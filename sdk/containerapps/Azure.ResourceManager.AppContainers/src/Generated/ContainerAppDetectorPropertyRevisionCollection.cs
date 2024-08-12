@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerAppDetectorPropertyRevisionResource" /> and their operations.
-    /// Each <see cref="ContainerAppDetectorPropertyRevisionResource" /> in the collection will belong to the same instance of <see cref="ContainerAppResource" />.
-    /// To get a <see cref="ContainerAppDetectorPropertyRevisionCollection" /> instance call the GetContainerAppDetectorPropertyRevisions method from an instance of <see cref="ContainerAppResource" />.
+    /// A class representing a collection of <see cref="ContainerAppDetectorPropertyRevisionResource"/> and their operations.
+    /// Each <see cref="ContainerAppDetectorPropertyRevisionResource"/> in the collection will belong to the same instance of <see cref="ContainerAppResource"/>.
+    /// To get a <see cref="ContainerAppDetectorPropertyRevisionCollection"/> instance call the GetContainerAppDetectorPropertyRevisions method from an instance of <see cref="ContainerAppResource"/>.
     /// </summary>
     public partial class ContainerAppDetectorPropertyRevisionCollection : ArmCollection, IEnumerable<ContainerAppDetectorPropertyRevisionResource>, IAsyncEnumerable<ContainerAppDetectorPropertyRevisionResource>
     {
@@ -63,6 +62,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetRevision</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyRevisionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
@@ -99,6 +106,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetRevision</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,16 +152,24 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_ListRevisions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyRevisionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppDetectorPropertyRevisionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppDetectorPropertyRevisionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppDetectorPropertyRevisionResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.CreateListRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.CreateListRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppDetectorPropertyRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsClientDiagnostics, Pipeline, "ContainerAppDetectorPropertyRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppDetectorPropertyRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsClientDiagnostics, Pipeline, "ContainerAppDetectorPropertyRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -160,16 +183,24 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_ListRevisions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyRevisionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppDetectorPropertyRevisionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppDetectorPropertyRevisionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppDetectorPropertyRevisionResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.CreateListRevisionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.CreateListRevisionsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppDetectorPropertyRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsClientDiagnostics, Pipeline, "ContainerAppDetectorPropertyRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppDetectorPropertyRevisionResource(Client, ContainerAppRevisionData.DeserializeContainerAppRevisionData(e)), _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsClientDiagnostics, Pipeline, "ContainerAppDetectorPropertyRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -182,6 +213,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetRevision</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +257,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetRevision</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyRevisionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionName"> Name of the Container App Revision. </param>
@@ -234,6 +281,96 @@ namespace Azure.ResourceManager.AppContainers
             {
                 var response = _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.GetRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/revisionsApi/revisions/{revisionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsDiagnostics_GetRevision</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyRevisionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="revisionName"> Name of the Container App Revision. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerAppDetectorPropertyRevisionResource>> GetIfExistsAsync(string revisionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
+
+            using var scope = _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.GetRevisionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppDetectorPropertyRevisionResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppDetectorPropertyRevisionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/revisionsApi/revisions/{revisionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsDiagnostics_GetRevision</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyRevisionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="revisionName"> Name of the Container App Revision. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="revisionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="revisionName"/> is null. </exception>
+        public virtual NullableResponse<ContainerAppDetectorPropertyRevisionResource> GetIfExists(string revisionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(revisionName, nameof(revisionName));
+
+            using var scope = _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorPropertyRevisionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient.GetRevision(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppDetectorPropertyRevisionResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppDetectorPropertyRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

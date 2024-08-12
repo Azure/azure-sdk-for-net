@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.18 (Unreleased)
+## 1.0.0-preview.21 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,70 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-preview.20 (2024-06-07)
+### Features Added
+- Model Dataset has a new parameter LakeHouseLocation
+- Model Dataset has a new parameter GoogleBigQueryV2ObjectDataset
+- Model Dataset has a new parameter PostgreSqlV2TableDataset
+- Model Dataset has a new parameter SalesforceServiceCloudV2ObjectDataset
+- Model Dataset has a new parameter SalesforceV2ObjectDataset
+- Model Dataset has a new parameter ServiceNowV2ObjectDataset
+- Model Dataset has a new parameter SnowflakeV2Dataset
+- Model Dataset has a new parameter WarehouseTableDataset
+- Model Pipeline has a new parameter ExpressionV2
+- Model Pipeline has a new parameter GoogleBigQueryV2Source
+- Model Pipeline has a new parameter LakeHouseTableSink
+- Model Pipeline has a new parameter LakeHouseTableSource
+- Model Pipeline has a new parameter LakeHouseWriteSettings
+- Model Pipeline has a new parameter LakeHouseReadSettings
+- Model Pipeline has a new parameter Metadata
+- Model Pipeline has a new parameter MetadataItem
+- Model Pipeline has a new parameter ParquetReadSettingsstate
+- Model Pipeline has a new parameter PostgreSqlV2Source
+- Model Pipeline has a new parameter SalesforceServiceCloudV2Sink
+- Model Pipeline has a new parameter SalesforceServiceCloudV2Source
+- Model Pipeline has a new parameter SalesforceV2Sink
+- Model Pipeline has a new parameter SalesforceV2SourceReadBehavior
+- Model Pipeline has a new parameter SalesforceV2Source
+- Model Pipeline has a new parameter ServiceNowV2Source
+- Model Pipeline has a new parameter SnowflakeV2Sink
+- Model Pipeline has a new parameter SnowflakeV2Source
+- Model Pipeline has a new parameter WarehouseSink
+- Model Pipeline has a new parameter WarehouseSource
+- Model LinkedService add supports GoogleAds
+- Model LinkedService has a new parameter GoogleBigQueryV2LinkedService
+- Model LinkedService has a new parameter LakeHouseLinkedService
+- Model LinkedService has a new parameter PostgreSqlV2LinkedService
+- Model LinkedService has a new parameter SalesforceServiceCloudV2LinkedService
+- Model LinkedService has a new parameter SalesforceV2LinkedService
+- Model LinkedService has a new parameter SalesforceV2LinkedService
+- Model LinkedService has a new parameter SnowflakeV2LinkedService
+- Model LinkedService has a new parameter WarehouseLinkedService
+- Model LinkedService has a new parameter WarehouseLinkedService
+
+### Breaking Changes
+- Model LinkedService parameter MariaDBLinkedService update new properties
+- Model LinkedService parameter MySqlLinkedService update new properties
+- Model LinkedService parameter ServiceNowV2LinkedService update properties
+- Model Pipeline parameter ExecuteDataFlowActivity update new properties computeType
+- Model Pipeline parameter ScriptActivityScriptBlock update properties type
+
+## 1.0.0-preview.19 (2023-10-30)
+- Fix runNotebook sessionId from int to string
+- Fix placeholder links causing 404s
+- Sync expression Support From DataFactory To Synapse
+
+## 1.0.0-preview.18 (2023-08-08)
+- Added `authenticationType`, `containerUri`, `sasUri` and `sasToken` properties to BlobService 
+- Added `setSystemVariable` proprety to SetVariableActivityTypeProperties
+- Added `mongoDbAtlasDriverVersion` property to MongoDbAtlasLinkedServiceTypeProperties
+- Added `ActionOnExistingTargetTable` property for Synapse Link
+- Added `OutputColumn` Object For Office365Source outputColumns
+- Added `configurationType` ,`targetSparkConfiguration` and `sparkConfig` properties for SynapseNotebookActivityTypeProperties
+- Added `credential` property for LinkedService
+- Added `isolationLevel` property for SQLServerSource
+- Added new apis of Create/Cancel/GetStatus/GetSnapshot for RunNotebook
 
 ## 1.0.0-preview.17 (2023-01-10)
 - Added `workspaceResourceId` to AzureSynapseArtifactsLinkedServiceTypeProperties

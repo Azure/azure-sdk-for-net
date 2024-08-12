@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.GraphServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.GraphServices.Models
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.GraphServices.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmGraphServicesModelFactory
     {
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GraphServices.GraphServicesAccountResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,17 +28,25 @@ namespace Azure.ResourceManager.GraphServices.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GraphServicesAccountResourceData(id, name, resourceType, systemData, tags, location, properties);
+            return new GraphServicesAccountResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of GraphServicesAccountResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GraphServicesAccountResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="appId"> Customer owned application ID. </param>
         /// <param name="billingPlanId"> Billing Plan Id. </param>
         /// <returns> A new <see cref="Models.GraphServicesAccountResourceProperties"/> instance for mocking. </returns>
         public static GraphServicesAccountResourceProperties GraphServicesAccountResourceProperties(GraphServicesProvisioningState? provisioningState = null, string appId = null, string billingPlanId = null)
         {
-            return new GraphServicesAccountResourceProperties(provisioningState, appId, billingPlanId);
+            return new GraphServicesAccountResourceProperties(provisioningState, appId, billingPlanId, serializedAdditionalRawData: null);
         }
     }
 }

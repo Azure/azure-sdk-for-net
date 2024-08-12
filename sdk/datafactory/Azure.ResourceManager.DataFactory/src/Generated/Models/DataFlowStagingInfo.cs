@@ -6,35 +6,21 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Staging info for execute data flow activity. </summary>
     public partial class DataFlowStagingInfo
     {
-        /// <summary> Initializes a new instance of DataFlowStagingInfo. </summary>
-        public DataFlowStagingInfo()
-        {
-        }
-
-        /// <summary> Initializes a new instance of DataFlowStagingInfo. </summary>
-        /// <param name="linkedService"> Staging linked service reference. </param>
-        /// <param name="folderPath"> Folder path for staging blob. Type: string (or Expression with resultType string). </param>
-        internal DataFlowStagingInfo(FactoryLinkedServiceReference linkedService, BinaryData folderPath)
-        {
-            LinkedService = linkedService;
-            FolderPath = folderPath;
-        }
-
-        /// <summary> Staging linked service reference. </summary>
-        public FactoryLinkedServiceReference LinkedService { get; set; }
         /// <summary>
-        /// Folder path for staging blob. Type: string (or Expression with resultType string)
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -58,6 +44,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData FolderPath { get; set; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowStagingInfo"/>. </summary>
+        public DataFlowStagingInfo()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowStagingInfo"/>. </summary>
+        /// <param name="linkedService"> Staging linked service reference. </param>
+        /// <param name="folderPath"> Folder path for staging blob. Type: string (or Expression with resultType string). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlowStagingInfo(DataFactoryLinkedServiceReference linkedService, DataFactoryElement<string> folderPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            LinkedService = linkedService;
+            FolderPath = folderPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Staging linked service reference. </summary>
+        public DataFactoryLinkedServiceReference LinkedService { get; set; }
+        /// <summary> Folder path for staging blob. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> FolderPath { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> the types of identities associated with this resource; currently restricted to 'SystemAssigned and UserAssigned'. </summary>
+    /// <summary> the types of identities associated with this resource; currently restricted to 'None and UserAssigned'. </summary>
     public readonly partial struct PostgreSqlFlexibleServerIdentityType : IEquatable<PostgreSqlFlexibleServerIdentityType>
     {
         private readonly string _value;
@@ -23,13 +23,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         private const string NoneValue = "None";
-        private const string SystemAssignedValue = "SystemAssigned";
         private const string UserAssignedValue = "UserAssigned";
 
         /// <summary> None. </summary>
         public static PostgreSqlFlexibleServerIdentityType None { get; } = new PostgreSqlFlexibleServerIdentityType(NoneValue);
-        /// <summary> SystemAssigned. </summary>
-        public static PostgreSqlFlexibleServerIdentityType SystemAssigned { get; } = new PostgreSqlFlexibleServerIdentityType(SystemAssignedValue);
         /// <summary> UserAssigned. </summary>
         public static PostgreSqlFlexibleServerIdentityType UserAssigned { get; } = new PostgreSqlFlexibleServerIdentityType(UserAssignedValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerIdentityType"/> values are the same. </summary>
@@ -47,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

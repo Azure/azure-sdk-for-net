@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes the TCP configuration. </summary>
     public partial class ConnectionMonitorTcpConfiguration
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorTcpConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTcpConfiguration"/>. </summary>
         public ConnectionMonitorTcpConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorTcpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTcpConfiguration"/>. </summary>
         /// <param name="port"> The port to connect to. </param>
         /// <param name="disableTraceRoute"> Value indicating whether path evaluation with trace route should be disabled. </param>
         /// <param name="destinationPortBehavior"> Destination port behavior. </param>
-        internal ConnectionMonitorTcpConfiguration(int? port, bool? disableTraceRoute, DestinationPortBehavior? destinationPortBehavior)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorTcpConfiguration(int? port, bool? disableTraceRoute, DestinationPortBehavior? destinationPortBehavior, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Port = port;
             DisableTraceRoute = disableTraceRoute;
             DestinationPortBehavior = destinationPortBehavior;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The port to connect to. </summary>

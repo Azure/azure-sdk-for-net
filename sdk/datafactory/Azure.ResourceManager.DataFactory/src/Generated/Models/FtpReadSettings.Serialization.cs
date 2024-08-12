@@ -6,109 +6,83 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class FtpReadSettings : IUtf8JsonSerializable
+    public partial class FtpReadSettings : IUtf8JsonSerializable, IJsonModel<FtpReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FtpReadSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FtpReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FtpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FtpReadSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Recursive);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Recursive.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Recursive);
             }
             if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WildcardFolderPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WildcardFolderPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, WildcardFolderPath);
             }
             if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WildcardFileName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WildcardFileName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, WildcardFileName);
             }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
-                writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
+                JsonSerializer.Serialize(writer, EnablePartitionDiscovery);
             }
             if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionRootPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionRootPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PartitionRootPath);
             }
             if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DeleteFilesAfterCompletion);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DeleteFilesAfterCompletion.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DeleteFilesAfterCompletion);
             }
             if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FileListPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileListPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FileListPath);
             }
             if (Optional.IsDefined(UseBinaryTransfer))
             {
                 writer.WritePropertyName("useBinaryTransfer"u8);
-                writer.WriteBooleanValue(UseBinaryTransfer.Value);
+                JsonSerializer.Serialize(writer, UseBinaryTransfer);
             }
             if (Optional.IsDefined(DisableChunking))
             {
                 writer.WritePropertyName("disableChunking"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableChunking);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableChunking.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DisableChunking);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreReadSettingsType);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxConcurrentConnections);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableMetricsCollection);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -116,30 +90,47 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static FtpReadSettings DeserializeFtpReadSettings(JsonElement element)
+        FtpReadSettings IJsonModel<FtpReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FtpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FtpReadSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFtpReadSettings(document.RootElement, options);
+        }
+
+        internal static FtpReadSettings DeserializeFtpReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BinaryData> recursive = default;
-            Optional<BinaryData> wildcardFolderPath = default;
-            Optional<BinaryData> wildcardFileName = default;
-            Optional<bool> enablePartitionDiscovery = default;
-            Optional<BinaryData> partitionRootPath = default;
-            Optional<BinaryData> deleteFilesAfterCompletion = default;
-            Optional<BinaryData> fileListPath = default;
-            Optional<bool> useBinaryTransfer = default;
-            Optional<BinaryData> disableChunking = default;
+            DataFactoryElement<bool> recursive = default;
+            DataFactoryElement<string> wildcardFolderPath = default;
+            DataFactoryElement<string> wildcardFileName = default;
+            DataFactoryElement<bool> enablePartitionDiscovery = default;
+            DataFactoryElement<string> partitionRootPath = default;
+            DataFactoryElement<bool> deleteFilesAfterCompletion = default;
+            DataFactoryElement<string> fileListPath = default;
+            DataFactoryElement<bool> useBinaryTransfer = default;
+            DataFactoryElement<bool> disableChunking = default;
             string type = default;
-            Optional<BinaryData> maxConcurrentConnections = default;
-            Optional<BinaryData> disableMetricsCollection = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    recursive = BinaryData.FromString(property.Value.GetRawText());
+                    recursive = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("wildcardFolderPath"u8))
@@ -159,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    wildcardFolderPath = BinaryData.FromString(property.Value.GetRawText());
+                    wildcardFolderPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("wildcardFileName"u8))
@@ -168,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    wildcardFileName = BinaryData.FromString(property.Value.GetRawText());
+                    wildcardFileName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("enablePartitionDiscovery"u8))
@@ -177,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enablePartitionDiscovery = property.Value.GetBoolean();
+                    enablePartitionDiscovery = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionRootPath"u8))
@@ -186,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionRootPath = BinaryData.FromString(property.Value.GetRawText());
+                    partitionRootPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("deleteFilesAfterCompletion"u8))
@@ -195,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    deleteFilesAfterCompletion = BinaryData.FromString(property.Value.GetRawText());
+                    deleteFilesAfterCompletion = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("fileListPath"u8))
@@ -204,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileListPath = BinaryData.FromString(property.Value.GetRawText());
+                    fileListPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("useBinaryTransfer"u8))
@@ -213,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    useBinaryTransfer = property.Value.GetBoolean();
+                    useBinaryTransfer = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableChunking"u8))
@@ -222,7 +213,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableChunking = BinaryData.FromString(property.Value.GetRawText());
+                    disableChunking = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -236,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -245,13 +236,57 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FtpReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, deleteFilesAfterCompletion.Value, fileListPath.Value, Optional.ToNullable(useBinaryTransfer), disableChunking.Value);
+            return new FtpReadSettings(
+                type,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                recursive,
+                wildcardFolderPath,
+                wildcardFileName,
+                enablePartitionDiscovery,
+                partitionRootPath,
+                deleteFilesAfterCompletion,
+                fileListPath,
+                useBinaryTransfer,
+                disableChunking);
         }
+
+        BinaryData IPersistableModel<FtpReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FtpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FtpReadSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FtpReadSettings IPersistableModel<FtpReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FtpReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFtpReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FtpReadSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FtpReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

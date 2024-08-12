@@ -29,11 +29,11 @@ namespace Azure.Identity
         private readonly bool _skipTenantValidation;
         private readonly AuthenticationRecord _record;
         private readonly AsyncLockWithValue<IAccount> _accountAsyncLock;
-
         internal string TenantId { get; }
         internal string Username { get; }
-
         internal MsalPublicClient Client { get; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
+        internal bool UseOperatingSystemAccount { get; }
 
         /// <summary>
         /// Creates a new <see cref="SharedTokenCacheCredential"/> which will authenticate users signed in through developer tools supporting Azure single sign on.
@@ -83,6 +83,8 @@ namespace Azure.Identity
                 null,
                 options ?? s_DefaultCacheOptions);
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
+            UseOperatingSystemAccount = (options as IMsalPublicClientInitializerOptions)?.UseDefaultBrokerAccount ?? false;
         }
 
         /// <summary>
@@ -93,6 +95,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
@@ -106,6 +109,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
@@ -117,10 +121,25 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, TenantIdResolver.AllTenants);
-                IAccount account = await GetAccountAsync(tenantId, async, cancellationToken).ConfigureAwait(false);
-                AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, tenantId, async, cancellationToken).ConfigureAwait(false);
-                return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, TenantIdResolverBase.AllTenants);
+
+                IAccount account = UseOperatingSystemAccount ?
+                    PublicClientApplication.OperatingSystemAccount :
+                    await GetAccountAsync(tenantId, requestContext.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
+
+                AuthenticationResult result = await Client.AcquireTokenSilentAsync(
+                    requestContext.Scopes,
+                    requestContext.Claims,
+                    account,
+                    tenantId,
+                    requestContext.IsCaeEnabled,
+#if PREVIEW_FEATURE_FLAG
+                    null,
+#endif
+                    async,
+                    cancellationToken).ConfigureAwait(false);
+
+                return scope.Succeeded(result.ToAccessToken());
             }
             catch (MsalUiRequiredException ex)
             {
@@ -135,7 +154,7 @@ namespace Azure.Identity
             }
         }
 
-        private async ValueTask<IAccount> GetAccountAsync(string tenantId, bool async, CancellationToken cancellationToken)
+        private async ValueTask<IAccount> GetAccountAsync(string tenantId, bool enableCae, bool async, CancellationToken cancellationToken)
         {
             using var asyncLock = await _accountAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
             if (asyncLock.HasValue)
@@ -151,7 +170,7 @@ namespace Azure.Identity
                 return account;
             }
 
-            List<IAccount> accounts = await Client.GetAccountsAsync(async, cancellationToken).ConfigureAwait(false);
+            List<IAccount> accounts = await Client.GetAccountsAsync(async, enableCae, cancellationToken).ConfigureAwait(false);
 
             if (accounts.Count == 0)
             {

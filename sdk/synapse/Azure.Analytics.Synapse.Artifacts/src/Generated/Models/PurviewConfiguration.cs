@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Purview Configuration. </summary>
     public partial class PurviewConfiguration
     {
-        /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewConfiguration"/>. </summary>
         public PurviewConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewConfiguration"/>. </summary>
         /// <param name="purviewResourceId"> Purview Resource ID. </param>
         internal PurviewConfiguration(string purviewResourceId)
         {

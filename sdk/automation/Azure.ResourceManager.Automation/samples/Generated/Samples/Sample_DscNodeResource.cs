@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Automation;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation.Samples
@@ -177,7 +174,7 @@ namespace Azure.ResourceManager.Automation.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // Get Dsc node report data by node id and report id. 
+        // Get Dsc node report data by node id and report id.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNodeReport_GetDscNodeReportDataByNodeIdAndReportId()

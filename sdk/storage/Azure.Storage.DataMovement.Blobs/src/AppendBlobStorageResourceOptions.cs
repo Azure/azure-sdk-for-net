@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -34,8 +33,30 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmimage/offers/", false);
+            uri.AppendPath(offer, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(skus, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version)
@@ -136,6 +157,39 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand, int? top, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmimage/offers/", false);
+            uri.AppendPath(offer, true);
+            uri.AppendPath("/skus/", false);
+            uri.AppendPath(skus, true);
+            uri.AppendPath("/versions", false);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand, int? top, string orderby)
@@ -261,6 +315,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateListOffersRequestUri(string subscriptionId, AzureLocation location, string edgeZone, string publisherName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmimage/offers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListOffersRequest(string subscriptionId, AzureLocation location, string edgeZone, string publisherName)
         {
             var message = _pipeline.CreateMessage();
@@ -354,6 +425,21 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateListPublishersRequestUri(string subscriptionId, AzureLocation location, string edgeZone)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListPublishersRequest(string subscriptionId, AzureLocation location, string edgeZone)
         {
             var message = _pipeline.CreateMessage();
@@ -439,6 +525,25 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSkusRequestUri(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/edgeZones/", false);
+            uri.AppendPath(edgeZone, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmimage/offers/", false);
+            uri.AppendPath(offer, true);
+            uri.AppendPath("/skus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSkusRequest(string subscriptionId, AzureLocation location, string edgeZone, string publisherName, string offer)

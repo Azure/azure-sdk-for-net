@@ -77,7 +77,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             _mockQueueProcessor = new Mock<QueueProcessor>(MockBehavior.Strict, context);
             var concurrencyManagerMock = new Mock<ConcurrencyManager>(MockBehavior.Strict);
 
-            _listener = new QueueListener(_mockQueue.Object, null, _mockTriggerExecutor.Object, _mockExceptionDispatcher.Object, _loggerFactory, null, _queuesOptions, _mockQueueProcessor.Object, new FunctionDescriptor { Id = TestFunctionId }, concurrencyManagerMock.Object);
+            _listener = new QueueListener(
+                _mockQueue.Object,
+                null,
+                _mockTriggerExecutor.Object,
+                _mockExceptionDispatcher.Object,
+                _loggerFactory,
+                null,
+                _queuesOptions,
+                _mockQueueProcessor.Object,
+                new FunctionDescriptor { Id = TestFunctionId },
+                concurrencyManagerMock.Object,
+                drainModeManager: null);
             _scaleMonitor = new QueueScaleMonitor(TestFunctionId, _mockQueue.Object, _loggerFactory);
             _queueMessage = QueuesModelFactory.QueueMessage("TestId", "TestPopReceipt", "TestMessage", 0);
         }
@@ -97,7 +108,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
             mockConcurrencyThrottleManager.Setup(p => p.GetStatus()).Returns(() => throttleStatus);
             var concurrencyManager = new ConcurrencyManager(optionsWrapper, _loggerFactory, mockConcurrencyThrottleManager.Object);
-            var localListener = new QueueListener(_mockQueue.Object, null, _mockTriggerExecutor.Object, _mockExceptionDispatcher.Object, _loggerFactory, null, _queuesOptions, _mockQueueProcessor.Object, new FunctionDescriptor { Id = TestFunctionId }, concurrencyManager);
+            var localListener = new QueueListener(
+                _mockQueue.Object,
+                null,
+                _mockTriggerExecutor.Object,
+                _mockExceptionDispatcher.Object,
+                _loggerFactory,
+                null,
+                _queuesOptions,
+                _mockQueueProcessor.Object,
+                new FunctionDescriptor { Id = TestFunctionId },
+                concurrencyManager,
+                drainModeManager: null);
 
             int result = localListener.GetMessageReceiveCount();
             Assert.AreEqual(1, result);
@@ -377,11 +399,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, poisonQueue, NullLoggerFactory.Instance, queueProcessorFactory, queuesOptions, null);
             var mockConcurrencyManager = new Mock<ConcurrencyManager>(MockBehavior.Strict);
 
-            QueueListener listener = new QueueListener(queue, poisonQueue, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
-                NullLoggerFactory.Instance, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" }, mockConcurrencyManager.Object);
+            QueueListener listener = new QueueListener(
+                queue,
+                poisonQueue,
+                mockTriggerExecutor.Object,
+                new WebJobsExceptionHandler(null),
+                NullLoggerFactory.Instance,
+                null,
+                queuesOptions,
+                queueProcessor,
+                new FunctionDescriptor { Id = "TestFunction" },
+                mockConcurrencyManager.Object,
+                drainModeManager: null);
 
             mockTriggerExecutor
-                .Setup(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), CancellationToken.None))
+                .Setup(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new FunctionResult(false));
 
             await listener.ProcessMessageAsync(messageFromCloud, TimeSpan.FromMinutes(10), CancellationToken.None);
@@ -400,7 +432,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueProperties poisonQueueProperties = await poisonQueue.GetPropertiesAsync();
             Assert.AreEqual(1, poisonQueueProperties.ApproximateMessagesCount);
 
-            mockTriggerExecutor.Verify(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), CancellationToken.None), Times.Exactly(2));
+            mockTriggerExecutor.Verify(m => m.ExecuteAsync(It.IsAny<QueueMessage>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
 
         [Test]
@@ -419,8 +451,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var queueProcessorFactory = new DefaultQueueProcessorFactory();
             var queueProcessor = QueueListenerFactory.CreateQueueProcessor(queue, null, _loggerFactory, queueProcessorFactory, queuesOptions, null);
             var mockConcurrencyManager = new Mock<ConcurrencyManager>(MockBehavior.Strict);
-            QueueListener listener = new QueueListener(queue, null, mockTriggerExecutor.Object, new WebJobsExceptionHandler(null),
-                _loggerFactory, null, queuesOptions, queueProcessor, new FunctionDescriptor { Id = "TestFunction" }, mockConcurrencyManager.Object);
+            QueueListener listener = new QueueListener(
+                queue,
+                null,
+                mockTriggerExecutor.Object,
+                new WebJobsExceptionHandler(null),
+                _loggerFactory,
+                null,
+                queuesOptions,
+                queueProcessor,
+                new FunctionDescriptor { Id = "TestFunction" },
+                mockConcurrencyManager.Object,
+                drainModeManager: null);
 
             listener.MinimumVisibilityRenewalInterval = TimeSpan.FromSeconds(1);
 
@@ -509,8 +551,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             CancellationToken cancellationToken = new CancellationToken();
             FunctionResult result = new FunctionResult(true);
-            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, cancellationToken)).ReturnsAsync(true);
-            _mockTriggerExecutor.Setup(p => p.ExecuteAsync(_queueMessage, cancellationToken)).ReturnsAsync(result);
+            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            _mockTriggerExecutor.Setup(p => p.ExecuteAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(result);
             _mockQueueProcessor.Setup(p => p.CompleteProcessingMessageAsync(_queueMessage, result, It.IsNotIn(cancellationToken))).Returns(Task.FromResult(true));
 
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
@@ -527,7 +569,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 string.Empty,
                 new Exception());
 
-            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken)).Throws(exception);
+            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>())).Throws(exception);
 
             var result = await _listener.ExecuteAsync(cancellationToken);
             Assert.NotNull(result);
@@ -541,7 +583,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             bool queueExists = false;
             _mockQueue.Setup(p => p.ExistsAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => Response.FromValue(queueExists, new MockResponse(queueExists ? 200 : 404)));
-            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken))
+            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Response.FromValue(new QueueMessage[0], new MockResponse(200)));
 
             int numIterations = 5;
@@ -560,7 +602,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             }
 
             _mockQueue.Verify(p => p.ExistsAsync(It.IsAny<CancellationToken>()), Times.Exactly(numIterations - numFailedExistenceChecks));
-            _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken), Times.Exactly(numIterations - numFailedExistenceChecks));
+            _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Exactly(numIterations - numFailedExistenceChecks));
         }
 
         [Test]
@@ -573,7 +615,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 string.Empty,
                 string.Empty,
                 new Exception());
-            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken)).Throws(exception);
+            _mockQueue.Setup(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>())).Throws(exception);
 
             for (int i = 0; i < 5; i++)
             {
@@ -582,14 +624,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             }
 
             _mockQueue.Verify(p => p.ExistsAsync(It.IsAny<CancellationToken>()), Times.Exactly(5));
-            _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), cancellationToken), Times.Exactly(5));
+            _mockQueue.Verify(p => p.ReceiveMessagesAsync(It.IsAny<int>(), It.IsAny<TimeSpan>(), It.IsAny<CancellationToken>()), Times.Exactly(5));
         }
 
         [Test]
         public async Task ProcessMessageAsync_QueueBeginProcessingMessageReturnsFalse_MessageNotProcessed()
         {
             CancellationToken cancellationToken = new CancellationToken();
-            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, cancellationToken)).ReturnsAsync(false);
+            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
         }
@@ -599,8 +641,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             CancellationToken cancellationToken = new CancellationToken();
             FunctionResult result = new FunctionResult(false);
-            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, cancellationToken)).ReturnsAsync(true);
-            _mockTriggerExecutor.Setup(p => p.ExecuteAsync(_queueMessage, cancellationToken)).ReturnsAsync(result);
+            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            _mockTriggerExecutor.Setup(p => p.ExecuteAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(result);
             _mockQueueProcessor.Setup(p => p.CompleteProcessingMessageAsync(_queueMessage, result, It.IsNotIn(cancellationToken))).Returns(Task.FromResult(true));
 
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
@@ -618,7 +660,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var mockConcurrencyThrottleManager = new Mock<IConcurrencyThrottleManager>(MockBehavior.Strict);
             mockConcurrencyThrottleManager.Setup(p => p.GetStatus()).Returns(() => throttleStatus);
             var concurrencyManager = new ConcurrencyManager(optionsWrapper, _loggerFactory, mockConcurrencyThrottleManager.Object);
-            var localListener = new QueueListener(_mockQueue.Object, null, _mockTriggerExecutor.Object, _mockExceptionDispatcher.Object, _loggerFactory, null, _queuesOptions, _mockQueueProcessor.Object, new FunctionDescriptor { Id = TestFunctionId }, concurrencyManager);
+            var localListener = new QueueListener(
+                _mockQueue.Object,
+                null,
+                _mockTriggerExecutor.Object,
+                _mockExceptionDispatcher.Object,
+                _loggerFactory,
+                null,
+                _queuesOptions,
+                _mockQueueProcessor.Object,
+                new FunctionDescriptor { Id = TestFunctionId },
+                concurrencyManager,
+                drainModeManager: null);
 
             var result = localListener.GetTargetScaler();
             Assert.IsNotNull(result);

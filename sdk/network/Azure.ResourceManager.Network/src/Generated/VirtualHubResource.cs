@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,13 +19,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a VirtualHub along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VirtualHubResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVirtualHubResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVirtualHub method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualHubResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVirtualHubResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetVirtualHub method.
     /// </summary>
     public partial class VirtualHubResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualHubResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualHubName"> The virtualHubName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualHubName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}";
@@ -38,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly VirtualHubsRestOperations _virtualHubRestClient;
         private readonly VirtualHubData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualHubResource"/> class for mocking. </summary>
         protected VirtualHubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VirtualHubResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VirtualHubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualHubResource(ArmClient client, VirtualHubData data) : this(client, data.Id)
@@ -64,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/virtualHubs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of RouteMapResources and their operations over a RouteMapResource. </returns>
         public virtual RouteMapCollection GetRouteMaps()
         {
-            return GetCachedClient(Client => new RouteMapCollection(Client, Id));
+            return GetCachedClient(client => new RouteMapCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +108,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>RouteMaps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RouteMapResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeMapName"> The name of the RouteMap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RouteMapResource>> GetRouteMapAsync(string routeMapName, CancellationToken cancellationToken = default)
         {
@@ -130,12 +139,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>RouteMaps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RouteMapResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeMapName"> The name of the RouteMap. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeMapName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeMapName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RouteMapResource> GetRouteMap(string routeMapName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +163,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of HubVirtualNetworkConnectionResources and their operations over a HubVirtualNetworkConnectionResource. </returns>
         public virtual HubVirtualNetworkConnectionCollection GetHubVirtualNetworkConnections()
         {
-            return GetCachedClient(Client => new HubVirtualNetworkConnectionCollection(Client, Id));
+            return GetCachedClient(client => new HubVirtualNetworkConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -160,12 +177,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>HubVirtualNetworkConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubVirtualNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HubVirtualNetworkConnectionResource>> GetHubVirtualNetworkConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -183,12 +208,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>HubVirtualNetworkConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubVirtualNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HubVirtualNetworkConnectionResource> GetHubVirtualNetworkConnection(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +232,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualHubRouteTableV2Resources and their operations over a VirtualHubRouteTableV2Resource. </returns>
         public virtual VirtualHubRouteTableV2Collection GetVirtualHubRouteTableV2s()
         {
-            return GetCachedClient(Client => new VirtualHubRouteTableV2Collection(Client, Id));
+            return GetCachedClient(client => new VirtualHubRouteTableV2Collection(client, Id));
         }
 
         /// <summary>
@@ -213,12 +246,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubRouteTableV2s_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubRouteTableV2Resource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualHubRouteTableV2Resource>> GetVirtualHubRouteTableV2Async(string routeTableName, CancellationToken cancellationToken = default)
         {
@@ -236,12 +277,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubRouteTableV2s_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubRouteTableV2Resource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeTableName"> The name of the VirtualHubRouteTableV2. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualHubRouteTableV2Resource> GetVirtualHubRouteTableV2(string routeTableName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +301,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of BgpConnectionResources and their operations over a BgpConnectionResource. </returns>
         public virtual BgpConnectionCollection GetBgpConnections()
         {
-            return GetCachedClient(Client => new BgpConnectionCollection(Client, Id));
+            return GetCachedClient(client => new BgpConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -266,12 +315,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubBgpConnection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BgpConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BgpConnectionResource>> GetBgpConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -289,12 +346,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubBgpConnection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BgpConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BgpConnectionResource> GetBgpConnection(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +370,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of HubIPConfigurationResources and their operations over a HubIPConfigurationResource. </returns>
         public virtual HubIPConfigurationCollection GetHubIPConfigurations()
         {
-            return GetCachedClient(Client => new HubIPConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new HubIPConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -319,12 +384,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubIpConfiguration_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubIPConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HubIPConfigurationResource>> GetHubIPConfigurationAsync(string ipConfigName, CancellationToken cancellationToken = default)
         {
@@ -342,12 +415,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubIpConfiguration_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubIPConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HubIPConfigurationResource> GetHubIPConfiguration(string ipConfigName, CancellationToken cancellationToken = default)
         {
@@ -358,7 +439,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of HubRouteTableResources and their operations over a HubRouteTableResource. </returns>
         public virtual HubRouteTableCollection GetHubRouteTables()
         {
-            return GetCachedClient(Client => new HubRouteTableCollection(Client, Id));
+            return GetCachedClient(client => new HubRouteTableCollection(client, Id));
         }
 
         /// <summary>
@@ -372,12 +453,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>HubRouteTables_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubRouteTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HubRouteTableResource>> GetHubRouteTableAsync(string routeTableName, CancellationToken cancellationToken = default)
         {
@@ -395,12 +484,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>HubRouteTables_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubRouteTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routeTableName"> The name of the RouteTable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeTableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeTableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HubRouteTableResource> GetHubRouteTable(string routeTableName, CancellationToken cancellationToken = default)
         {
@@ -411,7 +508,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of RoutingIntentResources and their operations over a RoutingIntentResource. </returns>
         public virtual RoutingIntentCollection GetRoutingIntents()
         {
-            return GetCachedClient(Client => new RoutingIntentCollection(Client, Id));
+            return GetCachedClient(client => new RoutingIntentCollection(client, Id));
         }
 
         /// <summary>
@@ -425,12 +522,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>RoutingIntent_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoutingIntentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RoutingIntentResource>> GetRoutingIntentAsync(string routingIntentName, CancellationToken cancellationToken = default)
         {
@@ -448,12 +553,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>RoutingIntent_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoutingIntentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RoutingIntentResource> GetRoutingIntent(string routingIntentName, CancellationToken cancellationToken = default)
         {
@@ -470,6 +583,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -503,6 +624,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -534,6 +663,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -569,6 +706,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -602,6 +747,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -637,6 +790,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualHubParameters"> Parameters supplied to update VirtualHub tags. </param>
@@ -671,21 +832,29 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_GetEffectiveVirtualHubRoutes</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> GetEffectiveVirtualHubRoutesAsync(WaitUntil waitUntil, EffectiveRoutesContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VirtualHubEffectiveRouteList>> GetVirtualHubEffectiveRoutesAsync(WaitUntil waitUntil, EffectiveRoutesContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetEffectiveVirtualHubRoutes");
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubEffectiveRoutes");
             scope.Start();
             try
             {
                 var response = await _virtualHubRestClient.GetEffectiveVirtualHubRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<VirtualHubEffectiveRouteList>(new VirtualHubEffectiveRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -706,21 +875,29 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_GetEffectiveVirtualHubRoutes</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to get the effective routes for a specific resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation GetEffectiveVirtualHubRoutes(WaitUntil waitUntil, EffectiveRoutesContent content = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VirtualHubEffectiveRouteList> GetVirtualHubEffectiveRoutes(WaitUntil waitUntil, EffectiveRoutesContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetEffectiveVirtualHubRoutes");
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubEffectiveRoutes");
             scope.Start();
             try
             {
                 var response = _virtualHubRestClient.GetEffectiveVirtualHubRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<VirtualHubEffectiveRouteList>(new VirtualHubEffectiveRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetEffectiveVirtualHubRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -741,24 +918,32 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_GetInboundRoutes</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to get the inbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> GetInboundRoutesAsync(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EffectiveRouteMapRouteList>> GetVirtualHubInboundRoutesAsync(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetInboundRoutes");
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubInboundRoutes");
             scope.Start();
             try
             {
                 var response = await _virtualHubRestClient.GetInboundRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetInboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(new EffectiveRouteMapRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetInboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -779,24 +964,32 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_GetInboundRoutes</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to get the inbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation GetInboundRoutes(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EffectiveRouteMapRouteList> GetVirtualHubInboundRoutes(WaitUntil waitUntil, VirtualHubInboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetInboundRoutes");
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubInboundRoutes");
             scope.Start();
             try
             {
                 var response = _virtualHubRestClient.GetInboundRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetInboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(new EffectiveRouteMapRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetInboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -817,24 +1010,32 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_GetOutboundRoutes</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to get the outbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> GetOutboundRoutesAsync(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EffectiveRouteMapRouteList>> GetVirtualHubOutboundRoutesAsync(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetOutboundRoutes");
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubOutboundRoutes");
             scope.Start();
             try
             {
                 var response = await _virtualHubRestClient.GetOutboundRoutesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetOutboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(new EffectiveRouteMapRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetOutboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -855,24 +1056,32 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_GetOutboundRoutes</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> Parameters supplied to get the outbound routes for a connection resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation GetOutboundRoutes(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EffectiveRouteMapRouteList> GetVirtualHubOutboundRoutes(WaitUntil waitUntil, VirtualHubOutboundRoutesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetOutboundRoutes");
+            using var scope = _virtualHubClientDiagnostics.CreateScope("VirtualHubResource.GetVirtualHubOutboundRoutes");
             scope.Start();
             try
             {
                 var response = _virtualHubRestClient.GetOutboundRoutes(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkArmOperation(_virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetOutboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkArmOperation<EffectiveRouteMapRouteList>(new EffectiveRouteMapRouteListOperationSource(), _virtualHubClientDiagnostics, Pipeline, _virtualHubRestClient.CreateGetOutboundRoutesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -892,6 +1101,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -947,6 +1164,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1001,6 +1226,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1050,6 +1283,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1098,6 +1339,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1150,6 +1399,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

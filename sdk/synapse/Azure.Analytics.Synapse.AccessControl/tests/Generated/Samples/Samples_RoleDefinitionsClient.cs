@@ -6,28 +6,39 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Synapse.AccessControl.Samples
 {
-    public class Samples_RoleDefinitionsClient
+    public partial class Samples_RoleDefinitionsClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRoleDefinitions()
+        public void Example_GetRoleDefinitions_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new RoleDefinitionsClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = client.GetRoleDefinitions();
+            Response response = client.GetRoleDefinitions(null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRoleDefinitions_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
+
+            Response response = await client.GetRoleDefinitionsAsync(null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -37,11 +48,11 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRoleDefinitions_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new RoleDefinitionsClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = client.GetRoleDefinitions(true, "<scope>");
+            Response response = client.GetRoleDefinitions(true, "<scope>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("id").ToString());
@@ -54,31 +65,17 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             Console.WriteLine(result[0].GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
             Console.WriteLine(result[0].GetProperty("scopes")[0].ToString());
             Console.WriteLine(result[0].GetProperty("availabilityStatus").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleDefinitions_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new RoleDefinitionsClient(endpoint, credential);
-
-            Response response = await client.GetRoleDefinitionsAsync();
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRoleDefinitions_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new RoleDefinitionsClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = await client.GetRoleDefinitionsAsync(true, "<scope>");
+            Response response = await client.GetRoleDefinitionsAsync(true, "<scope>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].GetProperty("id").ToString());
@@ -95,13 +92,27 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRoleDefinitionById()
+        public void Example_GetRoleDefinitionById_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new RoleDefinitionsClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = client.GetRoleDefinitionById("<roleDefinitionId>");
+            Response response = client.GetRoleDefinitionById("<roleDefinitionId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRoleDefinitionById_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
+
+            Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -111,11 +122,11 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRoleDefinitionById_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new RoleDefinitionsClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = client.GetRoleDefinitionById("<roleDefinitionId>");
+            Response response = client.GetRoleDefinitionById("<roleDefinitionId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -128,31 +139,17 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
             Console.WriteLine(result.GetProperty("permissions")[0].GetProperty("notDataActions")[0].ToString());
             Console.WriteLine(result.GetProperty("scopes")[0].ToString());
             Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRoleDefinitionById_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new RoleDefinitionsClient(endpoint, credential);
-
-            Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRoleDefinitionById_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new RoleDefinitionsClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>");
+            Response response = await client.GetRoleDefinitionByIdAsync("<roleDefinitionId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("id").ToString());
@@ -169,13 +166,27 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetScopes()
+        public void Example_GetScopes_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new RoleDefinitionsClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = client.GetScopes();
+            Response response = client.GetScopes(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetScopes_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
+
+            Response response = await client.GetScopesAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -185,25 +196,11 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetScopes_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new RoleDefinitionsClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = client.GetScopes();
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetScopes_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new RoleDefinitionsClient(endpoint, credential);
-
-            Response response = await client.GetScopesAsync();
+            Response response = client.GetScopes(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -213,11 +210,11 @@ namespace Azure.Analytics.Synapse.AccessControl.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetScopes_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new RoleDefinitionsClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            RoleDefinitionsClient client = new RoleDefinitionsClient(endpoint, credential);
 
-            Response response = await client.GetScopesAsync();
+            Response response = await client.GetScopesAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());

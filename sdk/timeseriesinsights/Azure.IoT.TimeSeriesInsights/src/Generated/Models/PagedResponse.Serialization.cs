@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -18,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> continuationToken = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("continuationToken"u8))
@@ -27,7 +26,15 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new PagedResponse(continuationToken.Value);
+            return new PagedResponse(continuationToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PagedResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePagedResponse(document.RootElement);
         }
     }
 }

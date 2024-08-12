@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.Kusto.Models
         private const string StoppedValue = "Stopped";
         private const string StartingValue = "Starting";
         private const string UpdatingValue = "Updating";
+        private const string MigratedValue = "Migrated";
 
         /// <summary> Creating. </summary>
         public static KustoClusterState Creating { get; } = new KustoClusterState(CreatingValue);
@@ -50,6 +51,8 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoClusterState Starting { get; } = new KustoClusterState(StartingValue);
         /// <summary> Updating. </summary>
         public static KustoClusterState Updating { get; } = new KustoClusterState(UpdatingValue);
+        /// <summary> Migrated. </summary>
+        public static KustoClusterState Migrated { get; } = new KustoClusterState(MigratedValue);
         /// <summary> Determines if two <see cref="KustoClusterState"/> values are the same. </summary>
         public static bool operator ==(KustoClusterState left, KustoClusterState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="KustoClusterState"/> values are not the same. </summary>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

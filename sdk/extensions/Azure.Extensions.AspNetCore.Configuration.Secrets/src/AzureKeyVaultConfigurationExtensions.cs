@@ -6,9 +6,7 @@ using Azure.Core;
 using Azure.Extensions.AspNetCore.Configuration.Secrets;
 using Azure.Security.KeyVault.Secrets;
 
-#pragma warning disable AZC0001 // Extension methods have to be in the correct namespace to appear in intellisense.
 namespace Microsoft.Extensions.Configuration
-#pragma warning restore
 {
     /// <summary>
     /// Extension methods for registering <see cref="AzureKeyVaultConfigurationProvider"/> with <see cref="IConfigurationBuilder"/>.
@@ -20,7 +18,7 @@ namespace Microsoft.Extensions.Configuration
         /// </summary>
         /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
         /// <param name="vaultUri">The Azure Key Vault uri.</param>
-        /// <param name="credential">The credential to to use for authentication.</param>
+        /// <param name="credential">The credential to use for authentication.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
         public static IConfigurationBuilder AddAzureKeyVault(
             this IConfigurationBuilder configurationBuilder,
@@ -35,7 +33,7 @@ namespace Microsoft.Extensions.Configuration
         /// </summary>
         /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
         /// <param name="vaultUri">Azure Key Vault uri.</param>
-        /// <param name="credential">The credential to to use for authentication.</param>
+        /// <param name="credential">The credential to use for authentication.</param>
         /// <param name="manager">The <see cref="KeyVaultSecretManager"/> instance used to control secret loading.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
         public static IConfigurationBuilder AddAzureKeyVault(
@@ -73,7 +71,7 @@ namespace Microsoft.Extensions.Configuration
         /// </summary>
         /// <param name="configurationBuilder">The <see cref="IConfigurationBuilder"/> to add to.</param>
         /// <param name="vaultUri">Azure Key Vault uri.</param>
-        /// <param name="credential">The credential to to use for authentication.</param>
+        /// <param name="credential">The credential to use for authentication.</param>
         /// <param name="options">The <see cref="AzureKeyVaultConfigurationOptions"/> to use.</param>
         /// <returns>The <see cref="IConfigurationBuilder"/>.</returns>
         public static IConfigurationBuilder AddAzureKeyVault(
@@ -98,7 +96,7 @@ namespace Microsoft.Extensions.Configuration
             AzureKeyVaultConfigurationOptions options)
         {
             Argument.AssertNotNull(configurationBuilder, nameof(configurationBuilder));
-            Argument.AssertNotNull(options, nameof(configurationBuilder));
+            Argument.AssertNotNull(options, nameof(options));
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNull(options.Manager, $"{nameof(options)}.{nameof(options.Manager)}");
 

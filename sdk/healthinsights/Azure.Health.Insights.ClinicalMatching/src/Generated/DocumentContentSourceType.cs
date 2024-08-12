@@ -11,8 +11,8 @@ using System.ComponentModel;
 namespace Azure.Health.Insights.ClinicalMatching
 {
     /// <summary>
-    /// The type of the content's source. 
-    /// In case the source type is 'inline', the content is given as a string (for instance, text). 
+    /// The type of the content's source.
+    /// In case the source type is 'inline', the content is given as a string (for instance, text).
     /// In case the source type is 'reference', the content is given as a URI.
     /// </summary>
     public readonly partial struct DocumentContentSourceType : IEquatable<DocumentContentSourceType>
@@ -48,7 +48,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

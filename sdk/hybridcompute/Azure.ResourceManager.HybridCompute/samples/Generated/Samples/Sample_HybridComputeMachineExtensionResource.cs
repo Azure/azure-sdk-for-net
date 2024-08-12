@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Samples
@@ -23,7 +20,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateAMachineExtension()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2022-05-10-preview/examples/UpdateExtension.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-05-20-preview/examples/extension/Extension_Update.json
             // this example is just showing the usage of "MachineExtensions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,17 +40,14 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             // invoke the operation
             HybridComputeMachineExtensionPatch patch = new HybridComputeMachineExtensionPatch()
             {
-                Properties = new MachineExtensionUpdateProperties()
-                {
-                    Publisher = "Microsoft.Compute",
-                    MachineExtensionUpdatePropertiesType = "CustomScriptExtension",
-                    TypeHandlerVersion = "1.10",
-                    EnableAutomaticUpgrade = true,
-                    Settings =
+                Publisher = "Microsoft.Compute",
+                MachineExtensionUpdatePropertiesType = "CustomScriptExtension",
+                TypeHandlerVersion = "1.10",
+                EnableAutomaticUpgrade = true,
+                Settings =
 {
-["commandToExecute"] = BinaryData.FromString("powershell.exe -c \"Get-Process | Where-Object { $_.CPU -lt 100 }\""),
+["commandToExecute"] = BinaryData.FromString("\"powershell.exe -c \"Get-Process | Where-Object { $_.CPU -lt 100 }\"\""),
 },
-                },
             };
             ArmOperation<HybridComputeMachineExtensionResource> lro = await hybridComputeMachineExtension.UpdateAsync(WaitUntil.Completed, patch);
             HybridComputeMachineExtensionResource result = lro.Value;
@@ -70,7 +64,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAMachineExtension()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2022-05-10-preview/examples/DELETEExtension.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-05-20-preview/examples/extension/Extension_Delete.json
             // this example is just showing the usage of "MachineExtensions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +92,7 @@ namespace Azure.ResourceManager.HybridCompute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GETMachineExtension()
         {
-            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2022-05-10-preview/examples/GETExtension.json
+            // Generated from example definition: specification/hybridcompute/resource-manager/Microsoft.HybridCompute/preview/2024-05-20-preview/examples/extension/Extension_Get.json
             // this example is just showing the usage of "MachineExtensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             RestorableGremlinGraph restorableGraph = restorableGraphs.Single(graph => graph.Resource.GraphName == graphName1);
 
             // building restore info to restore only database1 and graph1
-            GremlinDatabaseRestoreResourceInfo restoreInfo = new GremlinDatabaseRestoreResourceInfo(restorableDatabase.Resource.DatabaseName, new List<string>() { restorableGraph.Resource.GraphName });
+            GremlinDatabaseRestoreResourceInfo restoreInfo = new GremlinDatabaseRestoreResourceInfo(restorableDatabase.Resource.DatabaseName, new List<string>() { restorableGraph.Resource.GraphName }, null);
 
             CosmosDBAccountRestoreParameters restoreParameters = new CosmosDBAccountRestoreParameters()
             {
@@ -148,14 +148,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             var locations = new List<CosmosDBAccountLocation>()
             {
-                new CosmosDBAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new CosmosDBAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false, null)
             };
 
             var createOptions = new CosmosDBAccountCreateOrUpdateContent(AzureLocation.WestUS, locations)
             {
                 Kind = kind,
-                ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
-                IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120") },
+                ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
+                IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120", null) },
                 IsVirtualNetworkFilterEnabled = true,
                 EnableAutomaticFailover = false,
                 ConnectorOffer = ConnectorOffer.Small,
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             CosmosDBAccountKind kind = CosmosDBAccountKind.GlobalDocumentDB;
             var locations = new List<CosmosDBAccountLocation>()
             {
-                new CosmosDBAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new CosmosDBAccountLocation(id: null, locationName: AzureLocation.WestUS, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false, null)
             };
 
             var restoredAccountName = Recording.GenerateAssetName("restoredaccount-");
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             };
             databaseAccountCreateUpdateParameters.Tags.Add("key1", "value1");
             databaseAccountCreateUpdateParameters.Tags.Add("key2", "value2");
-            databaseAccountCreateUpdateParameters.Capabilities.Add(new CosmosDBAccountCapability("EnableGremlin"));
+            databaseAccountCreateUpdateParameters.Capabilities.Add(new CosmosDBAccountCapability("EnableGremlin", null));
             var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, restoredAccountName, databaseAccountCreateUpdateParameters);
             CosmosDBAccountResource restoredDatabaseAccount = accountLro.Value;
             Assert.NotNull(restoredDatabaseAccount);
@@ -313,18 +313,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         new CosmosDBCompositePath { Path = "/orderByPath4", Order = CompositePathSortOrder.Descending }
                     }
                 },
-                SpatialIndexes = { new SpatialSpec("/*", new List<CosmosDBSpatialType> { new CosmosDBSpatialType("Point") }) }
+                SpatialIndexes = { new SpatialSpec("/*", new List<CosmosDBSpatialType> { new CosmosDBSpatialType("Point") }, null) }
             };
 
-            var containerPartitionKey = new CosmosDBContainerPartitionKey(new List<string> { "/address" }, CosmosDBPartitionKind.Hash, null, null);
+            var containerPartitionKey = new CosmosDBContainerPartitionKey(new List<string> { "/address" }, CosmosDBPartitionKind.Hash, null, null, null);
             var uniqueKeyPolicy = new CosmosDBUniqueKeyPolicy()
             {
-                UniqueKeys = { new CosmosDBUniqueKey(new List<string>() { "/testpath" }) },
+                UniqueKeys = { new CosmosDBUniqueKey(new List<string>() { "/testpath" }, null) },
             };
 
-            var conflictResolutionPolicy = new ConflictResolutionPolicy(ConflictResolutionMode.LastWriterWins, "/path", "");
+            var conflictResolutionPolicy = new ConflictResolutionPolicy(ConflictResolutionMode.LastWriterWins, "/path", "", null);
 
-            return new GremlinGraphCreateOrUpdateContent(AzureLocation.WestUS, new Models.GremlinGraphResourceInfo(graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy, null, restoreParameters: null, createMode: null))
+            return new GremlinGraphCreateOrUpdateContent(AzureLocation.WestUS, new Models.GremlinGraphResourceInfo(graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy, null, restoreParameters: null, createMode: null, null))
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             CosmosDBAccountResource account = await CreateRestorableDatabaseAccount(
                     name: accountName,
                     kind: CosmosDBAccountKind.GlobalDocumentDB,
-                    capabilities: new List<CosmosDBAccountCapability> { new CosmosDBAccountCapability("EnableGremlin") }
+                    capabilities: new List<CosmosDBAccountCapability> { new CosmosDBAccountCapability("EnableGremlin", null) }
                     );
             return account;
         }

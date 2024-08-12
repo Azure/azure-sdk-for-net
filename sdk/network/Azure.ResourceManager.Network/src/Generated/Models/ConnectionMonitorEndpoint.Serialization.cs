@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectionMonitorEndpoint : IUtf8JsonSerializable
+    public partial class ConnectionMonitorEndpoint : IUtf8JsonSerializable, IJsonModel<ConnectionMonitorEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ConnectionMonitorEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectionMonitorEndpoint)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -35,34 +46,77 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue(Filter, options);
             }
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope);
+                writer.WriteObjectValue(Scope, options);
             }
             if (Optional.IsDefined(CoverageLevel))
             {
                 writer.WritePropertyName("coverageLevel"u8);
                 writer.WriteStringValue(CoverageLevel.Value.ToString());
             }
+            if (Optional.IsDefined(LocationDetails))
+            {
+                writer.WritePropertyName("locationDetails"u8);
+                writer.WriteObjectValue(LocationDetails, options);
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectionMonitorEndpoint DeserializeConnectionMonitorEndpoint(JsonElement element)
+        ConnectionMonitorEndpoint IJsonModel<ConnectionMonitorEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectionMonitorEndpoint)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectionMonitorEndpoint(document.RootElement, options);
+        }
+
+        internal static ConnectionMonitorEndpoint DeserializeConnectionMonitorEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            Optional<ConnectionMonitorEndpointType> type = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> address = default;
-            Optional<ConnectionMonitorEndpointFilter> filter = default;
-            Optional<ConnectionMonitorEndpointScope> scope = default;
-            Optional<CoverageLevel> coverageLevel = default;
+            ConnectionMonitorEndpointType? type = default;
+            ResourceIdentifier resourceId = default;
+            string address = default;
+            ConnectionMonitorEndpointFilter filter = default;
+            ConnectionMonitorEndpointScope scope = default;
+            CoverageLevel? coverageLevel = default;
+            ConnectionMonitorEndpointLocationDetails locationDetails = default;
+            Guid? subscriptionId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -99,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    filter = ConnectionMonitorEndpointFilter.DeserializeConnectionMonitorEndpointFilter(property.Value);
+                    filter = ConnectionMonitorEndpointFilter.DeserializeConnectionMonitorEndpointFilter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scope"u8))
@@ -108,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    scope = ConnectionMonitorEndpointScope.DeserializeConnectionMonitorEndpointScope(property.Value);
+                    scope = ConnectionMonitorEndpointScope.DeserializeConnectionMonitorEndpointScope(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("coverageLevel"u8))
@@ -120,8 +174,72 @@ namespace Azure.ResourceManager.Network.Models
                     coverageLevel = new CoverageLevel(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("locationDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    locationDetails = ConnectionMonitorEndpointLocationDetails.DeserializeConnectionMonitorEndpointLocationDetails(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("subscriptionId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subscriptionId = property.Value.GetGuid();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectionMonitorEndpoint(name, Optional.ToNullable(type), resourceId.Value, address.Value, filter.Value, scope.Value, Optional.ToNullable(coverageLevel));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectionMonitorEndpoint(
+                name,
+                type,
+                resourceId,
+                address,
+                filter,
+                scope,
+                coverageLevel,
+                locationDetails,
+                subscriptionId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectionMonitorEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectionMonitorEndpoint)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectionMonitorEndpoint IPersistableModel<ConnectionMonitorEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectionMonitorEndpoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectionMonitorEndpoint)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectionMonitorEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

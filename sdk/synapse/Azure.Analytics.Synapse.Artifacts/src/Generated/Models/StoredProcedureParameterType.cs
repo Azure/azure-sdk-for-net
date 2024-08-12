@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Stored procedure parameter type. </summary>
-    public readonly partial struct StoredProcedureParameterType : IEquatable<StoredProcedureParameterType>
+    internal readonly partial struct StoredProcedureParameterType : IEquatable<StoredProcedureParameterType>
     {
         private readonly string _value;
 
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

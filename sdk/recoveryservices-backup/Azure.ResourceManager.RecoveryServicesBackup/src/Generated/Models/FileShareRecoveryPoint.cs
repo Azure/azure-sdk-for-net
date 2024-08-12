@@ -6,26 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure File Share workload specific backup copy. </summary>
     public partial class FileShareRecoveryPoint : BackupGenericRecoveryPoint
     {
-        /// <summary> Initializes a new instance of FileShareRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRecoveryPoint"/>. </summary>
         public FileShareRecoveryPoint()
         {
             ObjectType = "AzureFileShareRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of FileShareRecoveryPoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileShareRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointType"> Type of the backup copy. Specifies whether it is a crash consistent backup or app consistent. </param>
         /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
         /// <param name="fileShareSnapshotUri"> Contains Url to the snapshot of fileshare, if applicable. </param>
         /// <param name="recoveryPointSizeInGB"> Contains recovery point size. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
-        internal FileShareRecoveryPoint(string objectType, string recoveryPointType, DateTimeOffset? recoveryPointOn, Uri fileShareSnapshotUri, int? recoveryPointSizeInGB, RecoveryPointProperties recoveryPointProperties) : base(objectType)
+        internal FileShareRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryPointType, DateTimeOffset? recoveryPointOn, Uri fileShareSnapshotUri, int? recoveryPointSizeInGB, RecoveryPointProperties recoveryPointProperties) : base(objectType, serializedAdditionalRawData)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;

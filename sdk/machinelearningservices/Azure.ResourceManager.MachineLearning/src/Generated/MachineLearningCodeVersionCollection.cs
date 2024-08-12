@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningCodeVersionResource" /> and their operations.
-    /// Each <see cref="MachineLearningCodeVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningCodeContainerResource" />.
-    /// To get a <see cref="MachineLearningCodeVersionCollection" /> instance call the GetMachineLearningCodeVersions method from an instance of <see cref="MachineLearningCodeContainerResource" />.
+    /// A class representing a collection of <see cref="MachineLearningCodeVersionResource"/> and their operations.
+    /// Each <see cref="MachineLearningCodeVersionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningCodeContainerResource"/>.
+    /// To get a <see cref="MachineLearningCodeVersionCollection"/> instance call the GetMachineLearningCodeVersions method from an instance of <see cref="MachineLearningCodeContainerResource"/>.
     /// </summary>
     public partial class MachineLearningCodeVersionCollection : ArmCollection, IEnumerable<MachineLearningCodeVersionResource>, IAsyncEnumerable<MachineLearningCodeVersionResource>
     {
@@ -63,6 +62,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>CodeVersions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningCodeVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -81,7 +88,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningCodeVersionCodeVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningCodeVersionResource>(Response.FromValue(new MachineLearningCodeVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningCodeVersionCodeVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation<MachineLearningCodeVersionResource>(Response.FromValue(new MachineLearningCodeVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>CodeVersions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningCodeVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -122,7 +139,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningCodeVersionCodeVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningCodeVersionResource>(Response.FromValue(new MachineLearningCodeVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningCodeVersionCodeVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation<MachineLearningCodeVersionResource>(Response.FromValue(new MachineLearningCodeVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,6 +163,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CodeVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningCodeVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +209,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>CodeVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningCodeVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
@@ -219,18 +254,28 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>CodeVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningCodeVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="hash"> If specified, return CodeVersion assets with specified content hash value, regardless of name. </param>
+        /// <param name="hashVersion"> Hash algorithm version when listing by hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningCodeVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningCodeVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningCodeVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningCodeVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, string hash = null, string hashVersion = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningCodeVersionResource(Client, MachineLearningCodeVersionData.DeserializeMachineLearningCodeVersionData(e)), _machineLearningCodeVersionCodeVersionsClientDiagnostics, Pipeline, "MachineLearningCodeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, hash, hashVersion);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, hash, hashVersion);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningCodeVersionResource(Client, MachineLearningCodeVersionData.DeserializeMachineLearningCodeVersionData(e)), _machineLearningCodeVersionCodeVersionsClientDiagnostics, Pipeline, "MachineLearningCodeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,18 +289,28 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>CodeVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningCodeVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="hash"> If specified, return CodeVersion assets with specified content hash value, regardless of name. </param>
+        /// <param name="hashVersion"> Hash algorithm version when listing by hash. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningCodeVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningCodeVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningCodeVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningCodeVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, string hash = null, string hashVersion = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningCodeVersionResource(Client, MachineLearningCodeVersionData.DeserializeMachineLearningCodeVersionData(e)), _machineLearningCodeVersionCodeVersionsClientDiagnostics, Pipeline, "MachineLearningCodeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, hash, hashVersion);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningCodeVersionCodeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, hash, hashVersion);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningCodeVersionResource(Client, MachineLearningCodeVersionData.DeserializeMachineLearningCodeVersionData(e)), _machineLearningCodeVersionCodeVersionsClientDiagnostics, Pipeline, "MachineLearningCodeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -268,6 +323,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CodeVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningCodeVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +367,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>CodeVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningCodeVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. This is case-sensitive. </param>
@@ -320,6 +391,96 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 var response = _machineLearningCodeVersionCodeVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CodeVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningCodeVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        public virtual async Task<NullableResponse<MachineLearningCodeVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+
+            using var scope = _machineLearningCodeVersionCodeVersionsClientDiagnostics.CreateScope("MachineLearningCodeVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _machineLearningCodeVersionCodeVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningCodeVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningCodeVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/codes/{name}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CodeVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningCodeVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        public virtual NullableResponse<MachineLearningCodeVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+
+            using var scope = _machineLearningCodeVersionCodeVersionsClientDiagnostics.CreateScope("MachineLearningCodeVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _machineLearningCodeVersionCodeVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningCodeVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningCodeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

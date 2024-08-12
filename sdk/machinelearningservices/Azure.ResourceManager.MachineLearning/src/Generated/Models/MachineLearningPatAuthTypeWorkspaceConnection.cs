@@ -5,25 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningPatAuthTypeWorkspaceConnection. </summary>
     public partial class MachineLearningPatAuthTypeWorkspaceConnection : MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningPatAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>. </summary>
         public MachineLearningPatAuthTypeWorkspaceConnection()
         {
             AuthType = MachineLearningConnectionAuthType.Pat;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPatAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="metadata"> Any object. </param>
         /// <param name="target"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"></param>
-        internal MachineLearningPatAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat, WorkspaceConnectionPersonalAccessToken credentials) : base(authType, category, target, value, valueFormat)
+        internal MachineLearningPatAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, DateTimeOffset? expiryOn, BinaryData metadata, string target, IDictionary<string, BinaryData> serializedAdditionalRawData, WorkspaceConnectionPersonalAccessToken credentials) : base(authType, category, expiryOn, metadata, target, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;

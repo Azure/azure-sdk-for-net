@@ -10,8 +10,15 @@ an artifact name property is available in the package properties.
 Can optionally add a dev version property which can be used logic for daily 
 builds.
 
+In cases of collisions where track 2 packages (IsNewSdk = true) have the same 
+filename as track 1 packages (e.g. same artifact name or package name), the
+track 2 package properties will be written.
+
 .PARAMETER serviceDirectory
-Service directory in which to search for packages
+Service directory in which to search for packages.
+
+.PARAMETER prDiff
+A file path leading to a file generated from Generate-PR-Diff.json. This parameter takes precedence over serviceDirectory, do not provide both.
 
 .PARAMETER outDirectory
 Output location (generally a package artifact directory in DevOps) for JSON 
@@ -28,10 +35,10 @@ Verison property in that file.
 
 [CmdletBinding()]
 Param (
-  [Parameter(Mandatory=$True)]
   [string] $serviceDirectory,
   [Parameter(Mandatory=$True)]
   [string] $outDirectory,
+  [string] $prDiff,
   [switch] $addDevVersion
 )
 
@@ -87,7 +94,17 @@ function GetRelativePath($path) {
   return $relativePath
 }
 
-$allPackageProperties = Get-AllPkgProperties $serviceDirectory
+$exportedPaths = @{}
+
+$allPackageProperties = @()
+
+if ($prDiff) {
+  $allPackageProperties = Get-PrPkgProperties $prDiff
+}
+else {
+  $allPackageProperties = Get-AllPkgProperties $serviceDirectory
+}
+
 if ($allPackageProperties)
 {
     if (-not (Test-Path -Path $outDirectory))
@@ -96,31 +113,42 @@ if ($allPackageProperties)
     }
     foreach($pkg in $allPackageProperties)
     {
-        Write-Host "Package Name: $($pkg.Name)"
-        Write-Host "Package Version: $($pkg.Version)"
-        Write-Host "Package SDK Type: $($pkg.SdkType)"
-        Write-Host "Artifact Name: $($pkg.ArtifactName)"
-        Write-Host "Release date: $($pkg.ReleaseStatus)"
-        $configFilePrefix = $pkg.Name
-        if ($pkg.ArtifactName)
-        {
-          $configFilePrefix = $pkg.ArtifactName
+        if ($pkg.Name) {
+          Write-Host "Package Name: $($pkg.Name)"
+          Write-Host "Package Version: $($pkg.Version)"
+          Write-Host "Package SDK Type: $($pkg.SdkType)"
+          Write-Host "Artifact Name: $($pkg.ArtifactName)"
+          Write-Host "Release date: $($pkg.ReleaseStatus)"
+          $configFilePrefix = $pkg.Name
+          if ($pkg.ArtifactName)
+          {
+            $configFilePrefix = $pkg.ArtifactName
+          }
+          $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
+          Write-Host "Output path of json file: $outputPath"
+          $outDir = Split-Path $outputPath -parent
+          if (-not (Test-Path -path $outDir))
+          {
+            Write-Host "Creating directory $($outDir) for json property file"
+            New-Item -ItemType Directory -Path $outDir
+          }
+
+          # If package properties for a track 2 (IsNewSdk = true) package has
+          # already been written, skip writing to that same path.
+          if ($exportedPaths.ContainsKey($outputPath) -and $exportedPaths[$outputPath].IsNewSdk -eq $true) {
+            Write-Host "Track 2 package info with file name $($outputPath) already exported. Skipping export."
+            continue
+          }
+          $exportedPaths[$outputPath] = $pkg
+
+          SetOutput $outputPath $pkg
         }
-        $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
-        Write-Host "Output path of json file: $outputPath"
-        $outDir = Split-Path $outputPath -parent
-        if (-not (Test-Path -path $outDir))
-        {
-          Write-Host "Creating directory $($outDir) for json property file"
-          New-Item -ItemType Directory -Path $outDir
-        }
-        SetOutput $outputPath $pkg
     }
 
     Get-ChildItem -Path $outDirectory
 }
 else
 {
-    Write-Error "Package properties are not available for service directory $($serviceDirectory)"
+    Write-Error "Package properties are not available for service directory $serviceDirectory or $prdiff"
     exit 1
 }

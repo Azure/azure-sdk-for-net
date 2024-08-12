@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Moq;
@@ -76,7 +77,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             string directoryName = GetNewDirectoryName();
             await test.FileSystem.CreateDirectoryAsync(directoryName);
 
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}/{directoryName}").ToHttps();
             DataLakePathClient pathClient = InstrumentClient(new DataLakePathClient(uri, tokenCredential, GetOptions()));
 
@@ -132,7 +133,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttp();
 
             // Act
@@ -242,8 +243,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = pathClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri = pathClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
@@ -256,6 +259,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -280,8 +284,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 StartsOn = startsOn
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = pathClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = pathClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             DataLakeUriBuilder expectedUri = new DataLakeUriBuilder(blobEndpoint);
@@ -293,6 +299,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
             expectedUri.Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
             Assert.AreEqual(expectedUri.ToUri().ToString(), sasUri.ToString());
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -411,7 +418,60 @@ namespace Azure.Storage.Files.DataLake.Tests
             mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), Tenants.GetNewHnsSharedKeyCredentials(), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new DataLakeClientOptions()).Object;
-            mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakePathClient>(new Uri("https://test/test"), TestEnvironment.Credential, new DataLakeClientOptions()).Object;
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient sourceFile = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            DataLakePathClient pathClient = test.FileSystem.GetPathClient(sourceFile.Name);
+            string destFileName = GetNewDirectoryName();
+
+            // Act
+            DataLakePathClient destFile = await pathClient.RenameAsync(destinationPath: destFileName);
+
+            // Assert
+            Response<PathProperties> response = await destFile.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync_FileSystem()
+        {
+            await using DisposingFileSystem sourceTest = await GetNewFileSystem();
+            await using DisposingFileSystem destTest = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient sourceFile = await sourceTest.FileSystem.CreateFileAsync(GetNewFileName());
+            DataLakePathClient pathClient = sourceTest.FileSystem.GetPathClient(sourceFile.Name);
+            string destFileName = GetNewDirectoryName();
+
+            // Act
+            DataLakePathClient destFile = await pathClient.RenameAsync(
+                destinationPath: destFileName,
+                destinationFileSystem: destTest.FileSystem.Name);
+
+            // Assert
+            Response<PathProperties> response = await destFile.GetPropertiesAsync();
+        }
+
+        [RecordedTest]
+        public async Task RenameAsync_Error()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeFileClient sourceFile = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            DataLakePathClient pathClient = test.FileSystem.GetPathClient(sourceFile.Name);
+            string destPath = GetNewFileName();
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                pathClient.RenameAsync(destinationPath: destPath),
+                e => Assert.AreEqual("SourcePathNotFound", e.ErrorCode));
         }
     }
 }

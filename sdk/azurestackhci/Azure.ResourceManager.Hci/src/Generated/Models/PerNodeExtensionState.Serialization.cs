@@ -5,24 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class PerNodeExtensionState
+    public partial class PerNodeExtensionState : IUtf8JsonSerializable, IJsonModel<PerNodeExtensionState>
     {
-        internal static PerNodeExtensionState DeserializePerNodeExtensionState(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerNodeExtensionState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PerNodeExtensionState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PerNodeExtensionState>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PerNodeExtensionState)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Extension))
+            {
+                writer.WritePropertyName("extension"u8);
+                writer.WriteStringValue(Extension);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TypeHandlerVersion))
+            {
+                writer.WritePropertyName("typeHandlerVersion"u8);
+                writer.WriteStringValue(TypeHandlerVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExtensionInstanceView))
+            {
+                writer.WritePropertyName("instanceView"u8);
+                writer.WriteObjectValue(ExtensionInstanceView, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PerNodeExtensionState IJsonModel<PerNodeExtensionState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PerNodeExtensionState>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PerNodeExtensionState)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePerNodeExtensionState(document.RootElement, options);
+        }
+
+        internal static PerNodeExtensionState DeserializePerNodeExtensionState(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> extension = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<NodeExtensionState> state = default;
-            Optional<HciExtensionInstanceView> instanceView = default;
+            string name = default;
+            string extension = default;
+            string typeHandlerVersion = default;
+            NodeExtensionState? state = default;
+            ArcExtensionInstanceView instanceView = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -55,11 +129,169 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    instanceView = HciExtensionInstanceView.DeserializeHciExtensionInstanceView(property.Value);
+                    instanceView = ArcExtensionInstanceView.DeserializeArcExtensionInstanceView(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PerNodeExtensionState(name.Value, extension.Value, typeHandlerVersion.Value, Optional.ToNullable(state), instanceView.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PerNodeExtensionState(
+                name,
+                extension,
+                typeHandlerVersion,
+                state,
+                instanceView,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Extension), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  extension: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Extension))
+                {
+                    builder.Append("  extension: ");
+                    if (Extension.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Extension}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Extension}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TypeHandlerVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  typeHandlerVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TypeHandlerVersion))
+                {
+                    builder.Append("  typeHandlerVersion: ");
+                    if (TypeHandlerVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TypeHandlerVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TypeHandlerVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtensionInstanceView), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  instanceView: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExtensionInstanceView))
+                {
+                    builder.Append("  instanceView: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExtensionInstanceView, options, 2, false, "  instanceView: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PerNodeExtensionState>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PerNodeExtensionState>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PerNodeExtensionState)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PerNodeExtensionState IPersistableModel<PerNodeExtensionState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PerNodeExtensionState>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePerNodeExtensionState(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PerNodeExtensionState)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PerNodeExtensionState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,24 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class InstancePoolEditionCapability
+    public partial class InstancePoolEditionCapability : IUtf8JsonSerializable, IJsonModel<InstancePoolEditionCapability>
     {
-        internal static InstancePoolEditionCapability DeserializeInstancePoolEditionCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstancePoolEditionCapability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<InstancePoolEditionCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InstancePoolEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InstancePoolEditionCapability)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFamilies))
+            {
+                writer.WritePropertyName("supportedFamilies"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedFamilies)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InstancePoolEditionCapability IJsonModel<InstancePoolEditionCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InstancePoolEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InstancePoolEditionCapability)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstancePoolEditionCapability(document.RootElement, options);
+        }
+
+        internal static InstancePoolEditionCapability DeserializeInstancePoolEditionCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<InstancePoolFamilyCapability>> supportedFamilies = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<InstancePoolFamilyCapability> supportedFamilies = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -39,7 +113,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<InstancePoolFamilyCapability> array = new List<InstancePoolFamilyCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancePoolFamilyCapability.DeserializeInstancePoolFamilyCapability(item));
+                        array.Add(InstancePoolFamilyCapability.DeserializeInstancePoolFamilyCapability(item, options));
                     }
                     supportedFamilies = array;
                     continue;
@@ -58,8 +132,145 @@ namespace Azure.ResourceManager.Sql.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InstancePoolEditionCapability(name.Value, Optional.ToList(supportedFamilies), Optional.ToNullable(status), reason.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InstancePoolEditionCapability(name, supportedFamilies ?? new ChangeTrackingList<InstancePoolFamilyCapability>(), status, reason, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedFamilies), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedFamilies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedFamilies))
+                {
+                    if (SupportedFamilies.Any())
+                    {
+                        builder.Append("  supportedFamilies: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedFamilies)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedFamilies: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reason))
+                {
+                    builder.Append("  reason: ");
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<InstancePoolEditionCapability>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InstancePoolEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(InstancePoolEditionCapability)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InstancePoolEditionCapability IPersistableModel<InstancePoolEditionCapability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InstancePoolEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInstancePoolEditionCapability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InstancePoolEditionCapability)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InstancePoolEditionCapability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

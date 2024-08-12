@@ -5,24 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class TenantAccessInfoSecretsDetails
+    public partial class TenantAccessInfoSecretsDetails : IUtf8JsonSerializable, IJsonModel<TenantAccessInfoSecretsDetails>
     {
-        internal static TenantAccessInfoSecretsDetails DeserializeTenantAccessInfoSecretsDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantAccessInfoSecretsDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<TenantAccessInfoSecretsDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TenantAccessInfoSecretsDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TenantAccessInfoSecretsDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AccessInfoType))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(AccessInfoType);
+            }
+            if (Optional.IsDefined(PrincipalId))
+            {
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId);
+            }
+            if (Optional.IsDefined(PrimaryKey))
+            {
+                writer.WritePropertyName("primaryKey"u8);
+                writer.WriteStringValue(PrimaryKey);
+            }
+            if (Optional.IsDefined(SecondaryKey))
+            {
+                writer.WritePropertyName("secondaryKey"u8);
+                writer.WriteStringValue(SecondaryKey);
+            }
+            if (Optional.IsDefined(IsDirectAccessEnabled))
+            {
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsDirectAccessEnabled.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TenantAccessInfoSecretsDetails IJsonModel<TenantAccessInfoSecretsDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TenantAccessInfoSecretsDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TenantAccessInfoSecretsDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTenantAccessInfoSecretsDetails(document.RootElement, options);
+        }
+
+        internal static TenantAccessInfoSecretsDetails DeserializeTenantAccessInfoSecretsDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> principalId = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
-            Optional<bool> enabled = default;
+            string id = default;
+            string principalId = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            bool? enabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -54,8 +128,175 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TenantAccessInfoSecretsDetails(id.Value, principalId.Value, primaryKey.Value, secondaryKey.Value, Optional.ToNullable(enabled));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TenantAccessInfoSecretsDetails(
+                id,
+                principalId,
+                primaryKey,
+                secondaryKey,
+                enabled,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessInfoType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessInfoType))
+                {
+                    builder.Append("  id: ");
+                    if (AccessInfoType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AccessInfoType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AccessInfoType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  principalId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrincipalId))
+                {
+                    builder.Append("  principalId: ");
+                    if (PrincipalId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrincipalId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrincipalId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  primaryKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryKey))
+                {
+                    builder.Append("  primaryKey: ");
+                    if (PrimaryKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secondaryKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryKey))
+                {
+                    builder.Append("  secondaryKey: ");
+                    if (SecondaryKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDirectAccessEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDirectAccessEnabled))
+                {
+                    builder.Append("  enabled: ");
+                    var boolValue = IsDirectAccessEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<TenantAccessInfoSecretsDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TenantAccessInfoSecretsDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(TenantAccessInfoSecretsDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TenantAccessInfoSecretsDetails IPersistableModel<TenantAccessInfoSecretsDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TenantAccessInfoSecretsDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTenantAccessInfoSecretsDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TenantAccessInfoSecretsDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TenantAccessInfoSecretsDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

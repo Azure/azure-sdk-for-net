@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -146,7 +146,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegrationAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSensorPartnerIntegrationAsync(string sensorPartnerId, string integrationId, RequestContext context = null)
+        public virtual async Task<Response> GetSensorPartnerIntegrationAsync(string sensorPartnerId, string integrationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
             Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
@@ -183,7 +183,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegration(string,string,RequestContext)']/*" />
-        public virtual Response GetSensorPartnerIntegration(string sensorPartnerId, string integrationId, RequestContext context = null)
+        public virtual Response GetSensorPartnerIntegration(string sensorPartnerId, string integrationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
             Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
@@ -295,7 +295,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CheckConsentAsync(string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> CheckConsentAsync(string sensorPartnerId, string integrationId, string key, RequestContext context = null)
+        public virtual async Task<Response> CheckConsentAsync(string sensorPartnerId, string integrationId, string key, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
             Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
@@ -334,7 +334,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='CheckConsent(string,string,string,RequestContext)']/*" />
-        public virtual Response CheckConsent(string sensorPartnerId, string integrationId, string key, RequestContext context = null)
+        public virtual Response CheckConsent(string sensorPartnerId, string integrationId, string key, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
             Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
@@ -372,7 +372,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GenerateConsentLinkAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GenerateConsentLinkAsync(string sensorPartnerId, string integrationId, RequestContext context = null)
+        public virtual async Task<Response> GenerateConsentLinkAsync(string sensorPartnerId, string integrationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
             Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
@@ -409,7 +409,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GenerateConsentLink(string,string,RequestContext)']/*" />
-        public virtual Response GenerateConsentLink(string sensorPartnerId, string integrationId, RequestContext context = null)
+        public virtual Response GenerateConsentLink(string sensorPartnerId, string integrationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
             Argument.AssertNotNullOrEmpty(integrationId, nameof(integrationId));
@@ -463,13 +463,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegrationsAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSensorPartnerIntegrationsAsync(string sensorPartnerId, IEnumerable<string> integrationIds = null, IEnumerable<string> partyIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSensorPartnerIntegrationsAsync(string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> partyIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSensorPartnerIntegrationsRequest(sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSensorPartnerIntegrationsNextPageRequest(nextLink, sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SensorPartnerIntegrations.GetSensorPartnerIntegrations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SensorPartnerIntegrations.GetSensorPartnerIntegrations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -507,13 +507,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SensorPartnerIntegrations.xml" path="doc/members/member[@name='GetSensorPartnerIntegrations(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSensorPartnerIntegrations(string sensorPartnerId, IEnumerable<string> integrationIds = null, IEnumerable<string> partyIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSensorPartnerIntegrations(string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> partyIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sensorPartnerId, nameof(sensorPartnerId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSensorPartnerIntegrationsRequest(sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSensorPartnerIntegrationsNextPageRequest(nextLink, sensorPartnerId, integrationIds, partyIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SensorPartnerIntegrations.GetSensorPartnerIntegrations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SensorPartnerIntegrations.GetSensorPartnerIntegrations", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetSensorPartnerIntegrationsRequest(string sensorPartnerId, IEnumerable<string> integrationIds, IEnumerable<string> partyIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
@@ -526,42 +526,42 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/sensor-partners/", false);
             uri.AppendPath(sensorPartnerId, true);
             uri.AppendPath("/integrations", false);
-            if (integrationIds != null && Optional.IsCollectionDefined(integrationIds))
+            if (integrationIds != null && !(integrationIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in integrationIds)
                 {
                     uri.AppendQuery("integrationIds", param, true);
                 }
             }
-            if (partyIds != null && Optional.IsCollectionDefined(partyIds))
+            if (partyIds != null && !(partyIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in partyIds)
                 {
                     uri.AppendQuery("partyIds", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && !(ids is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

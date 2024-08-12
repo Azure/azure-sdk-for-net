@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.AI.TextAnalytics.Legacy.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -30,9 +29,9 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus.api.cognitive.microsoft.com). </param>
-        /// <param name="apiVersion"> Text Analytics API version (for example, v3.0). </param>
+        /// <param name="apiVersion"> Text Analytics API version (for example, v3.0). The default value is "v3.1". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public TextAnalyticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "v3.1")
+        public TextAnalyticsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -532,7 +531,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            if (piiCategories != null && Optional.IsCollectionDefined(piiCategories))
+            if (piiCategories != null && !(piiCategories is ChangeTrackingList<PiiEntityLegacyCategory> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("piiCategories", piiCategories, ",", true);
             }
@@ -557,7 +556,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         /// <remarks>
         /// The API returns a list of entities with personal information (\"SSN\", \"Bank Account\" etc) in the document. For the list of supported entity types, check &lt;a href="https://aka.ms/tanerpii"&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href="https://aka.ms/talangs"&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages.
-        /// 
+        ///
         /// </remarks>
         public async Task<Response<PiiResult>> EntitiesRecognitionPiiAsync(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityLegacyCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {
@@ -594,7 +593,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         /// <remarks>
         /// The API returns a list of entities with personal information (\"SSN\", \"Bank Account\" etc) in the document. For the list of supported entity types, check &lt;a href="https://aka.ms/tanerpii"&gt;Supported Entity Types in Text Analytics API&lt;/a&gt;. See the &lt;a href="https://aka.ms/talangs"&gt;Supported languages in Text Analytics API&lt;/a&gt; for the list of enabled languages.
-        /// 
+        ///
         /// </remarks>
         public Response<PiiResult> EntitiesRecognitionPii(MultiLanguageBatchInput input, string modelVersion = null, bool? showStats = null, bool? loggingOptOut = null, string domain = null, StringIndexType? stringIndexType = null, IEnumerable<PiiEntityLegacyCategory> piiCategories = null, CancellationToken cancellationToken = default)
         {

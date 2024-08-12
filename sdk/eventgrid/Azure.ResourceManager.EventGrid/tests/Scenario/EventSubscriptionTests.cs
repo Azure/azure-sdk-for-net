@@ -33,11 +33,13 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
         private async Task SetCollection()
         {
-            ResourceGroup = await CreateResourceGroupAsync(DefaultSubscription, Recording.GenerateAssetName("sdktest-"), DefaultLocation);
+            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            ResourceGroup = await CreateResourceGroupAsync(DefaultSubscription, Recording.GenerateAssetName("sdktest-"), location);
             TopicCollection = ResourceGroup.GetEventGridTopics();
             DomainCollection = ResourceGroup.GetEventGridDomains();
         }
 
+        [Ignore("TODO: 06/21/2023 - EventSubscription not available in global for this API version, enable this test after ARM deployment")]
         [Test]
         public async Task EventSubscriptionToCustomTopicCreateGetUpdateDelete()
         {
@@ -154,6 +156,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(falseResult);
         }
 
+        [Ignore("TODO: 06/21/2023 - EventSubscription not available in global for this API version, enable this test after ARM deployment")]
         [Test]
         public async Task EventSubscriptionToDomainCreateGetUpdateDelete()
         {
@@ -306,6 +309,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(falseResult);
         }
 
+        [Ignore("TODO: 06/21/2023 - EventSubscription not available in global for this API version, enable this test after ARM deployment")]
         [Test]
         public async Task EventSubscriptionToAzureSubscriptionCreateGetUpdateDelete()
         {

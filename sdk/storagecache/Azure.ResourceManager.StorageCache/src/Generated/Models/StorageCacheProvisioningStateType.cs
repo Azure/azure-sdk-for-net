@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
+        private const string CanceledValue = "Canceled";
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static StorageCacheProvisioningStateType Succeeded { get; } = new StorageCacheProvisioningStateType(SucceededValue);
         /// <summary> Failed. </summary>
         public static StorageCacheProvisioningStateType Failed { get; } = new StorageCacheProvisioningStateType(FailedValue);
-        /// <summary> Cancelled. </summary>
-        public static StorageCacheProvisioningStateType Cancelled { get; } = new StorageCacheProvisioningStateType(CancelledValue);
+        /// <summary> Canceled. </summary>
+        public static StorageCacheProvisioningStateType Canceled { get; } = new StorageCacheProvisioningStateType(CanceledValue);
         /// <summary> Creating. </summary>
         public static StorageCacheProvisioningStateType Creating { get; } = new StorageCacheProvisioningStateType(CreatingValue);
         /// <summary> Deleting. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -6,17 +6,19 @@ using Azure.Core;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Threading.Channels;
+using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class CommitChunkHandler : IAsyncDisposable
+    internal class CommitChunkHandler : IDisposable
     {
         // Indicates whether the current thread is processing stage chunks.
         private static Task _processStageChunkEvents;
 
         #region Delegate Definitions
-        public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength);
-        public delegate Task QueueCommitBlockTaskInternal();
+        public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength, StorageResourceItemProperties properties);
+        public delegate Task QueueCommitBlockTaskInternal(StorageResourceItemProperties sourceProperties);
         public delegate void ReportProgressInBytes(long bytesWritten);
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
@@ -39,22 +41,25 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Create channel of <see cref="StageChunkEventArgs"/> to keep track of that are
-        /// waiting to update the bytesTransferredand other required operations.
+        /// waiting to update the bytesTransferred and other required operations.
         /// </summary>
         private readonly Channel<StageChunkEventArgs> _stageChunkChannel;
         private CancellationToken _cancellationToken;
 
-        private readonly SemaphoreSlim _currentBytesSemaphore;
         private long _bytesTransferred;
         private readonly long _expectedLength;
         private readonly long _blockSize;
-        private readonly TransferType _transferType;
+        private readonly DataTransferOrder _transferOrder;
+        private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly StorageResourceItemProperties _sourceProperties;
 
         public CommitChunkHandler(
             long expectedLength,
             long blockSize,
             Behaviors behaviors,
-            TransferType transferType,
+            DataTransferOrder transferOrder,
+            ClientDiagnostics clientDiagnostics,
+            StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken)
         {
             if (expectedLength <= 0)
@@ -62,6 +67,7 @@ namespace Azure.Storage.DataMovement
                 throw Errors.InvalidExpectedLength(expectedLength);
             }
             Argument.AssertNotNull(behaviors, nameof(behaviors));
+            Argument.AssertNotNull(clientDiagnostics, nameof(clientDiagnostics));
 
             _queuePutBlockTask = behaviors.QueuePutBlockTask
                 ?? throw Errors.ArgumentNull(nameof(behaviors.QueuePutBlockTask));
@@ -89,34 +95,29 @@ namespace Azure.Storage.DataMovement
             _processStageChunkEvents = Task.Run(() => NotifyOfPendingStageChunkEvents());
 
             // Set bytes transferred to block size because we transferred the initial block
-            _currentBytesSemaphore = new SemaphoreSlim(1, 1);
             _bytesTransferred = blockSize;
 
             _blockSize = blockSize;
-            _transferType = transferType;
-            if (_transferType == TransferType.Sequential)
+            _transferOrder = transferOrder;
+            if (_transferOrder == DataTransferOrder.Sequential)
             {
                 _commitBlockHandler += SequentialBlockEvent;
             }
             _commitBlockHandler += ConcurrentBlockEvent;
+            _clientDiagnostics = clientDiagnostics;
+            _sourceProperties = sourceProperties;
         }
 
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
             // We no longer have to read from the channel. We are not expecting any more requests.
             _stageChunkChannel.Writer.TryComplete();
-            await _stageChunkChannel.Reader.Completion.ConfigureAwait(false);
-
-            if (_currentBytesSemaphore != default)
-            {
-                _currentBytesSemaphore.Dispose();
-            }
-            DipsoseHandlers();
+            DisposeHandlers();
         }
 
-        private void DipsoseHandlers()
+        private void DisposeHandlers()
         {
-            if (_transferType == TransferType.Sequential)
+            if (_transferOrder == DataTransferOrder.Sequential)
             {
                 _commitBlockHandler -= SequentialBlockEvent;
             }
@@ -130,7 +131,7 @@ namespace Azure.Storage.DataMovement
                 if (args.Success)
                 {
                     // Let's add to the channel, and our notifier will handle the chunks.
-                    await _stageChunkChannel.Writer.WriteAsync(args, _cancellationToken).ConfigureAwait(false);
+                    _stageChunkChannel.Writer.TryWrite(args);
                 }
                 else
                 {
@@ -153,15 +154,6 @@ namespace Azure.Storage.DataMovement
                 {
                     // Read one event argument at a time.
                     StageChunkEventArgs args = await _stageChunkChannel.Reader.ReadAsync(_cancellationToken).ConfigureAwait(false);
-                    try
-                    {
-                        await _currentBytesSemaphore.WaitAsync(_cancellationToken).ConfigureAwait(false);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        // We should not continue if waiting on the semaphore has cancelled out.
-                        return;
-                    }
 
                     Interlocked.Add(ref _bytesTransferred, args.BytesTransferred);
                     // Report the incremental bytes transferred
@@ -170,25 +162,18 @@ namespace Azure.Storage.DataMovement
                     if (_bytesTransferred == _expectedLength)
                     {
                         // Add CommitBlockList task to the channel
-                        await _queueCommitBlockTask().ConfigureAwait(false);
+                        await _queueCommitBlockTask(_sourceProperties).ConfigureAwait(false);
                     }
                     else if (_bytesTransferred > _expectedLength)
                     {
                         throw Errors.MismatchLengthTransferred(
-                                expectedLength: _expectedLength,
-                                actualLength: _bytesTransferred);
+                            expectedLength: _expectedLength,
+                            actualLength: _bytesTransferred);
                     }
-                    _currentBytesSemaphore.Release();
                 }
             }
             catch (Exception ex)
             {
-                if (_currentBytesSemaphore.CurrentCount == 0)
-                {
-                    _currentBytesSemaphore.Release();
-                }
-                // Invoke the failed event argument here after we've released the semaphore
-                // or else we risk disposing the semaphore and releasing it after.
                 await _invokeFailedEventHandler(ex).ConfigureAwait(false);
             }
         }
@@ -206,7 +191,7 @@ namespace Azure.Storage.DataMovement
                         long blockLength = (newOffset + _blockSize < _expectedLength) ?
                                         _blockSize :
                                         _expectedLength - newOffset;
-                        await _queuePutBlockTask(newOffset, blockLength, _expectedLength).ConfigureAwait(false);
+                        await _queuePutBlockTask(newOffset, blockLength, _expectedLength, _sourceProperties).ConfigureAwait(false);
                     }
                 }
                 else
@@ -229,7 +214,11 @@ namespace Azure.Storage.DataMovement
             // was already disposed, and we should just ignore any more incoming events.
             if (_commitBlockHandler != null)
             {
-                await _commitBlockHandler.Invoke(args).ConfigureAwait(false);
+                await _commitBlockHandler.RaiseAsync(
+                    args,
+                    nameof(CommitChunkHandler),
+                    nameof(_commitBlockHandler),
+                    _clientDiagnostics).ConfigureAwait(false);
             }
         }
     }

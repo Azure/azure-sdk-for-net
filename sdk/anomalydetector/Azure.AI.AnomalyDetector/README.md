@@ -105,7 +105,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -126,7 +126,7 @@ Console.WriteLine("Detecting anomalies in the entire time series.");
 
 try
 {
-    Response response = client.DetectUnivariateEntireSeries(request.ToRequestContent());
+    Response response = client.GetUnivariateClient().DetectUnivariateEntireSeries(request.ToRequestContent());
     JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 
     bool hasAnomaly = false;
@@ -163,7 +163,7 @@ Console.WriteLine("Detecting the anomaly status of the latest point in the serie
 
 try
 {
-    UnivariateLastDetectionResult result = client.DetectUnivariateLastPoint(request);
+    UnivariateLastDetectionResult result = client.GetUnivariateClient().DetectUnivariateLastPoint(request);
 
     if (result.IsAnomaly)
     {
@@ -192,7 +192,7 @@ catch (Exception ex)
 //detect
 Console.WriteLine("Detecting the change point in the series.");
 
-UnivariateChangePointDetectionResult result = client.DetectUnivariateChangePoint(request);
+UnivariateChangePointDetectionResult result = client.GetUnivariateClient().DetectUnivariateChangePoint(request);
 
 if (result.IsChangePoint.Contains(true))
 {

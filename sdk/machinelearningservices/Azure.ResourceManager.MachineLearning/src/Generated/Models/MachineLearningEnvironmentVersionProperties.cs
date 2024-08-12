@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,17 +13,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Environment version details. </summary>
     public partial class MachineLearningEnvironmentVersionProperties : MachineLearningAssetBase
     {
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEnvironmentVersionProperties"/>. </summary>
         public MachineLearningEnvironmentVersionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEnvironmentVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEnvironmentVersionProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
+        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
         /// <param name="autoRebuild"> Defines if image needs to be rebuilt based on base image changes. </param>
         /// <param name="build"> Configuration settings for Docker build context. </param>
         /// <param name="condaFile">
@@ -38,8 +41,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// &lt;seealso href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image" /&gt;
         /// </param>
         /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. Used if environment is an Intellectual Property. </param>
         /// <param name="osType"> The OS type of the environment. </param>
-        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, MachineLearningInferenceContainerProperties inferenceConfig, MachineLearningOperatingSystemType? osType) : base(description, properties, tags, isAnonymous, isArchived)
+        /// <param name="provisioningState"> Provisioning state for the environment version. </param>
+        /// <param name="stage"> Stage in the environment lifecycle assigned to this environment. </param>
+        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, MachineLearningInferenceContainerProperties inferenceConfig, IntellectualProperty intellectualProperty, MachineLearningOperatingSystemType? osType, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, serializedAdditionalRawData, autoDeleteSetting, isAnonymous, isArchived)
         {
             AutoRebuild = autoRebuild;
             Build = build;
@@ -47,7 +53,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EnvironmentType = environmentType;
             Image = image;
             InferenceConfig = inferenceConfig;
+            IntellectualProperty = intellectualProperty;
             OSType = osType;
+            ProvisioningState = provisioningState;
+            Stage = stage;
         }
 
         /// <summary> Defines if image needs to be rebuilt based on base image changes. </summary>
@@ -71,7 +80,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string Image { get; set; }
         /// <summary> Defines configuration specific to inference. </summary>
         public MachineLearningInferenceContainerProperties InferenceConfig { get; set; }
+        /// <summary> Intellectual Property details. Used if environment is an Intellectual Property. </summary>
+        public IntellectualProperty IntellectualProperty { get; set; }
         /// <summary> The OS type of the environment. </summary>
         public MachineLearningOperatingSystemType? OSType { get; set; }
+        /// <summary> Provisioning state for the environment version. </summary>
+        public RegistryAssetProvisioningState? ProvisioningState { get; }
+        /// <summary> Stage in the environment lifecycle assigned to this environment. </summary>
+        public string Stage { get; set; }
     }
 }

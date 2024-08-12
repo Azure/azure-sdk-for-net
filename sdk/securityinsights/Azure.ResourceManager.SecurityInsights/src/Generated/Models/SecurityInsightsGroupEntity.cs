@@ -15,25 +15,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a security group entity. </summary>
     public partial class SecurityInsightsGroupEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsGroupEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupEntity"/>. </summary>
         public SecurityInsightsGroupEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.SecurityGroup;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsGroupEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="distinguishedName"> The group distinguished name. </param>
         /// <param name="objectGuid"> A single-value attribute that is the unique identifier for the object, assigned by active directory. </param>
         /// <param name="sid"> The SID attribute is a single-value attribute that specifies the security identifier (SID) of the group. </param>
-        internal SecurityInsightsGroupEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string distinguishedName, Guid? objectGuid, string sid) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsGroupEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string distinguishedName, Guid? objectGuid, string sid) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

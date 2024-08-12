@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Terms properties. </summary>
     public partial class DatadogAgreementProperties
     {
-        /// <summary> Initializes a new instance of DatadogAgreementProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementProperties"/>. </summary>
         public DatadogAgreementProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogAgreementProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogAgreementProperties"/>. </summary>
         /// <param name="publisher"> Publisher identifier string. </param>
         /// <param name="product"> Product identifier string. </param>
         /// <param name="plan"> Plan identifier string. </param>
@@ -26,7 +59,8 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="retrieveDatetime"> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </param>
         /// <param name="signature"> Terms signature. </param>
         /// <param name="accepted"> If any version of the terms have been accepted, otherwise false. </param>
-        internal DatadogAgreementProperties(string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, DateTimeOffset? retrieveDatetime, string signature, bool? accepted)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogAgreementProperties(string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, DateTimeOffset? retrieveDatetime, string signature, bool? accepted, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Publisher = publisher;
             Product = product;
@@ -36,6 +70,7 @@ namespace Azure.ResourceManager.Datadog.Models
             RetrieveDatetime = retrieveDatetime;
             Signature = signature;
             Accepted = accepted;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Publisher identifier string. </summary>

@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The TextAnalyticsError. </summary>
     internal partial class TextAnalyticsError
     {
-        /// <summary> Initializes a new instance of TextAnalyticsError. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextAnalyticsError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
@@ -28,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Details = new ChangeTrackingList<TextAnalyticsError>();
         }
 
-        /// <summary> Initializes a new instance of TextAnalyticsError. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextAnalyticsError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Error target. </param>

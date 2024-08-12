@@ -5,16 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RequestContract : IUtf8JsonSerializable
+    public partial class RequestContract : IUtf8JsonSerializable, IJsonModel<RequestContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RequestContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestContract)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
@@ -27,7 +39,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in QueryParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -37,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,23 +59,54 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Representations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static RequestContract DeserializeRequestContract(JsonElement element)
+        RequestContract IJsonModel<RequestContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestContract)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRequestContract(document.RootElement, options);
+        }
+
+        internal static RequestContract DeserializeRequestContract(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<IList<ParameterContract>> queryParameters = default;
-            Optional<IList<ParameterContract>> headers = default;
-            Optional<IList<RepresentationContract>> representations = default;
+            string description = default;
+            IList<ParameterContract> queryParameters = default;
+            IList<ParameterContract> headers = default;
+            IList<RepresentationContract> representations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -80,7 +123,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ParameterContract> array = new List<ParameterContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParameterContract.DeserializeParameterContract(item));
+                        array.Add(ParameterContract.DeserializeParameterContract(item, options));
                     }
                     queryParameters = array;
                     continue;
@@ -94,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ParameterContract> array = new List<ParameterContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParameterContract.DeserializeParameterContract(item));
+                        array.Add(ParameterContract.DeserializeParameterContract(item, options));
                     }
                     headers = array;
                     continue;
@@ -108,13 +151,158 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<RepresentationContract> array = new List<RepresentationContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RepresentationContract.DeserializeRepresentationContract(item));
+                        array.Add(RepresentationContract.DeserializeRepresentationContract(item, options));
                     }
                     representations = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RequestContract(description.Value, Optional.ToList(queryParameters), Optional.ToList(headers), Optional.ToList(representations));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RequestContract(description, queryParameters ?? new ChangeTrackingList<ParameterContract>(), headers ?? new ChangeTrackingList<ParameterContract>(), representations ?? new ChangeTrackingList<RepresentationContract>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryParameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  queryParameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(QueryParameters))
+                {
+                    if (QueryParameters.Any())
+                    {
+                        builder.Append("  queryParameters: ");
+                        builder.AppendLine("[");
+                        foreach (var item in QueryParameters)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  queryParameters: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Headers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  headers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Headers))
+                {
+                    if (Headers.Any())
+                    {
+                        builder.Append("  headers: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Headers)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  headers: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Representations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  representations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Representations))
+                {
+                    if (Representations.Any())
+                    {
+                        builder.Append("  representations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Representations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  representations: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<RequestContract>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(RequestContract)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RequestContract IPersistableModel<RequestContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRequestContract(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RequestContract)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RequestContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

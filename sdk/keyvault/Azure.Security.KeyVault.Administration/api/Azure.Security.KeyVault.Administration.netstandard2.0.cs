@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
     }
     public partial class KeyVaultAdministrationClientOptions : Azure.Core.ClientOptions
     {
-        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V7_4) { }
+        public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V7_5) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -51,6 +51,7 @@ namespace Azure.Security.KeyVault.Administration
             V7_2 = 1,
             V7_3 = 2,
             V7_4 = 3,
+            V7_5 = 4,
         }
     }
     public static partial class KeyVaultAdministrationModelFactory
@@ -76,12 +77,12 @@ namespace Azure.Security.KeyVault.Administration
         public KeyVaultBackupClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
         public KeyVaultBackupClient(System.Uri vaultUri, Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions options) { }
         public virtual System.Uri VaultUri { get { throw null; } }
-        public virtual Azure.Security.KeyVault.Administration.KeyVaultBackupOperation StartBackup(System.Uri blobStorageUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultBackupOperation> StartBackupAsync(System.Uri blobStorageUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.KeyVault.Administration.KeyVaultRestoreOperation StartRestore(System.Uri folderUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultRestoreOperation> StartRestoreAsync(System.Uri folderUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Security.KeyVault.Administration.KeyVaultSelectiveKeyRestoreOperation StartSelectiveKeyRestore(string keyName, System.Uri folderUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultSelectiveKeyRestoreOperation> StartSelectiveKeyRestoreAsync(string keyName, System.Uri folderUri, string sasToken, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.KeyVault.Administration.KeyVaultBackupOperation StartBackup(System.Uri blobStorageUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultBackupOperation> StartBackupAsync(System.Uri blobStorageUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.KeyVault.Administration.KeyVaultRestoreOperation StartRestore(System.Uri folderUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultRestoreOperation> StartRestoreAsync(System.Uri folderUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Security.KeyVault.Administration.KeyVaultSelectiveKeyRestoreOperation StartSelectiveKeyRestore(string keyName, System.Uri folderUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Administration.KeyVaultSelectiveKeyRestoreOperation> StartSelectiveKeyRestoreAsync(string keyName, System.Uri folderUri, string sasToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class KeyVaultBackupOperation : Azure.Operation<Azure.Security.KeyVault.Administration.KeyVaultBackupResult>
     {

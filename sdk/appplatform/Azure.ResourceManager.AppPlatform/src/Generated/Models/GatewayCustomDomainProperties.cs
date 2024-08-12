@@ -5,21 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The properties of custom domain for Spring Cloud Gateway. </summary>
     internal partial class GatewayCustomDomainProperties
     {
-        /// <summary> Initializes a new instance of GatewayCustomDomainProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GatewayCustomDomainProperties"/>. </summary>
         public GatewayCustomDomainProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayCustomDomainProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayCustomDomainProperties"/>. </summary>
         /// <param name="thumbprint"> The thumbprint of bound certificate. </param>
-        internal GatewayCustomDomainProperties(string thumbprint)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GatewayCustomDomainProperties(string thumbprint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Thumbprint = thumbprint;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The thumbprint of bound certificate. </summary>

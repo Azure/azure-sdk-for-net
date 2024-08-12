@@ -45,12 +45,12 @@ namespace Azure.Messaging.EventGrid.Models
                 return null;
             }
             string id = default;
-            Optional<string> topic = default;
+            string topic = default;
             string subject = default;
             JsonElement data = default;
             string eventType = default;
             DateTimeOffset eventTime = default;
-            Optional<string> metadataVersion = default;
+            string metadataVersion = default;
             string dataVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,7 +95,31 @@ namespace Azure.Messaging.EventGrid.Models
                     continue;
                 }
             }
-            return new EventGridEventInternal(id, topic.Value, subject, data, eventType, eventTime, metadataVersion.Value, dataVersion);
+            return new EventGridEventInternal(
+                id,
+                topic,
+                subject,
+                data,
+                eventType,
+                eventTime,
+                metadataVersion,
+                dataVersion);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EventGridEventInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEventGridEventInternal(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class EventGridEventInternalConverter : JsonConverter<EventGridEventInternal>
@@ -104,6 +128,7 @@ namespace Azure.Messaging.EventGrid.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override EventGridEventInternal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
@@ -12,19 +13,52 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> App ingress settings payload. </summary>
     public partial class AppIngressSettings
     {
-        /// <summary> Initializes a new instance of AppIngressSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppIngressSettings"/>. </summary>
         public AppIngressSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AppIngressSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppIngressSettings"/>. </summary>
         /// <param name="readTimeoutInSeconds"> Ingress read time out in seconds. </param>
         /// <param name="sendTimeoutInSeconds"> Ingress send time out in seconds. </param>
         /// <param name="sessionAffinity"> Type of the affinity, set this to Cookie to enable session affinity. </param>
         /// <param name="sessionCookieMaxAge"> Time in seconds until the cookie expires. </param>
         /// <param name="backendProtocol"> How ingress should communicate with this app backend service. </param>
         /// <param name="clientAuth"> Client-Certification Authentication. </param>
-        internal AppIngressSettings(int? readTimeoutInSeconds, int? sendTimeoutInSeconds, AppSessionAffinity? sessionAffinity, int? sessionCookieMaxAge, AppBackendProtocol? backendProtocol, IngressSettingsClientAuth clientAuth)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppIngressSettings(int? readTimeoutInSeconds, int? sendTimeoutInSeconds, AppSessionAffinity? sessionAffinity, int? sessionCookieMaxAge, AppBackendProtocol? backendProtocol, IngressSettingsClientAuth clientAuth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReadTimeoutInSeconds = readTimeoutInSeconds;
             SendTimeoutInSeconds = sendTimeoutInSeconds;
@@ -32,6 +66,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             SessionCookieMaxAge = sessionCookieMaxAge;
             BackendProtocol = backendProtocol;
             ClientAuth = clientAuth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Ingress read time out in seconds. </summary>

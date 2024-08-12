@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Data encryption type to depict if it is System assigned vs Azure Key vault. </summary>
+    /// <summary> Data encryption type to depict if it is System Managed vs Azure Key vault. </summary>
     public readonly partial struct PostgreSqlFlexibleServerKeyType : IEquatable<PostgreSqlFlexibleServerKeyType>
     {
         private readonly string _value;
@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SystemAssignedValue = "SystemAssigned";
+        private const string SystemManagedValue = "SystemManaged";
         private const string AzureKeyVaultValue = "AzureKeyVault";
 
-        /// <summary> SystemAssigned. </summary>
-        public static PostgreSqlFlexibleServerKeyType SystemAssigned { get; } = new PostgreSqlFlexibleServerKeyType(SystemAssignedValue);
+        /// <summary> SystemManaged. </summary>
+        public static PostgreSqlFlexibleServerKeyType SystemManaged { get; } = new PostgreSqlFlexibleServerKeyType(SystemManagedValue);
         /// <summary> AzureKeyVault. </summary>
         public static PostgreSqlFlexibleServerKeyType AzureKeyVault { get; } = new PostgreSqlFlexibleServerKeyType(AzureKeyVaultValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerKeyType"/> values are the same. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

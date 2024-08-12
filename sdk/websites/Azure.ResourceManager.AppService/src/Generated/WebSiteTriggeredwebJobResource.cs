@@ -9,25 +9,27 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteTriggeredwebJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteTriggeredwebJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteTriggeredwebJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteSlotResource" /> using the GetWebSiteTriggeredwebJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteTriggeredwebJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteTriggeredwebJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSiteTriggeredwebJob method.
     /// </summary>
     public partial class WebSiteTriggeredwebJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteTriggeredwebJobResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="webJobName"> The webJobName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _webSiteTriggeredwebJobWebAppsRestClient;
         private readonly TriggeredWebJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/triggeredwebjobs";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteTriggeredwebJobResource"/> class for mocking. </summary>
         protected WebSiteTriggeredwebJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteTriggeredwebJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteTriggeredwebJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteTriggeredwebJobResource(ArmClient client, TriggeredWebJobData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/triggeredwebjobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of WebSiteTriggeredWebJobHistoryResources and their operations over a WebSiteTriggeredWebJobHistoryResource. </returns>
         public virtual WebSiteTriggeredWebJobHistoryCollection GetWebSiteTriggeredWebJobHistories()
         {
-            return GetCachedClient(Client => new WebSiteTriggeredWebJobHistoryCollection(Client, Id));
+            return GetCachedClient(client => new WebSiteTriggeredWebJobHistoryCollection(client, Id));
         }
 
         /// <summary>
@@ -98,18 +100,26 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
+        /// <description>WebApps_GetTriggeredWebJobHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WebSiteTriggeredWebJobHistoryResource>> GetWebSiteTriggeredWebJobHistoryAsync(string id, CancellationToken cancellationToken = default)
         {
@@ -121,18 +131,26 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
+        /// <description>WebApps_GetTriggeredWebJobHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> History ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WebSiteTriggeredWebJobHistoryResource> GetWebSiteTriggeredWebJobHistory(string id, CancellationToken cancellationToken = default)
         {
@@ -144,11 +162,19 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_GetTriggeredWebJobSlot</description>
+        /// <description>WebApps_GetTriggeredWebJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteTriggeredwebJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,7 +185,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webSiteTriggeredwebJobWebAppsRestClient.GetTriggeredWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteTriggeredwebJobWebAppsRestClient.GetTriggeredWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebSiteTriggeredwebJobResource(Client, response.Value), response.GetRawResponse());
@@ -176,11 +202,19 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_GetTriggeredWebJobSlot</description>
+        /// <description>WebApps_GetTriggeredWebJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteTriggeredwebJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,7 +225,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webSiteTriggeredwebJobWebAppsRestClient.GetTriggeredWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _webSiteTriggeredwebJobWebAppsRestClient.GetTriggeredWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebSiteTriggeredwebJobResource(Client, response.Value), response.GetRawResponse());
@@ -208,11 +242,19 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_DeleteTriggeredWebJobSlot</description>
+        /// <description>WebApps_DeleteTriggeredWebJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteTriggeredwebJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,8 +266,10 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webSiteTriggeredwebJobWebAppsRestClient.DeleteTriggeredWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation(response);
+                var response = await _webSiteTriggeredwebJobWebAppsRestClient.DeleteTriggeredWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _webSiteTriggeredwebJobWebAppsRestClient.CreateDeleteTriggeredWebJobRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -242,11 +286,19 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_DeleteTriggeredWebJobSlot</description>
+        /// <description>WebApps_DeleteTriggeredWebJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteTriggeredwebJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,8 +310,10 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webSiteTriggeredwebJobWebAppsRestClient.DeleteTriggeredWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation(response);
+                var response = _webSiteTriggeredwebJobWebAppsRestClient.DeleteTriggeredWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _webSiteTriggeredwebJobWebAppsRestClient.CreateDeleteTriggeredWebJobRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -276,22 +330,30 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/run</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/run</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_RunTriggeredWebJobSlot</description>
+        /// <description>WebApps_RunTriggeredWebJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteTriggeredwebJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RunTriggeredWebJobSlotAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RunTriggeredWebJobAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.RunTriggeredWebJobSlot");
+            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.RunTriggeredWebJob");
             scope.Start();
             try
             {
-                var response = await _webSiteTriggeredwebJobWebAppsRestClient.RunTriggeredWebJobSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteTriggeredwebJobWebAppsRestClient.RunTriggeredWebJobAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -306,22 +368,30 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/run</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/run</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_RunTriggeredWebJobSlot</description>
+        /// <description>WebApps_RunTriggeredWebJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteTriggeredwebJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RunTriggeredWebJobSlot(CancellationToken cancellationToken = default)
+        public virtual Response RunTriggeredWebJob(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.RunTriggeredWebJobSlot");
+            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.RunTriggeredWebJob");
             scope.Start();
             try
             {
-                var response = _webSiteTriggeredwebJobWebAppsRestClient.RunTriggeredWebJobSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _webSiteTriggeredwebJobWebAppsRestClient.RunTriggeredWebJob(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

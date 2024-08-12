@@ -6,15 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The EntityRecognitionLROResult. </summary>
     internal partial class EntityRecognitionLROResult : AnalyzeTextLROResult
     {
-        /// <summary> Initializes a new instance of EntityRecognitionLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityRecognitionLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="results"></param>
@@ -27,7 +25,7 @@ namespace Azure.AI.TextAnalytics.Models
             Kind = AnalyzeTextLROResultsKind.EntityRecognitionLROResults;
         }
 
-        /// <summary> Initializes a new instance of EntityRecognitionLROResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EntityRecognitionLROResult"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>

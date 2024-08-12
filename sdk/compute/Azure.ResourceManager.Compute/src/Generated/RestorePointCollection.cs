@@ -9,18 +9,16 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RestorePointResource" /> and their operations.
-    /// Each <see cref="RestorePointResource" /> in the collection will belong to the same instance of <see cref="RestorePointGroupResource" />.
-    /// To get a <see cref="RestorePointCollection" /> instance call the GetRestorePoints method from an instance of <see cref="RestorePointGroupResource" />.
+    /// A class representing a collection of <see cref="RestorePointResource"/> and their operations.
+    /// Each <see cref="RestorePointResource"/> in the collection will belong to the same instance of <see cref="RestorePointGroupResource"/>.
+    /// To get a <see cref="RestorePointCollection"/> instance call the GetRestorePoints method from an instance of <see cref="RestorePointGroupResource"/>.
     /// </summary>
     public partial class RestorePointCollection : ArmCollection
     {
@@ -61,6 +59,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorePoints_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorePointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,6 +109,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>RestorePoints_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorePointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -144,6 +158,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>RestorePoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorePointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
@@ -181,6 +203,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorePoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorePointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,6 +250,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>RestorePoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorePointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
@@ -256,6 +294,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>RestorePoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorePointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
@@ -273,6 +319,98 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorePoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorePointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RestorePointResource>> GetIfExistsAsync(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
+
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RestorePointResource>(response.GetRawResponse());
+                return Response.FromValue(new RestorePointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorePoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorePointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public virtual NullableResponse<RestorePointResource> GetIfExists(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
+
+            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RestorePointResource>(response.GetRawResponse());
+                return Response.FromValue(new RestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

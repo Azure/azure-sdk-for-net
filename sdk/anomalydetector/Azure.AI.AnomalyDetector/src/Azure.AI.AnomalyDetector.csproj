@@ -4,6 +4,7 @@
     <AssemblyTitle>Microsoft Azure.AI.AnomalyDetector client library</AssemblyTitle>
     <Version>3.0.0-preview.8</Version>
     <PackageTags>Microsoft Azure Anomaly Detector</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
     <NoWarn>$(NoWarn);CS1591;AZC0012</NoWarn>
@@ -12,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -18,7 +17,7 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<string> accessToken = default;
+            string accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("access_token"u8))
@@ -27,7 +26,15 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new AcrAccessToken(accessToken.Value);
+            return new AcrAccessToken(accessToken);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcrAccessToken FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcrAccessToken(document.RootElement);
         }
     }
 }

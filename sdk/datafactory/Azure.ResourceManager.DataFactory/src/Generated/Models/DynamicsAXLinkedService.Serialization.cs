@@ -6,23 +6,33 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DynamicsAXLinkedService : IUtf8JsonSerializable
+    public partial class DynamicsAXLinkedService : IUtf8JsonSerializable, IJsonModel<DynamicsAXLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicsAXLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DynamicsAXLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicsAXLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynamicsAXLinkedService)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -36,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -54,7 +64,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -62,39 +75,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Uri);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Uri);
             writer.WritePropertyName("servicePrincipalId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ServicePrincipalId);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(ServicePrincipalId.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, ServicePrincipalId);
             writer.WritePropertyName("servicePrincipalKey"u8);
-            writer.WriteObjectValue(ServicePrincipalKey);
+            JsonSerializer.Serialize(writer, ServicePrincipalKey);
             writer.WritePropertyName("tenant"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Tenant);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Tenant.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Tenant);
             writer.WritePropertyName("aadResourceId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AadResourceId);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(AadResourceId.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, AadResourceId);
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -103,29 +96,46 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static DynamicsAXLinkedService DeserializeDynamicsAXLinkedService(JsonElement element)
+        DynamicsAXLinkedService IJsonModel<DynamicsAXLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicsAXLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynamicsAXLinkedService)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynamicsAXLinkedService(document.RootElement, options);
+        }
+
+        internal static DynamicsAXLinkedService DeserializeDynamicsAXLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            BinaryData url = default;
-            BinaryData servicePrincipalId = default;
-            FactorySecretBaseDefinition servicePrincipalKey = default;
-            BinaryData tenant = default;
-            BinaryData aadResourceId = default;
-            Optional<BinaryData> encryptedCredential = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            DataFactoryElement<string> url = default;
+            DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecret servicePrincipalKey = default;
+            DataFactoryElement<string> tenant = default;
+            DataFactoryElement<string> aadResourceId = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -158,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -195,36 +205,32 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("url"u8))
                         {
-                            url = BinaryData.FromString(property0.Value.GetRawText());
+                            url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"u8))
                         {
-                            servicePrincipalId = BinaryData.FromString(property0.Value.GetRawText());
+                            servicePrincipalId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalKey"u8))
                         {
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
                         {
-                            tenant = BinaryData.FromString(property0.Value.GetRawText());
+                            tenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("aadResourceId"u8))
                         {
-                            aadResourceId = BinaryData.FromString(property0.Value.GetRawText());
+                            aadResourceId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -233,7 +239,50 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsAXLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, servicePrincipalId, servicePrincipalKey, tenant, aadResourceId, encryptedCredential.Value);
+            return new DynamicsAXLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                url,
+                servicePrincipalId,
+                servicePrincipalKey,
+                tenant,
+                aadResourceId,
+                encryptedCredential);
         }
+
+        BinaryData IPersistableModel<DynamicsAXLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicsAXLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DynamicsAXLinkedService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DynamicsAXLinkedService IPersistableModel<DynamicsAXLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicsAXLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDynamicsAXLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DynamicsAXLinkedService)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DynamicsAXLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

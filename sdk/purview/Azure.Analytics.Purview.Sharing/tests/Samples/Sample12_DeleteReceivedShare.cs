@@ -28,9 +28,9 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 #endif
 
 #if SNIPPET
-            Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "receivedShareId");
+            Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "receivedShareId", new());
 #else
-            Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "c2da55e1-c80c-4925-91fc-37c82a925ff0");
+            Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "c2da55e1-c80c-4925-91fc-37c82a925ff0", new());
 #endif
 
 #endregion

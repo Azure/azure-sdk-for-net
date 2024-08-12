@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.AI.MetricsAdvisor;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The UnknownMetricFeedback. </summary>
+    /// <summary> Unknown version of MetricFeedback. </summary>
     internal partial class UnknownMetricFeedback : MetricFeedback
     {
-        /// <summary> Initializes a new instance of UnknownMetricFeedback. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMetricFeedback"/>. </summary>
         /// <param name="feedbackKind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>
         /// <param name="createdOn"> feedback created time. </param>

@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The RecognizeRequest. </summary>
     internal partial class RecognizeRequestInternal
     {
-        /// <summary> Initializes a new instance of RecognizeRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/>. </summary>
         /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
         /// <param name="recognizeOptions"> Defines options for recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recognizeOptions"/> is null. </exception>
@@ -22,18 +22,48 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(recognizeOptions, nameof(recognizeOptions));
 
             RecognizeInputType = recognizeInputType;
+            PlayPrompts = new ChangeTrackingList<PlaySourceInternal>();
             RecognizeOptions = recognizeOptions;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeRequestInternal"/>. </summary>
+        /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
+        /// <param name="playPrompt"> The source of the audio to be played for recognition. </param>
+        /// <param name="playPrompts"> The source of the audio to be played for recognition. </param>
+        /// <param name="interruptCallMediaOperation"> If set recognize can barge into other existing queued-up/currently-processing requests. </param>
+        /// <param name="recognizeOptions"> Defines options for recognition. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal RecognizeRequestInternal(RecognizeInputType recognizeInputType, PlaySourceInternal playPrompt, IList<PlaySourceInternal> playPrompts, bool? interruptCallMediaOperation, RecognizeOptionsInternal recognizeOptions, string operationContext, string operationCallbackUri)
+        {
+            RecognizeInputType = recognizeInputType;
+            PlayPrompt = playPrompt;
+            PlayPrompts = playPrompts;
+            InterruptCallMediaOperation = interruptCallMediaOperation;
+            RecognizeOptions = recognizeOptions;
+            OperationContext = operationContext;
+            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary> Determines the type of the recognition. </summary>
         public RecognizeInputType RecognizeInputType { get; }
         /// <summary> The source of the audio to be played for recognition. </summary>
         public PlaySourceInternal PlayPrompt { get; set; }
+        /// <summary> The source of the audio to be played for recognition. </summary>
+        public IList<PlaySourceInternal> PlayPrompts { get; }
         /// <summary> If set recognize can barge into other existing queued-up/currently-processing requests. </summary>
         public bool? InterruptCallMediaOperation { get; set; }
         /// <summary> Defines options for recognition. </summary>
         public RecognizeOptionsInternal RecognizeOptions { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
+        /// <summary>
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </summary>
+        public string OperationCallbackUri { get; set; }
     }
 }

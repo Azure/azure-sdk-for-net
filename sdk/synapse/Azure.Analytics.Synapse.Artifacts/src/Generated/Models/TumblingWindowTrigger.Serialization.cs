@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Delay))
             {
                 writer.WritePropertyName("delay"u8);
-                writer.WriteObjectValue(Delay);
+                writer.WriteObjectValue<object>(Delay);
             }
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -95,17 +95,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             TriggerPipelineReference pipeline = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
-            Optional<IList<object>> annotations = default;
+            string description = default;
+            TriggerRuntimeState? runtimeState = default;
+            IList<object> annotations = default;
             TumblingWindowFrequency frequency = default;
             int interval = default;
             DateTimeOffset startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<object> delay = default;
+            DateTimeOffset? endTime = default;
+            object delay = default;
             int maxConcurrency = default;
-            Optional<RetryPolicy> retryPolicy = default;
-            Optional<IList<DependencyReference>> dependsOn = default;
+            RetryPolicy retryPolicy = default;
+            IList<DependencyReference> dependsOn = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -231,7 +231,37 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, pipeline, frequency, interval, startTime, Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, Optional.ToList(dependsOn));
+            return new TumblingWindowTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                pipeline,
+                frequency,
+                interval,
+                startTime,
+                endTime,
+                delay,
+                maxConcurrency,
+                retryPolicy,
+                dependsOn ?? new ChangeTrackingList<DependencyReference>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TumblingWindowTrigger FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTumblingWindowTrigger(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class TumblingWindowTriggerConverter : JsonConverter<TumblingWindowTrigger>
@@ -240,6 +270,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override TumblingWindowTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

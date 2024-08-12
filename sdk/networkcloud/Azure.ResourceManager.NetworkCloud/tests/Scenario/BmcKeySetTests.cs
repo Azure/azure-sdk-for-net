@@ -17,26 +17,31 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public BmcKeySetTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task BmcKeySet()
         {
             string bmcKeySetName = Recording.GenerateAssetName("bmckeyset");
-            ResourceIdentifier bmcKeySetResourceId = BmcKeySetResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ClusterRG, TestEnvironment.ClusterName, bmcKeySetName);
-            BmcKeySetResource bmcKeySet = Client.GetBmcKeySetResource(bmcKeySetResourceId);
 
-            ClusterResource cluster = Client.GetClusterResource(TestEnvironment.ClusterId);
-            BmcKeySetCollection collection = cluster.GetBmcKeySets();
+            // retrieve a parent cluster
+            NetworkCloudClusterResource cluster = Client.GetNetworkCloudClusterResource(TestEnvironment.ClusterId);
+            cluster = await cluster.GetAsync();
+
+            ResourceIdentifier bmcKeySetResourceId = NetworkCloudBmcKeySetResource.CreateResourceIdentifier(cluster.Id.SubscriptionId, cluster.Id.ResourceGroupName, cluster.Data.Name, bmcKeySetName);
+            NetworkCloudBmcKeySetResource bmcKeySet = Client.GetNetworkCloudBmcKeySetResource(bmcKeySetResourceId);
+
+            NetworkCloudBmcKeySetCollection collection = cluster.GetNetworkCloudBmcKeySets();
 
             // Create
-            BmcKeySetData data = new BmcKeySetData
+            NetworkCloudBmcKeySetData data = new NetworkCloudBmcKeySetData
             (
-                TestEnvironment.Location,
-                new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"),
+                cluster.Data.Location,
+                cluster.Data.ClusterExtendedLocation,
                 "fake-ag-id",
                 TestEnvironment.DayFromNow,
                 BmcKeySetPrivilegeLevel.ReadOnly,
                 new KeySetUser[]
                 {
-                new KeySetUser("username",new SshPublicKey("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCYnWX/sth0/ikG/d+ahWdO4sTp1stHP1jnEcxt0Vr4YcoKYh6cic2yZr3Mjb4NxcuJKAw4kmJ7bSRl5na8MEJkSFyMberQaqapahv+lx7Pm8ZTZVlVcvq0Q83yrHA/62RNtLqLF03RaTaBMrNXZoC76euPEHK4LNgk9UxhTfE0GDHGHOHGRafh24pTgVhyd7nSTuYyY+OlIfv6J726wGsRFZ8OXtE7xfHEtfzsFJBpf15YOEEtdrIQ0w+xj53nO2FOk+gLhExxlfj4gizQZPXtNI+nM7d25rlZWQW4RngFAvon63/3HNELCEHmAaEPpoAQpgESl19AtTQzUf5hl3RAyL75CM7V95/NcUG0UJ+3t1wI+Kc3WpTkHZmbcgOBYSi6+JPpmqB/oxEkjDUIvyyenLB9UFyTj8keQ2vCYzaTBLjcndDJWFYM+MbKHCSx/XxZXDkFiPQeLgkWixFAWLmufnwULIx/tr/VRdQFSZI6MoUmfUqaQhv7a2eVikiqLEk= fake-public-key")){}
+                new KeySetUser("username",new NetworkCloudSshPublicKey("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCYnWX/sth0/ikG/d+ahWdO4sTp1stHP1jnEcxt0Vr4YcoKYh6cic2yZr3Mjb4NxcuJKAw4kmJ7bSRl5na8MEJkSFyMberQaqapahv+lx7Pm8ZTZVlVcvq0Q83yrHA/62RNtLqLF03RaTaBMrNXZoC76euPEHK4LNgk9UxhTfE0GDHGHOHGRafh24pTgVhyd7nSTuYyY+OlIfv6J726wGsRFZ8OXtE7xfHEtfzsFJBpf15YOEEtdrIQ0w+xj53nO2FOk+gLhExxlfj4gizQZPXtNI+nM7d25rlZWQW4RngFAvon63/3HNELCEHmAaEPpoAQpgESl19AtTQzUf5hl3RAyL75CM7V95/NcUG0UJ+3t1wI+Kc3WpTkHZmbcgOBYSi6+JPpmqB/oxEkjDUIvyyenLB9UFyTj8keQ2vCYzaTBLjcndDJWFYM+MbKHCSx/XxZXDkFiPQeLgkWixFAWLmufnwULIx/tr/VRdQFSZI6MoUmfUqaQhv7a2eVikiqLEk= fake-public-key")){}
                 }
             )
             {
@@ -45,23 +50,23 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1",
                 },
             };
-            ArmOperation<BmcKeySetResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bmcKeySetName, data);
+            ArmOperation<NetworkCloudBmcKeySetResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, bmcKeySetName, data);
             Assert.AreEqual(bmcKeySetName, createResult.Value.Data.Name);
 
             // Get
             var getResult = await bmcKeySet.GetAsync();
             Assert.AreEqual(bmcKeySetName, getResult.Value.Data.Name);
 
-            // List by Resource Group
-            var listByResourceGroup = new List<BmcKeySetResource>();
-            await foreach (BmcKeySetResource item in collection.GetAllAsync())
+            // List by cluster
+            var listByCluster = new List<NetworkCloudBmcKeySetResource>();
+            await foreach (NetworkCloudBmcKeySetResource item in collection.GetAllAsync())
             {
-                listByResourceGroup.Add(item);
+                listByCluster.Add(item);
             }
-            Assert.IsNotEmpty(listByResourceGroup);
+            Assert.IsNotEmpty(listByCluster);
 
             // Update
-            BmcKeySetPatch patch = new BmcKeySetPatch()
+            NetworkCloudBmcKeySetPatch patch = new NetworkCloudBmcKeySetPatch()
             {
                 Tags =
                 {
@@ -69,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            ArmOperation<BmcKeySetResource> updateResult = await bmcKeySet.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudBmcKeySetResource> updateResult = await bmcKeySet.UpdateAsync(WaitUntil.Completed, patch);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete

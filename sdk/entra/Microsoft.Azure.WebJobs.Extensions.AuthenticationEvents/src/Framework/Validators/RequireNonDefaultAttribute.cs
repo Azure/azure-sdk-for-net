@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Validator to ensure that a type value is not set to it's default value.</summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]

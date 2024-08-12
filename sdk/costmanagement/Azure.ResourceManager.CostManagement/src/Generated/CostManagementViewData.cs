@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement.Models;
 using Azure.ResourceManager.Models;
@@ -20,14 +19,46 @@ namespace Azure.ResourceManager.CostManagement
     /// </summary>
     public partial class CostManagementViewData : ResourceData
     {
-        /// <summary> Initializes a new instance of CostManagementViewData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CostManagementViewData"/>. </summary>
         public CostManagementViewData()
         {
-            Kpis = new ChangeTrackingList<KpiProperties>();
+            Kpis = new ChangeTrackingList<ViewKpiProperties>();
             Pivots = new ChangeTrackingList<ViewPivotProperties>();
         }
 
-        /// <summary> Initializes a new instance of CostManagementViewData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagementViewData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +80,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="dataSet"> Has definition for data in this report config. </param>
         /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
-        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string scope, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string dateRange, string currency, ViewChartType? chart, AccumulatedType? accumulated, ViewMetricType? metric, IList<KpiProperties> kpis, IList<ViewPivotProperties> pivots, ViewReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, ETag? eTag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CostManagementViewData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, ResourceIdentifier scope, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string dateRange, string currency, ViewChartType? chart, AccumulatedType? accumulated, ViewMetricType? metric, IList<ViewKpiProperties> kpis, IList<ViewPivotProperties> pivots, ViewReportType? typePropertiesQueryType, ReportTimeframeType? timeframe, ReportConfigTimePeriod timePeriod, ReportConfigDataset dataSet, bool? includeMonetaryCommitment, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Scope = scope;
@@ -68,12 +100,13 @@ namespace Azure.ResourceManager.CostManagement
             DataSet = dataSet;
             IncludeMonetaryCommitment = includeMonetaryCommitment;
             ETag = eTag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> User input name of the view. Required. </summary>
         public string DisplayName { get; set; }
         /// <summary> Cost Management scope to save the view on. This includes 'subscriptions/{subscriptionId}' for subscription scope, 'subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for resourceGroup scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for Billing Account scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}' for Department scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/enrollmentAccounts/{enrollmentAccountId}' for EnrollmentAccount scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}' for BillingProfile scope, 'providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}' for InvoiceSection scope, 'providers/Microsoft.Management/managementGroups/{managementGroupId}' for Management Group scope, '/providers/Microsoft.CostManagement/externalBillingAccounts/{externalBillingAccountName}' for ExternalBillingAccount scope, and '/providers/Microsoft.CostManagement/externalSubscriptions/{externalSubscriptionName}' for ExternalSubscription scope. </summary>
-        public string Scope { get; set; }
+        public ResourceIdentifier Scope { get; set; }
         /// <summary> Date the user created this view. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Date when the user last modified this view. </summary>
@@ -89,7 +122,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <summary> Metric to use when displaying costs. </summary>
         public ViewMetricType? Metric { get; set; }
         /// <summary> List of KPIs to show in Cost Analysis UI. </summary>
-        public IList<KpiProperties> Kpis { get; }
+        public IList<ViewKpiProperties> Kpis { get; }
         /// <summary> Configuration of 3 sub-views in the Cost Analysis UI. </summary>
         public IList<ViewPivotProperties> Pivots { get; }
         /// <summary> The type of the report. Usage represents actual usage, forecast represents forecasted data and UsageAndForecast represents both usage and forecasted data. Actual usage and forecasted data can be differentiated based on dates. </summary>

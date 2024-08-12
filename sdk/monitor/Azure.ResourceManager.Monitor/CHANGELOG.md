@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.1 (2024-04-29)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Bugs Fixed
+
+- Fix [issue#41377](https://github.com/Azure/azure-sdk-for-net/issues/41377), change the serialization for `MonitorConditionOperator`.
+- Fix [issue#43151](https://github.com/Azure/azure-sdk-for-net/issues/43151), change the deserialization for `TenantId`.
+
+## 1.3.0 (2023-11-21)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.3.0-beta.2 (2023-06-13)
 

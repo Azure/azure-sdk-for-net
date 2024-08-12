@@ -7,8 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -24,7 +22,7 @@ namespace Azure.Communication.Chat
             string topic = default;
             DateTimeOffset createdOn = default;
             CommunicationIdentifierModel createdByCommunicationIdentifier = default;
-            Optional<DateTimeOffset> deletedOn = default;
+            DateTimeOffset? deletedOn = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -57,7 +55,15 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatThreadPropertiesInternal(id, topic, createdOn, createdByCommunicationIdentifier, Optional.ToNullable(deletedOn));
+            return new ChatThreadPropertiesInternal(id, topic, createdOn, createdByCommunicationIdentifier, deletedOn);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatThreadPropertiesInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChatThreadPropertiesInternal(document.RootElement);
         }
     }
 }

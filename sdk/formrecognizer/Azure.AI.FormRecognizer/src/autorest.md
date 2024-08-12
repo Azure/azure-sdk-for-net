@@ -3,6 +3,7 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
+deserialize-null-collection-as-null-value: true
 batch:
   - tag: release_2_1
   - tag: 2023-02-28-preview
@@ -89,6 +90,10 @@ directive:
     where: $.definitions.FieldValue
     transform: >
       $.properties.valueObject.additionalProperties["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FormFieldsReport
+    transform: >
+      $.properties.accuracy["x-nullable"] = true;
 
 # Rename duplicated types
   - from: swagger-document
@@ -103,13 +108,13 @@ directive:
       $["x-accessibility"] = "internal"
 ```
 
-### Release 2023-02-28-preview
+### Release 2023-07-31
 
 These settings apply only when `--tag=2023-02-28-preview` is specified on the command line.
 
 ``` yaml $(tag) == '2023-02-28-preview'
-require:
-  - https://github.com/Azure/azure-rest-api-specs/blob/543f1920ac96303cc244d60e1c12f0b56fc646db/specification/cognitiveservices/data-plane/FormRecognizer/readme.md
+input-file:
+  - https://github.com/Azure/azure-rest-api-specs/blob/f6bf6555a71cb3167dcff04cc7964bda9ae36a88/specification/cognitiveservices/data-plane/FormRecognizer/stable/2023-07-31/FormRecognizer.json
 
 generate-model-factory: false
 generation1-convenience-client: true

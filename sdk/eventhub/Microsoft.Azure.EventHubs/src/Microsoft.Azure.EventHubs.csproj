@@ -28,6 +28,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="NETStandard.Library" VersionOverride="2.0.3"/>
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Net.Http" />
     <PackageReference Include="System.Reflection.TypeExtensions" />

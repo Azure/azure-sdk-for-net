@@ -5,25 +5,104 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ProductEntityBaseProperties
+    public partial class ProductEntityBaseProperties : IUtf8JsonSerializable, IJsonModel<ProductEntityBaseProperties>
     {
-        internal static ProductEntityBaseProperties DeserializeProductEntityBaseProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductEntityBaseProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ProductEntityBaseProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProductEntityBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Terms))
+            {
+                writer.WritePropertyName("terms"u8);
+                writer.WriteStringValue(Terms);
+            }
+            if (Optional.IsDefined(IsSubscriptionRequired))
+            {
+                writer.WritePropertyName("subscriptionRequired"u8);
+                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
+            }
+            if (Optional.IsDefined(IsApprovalRequired))
+            {
+                writer.WritePropertyName("approvalRequired"u8);
+                writer.WriteBooleanValue(IsApprovalRequired.Value);
+            }
+            if (Optional.IsDefined(SubscriptionsLimit))
+            {
+                writer.WritePropertyName("subscriptionsLimit"u8);
+                writer.WriteNumberValue(SubscriptionsLimit.Value);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToSerialString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProductEntityBaseProperties IJsonModel<ProductEntityBaseProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProductEntityBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProductEntityBaseProperties(document.RootElement, options);
+        }
+
+        internal static ProductEntityBaseProperties DeserializeProductEntityBaseProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<string> terms = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<bool> approvalRequired = default;
-            Optional<int> subscriptionsLimit = default;
-            Optional<ApiManagementProductState> state = default;
+            string description = default;
+            string terms = default;
+            bool? subscriptionRequired = default;
+            bool? approvalRequired = default;
+            int? subscriptionsLimit = default;
+            ApiManagementProductState? state = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -72,8 +151,176 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     state = property.Value.GetString().ToApiManagementProductState();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProductEntityBaseProperties(description.Value, terms.Value, Optional.ToNullable(subscriptionRequired), Optional.ToNullable(approvalRequired), Optional.ToNullable(subscriptionsLimit), Optional.ToNullable(state));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ProductEntityBaseProperties(
+                description,
+                terms,
+                subscriptionRequired,
+                approvalRequired,
+                subscriptionsLimit,
+                state,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Terms), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  terms: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Terms))
+                {
+                    builder.Append("  terms: ");
+                    if (Terms.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Terms}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Terms}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSubscriptionRequired), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subscriptionRequired: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSubscriptionRequired))
+                {
+                    builder.Append("  subscriptionRequired: ");
+                    var boolValue = IsSubscriptionRequired.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApprovalRequired), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  approvalRequired: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsApprovalRequired))
+                {
+                    builder.Append("  approvalRequired: ");
+                    var boolValue = IsApprovalRequired.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionsLimit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subscriptionsLimit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubscriptionsLimit))
+                {
+                    builder.Append("  subscriptionsLimit: ");
+                    builder.AppendLine($"{SubscriptionsLimit.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    builder.AppendLine($"'{State.Value.ToSerialString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ProductEntityBaseProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProductEntityBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProductEntityBaseProperties IPersistableModel<ProductEntityBaseProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProductEntityBaseProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProductEntityBaseProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProductEntityBaseProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProductEntityBaseProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

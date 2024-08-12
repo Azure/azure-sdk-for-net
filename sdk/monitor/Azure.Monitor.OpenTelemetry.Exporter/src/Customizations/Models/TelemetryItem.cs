@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class TelemetryItem
     {
-        public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey) :
+        public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey, float sampleRate) :
             this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
         {
             if (activity.ParentSpanId != default)
@@ -23,7 +23,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
-            var userAgent = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+            if (activity.GetTelemetryType() == TelemetryType.Request)
+            {
+                if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationNameV2(activity, ref activityTagsProcessor.MappedTags).Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
+                }
+                else if (activityTagsProcessor.activityType.HasFlag(OperationType.Http))
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags).Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
+                }
+                else
+                {
+                    Tags[ContextTagKeys.AiOperationName.ToString()] = activity.DisplayName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
+                }
+
+                // Set ip in case of server spans only.
+                if (activity.Kind == ActivityKind.Server)
+                {
+                    var locationIp = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeClientAddress)?.ToString();
+                    if (locationIp != null)
+                    {
+                        Tags[ContextTagKeys.AiLocationIp.ToString()] = locationIp;
+                    }
+                }
+            }
+
+            var userAgent = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUserAgentOriginal)?.ToString()
+                ?? AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
 
             if (userAgent != null)
             {
@@ -32,17 +59,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             SetAuthenticatedUserId(ref activityTagsProcessor);
-
-            // we only have mapping for server spans
-            // todo: non-server spans
-            if (activity.Kind == ActivityKind.Server)
-            {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = TraceHelper.GetOperationName(activity, ref activityTagsProcessor.MappedTags);
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
-            }
-
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
-            if (AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, "sampleRate") is float sampleRate)
+
+            if (sampleRate != 100f)
             {
                 SampleRate = sampleRate;
             }
@@ -60,19 +79,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags["ai.user.userAgent"] = userAgent;
             }
 
-            // we only have mapping for server spans
-            // todo: non-server spans
-            if (kind == ActivityKind.Server)
-            {
-                Tags[ContextTagKeys.AiOperationName.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()];
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()];
-            }
-
-            Tags[ContextTagKeys.AiCloudRole.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()];
-            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()];
-            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
+            Tags[ContextTagKeys.AiCloudRole.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()].Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
+            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()].Truncate(SchemaConstants.Tags_AiCloudRoleInstance_MaxLength);
+            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
+            Tags[ContextTagKeys.AiApplicationVer.ToString()] = telemetryItem.Tags[ContextTagKeys.AiApplicationVer.ToString()].Truncate(SchemaConstants.Tags_AiApplicationVer_MaxLength);
             InstrumentationKey = telemetryItem.InstrumentationKey;
-            SampleRate = telemetryItem.SampleRate;
+
+            if (telemetryItem.SampleRate != 100f)
+            {
+                SampleRate = telemetryItem.SampleRate;
+            }
         }
 
         public TelemetryItem (LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey) :
@@ -97,13 +113,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
         }
 
+        public TelemetryItem(DateTime time, AzureMonitorResource? resource, string instrumentationKey, MonitorBase monitorBaseData) : this(time, resource, instrumentationKey)
+        {
+            Data = monitorBaseData;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetResourceSdkVersionAndIkey(AzureMonitorResource? resource, string instrumentationKey)
         {
             InstrumentationKey = instrumentationKey;
-            Tags[ContextTagKeys.AiCloudRole.ToString()] = resource?.RoleName;
-            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = resource?.RoleInstance;
-            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
+            Tags[ContextTagKeys.AiCloudRole.ToString()] = resource?.RoleName_Truncated;
+            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = resource?.RoleInstance_Truncated;
+            Tags[ContextTagKeys.AiApplicationVer.ToString()] = resource?.ServiceVersion_Truncated;
+            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
         }
 
         internal static DateTimeOffset FormatUtcTimestamp(System.DateTime utcTimestamp)
@@ -116,7 +138,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         {
             if (activityTagsProcessor.EndUserId != null)
             {
-                Tags[ContextTagKeys.AiUserAuthUserId.ToString()] = activityTagsProcessor.EndUserId;
+                Tags[ContextTagKeys.AiUserAuthUserId.ToString()] = activityTagsProcessor.EndUserId.Truncate(SchemaConstants.Tags_AiUserAuthUserId_MaxLength);
             }
         }
     }

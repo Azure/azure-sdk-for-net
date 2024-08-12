@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.Logic
     /// </summary>
     public partial class IntegrationAccountSchemaData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of IntegrationAccountSchemaData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSchemaData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="schemaType"> The schema type. </param>
         public IntegrationAccountSchemaData(AzureLocation location, IntegrationAccountSchemaType schemaType) : base(location)
@@ -27,7 +59,7 @@ namespace Azure.ResourceManager.Logic
             SchemaType = schemaType;
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,7 +76,8 @@ namespace Azure.ResourceManager.Logic
         /// <param name="content"> The content. </param>
         /// <param name="contentType"> The content type. </param>
         /// <param name="contentLink"> The content link. </param>
-        internal IntegrationAccountSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountSchemaType schemaType, string targetNamespace, string documentName, string fileName, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, ContentType? contentType, LogicContentLink contentLink) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IntegrationAccountSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountSchemaType schemaType, string targetNamespace, string documentName, string fileName, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, ContentType? contentType, LogicContentLink contentLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             SchemaType = schemaType;
             TargetNamespace = targetNamespace;
@@ -56,6 +89,12 @@ namespace Azure.ResourceManager.Logic
             Content = content;
             ContentType = contentType;
             ContentLink = contentLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountSchemaData"/> for deserialization. </summary>
+        internal IntegrationAccountSchemaData()
+        {
         }
 
         /// <summary> The schema type. </summary>
@@ -76,7 +115,7 @@ namespace Azure.ResourceManager.Logic
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -107,7 +146,7 @@ namespace Azure.ResourceManager.Logic
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

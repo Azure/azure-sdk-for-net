@@ -5,18 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementIdentityProviderCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class ApiManagementIdentityProviderCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<ApiManagementIdentityProviderCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementIdentityProviderCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApiManagementIdentityProviderCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementIdentityProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiManagementIdentityProviderCreateOrUpdateContent)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IdentityProviderType))
@@ -64,6 +96,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("passwordResetPolicyName"u8);
                 writer.WriteStringValue(PasswordResetPolicyName);
             }
+            if (Optional.IsDefined(ClientLibrary))
+            {
+                writer.WritePropertyName("clientLibrary"u8);
+                writer.WriteStringValue(ClientLibrary);
+            }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
@@ -75,11 +112,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStringValue(ClientSecret);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiManagementIdentityProviderCreateOrUpdateContent DeserializeApiManagementIdentityProviderCreateOrUpdateContent(JsonElement element)
+        ApiManagementIdentityProviderCreateOrUpdateContent IJsonModel<ApiManagementIdentityProviderCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementIdentityProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiManagementIdentityProviderCreateOrUpdateContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementIdentityProviderCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        internal static ApiManagementIdentityProviderCreateOrUpdateContent DeserializeApiManagementIdentityProviderCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,17 +153,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IdentityProviderType> type0 = default;
-            Optional<string> signinTenant = default;
-            Optional<IList<string>> allowedTenants = default;
-            Optional<string> authority = default;
-            Optional<string> signupPolicyName = default;
-            Optional<string> signinPolicyName = default;
-            Optional<string> profileEditingPolicyName = default;
-            Optional<string> passwordResetPolicyName = default;
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
+            SystemData systemData = default;
+            IdentityProviderType? type0 = default;
+            string signinTenant = default;
+            IList<string> allowedTenants = default;
+            string authority = default;
+            string signupPolicyName = default;
+            string signinPolicyName = default;
+            string profileEditingPolicyName = default;
+            string passwordResetPolicyName = default;
+            string clientLibrary = default;
+            string clientId = default;
+            string clientSecret = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -186,6 +255,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             passwordResetPolicyName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("clientLibrary"u8))
+                        {
+                            clientLibrary = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("clientId"u8))
                         {
                             clientId = property0.Value.GetString();
@@ -199,8 +273,391 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApiManagementIdentityProviderCreateOrUpdateContent(id, name, type, systemData.Value, Optional.ToNullable(type0), signinTenant.Value, Optional.ToList(allowedTenants), authority.Value, signupPolicyName.Value, signinPolicyName.Value, profileEditingPolicyName.Value, passwordResetPolicyName.Value, clientId.Value, clientSecret.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApiManagementIdentityProviderCreateOrUpdateContent(
+                id,
+                name,
+                type,
+                systemData,
+                type0,
+                signinTenant,
+                allowedTenants ?? new ChangeTrackingList<string>(),
+                authority,
+                signupPolicyName,
+                signinPolicyName,
+                profileEditingPolicyName,
+                passwordResetPolicyName,
+                clientLibrary,
+                clientId,
+                clientSecret,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityProviderType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdentityProviderType))
+                {
+                    builder.Append("    type: ");
+                    builder.AppendLine($"'{IdentityProviderType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignInTenant), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    signinTenant: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SignInTenant))
+                {
+                    builder.Append("    signinTenant: ");
+                    if (SignInTenant.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SignInTenant}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SignInTenant}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedTenants), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    allowedTenants: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AllowedTenants))
+                {
+                    if (AllowedTenants.Any())
+                    {
+                        builder.Append("    allowedTenants: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedTenants)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Authority), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    authority: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Authority))
+                {
+                    builder.Append("    authority: ");
+                    if (Authority.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Authority}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Authority}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignUpPolicyName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    signupPolicyName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SignUpPolicyName))
+                {
+                    builder.Append("    signupPolicyName: ");
+                    if (SignUpPolicyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SignUpPolicyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SignUpPolicyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignInPolicyName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    signinPolicyName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SignInPolicyName))
+                {
+                    builder.Append("    signinPolicyName: ");
+                    if (SignInPolicyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SignInPolicyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SignInPolicyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProfileEditingPolicyName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    profileEditingPolicyName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProfileEditingPolicyName))
+                {
+                    builder.Append("    profileEditingPolicyName: ");
+                    if (ProfileEditingPolicyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProfileEditingPolicyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProfileEditingPolicyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PasswordResetPolicyName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    passwordResetPolicyName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PasswordResetPolicyName))
+                {
+                    builder.Append("    passwordResetPolicyName: ");
+                    if (PasswordResetPolicyName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PasswordResetPolicyName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PasswordResetPolicyName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientLibrary), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientLibrary: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientLibrary))
+                {
+                    builder.Append("    clientLibrary: ");
+                    if (ClientLibrary.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientLibrary}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientLibrary}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientId))
+                {
+                    builder.Append("    clientId: ");
+                    if (ClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecret), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clientSecret: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientSecret))
+                {
+                    builder.Append("    clientSecret: ");
+                    if (ClientSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientSecret}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ApiManagementIdentityProviderCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementIdentityProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementIdentityProviderCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApiManagementIdentityProviderCreateOrUpdateContent IPersistableModel<ApiManagementIdentityProviderCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementIdentityProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApiManagementIdentityProviderCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementIdentityProviderCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApiManagementIdentityProviderCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

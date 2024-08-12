@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Reservations.Models;
@@ -37,6 +36,17 @@ namespace Azure.ResourceManager.Reservations
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreatePostRequestUri(Guid reservationOrderId, ReservationCalculateRefundContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/calculateRefund", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePostRequest(Guid reservationOrderId, ReservationCalculateRefundContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -52,7 +62,7 @@ namespace Azure.ResourceManager.Reservations
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -60,7 +70,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculate price for returning `Reservations` if there are no policy errors.
-        /// 
+        ///
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>
@@ -88,7 +98,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculate price for returning `Reservations` if there are no policy errors.
-        /// 
+        ///
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>

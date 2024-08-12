@@ -9,8 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 {
@@ -71,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             CosmosDBForPostgreSqlClusterServerResource cosmosDBForPostgreSqlClusterServer = client.GetCosmosDBForPostgreSqlClusterServerResource(cosmosDBForPostgreSqlClusterServerResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ServerConfigurationData item in cosmosDBForPostgreSqlClusterServer.GetConfigurationsAsync())
+            await foreach (CosmosDBForPostgreSqlServerConfigurationData item in cosmosDBForPostgreSqlClusterServer.GetConfigurationsAsync())
             {
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {item.Id}");

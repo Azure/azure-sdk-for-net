@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.Azure
     /// <summary>
     /// Extension methods to add Question Answering clients to the Azure client builder.
     /// </summary>
-    [CodeGenType("QuestionAnsweringClientBuilderExtensions")]
+    [CodeGenType("AILanguageQuestionAnsweringClientBuilderExtensions")]
     public static partial class QuestionAnsweringClientExtensions
     {
         /// <summary>

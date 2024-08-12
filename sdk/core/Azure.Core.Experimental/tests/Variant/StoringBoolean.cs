@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringBoolean
     {
@@ -10,7 +10,7 @@ namespace Azure
         [TestCase(false)]
         public void BooleanImplicit(bool testValue)
         {
-            Value value;
+            Variant value;
             using (MemoryWatch.Create())
             {
                 value = testValue;
@@ -32,10 +32,10 @@ namespace Azure
         [TestCase(false)]
         public void BooleanCreate(bool testValue)
         {
-            Value value;
+            Variant value;
             using (MemoryWatch.Create())
             {
-                value = Value.Create(testValue);
+                value = Variant.Create(testValue);
             }
 
             Assert.AreEqual(testValue, value.As<bool>());
@@ -45,7 +45,7 @@ namespace Azure
 
             using (MemoryWatch.Create())
             {
-                value = Value.Create(source);
+                value = Variant.Create(source);
             }
 
             Assert.AreEqual(source, value.As<bool?>());
@@ -56,7 +56,7 @@ namespace Azure
         [TestCase(false)]
         public void BooleanInOut(bool testValue)
         {
-            Value value;
+            Variant value;
             bool success;
             bool result;
 
@@ -78,7 +78,7 @@ namespace Azure
         public void NullableBooleanInBooleanOut(bool? testValue)
         {
             bool? source = testValue;
-            Value value;
+            Variant value;
             bool success;
             bool result;
 
@@ -101,7 +101,7 @@ namespace Azure
         public void BooleanInNullableBooleanOut(bool testValue)
         {
             bool source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
             bool success = value.TryGetValue(out bool? result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -115,7 +115,7 @@ namespace Azure
         {
             bool i = testValue;
             object o = i;
-            Value value = new(o);
+            Variant value = new(o);
 
             Assert.AreEqual(typeof(bool), value.Type);
             Assert.True(value.TryGetValue(out bool result));
@@ -138,7 +138,7 @@ namespace Azure
         public void NullBoolean()
         {
             bool? source = null;
-            Value value;
+            Variant value;
 
             using (MemoryWatch.Create())
             {
@@ -154,7 +154,7 @@ namespace Azure
         [TestCase(false)]
         public void OutAsObject(bool testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(bool), o.GetType());
             Assert.AreEqual(testValue, (bool)o);

@@ -5,31 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    internal partial class NewRelicObservabilityOrganizationInfo : IUtf8JsonSerializable
+    internal partial class NewRelicObservabilityOrganizationInfo : IUtf8JsonSerializable, IJsonModel<NewRelicObservabilityOrganizationInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicObservabilityOrganizationInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NewRelicObservabilityOrganizationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityOrganizationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NewRelicObservabilityOrganizationInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OrganizationId))
             {
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NewRelicObservabilityOrganizationInfo DeserializeNewRelicObservabilityOrganizationInfo(JsonElement element)
+        NewRelicObservabilityOrganizationInfo IJsonModel<NewRelicObservabilityOrganizationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityOrganizationInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NewRelicObservabilityOrganizationInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicObservabilityOrganizationInfo(document.RootElement, options);
+        }
+
+        internal static NewRelicObservabilityOrganizationInfo DeserializeNewRelicObservabilityOrganizationInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> organizationId = default;
+            string organizationId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("organizationId"u8))
@@ -37,8 +80,84 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     organizationId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NewRelicObservabilityOrganizationInfo(organizationId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NewRelicObservabilityOrganizationInfo(organizationId, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OrganizationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  organizationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OrganizationId))
+                {
+                    builder.Append("  organizationId: ");
+                    if (OrganizationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OrganizationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OrganizationId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<NewRelicObservabilityOrganizationInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityOrganizationInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityOrganizationInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NewRelicObservabilityOrganizationInfo IPersistableModel<NewRelicObservabilityOrganizationInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityOrganizationInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNewRelicObservabilityOrganizationInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityOrganizationInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NewRelicObservabilityOrganizationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

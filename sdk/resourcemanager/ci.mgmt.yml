@@ -3,9 +3,9 @@
 trigger:
   branches:
     include:
-    - main
-    - hotfix/*
-    - release/*
+      - main
+      - hotfix/*
+      - release/*
   paths:
     include:
     - sdk/resourcemanager
@@ -15,17 +15,20 @@ trigger:
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
     - sdk/analysisservices/Azure.ResourceManager.Analysis
+    - sdk/apicenter/Azure.ResourceManager.ApiCenter
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
     - sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
-    - sdk/arc-scvmm/Azure.ResourceManager.ArcScVmm
+    - sdk/arc-scvmm/Azure.ResourceManager.ScVmm
+    - sdk/astronomer/Azure.ResourceManager.Astro
     - sdk/attestation/Azure.ResourceManager.Attestation
     - sdk/authorization/Azure.ResourceManager.Authorization
     - sdk/automanage/Azure.ResourceManager.Automanage
     - sdk/automation/Azure.ResourceManager.Automation
     - sdk/avs/Azure.ResourceManager.Avs
+    - sdk/azurelargeinstance/Azure.ResourceManager.LargeInstance
     - sdk/azurestackhci/Azure.ResourceManager.Hci
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
@@ -59,10 +62,11 @@ trigger:
     - sdk/datamigration/Azure.ResourceManager.DataMigration
     - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup
     - sdk/datashare/Azure.ResourceManager.DataShare
-    - sdk/deploymentmanager/Azure.ResourceManager.DeploymentManager
+    - sdk/defendereasm/Azure.ResourceManager.DefenderEasm
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
+    - sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
     - sdk/devspaces/Azure.ResourceManager.DevSpaces
     - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs
@@ -71,24 +75,30 @@ trigger:
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
+    - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
     - sdk/eventgrid/Azure.ResourceManager.EventGrid
     - sdk/eventhub/Azure.ResourceManager.EventHubs
     - sdk/extendedlocation/Azure.ResourceManager.ExtendedLocations
+    - sdk/fabric/Azure.ResourceManager.Fabric
+    - sdk/fleet/Azure.ResourceManager.ContainerServiceFleet
     - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
     - sdk/grafana/Azure.ResourceManager.Grafana
     - sdk/graphservices/Azure.ResourceManager.GraphServices
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
+    - sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
+    - sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
-    - sdk/hybriddatamanager/Azure.ResourceManager.HybridData
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
+    - sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork
+    - sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -110,12 +120,14 @@ trigger:
     - sdk/marketplace/Azure.ResourceManager.Marketplace
     - sdk/marketplaceordering/Azure.ResourceManager.MarketplaceOrdering
     - sdk/mediaservices/Azure.ResourceManager.Media
+    - sdk/migrationdiscoverysap/Azure.ResourceManager.MigrationDiscoverySap
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
+    - sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics
     - sdk/networkcloud/Azure.ResourceManager.NetworkCloud
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
     - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability
@@ -123,9 +135,11 @@ trigger:
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
+    - sdk/oracle/Azure.ResourceManager.OracleDatabase
     - sdk/orbital/Azure.ResourceManager.Orbital
     - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
+    - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
@@ -137,11 +151,13 @@ trigger:
     - sdk/quota/Azure.ResourceManager.Quota
     - sdk/recoveryservices/Azure.ResourceManager.RecoveryServices
     - sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup
+    - sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication
     - sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery
     - sdk/redis/Azure.ResourceManager.Redis
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
     - sdk/relay/Azure.ResourceManager.Relay
     - sdk/reservations/Azure.ResourceManager.Reservations
+    - sdk/resourceconnector/Azure.ResourceManager.ResourceConnector
     - sdk/resourcegraph/Azure.ResourceManager.ResourceGraph
     - sdk/resourcehealth/Azure.ResourceManager.ResourceHealth
     - sdk/resourcemover/Azure.ResourceManager.ResourceMover
@@ -157,9 +173,13 @@ trigger:
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
     - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking
     - sdk/signalr/Azure.ResourceManager.SignalR
+    - sdk/sphere/Azure.ResourceManager.Sphere
+    - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
+    - sdk/standbypool/Azure.ResourceManager.StandbyPool
     - sdk/storage/Azure.ResourceManager.Storage
+    - sdk/storageactions/Azure.ResourceManager.StorageActions
     - sdk/storagecache/Azure.ResourceManager.StorageCache
     - sdk/storagemover/Azure.ResourceManager.StorageMover
     - sdk/storagepool/Azure.ResourceManager.StoragePool
@@ -169,6 +189,7 @@ trigger:
     - sdk/support/Azure.ResourceManager.Support
     - sdk/synapse/Azure.ResourceManager.Synapse
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
+    - sdk/trustedsigning/Azure.ResourceManager.TrustedSigning
     - sdk/voiceservices/Azure.ResourceManager.VoiceServices
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
@@ -178,10 +199,10 @@ trigger:
 pr:
   branches:
     include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
   paths:
     include:
     - sdk/resourcemanager
@@ -191,17 +212,20 @@ pr:
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
     - sdk/analysisservices/Azure.ResourceManager.Analysis
+    - sdk/apicenter/Azure.ResourceManager.ApiCenter
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
     - sdk/appcomplianceautomation/Azure.ResourceManager.AppComplianceAutomation
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
     - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
-    - sdk/arc-scvmm/Azure.ResourceManager.ArcScVmm
+    - sdk/arc-scvmm/Azure.ResourceManager.ScVmm
+    - sdk/astronomer/Azure.ResourceManager.Astro
     - sdk/attestation/Azure.ResourceManager.Attestation
     - sdk/authorization/Azure.ResourceManager.Authorization
     - sdk/automanage/Azure.ResourceManager.Automanage
     - sdk/automation/Azure.ResourceManager.Automation
     - sdk/avs/Azure.ResourceManager.Avs
+    - sdk/azurelargeinstance/Azure.ResourceManager.LargeInstance
     - sdk/azurestackhci/Azure.ResourceManager.Hci
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
@@ -235,10 +259,11 @@ pr:
     - sdk/datamigration/Azure.ResourceManager.DataMigration
     - sdk/dataprotection/Azure.ResourceManager.DataProtectionBackup
     - sdk/datashare/Azure.ResourceManager.DataShare
-    - sdk/deploymentmanager/Azure.ResourceManager.DeploymentManager
+    - sdk/defendereasm/Azure.ResourceManager.DefenderEasm
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/devcenter/Azure.ResourceManager.DevCenter
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
+    - sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
     - sdk/devspaces/Azure.ResourceManager.DevSpaces
     - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs
@@ -247,24 +272,30 @@ pr:
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
+    - sdk/edgezones/Azure.ResourceManager.EdgeZones
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
     - sdk/eventgrid/Azure.ResourceManager.EventGrid
     - sdk/eventhub/Azure.ResourceManager.EventHubs
     - sdk/extendedlocation/Azure.ResourceManager.ExtendedLocations
+    - sdk/fabric/Azure.ResourceManager.Fabric
+    - sdk/fleet/Azure.ResourceManager.ContainerServiceFleet
     - sdk/fluidrelay/Azure.ResourceManager.FluidRelay
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
     - sdk/grafana/Azure.ResourceManager.Grafana
     - sdk/graphservices/Azure.ResourceManager.GraphServices
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
+    - sdk/hardwaresecuritymodules/Azure.ResourceManager.HardwareSecurityModules
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
+    - sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
-    - sdk/hybriddatamanager/Azure.ResourceManager.HybridData
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
+    - sdk/hybridnetwork/Azure.ResourceManager.HybridNetwork
+    - sdk/informaticadatamanagement/Azure.ResourceManager.InformaticaDataManagement
     - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
@@ -286,12 +317,14 @@ pr:
     - sdk/marketplace/Azure.ResourceManager.Marketplace
     - sdk/marketplaceordering/Azure.ResourceManager.MarketplaceOrdering
     - sdk/mediaservices/Azure.ResourceManager.Media
+    - sdk/migrationdiscoverysap/Azure.ResourceManager.MigrationDiscoverySap
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
+    - sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics
     - sdk/networkcloud/Azure.ResourceManager.NetworkCloud
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
     - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability
@@ -299,9 +332,11 @@ pr:
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
+    - sdk/oracle/Azure.ResourceManager.OracleDatabase
     - sdk/orbital/Azure.ResourceManager.Orbital
     - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
     - sdk/peering/Azure.ResourceManager.Peering
+    - sdk/playwrighttesting/Azure.ResourceManager.PlaywrightTesting
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
@@ -313,11 +348,13 @@ pr:
     - sdk/quota/Azure.ResourceManager.Quota
     - sdk/recoveryservices/Azure.ResourceManager.RecoveryServices
     - sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup
+    - sdk/recoveryservices-datareplication/Azure.ResourceManager.RecoveryServicesDataReplication
     - sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery
     - sdk/redis/Azure.ResourceManager.Redis
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
     - sdk/relay/Azure.ResourceManager.Relay
     - sdk/reservations/Azure.ResourceManager.Reservations
+    - sdk/resourceconnector/Azure.ResourceManager.ResourceConnector
     - sdk/resourcegraph/Azure.ResourceManager.ResourceGraph
     - sdk/resourcehealth/Azure.ResourceManager.ResourceHealth
     - sdk/resourcemover/Azure.ResourceManager.ResourceMover
@@ -333,9 +370,13 @@ pr:
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
     - sdk/servicenetworking/Azure.ResourceManager.ServiceNetworking
     - sdk/signalr/Azure.ResourceManager.SignalR
+    - sdk/sphere/Azure.ResourceManager.Sphere
+    - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
+    - sdk/standbypool/Azure.ResourceManager.StandbyPool
     - sdk/storage/Azure.ResourceManager.Storage
+    - sdk/storageactions/Azure.ResourceManager.StorageActions
     - sdk/storagecache/Azure.ResourceManager.StorageCache
     - sdk/storagemover/Azure.ResourceManager.StorageMover
     - sdk/storagepool/Azure.ResourceManager.StoragePool
@@ -345,6 +386,7 @@ pr:
     - sdk/support/Azure.ResourceManager.Support
     - sdk/synapse/Azure.ResourceManager.Synapse
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
+    - sdk/trustedsigning/Azure.ResourceManager.TrustedSigning
     - sdk/voiceservices/Azure.ResourceManager.VoiceServices
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
@@ -358,8 +400,8 @@ extends:
     BuildSnippets: false
     ArtifactName: packages
     Artifacts:
-    - name: Azure.ResourceManager
-      safeName: AzureResourceManager
+      - name: Azure.ResourceManager
+        safeName: AzureResourceManager
     TestSetupSteps:
-    - template: /sdk/storage/tests-install-azurite.yml
+      - template: /sdk/storage/tests-install-azurite.yml
     TestDependsOnDependency: Azure.ResourceManager

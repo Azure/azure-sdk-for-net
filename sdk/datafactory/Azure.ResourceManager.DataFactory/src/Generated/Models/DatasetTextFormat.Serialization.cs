@@ -6,117 +6,83 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DatasetTextFormat : IUtf8JsonSerializable
+    public partial class DatasetTextFormat : IUtf8JsonSerializable, IJsonModel<DatasetTextFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetTextFormat>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DatasetTextFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetTextFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ColumnDelimiter))
             {
                 writer.WritePropertyName("columnDelimiter"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ColumnDelimiter);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ColumnDelimiter.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ColumnDelimiter);
             }
             if (Optional.IsDefined(RowDelimiter))
             {
                 writer.WritePropertyName("rowDelimiter"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RowDelimiter);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RowDelimiter.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, RowDelimiter);
             }
             if (Optional.IsDefined(EscapeChar))
             {
                 writer.WritePropertyName("escapeChar"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EscapeChar);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EscapeChar.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, EscapeChar);
             }
             if (Optional.IsDefined(QuoteChar))
             {
                 writer.WritePropertyName("quoteChar"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(QuoteChar);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(QuoteChar.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, QuoteChar);
             }
             if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NullValue);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NullValue.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, NullValue);
             }
             if (Optional.IsDefined(EncodingName))
             {
                 writer.WritePropertyName("encodingName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncodingName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncodingName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, EncodingName);
             }
             if (Optional.IsDefined(TreatEmptyAsNull))
             {
                 writer.WritePropertyName("treatEmptyAsNull"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TreatEmptyAsNull);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(TreatEmptyAsNull.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, TreatEmptyAsNull);
             }
             if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SkipLineCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SkipLineCount.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SkipLineCount);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FirstRowAsHeader);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FirstRowAsHeader.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FirstRowAsHeader);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetStorageFormatType);
             if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Serializer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Serializer.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Serializer);
             }
             if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Deserializer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Deserializer.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Deserializer);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -124,30 +90,47 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static DatasetTextFormat DeserializeDatasetTextFormat(JsonElement element)
+        DatasetTextFormat IJsonModel<DatasetTextFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetTextFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetTextFormat(document.RootElement, options);
+        }
+
+        internal static DatasetTextFormat DeserializeDatasetTextFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BinaryData> columnDelimiter = default;
-            Optional<BinaryData> rowDelimiter = default;
-            Optional<BinaryData> escapeChar = default;
-            Optional<BinaryData> quoteChar = default;
-            Optional<BinaryData> nullValue = default;
-            Optional<BinaryData> encodingName = default;
-            Optional<BinaryData> treatEmptyAsNull = default;
-            Optional<BinaryData> skipLineCount = default;
-            Optional<BinaryData> firstRowAsHeader = default;
+            DataFactoryElement<string> columnDelimiter = default;
+            DataFactoryElement<string> rowDelimiter = default;
+            DataFactoryElement<string> escapeChar = default;
+            DataFactoryElement<string> quoteChar = default;
+            DataFactoryElement<string> nullValue = default;
+            DataFactoryElement<string> encodingName = default;
+            DataFactoryElement<bool> treatEmptyAsNull = default;
+            DataFactoryElement<int> skipLineCount = default;
+            DataFactoryElement<bool> firstRowAsHeader = default;
             string type = default;
-            Optional<BinaryData> serializer = default;
-            Optional<BinaryData> deserializer = default;
+            DataFactoryElement<string> serializer = default;
+            DataFactoryElement<string> deserializer = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    columnDelimiter = BinaryData.FromString(property.Value.GetRawText());
+                    columnDelimiter = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("rowDelimiter"u8))
@@ -167,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rowDelimiter = BinaryData.FromString(property.Value.GetRawText());
+                    rowDelimiter = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("escapeChar"u8))
@@ -176,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    escapeChar = BinaryData.FromString(property.Value.GetRawText());
+                    escapeChar = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("quoteChar"u8))
@@ -185,7 +168,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    quoteChar = BinaryData.FromString(property.Value.GetRawText());
+                    quoteChar = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("nullValue"u8))
@@ -194,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    nullValue = BinaryData.FromString(property.Value.GetRawText());
+                    nullValue = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("encodingName"u8))
@@ -203,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    encodingName = BinaryData.FromString(property.Value.GetRawText());
+                    encodingName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("treatEmptyAsNull"u8))
@@ -212,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    treatEmptyAsNull = BinaryData.FromString(property.Value.GetRawText());
+                    treatEmptyAsNull = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("skipLineCount"u8))
@@ -221,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    skipLineCount = BinaryData.FromString(property.Value.GetRawText());
+                    skipLineCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("firstRowAsHeader"u8))
@@ -230,7 +213,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    firstRowAsHeader = BinaryData.FromString(property.Value.GetRawText());
+                    firstRowAsHeader = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -244,7 +227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    serializer = BinaryData.FromString(property.Value.GetRawText());
+                    serializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("deserializer"u8))
@@ -253,13 +236,57 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    deserializer = BinaryData.FromString(property.Value.GetRawText());
+                    deserializer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DatasetTextFormat(type, serializer.Value, deserializer.Value, additionalProperties, columnDelimiter.Value, rowDelimiter.Value, escapeChar.Value, quoteChar.Value, nullValue.Value, encodingName.Value, treatEmptyAsNull.Value, skipLineCount.Value, firstRowAsHeader.Value);
+            return new DatasetTextFormat(
+                type,
+                serializer,
+                deserializer,
+                additionalProperties,
+                columnDelimiter,
+                rowDelimiter,
+                escapeChar,
+                quoteChar,
+                nullValue,
+                encodingName,
+                treatEmptyAsNull,
+                skipLineCount,
+                firstRowAsHeader);
         }
+
+        BinaryData IPersistableModel<DatasetTextFormat>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetTextFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DatasetTextFormat IPersistableModel<DatasetTextFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetTextFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatasetTextFormat(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatasetTextFormat)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatasetTextFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

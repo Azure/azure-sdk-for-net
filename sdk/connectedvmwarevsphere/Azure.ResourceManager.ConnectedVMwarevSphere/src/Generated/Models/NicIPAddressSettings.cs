@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> IP address information for a virtual network adapter reported by the fabric. </summary>
     public partial class NicIPAddressSettings
     {
-        /// <summary> Initializes a new instance of NicIPAddressSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NicIPAddressSettings"/>. </summary>
         internal NicIPAddressSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of NicIPAddressSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="NicIPAddressSettings"/>. </summary>
         /// <param name="allocationMethod"> Gets the ip address allocation method. </param>
         /// <param name="ipAddress"> Gets the ip address for the nic. </param>
         /// <param name="subnetMask"> Gets the mask. </param>
-        internal NicIPAddressSettings(string allocationMethod, string ipAddress, string subnetMask)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NicIPAddressSettings(string allocationMethod, string ipAddress, string subnetMask, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllocationMethod = allocationMethod;
             IPAddress = ipAddress;
             SubnetMask = subnetMask;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the ip address allocation method. </summary>

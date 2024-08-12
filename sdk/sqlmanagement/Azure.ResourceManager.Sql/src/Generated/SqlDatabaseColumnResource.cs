@@ -9,23 +9,28 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A Class representing a SqlDatabaseColumn along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SqlDatabaseColumnResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSqlDatabaseColumnResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseTableResource" /> using the GetSqlDatabaseColumn method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SqlDatabaseColumnResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSqlDatabaseColumnResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseTableResource"/> using the GetSqlDatabaseColumn method.
     /// </summary>
     public partial class SqlDatabaseColumnResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlDatabaseColumnResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="schemaName"> The schemaName. </param>
+        /// <param name="tableName"> The tableName. </param>
+        /// <param name="columnName"> The columnName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string columnName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}";
@@ -38,12 +43,15 @@ namespace Azure.ResourceManager.Sql
         private readonly SensitivityLabelsRestOperations _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient;
         private readonly DatabaseColumnData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/schemas/tables/columns";
+
         /// <summary> Initializes a new instance of the <see cref="SqlDatabaseColumnResource"/> class for mocking. </summary>
         protected SqlDatabaseColumnResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SqlDatabaseColumnResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SqlDatabaseColumnResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SqlDatabaseColumnResource(ArmClient client, DatabaseColumnData data) : this(client, data.Id)
@@ -67,9 +75,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/schemas/tables/columns";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,7 +101,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlDatabaseSensitivityLabelResources and their operations over a SqlDatabaseSensitivityLabelResource. </returns>
         public virtual SqlDatabaseSensitivityLabelCollection GetSqlDatabaseSensitivityLabels()
         {
-            return GetCachedClient(Client => new SqlDatabaseSensitivityLabelCollection(Client, Id));
+            return GetCachedClient(client => new SqlDatabaseSensitivityLabelCollection(client, Id));
         }
 
         /// <summary>
@@ -109,6 +114,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SensitivityLabels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSensitivityLabelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,6 +144,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>SensitivityLabels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSensitivityLabelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sensitivityLabelSource"> The source of the sensitivity label. </param>
@@ -151,6 +172,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseColumns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseColumnResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,6 +213,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseColumns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseColumnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,6 +253,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>SensitivityLabels_EnableRecommendation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSensitivityLabelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -245,6 +290,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SensitivityLabels_EnableRecommendation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSensitivityLabelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,6 +329,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>SensitivityLabels_DisableRecommendation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSensitivityLabelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -305,6 +366,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SensitivityLabels_DisableRecommendation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSensitivityLabelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

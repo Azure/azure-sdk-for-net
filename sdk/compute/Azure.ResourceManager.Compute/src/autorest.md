@@ -10,12 +10,16 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/a2140e7ff0a6c28df501b16c51fe85b762a386fc/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4e44971c375e4dbb03b75f8c6b91d0bd225f247d/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 update-required-copy:
   GalleryImage: OSType
@@ -32,7 +36,7 @@ keep-plural-enums:
 - IntervalInMins
 - VmGuestPatchClassificationForWindows # we have this because the generator will change windows to window which does not make sense
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -64,6 +68,8 @@ rename-rules:
   ZRS: Zrs
   RestorePointCollection: RestorePointGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
   EncryptionSettingsCollection: EncryptionSettingsGroup # the word `collection` is reserved by the SDK, therefore we need to rename all the occurrences of this in all resources and models
+  VHD: Vhd
+  VHDX: Vhdx
 
 list-exception:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}/restorePoints/{restorePointName} # compute RP did not provide an API for listing this resource
@@ -158,6 +164,7 @@ rename-mapping:
   DiskRestorePoint.properties.sourceResourceLocation: -|azure-location
   Encryption: DiskEncryption
   Encryption.diskEncryptionSetId: -|arm-id
+  Encryption.type: EncryptionType
   CreationData: DiskCreationData
   CreationData.storageAccountId: -|arm-id
   CreationData.sourceResourceId: -|arm-id
@@ -264,7 +271,13 @@ rename-mapping:
   SecurityPostureReference.id: -|arm-id
   CommunityGalleryImage.properties.identifier: ImageIdentifier
   GalleryTargetExtendedLocation.storageAccountType: GalleryStorageAccountType
-
+  FileFormat: DiskImageFileFormat
+  CreationData.elasticSanResourceId: -|arm-id
+  NetworkInterfaceAuxiliarySku: ComputeNetworkInterfaceAuxiliarySku
+  NetworkInterfaceAuxiliaryMode: ComputeNetworkInterfaceAuxiliaryMode
+  CommunityGalleryInfo.publisherUri: PublisherUriString
+  GalleryArtifactVersionFullSource.virtualMachineId: -|arm-id
+  
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
   - from: common.json
@@ -366,4 +379,13 @@ directive:
   - from: restorePoint.json
     where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
     transform: $["x-ms-client-name"] = "DataDiskList";
+  # Add a dummy property because generator tries to flatten automaticallyApprove in both UserInitiatedRedeploy and UserInitiatedReboot
+  - from: computeRPCommon.json
+    where: $.definitions.UserInitiatedRedeploy.properties
+    transform: >
+      $.dummyProperty = {
+        "type": "string",
+        "description": "This is a dummy property to prevent flattening."
+      };      
+    
 ```

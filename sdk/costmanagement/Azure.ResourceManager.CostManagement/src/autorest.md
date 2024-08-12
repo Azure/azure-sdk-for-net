@@ -10,9 +10,22 @@ namespace: Azure.ResourceManager.CostManagement
 require: https://github.com/Azure/azure-rest-api-specs/blob/20e9229b38b94c8975386b75c652b75e6d691995/specification/cost-management/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - BenefitRecommendations_List
+  - Forecast_Usage
+  - Dimensions_List
+  - Query_Usage
+  - ScheduledActions_CheckNameAvailabilityByScope
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 list-exception:
 - /providers/Microsoft.CostManagement/views/{viewName}
@@ -29,7 +42,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -51,11 +64,16 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
 
 request-path-to-resource-name:
   /providers/Microsoft.CostManagement/views/{viewName}: TenantsCostManagementViews
   /{scope}/providers/Microsoft.CostManagement/views/{viewName}: CostManagementViews
   /{scope}/providers/Microsoft.CostManagement/exports/{exportName}: CostManagementExport
+
+override-operation-name:
+  ScheduledActions_CheckNameAvailabilityByScope: CheckCostManagementNameAvailabilityByScopeScheduledAction
+  ScheduledActions_CheckNameAvailability: CheckCostManagementNameAvailabilityByScheduledAction
 
 prepend-rp-prefix:
   - Alert
@@ -78,8 +96,11 @@ rename-mapping:
   PivotType: ViewPivotType
   MetricType: ViewMetricType
   KpiType: ViewKpiType
+  KpiProperties: ViewKpiProperties
   ChartType: ViewChartType
   PivotProperties: ViewPivotProperties
+  ExecutionType: ExportRunExecutionType
+  ExecutionStatus: ExportRunExecutionStatus
   ErrorDetails: ExportRunErrorDetails
   BenefitKind: BillingAccountBenefitKind
   DaysOfWeek: ScheduledActionDaysOfWeek
@@ -89,9 +110,31 @@ rename-mapping:
   Scope: BenefitRecommendationScope
   Grain: BenefitRecommendationUsageGrain
   OperatorType: ComparisonOperatorType
+  DismissAlertPayload.properties.closeTime: CloseOn|datetime
+  DismissAlertPayload.properties.statusModificationTime: StatusModifiedOn|datetime
+  Alert.properties.modificationTime: ModifiedOn|datetime
+  Alert.properties.creationTime: CreatedOn|datetime
+  Alert.properties.statusModificationTime: StatusModifiedOn|datetime
+  View.properties.scope: -|arm-id
+  ScheduledAction.properties.scope: -|arm-id
+  ScheduledAction.properties.viewId: -|arm-id
+  ExportDeliveryDestination.resourceId: -|arm-id
+  KpiProperties.id: -|arm-id
+  Dimension.properties.filterEnabled: IsFilterEnabled
+  Dimension.properties.groupingEnabled: IsGroupingEnabled
+  KpiProperties.enabled: IsEnabled
+  CheckNameAvailabilityRequest: CostManagementNameAvailabilityContent
+  CheckNameAvailabilityResponse: CostManagementNameAvailabilityResult
+  CheckNameAvailabilityReason: CostManagementUnavailabilityReason
+  BenefitUtilizationSummariesRequest: BenefitUtilizationSummariesContent
+  GrainParameter: GrainContent
+  AlertPropertiesDefinition.type: AlertType
+
+suppress-abstract-base-class:
+- BenefitUtilizationSummary
 
 directive:
-  # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX 
+  # [Error][Linked: https://github.com/Azure/autorest.csharp/issues/3288] Found more than 1 candidate for XX
   - remove-operation: Views_List
   - remove-operation: ScheduledActions_List
   # [Build Error][LRO issue] Return 'Response' instead of 'Response<Foo>'

@@ -12,7 +12,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A copy activity Dynamics sink. </summary>
     public partial class DynamicsSink : CopySink
     {
-        /// <summary> Initializes a new instance of DynamicsSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsSink"/>. </summary>
         /// <param name="writeBehavior"> The write behavior for the operation. </param>
         public DynamicsSink(DynamicsSinkWriteBehavior writeBehavior)
         {
@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "DynamicsSink";
         }
 
-        /// <summary> Initializes a new instance of DynamicsSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsSink"/>. </summary>
         /// <param name="type"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

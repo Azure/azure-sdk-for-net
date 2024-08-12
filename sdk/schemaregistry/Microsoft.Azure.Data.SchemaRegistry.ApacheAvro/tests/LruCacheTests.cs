@@ -1,7 +1,8 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using NUnit.Framework;
+using Azure.Core;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 {

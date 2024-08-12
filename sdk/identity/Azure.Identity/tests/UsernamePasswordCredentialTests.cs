@@ -32,12 +32,24 @@ namespace Azure.Identity.Tests
 
             var options = new UsernamePasswordCredentialOptions
             {
-                Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
-                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
+            }
+            if (config.AuthenticationRecord != null)
+            {
+                options.AuthenticationRecord = config.AuthenticationRecord;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
-            return InstrumentClient(new UsernamePasswordCredential("user", "password", config.TenantId, ClientId, options, pipeline, null));
+            return InstrumentClient(new UsernamePasswordCredential("user", "password", config.TenantId, ClientId, options, pipeline, config.MockPublicMsalClient));
         }
 
         [Test]
@@ -45,7 +57,7 @@ namespace Azure.Identity.Tests
         {
             string expInnerExMessage = Guid.NewGuid().ToString();
 
-            var mockMsalClient = new MockMsalPublicClient() { UserPassAuthFactory = (_, _) => { throw new MockClientException(expInnerExMessage); } };
+            var mockMsalClient = new MockMsalPublicClient() { UserPassAuthFactory = (_, _, _, _, _, _) => { throw new MockClientException(expInnerExMessage); } };
 
             var username = Guid.NewGuid().ToString();
             var password = Guid.NewGuid().ToString();
@@ -66,33 +78,12 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
-        {
-            var username = Guid.NewGuid().ToString();
-            var password = Guid.NewGuid().ToString();
-            var clientId = Guid.NewGuid().ToString();
-            var tenantId = Guid.NewGuid().ToString();
-
-            var credential = new UsernamePasswordCredential(
-                username,
-                password,
-                clientId,
-                tenantId,
-                new TokenCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled },
-                default,
-                null);
-
-            Assert.NotNull(credential.Client);
-            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
-        }
-
-        [Test]
         public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
             var options = new UsernamePasswordCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint } };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
 
             var credential = InstrumentClient(new UsernamePasswordCredential("user", "password", TenantId, ClientId, options, null, mockPublicMsalClient));
 

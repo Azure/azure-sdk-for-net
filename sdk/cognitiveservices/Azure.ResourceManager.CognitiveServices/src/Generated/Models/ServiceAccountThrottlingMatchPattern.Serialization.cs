@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountThrottlingMatchPattern
+    public partial class ServiceAccountThrottlingMatchPattern : IUtf8JsonSerializable, IJsonModel<ServiceAccountThrottlingMatchPattern>
     {
-        internal static ServiceAccountThrottlingMatchPattern DeserializeServiceAccountThrottlingMatchPattern(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAccountThrottlingMatchPattern>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ServiceAccountThrottlingMatchPattern>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountThrottlingMatchPattern>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAccountThrottlingMatchPattern)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Path))
+            {
+                writer.WritePropertyName("path"u8);
+                writer.WriteStringValue(Path);
+            }
+            if (Optional.IsDefined(Method))
+            {
+                writer.WritePropertyName("method"u8);
+                writer.WriteStringValue(Method);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServiceAccountThrottlingMatchPattern IJsonModel<ServiceAccountThrottlingMatchPattern>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountThrottlingMatchPattern>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAccountThrottlingMatchPattern)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAccountThrottlingMatchPattern(document.RootElement, options);
+        }
+
+        internal static ServiceAccountThrottlingMatchPattern DeserializeServiceAccountThrottlingMatchPattern(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<string> method = default;
+            string path = default;
+            string method = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -32,8 +91,107 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     method = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceAccountThrottlingMatchPattern(path.Value, method.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServiceAccountThrottlingMatchPattern(path, method, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  path: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Path))
+                {
+                    builder.Append("  path: ");
+                    if (Path.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Path}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Path}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Method), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  method: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Method))
+                {
+                    builder.Append("  method: ");
+                    if (Method.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Method}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Method}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ServiceAccountThrottlingMatchPattern>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountThrottlingMatchPattern>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingMatchPattern)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServiceAccountThrottlingMatchPattern IPersistableModel<ServiceAccountThrottlingMatchPattern>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountThrottlingMatchPattern>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceAccountThrottlingMatchPattern(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAccountThrottlingMatchPattern)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceAccountThrottlingMatchPattern>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

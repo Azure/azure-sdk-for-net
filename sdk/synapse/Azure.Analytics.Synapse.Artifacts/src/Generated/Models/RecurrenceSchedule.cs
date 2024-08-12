@@ -6,14 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The recurrence schedule. </summary>
     public partial class RecurrenceSchedule
     {
-        /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecurrenceSchedule"/>. </summary>
         public RecurrenceSchedule()
         {
             Minutes = new ChangeTrackingList<int>();
@@ -24,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of RecurrenceSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecurrenceSchedule"/>. </summary>
         /// <param name="minutes"> The minutes. </param>
         /// <param name="hours"> The hours. </param>
         /// <param name="weekDays"> The days of the week. </param>

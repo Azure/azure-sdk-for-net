@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ElasticSan.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.ElasticSan
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-11-20-preview";
+            _apiVersion = apiVersion ?? "2023-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByElasticSanRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ElasticSan/elasticSans/", false);
+            uri.AppendPath(elasticSanName, true);
+            uri.AppendPath("/volumeGroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByElasticSanRequest(string subscriptionId, string resourceGroupName, string elasticSanName)
@@ -116,6 +130,22 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanVolumeGroupData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ElasticSan/elasticSans/", false);
+            uri.AppendPath(elasticSanName, true);
+            uri.AppendPath("/volumegroups/", false);
+            uri.AppendPath(volumeGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanVolumeGroupData data)
         {
             var message = _pipeline.CreateMessage();
@@ -136,7 +166,7 @@ namespace Azure.ResourceManager.ElasticSan
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -164,7 +194,7 @@ namespace Azure.ResourceManager.ElasticSan
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
+                case 201:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -193,11 +223,27 @@ namespace Azure.ResourceManager.ElasticSan
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
+                case 201:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanVolumeGroupPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ElasticSan/elasticSans/", false);
+            uri.AppendPath(elasticSanName, true);
+            uri.AppendPath("/volumegroups/", false);
+            uri.AppendPath(volumeGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName, ElasticSanVolumeGroupPatch patch)
@@ -220,7 +266,7 @@ namespace Azure.ResourceManager.ElasticSan
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -282,6 +328,22 @@ namespace Azure.ResourceManager.ElasticSan
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ElasticSan/elasticSans/", false);
+            uri.AppendPath(elasticSanName, true);
+            uri.AppendPath("/volumegroups/", false);
+            uri.AppendPath(volumeGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName)
@@ -360,6 +422,22 @@ namespace Azure.ResourceManager.ElasticSan
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ElasticSan/elasticSans/", false);
+            uri.AppendPath(elasticSanName, true);
+            uri.AppendPath("/volumegroups/", false);
+            uri.AppendPath(volumeGroupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName)
@@ -448,6 +526,14 @@ namespace Azure.ResourceManager.ElasticSan
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByElasticSanNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByElasticSanNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string elasticSanName)

@@ -8,12 +8,20 @@ azure-arm: true
 csharp: true
 library-name: ConfidentialLedger
 namespace: Azure.ResourceManager.ConfidentialLedger
-require: https://github.com/Azure/azure-rest-api-specs/blob/756495dd7e0e2f5181039def47a8c85ff0787b66/specification/confidentialledger/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/de1bc645b4c91e6cb3fddb5588c102ca050dd4da/specification/confidentialledger/resource-manager/readme.md
+#tag: package-preview-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 override-operation-name:
   CheckNameAvailability: CheckConfidentialLedgerNameAvailability
@@ -26,7 +34,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'principalId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -66,5 +74,14 @@ rename-mapping:
   LedgerRoleName: ConfidentialLedgerRoleName
   LedgerType: ConfidentialLedgerType
   ProvisioningState: ConfidentialLedgerProvisioningState
+  ConfidentialLedgerBackup: ConfidentialLedgerBackupContent
+  ConfidentialLedgerBackupResponse: ConfidentialLedgerBackupResult
+  ConfidentialLedgerRestore: ConfidentialLedgerRestoreContent
+  ConfidentialLedgerRestoreResponse: ConfidentialLedgerRestoreResult
+  ManagedCCFBackup: ManagedCcfBackupContent
+  ManagedCCFBackupResponse: ManagedCcfBackupResult
+  ManagedCCFRestore: ManagedCcfRestoreContent
+  ManagedCCFRestoreResponse: ManagedCcfRestoreResult
+  LedgerSku: ConfidentialLedgerSku
 
 ```

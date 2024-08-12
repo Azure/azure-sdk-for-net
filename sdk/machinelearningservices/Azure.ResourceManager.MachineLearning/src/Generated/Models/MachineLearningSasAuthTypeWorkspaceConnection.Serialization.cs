@@ -5,20 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningSasAuthTypeWorkspaceConnection : IUtf8JsonSerializable
+    public partial class MachineLearningSasAuthTypeWorkspaceConnection : IUtf8JsonSerializable, IJsonModel<MachineLearningSasAuthTypeWorkspaceConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningSasAuthTypeWorkspaceConnection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningSasAuthTypeWorkspaceConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSasAuthTypeWorkspaceConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningSasAuthTypeWorkspaceConnection)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue(Credentials, options);
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
@@ -27,36 +38,74 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
+            if (Optional.IsDefined(ExpiryOn))
+            {
+                writer.WritePropertyName("expiryTime"u8);
+                writer.WriteStringValue(ExpiryOn.Value, "O");
+            }
+            if (Optional.IsDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Metadata);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Metadata))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
-            if (Optional.IsDefined(Value))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
-            }
-            if (Optional.IsDefined(ValueFormat))
-            {
-                writer.WritePropertyName("valueFormat"u8);
-                writer.WriteStringValue(ValueFormat.Value.ToString());
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningSasAuthTypeWorkspaceConnection DeserializeMachineLearningSasAuthTypeWorkspaceConnection(JsonElement element)
+        MachineLearningSasAuthTypeWorkspaceConnection IJsonModel<MachineLearningSasAuthTypeWorkspaceConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSasAuthTypeWorkspaceConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningSasAuthTypeWorkspaceConnection)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningSasAuthTypeWorkspaceConnection(document.RootElement, options);
+        }
+
+        internal static MachineLearningSasAuthTypeWorkspaceConnection DeserializeMachineLearningSasAuthTypeWorkspaceConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<WorkspaceConnectionSharedAccessSignature> credentials = default;
+            WorkspaceConnectionSharedAccessSignature credentials = default;
             MachineLearningConnectionAuthType authType = default;
-            Optional<MachineLearningConnectionCategory> category = default;
-            Optional<string> target = default;
-            Optional<string> value = default;
-            Optional<MachineLearningValueFormat> valueFormat = default;
+            MachineLearningConnectionCategory? category = default;
+            DateTimeOffset? expiryTime = default;
+            BinaryData metadata = default;
+            string target = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("credentials"u8))
@@ -65,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    credentials = WorkspaceConnectionSharedAccessSignature.DeserializeWorkspaceConnectionSharedAccessSignature(property.Value);
+                    credentials = WorkspaceConnectionSharedAccessSignature.DeserializeWorkspaceConnectionSharedAccessSignature(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authType"u8))
@@ -82,27 +131,74 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     category = new MachineLearningConnectionCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("target"u8))
-                {
-                    target = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("value"u8))
-                {
-                    value = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("valueFormat"u8))
+                if (property.NameEquals("expiryTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valueFormat = new MachineLearningValueFormat(property.Value.GetString());
+                    expiryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    metadata = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("target"u8))
+                {
+                    target = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningSasAuthTypeWorkspaceConnection(authType, Optional.ToNullable(category), target.Value, value.Value, Optional.ToNullable(valueFormat), credentials.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningSasAuthTypeWorkspaceConnection(
+                authType,
+                category,
+                expiryTime,
+                metadata,
+                target,
+                serializedAdditionalRawData,
+                credentials);
         }
+
+        BinaryData IPersistableModel<MachineLearningSasAuthTypeWorkspaceConnection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSasAuthTypeWorkspaceConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningSasAuthTypeWorkspaceConnection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningSasAuthTypeWorkspaceConnection IPersistableModel<MachineLearningSasAuthTypeWorkspaceConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSasAuthTypeWorkspaceConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningSasAuthTypeWorkspaceConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningSasAuthTypeWorkspaceConnection)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningSasAuthTypeWorkspaceConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

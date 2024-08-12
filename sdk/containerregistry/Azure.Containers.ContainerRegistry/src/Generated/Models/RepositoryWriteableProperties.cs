@@ -10,9 +10,22 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Changeable attributes for Repository. </summary>
     internal partial class RepositoryWriteableProperties
     {
-        /// <summary> Initializes a new instance of RepositoryWriteableProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RepositoryWriteableProperties"/>. </summary>
         public RepositoryWriteableProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RepositoryWriteableProperties"/>. </summary>
+        /// <param name="canDelete"> Delete enabled. </param>
+        /// <param name="canWrite"> Write enabled. </param>
+        /// <param name="canList"> List enabled. </param>
+        /// <param name="canRead"> Read enabled. </param>
+        internal RepositoryWriteableProperties(bool? canDelete, bool? canWrite, bool? canList, bool? canRead)
+        {
+            CanDelete = canDelete;
+            CanWrite = canWrite;
+            CanList = canList;
+            CanRead = canRead;
         }
 
         /// <summary> Delete enabled. </summary>

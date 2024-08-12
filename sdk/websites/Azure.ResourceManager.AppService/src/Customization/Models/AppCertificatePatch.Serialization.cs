@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -11,36 +12,44 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppCertificatePatch : IUtf8JsonSerializable
+    public partial class AppCertificatePatch : IUtf8JsonSerializable, IJsonModel<AppCertificatePatch>
     {
-        internal static AppCertificatePatch DeserializeAppCertificatePatch(JsonElement element)
+        internal static AppCertificatePatch DeserializeAppCertificatePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            Optional<string> kind = default;
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> password = default;
-            Optional<string> friendlyName = default;
-            Optional<string> subjectName = default;
-            Optional<IList<string>> hostNames = default;
-            Optional<byte[]> pfxBlob = default;
-            Optional<string> siteName = default;
-            Optional<string> selfLink = default;
-            Optional<string> issuer = default;
-            Optional<DateTimeOffset> issueDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> thumbprintString = default;
-            Optional<bool> valid = default;
-            Optional<byte[]> cerBlob = default;
-            Optional<string> publicKeyHash = default;
-            Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
-            Optional<ResourceIdentifier> keyVaultId = default;
-            Optional<string> keyVaultSecretName = default;
-            Optional<KeyVaultSecretStatus> keyVaultSecretStatus = default;
-            Optional<ResourceIdentifier> serverFarmId = default;
-            Optional<string> canonicalName = default;
-            Optional<string> domainValidationMethod = default;
+            SystemData systemData = default;
+            string password = default;
+            string friendlyName = default;
+            string subjectName = default;
+            IList<string> hostNames = default;
+            byte[] pfxBlob = default;
+            string siteName = default;
+            string selfLink = default;
+            string issuer = default;
+            DateTimeOffset? issueDate = default;
+            DateTimeOffset? expirationDate = default;
+            string thumbprintString = default;
+            bool? valid = default;
+            byte[] cerBlob = default;
+            string publicKeyHash = default;
+            HostingEnvironmentProfile hostingEnvironmentProfile = default;
+            ResourceIdentifier keyVaultId = default;
+            string keyVaultSecretName = default;
+            KeyVaultSecretStatus? keyVaultSecretStatus = default;
+            ResourceIdentifier serverFarmId = default;
+            string canonicalName = default;
+            string domainValidationMethod = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -67,7 +76,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -77,7 +85,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -250,8 +257,40 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppCertificatePatch(id, name, type, systemData.Value, password.Value, friendlyName.Value, subjectName.Value, Optional.ToList(hostNames), pfxBlob.Value, siteName.Value, selfLink.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprintString.Value, Optional.ToNullable(valid), cerBlob.Value, publicKeyHash.Value, hostingEnvironmentProfile.Value, keyVaultId.Value, keyVaultSecretName.Value, Optional.ToNullable(keyVaultSecretStatus), serverFarmId.Value, canonicalName.Value, domainValidationMethod.Value, kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppCertificatePatch(
+                id,
+                name,
+                type,
+                systemData,
+                password,
+                friendlyName,
+                subjectName,
+                hostNames ?? new ChangeTrackingList<string>(),
+                pfxBlob,
+                siteName,
+                selfLink,
+                issuer,
+                issueDate,
+                expirationDate,
+                thumbprintString,
+                valid,
+                cerBlob,
+                publicKeyHash,
+                hostingEnvironmentProfile,
+                keyVaultId,
+                keyVaultSecretName,
+                keyVaultSecretStatus,
+                serverFarmId,
+                canonicalName,
+                domainValidationMethod,
+                kind,
+                serializedAdditionalRawData);
         }
     }
 }

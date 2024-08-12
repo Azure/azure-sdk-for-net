@@ -65,10 +65,10 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            Optional<IList<string>> actions = default;
-            Optional<IList<string>> notActions = default;
-            Optional<IList<KeyVaultDataAction>> dataActions = default;
-            Optional<IList<KeyVaultDataAction>> notDataActions = default;
+            IList<string> actions = default;
+            IList<string> notActions = default;
+            IList<KeyVaultDataAction> dataActions = default;
+            IList<KeyVaultDataAction> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))
@@ -128,7 +128,23 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions));
+            return new KeyVaultPermission(actions ?? new ChangeTrackingList<string>(), notActions ?? new ChangeTrackingList<string>(), dataActions ?? new ChangeTrackingList<KeyVaultDataAction>(), notDataActions ?? new ChangeTrackingList<KeyVaultDataAction>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyVaultPermission FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyVaultPermission(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

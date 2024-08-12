@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Client secret information for factory's bring your own app repository configuration. </summary>
     public partial class GitHubClientSecret
     {
-        /// <summary> Initializes a new instance of GitHubClientSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubClientSecret"/>. </summary>
         public GitHubClientSecret()
         {
         }
 
-        /// <summary> Initializes a new instance of GitHubClientSecret. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubClientSecret"/>. </summary>
         /// <param name="byoaSecretAkvUrl"> Bring your own app client secret AKV URL. </param>
         /// <param name="byoaSecretName"> Bring your own app client secret name in AKV. </param>
         internal GitHubClientSecret(string byoaSecretAkvUrl, string byoaSecretName)

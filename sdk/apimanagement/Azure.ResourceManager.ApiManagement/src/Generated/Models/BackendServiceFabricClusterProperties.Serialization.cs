@@ -5,16 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendServiceFabricClusterProperties : IUtf8JsonSerializable
+    public partial class BackendServiceFabricClusterProperties : IUtf8JsonSerializable, IJsonModel<BackendServiceFabricClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendServiceFabricClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<BackendServiceFabricClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackendServiceFabricClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackendServiceFabricClusterProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientCertificateId))
             {
@@ -54,25 +66,56 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ServerX509Names)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BackendServiceFabricClusterProperties DeserializeBackendServiceFabricClusterProperties(JsonElement element)
+        BackendServiceFabricClusterProperties IJsonModel<BackendServiceFabricClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackendServiceFabricClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackendServiceFabricClusterProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackendServiceFabricClusterProperties(document.RootElement, options);
+        }
+
+        internal static BackendServiceFabricClusterProperties DeserializeBackendServiceFabricClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> clientCertificateId = default;
-            Optional<string> clientCertificatethumbprint = default;
-            Optional<int> maxPartitionResolutionRetries = default;
+            string clientCertificateId = default;
+            string clientCertificatethumbprint = default;
+            int? maxPartitionResolutionRetries = default;
             IList<string> managementEndpoints = default;
-            Optional<IList<string>> serverCertificateThumbprints = default;
-            Optional<IList<X509CertificateName>> serverX509Names = default;
+            IList<string> serverCertificateThumbprints = default;
+            IList<X509CertificateName> serverX509Names = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientCertificateId"u8))
@@ -127,13 +170,229 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<X509CertificateName> array = new List<X509CertificateName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(X509CertificateName.DeserializeX509CertificateName(item));
+                        array.Add(X509CertificateName.DeserializeX509CertificateName(item, options));
                     }
                     serverX509Names = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackendServiceFabricClusterProperties(clientCertificateId.Value, clientCertificatethumbprint.Value, Optional.ToNullable(maxPartitionResolutionRetries), managementEndpoints, Optional.ToList(serverCertificateThumbprints), Optional.ToList(serverX509Names));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BackendServiceFabricClusterProperties(
+                clientCertificateId,
+                clientCertificatethumbprint,
+                maxPartitionResolutionRetries,
+                managementEndpoints,
+                serverCertificateThumbprints ?? new ChangeTrackingList<string>(),
+                serverX509Names ?? new ChangeTrackingList<X509CertificateName>(),
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientCertificateId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientCertificateId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientCertificateId))
+                {
+                    builder.Append("  clientCertificateId: ");
+                    if (ClientCertificateId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientCertificateId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientCertificateId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientCertificatethumbprint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  clientCertificatethumbprint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClientCertificatethumbprint))
+                {
+                    builder.Append("  clientCertificatethumbprint: ");
+                    if (ClientCertificatethumbprint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientCertificatethumbprint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientCertificatethumbprint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxPartitionResolutionRetries), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxPartitionResolutionRetries: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxPartitionResolutionRetries))
+                {
+                    builder.Append("  maxPartitionResolutionRetries: ");
+                    builder.AppendLine($"{MaxPartitionResolutionRetries.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagementEndpoints), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  managementEndpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ManagementEndpoints))
+                {
+                    if (ManagementEndpoints.Any())
+                    {
+                        builder.Append("  managementEndpoints: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ManagementEndpoints)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerCertificateThumbprints), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverCertificateThumbprints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ServerCertificateThumbprints))
+                {
+                    if (ServerCertificateThumbprints.Any())
+                    {
+                        builder.Append("  serverCertificateThumbprints: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ServerCertificateThumbprints)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerX509Names), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serverX509Names: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ServerX509Names))
+                {
+                    if (ServerX509Names.Any())
+                    {
+                        builder.Append("  serverX509Names: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ServerX509Names)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  serverX509Names: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<BackendServiceFabricClusterProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackendServiceFabricClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(BackendServiceFabricClusterProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackendServiceFabricClusterProperties IPersistableModel<BackendServiceFabricClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackendServiceFabricClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBackendServiceFabricClusterProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackendServiceFabricClusterProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackendServiceFabricClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

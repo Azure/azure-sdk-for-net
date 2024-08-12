@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NetworkFabricControllersGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkFabricControllers_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabricControllers_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkFabricControllers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,9 +31,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricControllerResource created on azure
             // for more information of creating NetworkFabricControllerResource, please refer to the document of NetworkFabricControllerResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkFabricControllerName = "networkFabricControllerName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkFabricControllerName = "example-networkController";
             ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
             NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
 
@@ -55,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_NetworkFabricControllersUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkFabricControllers_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabricControllers_Update_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkFabricControllers_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,18 +62,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricControllerResource created on azure
             // for more information of creating NetworkFabricControllerResource, please refer to the document of NetworkFabricControllerResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkFabricControllerName = "networkFabricControllerName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkFabricControllerName = "example-networkController";
             ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
             NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
 
             // invoke the operation
             NetworkFabricControllerPatch patch = new NetworkFabricControllerPatch()
             {
+                InfrastructureExpressRouteConnections =
+{
+new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
+{
+ExpressRouteAuthorizationKey = "xxxxxxx",
+}
+},
                 WorkloadExpressRouteConnections =
 {
-new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName","xxxxxxx")
+new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
+{
+ExpressRouteAuthorizationKey = "xxxxxxx",
+}
 },
             };
             ArmOperation<NetworkFabricControllerResource> lro = await networkFabricController.UpdateAsync(WaitUntil.Completed, patch);
@@ -94,7 +101,7 @@ new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resou
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_NetworkFabricControllersDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkFabricControllers_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabricControllers_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkFabricControllers_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,9 +111,9 @@ new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resou
 
             // this example assumes you already have this NetworkFabricControllerResource created on azure
             // for more information of creating NetworkFabricControllerResource, please refer to the document of NetworkFabricControllerResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkFabricControllerName = "networkFabricControllerName";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string resourceGroupName = "example-rg";
+            string networkFabricControllerName = "example-networkController";
             ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
             NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
 
@@ -121,7 +128,7 @@ new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resou
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetworkFabricControllers_NetworkFabricControllersListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkFabricControllers_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabricControllers_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "NetworkFabricControllers_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +138,7 @@ new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resou
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -144,60 +151,6 @@ new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resou
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // NetworkFabricControllers_enableWorkloadManagementNetwork_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task EnableWorkloadManagementNetwork_NetworkFabricControllersEnableWorkloadManagementNetworkMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkFabricControllers_enableWorkloadManagementNetwork_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabricControllers_enableWorkloadManagementNetwork" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkFabricControllerResource created on azure
-            // for more information of creating NetworkFabricControllerResource, please refer to the document of NetworkFabricControllerResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkFabricControllerName = "networkFabricControllerName";
-            ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
-            NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
-
-            // invoke the operation
-            await networkFabricController.EnableWorkloadManagementNetworkAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // NetworkFabricControllers_disableWorkloadManagementNetwork_MaximumSet_Gen
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DisableWorkloadManagementNetwork_NetworkFabricControllersDisableWorkloadManagementNetworkMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2023-02-01-preview/examples/NetworkFabricControllers_disableWorkloadManagementNetwork_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkFabricControllers_disableWorkloadManagementNetwork" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkFabricControllerResource created on azure
-            // for more information of creating NetworkFabricControllerResource, please refer to the document of NetworkFabricControllerResource
-            string subscriptionId = "subscriptionId";
-            string resourceGroupName = "resourceGroupName";
-            string networkFabricControllerName = "networkFabricControllerName";
-            ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkFabricControllerName);
-            NetworkFabricControllerResource networkFabricController = client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
-
-            // invoke the operation
-            await networkFabricController.DisableWorkloadManagementNetworkAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

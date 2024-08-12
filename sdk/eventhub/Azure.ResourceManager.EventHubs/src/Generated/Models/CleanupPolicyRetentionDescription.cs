@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         private const string DeleteValue = "Delete";
-        private const string CompactionValue = "Compaction";
+        private const string CompactionValue = "Compact";
 
         /// <summary> Delete. </summary>
         public static CleanupPolicyRetentionDescription Delete { get; } = new CleanupPolicyRetentionDescription(DeleteValue);
-        /// <summary> Compaction. </summary>
+        /// <summary> Compact. </summary>
         public static CleanupPolicyRetentionDescription Compaction { get; } = new CleanupPolicyRetentionDescription(CompactionValue);
         /// <summary> Determines if two <see cref="CleanupPolicyRetentionDescription"/> values are the same. </summary>
         public static bool operator ==(CleanupPolicyRetentionDescription left, CleanupPolicyRetentionDescription right) => left.Equals(right);
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

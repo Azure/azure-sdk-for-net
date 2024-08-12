@@ -6,15 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Storage Service Properties. </summary>
     public partial class BlobServiceProperties
     {
-
-        /// <summary> Initializes a new instance of BlobServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobServiceProperties"/>. </summary>
         /// <param name="logging"> Azure Analytics Logging settings. </param>
         /// <param name="hourMetrics"> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </param>
         /// <param name="minuteMetrics"> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </param>

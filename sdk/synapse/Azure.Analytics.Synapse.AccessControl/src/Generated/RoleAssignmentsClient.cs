@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -148,7 +147,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignmentsAsync(string,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRoleAssignmentsAsync(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestContext context = null)
+        public virtual async Task<Response> GetRoleAssignmentsAsync(string roleId, string principalId, string scope, string continuationToken, RequestContext context)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
             scope0.Start();
@@ -182,7 +181,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignments(string,string,string,string,RequestContext)']/*" />
-        public virtual Response GetRoleAssignments(string roleId = null, string principalId = null, string scope = null, string continuationToken = null, RequestContext context = null)
+        public virtual Response GetRoleAssignments(string roleId, string principalId, string scope, string continuationToken, RequestContext context)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsClient.GetRoleAssignments");
             scope0.Start();
@@ -291,7 +290,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignmentByIdAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestContext context = null)
+        public virtual async Task<Response> GetRoleAssignmentByIdAsync(string roleAssignmentId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
@@ -326,7 +325,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleAssignmentsClient.xml" path="doc/members/member[@name='GetRoleAssignmentById(string,RequestContext)']/*" />
-        public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestContext context = null)
+        public virtual Response GetRoleAssignmentById(string roleAssignmentId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
 
@@ -454,11 +453,11 @@ namespace Azure.Analytics.Synapse.AccessControl
                 uri.AppendQuery("scope", scope, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, text/json");
             if (continuationToken != null)
             {
                 request.Headers.Add("x-ms-continuation", continuationToken);
             }
-            request.Headers.Add("Accept", "application/json, text/json");
             return message;
         }
 

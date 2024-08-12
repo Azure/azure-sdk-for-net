@@ -12,18 +12,23 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Provides a default <see cref="TokenCredential"/> authentication flow for applications that will be deployed to Azure.  The following credential
-    /// types if enabled will be tried, in order:
+    /// <see cref="DefaultAzureCredential"/> simplifies authentication while developing applications that deploy to Azure by
+    /// combining credentials used in Azure hosting environments and credentials used in local development. In
+    /// production, it's better to use a specific credential type so authentication is more predictable and easier
+    /// to debug.
+    ///
+    /// <see cref="DefaultAzureCredential"/> attempts to authenticate with each of these credential types, in the following order,
+    /// stopping when one provides a token:
     /// <list type="bullet">
     /// <item><description><see cref="EnvironmentCredential"/></description></item>
     /// <item><description><see cref="WorkloadIdentityCredential"/></description></item>
     /// <item><description><see cref="ManagedIdentityCredential"/></description></item>
-    /// <item><description><see cref="AzureDeveloperCliCredential"/></description></item>
     /// <item><description><see cref="SharedTokenCacheCredential"/></description></item>
     /// <item><description><see cref="VisualStudioCredential"/></description></item>
     /// <item><description><see cref="VisualStudioCodeCredential"/></description></item>
     /// <item><description><see cref="AzureCliCredential"/></description></item>
     /// <item><description><see cref="AzurePowerShellCredential"/></description></item>
+    /// <item><description><see cref="AzureDeveloperCliCredential"/></description></item>
     /// <item><description><see cref="InteractiveBrowserCredential"/></description></item>
     /// </list>
     /// Consult the documentation of these credential types for more information on how they attempt authentication.
@@ -36,15 +41,21 @@ namespace Azure.Identity
     /// <example>
     /// <para>
     /// This example demonstrates authenticating the BlobClient from the Azure.Storage.Blobs client library using the DefaultAzureCredential,
-    /// deployed to an Azure resource with a user assigned managed identity configured.
+    /// deployed to an Azure resource with a user-assigned managed identity configured.
     /// </para>
-    /// <code snippet="Snippet:UserAssignedManagedIdentity" language="csharp">
-    /// // When deployed to an azure host, the default azure credential will authenticate the specified user assigned managed identity.
+    /// <code snippet="Snippet:UserAssignedManagedIdentityWithClientId" language="csharp">
+    /// // When deployed to an Azure host, DefaultAzureCredential will authenticate the specified user-assigned managed identity.
     ///
-    /// string userAssignedClientId = &quot;&lt;your managed identity client Id&gt;&quot;;
-    /// var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
+    /// string userAssignedClientId = &quot;&lt;your managed identity client ID&gt;&quot;;
+    /// var credential = new DefaultAzureCredential(
+    ///     new DefaultAzureCredentialOptions
+    ///     {
+    ///         ManagedIdentityClientId = userAssignedClientId
+    ///     });
     ///
-    /// var blobClient = new BlobClient(new Uri(&quot;https://myaccount.blob.core.windows.net/mycontainer/myblob&quot;), credential);
+    /// var blobClient = new BlobClient(
+    ///     new Uri(&quot;https://myaccount.blob.core.windows.net/mycontainer/myblob&quot;),
+    ///     credential);
     /// </code>
     /// </example>
     public class DefaultAzureCredential : TokenCredential
@@ -58,7 +69,10 @@ namespace Azure.Identity
 
         internal TokenCredential[] _sources;
 
-        internal DefaultAzureCredential() : this(false) { }
+        /// <summary>
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
+        /// </summary>
+        protected DefaultAzureCredential() : this(false) { }
 
         /// <summary>
         /// Creates an instance of the DefaultAzureCredential class.
@@ -72,9 +86,9 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of the <see cref="DefaultAzureCredential"/> class.
         /// </summary>
-        /// <param name="options">Options that configure the management of the requests sent to Azure Active Directory services, and determine which credentials are included in the <see cref="DefaultAzureCredential"/> authentication flow.</param>
+        /// <param name="options">Options that configure the management of the requests sent to Microsoft Entra ID, and determine which credentials are included in the <see cref="DefaultAzureCredential"/> authentication flow.</param>
         public DefaultAzureCredential(DefaultAzureCredentialOptions options)
-            // we call ValidateAuthoriyHostOption to validate that we have a valid authority host before constructing the DAC chain
+            // we call ValidateAuthorityHostOption to validate that we have a valid authority host before constructing the DAC chain
             // if we don't validate this up front it will end up throwing an exception out of a static initializer which obscures the error.
             : this(new DefaultAzureCredentialFactory(ValidateAuthorityHostOption(options)))
         {
@@ -100,6 +114,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
@@ -118,6 +133,7 @@ namespace Azure.Identity
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);

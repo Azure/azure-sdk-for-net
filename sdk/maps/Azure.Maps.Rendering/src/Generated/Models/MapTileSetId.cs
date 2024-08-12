@@ -35,8 +35,6 @@ namespace Azure.Maps.Rendering
         private const string MicrosoftImageryValue = "microsoft.imagery";
         private const string MicrosoftWeatherRadarMainValue = "microsoft.weather.radar.main";
         private const string MicrosoftWeatherInfraredMainValue = "microsoft.weather.infrared.main";
-        private const string MicrosoftDemValue = "microsoft.dem";
-        private const string MicrosoftDemContoursValue = "microsoft.dem.contours";
         private const string MicrosoftTrafficAbsoluteValue = "microsoft.traffic.absolute";
         private const string MicrosoftTrafficAbsoluteMainValue = "microsoft.traffic.absolute.main";
         private const string MicrosoftTrafficRelativeValue = "microsoft.traffic.relative";
@@ -49,101 +47,82 @@ namespace Azure.Maps.Rendering
 
         /// <summary>
         /// A base map is a standard map that displays roads, natural and artificial features along with the labels for those features in a vector tile.&lt;br&gt;
-        /// 
+        ///
         /// Supports zoom levels 0 through 22. Format: vector (pbf).
         /// </summary>
         public static MapTileSetId MicrosoftBase { get; } = new MapTileSetId(MicrosoftBaseValue);
         /// <summary>
         /// Displays labels for roads, natural and artificial features in a vector tile.&lt;br&gt;
-        /// 
+        ///
         /// Supports zoom levels 0 through 22. Format: vector (pbf).
         /// </summary>
         public static MapTileSetId MicrosoftBaseLabels { get; } = new MapTileSetId(MicrosoftBaseLabelsValue);
         /// <summary>
         /// Displays road, boundary and label data in a vector tile.&lt;br&gt;
-        /// 
+        ///
         /// Supports zoom levels 0 through 22. Format: vector (pbf).
         /// </summary>
         public static MapTileSetId MicrosoftBaseHybrid { get; } = new MapTileSetId(MicrosoftBaseHybridValue);
         /// <summary>
         /// Shaded relief and terra layers.&lt;br&gt;
-        /// 
+        ///
         /// Supports zoom levels 0 through 6. Format: raster (png).
         /// </summary>
         public static MapTileSetId MicrosoftTerraMain { get; } = new MapTileSetId(MicrosoftTerraMainValue);
         /// <summary>
         /// All layers with our main style.&lt;br&gt;
-        /// 
+        ///
         /// Supports zoom levels 0 through 22. Format: raster (png).
         /// </summary>
         public static MapTileSetId MicrosoftBaseRoad { get; } = new MapTileSetId(MicrosoftBaseRoadValue);
         /// <summary>
         /// All layers with our dark grey style.&lt;br&gt;
-        /// 
+        ///
         /// Supports zoom levels 0 through 22. Format: raster (png).
         /// </summary>
         public static MapTileSetId MicrosoftBaseDarkgrey { get; } = new MapTileSetId(MicrosoftBaseDarkgreyValue);
         /// <summary>
         /// Label data in our main style.&lt;br&gt;
-        /// 
+        ///
         /// Supports zoom levels 0 through 22. Format: raster (png).
         /// </summary>
         public static MapTileSetId MicrosoftBaseLabelsRoad { get; } = new MapTileSetId(MicrosoftBaseLabelsRoadValue);
         /// <summary>
         /// Label data in our dark grey style.&lt;br&gt;
-        /// 
+        ///
         /// Supports zoom levels 0 through 22. Format: raster (png).
         /// </summary>
         public static MapTileSetId MicrosoftBaseLabelsDarkgrey { get; } = new MapTileSetId(MicrosoftBaseLabelsDarkgreyValue);
         /// <summary>
         /// Road, boundary and label data in our main style.&lt;br&gt;
-        /// 
+        ///
         /// Supports zoom levels 0 through 22. Format: raster (png).
         /// </summary>
         public static MapTileSetId MicrosoftBaseHybridRoad { get; } = new MapTileSetId(MicrosoftBaseHybridRoadValue);
         /// <summary>
         /// Road, boundary and label data in our dark grey style.&lt;br&gt;
-        /// 
+        ///
         /// Supports zoom levels 0 through 22. Format: raster (png).
         /// </summary>
         public static MapTileSetId MicrosoftBaseHybridDarkgrey { get; } = new MapTileSetId(MicrosoftBaseHybridDarkgreyValue);
         /// <summary>
         /// A combination of satellite and aerial imagery. Only available in S1 pricing SKU.&lt;br&gt;
-        /// 
+        ///
         /// Supports zoom levels 1 through 19. Format: raster (jpeg).
         /// </summary>
         public static MapTileSetId MicrosoftImagery { get; } = new MapTileSetId(MicrosoftImageryValue);
         /// <summary>
-        /// Weather radar tiles. Latest weather radar images including areas of rain, snow, ice and mixed conditions. Please see [coverage information](https://aka.ms/AzureMapsWeatherCoverage) for Azure Maps Weather service.  To learn more about the Radar data, please see [Weather concepts](https://aka.ms/AzureMapsWeatherConcepts).&lt;br&gt;
-        /// 
+        /// Weather radar tiles. Latest weather radar images including areas of rain, snow, ice and mixed conditions. For more information on the Azure Maps Weather service coverage, see [Azure Maps weather services coverage](/azure/azure-maps/weather-coverage).  For more information on Radar data, see [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#radar-images).
+        ///
         /// Supports zoom levels 0 through 15. Format: raster (png).
         /// </summary>
         public static MapTileSetId MicrosoftWeatherRadarMain { get; } = new MapTileSetId(MicrosoftWeatherRadarMainValue);
         /// <summary>
-        /// Weather infrared tiles. Latest Infrared Satellite images shows clouds by their temperature.  Please see [coverage information](https://aka.ms/AzureMapsWeatherCoverage) for Azure Maps Weather service. To learn more about the returned Satellite data, please see [Weather concepts](https://aka.ms/AzureMapsWeatherConcepts).&lt;br&gt;
-        /// 
+        /// Weather infrared tiles. Latest Infrared Satellite images shows clouds by their temperature.  For more information, see [Azure Maps weather services coverage](/azure/azure-maps/weather-coverage). For more information about the satellite data returned, see [Weather services in Azure Maps](/azure-maps/weather-services-concepts#satellite-images).
+        ///
         /// Supports zoom levels 0 through 15. Format: raster (png).
         /// </summary>
         public static MapTileSetId MicrosoftWeatherInfraredMain { get; } = new MapTileSetId(MicrosoftWeatherInfraredMainValue);
-        /// <summary>
-        /// Digital Elevation Model tiles. The tiles are in the GeoTIFF format with a single 32-bit floating point band. The tiles cover the whole landmass of Earth. Some small islands (e.g., atolls) might not be represented accurately.&lt;br&gt;
-        /// * The vertical unit for measurement of elevation height is meters. An elevation value of -32767.0 is used for points that have no data value, most often returned where there isn't landmass (i.e. water).&lt;br&gt;
-        /// * The horizontal reference datum is the World Geodetic System 1984 (WGS84-G1150) and the vertical reference datum is the Earth Gravitational Model 2008 (EGM2008).&lt;br&gt;
-        /// * Tiles are 258x258 pixel squares rather than the standard 256 x 256. This is done to allow for accurate interpolation of values at the tile edges. As such adjacent tiles overlap by 1 pixel along all edges.&lt;br&gt;
-        /// * Tile data comes from the [Airbus WorldDEM4Ortho product](https://www.intelligence-airbusds.com/worlddem-streaming/). Urban areas are approximately leveled down to ground level. All other areas are represented by the object surface level (e.g., trees). &lt;br&gt;
-        /// 
-        /// Supports zoom level 13 only. Format: raster (tiff).
-        /// </summary>
-        public static MapTileSetId MicrosoftDem { get; } = new MapTileSetId(MicrosoftDemValue);
-        /// <summary>
-        /// Digital elevation contour line tiles. Compared to the microsoft.dem option, these tiles are in vector format and intended for visualization purpose. The tiles cover the whole landmass of Earth. Some small islands (e.g., atolls) might not be represented accurately.&lt;br&gt;
-        /// * The vertical unit for measurement of elevation height is meters.&lt;br&gt;
-        /// * The horizontal reference datum is the World Geodetic System 1984 (WGS84-G1150) and the vertical reference datum is the Earth Gravitational Model 2008 (EGM2008).&lt;br&gt;
-        /// * Tile data comes from the [Airbus WorldDEM4Ortho product](https://www.intelligence-airbusds.com/worlddem-streaming/). Urban areas are approximately leveled down to ground level. All other areas are represented by the object surface level (e.g., trees).&lt;br&gt;
-        /// 
-        /// Supports zoom levels 9 through 14. Format: vector (pbf).
-        /// </summary>
-        public static MapTileSetId MicrosoftDemContours { get; } = new MapTileSetId(MicrosoftDemContoursValue);
         /// <summary> absolute traffic tiles in vector. </summary>
         public static MapTileSetId MicrosoftTrafficAbsolute { get; } = new MapTileSetId(MicrosoftTrafficAbsoluteValue);
         /// <summary> absolute traffic tiles in raster in our main style. </summary>
@@ -177,7 +156,7 @@ namespace Azure.Maps.Rendering
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

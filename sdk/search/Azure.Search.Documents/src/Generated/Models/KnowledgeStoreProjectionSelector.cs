@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Abstract class to share properties between concrete selectors. </summary>
-    public abstract partial class KnowledgeStoreProjectionSelector
+    public partial class KnowledgeStoreProjectionSelector
     {
-        /// <summary> Initializes a new instance of KnowledgeStoreProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjectionSelector"/>. </summary>
         public KnowledgeStoreProjectionSelector()
         {
             Inputs = new ChangeTrackingList<InputFieldMappingEntry>();
         }
 
-        /// <summary> Initializes a new instance of KnowledgeStoreProjectionSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreProjectionSelector"/>. </summary>
         /// <param name="referenceKeyName"> Name of reference key to different projection. </param>
         /// <param name="generatedKeyName"> Name of generated key to store projection under. </param>
         /// <param name="source"> Source data to project. </param>

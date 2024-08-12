@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,10 +20,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<LinkTableRequestSource> source = default;
-            Optional<LinkTableRequestTarget> target = default;
+            string id = default;
+            string name = default;
+            LinkTableRequestSource source = default;
+            LinkTableRequestTarget target = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -56,7 +55,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkTableResource(id.Value, name.Value, source.Value, target.Value);
+            return new LinkTableResource(id, name, source, target);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkTableResource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkTableResource(document.RootElement);
         }
 
         internal partial class LinkTableResourceConverter : JsonConverter<LinkTableResource>
@@ -65,6 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override LinkTableResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

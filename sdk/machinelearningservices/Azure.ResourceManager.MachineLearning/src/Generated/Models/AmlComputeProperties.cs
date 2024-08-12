@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> AML Compute properties. </summary>
     public partial class AmlComputeProperties
     {
-        /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AmlComputeProperties"/>. </summary>
         public AmlComputeProperties()
         {
             Errors = new ChangeTrackingList<MachineLearningError>();
         }
 
-        /// <summary> Initializes a new instance of AmlComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmlComputeProperties"/>. </summary>
         /// <param name="osType"> Compute OS Type. </param>
         /// <param name="vmSize"> Virtual Machine Size. </param>
         /// <param name="vmPriority"> Virtual Machine priority. </param>
@@ -38,7 +70,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="nodeStateCounts"> Counts of various node states on the compute. </param>
         /// <param name="enableNodePublicIP"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
         /// <param name="propertyBag"> A property bag containing additional properties. </param>
-        internal AmlComputeProperties(MachineLearningOSType? osType, string vmSize, MachineLearningVmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, AmlComputeScaleSettings scaleSettings, MachineLearningUserAccountCredentials userAccountCredentials, ResourceId subnet, MachineLearningRemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, MachineLearningAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<MachineLearningError> errors, int? currentNodeCount, int? targetNodeCount, MachineLearningNodeStateCounts nodeStateCounts, bool? enableNodePublicIP, BinaryData propertyBag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlComputeProperties(MachineLearningOSType? osType, string vmSize, MachineLearningVmPriority? vmPriority, VirtualMachineImage virtualMachineImage, bool? isolatedNetwork, AmlComputeScaleSettings scaleSettings, MachineLearningUserAccountCredentials userAccountCredentials, ResourceId subnet, MachineLearningRemoteLoginPortPublicAccess? remoteLoginPortPublicAccess, MachineLearningAllocationState? allocationState, DateTimeOffset? allocationStateTransitionOn, IReadOnlyList<MachineLearningError> errors, int? currentNodeCount, int? targetNodeCount, MachineLearningNodeStateCounts nodeStateCounts, bool? enableNodePublicIP, BinaryData propertyBag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OSType = osType;
             VmSize = vmSize;
@@ -57,6 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             NodeStateCounts = nodeStateCounts;
             EnableNodePublicIP = enableNodePublicIP;
             PropertyBag = propertyBag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Compute OS Type. </summary>
@@ -111,7 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

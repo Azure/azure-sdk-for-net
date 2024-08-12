@@ -12,12 +12,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The JobResponse. </summary>
     public partial class JobResponse
     {
-        /// <summary> Initializes a new instance of JobResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobResponse"/>. </summary>
         internal JobResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of JobResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobResponse"/>. </summary>
         /// <param name="jobId"> System generated.  Ignored at creation. The unique identifier of the job. </param>
         /// <param name="queryCondition"> The device query condition. </param>
         /// <param name="createdTime"> System generated.  Ignored at creation. The creation date and time of the job. </param>

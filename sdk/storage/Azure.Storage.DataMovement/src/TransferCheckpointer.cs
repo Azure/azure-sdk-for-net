@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
@@ -26,12 +25,16 @@ namespace Azure.Storage.DataMovement
         /// Adds a new transfer to the checkpointer.
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
+        /// <param name="source">The source resource.</param>
+        /// <param name="destination">The destination resource.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
         public abstract Task AddNewJobAsync(
             string transferId,
+            StorageResource source,
+            StorageResource destination,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -41,7 +44,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
         /// <param name="partNumber">The job part number.</param>
-        /// <param name="chunksTotal">The total chunks for the part.</param>
         /// <param name="headerStream">A <see cref="Stream"/> to the job part plan header.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -50,22 +52,7 @@ namespace Azure.Storage.DataMovement
         public abstract Task AddNewJobPartAsync(
             string transferId,
             int partNumber,
-            int chunksTotal,
             Stream headerStream,
-            CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Add existing job to the checkpointer with verification. This function will throw
-        /// if no existing job plan files exist in the checkpointer, and the job plan files have
-        /// mismatch information from the information to resume from.
-        /// </summary>
-        /// <param name="transferId">The transfer ID.</param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be canceled.
-        /// </param>
-        public abstract Task AddExistingJobAsync(
-            string transferId,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -83,12 +70,32 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Creates a stream to the stored memory stored checkpointing information.
+        /// Reads the specified part of the job plan file and returns it in a Stream.
+        /// </summary>
+        /// <param name="transferId">The transfer ID.</param>
+        /// <param name="offset">The offset to start reading the job plan file at.</param>
+        /// <param name="length">
+        /// The maximum number of bytes to read.
+        /// Specify 0 (zero) to create a stream over teh whole file.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be canceled.
+        /// </param>
+        /// <returns>A Stream of the requested part of the Job Plan File.</returns>
+        public abstract Task<Stream> ReadJobPlanFileAsync(
+            string transferId,
+            int offset,
+            int length,
+            CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Reads the specified part of the job part plan file and returns it in a Stream.
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
         /// <param name="partNumber">The job part number.</param>
-        /// <param name="offset">The offset of the current transfer.</param>
-        /// <param name="readSize">
+        /// <param name="offset">The offset to start reading the job part plan file at.</param>
+        /// <param name="length">
         /// The size of how many bytes to read.
         /// Specify 0 (zero) to create a stream that ends approximately at the end of the file.
         /// </param>
@@ -97,46 +104,45 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be canceled.
         /// </param>
         /// <returns>The Stream to the checkpoint of the respective job ID and part number.</returns>
-        public abstract Task<Stream> ReadableStreamAsync(
+        public abstract Task<Stream> ReadJobPartPlanFileAsync(
             string transferId,
             int partNumber,
-            long offset,
-            long readSize,
+            int offset,
+            int length,
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Writes to the memory mapped file to store the checkpointing information.
-        ///
-        /// Creates the file for the respective ID if it does not currently exist.
+        /// Writes to the job plan file at the given offset.
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
-        /// <param name="partNumber">The job part number.</param>
-        /// <param name="offset">The offset of the current transfer.</param>
-        /// <param name="buffer">The buffer to write data from to the checkpoint.</param>
+        /// <param name="fileOffset">The offset into the job plan file to start writing at.</param>
+        /// <param name="buffer">The data to write.</param>
+        /// <param name="bufferOffset">The offset into the given buffer to start reading from.</param>
+        /// <param name="length">The length of data to read from the buffer and write to the job plan file.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        /// <returns></returns>
-        public abstract Task WriteToCheckpointAsync(
+        public abstract Task WriteToJobPlanFileAsync(
             string transferId,
-            int partNumber,
-            long offset,
+            int fileOffset,
             byte[] buffer,
+            int bufferOffset,
+            int length,
             CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Sets the Job Transfer Status in the Job Part Plan files.
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
-        /// <param name="status">The <see cref="StorageTransferStatus"/> of the job.</param>
+        /// <param name="status">The <see cref="DataTransferStatus"/> of the job.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
         public abstract Task SetJobTransferStatusAsync(
             string transferId,
-            StorageTransferStatus status,
+            DataTransferStatus status,
             CancellationToken cancellationToken = default);
 
         /// <summary>
@@ -144,7 +150,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
         /// <param name="partNumber">The job part number.</param>
-        /// <param name="status">The <see cref="StorageTransferStatus"/> of the job part.</param>
+        /// <param name="status">The <see cref="DataTransferStatus"/> of the job part.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
@@ -152,7 +158,7 @@ namespace Azure.Storage.DataMovement
         public abstract Task SetJobPartTransferStatusAsync(
             string transferId,
             int partNumber,
-            StorageTransferStatus status,
+            DataTransferStatus status,
             CancellationToken cancellationToken = default);
 
         /// <summary>

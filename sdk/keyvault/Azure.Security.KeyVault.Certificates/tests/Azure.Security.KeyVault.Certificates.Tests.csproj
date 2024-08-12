@@ -20,6 +20,8 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="Portable.BouncyCastle" />
+    <PackageReference Include="Microsoft.Azure.KeyVault" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
   </ItemGroup>
 
   <ItemGroup>

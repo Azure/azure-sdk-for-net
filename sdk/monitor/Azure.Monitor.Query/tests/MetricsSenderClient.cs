@@ -3,10 +3,12 @@
 
 using System;
 using System.IO;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 
 namespace Azure.Monitor.Query.Tests
 {

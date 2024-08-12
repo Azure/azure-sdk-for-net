@@ -8,4 +8,12 @@
       <TestInParallel>false</TestInParallel>
     </ProjectReference>
   </ItemGroup>
+
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Security.KeyVault.*\**\*.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
+  </ItemGroup>
 </Project>

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,14 +20,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> dataDriftId = default;
-            Optional<string> dataDriftName = default;
-            Optional<string> runId = default;
-            Optional<string> baseDatasetId = default;
-            Optional<string> targetDatasetId = default;
-            Optional<double> driftCoefficient = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
+            string dataDriftId = default;
+            string dataDriftName = default;
+            string runId = default;
+            string baseDatasetId = default;
+            string targetDatasetId = default;
+            double? driftCoefficient = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataDriftId"u8))
@@ -84,7 +83,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MachineLearningServicesDatasetDriftDetectedEventData(dataDriftId.Value, dataDriftName.Value, runId.Value, baseDatasetId.Value, targetDatasetId.Value, Optional.ToNullable(driftCoefficient), Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return new MachineLearningServicesDatasetDriftDetectedEventData(
+                dataDriftId,
+                dataDriftName,
+                runId,
+                baseDatasetId,
+                targetDatasetId,
+                driftCoefficient,
+                startTime,
+                endTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MachineLearningServicesDatasetDriftDetectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMachineLearningServicesDatasetDriftDetectedEventData(document.RootElement);
         }
 
         internal partial class MachineLearningServicesDatasetDriftDetectedEventDataConverter : JsonConverter<MachineLearningServicesDatasetDriftDetectedEventData>
@@ -93,6 +108,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override MachineLearningServicesDatasetDriftDetectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -3,12 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
@@ -133,8 +135,8 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary>
-        /// Determines whether the client is able to generate a SAS.
-        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// Indicates whether the client is able to generate a SAS uri.
+        /// Client can generate a SAS url if it is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
         public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
@@ -191,6 +193,7 @@ namespace Azure.Storage.Queues
         /// </param>
         public QueueClient(string connectionString, string queueName, QueueClientOptions options)
         {
+            Argument.AssertNotNullOrEmpty(queueName, nameof(queueName));
             StorageConnectionString conn = StorageConnectionString.Parse(connectionString);
             QueueUriBuilder uriBuilder = new QueueUriBuilder(conn.QueueEndpoint)
             {
@@ -234,7 +237,13 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <seealso href="https://docs.microsoft.com/azure/storage/common/storage-sas-overview">Storage SAS Token Overview</seealso>
         public QueueClient(Uri queueUri, QueueClientOptions options = default)
-            : this(queueUri, (HttpPipelinePolicy)null, options, null)
+            : this(
+                  queueUri,
+                  (HttpPipelinePolicy)null,
+                  options,
+                  sharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -256,7 +265,13 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, StorageSharedKeyCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(), options, credential)
+            : this(
+                  queueUri,
+                  credential.AsPolicy(),
+                  options,
+                  sharedKeyCredential: credential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -282,7 +297,13 @@ namespace Azure.Storage.Queues
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public QueueClient(Uri queueUri, AzureSasCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy<QueueUriBuilder>(queueUri), options, null)
+            : this(
+                  queueUri,
+                  credential.AsPolicy<QueueUriBuilder>(queueUri),
+                  options,
+                  sharedKeyCredential: null,
+                  sasCredential: credential,
+                  tokenCredential: null)
         {
         }
 
@@ -304,7 +325,15 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(options), options, null)
+            : this(
+                  queueUri,
+                  credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? QueueAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                  options,
+                  sharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(queueUri);
         }
@@ -326,14 +355,22 @@ namespace Azure.Storage.Queues
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        /// <param name="storageSharedKeyCredential">
+        /// <param name="sharedKeyCredential">
         /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The SAS credential used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
         /// </param>
         internal QueueClient(
             Uri queueUri,
             HttpPipelinePolicy authentication,
             QueueClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential)
+            StorageSharedKeyCredential sharedKeyCredential,
+            AzureSasCredential sasCredential,
+            TokenCredential tokenCredential)
         {
             Argument.AssertNotNull(queueUri, nameof(queueUri));
             _uri = queueUri;
@@ -341,7 +378,9 @@ namespace Azure.Storage.Queues
             options ??= new QueueClientOptions();
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(authentication),
-                sharedKeyCredential: storageSharedKeyCredential,
+                sharedKeyCredential: sharedKeyCredential,
+                sasCredential: sasCredential,
+                tokenCredential: tokenCredential,
                 clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
@@ -3094,8 +3133,41 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual Uri GenerateSasUri(QueueSasPermissions permissions, DateTimeOffset expiresOn)
-            => GenerateSasUri(new QueueSasBuilder(permissions, expiresOn) { QueueName = Name });
+            => GenerateSasUri(permissions, expiresOn, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(QueueSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Queue Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and parameters passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="QueueSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="QueueSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
+        public virtual Uri GenerateSasUri(QueueSasPermissions permissions, DateTimeOffset expiresOn, out string stringToSign)
+            => GenerateSasUri(new QueueSasBuilder(permissions, expiresOn) { QueueName = Name }, out stringToSign);
 
         /// <summary>
         /// The <see cref="GenerateSasUri(QueueSasBuilder)"/> returns a
@@ -3115,8 +3187,37 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual Uri GenerateSasUri(
             QueueSasBuilder builder)
+            => GenerateSasUri(builder, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(QueueSasBuilder)"/> returns a
+        /// <see cref="Uri"/> that generates a Queue Service SAS Uri based
+        /// on the Client properties and builder passed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="QueueSasBuilder"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
+        public virtual Uri GenerateSasUri(
+            QueueSasBuilder builder,
+            out string stringToSign)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
 
@@ -3139,7 +3240,7 @@ namespace Azure.Storage.Queues
             }
             QueueUriBuilder sasUri = new QueueUriBuilder(Uri)
             {
-                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential)
+                Sas = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign)
             };
             return sasUri.ToUri();
         }

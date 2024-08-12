@@ -7,7 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Initializes a new instance of PurviewClassificationRuleClient. </summary>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="classificationRuleName"> The String to use. </param>
+        /// <param name="classificationRuleName"> The <see cref="string"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="classificationRuleName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classificationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Initializes a new instance of PurviewClassificationRuleClient. </summary>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="classificationRuleName"> The String to use. </param>
+        /// <param name="classificationRuleName"> The <see cref="string"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="classificationRuleName"/> or <paramref name="credential"/> is null. </exception>
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetPropertiesAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
+        public virtual async Task<Response> GetPropertiesAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
             scope.Start();
@@ -111,7 +111,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetProperties(RequestContext)']/*" />
-        public virtual Response GetProperties(RequestContext context = null)
+        public virtual Response GetProperties(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.GetProperties");
             scope.Start();
@@ -203,7 +203,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='DeleteAsync(RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(RequestContext context = null)
+        public virtual async Task<Response> DeleteAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
             scope.Start();
@@ -233,7 +233,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='Delete(RequestContext)']/*" />
-        public virtual Response Delete(RequestContext context = null)
+        public virtual Response Delete(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewClassificationRuleClient.Delete");
             scope.Start();
@@ -259,14 +259,14 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="classificationRuleVersion"> The Int32 to use. </param>
-        /// <param name="action"> The ClassificationAction to use. Allowed values: "Keep" | "Delete". </param>
+        /// <param name="classificationRuleVersion"> The <see cref="int"/> to use. </param>
+        /// <param name="action"> The <see cref="string"/> to use. Allowed values: "Keep" | "Delete". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersionAsync(int,string,RequestContext)']/*" />
-        public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestContext context = null)
+        public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestContext context)
         {
             Argument.AssertNotNull(action, nameof(action));
 
@@ -294,14 +294,14 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="classificationRuleVersion"> The Int32 to use. </param>
-        /// <param name="action"> The ClassificationAction to use. Allowed values: "Keep" | "Delete". </param>
+        /// <param name="classificationRuleVersion"> The <see cref="int"/> to use. </param>
+        /// <param name="action"> The <see cref="string"/> to use. Allowed values: "Keep" | "Delete". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersion(int,string,RequestContext)']/*" />
-        public virtual Response TagVersion(int classificationRuleVersion, string action, RequestContext context = null)
+        public virtual Response TagVersion(int classificationRuleVersion, string action, RequestContext context)
         {
             Argument.AssertNotNull(action, nameof(action));
 
@@ -333,11 +333,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetVersionsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetVersionsAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetVersionsAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewClassificationRuleClient.GetVersions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewClassificationRuleClient.GetVersions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -354,11 +354,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='GetVersions(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetVersions(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetVersions(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetVersionsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetVersionsNextPageRequest(nextLink, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewClassificationRuleClient.GetVersions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewClassificationRuleClient.GetVersions", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateGetPropertiesRequest(RequestContext context)

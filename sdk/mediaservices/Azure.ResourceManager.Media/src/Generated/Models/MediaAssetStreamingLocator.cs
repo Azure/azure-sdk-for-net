@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Properties of the Streaming Locator. </summary>
     public partial class MediaAssetStreamingLocator
     {
-        /// <summary> Initializes a new instance of MediaAssetStreamingLocator. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MediaAssetStreamingLocator"/>. </summary>
         internal MediaAssetStreamingLocator()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaAssetStreamingLocator. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaAssetStreamingLocator"/>. </summary>
         /// <param name="name"> Streaming Locator name. </param>
         /// <param name="assetName"> Asset Name. </param>
         /// <param name="createdOn"> The creation time of the Streaming Locator. </param>
@@ -26,7 +59,8 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="streamingLocatorId"> StreamingLocatorId of the Streaming Locator. </param>
         /// <param name="streamingPolicyName"> Name of the Streaming Policy used by this Streaming Locator. </param>
         /// <param name="defaultContentKeyPolicyName"> Name of the default ContentKeyPolicy used by this Streaming Locator. </param>
-        internal MediaAssetStreamingLocator(string name, string assetName, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? streamingLocatorId, string streamingPolicyName, string defaultContentKeyPolicyName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MediaAssetStreamingLocator(string name, string assetName, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? streamingLocatorId, string streamingPolicyName, string defaultContentKeyPolicyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AssetName = assetName;
@@ -36,6 +70,7 @@ namespace Azure.ResourceManager.Media.Models
             StreamingLocatorId = streamingLocatorId;
             StreamingPolicyName = streamingPolicyName;
             DefaultContentKeyPolicyName = defaultContentKeyPolicyName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Streaming Locator name. </summary>

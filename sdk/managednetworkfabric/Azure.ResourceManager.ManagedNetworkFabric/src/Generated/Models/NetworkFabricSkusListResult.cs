@@ -5,31 +5,64 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of NetworkFabricSkus. </summary>
+    /// <summary> List of Network Fabric SKUs. </summary>
     internal partial class NetworkFabricSkusListResult
     {
-        /// <summary> Initializes a new instance of NetworkFabricSkusListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricSkusListResult"/>. </summary>
         internal NetworkFabricSkusListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricSkuData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricSkusListResult. </summary>
-        /// <param name="value"> List of NetworkFabricSku resources. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricSkusListResult"/>. </summary>
+        /// <param name="value"> List of Network Fabric SKU resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal NetworkFabricSkusListResult(IReadOnlyList<NetworkFabricSkuData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricSkusListResult(IReadOnlyList<NetworkFabricSkuData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of NetworkFabricSku resources. </summary>
+        /// <summary> List of Network Fabric SKU resources. </summary>
         public IReadOnlyList<NetworkFabricSkuData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }

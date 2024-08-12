@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkDeviceSkuData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkDeviceSkuData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuData"/>. </summary>
         /// <param name="model"> Model of the network device. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public NetworkDeviceSkuData(string model)
@@ -27,47 +59,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(model, nameof(model));
 
             Model = model;
-            SupportedVersions = new ChangeTrackingList<NetworkDeviceSkuPropertiesSupportedVersionsItem>();
+            SupportedVersions = new ChangeTrackingList<SupportedVersionProperties>();
             SupportedRoleTypes = new ChangeTrackingList<NetworkDeviceRoleName>();
-            Interfaces = new ChangeTrackingList<NetworkDeviceSkuPropertiesInterfacesItem>();
+            Interfaces = new ChangeTrackingList<NetworkDeviceInterfaceProperties>();
         }
 
-        /// <summary> Initializes a new instance of NetworkDeviceSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="model"> Model of the network device. </param>
         /// <param name="manufacturer"> Manufacturer of the network device. </param>
-        /// <param name="supportedVersions"> List of network device interfaces. </param>
-        /// <param name="limits"> Network device limits. </param>
+        /// <param name="supportedVersions"> List of supported version details of network device. </param>
         /// <param name="supportedRoleTypes"> Available roles for the network device. </param>
         /// <param name="interfaces"> List of network device interfaces. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal NetworkDeviceSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string model, string manufacturer, IList<NetworkDeviceSkuPropertiesSupportedVersionsItem> supportedVersions, NetworkDeviceSkuPropertiesLimits limits, IList<NetworkDeviceRoleName> supportedRoleTypes, IList<NetworkDeviceSkuPropertiesInterfacesItem> interfaces, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkDeviceSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string model, string manufacturer, IList<SupportedVersionProperties> supportedVersions, IList<NetworkDeviceRoleName> supportedRoleTypes, IList<NetworkDeviceInterfaceProperties> interfaces, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Model = model;
             Manufacturer = manufacturer;
             SupportedVersions = supportedVersions;
-            Limits = limits;
             SupportedRoleTypes = supportedRoleTypes;
             Interfaces = interfaces;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkDeviceSkuData"/> for deserialization. </summary>
+        internal NetworkDeviceSkuData()
+        {
         }
 
         /// <summary> Model of the network device. </summary>
         public string Model { get; set; }
         /// <summary> Manufacturer of the network device. </summary>
         public string Manufacturer { get; set; }
-        /// <summary> List of network device interfaces. </summary>
-        public IList<NetworkDeviceSkuPropertiesSupportedVersionsItem> SupportedVersions { get; }
-        /// <summary> Network device limits. </summary>
-        public NetworkDeviceSkuPropertiesLimits Limits { get; set; }
+        /// <summary> List of supported version details of network device. </summary>
+        public IList<SupportedVersionProperties> SupportedVersions { get; }
         /// <summary> Available roles for the network device. </summary>
         public IList<NetworkDeviceRoleName> SupportedRoleTypes { get; }
         /// <summary> List of network device interfaces. </summary>
-        public IList<NetworkDeviceSkuPropertiesInterfacesItem> Interfaces { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public IList<NetworkDeviceInterfaceProperties> Interfaces { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
     }
 }

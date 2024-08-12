@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -200,7 +201,7 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(), options ?? new BlobClientOptions(), credential)
+            : this(serviceUri, credential.AsPolicy(), credential, options ?? new BlobClientOptions())
         {
         }
 
@@ -225,7 +226,7 @@ namespace Azure.Storage.Blobs
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public BlobServiceClient(Uri serviceUri, AzureSasCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy<BlobUriBuilder>(serviceUri), options ?? new BlobClientOptions())
+            : this(serviceUri, credential.AsPolicy<BlobUriBuilder>(serviceUri), credential, options ?? new BlobClientOptions())
         {
         }
 
@@ -246,7 +247,13 @@ namespace Azure.Storage.Blobs
         /// every request.
         /// </param>
         public BlobServiceClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(serviceUri, credential.AsPolicy(options), options ?? new BlobClientOptions())
+            : this(
+                  serviceUri,
+                  credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                  credential,
+                  options ?? new BlobClientOptions())
         {
             Errors.VerifyHttpsTokenAuth(serviceUri);
         }
@@ -267,19 +274,131 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        internal BlobServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            BlobClientOptions options)
+            : this(serviceUri,
+                  new BlobClientConfiguration(
+                      pipeline: options.Build(authentication),
+                      sharedKeyCredential: default,
+                      clientDiagnostics: new ClientDiagnostics(options),
+                      version: options?.Version ?? BlobClientOptions.LatestVersion,
+                      customerProvidedKey: options?.CustomerProvidedKey,
+                      transferValidation: options.TransferValidation,
+                      encryptionScope: options?.EncryptionScope,
+                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
+                  authentication,
+                  options?._clientSideEncryptionOptions?.Clone())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
         /// <param name="storageSharedKeyCredential">
         /// Optional storage shared key credential used to sign requests and generate sas.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
         /// </param>
         internal BlobServiceClient(
             Uri serviceUri,
             HttpPipelinePolicy authentication,
-            BlobClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential = default)
-            : this(
-                  serviceUri,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            BlobClientOptions options)
+            : this(serviceUri,
                   new BlobClientConfiguration(
                       pipeline: options.Build(authentication),
                       sharedKeyCredential: storageSharedKeyCredential,
+                      clientDiagnostics: new ClientDiagnostics(options),
+                      version: options?.Version ?? BlobClientOptions.LatestVersion,
+                      customerProvidedKey: options?.CustomerProvidedKey,
+                      transferValidation: options.TransferValidation,
+                      encryptionScope: options?.EncryptionScope,
+                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
+                  authentication,
+                  options?._clientSideEncryptionOptions?.Clone())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal BlobServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            TokenCredential tokenCredential,
+            BlobClientOptions options)
+            : this(serviceUri,
+                  new BlobClientConfiguration(
+                      pipeline: options.Build(authentication),
+                      tokenCredential: tokenCredential,
+                      clientDiagnostics: new ClientDiagnostics(options),
+                      version: options?.Version ?? BlobClientOptions.LatestVersion,
+                      customerProvidedKey: options?.CustomerProvidedKey,
+                      transferValidation: options.TransferValidation,
+                      encryptionScope: options?.EncryptionScope,
+                      trimBlobNameSlashes: options?.TrimBlobNameSlashes ?? false),
+                  authentication,
+                  options?._clientSideEncryptionOptions?.Clone())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the blob service.
+        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net".
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="sasCredential">
+        /// Optional SAS credential used to sign requests and generate sas.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        internal BlobServiceClient(
+            Uri serviceUri,
+            HttpPipelinePolicy authentication,
+            AzureSasCredential sasCredential,
+            BlobClientOptions options)
+            : this(serviceUri,
+                  new BlobClientConfiguration(
+                      pipeline: options.Build(authentication),
+                      sasCredential: sasCredential,
                       clientDiagnostics: new ClientDiagnostics(options),
                       version: options?.Version ?? BlobClientOptions.LatestVersion,
                       customerProvidedKey: options?.CustomerProvidedKey,
@@ -346,9 +465,70 @@ namespace Azure.Storage.Blobs
         /// <param name="pipeline">
         /// The transport pipeline used to send every request.
         /// </param>
+        /// <param name="sharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The SAS credential used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
         /// <returns>
         /// New instanc of the <see cref="BlobServiceClient"/> class.
         /// </returns>
+        protected static BlobServiceClient CreateClient(
+            Uri serviceUri,
+            BlobClientOptions options,
+            HttpPipelinePolicy authentication,
+            HttpPipeline pipeline,
+            StorageSharedKeyCredential sharedKeyCredential,
+            AzureSasCredential sasCredential,
+            TokenCredential tokenCredential)
+        {
+            return new BlobServiceClient(
+                serviceUri,
+                new BlobClientConfiguration(
+                    pipeline: pipeline,
+                    sharedKeyCredential: sharedKeyCredential,
+                    sasCredential: sasCredential,
+                    tokenCredential: tokenCredential,
+                    clientDiagnostics: new ClientDiagnostics(options),
+                    version: options.Version,
+                    customerProvidedKey: null,
+                    transferValidation: options.TransferValidation,
+                    encryptionScope: null,
+                    trimBlobNameSlashes: options.TrimBlobNameSlashes),
+                authentication,
+                clientSideEncryption: null);
+        }
+
+        /// <summary>
+        /// Intended for DataLake to create a backing blob client.
+        ///
+        /// Initializes a new instance of the <see cref="BlobServiceClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="serviceUri">
+        /// A <see cref="Uri"/> referencing the block blob that includes the
+        /// name of the account, the name of the container, and the name of
+        /// the blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="pipeline">
+        /// The transport pipeline used to send every request.
+        /// </param>
+        /// <returns>
+        /// New instanc of the <see cref="BlobServiceClient"/> class.
+        /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected static BlobServiceClient CreateClient(
             Uri serviceUri,
             BlobClientOptions options,
@@ -1000,6 +1180,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Response SetProperties(
             BlobServiceProperties properties,
             CancellationToken cancellationToken = default) =>
@@ -1034,6 +1215,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual async Task<Response> SetPropertiesAsync(
             BlobServiceProperties properties,
             CancellationToken cancellationToken = default) =>
@@ -1094,14 +1276,14 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response  = await ServiceRestClient.SetPropertiesAsync(
-                            storageServiceProperties: properties,
+                            blobServiceProperties: properties,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ServiceRestClient.SetProperties(
-                            storageServiceProperties: properties,
+                            blobServiceProperties: properties,
                             cancellationToken: cancellationToken);
                     }
 
@@ -1281,6 +1463,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Response<UserDelegationKey> GetUserDelegationKey(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
@@ -1317,6 +1500,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(
             DateTimeOffset? startsOn,
             DateTimeOffset expiresOn,
@@ -2183,15 +2367,61 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public Uri GenerateAccountSasUri(
             AccountSasPermissions permissions,
             DateTimeOffset expiresOn,
             AccountSasResourceTypes resourceTypes) =>
+            GenerateAccountSasUri(permissions, expiresOn, resourceTypes, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateAccountSasUri(AccountSasPermissions, DateTimeOffset, AccountSasResourceTypes)"/>
+        /// returns a <see cref="Uri"/> that generates a Blob Account
+        /// Shared Access Signature (SAS) based on the Client properties
+        /// and parameters passed. The SAS is signed by the
+        /// shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateAccountSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing an Account SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="AccountSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. The time at which the shared access signature becomes invalid.
+        /// </param>
+        /// <param name="resourceTypes">
+        /// Specifies the resource types associated with the shared access signature.
+        /// The user is restricted to operations on the specified resources.
+        /// See <see cref="AccountSasResourceTypes"/>.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public Uri GenerateAccountSasUri(
+            AccountSasPermissions permissions,
+            DateTimeOffset expiresOn,
+            AccountSasResourceTypes resourceTypes,
+            out string stringToSign) =>
             GenerateAccountSasUri(new AccountSasBuilder(
                 permissions,
                 expiresOn,
                 AccountSasServices.Blobs,
-                resourceTypes));
+                resourceTypes),
+                out stringToSign);
 
         /// <summary>
         /// The <see cref="GenerateAccountSasUri(AccountSasBuilder)"/> returns a <see cref="Uri"/> that
@@ -2215,7 +2445,38 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public Uri GenerateAccountSasUri(AccountSasBuilder builder)
+            => GenerateAccountSasUri(builder, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateAccountSasUri(AccountSasBuilder)"/> returns a <see cref="Uri"/> that
+        /// generates a Blob Account Shared Access Signature (SAS) based on the
+        /// Client properties and builder passed. The SAS is signed by the
+        /// shared key credential of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateAccountSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/create-account-sas">
+        /// Constructing an Account SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS).
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public Uri GenerateAccountSasUri(AccountSasBuilder builder, out string stringToSign)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
             if (!builder.Services.HasFlag(AccountSasServices.Blobs))
@@ -2226,7 +2487,7 @@ namespace Azure.Storage.Blobs
                     nameof(AccountSasServices.Blobs));
             }
             UriBuilder sasUri = new UriBuilder(Uri);
-            sasUri.Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString();
+            sasUri.Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign).ToString();
             return sasUri.Uri;
         }
         #endregion

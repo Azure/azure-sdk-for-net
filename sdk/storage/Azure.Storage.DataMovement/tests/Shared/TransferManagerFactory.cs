@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -23,8 +24,8 @@ namespace Azure.Storage.DataMovement.Tests
             if (dataTransfers != default)
             {
                 // populate checkpointer
-                Argument.AssertNotNullOrWhiteSpace(_options.CheckpointerOptions.checkpointerPath, nameof(dataTransfers));
-                LocalTransferCheckpointerFactory checkpointerFactory = new LocalTransferCheckpointerFactory(_options.CheckpointerOptions.checkpointerPath);
+                Argument.AssertNotNullOrWhiteSpace(_options.CheckpointerOptions.CheckpointerPath, nameof(dataTransfers));
+                LocalTransferCheckpointerFactory checkpointerFactory = new LocalTransferCheckpointerFactory(_options.CheckpointerOptions.CheckpointerPath);
                 checkpointerFactory.BuildCheckpointer(dataTransfers);
             }
             TransferManager transferManager = new TransferManager(_options);

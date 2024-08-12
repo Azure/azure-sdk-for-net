@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Pipeline Job definition: defines generic to MFE attributes. </summary>
     public partial class MachineLearningPipelineJob : MachineLearningJobProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningPipelineJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPipelineJob"/>. </summary>
         public MachineLearningPipelineJob()
         {
             Inputs = new ChangeTrackingDictionary<string, MachineLearningJobInput>();
@@ -23,10 +23,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobType = JobType.Pipeline;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPipelineJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPipelineJob"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
@@ -39,6 +40,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
+        /// <param name="notificationSetting"> Notification setting for the job. </param>
+        /// <param name="secretsConfiguration"> Configuration for secrets to be made available during runtime. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
@@ -57,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="settings"> Pipeline settings, for things like ContinueRunOnStepFailure etc. </param>
         /// <param name="sourceJobId"> ARM resource ID of source job. </param>
-        internal MachineLearningPipelineJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, BinaryData> jobs, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData settings, ResourceIdentifier sourceJobId) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, services, status)
+        internal MachineLearningPipelineJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, BinaryData> jobs, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData settings, ResourceIdentifier sourceJobId) : base(description, properties, tags, serializedAdditionalRawData, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
         {
             Inputs = inputs;
             Jobs = jobs;
@@ -79,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -116,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

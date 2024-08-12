@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -19,14 +20,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float sampleRate)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
 
-            if (batchActivity.Count > 0 && azureMonitorResource?.MetricTelemetry != null)
+            if (batchActivity.Count > 0 && azureMonitorResource?.MonitorBaseData != null)
             {
-                telemetryItems.Add(azureMonitorResource.MetricTelemetry);
+                var otelResourceMetricTelemetry = new TelemetryItem(DateTime.UtcNow, azureMonitorResource, instrumentationKey!, azureMonitorResource.MonitorBaseData);
+                telemetryItems.Add(otelResourceMetricTelemetry);
             }
 
             foreach (var activity in batchActivity)
@@ -34,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 try
                 {
                     var activityTagsProcessor = EnumerateActivityTags(activity);
-                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey);
+                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
 
                     // Check for Exceptions events
                     if (activity.Events.Any())
@@ -45,10 +47,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     switch (activity.GetTelemetryType())
                     {
                         case TelemetryType.Request:
+                            var requestData = new RequestData(Version, activity, ref activityTagsProcessor);
+                            requestData.Name = telemetryItem.Tags.TryGetValue(ContextTagKeys.AiOperationName.ToString(), out var operationName) ? operationName.Truncate(SchemaConstants.RequestData_Name_MaxLength) : activity.DisplayName.Truncate(SchemaConstants.RequestData_Name_MaxLength);
                             telemetryItem.Data = new MonitorBase
                             {
                                 BaseType = "RequestData",
-                                BaseData = new RequestData(Version, activity, ref activityTagsProcessor),
+                                BaseData = requestData,
                             };
                             break;
                         case TelemetryType.Dependency:
@@ -65,7 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToConvertActivity", ex);
+                    AzureMonitorExporterEventSource.Log.FailedToConvertActivity(activity.Source.Name, activity.DisplayName, ex);
                 }
             }
 
@@ -75,16 +79,54 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void AddPropertiesToTelemetry(IDictionary<string, string> destination, ref AzMonList UnMappedTags)
         {
-            // TODO: Iterate only interested fields. Ref: https://github.com/Azure/azure-sdk-for-net/pull/14254#discussion_r470907560
-            for (int i = 0; i < UnMappedTags.Length; i++)
+            try
             {
-                var tag = UnMappedTags[i];
-                if (tag.Key.Length <= SchemaConstants.KVP_MaxKeyLength && tag.Value != null)
+                // TODO: Iterate only interested fields. Ref: https://github.com/Azure/azure-sdk-for-net/pull/14254#discussion_r470907560
+                for (int i = 0; i < UnMappedTags.Length; i++)
                 {
-                    // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
-
-                    destination.Add(tag.Key, tag.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                    var tag = UnMappedTags[i];
+                    AddKvpToDictionary(destination, tag);
                 }
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.ErrorAddingActivityTagsAsCustomProperties(ex);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void AddKvpToDictionary(IDictionary<string, string> destination, KeyValuePair<string, object?> keyValuePair)
+        {
+            if (keyValuePair.Key.Length <= SchemaConstants.KVP_MaxKeyLength && keyValuePair.Value != null)
+            {
+                // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
+                // In case of duplicate keys, only the first occurence will be exported.
+#if NET6_0_OR_GREATER
+                destination.TryAdd(keyValuePair.Key, Convert.ToString(keyValuePair.Value, CultureInfo.InvariantCulture).Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+#else
+                if (!destination.ContainsKey(keyValuePair.Key))
+                {
+                    destination.Add(keyValuePair.Key, Convert.ToString(keyValuePair.Value, CultureInfo.InvariantCulture).Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                }
+#endif
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void AddKvpToDictionary(IDictionary<string, string> destination, string key, string value)
+        {
+            if (key.Length <= SchemaConstants.KVP_MaxKeyLength && value != null)
+            {
+                // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
+                // In case of duplicate keys, only the first occurence will be exported.
+#if NET6_0_OR_GREATER
+                destination.TryAdd(key, value.Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+#else
+                if (!destination.ContainsKey(key))
+                {
+                    destination.Add(key, value.Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                }
+#endif
             }
         }
 
@@ -111,7 +153,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         if (MaxlinksAllowed < activity.Links.Count())
                         {
-                            AzureMonitorExporterEventSource.Log.WriteInformational("ActivityLinksIgnored", $"Max count of {MaxlinksAllowed} has reached.");
+                            AzureMonitorExporterEventSource.Log.ActivityLinksIgnored(MaxlinksAllowed, activity.Source.Name, activity.DisplayName);
                         }
                         break;
                     }
@@ -136,17 +178,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activityTagsProcessor;
         }
 
-        internal static string? GetLocationIp(ref AzMonList MappedTags)
-        {
-            var httpClientIp = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpClientIP)?.ToString();
-            if (!string.IsNullOrWhiteSpace(httpClientIp))
-            {
-                return httpClientIp;
-            }
-
-            return AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeNetPeerIp)?.ToString();
-        }
-
         internal static string GetOperationName(Activity activity, ref AzMonList MappedTags)
         {
             var httpMethod = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpMethod)?.ToString();
@@ -165,6 +196,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (!string.IsNullOrWhiteSpace(httpUrl) && Uri.TryCreate(httpUrl!.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
                 {
                     return $"{httpMethod} {uri.AbsolutePath}";
+                }
+            }
+
+            return activity.DisplayName;
+        }
+
+        internal static string GetOperationNameV2(Activity activity, ref AzMonList MappedTags)
+        {
+            var httpMethod = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRequestMethod)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpMethod))
+            {
+                var httpRoute = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRoute)?.ToString();
+
+                // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
+                // To work around that we will use path from url.path.
+                if (!string.IsNullOrWhiteSpace(httpRoute) && !httpRoute!.Contains("{controller}"))
+                {
+                    return $"{httpMethod} {httpRoute}";
+                }
+
+                var httpPath = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeUrlPath)?.ToString();
+                if (!string.IsNullOrWhiteSpace(httpPath))
+                {
+                    return $"{httpMethod} {httpPath}";
                 }
             }
 
@@ -200,7 +255,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToExtractActivityEvent", ex);
+                    AzureMonitorExporterEventSource.Log.FailedToExtractActivityEvent(activity.Source.Name, activity.DisplayName, ex);
                 }
             }
         }
@@ -218,11 +273,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 if (tag.Value is Array arrayValue)
                 {
-                    messageData.Properties.Add(tag.Key, arrayValue.ToCommaDelimitedString());
+                    AddKvpToDictionary(messageData.Properties, tag.Key, arrayValue.ToCommaDelimitedString());
                 }
                 else
                 {
-                    messageData.Properties.Add(tag.Key, tag.Value?.ToString());
+                    AddKvpToDictionary(messageData.Properties, tag);
                 }
             }
 
@@ -238,6 +293,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             string? exceptionType = null;
             string? exceptionStackTrace = null;
             string? exceptionMessage = null;
+            var properties = new Dictionary<string, string>();
 
             foreach (ref readonly var tag in activityEvent.EnumerateTagObjects())
             {
@@ -245,17 +301,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (tag.Key == SemanticConventions.AttributeExceptionType)
                 {
                     exceptionType = tag.Value?.ToString();
-                    continue;
                 }
-                if (tag.Key == SemanticConventions.AttributeExceptionMessage)
+                else if (tag.Key == SemanticConventions.AttributeExceptionMessage)
                 {
                     exceptionMessage = tag.Value?.ToString();
-                    continue;
                 }
-                if (tag.Key == SemanticConventions.AttributeExceptionStacktrace)
+                else if (tag.Key == SemanticConventions.AttributeExceptionStacktrace)
                 {
                     exceptionStackTrace = tag.Value?.ToString();
-                    continue;
+                }
+                else
+                {
+                    AddKvpToDictionary(properties, tag);
                 }
             }
 
@@ -279,7 +336,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 exceptionDetails
             };
 
-            TelemetryExceptionData exceptionData = new(Version, exceptions);
+            TelemetryExceptionData exceptionData = new(Version, exceptions, properties);
 
             return new MonitorBase
             {
@@ -340,7 +397,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             AzMonList.Add(ref UnMappedTags, new KeyValuePair<string, object?>(msLinks, linksJson.ToString()));
             if (MaxlinksAllowed < linksCount)
             {
-                AzureMonitorExporterEventSource.Log.WriteInformational("ActivityLinksIgnored", $"Max count of {MaxlinksAllowed} has reached.");
+                AzureMonitorExporterEventSource.Log.ActivityLinksIgnored(MaxlinksAllowed, activity.Source.Name, activity.DisplayName);
             }
 
             if (isEnqueuedTimeCalculated)
@@ -388,6 +445,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 .Append('\"');
             linksJson
                 .Append("},");
+        }
+
+        internal static string GetAzureSDKDependencyType(ActivityKind kind, string azureNamespace)
+        {
+            // TODO: see if the values can be cached to avoid allocation.
+            if (kind == ActivityKind.Internal)
+            {
+                return $"InProc | {azureNamespace}";
+            }
+            else if (kind == ActivityKind.Producer)
+            {
+                return $"Queue Message | {azureNamespace}";
+            }
+            else
+            {
+                // The Azure SDK sets az.namespace with its resource provider information.
+                // When ActivityKind is not internal and az.namespace is present, set the value of Type to az.namespace.
+                return azureNamespace;
+            }
         }
     }
 }

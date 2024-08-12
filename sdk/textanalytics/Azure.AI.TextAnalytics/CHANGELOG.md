@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Removed `document` tag reported on `LanguageServiceClient` and `LegacyServiceClient` activities as it may contain sensitive or personal data and can exceed tag length limitations.
+
 ### Bugs Fixed
 
 ### Other Changes

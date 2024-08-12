@@ -4,10 +4,20 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://github.com/Azure/azure-rest-api-specs/blob/67527326606bd3c71700e2b96ff3c9ce9e655e29/specification/sql/resource-manager/readme.md
+tag: package-composite-v5
+require: https://github.com/Azure/azure-rest-api-specs/blob/f45a76fc39f033947ed12faf4b6416e1e19724cd/specification/sql/resource-manager/readme.md
+#package-composite-v5
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - ManagedDatabaseSensitivityLabels_CreateOrUpdate
+  - ManagedDatabaseSensitivityLabels_Delete
+  - SensitivityLabels_CreateOrUpdate
+  - SensitivityLabels_Delete
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -15,6 +25,15 @@ modelerfour:
 model-namespace: false
 public-clients: false
 head-as-boolean: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
+
+#mgmt-debug: 
+#  show-serialized-names: true
+
+# this is temporary, to be removed when we find the owner of this feature
+operation-groups-to-omit:
+- JobPrivateEndpoints
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -52,7 +71,7 @@ keep-plural-enums:
 keep-plural-resource-data:
 - MaintenanceWindows
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -328,9 +347,20 @@ rename-mapping:
   OutboundEnvironmentEndpoint: SqlOutboundEnvironmentEndpoint
   OutboundEnvironmentEndpointCollection: SqlOutboundEnvironmentEndpointCollection
   MetricDefinition.resourceUri: ResourceUriString
+  FailoverGroup.properties.databases: FailoverDatabases
+  ManagedInstance.properties.dnsZonePartner: ManagedDnsZonePartner
+  ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
+  FailoverGroupUpdate.properties.databases: FailoverDatabases
+  Server.properties.minimalTlsVersion: minTlsVersion
+  ServerUpdate.properties.minimalTlsVersion: minTlsVersion
+  MinimalTlsVersion: SqlMinimalTlsVersion
+  BackupStorageAccessTier: SqlBackupStorageAccessTier
+  Phase: DatabaseOperationPhase
+  PhaseDetails: DatabaseOperationPhaseDetails
 
 prompted-enum-values:
   - Default
+
 directive:
     - remove-operation: ManagedDatabaseMoveOperations_ListByLocation
     - remove-operation: ManagedDatabaseMoveOperations_Get

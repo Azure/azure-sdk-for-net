@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -66,7 +65,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/FarmOperationsDataIngestion.xml" path="doc/members/member[@name='GetJobDetailsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetJobDetailsAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetJobDetailsAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -101,7 +100,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/FarmOperationsDataIngestion.xml" path="doc/members/member[@name='GetJobDetails(string,RequestContext)']/*" />
-        public virtual Response GetJobDetails(string jobId, RequestContext context = null)
+        public virtual Response GetJobDetails(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 

@@ -6,23 +6,52 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SSIS access credential. </summary>
     public partial class SsisAccessCredential
     {
-        /// <summary> Initializes a new instance of SsisAccessCredential. </summary>
-        /// <param name="domain"> Domain for windows authentication. </param>
-        /// <param name="userName"> UseName for windows authentication. </param>
-        /// <param name="password">
-        /// Password for windows authentication.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisAccessCredential"/>. </summary>
+        /// <param name="domain"> Domain for windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="userName"> UseName for windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for windows authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domain"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public SsisAccessCredential(BinaryData domain, BinaryData userName, FactorySecretBaseDefinition password)
+        public SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecret password)
         {
             Argument.AssertNotNull(domain, nameof(domain));
             Argument.AssertNotNull(userName, nameof(userName));
@@ -33,73 +62,29 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
         }
 
-        /// <summary>
-        /// Domain for windows authentication.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Domain { get; set; }
-        /// <summary>
-        /// UseName for windows authentication.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData UserName { get; set; }
-        /// <summary>
-        /// Password for windows authentication.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
-        public FactorySecretBaseDefinition Password { get; set; }
+        /// <summary> Initializes a new instance of <see cref="SsisAccessCredential"/>. </summary>
+        /// <param name="domain"> Domain for windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="userName"> UseName for windows authentication. Type: string (or Expression with resultType string). </param>
+        /// <param name="password"> Password for windows authentication. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisAccessCredential(DataFactoryElement<string> domain, DataFactoryElement<string> userName, DataFactorySecret password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Domain = domain;
+            UserName = userName;
+            Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisAccessCredential"/> for deserialization. </summary>
+        internal SsisAccessCredential()
+        {
+        }
+
+        /// <summary> Domain for windows authentication. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Domain { get; set; }
+        /// <summary> UseName for windows authentication. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> UserName { get; set; }
+        /// <summary> Password for windows authentication. </summary>
+        public DataFactorySecret Password { get; set; }
     }
 }

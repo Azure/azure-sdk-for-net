@@ -9,7 +9,6 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-#if NET5_0_OR_GREATER
     public class TestActivitySourceListener: IDisposable
     {
         private readonly ActivityListener _listener;
@@ -17,7 +16,7 @@ namespace Azure.Core.Tests
         public Queue<Activity> Activities { get; } =
             new Queue<Activity>();
 
-        public TestActivitySourceListener(string name, Action<Activity> activityStartedCallback = default) : this(source => source.Name.StartsWith(name), activityStartedCallback)
+        public TestActivitySourceListener(string name, Action<Activity> activityStartedCallback = default) : this(source => source.Name.Equals(name), activityStartedCallback)
         {
         }
 
@@ -60,5 +59,4 @@ namespace Azure.Core.Tests
             _listener?.Dispose();
         }
     }
-#endif
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -51,19 +52,19 @@ namespace Azure.ResourceManager.Nginx.Tests
             NginxConfigurationContent = "aHR0cCB7CiAgICBzZXJ2ZXIgewogICAgICAgIGxpc3RlbiA4MDsKICAgICAgICBsb2NhdGlvbiAvIHsKICAgICAgICAgICAgZGVmYXVsdF90eXBlIHRleHQvaHRtbDsKICAgICAgICAgICAgcmV0dXJuIDIwMCAnPCFET0NUWVBFIGh0bWw+PGgxIHN0eWxlPSJmb250LXNpemU6MzBweDsiPk5naW54IGNvbmZpZyBpcyB3b3JraW5nITwvaDE+JzsKICAgICAgICB9CiAgICB9Cn0=";
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string resourceGroupNamePrefix, AzureLocation location)
         {
             if (subscription == null)
             {
                 throw new ArgumentNullException(nameof(subscription));
             }
 
-            if (rgNamePrefix == null)
+            if (resourceGroupNamePrefix == null)
             {
-                throw new ArgumentNullException(nameof(rgNamePrefix));
+                throw new ArgumentNullException(nameof(resourceGroupNamePrefix));
             }
 
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
+            string rgName = Recording.GenerateAssetName(resourceGroupNamePrefix);
             ResourceGroupData input = new(location);
             ArmOperation<ResourceGroupResource> lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
@@ -118,16 +119,16 @@ namespace Azure.ResourceManager.Nginx.Tests
             return lro.Value;
         }
 
-        protected async Task<VirtualNetworkResource> CreateVirtualNetwork(ResourceGroupResource resourceGroup, AzureLocation location, NetworkSecurityGroupData nsgData)
+        protected async Task<VirtualNetworkResource> CreateVirtualNetwork(ResourceGroupResource resourceGroup, AzureLocation location, NetworkSecurityGroupData networkSecurityGroupData)
         {
             if (resourceGroup == null)
             {
                 throw new ArgumentNullException(nameof(resourceGroup));
             }
 
-            if (nsgData == null)
+            if (networkSecurityGroupData == null)
             {
-                throw new ArgumentNullException(nameof(nsgData));
+                throw new ArgumentNullException(nameof(networkSecurityGroupData));
             }
 
             ServiceDelegation delegation = new ServiceDelegation
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Nginx.Tests
             {
                 Name = subnetName,
                 AddressPrefix = "10.0.2.0/24",
-                NetworkSecurityGroup = nsgData,
+                NetworkSecurityGroup = networkSecurityGroupData,
                 Delegations =
                 {
                     delegation
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Nginx.Tests
             return lro.Value;
         }
 
-        protected ResourceIdentifier GetSubnetId(VirtualNetworkResource vnet)
+        protected static ResourceIdentifier GetSubnetId(VirtualNetworkResource vnet)
         {
             if (vnet == null)
             {
@@ -182,8 +183,10 @@ namespace Azure.ResourceManager.Nginx.Tests
                 throw new ArgumentNullException(nameof(resourceGroup));
             }
 
-            PublicIPAddressSku sku = new PublicIPAddressSku();
-            sku.Name = PublicIPAddressSkuName.Standard;
+            PublicIPAddressSku sku = new PublicIPAddressSku
+            {
+                Name = PublicIPAddressSkuName.Standard
+            };
 
             PublicIPAddressData publicIPAddressData = new PublicIPAddressData
             {
@@ -197,7 +200,7 @@ namespace Azure.ResourceManager.Nginx.Tests
             return lro.Value;
         }
 
-        protected string GetPublicIPAddress(PublicIPAddressResource publicIP)
+        protected static string GetPublicIPAddress(PublicIPAddressResource publicIP)
         {
             if (publicIP == null)
             {
@@ -228,23 +231,37 @@ namespace Azure.ResourceManager.Nginx.Tests
 
             NetworkSecurityGroupResource nsg = await CreateNetworkSecurityGroup(resourceGroup, location);
             VirtualNetworkResource vnet = await CreateVirtualNetwork(resourceGroup, location, nsg.Data);
-            string subnetId = GetSubnetId(vnet);
+            ResourceIdentifier subnetId = GetSubnetId(vnet);
 
-            NginxNetworkProfile networkProfile = new NginxNetworkProfile();
-            networkProfile.FrontEndIPConfiguration = frontEndIPConfiguration;
-            networkProfile.NetworkInterfaceSubnetId = subnetId;
+            NginxNetworkProfile networkProfile = new NginxNetworkProfile
+            {
+                FrontEndIPConfiguration = frontEndIPConfiguration,
+                NetworkInterfaceSubnetId = subnetId
+            };
 
-            NginxDeploymentProperties deploymentProperties = new NginxDeploymentProperties();
-            deploymentProperties.NetworkProfile = networkProfile;
-            deploymentProperties.EnableDiagnosticsSupport = true;
+            NginxDeploymentScalingProperties nginxDeploymentScalingProperties = new NginxDeploymentScalingProperties(10, new List<NginxScaleProfile>(), null);
+
+            AutoUpgradeProfile autoUpgradeProfile = new AutoUpgradeProfile();
+            autoUpgradeProfile.UpgradeChannel = "preview";
+
+            NginxDeploymentProperties deploymentProperties = new NginxDeploymentProperties
+            {
+                NetworkProfile = networkProfile,
+                EnableDiagnosticsSupport = true,
+                ScalingProperties = nginxDeploymentScalingProperties,
+                UserPreferredEmail = "test@mail.com",
+                AutoUpgradeProfile = autoUpgradeProfile
+            };
 
             ManagedServiceIdentity identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             identity.UserAssignedIdentities.Add(new ResourceIdentifier(TestEnvironment.ManagedIdentityResourceID), new UserAssignedIdentity());
 
-            NginxDeploymentData nginxDeploymentData = new NginxDeploymentData(location);
-            nginxDeploymentData.Identity = identity;
-            nginxDeploymentData.Properties = deploymentProperties;
-            nginxDeploymentData.SkuName = "preview_Monthly";
+            NginxDeploymentData nginxDeploymentData = new NginxDeploymentData(location)
+            {
+                Identity = identity,
+                Properties = deploymentProperties,
+                SkuName = "standard_Monthly"
+            };
             ArmOperation<NginxDeploymentResource> lro = await resourceGroup.GetNginxDeployments().CreateOrUpdateAsync(WaitUntil.Completed, nginxDeploymentName, nginxDeploymentData);
             return lro.Value;
         }
@@ -261,16 +278,23 @@ namespace Azure.ResourceManager.Nginx.Tests
                 throw new ArgumentNullException(nameof(nginxConfigurationName));
             }
 
-            NginxConfigurationFile rootConfigFile = new NginxConfigurationFile();
-            rootConfigFile.Content = NginxConfigurationContent;
-            rootConfigFile.VirtualPath = virtualPath;
+            NginxConfigurationFile rootConfigFile = new NginxConfigurationFile
+            {
+                Content = NginxConfigurationContent,
+                VirtualPath = virtualPath
+            };
 
-            NginxConfigurationProperties configurationProperties = new NginxConfigurationProperties();
-            configurationProperties.RootFile = rootConfigFile.VirtualPath;
+            NginxConfigurationProperties configurationProperties = new NginxConfigurationProperties
+            {
+                RootFile = rootConfigFile.VirtualPath
+            };
             configurationProperties.Files.Add(rootConfigFile);
 
-            NginxConfigurationData nginxConfigurationData = new NginxConfigurationData(location);
-            nginxConfigurationData.Properties = configurationProperties;
+            NginxConfigurationData nginxConfigurationData = new NginxConfigurationData
+            {
+                Location = location,
+                Properties = configurationProperties
+            };
             ArmOperation<NginxConfigurationResource> lro = await nginxDeployment.GetNginxConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, nginxConfigurationName, nginxConfigurationData);
             return lro.Value;
         }
@@ -287,13 +311,18 @@ namespace Azure.ResourceManager.Nginx.Tests
                 throw new ArgumentNullException(nameof(nginxCertificateName));
             }
 
-            NginxCertificateProperties certificateProperties = new NginxCertificateProperties();
-            certificateProperties.CertificateVirtualPath = certificateVirtualPath;
-            certificateProperties.KeyVirtualPath = keyVirtualPath;
-            certificateProperties.KeyVaultSecretId = TestEnvironment.KeyVaultSecretId;
+            NginxCertificateProperties certificateProperties = new NginxCertificateProperties
+            {
+                CertificateVirtualPath = certificateVirtualPath,
+                KeyVirtualPath = keyVirtualPath,
+                KeyVaultSecretId = TestEnvironment.KeyVaultSecretId
+            };
 
-            NginxCertificateData nginxCertificateData = new NginxCertificateData(location);
-            nginxCertificateData.Properties = certificateProperties;
+            NginxCertificateData nginxCertificateData = new NginxCertificateData
+            {
+                Location = location,
+                Properties = certificateProperties
+            };
             ArmOperation<NginxCertificateResource> lro = await nginxDeployment.GetNginxCertificates().CreateOrUpdateAsync(WaitUntil.Completed, nginxCertificateName, nginxCertificateData);
             return lro.Value;
         }

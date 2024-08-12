@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
@@ -19,12 +18,12 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> statusDetails = default;
-            Optional<KeyVaultServiceError> error = default;
-            Optional<string> jobId = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
+            string status = default;
+            string statusDetails = default;
+            KeyVaultServiceError error = default;
+            string jobId = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -58,7 +57,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     {
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("U");
+                    startTime = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
@@ -68,11 +67,25 @@ namespace Azure.Security.KeyVault.Administration.Models
                         endTime = null;
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("U");
+                    endTime = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
             }
-            return new SelectiveKeyRestoreDetailsInternal(status.Value, statusDetails.Value, error.Value, jobId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            return new SelectiveKeyRestoreDetailsInternal(
+                status,
+                statusDetails,
+                error,
+                jobId,
+                startTime,
+                endTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SelectiveKeyRestoreDetailsInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSelectiveKeyRestoreDetailsInternal(document.RootElement);
         }
     }
 }

@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Job output canceling event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobOutputCanceling event. </summary>
     public partial class MediaJobOutputCancelingEventData : MediaJobOutputStateChangeEventData
     {
-        /// <summary> Initializes a new instance of MediaJobOutputCancelingEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputCancelingEventData"/>. </summary>
         internal MediaJobOutputCancelingEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutputCancelingEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputCancelingEventData"/>. </summary>
         /// <param name="previousState"> The previous state of the Job. </param>
         /// <param name="output">
         /// Gets the output.

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The status of the lot.
-    /// Serialized Name: Status
-    /// </summary>
+    /// <summary> The status of the lot. </summary>
     public readonly partial struct ConsumptionLotStatus : IEquatable<ConsumptionLotStatus>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string CompleteValue = "Complete";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// None
-        /// Serialized Name: Status.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static ConsumptionLotStatus None { get; } = new ConsumptionLotStatus(NoneValue);
-        /// <summary>
-        /// Active
-        /// Serialized Name: Status.Active
-        /// </summary>
+        /// <summary> Active. </summary>
         public static ConsumptionLotStatus Active { get; } = new ConsumptionLotStatus(ActiveValue);
-        /// <summary>
-        /// Inactive
-        /// Serialized Name: Status.Inactive
-        /// </summary>
+        /// <summary> Inactive. </summary>
         public static ConsumptionLotStatus Inactive { get; } = new ConsumptionLotStatus(InactiveValue);
-        /// <summary>
-        /// Expired
-        /// Serialized Name: Status.Expired
-        /// </summary>
+        /// <summary> Expired. </summary>
         public static ConsumptionLotStatus Expired { get; } = new ConsumptionLotStatus(ExpiredValue);
-        /// <summary>
-        /// Complete
-        /// Serialized Name: Status.Complete
-        /// </summary>
+        /// <summary> Complete. </summary>
         public static ConsumptionLotStatus Complete { get; } = new ConsumptionLotStatus(CompleteValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: Status.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static ConsumptionLotStatus Canceled { get; } = new ConsumptionLotStatus(CanceledValue);
         /// <summary> Determines if two <see cref="ConsumptionLotStatus"/> values are the same. </summary>
         public static bool operator ==(ConsumptionLotStatus left, ConsumptionLotStatus right) => left.Equals(right);
@@ -77,7 +56,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

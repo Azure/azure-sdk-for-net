@@ -36,9 +36,9 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<SentimentAnalysisTaskParameters> parameters = default;
+            SentimentAnalysisTaskParameters parameters = default;
             AnalyzeTextLROTaskKind kind = default;
-            Optional<string> taskName = default;
+            string taskName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -61,7 +61,23 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentimentAnalysisLROTask(taskName.Value, kind, parameters.Value);
+            return new SentimentAnalysisLROTask(taskName, kind, parameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SentimentAnalysisLROTask FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSentimentAnalysisLROTask(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

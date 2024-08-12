@@ -31,9 +31,9 @@ internal class Sample14_ListShareResources : ShareResourcesClientTestBase
 #endif
 
 #if SNIPPET
-        List<BinaryData> createResponse = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
+        List<BinaryData> createResponse = await shareResourcesClient.GetAllShareResourcesAsync(null, null, null).ToEnumerableAsync();
 #else
-        List<BinaryData> shareResources = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
+        List<BinaryData> shareResources = await shareResourcesClient.GetAllShareResourcesAsync(null, null, null).ToEnumerableAsync();
 #endif
 
         #endregion

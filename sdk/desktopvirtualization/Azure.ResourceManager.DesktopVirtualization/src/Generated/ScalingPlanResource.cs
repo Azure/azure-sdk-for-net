@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,13 +19,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
     /// A Class representing a ScalingPlan along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScalingPlanResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScalingPlanResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetScalingPlan method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScalingPlanResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScalingPlanResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetScalingPlan method.
     /// </summary>
     public partial class ScalingPlanResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScalingPlanResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scalingPlanName"> The scalingPlanName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scalingPlanName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}";
@@ -38,12 +39,15 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly ScalingPlansRestOperations _scalingPlanRestClient;
         private readonly ScalingPlanData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/scalingPlans";
+
         /// <summary> Initializes a new instance of the <see cref="ScalingPlanResource"/> class for mocking. </summary>
         protected ScalingPlanResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScalingPlanResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScalingPlanResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScalingPlanResource(ArmClient client, ScalingPlanData data) : this(client, data.Id)
@@ -64,9 +68,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/scalingPlans";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of ScalingPlanPooledScheduleResources and their operations over a ScalingPlanPooledScheduleResource. </returns>
         public virtual ScalingPlanPooledScheduleCollection GetScalingPlanPooledSchedules()
         {
-            return GetCachedClient(Client => new ScalingPlanPooledScheduleCollection(Client, Id));
+            return GetCachedClient(client => new ScalingPlanPooledScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +108,20 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>ScalingPlanPooledSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanPooledScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScalingPlanPooledScheduleResource>> GetScalingPlanPooledScheduleAsync(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
@@ -130,16 +139,93 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>ScalingPlanPooledSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanPooledScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScalingPlanPooledScheduleResource> GetScalingPlanPooledSchedule(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
             return GetScalingPlanPooledSchedules().Get(scalingPlanScheduleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ScalingPlanPersonalScheduleResources in the ScalingPlan. </summary>
+        /// <returns> An object representing collection of ScalingPlanPersonalScheduleResources and their operations over a ScalingPlanPersonalScheduleResource. </returns>
+        public virtual ScalingPlanPersonalScheduleCollection GetScalingPlanPersonalSchedules()
+        {
+            return GetCachedClient(client => new ScalingPlanPersonalScheduleCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a ScalingPlanPersonalSchedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScalingPlanPersonalSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanPersonalScheduleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScalingPlanPersonalScheduleResource>> GetScalingPlanPersonalScheduleAsync(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
+        {
+            return await GetScalingPlanPersonalSchedules().GetAsync(scalingPlanScheduleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a ScalingPlanPersonalSchedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScalingPlanPersonalSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanPersonalScheduleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScalingPlanPersonalScheduleResource> GetScalingPlanPersonalSchedule(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
+        {
+            return GetScalingPlanPersonalSchedules().Get(scalingPlanScheduleName, cancellationToken);
         }
 
         /// <summary>
@@ -152,6 +238,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,6 +279,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,6 +319,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,7 +338,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = await _scalingPlanRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation(response);
+                var uri = _scalingPlanRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -251,6 +363,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -262,7 +382,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = _scalingPlanRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation(response);
+                var uri = _scalingPlanRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -284,6 +406,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,6 +449,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Object containing scaling plan definitions. </param>
@@ -352,6 +490,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -407,6 +553,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -461,6 +615,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -510,6 +672,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -558,6 +728,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -610,6 +788,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScalingPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScalingPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

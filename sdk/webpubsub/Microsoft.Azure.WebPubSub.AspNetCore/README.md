@@ -37,12 +37,24 @@ In order to interact with the service, you'll need to provide the Web PubSub ser
 
 ### Configure Web PubSub service options
 
+Configure with connection string:
 ```C# Snippet:WebPubSubDependencyInjection
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddWebPubSub(o =>
     {
         o.ServiceEndpoint = new("<connection-string>");
+    }).AddWebPubSubServiceClient<SampleHub>();
+}
+```
+
+Configure with [Azure Identity](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity):
+```C# Snippet:WebPubSubDependencyInjectionWithAzureIdentity
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddWebPubSub(o =>
+    {
+        o.ServiceEndpoint = new WebPubSubServiceEndpoint(new Uri("<endpoint"), new DefaultAzureCredential());
     }).AddWebPubSubServiceClient<SampleHub>();
 }
 ```
@@ -69,7 +81,7 @@ For information about general Web PubSub concepts [Concepts in Azure Web PubSub]
 
 > NOTE
 >
-> Among the 4 methods, `OnConnectAsync()` and `OnMessageReceivedAsync()` are blocking events that service will respect server returns. Besides the mapped correct response, server can throw exceptions whenever the request is against the server side logic. And `UnauthorizedAccessException` will be converted to `401Unauthorized` and rest will be converted to `500InternalServerError` along with exception message to return service. Then service will drop current client connection.
+> Among the 4 methods, `OnConnectAsync()` and `OnMessageReceivedAsync()` are blocking events that service will respect server returns. Besides the mapped correct response, server can throw exceptions whenever the request is against the server side logic. And `UnauthorizedAccessException` and `AuthenticationException` will be converted to `401Unauthorized` and rest will be converted to `500InternalServerError` along with exception message to return service. Then service will drop current client connection.
 
 ## Examples
 

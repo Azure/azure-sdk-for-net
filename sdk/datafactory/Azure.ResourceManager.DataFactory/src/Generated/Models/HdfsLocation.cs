@@ -7,24 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The location of HDFS. </summary>
     public partial class HdfsLocation : DatasetLocation
     {
-        /// <summary> Initializes a new instance of HdfsLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdfsLocation"/>. </summary>
         public HdfsLocation()
         {
             DatasetLocationType = "HdfsLocation";
         }
 
-        /// <summary> Initializes a new instance of HdfsLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="HdfsLocation"/>. </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal HdfsLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal HdfsLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             DatasetLocationType = datasetLocationType ?? "HdfsLocation";
         }

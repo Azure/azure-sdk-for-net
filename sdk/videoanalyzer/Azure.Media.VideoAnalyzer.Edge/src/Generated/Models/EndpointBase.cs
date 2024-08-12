@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -17,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public abstract partial class EndpointBase
     {
-        /// <summary> Initializes a new instance of EndpointBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointBase"/>. </summary>
         /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         protected EndpointBase(string url)
@@ -27,7 +26,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Url = url;
         }
 
-        /// <summary> Initializes a new instance of EndpointBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="EndpointBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="credentials">
         /// Credentials to be presented to the endpoint.

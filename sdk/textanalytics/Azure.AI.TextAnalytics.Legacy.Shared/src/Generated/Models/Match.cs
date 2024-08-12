@@ -6,14 +6,12 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The Match. </summary>
     internal partial class Match
     {
-
         /// <summary> If a well known item is recognized, a decimal number denoting the confidence level between 0 and 1 will be returned. </summary>
         public double ConfidenceScore { get; }
         /// <summary> Entity text as appears in the request. </summary>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -66,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <summary>
         /// Stops transmitting data to backend.
         /// </summary>
-        private void OpenTransmission()
+        internal void OpenTransmission()
         {
             State = TransmissionState.Open;
         }
@@ -95,12 +96,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             CloseTransmission();
         }
 
-        internal void EnableBackOff(Response response)
+        internal void EnableBackOff(Response? response)
         {
             if (Interlocked.Exchange(ref _syncBackOffIntervalCalculation, 1) == 0)
             {
                 // Do not increase number of errors more often than minimum interval.
-                // since we can have 4 parallel transmissions (logs, metrics, traces and offline storage tranmission) and all of them most likely would fail if we have intermittent error.
+                // since we can have 4 parallel transmissions (logs, metrics, traces and offline storage transmission) and all of them most likely would fail if we have intermittent error.
                 if (DateTimeOffset.UtcNow > _nextMinTimeToUpdateConsecutiveErrors)
                 {
                     Interlocked.Increment(ref _consecutiveErrors);
@@ -117,6 +118,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         _backOffIntervalTimer.Interval = backOffTimeInterval.TotalMilliseconds;
 
                         _backOffIntervalTimer.Start();
+
+                        AzureMonitorExporterEventSource.Log.BackoffEnabled(backOffTimeInterval.TotalMilliseconds);
                     }
                 }
 

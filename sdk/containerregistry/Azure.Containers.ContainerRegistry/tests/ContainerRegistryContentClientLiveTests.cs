@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -768,6 +769,74 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Content is validated by the client, so we only need to check length.
             Assert.IsTrue(File.Exists(filePath));
             Assert.AreEqual(size, new FileInfo(filePath).Length);
+        }
+
+        [Test]
+        [LiveOnly]
+        [IgnoreServiceError(404, "BLOB_UPLOAD_INVALID", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/35322")]
+        public async Task CanUploadAndDownloadLargeBlobStreaming()
+        {
+            long size = int.MaxValue;
+            size++; // Exceed max to exercise path that would throw with an int.
+
+            string repositoryId = Recording.Random.NewGuid().ToString();
+            ContainerRegistryContentClient client = CreateBlobClient(repositoryId);
+
+            // Upload the large blob
+            Stream uploadStream = RandomStream.Create(size);
+            UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(uploadStream);
+
+            // Download to a file stream
+            string path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "LargeFile");
+            string downloadFileName = "blob_downloaded.bin";
+            string filePath = Path.Combine(path, downloadFileName);
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            using FileStream downloadFs = File.OpenWrite(filePath);
+            Response<DownloadRegistryBlobStreamingResult> response = await client.DownloadBlobStreamingAsync(uploadResult.Digest);
+            using Stream contentStream = response.Value.Content;
+            long blobSize = response.GetRawResponse().Headers.ContentLengthLong.Value;
+            await CopyNetworkStream(contentStream, downloadFs, blobSize);
+
+            // Content is validated by the client, so we only need to check length.
+            Assert.IsTrue(File.Exists(filePath));
+            Assert.AreEqual(size, new FileInfo(filePath).Length);
+            Assert.AreEqual(blobSize, new FileInfo(filePath).Length);
+        }
+
+        private async Task CopyNetworkStream(Stream source, Stream destination, long size, CancellationToken cancellationToken = default)
+        {
+            int bufferSize = 4 * 1024 * 1024; // 4MB
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(bufferSize);
+
+            long blobBytes = 0;
+            long blobSize = size;
+
+            try
+            {
+                do
+                {
+                    int bytesRead = await source.ReadAsync(buffer, 0, bufferSize, cancellationToken).ConfigureAwait(false);
+                    await destination.WriteAsync(buffer, 0, bytesRead, cancellationToken).ConfigureAwait(false);
+                    blobBytes += bytesRead;
+                }
+                while (blobBytes < blobSize);
+
+                await destination.FlushAsync(cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                ArrayPool<byte>.Shared.Return(buffer);
+            }
         }
 
         [RecordedTest]

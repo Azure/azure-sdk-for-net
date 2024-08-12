@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -19,25 +19,25 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<int> routeOffsetInMeters = default;
-            Optional<int> travelTimeInSeconds = default;
-            Optional<LatLongPair> point = default;
-            Optional<int> pointIndex = default;
-            Optional<GuidanceInstructionType> instructionType = default;
-            Optional<IReadOnlyList<string>> roadNumbers = default;
-            Optional<string> exitNumber = default;
-            Optional<string> street = default;
-            Optional<string> signpostText = default;
-            Optional<string> countryCode = default;
-            Optional<string> stateCode = default;
-            Optional<JunctionType> junctionType = default;
-            Optional<int> turnAngleInDecimalDegrees = default;
-            Optional<string> roundaboutExitNumber = default;
-            Optional<bool> possibleCombineWithNext = default;
-            Optional<DrivingSide> drivingSide = default;
-            Optional<GuidanceManeuver> maneuver = default;
-            Optional<string> message = default;
-            Optional<string> combinedMessage = default;
+            int? routeOffsetInMeters = default;
+            int? travelTimeInSeconds = default;
+            LatLongPair point = default;
+            int? pointIndex = default;
+            GuidanceInstructionType? instructionType = default;
+            IReadOnlyList<string> roadNumbers = default;
+            string exitNumber = default;
+            string street = default;
+            string signpostText = default;
+            string countryCode = default;
+            string stateCode = default;
+            JunctionType? junctionType = default;
+            int? turnAngleInDecimalDegrees = default;
+            long? roundaboutExitNumber = default;
+            bool? possibleCombineWithNext = default;
+            DrivingSide? drivingSide = default;
+            GuidanceManeuver? maneuver = default;
+            string message = default;
+            string combinedMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routeOffsetInMeters"u8))
@@ -144,7 +144,11 @@ namespace Azure.Maps.Routing.Models
                 }
                 if (property.NameEquals("roundaboutExitNumber"u8))
                 {
-                    roundaboutExitNumber = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    roundaboutExitNumber = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("possibleCombineWithNext"u8))
@@ -185,7 +189,34 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteInstruction(Optional.ToNullable(routeOffsetInMeters), Optional.ToNullable(travelTimeInSeconds), point.Value, Optional.ToNullable(pointIndex), Optional.ToNullable(instructionType), Optional.ToList(roadNumbers), exitNumber.Value, street.Value, signpostText.Value, countryCode.Value, stateCode.Value, Optional.ToNullable(junctionType), Optional.ToNullable(turnAngleInDecimalDegrees), roundaboutExitNumber.Value, Optional.ToNullable(possibleCombineWithNext), Optional.ToNullable(drivingSide), Optional.ToNullable(maneuver), message.Value, combinedMessage.Value);
+            return new RouteInstruction(
+                routeOffsetInMeters,
+                travelTimeInSeconds,
+                point,
+                pointIndex,
+                instructionType,
+                roadNumbers ?? new ChangeTrackingList<string>(),
+                exitNumber,
+                street,
+                signpostText,
+                countryCode,
+                stateCode,
+                junctionType,
+                turnAngleInDecimalDegrees,
+                roundaboutExitNumber,
+                possibleCombineWithNext,
+                drivingSide,
+                maneuver,
+                message,
+                combinedMessage);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteInstruction FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteInstruction(document.RootElement);
         }
     }
 }

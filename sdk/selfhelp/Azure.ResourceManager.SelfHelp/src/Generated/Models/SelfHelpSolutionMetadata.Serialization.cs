@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,54 +14,84 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SelfHelpSolutionMetadata : IUtf8JsonSerializable
+    public partial class SelfHelpSolutionMetadata : IUtf8JsonSerializable, IJsonModel<SelfHelpSolutionMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IJsonModel<SelfHelpSolutionMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SelfHelpSolutionMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SelfHelpSolutionMetadata)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SolutionId))
+            if (Optional.IsCollectionDefined(Solutions))
             {
-                writer.WritePropertyName("solutionId"u8);
-                writer.WriteStringValue(SolutionId);
-            }
-            if (Optional.IsDefined(SolutionType))
-            {
-                writer.WritePropertyName("solutionType"u8);
-                writer.WriteStringValue(SolutionType);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(RequiredParameterSets))
-            {
-                writer.WritePropertyName("requiredParameterSets"u8);
+                writer.WritePropertyName("solutions"u8);
                 writer.WriteStartArray();
-                foreach (var item in RequiredParameterSets)
+                foreach (var item in Solutions)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SelfHelpSolutionMetadata DeserializeSelfHelpSolutionMetadata(JsonElement element)
+        SelfHelpSolutionMetadata IJsonModel<SelfHelpSolutionMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SelfHelpSolutionMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SelfHelpSolutionMetadata)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSelfHelpSolutionMetadata(document.RootElement, options);
+        }
+
+        internal static SelfHelpSolutionMetadata DeserializeSelfHelpSolutionMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,11 +99,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> solutionId = default;
-            Optional<string> solutionType = default;
-            Optional<string> description = default;
-            Optional<IList<IList<string>>> requiredParameterSets = default;
+            SystemData systemData = default;
+            IList<SolutionMetadataProperties> solutions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -107,52 +138,67 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("solutionId"u8))
-                        {
-                            solutionId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("solutionType"u8))
-                        {
-                            solutionType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("requiredParameterSets"u8))
+                        if (property0.NameEquals("solutions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            List<IList<string>> array = new List<IList<string>>();
+                            List<SolutionMetadataProperties> array = new List<SolutionMetadataProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    List<string> array0 = new List<string>();
-                                    foreach (var item0 in item.EnumerateArray())
-                                    {
-                                        array0.Add(item0.GetString());
-                                    }
-                                    array.Add(array0);
-                                }
+                                array.Add(SolutionMetadataProperties.DeserializeSolutionMetadataProperties(item, options));
                             }
-                            requiredParameterSets = array;
+                            solutions = array;
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SelfHelpSolutionMetadata(id, name, type, systemData.Value, solutionId.Value, solutionType.Value, description.Value, Optional.ToList(requiredParameterSets));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SelfHelpSolutionMetadata(
+                id,
+                name,
+                type,
+                systemData,
+                solutions ?? new ChangeTrackingList<SolutionMetadataProperties>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SelfHelpSolutionMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SelfHelpSolutionMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SelfHelpSolutionMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SelfHelpSolutionMetadata IPersistableModel<SelfHelpSolutionMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SelfHelpSolutionMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSelfHelpSolutionMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SelfHelpSolutionMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SelfHelpSolutionMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -18,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmCognitiveServicesModelFactory
     {
-        /// <summary> Initializes a new instance of CognitiveServicesAccountData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,10 +33,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CognitiveServicesAccountData(id, name, resourceType, systemData, tags, location, kind, sku, identity, properties, etag);
+            return new CognitiveServicesAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                kind,
+                sku,
+                identity,
+                properties,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the cognitive services account at the time the operation was called. </param>
         /// <param name="endpoint"> Endpoint of the created account. </param>
         /// <param name="capabilities"> Gets the capabilities of the cognitive services account. Each item indicates the capability of a specific feature. The values are read-only and for reference only. </param>
@@ -65,8 +75,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="scheduledPurgeDate"> The scheduled purge date, only available for deleted account. </param>
         /// <param name="locations"> The multiregion settings of Cognitive Services account. </param>
         /// <param name="commitmentPlanAssociations"> The commitment plan associations of Cognitive Services account. </param>
+        /// <param name="abusePenalty"> The abuse penalty. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = null, string endpoint = null, IEnumerable<CognitiveServicesSkuCapability> capabilities = null, bool? isMigrated = null, string migrationToken = null, CognitiveServicesSkuChangeInfo skuChangeInfo = null, string customSubDomainName = null, CognitiveServicesNetworkRuleSet networkAcls = null, ServiceAccountEncryptionProperties encryption = null, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = null, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = null, ServiceAccountPublicNetworkAccess? publicNetworkAccess = null, ServiceAccountApiProperties apiProperties = null, DateTimeOffset? createdOn = null, ServiceAccountCallRateLimit callRateLimit = null, bool? enableDynamicThrottling = null, ServiceAccountQuotaLimit quotaLimit = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, bool? disableLocalAuth = null, IReadOnlyDictionary<string, string> endpoints = null, bool? restore = null, DateTimeOffset? deletedOn = null, string scheduledPurgeDate = null, CognitiveServicesMultiRegionSettings locations = null, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = null)
+        public static CognitiveServicesAccountProperties CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState = null, string endpoint = null, IEnumerable<CognitiveServicesSkuCapability> capabilities = null, bool? isMigrated = null, string migrationToken = null, CognitiveServicesSkuChangeInfo skuChangeInfo = null, string customSubDomainName = null, CognitiveServicesNetworkRuleSet networkAcls = null, ServiceAccountEncryptionProperties encryption = null, IEnumerable<ServiceAccountUserOwnedStorage> userOwnedStorage = null, IEnumerable<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections = null, ServiceAccountPublicNetworkAccess? publicNetworkAccess = null, ServiceAccountApiProperties apiProperties = null, DateTimeOffset? createdOn = null, ServiceAccountCallRateLimit callRateLimit = null, bool? enableDynamicThrottling = null, ServiceAccountQuotaLimit quotaLimit = null, bool? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, bool? disableLocalAuth = null, IReadOnlyDictionary<string, string> endpoints = null, bool? restore = null, DateTimeOffset? deletedOn = null, string scheduledPurgeDate = null, CognitiveServicesMultiRegionSettings locations = null, IEnumerable<CommitmentPlanAssociation> commitmentPlanAssociations = null, AbusePenalty abusePenalty = null)
         {
             capabilities ??= new List<CognitiveServicesSkuCapability>();
             userOwnedStorage ??= new List<ServiceAccountUserOwnedStorage>();
@@ -75,29 +86,57 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             endpoints ??= new Dictionary<string, string>();
             commitmentPlanAssociations ??= new List<CommitmentPlanAssociation>();
 
-            return new CognitiveServicesAccountProperties(provisioningState, endpoint, capabilities?.ToList(), isMigrated, migrationToken, skuChangeInfo, customSubDomainName, networkAcls, encryption, userOwnedStorage?.ToList(), privateEndpointConnections?.ToList(), publicNetworkAccess, apiProperties, createdOn, callRateLimit, enableDynamicThrottling, quotaLimit, restrictOutboundNetworkAccess, allowedFqdnList?.ToList(), disableLocalAuth, endpoints, restore, deletedOn, scheduledPurgeDate, locations, commitmentPlanAssociations?.ToList());
+            return new CognitiveServicesAccountProperties(
+                provisioningState,
+                endpoint,
+                capabilities?.ToList(),
+                isMigrated,
+                migrationToken,
+                skuChangeInfo,
+                customSubDomainName,
+                networkAcls,
+                encryption,
+                userOwnedStorage?.ToList(),
+                privateEndpointConnections?.ToList(),
+                publicNetworkAccess,
+                apiProperties,
+                createdOn,
+                callRateLimit,
+                enableDynamicThrottling,
+                quotaLimit,
+                restrictOutboundNetworkAccess,
+                allowedFqdnList?.ToList(),
+                disableLocalAuth,
+                endpoints,
+                restore,
+                deletedOn,
+                scheduledPurgeDate,
+                locations,
+                commitmentPlanAssociations?.ToList(),
+                abusePenalty,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesSkuCapability"/>. </summary>
         /// <param name="name"> The name of the SkuCapability. </param>
         /// <param name="value"> The value of the SkuCapability. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesSkuCapability"/> instance for mocking. </returns>
         public static CognitiveServicesSkuCapability CognitiveServicesSkuCapability(string name = null, string value = null)
         {
-            return new CognitiveServicesSkuCapability(name, value);
+            return new CognitiveServicesSkuCapability(name, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuChangeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesSkuChangeInfo"/>. </summary>
         /// <param name="countOfDowngrades"> Gets the count of downgrades. </param>
         /// <param name="countOfUpgradesAfterDowngrades"> Gets the count of upgrades after downgrades. </param>
         /// <param name="lastChangedOn"> Gets the last change date. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesSkuChangeInfo"/> instance for mocking. </returns>
         public static CognitiveServicesSkuChangeInfo CognitiveServicesSkuChangeInfo(float? countOfDowngrades = null, float? countOfUpgradesAfterDowngrades = null, DateTimeOffset? lastChangedOn = null)
         {
-            return new CognitiveServicesSkuChangeInfo(countOfDowngrades, countOfUpgradesAfterDowngrades, lastChangedOn);
+            return new CognitiveServicesSkuChangeInfo(countOfDowngrades, countOfUpgradesAfterDowngrades, lastChangedOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -113,10 +152,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             groupIds ??= new List<string>();
 
-            return new CognitiveServicesPrivateEndpointConnectionData(id, name, resourceType, systemData, location, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, groupIds?.ToList(), etag);
+            return new CognitiveServicesPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                connectionState,
+                provisioningState,
+                groupIds?.ToList(),
+                etag,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountCallRateLimit. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountCallRateLimit"/>. </summary>
         /// <param name="count"> The count value of Call Rate Limit. </param>
         /// <param name="renewalPeriod"> The renewal period in seconds of Call Rate Limit. </param>
         /// <param name="rules"></param>
@@ -125,10 +175,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             rules ??= new List<ServiceAccountThrottlingRule>();
 
-            return new ServiceAccountCallRateLimit(count, renewalPeriod, rules?.ToList());
+            return new ServiceAccountCallRateLimit(count, renewalPeriod, rules?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountThrottlingRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountThrottlingRule"/>. </summary>
         /// <param name="key"></param>
         /// <param name="renewalPeriod"></param>
         /// <param name="count"></param>
@@ -140,19 +190,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             matchPatterns ??= new List<ServiceAccountThrottlingMatchPattern>();
 
-            return new ServiceAccountThrottlingRule(key, renewalPeriod, count, minCount, isDynamicThrottlingEnabled, matchPatterns?.ToList());
+            return new ServiceAccountThrottlingRule(
+                key,
+                renewalPeriod,
+                count,
+                minCount,
+                isDynamicThrottlingEnabled,
+                matchPatterns?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountThrottlingMatchPattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountThrottlingMatchPattern"/>. </summary>
         /// <param name="path"></param>
         /// <param name="method"></param>
         /// <returns> A new <see cref="Models.ServiceAccountThrottlingMatchPattern"/> instance for mocking. </returns>
         public static ServiceAccountThrottlingMatchPattern ServiceAccountThrottlingMatchPattern(string path = null, string method = null)
         {
-            return new ServiceAccountThrottlingMatchPattern(path, method);
+            return new ServiceAccountThrottlingMatchPattern(path, method, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountQuotaLimit. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountQuotaLimit"/>. </summary>
         /// <param name="count"></param>
         /// <param name="renewalPeriod"></param>
         /// <param name="rules"></param>
@@ -161,28 +218,38 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             rules ??= new List<ServiceAccountThrottlingRule>();
 
-            return new ServiceAccountQuotaLimit(count, renewalPeriod, rules?.ToList());
+            return new ServiceAccountQuotaLimit(count, renewalPeriod, rules?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CommitmentPlanAssociation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommitmentPlanAssociation"/>. </summary>
         /// <param name="commitmentPlanId"> The Azure resource id of the commitment plan. </param>
         /// <param name="commitmentPlanLocation"> The location of of the commitment plan. </param>
         /// <returns> A new <see cref="Models.CommitmentPlanAssociation"/> instance for mocking. </returns>
         public static CommitmentPlanAssociation CommitmentPlanAssociation(ResourceIdentifier commitmentPlanId = null, string commitmentPlanLocation = null)
         {
-            return new CommitmentPlanAssociation(commitmentPlanId, commitmentPlanLocation);
+            return new CommitmentPlanAssociation(commitmentPlanId, commitmentPlanLocation, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountApiKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AbusePenalty"/>. </summary>
+        /// <param name="action"> The action of AbusePenalty. </param>
+        /// <param name="rateLimitPercentage"> The percentage of rate limit. </param>
+        /// <param name="expiration"> The datetime of expiration of the AbusePenalty. </param>
+        /// <returns> A new <see cref="Models.AbusePenalty"/> instance for mocking. </returns>
+        public static AbusePenalty AbusePenalty(AbusePenaltyAction? action = null, float? rateLimitPercentage = null, DateTimeOffset? expiration = null)
+        {
+            return new AbusePenalty(action, rateLimitPercentage, expiration, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountApiKeys"/>. </summary>
         /// <param name="key1"> Gets the value of key 1. </param>
         /// <param name="key2"> Gets the value of key 2. </param>
         /// <returns> A new <see cref="Models.ServiceAccountApiKeys"/> instance for mocking. </returns>
         public static ServiceAccountApiKeys ServiceAccountApiKeys(string key1 = null, string key2 = null)
         {
-            return new ServiceAccountApiKeys(key1, key2);
+            return new ServiceAccountApiKeys(key1, key2, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AvailableCognitiveServicesSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AvailableCognitiveServicesSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="name"> The name of SKU. </param>
         /// <param name="tier"> Specifies the tier of Cognitive Services account. </param>
@@ -195,10 +262,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             locations ??= new List<AzureLocation>();
             restrictions ??= new List<CognitiveServicesSkuRestrictions>();
 
-            return new AvailableCognitiveServicesSku(resourceType, name, tier, kind, locations?.ToList(), restrictions?.ToList());
+            return new AvailableCognitiveServicesSku(
+                resourceType,
+                name,
+                tier,
+                kind,
+                locations?.ToList(),
+                restrictions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesSkuRestrictions"/>. </summary>
         /// <param name="restrictionsType"> The type of restrictions. </param>
         /// <param name="values"> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </param>
         /// <param name="restrictionInfo"> The information about the restriction where the SKU cannot be used. </param>
@@ -208,10 +282,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             values ??= new List<string>();
 
-            return new CognitiveServicesSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode);
+            return new CognitiveServicesSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuRestrictionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesSkuRestrictionInfo"/>. </summary>
         /// <param name="locations"> Locations where the SKU is restricted. </param>
         /// <param name="zones"> List of availability zones where the SKU is restricted. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesSkuRestrictionInfo"/> instance for mocking. </returns>
@@ -220,19 +294,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             locations ??= new List<AzureLocation>();
             zones ??= new List<string>();
 
-            return new CognitiveServicesSkuRestrictionInfo(locations?.ToList(), zones?.ToList());
+            return new CognitiveServicesSkuRestrictionInfo(locations?.ToList(), zones?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountSku"/>. </summary>
         /// <param name="resourceType"> Resource Namespace and Type. </param>
         /// <param name="sku"> The SKU of Cognitive Services account. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountSku"/> instance for mocking. </returns>
         public static CognitiveServicesAccountSku CognitiveServicesAccountSku(ResourceType? resourceType = null, CognitiveServicesSku sku = null)
         {
-            return new CognitiveServicesAccountSku(resourceType, sku);
+            return new CognitiveServicesAccountSku(resourceType, sku, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountUsage"/>. </summary>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
@@ -243,24 +317,35 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <returns> A new <see cref="Models.ServiceAccountUsage"/> instance for mocking. </returns>
         public static ServiceAccountUsage ServiceAccountUsage(ServiceAccountUsageUnitType? unit = null, ServiceAccountUsageMetricName name = null, string quotaPeriod = null, double? limit = null, double? currentValue = null, string nextResetTime = null, ServiceAccountQuotaUsageStatus? status = null)
         {
-            return new ServiceAccountUsage(unit, name, quotaPeriod, limit, currentValue, nextResetTime, status);
+            return new ServiceAccountUsage(
+                unit,
+                name,
+                quotaPeriod,
+                limit,
+                currentValue,
+                nextResetTime,
+                status,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ServiceAccountUsageMetricName. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceAccountUsageMetricName"/>. </summary>
         /// <param name="value"> The name of the metric. </param>
         /// <param name="localizedValue"> The friendly name of the metric. </param>
         /// <returns> A new <see cref="Models.ServiceAccountUsageMetricName"/> instance for mocking. </returns>
         public static ServiceAccountUsageMetricName ServiceAccountUsageMetricName(string value = null, string localizedValue = null)
         {
-            return new ServiceAccountUsageMetricName(value, localizedValue);
+            return new ServiceAccountUsageMetricName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountModel"/>. </summary>
         /// <param name="format"> Deployment model format. </param>
         /// <param name="name"> Deployment model name. </param>
-        /// <param name="version"> Deployment model version. </param>
+        /// <param name="version"> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </param>
+        /// <param name="source"> Optional. Deployment model source ARM resource ID. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
         /// <param name="baseModel"> Base Model Identifier. </param>
+        /// <param name="isDefaultVersion"> If the model is default version. </param>
+        /// <param name="skus"> The list of Model Sku. </param>
         /// <param name="maxCapacity"> The max capacity. </param>
         /// <param name="capabilities"> The capabilities. </param>
         /// <param name="finetuneCapabilities"> The capabilities for finetune models. </param>
@@ -268,26 +353,69 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="lifecycleStatus"> Model lifecycle status. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountModel"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string format = null, string name = null, string version = null, ServiceAccountCallRateLimit callRateLimit = null, CognitiveServicesAccountDeploymentModel baseModel = null, int? maxCapacity = null, IDictionary<string, string> capabilities = null, IDictionary<string, string> finetuneCapabilities = null, ServiceAccountModelDeprecationInfo deprecation = null, ModelLifecycleStatus? lifecycleStatus = null, SystemData systemData = null)
+        public static CognitiveServicesAccountModel CognitiveServicesAccountModel(string format = null, string name = null, string version = null, string source = null, ServiceAccountCallRateLimit callRateLimit = null, CognitiveServicesAccountDeploymentModel baseModel = null, bool? isDefaultVersion = null, IEnumerable<CognitiveServicesModelSku> skus = null, int? maxCapacity = null, IDictionary<string, string> capabilities = null, IDictionary<string, string> finetuneCapabilities = null, ServiceAccountModelDeprecationInfo deprecation = null, ModelLifecycleStatus? lifecycleStatus = null, SystemData systemData = null)
         {
+            skus ??= new List<CognitiveServicesModelSku>();
             capabilities ??= new Dictionary<string, string>();
             finetuneCapabilities ??= new Dictionary<string, string>();
 
-            return new CognitiveServicesAccountModel(format, name, version, callRateLimit, baseModel, maxCapacity, capabilities, finetuneCapabilities, deprecation, lifecycleStatus, systemData);
+            return new CognitiveServicesAccountModel(
+                format,
+                name,
+                version,
+                source,
+                callRateLimit,
+                serializedAdditionalRawData: null,
+                baseModel,
+                isDefaultVersion,
+                skus?.ToList(),
+                maxCapacity,
+                capabilities,
+                finetuneCapabilities,
+                deprecation,
+                lifecycleStatus,
+                systemData);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentModel"/>. </summary>
         /// <param name="format"> Deployment model format. </param>
         /// <param name="name"> Deployment model name. </param>
-        /// <param name="version"> Deployment model version. </param>
+        /// <param name="version"> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </param>
+        /// <param name="source"> Optional. Deployment model source ARM resource ID. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentModel"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountDeploymentModel CognitiveServicesAccountDeploymentModel(string format = null, string name = null, string version = null, ServiceAccountCallRateLimit callRateLimit = null)
+        public static CognitiveServicesAccountDeploymentModel CognitiveServicesAccountDeploymentModel(string format = null, string name = null, string version = null, string source = null, ServiceAccountCallRateLimit callRateLimit = null)
         {
-            return new CognitiveServicesAccountDeploymentModel(format, name, version, callRateLimit);
+            return new CognitiveServicesAccountDeploymentModel(
+                format,
+                name,
+                version,
+                source,
+                callRateLimit,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuAvailabilityList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesModelSku"/>. </summary>
+        /// <param name="name"> The name of the model SKU. </param>
+        /// <param name="usageName"> The usage name of the model SKU. </param>
+        /// <param name="deprecationOn"> The datetime of deprecation of the model SKU. </param>
+        /// <param name="capacity"> The capacity configuration. </param>
+        /// <param name="rateLimits"> The list of rateLimit. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesModelSku"/> instance for mocking. </returns>
+        public static CognitiveServicesModelSku CognitiveServicesModelSku(string name = null, string usageName = null, DateTimeOffset? deprecationOn = null, CognitiveServicesCapacityConfig capacity = null, IEnumerable<ServiceAccountCallRateLimit> rateLimits = null)
+        {
+            rateLimits ??= new List<ServiceAccountCallRateLimit>();
+
+            return new CognitiveServicesModelSku(
+                name,
+                usageName,
+                deprecationOn,
+                capacity,
+                rateLimits?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesSkuAvailabilityList"/>. </summary>
         /// <param name="kind"> The Kind of the resource. </param>
         /// <param name="skuAvailabilityType"> The Type of the resource. </param>
         /// <param name="skuName"> The SKU of Cognitive Services account. </param>
@@ -297,10 +425,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <returns> A new <see cref="Models.CognitiveServicesSkuAvailabilityList"/> instance for mocking. </returns>
         public static CognitiveServicesSkuAvailabilityList CognitiveServicesSkuAvailabilityList(string kind = null, string skuAvailabilityType = null, string skuName = null, bool? isSkuAvailable = null, string reason = null, string message = null)
         {
-            return new CognitiveServicesSkuAvailabilityList(kind, skuAvailabilityType, skuName, isSkuAvailable, reason, message);
+            return new CognitiveServicesSkuAvailabilityList(
+                kind,
+                skuAvailabilityType,
+                skuName,
+                isSkuAvailable,
+                reason,
+                message,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CommitmentTier. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommitmentTier"/>. </summary>
         /// <param name="kind"> The Kind of the resource. </param>
         /// <param name="skuName"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
         /// <param name="hostingModel"> Account hosting model. </param>
@@ -312,28 +447,57 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <returns> A new <see cref="Models.CommitmentTier"/> instance for mocking. </returns>
         public static CommitmentTier CommitmentTier(string kind = null, string skuName = null, ServiceAccountHostingModel? hostingModel = null, string planType = null, string tier = null, int? maxCount = null, CommitmentQuota quota = null, CommitmentCost cost = null)
         {
-            return new CommitmentTier(kind, skuName, hostingModel, planType, tier, maxCount, quota, cost);
+            return new CommitmentTier(
+                kind,
+                skuName,
+                hostingModel,
+                planType,
+                tier,
+                maxCount,
+                quota,
+                cost,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CommitmentQuota. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommitmentQuota"/>. </summary>
         /// <param name="quantity"> Commitment quota quantity. </param>
         /// <param name="unit"> Commitment quota unit. </param>
         /// <returns> A new <see cref="Models.CommitmentQuota"/> instance for mocking. </returns>
         public static CommitmentQuota CommitmentQuota(long? quantity = null, string unit = null)
         {
-            return new CommitmentQuota(quantity, unit);
+            return new CommitmentQuota(quantity, unit, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CommitmentCost. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommitmentCost"/>. </summary>
         /// <param name="commitmentMeterId"> Commitment meter Id. </param>
         /// <param name="overageMeterId"> Overage meter Id. </param>
         /// <returns> A new <see cref="Models.CommitmentCost"/> instance for mocking. </returns>
         public static CommitmentCost CommitmentCost(string commitmentMeterId = null, string overageMeterId = null)
         {
-            return new CommitmentCost(commitmentMeterId, overageMeterId);
+            return new CommitmentCost(commitmentMeterId, overageMeterId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesDomainAvailabilityList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesModel"/>. </summary>
+        /// <param name="model"> Model Metadata. </param>
+        /// <param name="kind"> The Kind of the Model. </param>
+        /// <param name="skuName"> The SKU of the Model. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesModel"/> instance for mocking. </returns>
+        public static CognitiveServicesModel CognitiveServicesModel(CognitiveServicesAccountModel model = null, string kind = null, string skuName = null)
+        {
+            return new CognitiveServicesModel(model, kind, skuName, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesDomainAvailabilityContent"/>. </summary>
+        /// <param name="subdomainName"> The subdomain name to use. </param>
+        /// <param name="resourceType"> The Type of the resource. </param>
+        /// <param name="kind"> The Kind of the resource. </param>
+        /// <returns> A new <see cref="Models.CognitiveServicesDomainAvailabilityContent"/> instance for mocking. </returns>
+        public static CognitiveServicesDomainAvailabilityContent CognitiveServicesDomainAvailabilityContent(string subdomainName = null, ResourceType resourceType = default, string kind = null)
+        {
+            return new CognitiveServicesDomainAvailabilityContent(subdomainName, resourceType, kind, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesDomainAvailabilityList"/>. </summary>
         /// <param name="isSubdomainAvailable"> Indicates the given SKU is available or not. </param>
         /// <param name="reason"> Reason why the SKU is not available. </param>
         /// <param name="subdomainName"> The subdomain name to use. </param>
@@ -342,10 +506,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <returns> A new <see cref="Models.CognitiveServicesDomainAvailabilityList"/> instance for mocking. </returns>
         public static CognitiveServicesDomainAvailabilityList CognitiveServicesDomainAvailabilityList(bool? isSubdomainAvailable = null, string reason = null, string subdomainName = null, string domainAvailabilityType = null, string kind = null)
         {
-            return new CognitiveServicesDomainAvailabilityList(isSubdomainAvailable, reason, subdomainName, domainAvailabilityType, kind);
+            return new CognitiveServicesDomainAvailabilityList(
+                isSubdomainAvailable,
+                reason,
+                subdomainName,
+                domainAvailabilityType,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -354,10 +524,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <returns> A new <see cref="Models.CognitiveServicesPrivateLinkResource"/> instance for mocking. </returns>
         public static CognitiveServicesPrivateLinkResource CognitiveServicesPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CognitiveServicesPrivateLinkResourceProperties properties = null)
         {
-            return new CognitiveServicesPrivateLinkResource(id, name, resourceType, systemData, properties);
+            return new CognitiveServicesPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesPrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesPrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
@@ -368,48 +544,69 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new CognitiveServicesPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), displayName);
+            return new CognitiveServicesPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), displayName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CognitiveServicesAccountDeploymentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of Cognitive Services account deployment. </param>
         /// <returns> A new <see cref="CognitiveServices.CognitiveServicesAccountDeploymentData"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, CognitiveServicesAccountDeploymentProperties properties = null)
+        public static CognitiveServicesAccountDeploymentData CognitiveServicesAccountDeploymentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CognitiveServicesSku sku = null, ETag? etag = null, CognitiveServicesAccountDeploymentProperties properties = null)
         {
-            return new CognitiveServicesAccountDeploymentData(id, name, resourceType, systemData, etag, properties);
+            return new CognitiveServicesAccountDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sku,
+                etag,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="model"> Properties of Cognitive Services account deployment model. </param>
         /// <param name="scaleSettings"> Properties of Cognitive Services account deployment model. </param>
         /// <param name="capabilities"> The capabilities. </param>
         /// <param name="raiPolicyName"> The name of RAI policy. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
+        /// <param name="rateLimits"></param>
+        /// <param name="versionUpgradeOption"> Deployment model version upgrade option. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState = null, CognitiveServicesAccountDeploymentModel model = null, CognitiveServicesAccountDeploymentScaleSettings scaleSettings = null, IReadOnlyDictionary<string, string> capabilities = null, string raiPolicyName = null, ServiceAccountCallRateLimit callRateLimit = null)
+        public static CognitiveServicesAccountDeploymentProperties CognitiveServicesAccountDeploymentProperties(CognitiveServicesAccountDeploymentProvisioningState? provisioningState = null, CognitiveServicesAccountDeploymentModel model = null, CognitiveServicesAccountDeploymentScaleSettings scaleSettings = null, IReadOnlyDictionary<string, string> capabilities = null, string raiPolicyName = null, ServiceAccountCallRateLimit callRateLimit = null, IEnumerable<ServiceAccountThrottlingRule> rateLimits = null, DeploymentModelVersionUpgradeOption? versionUpgradeOption = null)
         {
             capabilities ??= new Dictionary<string, string>();
+            rateLimits ??= new List<ServiceAccountThrottlingRule>();
 
-            return new CognitiveServicesAccountDeploymentProperties(provisioningState, model, scaleSettings, capabilities, raiPolicyName, callRateLimit);
+            return new CognitiveServicesAccountDeploymentProperties(
+                provisioningState,
+                model,
+                scaleSettings,
+                capabilities,
+                raiPolicyName,
+                callRateLimit,
+                rateLimits?.ToList(),
+                versionUpgradeOption,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentScaleSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CognitiveServicesAccountDeploymentScaleSettings"/>. </summary>
         /// <param name="scaleType"> Deployment scale type. </param>
         /// <param name="capacity"> Deployment capacity. </param>
         /// <param name="activeCapacity"> Deployment active capacity. This value might be different from `capacity` if customer recently updated `capacity`. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesAccountDeploymentScaleSettings"/> instance for mocking. </returns>
         public static CognitiveServicesAccountDeploymentScaleSettings CognitiveServicesAccountDeploymentScaleSettings(CognitiveServicesAccountDeploymentScaleType? scaleType = null, int? capacity = null, int? activeCapacity = null)
         {
-            return new CognitiveServicesAccountDeploymentScaleSettings(scaleType, capacity, activeCapacity);
+            return new CognitiveServicesAccountDeploymentScaleSettings(scaleType, capacity, activeCapacity, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CommitmentPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CommitmentPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -425,10 +622,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CommitmentPlanData(id, name, resourceType, systemData, etag, kind, sku, tags, location, properties);
+            return new CommitmentPlanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                kind,
+                sku,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CommitmentPlanProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommitmentPlanProperties"/>. </summary>
         /// <param name="provisioningState"> Gets the status of the resource at the time the operation was called. </param>
         /// <param name="commitmentPlanGuid"> Commitment plan guid. </param>
         /// <param name="hostingModel"> Account hosting model. </param>
@@ -437,13 +645,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="autoRenew"> AutoRenew commitment plan. </param>
         /// <param name="next"> Cognitive Services account commitment period. </param>
         /// <param name="last"> Cognitive Services account commitment period. </param>
+        /// <param name="provisioningIssues"> The list of ProvisioningIssue. </param>
         /// <returns> A new <see cref="Models.CommitmentPlanProperties"/> instance for mocking. </returns>
-        public static CommitmentPlanProperties CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState = null, Guid? commitmentPlanGuid = null, ServiceAccountHostingModel? hostingModel = null, string planType = null, CommitmentPeriod current = null, bool? autoRenew = null, CommitmentPeriod next = null, CommitmentPeriod last = null)
+        public static CommitmentPlanProperties CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState = null, Guid? commitmentPlanGuid = null, ServiceAccountHostingModel? hostingModel = null, string planType = null, CommitmentPeriod current = null, bool? autoRenew = null, CommitmentPeriod next = null, CommitmentPeriod last = null, IEnumerable<string> provisioningIssues = null)
         {
-            return new CommitmentPlanProperties(provisioningState, commitmentPlanGuid, hostingModel, planType, current, autoRenew, next, last);
+            provisioningIssues ??= new List<string>();
+
+            return new CommitmentPlanProperties(
+                provisioningState,
+                commitmentPlanGuid,
+                hostingModel,
+                planType,
+                current,
+                autoRenew,
+                next,
+                last,
+                provisioningIssues?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CommitmentPeriod. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommitmentPeriod"/>. </summary>
         /// <param name="tier"> Commitment period commitment tier. </param>
         /// <param name="count"> Commitment period commitment count. </param>
         /// <param name="quota"> Cognitive Services account commitment quota. </param>
@@ -452,10 +673,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <returns> A new <see cref="Models.CommitmentPeriod"/> instance for mocking. </returns>
         public static CommitmentPeriod CommitmentPeriod(string tier = null, int? count = null, CommitmentQuota quota = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null)
         {
-            return new CommitmentPeriod(tier, count, quota, startOn, endOn);
+            return new CommitmentPeriod(
+                tier,
+                count,
+                quota,
+                startOn,
+                endOn,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CommitmentPlanAccountAssociationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServices.CommitmentPlanAccountAssociationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -465,7 +692,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <returns> A new <see cref="CognitiveServices.CommitmentPlanAccountAssociationData"/> instance for mocking. </returns>
         public static CommitmentPlanAccountAssociationData CommitmentPlanAccountAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string accountId = null)
         {
-            return new CommitmentPlanAccountAssociationData(id, name, resourceType, systemData, etag, accountId);
+            return new CommitmentPlanAccountAssociationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                accountId,
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -6,24 +6,23 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The AnalysisInput. </summary>
     internal partial class AnalysisInput
     {
-        /// <summary> Initializes a new instance of AnalysisInput. </summary>
-        /// <param name="analysisInputValue"> Contains a set of input documents to be analyzed by the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisInputValue"/> is null. </exception>
-        public AnalysisInput(MultiLanguageBatchInput analysisInputValue)
+        /// <summary> Initializes a new instance of <see cref="AnalysisInput"/>. </summary>
+        /// <param name="analysisInputProperty"> Contains a set of input documents to be analyzed by the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisInputProperty"/> is null. </exception>
+        public AnalysisInput(MultiLanguageBatchInput analysisInputProperty)
         {
-            Argument.AssertNotNull(analysisInputValue, nameof(analysisInputValue));
+            Argument.AssertNotNull(analysisInputProperty, nameof(analysisInputProperty));
 
-            AnalysisInputValue = analysisInputValue;
+            AnalysisInputProperty = analysisInputProperty;
         }
 
         /// <summary> Contains a set of input documents to be analyzed by the service. </summary>
-        public MultiLanguageBatchInput AnalysisInputValue { get; }
+        public MultiLanguageBatchInput AnalysisInputProperty { get; }
     }
 }

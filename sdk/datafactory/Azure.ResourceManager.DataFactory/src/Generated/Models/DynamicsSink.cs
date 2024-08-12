@@ -7,13 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Dynamics sink. </summary>
     public partial class DynamicsSink : CopySink
     {
-        /// <summary> Initializes a new instance of DynamicsSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsSink"/>. </summary>
         /// <param name="writeBehavior"> The write behavior for the operation. </param>
         public DynamicsSink(DynamicsSinkWriteBehavior writeBehavior)
         {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = "DynamicsSink";
         }
 
-        /// <summary> Initializes a new instance of DynamicsSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsSink"/>. </summary>
         /// <param name="copySinkType"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="writeBehavior"> The write behavior for the operation. </param>
         /// <param name="ignoreNullValues"> The flag indicating whether ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="alternateKeyName"> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </param>
-        internal DynamicsSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DynamicsSinkWriteBehavior writeBehavior, BinaryData ignoreNullValues, BinaryData alternateKeyName) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal DynamicsSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DynamicsSinkWriteBehavior writeBehavior, DataFactoryElement<bool> ignoreNullValues, DataFactoryElement<string> alternateKeyName) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             WriteBehavior = writeBehavior;
             IgnoreNullValues = ignoreNullValues;
@@ -41,69 +42,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySinkType = copySinkType ?? "DynamicsSink";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynamicsSink"/> for deserialization. </summary>
+        internal DynamicsSink()
+        {
+        }
+
         /// <summary> The write behavior for the operation. </summary>
         public DynamicsSinkWriteBehavior WriteBehavior { get; set; }
-        /// <summary>
-        /// The flag indicating whether ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData IgnoreNullValues { get; set; }
-        /// <summary>
-        /// The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData AlternateKeyName { get; set; }
+        /// <summary> The flag indicating whether ignore null values from input dataset (except key fields) during write operation. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        public DataFactoryElement<bool> IgnoreNullValues { get; set; }
+        /// <summary> The logical name of the alternate key which will be used when upserting records. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> AlternateKeyName { get; set; }
     }
 }

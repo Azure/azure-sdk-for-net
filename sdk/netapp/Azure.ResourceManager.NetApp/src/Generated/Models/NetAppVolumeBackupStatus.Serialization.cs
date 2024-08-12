@@ -5,27 +5,121 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeBackupStatus
+    public partial class NetAppVolumeBackupStatus : IUtf8JsonSerializable, IJsonModel<NetAppVolumeBackupStatus>
     {
-        internal static NetAppVolumeBackupStatus DeserializeNetAppVolumeBackupStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeBackupStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NetAppVolumeBackupStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeBackupStatus)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(IsHealthy))
+            {
+                writer.WritePropertyName("healthy"u8);
+                writer.WriteBooleanValue(IsHealthy.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RelationshipStatus))
+            {
+                writer.WritePropertyName("relationshipStatus"u8);
+                writer.WriteStringValue(RelationshipStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(MirrorState))
+            {
+                writer.WritePropertyName("mirrorState"u8);
+                writer.WriteStringValue(MirrorState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(UnhealthyReason))
+            {
+                writer.WritePropertyName("unhealthyReason"u8);
+                writer.WriteStringValue(UnhealthyReason);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastTransferSize))
+            {
+                writer.WritePropertyName("lastTransferSize"u8);
+                writer.WriteNumberValue(LastTransferSize.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastTransferType))
+            {
+                writer.WritePropertyName("lastTransferType"u8);
+                writer.WriteStringValue(LastTransferType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalTransferBytes))
+            {
+                writer.WritePropertyName("totalTransferBytes"u8);
+                writer.WriteNumberValue(TotalTransferBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TransferProgressBytes))
+            {
+                writer.WritePropertyName("transferProgressBytes"u8);
+                writer.WriteNumberValue(TransferProgressBytes.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        NetAppVolumeBackupStatus IJsonModel<NetAppVolumeBackupStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeBackupStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumeBackupStatus(document.RootElement, options);
+        }
+
+        internal static NetAppVolumeBackupStatus DeserializeNetAppVolumeBackupStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> healthy = default;
-            Optional<NetAppRelationshipStatus> relationshipStatus = default;
-            Optional<NetAppMirrorState> mirrorState = default;
-            Optional<string> unhealthyReason = default;
-            Optional<string> errorMessage = default;
-            Optional<long> lastTransferSize = default;
-            Optional<string> lastTransferType = default;
-            Optional<long> totalTransferBytes = default;
+            bool? healthy = default;
+            NetAppRelationshipStatus? relationshipStatus = default;
+            NetAppMirrorState? mirrorState = default;
+            string unhealthyReason = default;
+            string errorMessage = default;
+            long? lastTransferSize = default;
+            string lastTransferType = default;
+            long? totalTransferBytes = default;
+            long? transferProgressBytes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("healthy"u8))
@@ -88,8 +182,63 @@ namespace Azure.ResourceManager.NetApp.Models
                     totalTransferBytes = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("transferProgressBytes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    transferProgressBytes = property.Value.GetInt64();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetAppVolumeBackupStatus(Optional.ToNullable(healthy), Optional.ToNullable(relationshipStatus), Optional.ToNullable(mirrorState), unhealthyReason.Value, errorMessage.Value, Optional.ToNullable(lastTransferSize), lastTransferType.Value, Optional.ToNullable(totalTransferBytes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetAppVolumeBackupStatus(
+                healthy,
+                relationshipStatus,
+                mirrorState,
+                unhealthyReason,
+                errorMessage,
+                lastTransferSize,
+                lastTransferType,
+                totalTransferBytes,
+                transferProgressBytes,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetAppVolumeBackupStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeBackupStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetAppVolumeBackupStatus IPersistableModel<NetAppVolumeBackupStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetAppVolumeBackupStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeBackupStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetAppVolumeBackupStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

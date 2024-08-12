@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
@@ -33,8 +32,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-02-01";
+            _apiVersion = apiVersion ?? "2023-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string instanceType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationSupportedOperatingSystems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (instanceType != null)
+            {
+                uri.AppendQuery("instanceType", instanceType, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string instanceType)
@@ -70,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SupportedOperatingSystems>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SiteRecoverySupportedOperatingSystems>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -82,9 +100,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SupportedOperatingSystems value = default;
+                        SiteRecoverySupportedOperatingSystems value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SupportedOperatingSystems.DeserializeSupportedOperatingSystems(document.RootElement);
+                        value = SiteRecoverySupportedOperatingSystems.DeserializeSiteRecoverySupportedOperatingSystems(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -100,7 +118,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SupportedOperatingSystems> Get(string subscriptionId, string resourceGroupName, string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
+        public Response<SiteRecoverySupportedOperatingSystems> Get(string subscriptionId, string resourceGroupName, string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +130,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 case 200:
                     {
-                        SupportedOperatingSystems value = default;
+                        SiteRecoverySupportedOperatingSystems value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SupportedOperatingSystems.DeserializeSupportedOperatingSystems(document.RootElement);
+                        value = SiteRecoverySupportedOperatingSystems.DeserializeSiteRecoverySupportedOperatingSystems(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

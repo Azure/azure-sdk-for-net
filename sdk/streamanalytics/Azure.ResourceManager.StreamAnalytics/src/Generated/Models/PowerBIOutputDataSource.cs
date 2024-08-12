@@ -6,20 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes a Power BI output data source. </summary>
     public partial class PowerBIOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of PowerBIOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerBIOutputDataSource"/>. </summary>
         public PowerBIOutputDataSource()
         {
             OutputDataSourceType = "PowerBI";
         }
 
-        /// <summary> Initializes a new instance of PowerBIOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="PowerBIOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="refreshToken"> A refresh token that can be used to obtain a valid access token that can then be used to authenticate with the data source. A valid refresh token is currently only obtainable via the Azure Portal. It is recommended to put a dummy string value here when creating the data source and then going to the Azure Portal to authenticate the data source which will update this property with a valid refresh token. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="tokenUserPrincipalName"> The user principal name (UPN) of the user that was used to obtain the refresh token. Use this property to help remember which user was used to obtain the refresh token. </param>
         /// <param name="tokenUserDisplayName"> The user display name of the user that was used to obtain the refresh token. Use this property to help remember which user was used to obtain the refresh token. </param>
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="groupId"> The ID of the Power BI group. </param>
         /// <param name="groupName"> The name of the Power BI group. Use this property to help remember which specific Power BI group id was used. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal PowerBIOutputDataSource(string outputDataSourceType, string refreshToken, string tokenUserPrincipalName, string tokenUserDisplayName, string dataset, string table, Guid? groupId, string groupName, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
+        internal PowerBIOutputDataSource(string outputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string refreshToken, string tokenUserPrincipalName, string tokenUserDisplayName, string dataset, string table, Guid? groupId, string groupName, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType, serializedAdditionalRawData)
         {
             RefreshToken = refreshToken;
             TokenUserPrincipalName = tokenUserPrincipalName;

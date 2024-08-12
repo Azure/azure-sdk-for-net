@@ -5,49 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Details of estimated savings.
-    /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties
-    /// </summary>
+    /// <summary> Details of estimated savings. </summary>
     public partial class ConsumptionCalculatedSavingsProperties
     {
-        /// <summary> Initializes a new instance of ConsumptionCalculatedSavingsProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionCalculatedSavingsProperties"/>. </summary>
         internal ConsumptionCalculatedSavingsProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ConsumptionCalculatedSavingsProperties. </summary>
-        /// <param name="onDemandCost">
-        /// The cost without reservation.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.onDemandCost
-        /// </param>
-        /// <param name="overageCost">
-        /// The difference between total reservation cost and reservation cost.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.overageCost
-        /// </param>
-        /// <param name="quantity">
-        /// The quantity for calculated savings.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.quantity
-        /// </param>
-        /// <param name="reservationCost">
-        /// The exact cost of the estimated usage using reservation.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.reservationCost
-        /// </param>
-        /// <param name="totalReservationCost">
-        /// The cost of the suggested quantity.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.totalReservationCost
-        /// </param>
-        /// <param name="reservedUnitCount">
-        /// The number of reserved units used to calculate savings. Always 1 for virtual machines.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.reservedUnitCount
-        /// </param>
-        /// <param name="savings">
-        /// The amount saved by purchasing the recommended quantity of reservation.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.savings
-        /// </param>
-        internal ConsumptionCalculatedSavingsProperties(float? onDemandCost, float? overageCost, float? quantity, float? reservationCost, float? totalReservationCost, float? reservedUnitCount, float? savings)
+        /// <summary> Initializes a new instance of <see cref="ConsumptionCalculatedSavingsProperties"/>. </summary>
+        /// <param name="onDemandCost"> The cost without reservation. </param>
+        /// <param name="overageCost"> The difference between total reservation cost and reservation cost. </param>
+        /// <param name="quantity"> The quantity for calculated savings. </param>
+        /// <param name="reservationCost"> The exact cost of the estimated usage using reservation. </param>
+        /// <param name="totalReservationCost"> The cost of the suggested quantity. </param>
+        /// <param name="reservedUnitCount"> The number of reserved units used to calculate savings. Always 1 for virtual machines. </param>
+        /// <param name="savings"> The amount saved by purchasing the recommended quantity of reservation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionCalculatedSavingsProperties(float? onDemandCost, float? overageCost, float? quantity, float? reservationCost, float? totalReservationCost, float? reservedUnitCount, float? savings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OnDemandCost = onDemandCost;
             OverageCost = overageCost;
@@ -56,42 +68,22 @@ namespace Azure.ResourceManager.Consumption.Models
             TotalReservationCost = totalReservationCost;
             ReservedUnitCount = reservedUnitCount;
             Savings = savings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The cost without reservation.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.onDemandCost
-        /// </summary>
+        /// <summary> The cost without reservation. </summary>
         public float? OnDemandCost { get; }
-        /// <summary>
-        /// The difference between total reservation cost and reservation cost.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.overageCost
-        /// </summary>
+        /// <summary> The difference between total reservation cost and reservation cost. </summary>
         public float? OverageCost { get; }
-        /// <summary>
-        /// The quantity for calculated savings.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.quantity
-        /// </summary>
+        /// <summary> The quantity for calculated savings. </summary>
         public float? Quantity { get; }
-        /// <summary>
-        /// The exact cost of the estimated usage using reservation.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.reservationCost
-        /// </summary>
+        /// <summary> The exact cost of the estimated usage using reservation. </summary>
         public float? ReservationCost { get; }
-        /// <summary>
-        /// The cost of the suggested quantity.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.totalReservationCost
-        /// </summary>
+        /// <summary> The cost of the suggested quantity. </summary>
         public float? TotalReservationCost { get; }
-        /// <summary>
-        /// The number of reserved units used to calculate savings. Always 1 for virtual machines.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.reservedUnitCount
-        /// </summary>
+        /// <summary> The number of reserved units used to calculate savings. Always 1 for virtual machines. </summary>
         public float? ReservedUnitCount { get; }
-        /// <summary>
-        /// The amount saved by purchasing the recommended quantity of reservation.
-        /// Serialized Name: ReservationRecommendationDetailsCalculatedSavingsProperties.savings
-        /// </summary>
+        /// <summary> The amount saved by purchasing the recommended quantity of reservation. </summary>
         public float? Savings { get; }
     }
 }

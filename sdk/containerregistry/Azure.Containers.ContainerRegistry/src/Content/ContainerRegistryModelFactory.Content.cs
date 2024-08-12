@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
+    [CodeGenType("ContainersContainerRegistryModelFactory")]
     public static partial class ContainerRegistryModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="SetManifestResult" />. </summary>

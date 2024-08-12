@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources.Models;
@@ -37,6 +36,22 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Resources/templateSpecs/", false);
+            uri.AppendPath(templateSpecName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(templateSpecVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData data)
         {
             var message = _pipeline.CreateMessage();
@@ -57,14 +72,14 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Creates or updates a Template Spec version. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -98,7 +113,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates or updates a Template Spec version. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -131,6 +146,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Resources/templateSpecs/", false);
+            uri.AppendPath(templateSpecName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(templateSpecVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -151,14 +182,14 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Updates Template Spec Version tags with specified values. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -191,7 +222,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Updates Template Spec Version tags with specified values. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -223,6 +254,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Resources/templateSpecs/", false);
+            uri.AppendPath(templateSpecName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(templateSpecVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
         {
             var message = _pipeline.CreateMessage();
@@ -246,7 +293,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets a Template Spec version from a specific Template Spec. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -279,7 +326,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets a Template Spec version from a specific Template Spec. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -311,6 +358,22 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Resources/templateSpecs/", false);
+            uri.AppendPath(templateSpecName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(templateSpecVersion, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
         {
             var message = _pipeline.CreateMessage();
@@ -334,7 +397,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes a specific version from a Template Spec. When operation completes, status code 200 returned without content. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -361,7 +424,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes a specific version from a Template Spec. When operation completes, status code 200 returned without content. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="templateSpecVersion"> The version of the Template Spec. </param>
@@ -387,6 +450,21 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string templateSpecName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Resources/templateSpecs/", false);
+            uri.AppendPath(templateSpecName, true);
+            uri.AppendPath("/versions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string templateSpecName)
         {
             var message = _pipeline.CreateMessage();
@@ -409,7 +487,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists all the Template Spec versions in the specified Template Spec. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -438,7 +516,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists all the Template Spec versions in the specified Template Spec. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -466,6 +544,14 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string templateSpecName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string templateSpecName)
         {
             var message = _pipeline.CreateMessage();
@@ -482,7 +568,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists all the Template Spec versions in the specified Template Spec. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -513,7 +599,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists all the Template Spec versions in the specified Template Spec. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="templateSpecName"> Name of the Template Spec. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

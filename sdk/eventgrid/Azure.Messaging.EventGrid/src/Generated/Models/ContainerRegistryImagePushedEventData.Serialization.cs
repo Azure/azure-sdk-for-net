@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,15 +20,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> action = default;
-            Optional<string> location = default;
-            Optional<ContainerRegistryEventTarget> target = default;
-            Optional<ContainerRegistryEventRequest> request = default;
-            Optional<ContainerRegistryEventActor> actor = default;
-            Optional<ContainerRegistryEventSource> source = default;
-            Optional<ContainerRegistryEventConnectedRegistry> connectedRegistry = default;
+            string id = default;
+            DateTimeOffset? timestamp = default;
+            string action = default;
+            string location = default;
+            ContainerRegistryEventTarget target = default;
+            ContainerRegistryEventRequest request = default;
+            ContainerRegistryEventActor actor = default;
+            ContainerRegistryEventSource source = default;
+            ContainerRegistryEventConnectedRegistry connectedRegistry = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -102,7 +101,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ContainerRegistryImagePushedEventData(id.Value, Optional.ToNullable(timestamp), action.Value, location.Value, target.Value, request.Value, actor.Value, source.Value, connectedRegistry.Value);
+            return new ContainerRegistryImagePushedEventData(
+                id,
+                timestamp,
+                action,
+                location,
+                target,
+                request,
+                actor,
+                source,
+                connectedRegistry);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ContainerRegistryImagePushedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeContainerRegistryImagePushedEventData(document.RootElement);
         }
 
         internal partial class ContainerRegistryImagePushedEventDataConverter : JsonConverter<ContainerRegistryImagePushedEventData>
@@ -111,6 +127,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override ContainerRegistryImagePushedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

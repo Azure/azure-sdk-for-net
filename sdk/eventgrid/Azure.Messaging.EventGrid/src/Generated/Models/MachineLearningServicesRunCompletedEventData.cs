@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.RunCompleted event. </summary>
     public partial class MachineLearningServicesRunCompletedEventData
     {
-        /// <summary> Initializes a new instance of MachineLearningServicesRunCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunCompletedEventData"/>. </summary>
         internal MachineLearningServicesRunCompletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServicesRunCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunCompletedEventData"/>. </summary>
         /// <param name="experimentId"> The ID of the experiment that the run belongs to. </param>
         /// <param name="experimentName"> The name of the experiment that the run belongs to. </param>
         /// <param name="runId"> The ID of the Run that was completed. </param>

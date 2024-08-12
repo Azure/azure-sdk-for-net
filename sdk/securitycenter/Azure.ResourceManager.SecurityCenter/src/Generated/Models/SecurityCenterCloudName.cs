@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string GcpValue = "GCP";
         private const string GithubValue = "Github";
         private const string AzureDevOpsValue = "AzureDevOps";
+        private const string GitLabValue = "GitLab";
 
         /// <summary> Azure. </summary>
         public static SecurityCenterCloudName Azure { get; } = new SecurityCenterCloudName(AzureValue);
@@ -38,6 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityCenterCloudName Github { get; } = new SecurityCenterCloudName(GithubValue);
         /// <summary> AzureDevOps. </summary>
         public static SecurityCenterCloudName AzureDevOps { get; } = new SecurityCenterCloudName(AzureDevOpsValue);
+        /// <summary> GitLab. </summary>
+        public static SecurityCenterCloudName GitLab { get; } = new SecurityCenterCloudName(GitLabValue);
         /// <summary> Determines if two <see cref="SecurityCenterCloudName"/> values are the same. </summary>
         public static bool operator ==(SecurityCenterCloudName left, SecurityCenterCloudName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SecurityCenterCloudName"/> values are not the same. </summary>
@@ -53,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

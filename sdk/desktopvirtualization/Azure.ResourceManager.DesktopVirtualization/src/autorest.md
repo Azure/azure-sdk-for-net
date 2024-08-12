@@ -9,15 +9,20 @@ generate-model-factory: true
 csharp: true
 library-name: DesktopVirtualization
 namespace: Azure.ResourceManager.DesktopVirtualization
-require: https://github.com/Azure/azure-rest-api-specs/blob/45765fbbfd14084eb7a12ebd099aaeddb2a13173/specification/desktopvirtualization/resource-manager/readme.md
-# tag: package-2022-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/9d449f35c2a8707d446a86d80c3732c909b1872f/specification/desktopvirtualization/resource-manager/readme.md
+# tag: package-2023-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -27,7 +32,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -107,6 +112,10 @@ rename-mapping:
   AgentUpdatePatchProperties: SessionHostAgentUpdatePatchProperties
   AgentUpdatePatchProperties.useSessionHostLocalTime: DoesUseSessionHostLocalTime
   MaintenanceWindowProperties: SessionHostMaintenanceWindowProperties
+  HostpoolPublicNetworkAccess: HostPoolPublicNetworkAccess
+  PrivateLinkResource: DesktopVirtualizationPrivateLinkResourceData
+  PrivateEndpointConnectionWithSystemData: DesktopVirtualizationPrivateEndpointConnectionData
+  PublicNetworkAccess: DesktopVirtualizationPublicNetworkAccess
 
 prepend-rp-prefix:
   - DayOfWeek

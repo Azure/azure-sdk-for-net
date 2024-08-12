@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
@@ -18,24 +16,31 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmCostManagementModelFactory
     {
-        /// <summary> Initializes a new instance of BenefitRecommendationModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BenefitRecommendationModel"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// The properties of the benefit recommendations.
-        /// Please note <see cref="BenefitRecommendationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SharedScopeBenefitRecommendationProperties"/> and <see cref="SingleScopeBenefitRecommendationProperties"/>.
+        /// Please note <see cref="Models.BenefitRecommendationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.SharedScopeBenefitRecommendationProperties"/> and <see cref="Models.SingleScopeBenefitRecommendationProperties"/>.
         /// </param>
         /// <param name="kind"> Reservation or SavingsPlan. </param>
         /// <returns> A new <see cref="Models.BenefitRecommendationModel"/> instance for mocking. </returns>
         public static BenefitRecommendationModel BenefitRecommendationModel(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, BenefitRecommendationProperties properties = null, BillingAccountBenefitKind? kind = null)
         {
-            return new BenefitRecommendationModel(id, name, resourceType, systemData, properties, kind);
+            return new BenefitRecommendationModel(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of BenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BenefitRecommendationProperties"/>. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
@@ -50,12 +55,26 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
         /// <param name="scope"> Benefit scope. For example, Single or Shared. </param>
         /// <returns> A new <see cref="Models.BenefitRecommendationProperties"/> instance for mocking. </returns>
-        public static BenefitRecommendationProperties BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = null, DateTimeOffset? lastConsumptionOn = null, LookBackPeriod? lookBackPeriod = null, int? totalHours = null, RecommendationUsageDetails usage = null, string armSkuName = null, BenefitRecommendationPeriodTerm? term = null, BenefitRecommendationUsageGrain? commitmentGranularity = null, string currencyCode = null, decimal? costWithoutBenefit = null, AllSavingsBenefitDetails recommendationDetails = null, AllSavingsList allRecommendationDetails = null, string scope = "Unknown")
+        public static BenefitRecommendationProperties BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = null, DateTimeOffset? lastConsumptionOn = null, LookBackPeriod? lookBackPeriod = null, int? totalHours = null, RecommendationUsageDetails usage = null, string armSkuName = null, BenefitRecommendationPeriodTerm? term = null, BenefitRecommendationUsageGrain? commitmentGranularity = null, string currencyCode = null, decimal? costWithoutBenefit = null, AllSavingsBenefitDetails recommendationDetails = null, AllSavingsList allRecommendationDetails = null, string scope = null)
         {
-            return new UnknownBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope);
+            return new UnknownBenefitRecommendationProperties(
+                firstConsumptionOn,
+                lastConsumptionOn,
+                lookBackPeriod,
+                totalHours,
+                usage,
+                armSkuName,
+                term,
+                commitmentGranularity,
+                currencyCode,
+                costWithoutBenefit,
+                recommendationDetails,
+                allRecommendationDetails,
+                scope == null ? default : new BenefitRecommendationScope(scope),
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RecommendationUsageDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendationUsageDetails"/>. </summary>
         /// <param name="usageGrain"> The grain of the usage. Supported values: 'Hourly'. </param>
         /// <param name="charges"> On-demand charges for each hour between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </param>
         /// <returns> A new <see cref="Models.RecommendationUsageDetails"/> instance for mocking. </returns>
@@ -63,10 +82,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             charges ??= new List<decimal>();
 
-            return new RecommendationUsageDetails(usageGrain, charges?.ToList());
+            return new RecommendationUsageDetails(usageGrain, charges?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AllSavingsBenefitDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AllSavingsBenefitDetails"/>. </summary>
         /// <param name="overageCost"> The difference between total cost and benefit cost for the 'totalHours' in the look-back period. </param>
         /// <param name="benefitCost"> The estimated cost with benefit for the 'totalHours' in the look-back period. It's equal to (commitmentAmount * totalHours). </param>
         /// <param name="totalCost"> Total cost, which is sum of benefit cost and overage cost. </param>
@@ -79,10 +98,20 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.AllSavingsBenefitDetails"/> instance for mocking. </returns>
         public static AllSavingsBenefitDetails AllSavingsBenefitDetails(decimal? overageCost = null, decimal? benefitCost = null, decimal? totalCost = null, decimal? savingsAmount = null, decimal? savingsPercentage = null, decimal? coveragePercentage = null, decimal? commitmentAmount = null, decimal? averageUtilizationPercentage = null, decimal? wastageCost = null)
         {
-            return new AllSavingsBenefitDetails(overageCost, benefitCost, totalCost, savingsAmount, savingsPercentage, coveragePercentage, commitmentAmount, averageUtilizationPercentage, wastageCost);
+            return new AllSavingsBenefitDetails(
+                overageCost,
+                benefitCost,
+                totalCost,
+                savingsAmount,
+                savingsPercentage,
+                coveragePercentage,
+                commitmentAmount,
+                averageUtilizationPercentage,
+                wastageCost,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AllSavingsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AllSavingsList"/>. </summary>
         /// <param name="value"> The list of benefit recommendations with the recommendation details.. </param>
         /// <param name="nextLink"> The link (URL) to the next page of results. </param>
         /// <returns> A new <see cref="Models.AllSavingsList"/> instance for mocking. </returns>
@@ -90,51 +119,57 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             value ??= new List<AllSavingsBenefitDetails>();
 
-            return new AllSavingsList(value?.ToList(), nextLink);
+            return new AllSavingsList(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ExportRunErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportRunErrorDetails"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
         /// <returns> A new <see cref="Models.ExportRunErrorDetails"/> instance for mocking. </returns>
         public static ExportRunErrorDetails ExportRunErrorDetails(string code = null, string message = null)
         {
-            return new ExportRunErrorDetails(code, message);
+            return new ExportRunErrorDetails(code, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of BenefitUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BenefitUtilizationSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Supported values: 'SavingsPlan'. </param>
         /// <returns> A new <see cref="Models.BenefitUtilizationSummary"/> instance for mocking. </returns>
-        public static BenefitUtilizationSummary BenefitUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static BenefitUtilizationSummary BenefitUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
-            return new BenefitUtilizationSummary(id, name, resourceType, systemData, kind);
+            return new BenefitUtilizationSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new BillingAccountBenefitKind(kind),
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of BenefitUtilizationSummariesOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BenefitUtilizationSummariesOperationStatus"/>. </summary>
         /// <param name="input"> Input given to create the benefit utilization summaries report. </param>
         /// <param name="status"> The status of the creation of the benefit utilization summaries report. </param>
         /// <param name="properties"> Contains sas url to the async benefit utilization summaries report and a date that the url is valid until. These values will be empty if the report is in a Running or Failed state. </param>
         /// <returns> A new <see cref="Models.BenefitUtilizationSummariesOperationStatus"/> instance for mocking. </returns>
-        public static BenefitUtilizationSummariesOperationStatus BenefitUtilizationSummariesOperationStatus(BenefitUtilizationSummariesRequest input = null, OperationStatusType? status = null, AsyncOperationStatusProperties properties = null)
+        public static BenefitUtilizationSummariesOperationStatus BenefitUtilizationSummariesOperationStatus(BenefitUtilizationSummariesContent input = null, OperationStatusType? status = null, AsyncOperationStatusProperties properties = null)
         {
-            return new BenefitUtilizationSummariesOperationStatus(input, status, properties);
+            return new BenefitUtilizationSummariesOperationStatus(input, status, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AsyncOperationStatusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AsyncOperationStatusProperties"/>. </summary>
         /// <param name="reportUri"> Sas url to the async benefit utilization summaries report. Will be empty if the report is in Running or Failed state. </param>
         /// <param name="secondaryReportUri"> Sas url to async benefit utilization summaries report in secondary storage in case of primary outage. Will be empty if the report is in Running or Failed state. </param>
         /// <param name="validUntil"> The date that the sas url provided in reportUrl expires. </param>
         /// <returns> A new <see cref="Models.AsyncOperationStatusProperties"/> instance for mocking. </returns>
         public static AsyncOperationStatusProperties AsyncOperationStatusProperties(BenefitUtilizationSummaryReportSchema? reportUri = null, BenefitUtilizationSummaryReportSchema? secondaryReportUri = null, DateTimeOffset? validUntil = null)
         {
-            return new AsyncOperationStatusProperties(reportUri, secondaryReportUri, validUntil);
+            return new AsyncOperationStatusProperties(reportUri, secondaryReportUri, validUntil, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CostManagementExportData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagement.CostManagementExportData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -152,10 +187,23 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             runHistoryValue ??= new List<ExportRun>();
 
-            return new CostManagementExportData(id, name, resourceType, systemData, format, deliveryInfoDestination != null ? new ExportDeliveryInfo(deliveryInfoDestination) : null, definition, runHistoryValue != null ? new ExportExecutionListResult(runHistoryValue?.ToList()) : null, partitionData, nextRunTimeEstimate, schedule, eTag);
+            return new CostManagementExportData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                format,
+                deliveryInfoDestination != null ? new ExportDeliveryInfo(deliveryInfoDestination, serializedAdditionalRawData: null) : null,
+                definition,
+                runHistoryValue != null ? new ExportExecutionListResult(runHistoryValue?.ToList(), serializedAdditionalRawData: null) : null,
+                partitionData,
+                nextRunTimeEstimate,
+                schedule,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CommonExportProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CommonExportProperties"/>. </summary>
         /// <param name="format"> The format of the export being delivered. Currently only 'Csv' is supported. </param>
         /// <param name="deliveryInfoDestination"> Has delivery information for the export. </param>
         /// <param name="definition"> Has the definition for the export. </param>
@@ -167,10 +215,17 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             runHistoryValue ??= new List<ExportRun>();
 
-            return new CommonExportProperties(format, deliveryInfoDestination != null ? new ExportDeliveryInfo(deliveryInfoDestination) : null, definition, runHistoryValue != null ? new ExportExecutionListResult(runHistoryValue?.ToList()) : null, partitionData, nextRunTimeEstimate);
+            return new CommonExportProperties(
+                format,
+                deliveryInfoDestination != null ? new ExportDeliveryInfo(deliveryInfoDestination, serializedAdditionalRawData: null) : null,
+                definition,
+                runHistoryValue != null ? new ExportExecutionListResult(runHistoryValue?.ToList(), serializedAdditionalRawData: null) : null,
+                partitionData,
+                nextRunTimeEstimate,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ExportRun. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportRun"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -186,12 +241,27 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="error"> The details of any error. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ExportRun"/> instance for mocking. </returns>
-        public static ExportRun ExportRun(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExecutionType? executionType = null, ExecutionStatus? status = null, string submittedBy = null, DateTimeOffset? submittedOn = null, DateTimeOffset? processingStartOn = null, DateTimeOffset? processingEndOn = null, string fileName = null, CommonExportProperties runSettings = null, ExportRunErrorDetails error = null, ETag? eTag = null)
+        public static ExportRun ExportRun(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExportRunExecutionType? executionType = null, ExportRunExecutionStatus? status = null, string submittedBy = null, DateTimeOffset? submittedOn = null, DateTimeOffset? processingStartOn = null, DateTimeOffset? processingEndOn = null, string fileName = null, CommonExportProperties runSettings = null, ExportRunErrorDetails error = null, ETag? eTag = null)
         {
-            return new ExportRun(id, name, resourceType, systemData, executionType, status, submittedBy, submittedOn, processingStartOn, processingEndOn, fileName, runSettings, error, eTag);
+            return new ExportRun(
+                id,
+                name,
+                resourceType,
+                systemData,
+                executionType,
+                status,
+                submittedBy,
+                submittedOn,
+                processingStartOn,
+                processingEndOn,
+                fileName,
+                runSettings,
+                error,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CostManagementViewData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagement.CostManagementViewData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -214,15 +284,37 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="includeMonetaryCommitment"> If true, report includes monetary commitment. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.CostManagementViewData"/> instance for mocking. </returns>
-        public static CostManagementViewData CostManagementViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string scope = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string dateRange = null, string currency = null, ViewChartType? chart = null, AccumulatedType? accumulated = null, ViewMetricType? metric = null, IEnumerable<KpiProperties> kpis = null, IEnumerable<ViewPivotProperties> pivots = null, ViewReportType? typePropertiesQueryType = null, ReportTimeframeType? timeframe = null, ReportConfigTimePeriod timePeriod = null, ReportConfigDataset dataSet = null, bool? includeMonetaryCommitment = null, ETag? eTag = null)
+        public static CostManagementViewData CostManagementViewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, ResourceIdentifier scope = null, DateTimeOffset? createdOn = null, DateTimeOffset? modifiedOn = null, string dateRange = null, string currency = null, ViewChartType? chart = null, AccumulatedType? accumulated = null, ViewMetricType? metric = null, IEnumerable<ViewKpiProperties> kpis = null, IEnumerable<ViewPivotProperties> pivots = null, ViewReportType? typePropertiesQueryType = null, ReportTimeframeType? timeframe = null, ReportConfigTimePeriod timePeriod = null, ReportConfigDataset dataSet = null, bool? includeMonetaryCommitment = null, ETag? eTag = null)
         {
-            kpis ??= new List<KpiProperties>();
+            kpis ??= new List<ViewKpiProperties>();
             pivots ??= new List<ViewPivotProperties>();
 
-            return new CostManagementViewData(id, name, resourceType, systemData, displayName, scope, createdOn, modifiedOn, dateRange, currency, chart, accumulated, metric, kpis?.ToList(), pivots?.ToList(), typePropertiesQueryType, timeframe, timePeriod, dataSet, includeMonetaryCommitment, eTag);
+            return new CostManagementViewData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                scope,
+                createdOn,
+                modifiedOn,
+                dateRange,
+                currency,
+                chart,
+                accumulated,
+                metric,
+                kpis?.ToList(),
+                pivots?.ToList(),
+                typePropertiesQueryType,
+                timeframe,
+                timePeriod,
+                dataSet,
+                includeMonetaryCommitment,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CostManagementAlertData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagement.CostManagementAlertData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -233,19 +325,56 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="details"> Alert details. </param>
         /// <param name="costEntityId"> related budget. </param>
         /// <param name="status"> alert status. </param>
-        /// <param name="creationTime"> dateTime in which alert was created. </param>
-        /// <param name="closeTime"> dateTime in which alert was closed. </param>
-        /// <param name="modificationTime"> dateTime in which alert was last modified. </param>
+        /// <param name="createdOn"> dateTime in which alert was created. </param>
+        /// <param name="closeOn"> dateTime in which alert was closed. </param>
+        /// <param name="modifiedOn"> dateTime in which alert was last modified. </param>
         /// <param name="statusModificationUserName"> User who last modified the alert. </param>
-        /// <param name="statusModificationTime"> dateTime in which the alert status was last modified. </param>
+        /// <param name="statusModifiedOn"> dateTime in which the alert status was last modified. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="CostManagement.CostManagementAlertData"/> instance for mocking. </returns>
-        public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlertPropertiesDefinition definition = null, string description = null, CostManagementAlertSource? source = null, AlertPropertiesDetails details = null, string costEntityId = null, CostManagementAlertStatus? status = null, string creationTime = null, string closeTime = null, string modificationTime = null, string statusModificationUserName = null, string statusModificationTime = null, ETag? eTag = null)
+        public static CostManagementAlertData CostManagementAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AlertPropertiesDefinition definition = null, string description = null, CostManagementAlertSource? source = null, AlertPropertiesDetails details = null, string costEntityId = null, CostManagementAlertStatus? status = null, DateTimeOffset? createdOn = null, DateTimeOffset? closeOn = null, DateTimeOffset? modifiedOn = null, string statusModificationUserName = null, DateTimeOffset? statusModifiedOn = null, ETag? eTag = null)
         {
-            return new CostManagementAlertData(id, name, resourceType, systemData, definition, description, source, details, costEntityId, status, creationTime, closeTime, modificationTime, statusModificationUserName, statusModificationTime, eTag);
+            return new CostManagementAlertData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                definition,
+                description,
+                source,
+                details,
+                costEntityId,
+                status,
+                createdOn,
+                closeOn,
+                modifiedOn,
+                statusModificationUserName,
+                statusModifiedOn,
+                eTag,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ForecastResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ForecastDefinition"/>. </summary>
+        /// <param name="forecastType"> The type of the forecast. </param>
+        /// <param name="timeframe"> The time frame for pulling data for the forecast. If custom, then a specific time period must be provided. </param>
+        /// <param name="timePeriod"> Has time period for pulling data for the forecast. </param>
+        /// <param name="dataset"> Has definition for data in this forecast. </param>
+        /// <param name="includeActualCost"> A boolean determining if actualCost will be included. </param>
+        /// <param name="includeFreshPartialCost"> A boolean determining if FreshPartialCost will be included. </param>
+        /// <returns> A new <see cref="Models.ForecastDefinition"/> instance for mocking. </returns>
+        public static ForecastDefinition ForecastDefinition(ForecastType forecastType = default, ForecastTimeframe timeframe = default, ForecastTimePeriod timePeriod = null, ForecastDataset dataset = null, bool? includeActualCost = null, bool? includeFreshPartialCost = null)
+        {
+            return new ForecastDefinition(
+                forecastType,
+                timeframe,
+                timePeriod,
+                dataset,
+                includeActualCost,
+                includeFreshPartialCost,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ForecastResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -264,26 +393,38 @@ namespace Azure.ResourceManager.CostManagement.Models
             rows ??= new List<IList<BinaryData>>();
             tags ??= new Dictionary<string, string>();
 
-            return new ForecastResult(id, name, resourceType, systemData, nextLink, columns?.ToList(), rows?.ToList(), location, sku, eTag, tags);
+            return new ForecastResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                nextLink,
+                columns?.ToList(),
+                rows?.ToList(),
+                location,
+                sku,
+                eTag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ForecastColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ForecastColumn"/>. </summary>
         /// <param name="name"> The name of column. </param>
         /// <param name="forecastColumnType"> The type of column. </param>
         /// <returns> A new <see cref="Models.ForecastColumn"/> instance for mocking. </returns>
         public static ForecastColumn ForecastColumn(string name = null, string forecastColumnType = null)
         {
-            return new ForecastColumn(name, forecastColumnType);
+            return new ForecastColumn(name, forecastColumnType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CostManagementDimension. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CostManagementDimension"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Dimension description. </param>
-        /// <param name="filterEnabled"> Filter enabled. </param>
-        /// <param name="groupingEnabled"> Grouping enabled. </param>
+        /// <param name="isFilterEnabled"> Filter enabled. </param>
+        /// <param name="isGroupingEnabled"> Grouping enabled. </param>
         /// <param name="data"> Dimension data. </param>
         /// <param name="total"> Total number of data for the dimension. </param>
         /// <param name="category"> Dimension category. </param>
@@ -295,15 +436,44 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.CostManagementDimension"/> instance for mocking. </returns>
-        public static CostManagementDimension CostManagementDimension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? filterEnabled = null, bool? groupingEnabled = null, IEnumerable<string> data = null, int? total = null, string category = null, DateTimeOffset? usageStart = null, DateTimeOffset? usageEnd = null, string nextLink = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static CostManagementDimension CostManagementDimension(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, bool? isFilterEnabled = null, bool? isGroupingEnabled = null, IEnumerable<string> data = null, int? total = null, string category = null, DateTimeOffset? usageStart = null, DateTimeOffset? usageEnd = null, string nextLink = null, AzureLocation? location = null, string sku = null, ETag? eTag = null, IReadOnlyDictionary<string, string> tags = null)
         {
             data ??= new List<string>();
             tags ??= new Dictionary<string, string>();
 
-            return new CostManagementDimension(id, name, resourceType, systemData, description, filterEnabled, groupingEnabled, data?.ToList(), total, category, usageStart, usageEnd, nextLink, location, sku, eTag, tags);
+            return new CostManagementDimension(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                isFilterEnabled,
+                isGroupingEnabled,
+                data?.ToList(),
+                total,
+                category,
+                usageStart,
+                usageEnd,
+                nextLink,
+                location,
+                sku,
+                eTag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of QueryResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryDefinition"/>. </summary>
+        /// <param name="exportType"> The type of the query. </param>
+        /// <param name="timeframe"> The time frame for pulling data for the query. If custom, then a specific time period must be provided. </param>
+        /// <param name="timePeriod"> Has time period for pulling data for the query. </param>
+        /// <param name="dataset"> Has definition for data in this query. </param>
+        /// <returns> A new <see cref="Models.QueryDefinition"/> instance for mocking. </returns>
+        public static QueryDefinition QueryDefinition(ExportType exportType = default, TimeframeType timeframe = default, QueryTimePeriod timePeriod = null, QueryDataset dataset = null)
+        {
+            return new QueryDefinition(exportType, timeframe, timePeriod, dataset, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.QueryResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -322,39 +492,51 @@ namespace Azure.ResourceManager.CostManagement.Models
             rows ??= new List<IList<BinaryData>>();
             tags ??= new Dictionary<string, string>();
 
-            return new QueryResult(id, name, resourceType, systemData, nextLink, columns?.ToList(), rows?.ToList(), location, sku, eTag, tags);
+            return new QueryResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                nextLink,
+                columns?.ToList(),
+                rows?.ToList(),
+                location,
+                sku,
+                eTag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of QueryColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QueryColumn"/>. </summary>
         /// <param name="name"> The name of column. </param>
         /// <param name="queryColumnType"> The type of column. </param>
         /// <returns> A new <see cref="Models.QueryColumn"/> instance for mocking. </returns>
         public static QueryColumn QueryColumn(string name = null, string queryColumnType = null)
         {
-            return new QueryColumn(name, queryColumnType);
+            return new QueryColumn(name, queryColumnType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of OperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OperationStatus"/>. </summary>
         /// <param name="status"> The status of the long running operation. </param>
         /// <param name="reportUri"> The CSV file from the reportUrl blob link consists of reservation usage data with the following schema at daily granularity. </param>
         /// <param name="validUntil"> The time at which report URL becomes invalid. </param>
         /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
         public static OperationStatus OperationStatus(OperationStatusType? status = null, ReservationReportSchema? reportUri = null, DateTimeOffset? validUntil = null)
         {
-            return new OperationStatus(status, reportUri, validUntil);
+            return new OperationStatus(status, reportUri, validUntil, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DownloadURL. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DownloadURL"/>. </summary>
         /// <param name="expiryOn"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
         /// <param name="validTill"> The time at which report URL becomes invalid/expires in UTC e.g. 2020-12-08T05:55:59.4394737Z. </param>
         /// <param name="downloadUri"> The URL to download the generated report. </param>
         /// <returns> A new <see cref="Models.DownloadURL"/> instance for mocking. </returns>
         public static DownloadURL DownloadURL(DateTimeOffset? expiryOn = null, DateTimeOffset? validTill = null, Uri downloadUri = null)
         {
-            return new DownloadURL(expiryOn, validTill, downloadUri);
+            return new DownloadURL(expiryOn, validTill, downloadUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ScheduledActionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CostManagement.ScheduledActionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -370,24 +552,39 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="eTag"> Resource Etag. For update calls, eTag is optional and can be specified to achieve optimistic concurrency. Fetch the resource's eTag by doing a 'GET' call first and then including the latest eTag as part of the request body or 'If-Match' header while performing the update. For create calls, eTag is not required. </param>
         /// <param name="kind"> Kind of the scheduled action. </param>
         /// <returns> A new <see cref="CostManagement.ScheduledActionData"/> instance for mocking. </returns>
-        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<ScheduledActionFileFormat> fileFormats = null, NotificationProperties notification = null, string notificationEmail = null, ScheduleProperties schedule = null, string scope = null, ScheduledActionStatus? status = null, string viewId = null, ETag? eTag = null, ScheduledActionKind? kind = null)
+        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, IEnumerable<ScheduledActionFileFormat> fileFormats = null, NotificationProperties notification = null, string notificationEmail = null, ScheduleProperties schedule = null, ResourceIdentifier scope = null, ScheduledActionStatus? status = null, ResourceIdentifier viewId = null, ETag? eTag = null, ScheduledActionKind? kind = null)
         {
             fileFormats ??= new List<ScheduledActionFileFormat>();
 
-            return new ScheduledActionData(id, name, resourceType, systemData, displayName, fileFormats != null ? new FileDestination(fileFormats?.ToList()) : null, notification, notificationEmail, schedule, scope, status, viewId, eTag, kind);
+            return new ScheduledActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                fileFormats != null ? new FileDestination(fileFormats?.ToList(), serializedAdditionalRawData: null) : null,
+                notification,
+                notificationEmail,
+                schedule,
+                scope,
+                status,
+                viewId,
+                eTag,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CostManagementNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.CostManagementNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CostManagementNameAvailabilityResult CostManagementNameAvailabilityResult(bool? nameAvailable = null, CostManagementUnavailabilityReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message);
+            return new CostManagementNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SingleScopeBenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SingleScopeBenefitRecommendationProperties"/>. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
@@ -405,10 +602,26 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.SingleScopeBenefitRecommendationProperties"/> instance for mocking. </returns>
         public static SingleScopeBenefitRecommendationProperties SingleScopeBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = null, DateTimeOffset? lastConsumptionOn = null, LookBackPeriod? lookBackPeriod = null, int? totalHours = null, RecommendationUsageDetails usage = null, string armSkuName = null, BenefitRecommendationPeriodTerm? term = null, BenefitRecommendationUsageGrain? commitmentGranularity = null, string currencyCode = null, decimal? costWithoutBenefit = null, AllSavingsBenefitDetails recommendationDetails = null, AllSavingsList allRecommendationDetails = null, string subscriptionId = null, string resourceGroup = null)
         {
-            return new SingleScopeBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, BenefitRecommendationScope.Single, subscriptionId, resourceGroup);
+            return new SingleScopeBenefitRecommendationProperties(
+                firstConsumptionOn,
+                lastConsumptionOn,
+                lookBackPeriod,
+                totalHours,
+                usage,
+                armSkuName,
+                term,
+                commitmentGranularity,
+                currencyCode,
+                costWithoutBenefit,
+                recommendationDetails,
+                allRecommendationDetails,
+                BenefitRecommendationScope.Single,
+                serializedAdditionalRawData: null,
+                subscriptionId,
+                resourceGroup);
         }
 
-        /// <summary> Initializes a new instance of SharedScopeBenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SharedScopeBenefitRecommendationProperties"/>. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
@@ -424,10 +637,24 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.SharedScopeBenefitRecommendationProperties"/> instance for mocking. </returns>
         public static SharedScopeBenefitRecommendationProperties SharedScopeBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = null, DateTimeOffset? lastConsumptionOn = null, LookBackPeriod? lookBackPeriod = null, int? totalHours = null, RecommendationUsageDetails usage = null, string armSkuName = null, BenefitRecommendationPeriodTerm? term = null, BenefitRecommendationUsageGrain? commitmentGranularity = null, string currencyCode = null, decimal? costWithoutBenefit = null, AllSavingsBenefitDetails recommendationDetails = null, AllSavingsList allRecommendationDetails = null)
         {
-            return new SharedScopeBenefitRecommendationProperties(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, BenefitRecommendationScope.Shared);
+            return new SharedScopeBenefitRecommendationProperties(
+                firstConsumptionOn,
+                lastConsumptionOn,
+                lookBackPeriod,
+                totalHours,
+                usage,
+                armSkuName,
+                term,
+                commitmentGranularity,
+                currencyCode,
+                costWithoutBenefit,
+                recommendationDetails,
+                allRecommendationDetails,
+                BenefitRecommendationScope.Shared,
+                serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of IncludedQuantityUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IncludedQuantityUtilizationSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -441,10 +668,22 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.IncludedQuantityUtilizationSummary"/> instance for mocking. </returns>
         public static IncludedQuantityUtilizationSummary IncludedQuantityUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string armSkuName = null, string benefitId = null, string benefitOrderId = null, BillingAccountBenefitKind? benefitType = null, DateTimeOffset? usageOn = null, decimal? utilizationPercentage = null)
         {
-            return new IncludedQuantityUtilizationSummary(id, name, resourceType, systemData, BillingAccountBenefitKind.IncludedQuantity, armSkuName, benefitId, benefitOrderId, benefitType, usageOn, utilizationPercentage);
+            return new IncludedQuantityUtilizationSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                BillingAccountBenefitKind.IncludedQuantity,
+                serializedAdditionalRawData: null,
+                armSkuName,
+                benefitId,
+                benefitOrderId,
+                benefitType,
+                usageOn,
+                utilizationPercentage);
         }
 
-        /// <summary> Initializes a new instance of SavingsPlanUtilizationSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SavingsPlanUtilizationSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -460,7 +699,21 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <returns> A new <see cref="Models.SavingsPlanUtilizationSummary"/> instance for mocking. </returns>
         public static SavingsPlanUtilizationSummary SavingsPlanUtilizationSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string armSkuName = null, string benefitId = null, string benefitOrderId = null, BillingAccountBenefitKind? benefitType = null, DateTimeOffset? usageOn = null, decimal? avgUtilizationPercentage = null, decimal? minUtilizationPercentage = null, decimal? maxUtilizationPercentage = null)
         {
-            return new SavingsPlanUtilizationSummary(id, name, resourceType, systemData, BillingAccountBenefitKind.SavingsPlan, armSkuName, benefitId, benefitOrderId, benefitType, usageOn, avgUtilizationPercentage, minUtilizationPercentage, maxUtilizationPercentage);
+            return new SavingsPlanUtilizationSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                BillingAccountBenefitKind.SavingsPlan,
+                serializedAdditionalRawData: null,
+                armSkuName,
+                benefitId,
+                benefitOrderId,
+                benefitType,
+                usageOn,
+                avgUtilizationPercentage,
+                minUtilizationPercentage,
+                maxUtilizationPercentage);
         }
     }
 }

@@ -6,33 +6,157 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciClusterNode
+    public partial class HciClusterNode : IUtf8JsonSerializable, IJsonModel<HciClusterNode>
     {
-        internal static HciClusterNode DeserializeHciClusterNode(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterNode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HciClusterNode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HciClusterNode>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HciClusterNode)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(Id.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(WindowsServerSubscription))
+            {
+                writer.WritePropertyName("windowsServerSubscription"u8);
+                writer.WriteStringValue(WindowsServerSubscription.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(NodeType))
+            {
+                writer.WritePropertyName("nodeType"u8);
+                writer.WriteStringValue(NodeType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(EhcResourceId))
+            {
+                writer.WritePropertyName("ehcResourceId"u8);
+                writer.WriteStringValue(EhcResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Manufacturer))
+            {
+                writer.WritePropertyName("manufacturer"u8);
+                writer.WriteStringValue(Manufacturer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSName))
+            {
+                writer.WritePropertyName("osName"u8);
+                writer.WriteStringValue(OSName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSVersion))
+            {
+                writer.WritePropertyName("osVersion"u8);
+                writer.WriteStringValue(OSVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSDisplayVersion))
+            {
+                writer.WritePropertyName("osDisplayVersion"u8);
+                writer.WriteStringValue(OSDisplayVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            {
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CoreCount))
+            {
+                writer.WritePropertyName("coreCount"u8);
+                writer.WriteNumberValue(CoreCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MemoryInGiB))
+            {
+                writer.WritePropertyName("memoryInGiB"u8);
+                writer.WriteNumberValue(MemoryInGiB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastLicensingTimestamp))
+            {
+                writer.WritePropertyName("lastLicensingTimestamp"u8);
+                writer.WriteStringValue(LastLicensingTimestamp.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(OemActivation))
+            {
+                writer.WritePropertyName("oemActivation"u8);
+                writer.WriteStringValue(OemActivation.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HciClusterNode IJsonModel<HciClusterNode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciClusterNode>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HciClusterNode)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHciClusterNode(document.RootElement, options);
+        }
+
+        internal static HciClusterNode DeserializeHciClusterNode(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<float> id = default;
-            Optional<WindowsServerSubscription> windowsServerSubscription = default;
-            Optional<ClusterNodeType> nodeType = default;
-            Optional<string> ehcResourceId = default;
-            Optional<string> manufacturer = default;
-            Optional<string> model = default;
-            Optional<string> osName = default;
-            Optional<string> osVersion = default;
-            Optional<string> osDisplayVersion = default;
-            Optional<string> serialNumber = default;
-            Optional<float> coreCount = default;
-            Optional<float> memoryInGiB = default;
-            Optional<DateTimeOffset> lastLicensingTimestamp = default;
+            string name = default;
+            float? id = default;
+            WindowsServerSubscription? windowsServerSubscription = default;
+            ClusterNodeType? nodeType = default;
+            string ehcResourceId = default;
+            string manufacturer = default;
+            string model = default;
+            string osName = default;
+            string osVersion = default;
+            string osDisplayVersion = default;
+            string serialNumber = default;
+            float? coreCount = default;
+            float? memoryInGiB = default;
+            DateTimeOffset? lastLicensingTimestamp = default;
+            OemActivation? oemActivation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -129,8 +253,376 @@ namespace Azure.ResourceManager.Hci.Models
                     lastLicensingTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("oemActivation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    oemActivation = new OemActivation(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(nodeType), ehcResourceId.Value, manufacturer.Value, model.Value, osName.Value, osVersion.Value, osDisplayVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB), Optional.ToNullable(lastLicensingTimestamp));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HciClusterNode(
+                name,
+                id,
+                windowsServerSubscription,
+                nodeType,
+                ehcResourceId,
+                manufacturer,
+                model,
+                osName,
+                osVersion,
+                osDisplayVersion,
+                serialNumber,
+                coreCount,
+                memoryInGiB,
+                lastLicensingTimestamp,
+                oemActivation,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsServerSubscription), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  windowsServerSubscription: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WindowsServerSubscription))
+                {
+                    builder.Append("  windowsServerSubscription: ");
+                    builder.AppendLine($"'{WindowsServerSubscription.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodeType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NodeType))
+                {
+                    builder.Append("  nodeType: ");
+                    builder.AppendLine($"'{NodeType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EhcResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ehcResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EhcResourceId))
+                {
+                    builder.Append("  ehcResourceId: ");
+                    if (EhcResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EhcResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EhcResourceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Manufacturer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  manufacturer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Manufacturer))
+                {
+                    builder.Append("  manufacturer: ");
+                    if (Manufacturer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Manufacturer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Manufacturer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Model), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  model: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Model))
+                {
+                    builder.Append("  model: ");
+                    if (Model.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Model}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Model}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  osName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OSName))
+                {
+                    builder.Append("  osName: ");
+                    if (OSName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OSName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OSName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  osVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OSVersion))
+                {
+                    builder.Append("  osVersion: ");
+                    if (OSVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OSVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OSVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OSDisplayVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  osDisplayVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OSDisplayVersion))
+                {
+                    builder.Append("  osDisplayVersion: ");
+                    if (OSDisplayVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OSDisplayVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OSDisplayVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SerialNumber), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serialNumber: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SerialNumber))
+                {
+                    builder.Append("  serialNumber: ");
+                    if (SerialNumber.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SerialNumber}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SerialNumber}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CoreCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  coreCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CoreCount))
+                {
+                    builder.Append("  coreCount: ");
+                    builder.AppendLine($"'{CoreCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryInGiB), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  memoryInGiB: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MemoryInGiB))
+                {
+                    builder.Append("  memoryInGiB: ");
+                    builder.AppendLine($"'{MemoryInGiB.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastLicensingTimestamp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastLicensingTimestamp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastLicensingTimestamp))
+                {
+                    builder.Append("  lastLicensingTimestamp: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastLicensingTimestamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OemActivation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  oemActivation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OemActivation))
+                {
+                    builder.Append("  oemActivation: ");
+                    builder.AppendLine($"'{OemActivation.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<HciClusterNode>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciClusterNode>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(HciClusterNode)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HciClusterNode IPersistableModel<HciClusterNode>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciClusterNode>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHciClusterNode(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciClusterNode)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HciClusterNode>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

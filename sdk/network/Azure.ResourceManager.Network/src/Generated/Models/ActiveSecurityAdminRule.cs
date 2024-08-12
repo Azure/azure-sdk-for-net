@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network admin rule. </summary>
     public partial class ActiveSecurityAdminRule : ActiveBaseSecurityAdminRule
     {
-        /// <summary> Initializes a new instance of ActiveSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveSecurityAdminRule"/>. </summary>
         internal ActiveSecurityAdminRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             Kind = EffectiveAdminRuleKind.Custom;
         }
 
-        /// <summary> Initializes a new instance of ActiveSecurityAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActiveSecurityAdminRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="commitOn"> Deployment time string. </param>
         /// <param name="region"> Deployment region. </param>
@@ -33,6 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ruleCollectionAppliesToGroups"> Groups for rule collection. </param>
         /// <param name="ruleGroups"> Effective configuration groups. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
         /// <param name="sources"> The CIDR or source IP ranges. </param>
@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="priority"> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ActiveSecurityAdminRule(string id, DateTimeOffset? commitOn, string region, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, string description, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState) : base(id, commitOn, region, configurationDescription, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups, kind)
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        internal ActiveSecurityAdminRule(string id, DateTimeOffset? commitOn, string region, string configurationDescription, string ruleCollectionDescription, IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups, IReadOnlyList<NetworkConfigurationGroup> ruleGroups, EffectiveAdminRuleKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string description, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, commitOn, region, configurationDescription, ruleCollectionDescription, ruleCollectionAppliesToGroups, ruleGroups, kind, serializedAdditionalRawData)
         {
             Description = description;
             Protocol = protocol;
@@ -55,6 +56,7 @@ namespace Azure.ResourceManager.Network.Models
             Priority = priority;
             Direction = direction;
             ProvisioningState = provisioningState;
+            ResourceGuid = resourceGuid;
             Kind = kind;
         }
 
@@ -78,5 +80,7 @@ namespace Azure.ResourceManager.Network.Models
         public SecurityConfigurationRuleDirection? Direction { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> Unique identifier for this resource. </summary>
+        public Guid? ResourceGuid { get; }
     }
 }

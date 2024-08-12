@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
     /// A Class representing a HDInsightPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HDInsightPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHDInsightPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource" /> using the GetHDInsightPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HDInsightPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHDInsightPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource"/> using the GetHDInsightPrivateLinkResource method.
     /// </summary>
     public partial class HDInsightPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HDInsightPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="privateLinkResourceName"> The privateLinkResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string privateLinkResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.HDInsight
         private readonly PrivateLinkResourcesRestOperations _hdInsightPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly HDInsightPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusters/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="HDInsightPrivateLinkResource"/> class for mocking. </summary>
         protected HDInsightPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HDInsightPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HDInsightPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HDInsightPrivateLinkResource(ArmClient client, HDInsightPrivateLinkResourceData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.HDInsight
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HDInsight/clusters/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -22,8 +21,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KqlScriptResource>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<KqlScriptResource> value = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -46,7 +45,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new KqlScriptsResourceCollectionResponse(Optional.ToList(value), nextLink.Value);
+            return new KqlScriptsResourceCollectionResponse(value ?? new ChangeTrackingList<KqlScriptResource>(), nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KqlScriptsResourceCollectionResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKqlScriptsResourceCollectionResponse(document.RootElement);
         }
 
         internal partial class KqlScriptsResourceCollectionResponseConverter : JsonConverter<KqlScriptsResourceCollectionResponse>
@@ -55,6 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override KqlScriptsResourceCollectionResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

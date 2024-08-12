@@ -7,17 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Staging settings. </summary>
     public partial class StagingSettings
     {
-        /// <summary> Initializes a new instance of StagingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StagingSettings"/>. </summary>
         /// <param name="linkedServiceName"> Staging linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public StagingSettings(FactoryLinkedServiceReference linkedServiceName)
+        public StagingSettings(DataFactoryLinkedServiceReference linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of StagingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="StagingSettings"/>. </summary>
         /// <param name="linkedServiceName"> Staging linked service reference. </param>
         /// <param name="path"> The path to storage for storing the interim data. Type: string (or Expression with resultType string). </param>
         /// <param name="enableCompression"> Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal StagingSettings(FactoryLinkedServiceReference linkedServiceName, BinaryData path, BinaryData enableCompression, IDictionary<string, BinaryData> additionalProperties)
+        internal StagingSettings(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> path, DataFactoryElement<bool> enableCompression, IDictionary<string, BinaryData> additionalProperties)
         {
             LinkedServiceName = linkedServiceName;
             Path = path;
@@ -38,77 +38,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="StagingSettings"/> for deserialization. </summary>
+        internal StagingSettings()
+        {
+        }
+
         /// <summary> Staging linked service reference. </summary>
-        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
-        /// <summary>
-        /// The path to storage for storing the interim data. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Path { get; set; }
-        /// <summary>
-        /// Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EnableCompression { get; set; }
+        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
+        /// <summary> The path to storage for storing the interim data. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Path { get; set; }
+        /// <summary> Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>
+        public DataFactoryElement<bool> EnableCompression { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

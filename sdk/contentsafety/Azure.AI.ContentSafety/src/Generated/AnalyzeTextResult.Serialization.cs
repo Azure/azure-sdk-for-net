@@ -5,81 +5,151 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    public partial class AnalyzeTextResult
+    public partial class AnalyzeTextResult : IUtf8JsonSerializable, IJsonModel<AnalyzeTextResult>
     {
-        internal static AnalyzeTextResult DeserializeAnalyzeTextResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalyzeTextResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AnalyzeTextResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(BlocklistsMatch))
+            {
+                writer.WritePropertyName("blocklistsMatch"u8);
+                writer.WriteStartArray();
+                foreach (var item in BlocklistsMatch)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("categoriesAnalysis"u8);
+            writer.WriteStartArray();
+            foreach (var item in CategoriesAnalysis)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AnalyzeTextResult IJsonModel<AnalyzeTextResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalyzeTextResult(document.RootElement, options);
+        }
+
+        internal static AnalyzeTextResult DeserializeAnalyzeTextResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<TextBlocklistMatchResult>> blocklistsMatchResults = default;
-            Optional<TextAnalyzeSeverityResult> hateResult = default;
-            Optional<TextAnalyzeSeverityResult> selfHarmResult = default;
-            Optional<TextAnalyzeSeverityResult> sexualResult = default;
-            Optional<TextAnalyzeSeverityResult> violenceResult = default;
+            IReadOnlyList<TextBlocklistMatch> blocklistsMatch = default;
+            IReadOnlyList<TextCategoriesAnalysis> categoriesAnalysis = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blocklistsMatchResults"u8))
+                if (property.NameEquals("blocklistsMatch"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<TextBlocklistMatchResult> array = new List<TextBlocklistMatchResult>();
+                    List<TextBlocklistMatch> array = new List<TextBlocklistMatch>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextBlocklistMatchResult.DeserializeTextBlocklistMatchResult(item));
+                        array.Add(TextBlocklistMatch.DeserializeTextBlocklistMatch(item, options));
                     }
-                    blocklistsMatchResults = array;
+                    blocklistsMatch = array;
                     continue;
                 }
-                if (property.NameEquals("hateResult"u8))
+                if (property.NameEquals("categoriesAnalysis"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    List<TextCategoriesAnalysis> array = new List<TextCategoriesAnalysis>();
+                    foreach (var item in property.Value.EnumerateArray())
                     {
-                        continue;
+                        array.Add(TextCategoriesAnalysis.DeserializeTextCategoriesAnalysis(item, options));
                     }
-                    hateResult = TextAnalyzeSeverityResult.DeserializeTextAnalyzeSeverityResult(property.Value);
+                    categoriesAnalysis = array;
                     continue;
                 }
-                if (property.NameEquals("selfHarmResult"u8))
+                if (options.Format != "W")
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    selfHarmResult = TextAnalyzeSeverityResult.DeserializeTextAnalyzeSeverityResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("sexualResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sexualResult = TextAnalyzeSeverityResult.DeserializeTextAnalyzeSeverityResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("violenceResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    violenceResult = TextAnalyzeSeverityResult.DeserializeTextAnalyzeSeverityResult(property.Value);
-                    continue;
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new AnalyzeTextResult(Optional.ToList(blocklistsMatchResults), hateResult.Value, selfHarmResult.Value, sexualResult.Value, violenceResult.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AnalyzeTextResult(blocklistsMatch ?? new ChangeTrackingList<TextBlocklistMatch>(), categoriesAnalysis, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AnalyzeTextResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AnalyzeTextResult IPersistableModel<AnalyzeTextResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnalyzeTextResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnalyzeTextResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnalyzeTextResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -87,6 +157,14 @@ namespace Azure.AI.ContentSafety
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeAnalyzeTextResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

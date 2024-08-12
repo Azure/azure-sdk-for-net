@@ -10,12 +10,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
     /// <summary> Inner error. </summary>
     internal partial class InnerError
     {
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         internal InnerError()
         {
         }
 
-        /// <summary> Initializes a new instance of InnerError. </summary>
+        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
         /// <param name="code"> A more specific error code than was provided by the containing error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         internal InnerError(string code, InnerError innererror)

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> This property allows you to specify the operation type of gallery sharing update. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Add** &lt;br&gt;&lt;br&gt; **Remove** &lt;br&gt;&lt;br&gt; **Reset**. </summary>
+    /// <summary> This property allows you to specify the operation type of gallery sharing update. Possible values are: **Add,** **Remove,** **Reset.**. </summary>
     public readonly partial struct SharingUpdateOperationType : IEquatable<SharingUpdateOperationType>
     {
         private readonly string _value;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

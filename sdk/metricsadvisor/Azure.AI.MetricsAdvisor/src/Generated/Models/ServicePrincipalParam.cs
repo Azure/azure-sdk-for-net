@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The ServicePrincipalParam. </summary>
     internal partial class ServicePrincipalParam
     {
-        /// <summary> Initializes a new instance of ServicePrincipalParam. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalParam"/>. </summary>
         /// <param name="clientId"> The client id of the service principal. </param>
         /// <param name="tenantId"> The tenant id of the service principal. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="tenantId"/> is null. </exception>
@@ -26,7 +25,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             TenantId = tenantId;
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipalParam. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalParam"/>. </summary>
         /// <param name="clientId"> The client id of the service principal. </param>
         /// <param name="clientSecret"> The client secret of the service principal. </param>
         /// <param name="tenantId"> The tenant id of the service principal. </param>

@@ -7,115 +7,49 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Modern reservation recommendation.
-    /// Serialized Name: ModernReservationRecommendation
-    /// </summary>
+    /// <summary> Modern reservation recommendation. </summary>
     public partial class ConsumptionModernReservationRecommendation : ConsumptionReservationRecommendation
     {
-        /// <summary> Initializes a new instance of ConsumptionModernReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationRecommendation"/>. </summary>
         internal ConsumptionModernReservationRecommendation()
         {
             SkuProperties = new ChangeTrackingList<ConsumptionSkuProperty>();
             Kind = ReservationRecommendationKind.Modern;
         }
 
-        /// <summary> Initializes a new instance of ConsumptionModernReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationRecommendation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Specifies the kind of reservation recommendation.
-        /// Serialized Name: ReservationRecommendation.kind
-        /// </param>
-        /// <param name="etag">
-        /// The etag for the resource.
-        /// Serialized Name: Resource.etag
-        /// </param>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: Resource.tags
-        /// </param>
-        /// <param name="location">
-        /// Resource location
-        /// Serialized Name: ResourceAttributes.location
-        /// </param>
-        /// <param name="sku">
-        /// Resource sku
-        /// Serialized Name: ResourceAttributes.sku
-        /// </param>
-        /// <param name="locationPropertiesLocation">
-        /// Resource Location.
-        /// Serialized Name: ModernReservationRecommendation.properties.location
-        /// </param>
-        /// <param name="lookBackPeriod">
-        /// The number of days of usage to look back for recommendation.
-        /// Serialized Name: ModernReservationRecommendation.properties.lookBackPeriod
-        /// </param>
-        /// <param name="instanceFlexibilityRatio">
-        /// The instance Flexibility Ratio.
-        /// Serialized Name: ModernReservationRecommendation.properties.instanceFlexibilityRatio
-        /// </param>
-        /// <param name="instanceFlexibilityGroup">
-        /// The instance Flexibility Group.
-        /// Serialized Name: ModernReservationRecommendation.properties.instanceFlexibilityGroup
-        /// </param>
-        /// <param name="normalizedSize">
-        /// The normalized Size.
-        /// Serialized Name: ModernReservationRecommendation.properties.normalizedSize
-        /// </param>
-        /// <param name="recommendedQuantityNormalized">
-        /// The recommended Quantity Normalized.
-        /// Serialized Name: ModernReservationRecommendation.properties.recommendedQuantityNormalized
-        /// </param>
-        /// <param name="meterId">
-        /// The meter id (GUID)
-        /// Serialized Name: ModernReservationRecommendation.properties.meterId
-        /// </param>
-        /// <param name="term">
-        /// RI recommendations in one or three year terms.
-        /// Serialized Name: ModernReservationRecommendation.properties.term
-        /// </param>
-        /// <param name="costWithNoReservedInstances">
-        /// The total amount of cost without reserved instances.
-        /// Serialized Name: ModernReservationRecommendation.properties.costWithNoReservedInstances
-        /// </param>
-        /// <param name="recommendedQuantity">
-        /// Recommended quality for reserved instances.
-        /// Serialized Name: ModernReservationRecommendation.properties.recommendedQuantity
-        /// </param>
-        /// <param name="totalCostWithReservedInstances">
-        /// The total amount of cost with reserved instances.
-        /// Serialized Name: ModernReservationRecommendation.properties.totalCostWithReservedInstances
-        /// </param>
-        /// <param name="netSavings">
-        /// Total estimated savings with reserved instances.
-        /// Serialized Name: ModernReservationRecommendation.properties.netSavings
-        /// </param>
-        /// <param name="firstUsageOn">
-        /// The usage date for looking back.
-        /// Serialized Name: ModernReservationRecommendation.properties.firstUsageDate
-        /// </param>
-        /// <param name="scope">
-        /// Shared or single recommendation.
-        /// Serialized Name: ModernReservationRecommendation.properties.scope
-        /// </param>
-        /// <param name="skuProperties">
-        /// List of sku properties
-        /// Serialized Name: ModernReservationRecommendation.properties.skuProperties
-        /// </param>
-        /// <param name="skuName">
-        /// This is the ARM Sku name.
-        /// Serialized Name: ModernReservationRecommendation.properties.skuName
-        /// </param>
-        internal ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationRecommendationKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags, AzureLocation? location, string sku, string locationPropertiesLocation, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, string skuName) : base(id, name, resourceType, systemData, kind, etag, tags, location, sku)
+        /// <param name="kind"> Specifies the kind of reservation recommendation. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="sku"> Resource sku. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="locationPropertiesLocation"> Resource Location. </param>
+        /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
+        /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
+        /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
+        /// <param name="normalizedSize"> The normalized Size. </param>
+        /// <param name="recommendedQuantityNormalized"> The recommended Quantity Normalized. </param>
+        /// <param name="meterId"> The meter id (GUID). </param>
+        /// <param name="term"> RI recommendations in one or three year terms. </param>
+        /// <param name="costWithNoReservedInstances"> The total amount of cost without reserved instances. </param>
+        /// <param name="recommendedQuantity"> Recommended quality for reserved instances. </param>
+        /// <param name="totalCostWithReservedInstances"> The total amount of cost with reserved instances. </param>
+        /// <param name="netSavings"> Total estimated savings with reserved instances. </param>
+        /// <param name="firstUsageOn"> The usage date for looking back. </param>
+        /// <param name="scope"> Shared or single recommendation. </param>
+        /// <param name="skuProperties"> List of sku properties. </param>
+        /// <param name="skuName"> This is the ARM Sku name. </param>
+        internal ConsumptionModernReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationRecommendationKind kind, AzureLocation? location, string sku, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string locationPropertiesLocation, int? lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, ConsumptionAmount costWithNoReservedInstances, decimal? recommendedQuantity, ConsumptionAmount totalCostWithReservedInstances, ConsumptionAmount netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties, string skuName) : base(id, name, resourceType, systemData, kind, location, sku, etag, tags, serializedAdditionalRawData)
         {
             LocationPropertiesLocation = locationPropertiesLocation;
             LookBackPeriod = lookBackPeriod;
@@ -136,85 +70,37 @@ namespace Azure.ResourceManager.Consumption.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Resource Location.
-        /// Serialized Name: ModernReservationRecommendation.properties.location
-        /// </summary>
+        /// <summary> Resource Location. </summary>
         public string LocationPropertiesLocation { get; }
-        /// <summary>
-        /// The number of days of usage to look back for recommendation.
-        /// Serialized Name: ModernReservationRecommendation.properties.lookBackPeriod
-        /// </summary>
+        /// <summary> The number of days of usage to look back for recommendation. </summary>
         public int? LookBackPeriod { get; }
-        /// <summary>
-        /// The instance Flexibility Ratio.
-        /// Serialized Name: ModernReservationRecommendation.properties.instanceFlexibilityRatio
-        /// </summary>
+        /// <summary> The instance Flexibility Ratio. </summary>
         public float? InstanceFlexibilityRatio { get; }
-        /// <summary>
-        /// The instance Flexibility Group.
-        /// Serialized Name: ModernReservationRecommendation.properties.instanceFlexibilityGroup
-        /// </summary>
+        /// <summary> The instance Flexibility Group. </summary>
         public string InstanceFlexibilityGroup { get; }
-        /// <summary>
-        /// The normalized Size.
-        /// Serialized Name: ModernReservationRecommendation.properties.normalizedSize
-        /// </summary>
+        /// <summary> The normalized Size. </summary>
         public string NormalizedSize { get; }
-        /// <summary>
-        /// The recommended Quantity Normalized.
-        /// Serialized Name: ModernReservationRecommendation.properties.recommendedQuantityNormalized
-        /// </summary>
+        /// <summary> The recommended Quantity Normalized. </summary>
         public float? RecommendedQuantityNormalized { get; }
-        /// <summary>
-        /// The meter id (GUID)
-        /// Serialized Name: ModernReservationRecommendation.properties.meterId
-        /// </summary>
+        /// <summary> The meter id (GUID). </summary>
         public Guid? MeterId { get; }
-        /// <summary>
-        /// RI recommendations in one or three year terms.
-        /// Serialized Name: ModernReservationRecommendation.properties.term
-        /// </summary>
+        /// <summary> RI recommendations in one or three year terms. </summary>
         public string Term { get; }
-        /// <summary>
-        /// The total amount of cost without reserved instances.
-        /// Serialized Name: ModernReservationRecommendation.properties.costWithNoReservedInstances
-        /// </summary>
+        /// <summary> The total amount of cost without reserved instances. </summary>
         public ConsumptionAmount CostWithNoReservedInstances { get; }
-        /// <summary>
-        /// Recommended quality for reserved instances.
-        /// Serialized Name: ModernReservationRecommendation.properties.recommendedQuantity
-        /// </summary>
+        /// <summary> Recommended quality for reserved instances. </summary>
         public decimal? RecommendedQuantity { get; }
-        /// <summary>
-        /// The total amount of cost with reserved instances.
-        /// Serialized Name: ModernReservationRecommendation.properties.totalCostWithReservedInstances
-        /// </summary>
+        /// <summary> The total amount of cost with reserved instances. </summary>
         public ConsumptionAmount TotalCostWithReservedInstances { get; }
-        /// <summary>
-        /// Total estimated savings with reserved instances.
-        /// Serialized Name: ModernReservationRecommendation.properties.netSavings
-        /// </summary>
+        /// <summary> Total estimated savings with reserved instances. </summary>
         public ConsumptionAmount NetSavings { get; }
-        /// <summary>
-        /// The usage date for looking back.
-        /// Serialized Name: ModernReservationRecommendation.properties.firstUsageDate
-        /// </summary>
+        /// <summary> The usage date for looking back. </summary>
         public DateTimeOffset? FirstUsageOn { get; }
-        /// <summary>
-        /// Shared or single recommendation.
-        /// Serialized Name: ModernReservationRecommendation.properties.scope
-        /// </summary>
+        /// <summary> Shared or single recommendation. </summary>
         public string Scope { get; }
-        /// <summary>
-        /// List of sku properties
-        /// Serialized Name: ModernReservationRecommendation.properties.skuProperties
-        /// </summary>
+        /// <summary> List of sku properties. </summary>
         public IReadOnlyList<ConsumptionSkuProperty> SkuProperties { get; }
-        /// <summary>
-        /// This is the ARM Sku name.
-        /// Serialized Name: ModernReservationRecommendation.properties.skuName
-        /// </summary>
+        /// <summary> This is the ARM Sku name. </summary>
         public string SkuName { get; }
     }
 }

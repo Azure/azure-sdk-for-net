@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Config
             _collectorFactory = collectorFactory;
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
-            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, false);
+            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, true, true);
         }
 
         public void Initialize(ExtensionConfigContext context)
@@ -163,7 +164,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Config
 
         private async Task<FunctionResult> ExecuteWithTracingAsync(string functionName, TriggeredFunctionData triggerData)
         {
-            using DiagnosticScope scope = _diagnosticScopeFactory.CreateScope(DiagnosticScopeName, DiagnosticScope.ActivityKind.Consumer);
+            using DiagnosticScope scope = _diagnosticScopeFactory.CreateScope(DiagnosticScopeName, ActivityKind.Consumer);
             if (scope.IsEnabled)
             {
                 if (triggerData.TriggerValue is JArray evntArray)

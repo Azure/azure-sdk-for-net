@@ -6,74 +6,69 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Scanning.Samples
 {
-    public class Samples_PurviewClassificationRuleClient
+    public partial class Samples_PurviewClassificationRuleClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProperties()
+        public void Example_GetProperties_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = client.GetProperties();
+            Response response = client.GetProperties(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProperties_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
+
+            Response response = await client.GetPropertiesAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProperties_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = client.GetProperties();
+            Response response = client.GetProperties(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProperties_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-
-            Response response = await client.GetPropertiesAsync();
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProperties_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = await client.GetPropertiesAsync();
+            Response response = await client.GetPropertiesAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -83,33 +78,43 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public void Example_CreateOrUpdate_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            var data = new
-            {
-                kind = "System",
-            };
-
-            Response response = client.CreateOrUpdate(RequestContent.Create(data));
+            using RequestContent content = null;
+            Response response = client.CreateOrUpdate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
+
+            using RequestContent content = null;
+            Response response = await client.CreateOrUpdateAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -118,45 +123,24 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                     ruleStatus = "Enabled",
                 },
                 kind = "System",
-            };
-
-            Response response = client.CreateOrUpdate(RequestContent.Create(data));
+            });
+            Response response = client.CreateOrUpdate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-
-            var data = new
-            {
-                kind = "System",
-            };
-
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -165,9 +149,8 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                     ruleStatus = "Enabled",
                 },
                 kind = "System",
-            };
-
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+            });
+            Response response = await client.CreateOrUpdateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -177,59 +160,57 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = client.Delete();
+            Response response = client.Delete(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Delete_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
+
+            Response response = await client.DeleteAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = client.Delete();
+            Response response = client.Delete(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-
-            Response response = await client.DeleteAsync();
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = await client.DeleteAsync();
+            Response response = await client.DeleteAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -239,13 +220,27 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TagVersion()
+        public void Example_TagVersion_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = client.TagVersion(1234, "<action>");
+            Response response = client.TagVersion(1234, "Keep", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TagVersion_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
+
+            Response response = await client.TagVersionAsync(1234, "Keep", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -255,11 +250,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_TagVersion_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = client.TagVersion(1234, "<action>");
+            Response response = client.TagVersion(1234, "Keep", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -272,31 +267,17 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TagVersion_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-
-            Response response = await client.TagVersionAsync(1234, "<action>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_TagVersion_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = await client.TagVersionAsync(1234, "<action>");
+            Response response = await client.TagVersionAsync(1234, "Keep", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -313,17 +294,31 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetVersions()
+        public void Example_GetVersions_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            foreach (var item in client.GetVersions())
+            foreach (BinaryData item in client.GetVersions(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetVersions_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
+
+            await foreach (BinaryData item in client.GetVersionsAsync(null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -331,11 +326,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetVersions_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            foreach (var item in client.GetVersions())
+            foreach (BinaryData item in client.GetVersions(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -346,29 +341,13 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetVersions_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
-
-            await foreach (var item in client.GetVersionsAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("kind").ToString());
-                Console.WriteLine(result.ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetVersions_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewClassificationRuleClient(endpoint, "<classificationRuleName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            await foreach (var item in client.GetVersionsAsync())
+            await foreach (BinaryData item in client.GetVersionsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("kind").ToString());

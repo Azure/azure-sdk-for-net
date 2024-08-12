@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.WorkloadMonitor.Models;
@@ -18,12 +19,44 @@ namespace Azure.ResourceManager.WorkloadMonitor
     /// </summary>
     public partial class HealthMonitorData : ResourceData
     {
-        /// <summary> Initializes a new instance of HealthMonitorData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HealthMonitorData"/>. </summary>
         internal HealthMonitorData()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthMonitorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthMonitorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +72,8 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <param name="lastReportedTimestamp"> Timestamp of the monitor's last reported health state. </param>
         /// <param name="evidence"> Evidence validating the monitor's current health state. </param>
         /// <param name="monitorConfiguration"> The configuration settings at the time of the monitor's health evaluation. </param>
-        internal HealthMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string monitorName, string monitorType, string monitoredObject, string parentMonitorName, HealthState? previousMonitorState, HealthState? currentMonitorState, string evaluationTimestamp, string currentStateFirstObservedTimestamp, string lastReportedTimestamp, BinaryData evidence, BinaryData monitorConfiguration) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HealthMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string monitorName, string monitorType, string monitoredObject, string parentMonitorName, HealthState? previousMonitorState, HealthState? currentMonitorState, string evaluationTimestamp, string currentStateFirstObservedTimestamp, string lastReportedTimestamp, BinaryData evidence, BinaryData monitorConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             MonitorName = monitorName;
             MonitorType = monitorType;
@@ -52,6 +86,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             LastReportedTimestamp = lastReportedTimestamp;
             Evidence = evidence;
             MonitorConfiguration = monitorConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Human-readable name of the monitor. </summary>
@@ -78,7 +113,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -109,7 +144,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

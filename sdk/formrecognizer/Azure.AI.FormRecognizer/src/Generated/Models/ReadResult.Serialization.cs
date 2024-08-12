@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -24,8 +23,8 @@ namespace Azure.AI.FormRecognizer.Models
             float width = default;
             float height = default;
             LengthUnit unit = default;
-            Optional<IReadOnlyList<TextLine>> lines = default;
-            Optional<IReadOnlyList<SelectionMark>> selectionMarks = default;
+            IReadOnlyList<TextLine> lines = default;
+            IReadOnlyList<SelectionMark> selectionMarks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("page"u8))
@@ -83,7 +82,22 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new ReadResult(page, angle, width, height, unit, Optional.ToList(lines), Optional.ToList(selectionMarks));
+            return new ReadResult(
+                page,
+                angle,
+                width,
+                height,
+                unit,
+                lines ?? new ChangeTrackingList<TextLine>(),
+                selectionMarks ?? new ChangeTrackingList<SelectionMark>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ReadResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeReadResult(document.RootElement);
         }
     }
 }

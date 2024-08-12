@@ -11,10 +11,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 /// Sample configurable for OpenTelemetry exporters for compatibility
 /// with Application Insight SDKs.
 /// </summary>
-internal class ApplicationInsightsSampler : Sampler
+internal sealed class ApplicationInsightsSampler : Sampler
 {
     private static readonly SamplingResult RecordOnlySamplingResult = new(SamplingDecision.RecordOnly);
-    private readonly SamplingResult recordAndSampleSamplingResult;
+    private static readonly SamplingResult RecordAndSampleSamplingResult = new(SamplingDecision.RecordAndSample);
     private readonly float samplingRatio;
 
     /// <summary>
@@ -34,13 +34,6 @@ internal class ApplicationInsightsSampler : Sampler
 
         this.samplingRatio = samplingRatio;
         Description = "ApplicationInsightsSampler{" + samplingRatio + "}";
-        var sampleRate = (float)Math.Round(samplingRatio * 100);
-        recordAndSampleSamplingResult = new SamplingResult(
-            SamplingDecision.RecordAndSample,
-            new Dictionary<string, object>
-                {
-                    { "sampleRate", sampleRate },
-                });
     }
 
     /// <summary>
@@ -51,21 +44,21 @@ internal class ApplicationInsightsSampler : Sampler
     /// <returns>Returns whether or not we should sample telemetry in the form of a <see cref="SamplingResult"/> class.</returns>
     public override SamplingResult ShouldSample(in SamplingParameters samplingParameters)
     {
+        if (samplingRatio == 1)
+        {
+            return RecordAndSampleSamplingResult;
+        }
+
         if (samplingRatio == 0)
         {
             return RecordOnlySamplingResult;
-        }
-
-        if (samplingRatio == 1)
-        {
-            return recordAndSampleSamplingResult;
         }
 
         double sampleScore = DJB2SampleScore(samplingParameters.TraceId.ToHexString().ToUpperInvariant());
 
         if (sampleScore < samplingRatio)
         {
-            return recordAndSampleSamplingResult;
+            return RecordAndSampleSamplingResult;
         }
         else
         {

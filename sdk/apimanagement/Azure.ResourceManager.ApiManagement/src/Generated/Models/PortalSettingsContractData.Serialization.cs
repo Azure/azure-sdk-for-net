@@ -6,17 +6,48 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class PortalSettingsContractData : IUtf8JsonSerializable
+    public partial class PortalSettingsContractData : IUtf8JsonSerializable, IJsonModel<PortalSettingsContractData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PortalSettingsContractData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PortalSettingsContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsContractData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
@@ -32,12 +63,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(IsSubscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue(IsSubscriptions);
+                writer.WriteObjectValue(IsSubscriptions, options);
             }
             if (Optional.IsDefined(IsUserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue(IsUserRegistration);
+                writer.WriteObjectValue(IsUserRegistration, options);
             }
             if (Optional.IsDefined(IsRedirectEnabled))
             {
@@ -47,14 +78,43 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
-                writer.WriteObjectValue(TermsOfService);
+                writer.WriteObjectValue(TermsOfService, options);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PortalSettingsContractData DeserializePortalSettingsContractData(JsonElement element)
+        PortalSettingsContractData IJsonModel<PortalSettingsContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsContractData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePortalSettingsContractData(document.RootElement, options);
+        }
+
+        internal static PortalSettingsContractData DeserializePortalSettingsContractData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,13 +122,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Uri> uri = default;
-            Optional<string> validationKey = default;
-            Optional<SubscriptionDelegationSettingProperties> subscriptions = default;
-            Optional<RegistrationDelegationSettingProperties> userRegistration = default;
-            Optional<bool> enabled = default;
-            Optional<TermsOfServiceProperties> termsOfService = default;
+            SystemData systemData = default;
+            Uri uri = default;
+            string validationKey = default;
+            SubscriptionDelegationSettingProperties subscriptions = default;
+            RegistrationDelegationSettingProperties userRegistration = default;
+            bool? enabled = default;
+            TermsOfServiceProperties termsOfService = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -124,7 +186,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            subscriptions = SubscriptionDelegationSettingProperties.DeserializeSubscriptionDelegationSettingProperties(property0.Value);
+                            subscriptions = SubscriptionDelegationSettingProperties.DeserializeSubscriptionDelegationSettingProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userRegistration"u8))
@@ -133,7 +195,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            userRegistration = RegistrationDelegationSettingProperties.DeserializeRegistrationDelegationSettingProperties(property0.Value);
+                            userRegistration = RegistrationDelegationSettingProperties.DeserializeRegistrationDelegationSettingProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabled"u8))
@@ -151,14 +213,243 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             {
                                 continue;
                             }
-                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value);
+                            termsOfService = TermsOfServiceProperties.DeserializeTermsOfServiceProperties(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PortalSettingsContractData(id, name, type, systemData.Value, uri.Value, validationKey.Value, subscriptions.Value, userRegistration.Value, Optional.ToNullable(enabled), termsOfService.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PortalSettingsContractData(
+                id,
+                name,
+                type,
+                systemData,
+                uri,
+                validationKey,
+                subscriptions,
+                userRegistration,
+                enabled,
+                termsOfService,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    url: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Uri))
+                {
+                    builder.Append("    url: ");
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    validationKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ValidationKey))
+                {
+                    builder.Append("    validationKey: ");
+                    if (ValidationKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ValidationKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ValidationKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsSubscriptionDelegationEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    subscriptions: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      subscriptions: {");
+                builder.Append("        enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSubscriptions))
+                {
+                    builder.Append("    subscriptions: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, IsSubscriptions, options, 4, false, "    subscriptions: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsUserRegistrationDelegationEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    userRegistration: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      userRegistration: {");
+                builder.Append("        enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(IsUserRegistration))
+                {
+                    builder.Append("    userRegistration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, IsUserRegistration, options, 4, false, "    userRegistration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRedirectEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRedirectEnabled))
+                {
+                    builder.Append("    enabled: ");
+                    var boolValue = IsRedirectEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TermsOfService), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    termsOfService: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TermsOfService))
+                {
+                    builder.Append("    termsOfService: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, TermsOfService, options, 4, false, "    termsOfService: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PortalSettingsContractData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsContractData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PortalSettingsContractData IPersistableModel<PortalSettingsContractData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsContractData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePortalSettingsContractData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PortalSettingsContractData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PortalSettingsContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

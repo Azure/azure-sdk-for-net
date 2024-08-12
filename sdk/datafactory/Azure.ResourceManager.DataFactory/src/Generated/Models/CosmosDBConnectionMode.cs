@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The connection mode used to access CosmosDB account. Type: string (or Expression with resultType string). </summary>
+    /// <summary> The connection mode used to access CosmosDB account. Type: string. </summary>
     public readonly partial struct CosmosDBConnectionMode : IEquatable<CosmosDBConnectionMode>
     {
         private readonly string _value;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

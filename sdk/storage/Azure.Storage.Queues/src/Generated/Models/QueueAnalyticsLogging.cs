@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> Azure Analytics Logging settings. </summary>
     public partial class QueueAnalyticsLogging
     {
-
         /// <summary> The version of Storage Analytics to configure. </summary>
         public string Version { get; set; }
         /// <summary> Indicates whether all delete requests should be logged. </summary>

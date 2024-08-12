@@ -71,7 +71,7 @@ The exception includes some contextual information to assist in understanding th
 
   - **Consumer Disconnected** : A consumer client was disconnected by the Event Hub service from the Event Hub instance.  This typically occurs when a consumer with a higher owner level asserts ownership over a partition and consumer group pairing.
 
-  - **Resource Not Found**: An Event Hubs resource, such as an Event Hub, consumer group, or partition, could not be found by the Event Hubs service.  This may indicate that it has been deleted from the service or that there is an issue with the Event Hubs service itself.
+  - **Resource Not Found**: An Event Hubs resource, such as an Event Hub, consumer group, or partition, could not be found by the Event Hubs service.  This may indicate that it has been disabled, is still in the process of being created, was deleted from the service, or that there is an issue with the Event Hubs service itself.
 
 Reacting to a specific failure reason for the [EventHubsException][EventHubsException] can be accomplished in several ways, the most common of which is by applying an exception filter clause as part of the `catch` block:
 
@@ -421,6 +421,7 @@ When filing GitHub issues, the following details are requested for all scenarios
   - 123 (EventProcessorProcessingHandlerStart)
   - 124 (EventProcessorProcessingHandlerComplete)
   - 125 (EventProcessorProcessingHandlerError)
+  - 129 (EventProcessorPartitionProcessingCycleComplete)
 
 ### Consuming issues
 

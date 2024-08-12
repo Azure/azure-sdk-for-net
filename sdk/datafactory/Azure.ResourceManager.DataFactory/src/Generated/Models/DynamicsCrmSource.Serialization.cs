@@ -6,25 +6,31 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DynamicsCrmSource : IUtf8JsonSerializable
+    public partial class DynamicsCrmSource : IUtf8JsonSerializable, IJsonModel<DynamicsCrmSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicsCrmSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DynamicsCrmSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicsCrmSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynamicsCrmSource)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Query);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Query.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Query);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -32,7 +38,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(AdditionalColumns);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalColumns.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(AdditionalColumns))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WritePropertyName("type"u8);
@@ -40,38 +49,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceRetryCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryCount.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceRetryWait);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryWait.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxConcurrentConnections);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableMetricsCollection);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -79,25 +72,42 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static DynamicsCrmSource DeserializeDynamicsCrmSource(JsonElement element)
+        DynamicsCrmSource IJsonModel<DynamicsCrmSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicsCrmSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynamicsCrmSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynamicsCrmSource(document.RootElement, options);
+        }
+
+        internal static DynamicsCrmSource DeserializeDynamicsCrmSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BinaryData> query = default;
-            Optional<BinaryData> additionalColumns = default;
+            DataFactoryElement<string> query = default;
+            BinaryData additionalColumns = default;
             string type = default;
-            Optional<BinaryData> sourceRetryCount = default;
-            Optional<BinaryData> sourceRetryWait = default;
-            Optional<BinaryData> maxConcurrentConnections = default;
-            Optional<BinaryData> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    query = BinaryData.FromString(property.Value.GetRawText());
+                    query = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))
@@ -131,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
+                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"u8))
@@ -140,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
+                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"u8))
@@ -149,7 +159,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -158,13 +168,52 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DynamicsCrmSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, query.Value, additionalColumns.Value);
+            return new DynamicsCrmSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                query,
+                additionalColumns);
         }
+
+        BinaryData IPersistableModel<DynamicsCrmSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicsCrmSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DynamicsCrmSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DynamicsCrmSource IPersistableModel<DynamicsCrmSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynamicsCrmSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDynamicsCrmSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DynamicsCrmSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DynamicsCrmSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

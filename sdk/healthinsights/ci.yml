@@ -30,3 +30,5 @@ extends:
         safeName: AzureHealthInsightsClinicalMatching
       - name: Azure.Health.Insights.CancerProfiling
         safeName: AzureHealthInsightsCancerProfiling
+      - name: Azure.Health.Insights.RadiologyInsights
+        safeName: AzureHealthInsightsRadiologyInsights

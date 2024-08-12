@@ -79,6 +79,7 @@ namespace Azure.Identity.Tests
             workloadOptions.TenantId = config.TenantId;
             workloadOptions.ClientId = ClientId;
             workloadOptions.TokenFilePath = _tempFiles.GetTempFilePath();
+            workloadOptions.MsalClient = config.MockConfidentialMsalClient;
 
             string assertion = CredentialTestHelpers.CreateClientAssertionJWT(workloadOptions.AuthorityHost, workloadOptions.ClientId, workloadOptions.TenantId, mockCert);
 

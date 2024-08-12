@@ -6,21 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateSqlServerSqlMISyncTaskOutputMigrationLevel. </summary>
     public partial class MigrateSqlServerSqlMISyncTaskOutputMigrationLevel : MigrateSqlServerSqlMISyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>. </summary>
         internal MigrateSqlServerSqlMISyncTaskOutputMigrationLevel()
         {
             ResultType = "MigrationLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlMISyncTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseCount"> Count of databases. </param>
         /// <param name="state"> Current state of migration. </param>
         /// <param name="startedOn"> Migration start time. </param>
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="databaseErrorCount"> Number of database level errors. </param>
-        internal MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(string id, string resultType, int? databaseCount, MigrationState? state, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerName, string sourceServerVersion, string sourceServerBrandVersion, string targetServerName, string targetServerVersion, string targetServerBrandVersion, int? databaseErrorCount) : base(id, resultType)
+        internal MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? databaseCount, MigrationState? state, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerName, string sourceServerVersion, string sourceServerBrandVersion, string targetServerName, string targetServerVersion, string targetServerBrandVersion, int? databaseErrorCount) : base(id, resultType, serializedAdditionalRawData)
         {
             DatabaseCount = databaseCount;
             State = state;

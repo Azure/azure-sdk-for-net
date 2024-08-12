@@ -158,10 +158,14 @@ namespace Azure.Messaging.EventHubs.Core
                     return ex.IsTransient;
 
                 case TimeoutException _:
-                case SocketException _:
                 case IOException _:
                 case UnauthorizedAccessException _:
                     return true;
+
+                case SocketException ex:
+                    return ex.SocketErrorCode != SocketError.HostUnreachable
+                        && ex.SocketErrorCode != SocketError.HostNotFound
+                        && ex.SocketErrorCode != SocketError.NoRecovery;
 
                 default:
                     return false;

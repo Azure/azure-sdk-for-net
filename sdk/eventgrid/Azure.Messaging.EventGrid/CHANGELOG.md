@@ -1,6 +1,6 @@
 # Release History
 
-## 4.18.0-beta.1 (Unreleased)
+## 4.25.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,73 @@
 
 ### Other Changes
 
+## 4.24.1 (2024-07-16)
+
+### Bugs Fixed
+
+- Fixed deserialization bugs in `AcsEmailEngagementTrackingReportReceivedEventData` and `AcsEmailDeliveryReportReceivedEventData` system events that caused the `DeliveryAttemptTimestamp` and `UserActionTimeStamp` properties to be null.
+
+## 4.24.0 (2024-04-09)
+
+### Features Added
+
+- Added new Communication events.
+
+## 4.23.0 (2024-03-11)
+
+### Features Added
+
+- Added API Center events.
+
+## 4.22.0 (2024-02-12)
+
+### Features Added
+
+- Added new Storage Task Assignment system events.
+- Added new AVS system events.
+- Added `Metadata` property to `AcsChatThreadCreatedEventData` system event.
+
+## 4.21.0 (2023-11-07)
+
+### Features Added
+
+- Added new system events for Resource Notifications
+- Added the `Metadata` property to various Azure Communication Services events.
+
+## 4.20.0 (2023-10-18)
+
+### Bugs Fixed
+
+- Added several communication models into the correct namespace and hid the old ones.
+
+## 4.19.0 (2023-10-11)
+
+### Features Added
+
+- Added new system events for Resource Notifications and Azure Communication Services.
+
+## 4.18.0 (2023-09-12)
+
+### Features Added
+
+- Added new system events for Event Grid and App Configuration.
+- Added `Recipient` property to `AcsEmailEngagementTrackingReportReceivedEventData` event.
+
+### Breaking Changes
+
+- `EventGridClient` has been removed for the stable release. It will be included in a subsequent release.
+
+## 4.18.0-beta.1 (2023-07-16)
+
+### Other Changes
+
+- Shipping the `EventGridClient` on top of the latest system events.
+
 ## 4.17.0 (2023-06-08)
 
 ### Features Added
 
-- Added new system events for Container Service. 
+- Added new system events for Container Service.
 
 ### Breaking Changes
 
@@ -157,7 +219,7 @@
 ### New Features
 * Added the following new system events:
   - StorageBlobInventoryPolicyCompletedEventData
-    
+
 * Updated existing system events:
  - AcsRecordingChunkInfoProperties - Added `ContentLocation` and `MetadataLocation` properties.
 
@@ -167,7 +229,7 @@
 ## 4.2.0 (2021-05-10)
 
 ### New Features
-* Added the following new system events: 
+* Added the following new system events:
   - PolicyInsightsPolicyStateChangedEventData
   - PolicyInsightsPolicyStateCreatedEventData
   - PolicyInsightsPolicyStateDeletedEventData

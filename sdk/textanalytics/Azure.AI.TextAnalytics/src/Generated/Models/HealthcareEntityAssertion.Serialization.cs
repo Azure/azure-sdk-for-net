@@ -39,9 +39,9 @@ namespace Azure.AI.TextAnalytics
             {
                 return null;
             }
-            Optional<EntityConditionality> conditionality = default;
-            Optional<EntityCertainty> certainty = default;
-            Optional<EntityAssociation> association = default;
+            EntityConditionality? conditionality = default;
+            EntityCertainty? certainty = default;
+            EntityAssociation? association = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("conditionality"u8))
@@ -72,7 +72,23 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new HealthcareEntityAssertion(Optional.ToNullable(conditionality), Optional.ToNullable(certainty), Optional.ToNullable(association));
+            return new HealthcareEntityAssertion(conditionality, certainty, association);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareEntityAssertion FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareEntityAssertion(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

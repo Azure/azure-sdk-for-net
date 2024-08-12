@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -68,7 +67,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossariesAsync(int?,int?,string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
+        public virtual async Task<Response> GetGlossariesAsync(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
@@ -102,7 +101,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaries(int?,int?,string,bool?,RequestContext)']/*" />
-        public virtual Response GetGlossaries(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
+        public virtual Response GetGlossaries(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewGlossaries.GetGlossaries");
             scope.Start();
@@ -339,7 +338,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoryAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossaryCategoryAsync(string categoryGuid, RequestContext context = null)
+        public virtual async Task<Response> GetGlossaryCategoryAsync(string categoryGuid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
@@ -374,7 +373,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategory(string,RequestContext)']/*" />
-        public virtual Response GetGlossaryCategory(string categoryGuid, RequestContext context = null)
+        public virtual Response GetGlossaryCategory(string categoryGuid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
@@ -630,7 +629,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedCategoriesAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual async Task<Response> GetRelatedCategoriesAsync(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
@@ -668,7 +667,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedCategories(string,int?,int?,string,RequestContext)']/*" />
-        public virtual Response GetRelatedCategories(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual Response GetRelatedCategories(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
@@ -706,7 +705,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetCategoryTermsAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual async Task<Response> GetCategoryTermsAsync(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
@@ -744,7 +743,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetCategoryTerms(string,int?,int?,string,RequestContext)']/*" />
-        public virtual Response GetCategoryTerms(string categoryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual Response GetCategoryTerms(string categoryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
 
@@ -851,7 +850,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermAsync(string,bool?,IEnumerable{string},RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy = null, IEnumerable<string> excludeRelationshipTypeList = null, RequestContext context = null)
+        public virtual async Task<Response> GetGlossaryTermAsync(string termGuid, bool? includeTermHierarchy, IEnumerable<string> excludeRelationshipTypeList, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
@@ -888,7 +887,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTerm(string,bool?,IEnumerable{string},RequestContext)']/*" />
-        public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy = null, IEnumerable<string> excludeRelationshipTypeList = null, RequestContext context = null)
+        public virtual Response GetGlossaryTerm(string termGuid, bool? includeTermHierarchy, IEnumerable<string> excludeRelationshipTypeList, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
@@ -1218,7 +1217,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTermAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual async Task<Response> GetEntitiesAssignedWithTermAsync(string termGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
@@ -1256,7 +1255,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTerm(string,int?,int?,string,RequestContext)']/*" />
-        public virtual Response GetEntitiesAssignedWithTerm(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual Response GetEntitiesAssignedWithTerm(string termGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
@@ -1516,7 +1515,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedTermsAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRelatedTermsAsync(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual async Task<Response> GetRelatedTermsAsync(string termGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
@@ -1554,7 +1553,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetRelatedTerms(string,int?,int?,string,RequestContext)']/*" />
-        public virtual Response GetRelatedTerms(string termGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual Response GetRelatedTerms(string termGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
 
@@ -1589,7 +1588,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, RequestContext context = null)
+        public virtual async Task<Response> GetGlossaryAsync(string glossaryGuid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
@@ -1624,7 +1623,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossary(string,RequestContext)']/*" />
-        public virtual Response GetGlossary(string glossaryGuid, RequestContext context = null)
+        public virtual Response GetGlossary(string glossaryGuid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
@@ -1806,7 +1805,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual async Task<Response> GetGlossaryCategoriesAsync(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
@@ -1844,7 +1843,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategories(string,int?,int?,string,RequestContext)']/*" />
-        public virtual Response GetGlossaryCategories(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual Response GetGlossaryCategories(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
@@ -1882,7 +1881,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesHeadersAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual async Task<Response> GetGlossaryCategoriesHeadersAsync(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
@@ -1920,7 +1919,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryCategoriesHeaders(string,int?,int?,string,RequestContext)']/*" />
-        public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual Response GetGlossaryCategoriesHeaders(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
@@ -1956,7 +1955,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetDetailedGlossaryAsync(string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual async Task<Response> GetDetailedGlossaryAsync(string glossaryGuid, bool? includeTermHierarchy, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
@@ -1992,7 +1991,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetDetailedGlossary(string,bool?,RequestContext)']/*" />
-        public virtual Response GetDetailedGlossary(string glossaryGuid, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual Response GetDetailedGlossary(string glossaryGuid, bool? includeTermHierarchy, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
@@ -2107,7 +2106,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermsAsync(string,bool?,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual async Task<Response> GetGlossaryTermsAsync(string glossaryGuid, bool? includeTermHierarchy, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
@@ -2146,7 +2145,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTerms(string,bool?,int?,int?,string,RequestContext)']/*" />
-        public virtual Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy = null, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual Response GetGlossaryTerms(string glossaryGuid, bool? includeTermHierarchy, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
@@ -2184,7 +2183,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermHeadersAsync(string,int?,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual async Task<Response> GetGlossaryTermHeadersAsync(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
@@ -2222,7 +2221,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetGlossaryTermHeaders(string,int?,int?,string,RequestContext)']/*" />
-        public virtual Response GetGlossaryTermHeaders(string glossaryGuid, int? limit = null, int? offset = null, string sort = null, RequestContext context = null)
+        public virtual Response GetGlossaryTermHeaders(string glossaryGuid, int? limit, int? offset, string sort, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
 
@@ -2257,7 +2256,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetImportCsvOperationStatusAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetImportCsvOperationStatusAsync(string operationGuid, RequestContext context = null)
+        public virtual async Task<Response> GetImportCsvOperationStatusAsync(string operationGuid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(operationGuid, nameof(operationGuid));
 
@@ -2292,7 +2291,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetImportCsvOperationStatus(string,RequestContext)']/*" />
-        public virtual Response GetImportCsvOperationStatus(string operationGuid, RequestContext context = null)
+        public virtual Response GetImportCsvOperationStatus(string operationGuid, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(operationGuid, nameof(operationGuid));
 
@@ -2406,7 +2405,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetTermsByGlossaryNameAsync(string,int?,int?,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual async Task<Response> GetTermsByGlossaryNameAsync(string glossaryName, int? limit, int? offset, bool? includeTermHierarchy, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
 
@@ -2444,7 +2443,7 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='GetTermsByGlossaryName(string,int?,int?,bool?,RequestContext)']/*" />
-        public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit = null, int? offset = null, bool? includeTermHierarchy = null, RequestContext context = null)
+        public virtual Response GetTermsByGlossaryName(string glossaryName, int? limit, int? offset, bool? includeTermHierarchy, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
 
@@ -2475,14 +2474,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "multipart/form-data". </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvAsync(WaitUntil,string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(WaitUntil waitUntil, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvAsync(WaitUntil,string,RequestContent,string,bool?,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvAsync(WaitUntil waitUntil, string glossaryGuid, RequestContent content, string contentType, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
@@ -2491,7 +2491,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, context);
+                using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, contentType, includeTermHierarchy, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2514,14 +2514,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryGuid"> The globally unique identifier for glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "multipart/form-data". </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryGuid"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsv(WaitUntil,string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(WaitUntil waitUntil, string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsv(WaitUntil,string,RequestContent,string,bool?,RequestContext)']/*" />
+        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsv(WaitUntil waitUntil, string glossaryGuid, RequestContent content, string contentType, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
             Argument.AssertNotNull(content, nameof(content));
@@ -2530,7 +2531,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, includeTermHierarchy, context);
+                using HttpMessage message = CreateImportGlossaryTermsViaCsvRequest(glossaryGuid, content, contentType, includeTermHierarchy, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsv", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
@@ -2553,14 +2554,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "multipart/form-data". </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil,string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil waitUntil, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil,string,RequestContent,string,bool?,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil waitUntil, string glossaryName, RequestContent content, string contentType, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2569,7 +2571,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, context);
+                using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, contentType, includeTermHierarchy, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2592,14 +2594,15 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="glossaryName"> The name of the glossary. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "multipart/form-data". </param>
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil,string,RequestContent,bool?,RequestContext)']/*" />
-        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil waitUntil, string glossaryName, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
+        /// <include file="Docs/PurviewGlossaries.xml" path="doc/members/member[@name='ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil,string,RequestContent,string,bool?,RequestContext)']/*" />
+        public virtual Operation<BinaryData> ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil waitUntil, string glossaryName, RequestContent content, string contentType, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryName, nameof(glossaryName));
             Argument.AssertNotNull(content, nameof(content));
@@ -2608,7 +2611,7 @@ namespace Azure.Analytics.Purview.Catalog
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, includeTermHierarchy, context);
+                using HttpMessage message = CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(glossaryName, content, contentType, includeTermHierarchy, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "PurviewGlossaries.ImportGlossaryTermsViaCsvByGlossaryName", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
@@ -2851,7 +2854,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
-            if (excludeRelationshipTypeList != null && Optional.IsCollectionDefined(excludeRelationshipTypeList))
+            if (excludeRelationshipTypeList != null && !(excludeRelationshipTypeList is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in excludeRelationshipTypeList)
                 {
@@ -3256,7 +3259,7 @@ namespace Azure.Analytics.Purview.Catalog
             return message;
         }
 
-        internal HttpMessage CreateImportGlossaryTermsViaCsvRequest(string glossaryGuid, RequestContent content, bool? includeTermHierarchy, RequestContext context)
+        internal HttpMessage CreateImportGlossaryTermsViaCsvRequest(string glossaryGuid, RequestContent content, string contentType, bool? includeTermHierarchy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -3274,12 +3277,12 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "multipart/form-data");
+            request.Headers.Add("Content-Type", contentType);
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(string glossaryName, RequestContent content, bool? includeTermHierarchy, RequestContext context)
+        internal HttpMessage CreateImportGlossaryTermsViaCsvByGlossaryNameRequest(string glossaryName, RequestContent content, string contentType, bool? includeTermHierarchy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -3297,7 +3300,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "multipart/form-data");
+            request.Headers.Add("Content-Type", contentType);
             request.Content = content;
             return message;
         }

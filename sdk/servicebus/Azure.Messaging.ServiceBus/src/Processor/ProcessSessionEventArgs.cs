@@ -85,7 +85,6 @@ namespace Azure.Messaging.ServiceBus
             Identifier = identifier;
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         internal ProcessSessionEventArgs(
             SessionReceiverManager manager,
             CancellationToken cancellationToken)

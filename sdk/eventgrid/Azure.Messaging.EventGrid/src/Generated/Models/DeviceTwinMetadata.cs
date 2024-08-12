@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Metadata information for the properties JSON document. </summary>
     public partial class DeviceTwinMetadata
     {
-        /// <summary> Initializes a new instance of DeviceTwinMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceTwinMetadata"/>. </summary>
         internal DeviceTwinMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceTwinMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceTwinMetadata"/>. </summary>
         /// <param name="lastUpdated"> The ISO8601 timestamp of the last time the properties were updated. </param>
         internal DeviceTwinMetadata(string lastUpdated)
         {

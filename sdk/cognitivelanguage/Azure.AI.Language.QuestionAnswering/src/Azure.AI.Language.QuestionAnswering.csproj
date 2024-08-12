@@ -6,6 +6,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Azure AI Language Question Answering QnA Maker</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>

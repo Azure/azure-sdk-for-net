@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string PointInTimeRestoreValue = "PointInTimeRestore";
         private const string GeoRestoreValue = "GeoRestore";
         private const string ReplicaValue = "Replica";
+        private const string ReviveDroppedValue = "ReviveDropped";
 
         /// <summary> Default. </summary>
         public static PostgreSqlFlexibleServerCreateMode Default { get; } = new PostgreSqlFlexibleServerCreateMode(DefaultValue);
@@ -41,6 +42,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerCreateMode GeoRestore { get; } = new PostgreSqlFlexibleServerCreateMode(GeoRestoreValue);
         /// <summary> Replica. </summary>
         public static PostgreSqlFlexibleServerCreateMode Replica { get; } = new PostgreSqlFlexibleServerCreateMode(ReplicaValue);
+        /// <summary> ReviveDropped. </summary>
+        public static PostgreSqlFlexibleServerCreateMode ReviveDropped { get; } = new PostgreSqlFlexibleServerCreateMode(ReviveDroppedValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerCreateMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerCreateMode left, PostgreSqlFlexibleServerCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerCreateMode"/> values are not the same. </summary>
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

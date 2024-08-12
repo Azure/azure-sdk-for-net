@@ -15,14 +15,46 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Represents the definition of contents retrieved after expanding the MSIX Image. </summary>
     public partial class ExpandMsixImage : ResourceData
     {
-        /// <summary> Initializes a new instance of ExpandMsixImage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpandMsixImage"/>. </summary>
         public ExpandMsixImage()
         {
             PackageDependencies = new ChangeTrackingList<MsixPackageDependencies>();
             PackageApplications = new ChangeTrackingList<MsixPackageApplications>();
         }
 
-        /// <summary> Initializes a new instance of ExpandMsixImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpandMsixImage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +72,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="version"> Package Version found in the appxmanifest.xml. </param>
         /// <param name="lastUpdatedOn"> Date Package was last updated, found in the appxmanifest.xml. </param>
         /// <param name="packageApplications"> List of package applications. </param>
-        internal ExpandMsixImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string packageAlias, string imagePath, string packageName, string packageFamilyName, string packageFullName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdatedOn, IList<MsixPackageApplications> packageApplications) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpandMsixImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string packageAlias, string imagePath, string packageName, string packageFamilyName, string packageFullName, string displayName, string packageRelativePath, bool? isRegularRegistration, bool? isActive, IList<MsixPackageDependencies> packageDependencies, string version, DateTimeOffset? lastUpdatedOn, IList<MsixPackageApplications> packageApplications, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PackageAlias = packageAlias;
             ImagePath = imagePath;
@@ -55,6 +88,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             Version = version;
             LastUpdatedOn = lastUpdatedOn;
             PackageApplications = packageApplications;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Alias of MSIX Package. </summary>

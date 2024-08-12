@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Tests
 
             ManagedPrivateEndpointsClient previewClient = CreateTestClient(ManagedPrivateEndpointsClientOptions.ServiceVersion.V2020_12_01, mockTransport);
 
-            Response<ManagedPrivateEndpoint> endpoint = await previewClient.GetAsync("TestEndpoint");
+            Response<ManagedPrivateEndpoint> endpoint = await previewClient.GetAsync("default", "TestEndpoint");
 
             MockRequest request = mockTransport.SingleRequest;
 

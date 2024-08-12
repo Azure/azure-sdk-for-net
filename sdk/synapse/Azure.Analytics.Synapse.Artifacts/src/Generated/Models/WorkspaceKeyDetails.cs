@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Details of the customer managed key associated with the workspace. </summary>
     public partial class WorkspaceKeyDetails
     {
-        /// <summary> Initializes a new instance of WorkspaceKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceKeyDetails"/>. </summary>
         public WorkspaceKeyDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkspaceKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceKeyDetails"/>. </summary>
         /// <param name="name"> Workspace Key sub-resource name. </param>
         /// <param name="keyVaultUrl"> Workspace Key sub-resource key vault url. </param>
         internal WorkspaceKeyDetails(string name, string keyVaultUrl)

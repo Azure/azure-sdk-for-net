@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     /// <summary> Error details. </summary>
     public partial class FacetErrorDetails
     {
-        /// <summary> Initializes a new instance of FacetErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacetErrorDetails"/>. </summary>
         /// <param name="code"> Error code identifying the specific error. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of FacetErrorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="FacetErrorDetails"/>. </summary>
         /// <param name="code"> Error code identifying the specific error. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -37,6 +36,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             Code = code;
             Message = message;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FacetErrorDetails"/> for deserialization. </summary>
+        internal FacetErrorDetails()
+        {
         }
 
         /// <summary> Error code identifying the specific error. </summary>
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

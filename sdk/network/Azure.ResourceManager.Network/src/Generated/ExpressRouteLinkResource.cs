@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an ExpressRouteLink along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExpressRouteLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExpressRouteLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ExpressRoutePortResource" /> using the GetExpressRouteLink method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExpressRouteLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExpressRouteLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ExpressRoutePortResource"/> using the GetExpressRouteLink method.
     /// </summary>
     public partial class ExpressRouteLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRouteLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="expressRoutePortName"> The expressRoutePortName. </param>
+        /// <param name="linkName"> The linkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string expressRoutePortName, string linkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}/links/{linkName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Network
         private readonly ExpressRouteLinksRestOperations _expressRouteLinkRestClient;
         private readonly ExpressRouteLinkData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/ExpressRoutePorts/links";
+
         /// <summary> Initializes a new instance of the <see cref="ExpressRouteLinkResource"/> class for mocking. </summary>
         protected ExpressRouteLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExpressRouteLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExpressRouteLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExpressRouteLinkResource(ArmClient client, ExpressRouteLinkData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/ExpressRoutePorts/links";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ExpressRouteLinks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

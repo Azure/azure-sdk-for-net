@@ -9,22 +9,25 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing an AdminRuleGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AdminRuleGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAdminRuleGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityAdminConfigurationResource" /> using the GetAdminRuleGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AdminRuleGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAdminRuleGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityAdminConfigurationResource"/> using the GetAdminRuleGroup method.
     /// </summary>
     public partial class AdminRuleGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AdminRuleGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
+        /// <param name="ruleCollectionName"> The ruleCollectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityAdminConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}";
@@ -35,12 +38,15 @@ namespace Azure.ResourceManager.Network
         private readonly AdminRuleCollectionsRestOperations _adminRuleGroupAdminRuleCollectionsRestClient;
         private readonly AdminRuleGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections";
+
         /// <summary> Initializes a new instance of the <see cref="AdminRuleGroupResource"/> class for mocking. </summary>
         protected AdminRuleGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AdminRuleGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AdminRuleGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AdminRuleGroupResource(ArmClient client, AdminRuleGroupData data) : this(client, data.Id)
@@ -61,9 +67,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/securityAdminConfigurations/ruleCollections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of BaseAdminRuleResources and their operations over a BaseAdminRuleResource. </returns>
         public virtual BaseAdminRuleCollection GetBaseAdminRules()
         {
-            return GetCachedClient(Client => new BaseAdminRuleCollection(Client, Id));
+            return GetCachedClient(client => new BaseAdminRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +107,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>AdminRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BaseAdminRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BaseAdminRuleResource>> GetBaseAdminRuleAsync(string ruleName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +138,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>AdminRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BaseAdminRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BaseAdminRuleResource> GetBaseAdminRule(string ruleName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +168,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AdminRuleCollections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdminRuleGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +209,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>AdminRuleCollections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdminRuleGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -213,6 +248,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AdminRuleCollections_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdminRuleGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,6 +292,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>AdminRuleCollections_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdminRuleGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -284,6 +335,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>AdminRuleCollections_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdminRuleGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -299,7 +358,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _adminRuleGroupAdminRuleCollectionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<AdminRuleGroupResource>(Response.FromValue(new AdminRuleGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _adminRuleGroupAdminRuleCollectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<AdminRuleGroupResource>(Response.FromValue(new AdminRuleGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -322,6 +383,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>AdminRuleCollections_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdminRuleGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -337,7 +406,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _adminRuleGroupAdminRuleCollectionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NetworkArmOperation<AdminRuleGroupResource>(Response.FromValue(new AdminRuleGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _adminRuleGroupAdminRuleCollectionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<AdminRuleGroupResource>(Response.FromValue(new AdminRuleGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,41 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.3 (2024-05-07)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.3.2 (2024-03-23)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added experimental Bicep serialization.
+
+## 1.3.1 (2023-11-27)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.3.0 (2023-06-26)
+
+### Other Changes
+
+- Upgraded API version to `2023-05-01`.
+- Added API to list models for a subscription in a region.
+- Added API to list usages for a subscription in a region.
 
 ## 1.3.0-beta.1 (2023-05-29)
 

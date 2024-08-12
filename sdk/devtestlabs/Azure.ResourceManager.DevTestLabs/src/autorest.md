@@ -9,11 +9,16 @@ csharp: true
 library-name: DevTestLabs
 namespace: Azure.ResourceManager.DevTestLabs
 require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e11ac3ecbd1bd4e14f5a0/specification/devtestlabs/resource-manager/readme.md
+#tag: package-2018-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/costs/{name}
@@ -27,7 +32,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'UniqueIdentifier': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -190,4 +195,5 @@ rename-mapping:
 
 directive:
   - remove-operation: ProviderOperations_List
+
 ```

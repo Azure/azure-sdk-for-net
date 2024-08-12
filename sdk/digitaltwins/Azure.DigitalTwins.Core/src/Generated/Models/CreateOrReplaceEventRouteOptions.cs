@@ -10,9 +10,18 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class CreateOrReplaceEventRouteOptions
     {
-        /// <summary> Initializes a new instance of CreateOrReplaceEventRouteOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateOrReplaceEventRouteOptions"/>. </summary>
         public CreateOrReplaceEventRouteOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateOrReplaceEventRouteOptions"/>. </summary>
+        /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        internal CreateOrReplaceEventRouteOptions(string traceParent, string traceState)
+        {
+            TraceParent = traceParent;
+            TraceState = traceState;
         }
     }
 }

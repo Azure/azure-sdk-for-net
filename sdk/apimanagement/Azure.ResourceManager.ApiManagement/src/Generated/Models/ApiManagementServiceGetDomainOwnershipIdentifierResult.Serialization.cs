@@ -5,20 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementServiceGetDomainOwnershipIdentifierResult
+    public partial class ApiManagementServiceGetDomainOwnershipIdentifierResult : IUtf8JsonSerializable, IJsonModel<ApiManagementServiceGetDomainOwnershipIdentifierResult>
     {
-        internal static ApiManagementServiceGetDomainOwnershipIdentifierResult DeserializeApiManagementServiceGetDomainOwnershipIdentifierResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementServiceGetDomainOwnershipIdentifierResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApiManagementServiceGetDomainOwnershipIdentifierResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceGetDomainOwnershipIdentifierResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiManagementServiceGetDomainOwnershipIdentifierResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DomainOwnershipIdentifier))
+            {
+                writer.WritePropertyName("domainOwnershipIdentifier"u8);
+                writer.WriteStringValue(DomainOwnershipIdentifier);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ApiManagementServiceGetDomainOwnershipIdentifierResult IJsonModel<ApiManagementServiceGetDomainOwnershipIdentifierResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceGetDomainOwnershipIdentifierResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiManagementServiceGetDomainOwnershipIdentifierResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementServiceGetDomainOwnershipIdentifierResult(document.RootElement, options);
+        }
+
+        internal static ApiManagementServiceGetDomainOwnershipIdentifierResult DeserializeApiManagementServiceGetDomainOwnershipIdentifierResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> domainOwnershipIdentifier = default;
+            string domainOwnershipIdentifier = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainOwnershipIdentifier"u8))
@@ -26,8 +80,84 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     domainOwnershipIdentifier = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApiManagementServiceGetDomainOwnershipIdentifierResult(domainOwnershipIdentifier.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApiManagementServiceGetDomainOwnershipIdentifierResult(domainOwnershipIdentifier, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainOwnershipIdentifier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  domainOwnershipIdentifier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DomainOwnershipIdentifier))
+                {
+                    builder.Append("  domainOwnershipIdentifier: ");
+                    if (DomainOwnershipIdentifier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DomainOwnershipIdentifier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DomainOwnershipIdentifier}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ApiManagementServiceGetDomainOwnershipIdentifierResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceGetDomainOwnershipIdentifierResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementServiceGetDomainOwnershipIdentifierResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApiManagementServiceGetDomainOwnershipIdentifierResult IPersistableModel<ApiManagementServiceGetDomainOwnershipIdentifierResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceGetDomainOwnershipIdentifierResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApiManagementServiceGetDomainOwnershipIdentifierResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementServiceGetDomainOwnershipIdentifierResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApiManagementServiceGetDomainOwnershipIdentifierResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -67,7 +67,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -102,7 +102,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(string,RequestContext)']/*" />
-        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
+        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -240,7 +240,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsightAsync(string,string,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetInsightAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
+        public virtual async Task<Response> GetInsightAsync(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -286,7 +286,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsight(string,string,string,string,string,RequestContext)']/*" />
-        public virtual Response GetInsight(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
+        public virtual Response GetInsight(string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -445,7 +445,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsightsByPartyIdModelIdAndResourceAsync(string,string,string,string,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetInsightsByPartyIdModelIdAndResourceAsync(string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime = null, DateTimeOffset? maxInsightStartDateTime = null, DateTimeOffset? minInsightEndDateTime = null, DateTimeOffset? maxInsightEndDateTime = null, IEnumerable<string> measurementFilters = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetInsightsByPartyIdModelIdAndResourceAsync(string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measurementFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -454,7 +454,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetInsightsByPartyIdModelIdAndResourceRequest(partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetInsightsByPartyIdModelIdAndResourceNextPageRequest(nextLink, partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Insights.GetInsightsByPartyIdModelIdAndResource", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Insights.GetInsightsByPartyIdModelIdAndResource", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -502,7 +502,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='GetInsightsByPartyIdModelIdAndResource(string,string,string,string,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetInsightsByPartyIdModelIdAndResource(string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime = null, DateTimeOffset? maxInsightStartDateTime = null, DateTimeOffset? minInsightEndDateTime = null, DateTimeOffset? maxInsightEndDateTime = null, IEnumerable<string> measurementFilters = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetInsightsByPartyIdModelIdAndResource(string partyId, string modelId, string resourceType, string resourceId, DateTimeOffset? minInsightStartDateTime, DateTimeOffset? maxInsightStartDateTime, DateTimeOffset? minInsightEndDateTime, DateTimeOffset? maxInsightEndDateTime, IEnumerable<string> measurementFilters, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -511,7 +511,7 @@ namespace Azure.Verticals.AgriFood.Farming
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetInsightsByPartyIdModelIdAndResourceRequest(partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetInsightsByPartyIdModelIdAndResourceNextPageRequest(nextLink, partyId, modelId, resourceType, resourceId, minInsightStartDateTime, maxInsightStartDateTime, minInsightEndDateTime, maxInsightEndDateTime, measurementFilters, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Insights.GetInsightsByPartyIdModelIdAndResource", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Insights.GetInsightsByPartyIdModelIdAndResource", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(partyId, nameof(partyId));
@@ -583,7 +583,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/Insights.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,string,string,string,string,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string modelId, string resourceType, string resourceId, string insightId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(partyId, nameof(partyId));
@@ -673,35 +673,35 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxInsightEndDateTime", maxInsightEndDateTime.Value, "O", true);
             }
-            if (measurementFilters != null && Optional.IsCollectionDefined(measurementFilters))
+            if (measurementFilters != null && !(measurementFilters is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in measurementFilters)
                 {
                     uri.AppendQuery("measurementFilters", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && !(ids is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

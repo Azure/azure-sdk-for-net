@@ -70,6 +70,11 @@ namespace Azure.DigitalTwins.Core.Tests
             return await GetUniqueIdAsync(baseName, (twinId) => dtClient.GetDigitalTwinAsync<BasicDigitalTwin>(twinId)).ConfigureAwait(false);
         }
 
+        public async Task<string> GetUniqueJobIdAsync(DigitalTwinsClient dtClient, string baseName)
+        {
+            return await GetUniqueIdAsync(baseName, (jobId) => dtClient.GetImportJobAsync(jobId)).ConfigureAwait(false);
+        }
+
         private async Task<string> GetUniqueIdAsync(string baseName, Func<string, Task> getResource)
         {
             var id = Recording.GenerateId(baseName, MaxIdLength);

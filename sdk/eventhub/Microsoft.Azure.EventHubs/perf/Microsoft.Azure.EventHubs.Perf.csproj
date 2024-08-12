@@ -13,6 +13,7 @@
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="Microsoft.Azure.Storage.Blob" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" />
     <PackageReference Include="Polly" />
   </ItemGroup>
 

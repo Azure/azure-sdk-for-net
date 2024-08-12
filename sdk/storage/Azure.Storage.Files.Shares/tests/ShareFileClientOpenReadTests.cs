@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Test;
@@ -107,12 +108,12 @@ namespace Azure.Storage.Files.Shares.Tests
             switch (mode)
             {
                 case ModifyDataMode.Replace:
-                    await client.SetHttpHeadersAsync(newSize: data.Length);
+                    await client.SetHttpHeadersAsync(new ShareFileSetHttpHeadersOptions() { NewSize = data.Length});
                     await client.UploadAsync(data);
                     break;
                 case ModifyDataMode.Append:
                     long currentBlobLength = (await client.GetPropertiesAsync()).Value.ContentLength;
-                    await client.SetHttpHeadersAsync(newSize: currentBlobLength + data.Length);
+                    await client.SetHttpHeadersAsync(new ShareFileSetHttpHeadersOptions() { NewSize = currentBlobLength + data.Length });
                     await client.UploadRangeAsync(new HttpRange(currentBlobLength, data.Length),  data);
                     break;
                 default:

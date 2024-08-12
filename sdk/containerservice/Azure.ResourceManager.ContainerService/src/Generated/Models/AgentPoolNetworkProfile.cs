@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Network settings of an agent pool. </summary>
     public partial class AgentPoolNetworkProfile
     {
-        /// <summary> Initializes a new instance of AgentPoolNetworkProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkProfile"/>. </summary>
         public AgentPoolNetworkProfile()
         {
             NodePublicIPTags = new ChangeTrackingList<ContainerServiceIPTag>();
@@ -21,15 +54,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             ApplicationSecurityGroups = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of AgentPoolNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkProfile"/>. </summary>
         /// <param name="nodePublicIPTags"> IPTags of instance-level public IPs. </param>
         /// <param name="allowedHostPorts"> The port ranges that are allowed to access. The specified ranges are allowed to overlap. </param>
         /// <param name="applicationSecurityGroups"> The IDs of the application security groups which agent pool will associate when created. </param>
-        internal AgentPoolNetworkProfile(IList<ContainerServiceIPTag> nodePublicIPTags, IList<AgentPoolNetworkPortRange> allowedHostPorts, IList<ResourceIdentifier> applicationSecurityGroups)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolNetworkProfile(IList<ContainerServiceIPTag> nodePublicIPTags, IList<AgentPoolNetworkPortRange> allowedHostPorts, IList<ResourceIdentifier> applicationSecurityGroups, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NodePublicIPTags = nodePublicIPTags;
             AllowedHostPorts = allowedHostPorts;
             ApplicationSecurityGroups = applicationSecurityGroups;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IPTags of instance-level public IPs. </summary>

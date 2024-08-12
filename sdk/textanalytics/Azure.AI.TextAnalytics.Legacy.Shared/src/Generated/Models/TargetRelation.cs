@@ -7,14 +7,13 @@
 
 using System;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The TargetRelation. </summary>
     internal partial class TargetRelation
     {
-        /// <summary> Initializes a new instance of TargetRelation. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetRelation"/>. </summary>
         /// <param name="relationType"> The type related to the target. </param>
         /// <param name="ref"> The JSON pointer indicating the linked object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ref"/> is null. </exception>

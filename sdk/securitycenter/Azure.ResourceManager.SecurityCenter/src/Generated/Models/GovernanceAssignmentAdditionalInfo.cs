@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Describe the additional data of governance assignment - optional. </summary>
     public partial class GovernanceAssignmentAdditionalInfo
     {
-        /// <summary> Initializes a new instance of GovernanceAssignmentAdditionalInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GovernanceAssignmentAdditionalInfo"/>. </summary>
         public GovernanceAssignmentAdditionalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of GovernanceAssignmentAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceAssignmentAdditionalInfo"/>. </summary>
         /// <param name="ticketNumber"> Ticket number associated with this governance assignment. </param>
         /// <param name="ticketLink"> Ticket link associated with this governance assignment - for example: https://snow.com. </param>
         /// <param name="ticketStatus"> The ticket status associated with this governance assignment - for example: Active. </param>
-        internal GovernanceAssignmentAdditionalInfo(int? ticketNumber, string ticketLink, string ticketStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GovernanceAssignmentAdditionalInfo(int? ticketNumber, string ticketLink, string ticketStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TicketNumber = ticketNumber;
             TicketLink = ticketLink;
             TicketStatus = ticketStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Ticket number associated with this governance assignment. </summary>

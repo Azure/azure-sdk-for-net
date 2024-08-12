@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Ingest fragment dropped event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIncomingDataChunkDropped event. </summary>
     public partial class MediaLiveEventIncomingDataChunkDroppedEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingDataChunkDroppedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingDataChunkDroppedEventData"/>. </summary>
         internal MediaLiveEventIncomingDataChunkDroppedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingDataChunkDroppedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingDataChunkDroppedEventData"/>. </summary>
         /// <param name="timestamp"> Gets the timestamp of the data chunk dropped. </param>
         /// <param name="trackType"> Gets the type of the track (Audio / Video). </param>
         /// <param name="bitrate"> Gets the bitrate of the track. </param>

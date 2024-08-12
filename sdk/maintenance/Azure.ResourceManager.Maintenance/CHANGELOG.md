@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.9 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,61 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.8 (2024-04-28)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2023-09' to 'package-preview-2023-10'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/741b0c8c71d90525a92bc4f2e45cb189c3affccd/specification/maintenance/resource-manager/readme.md.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.39.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.11.1
+
+## 1.2.0-beta.7 (2023-12-08)
+
+### Bugs Fixed
+
+ - Add ApiVersion support for `ConfigurationAssignmentsRestClient` in `MockableMaintenanceResourceGroupResource` for issue #40511
+
+## 1.2.0-beta.6 (2023-11-29)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.2.0-beta.5 (2023-10-31)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-04' to 'package-preview-2023-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/13aec7f115c01ba6986ebf32488537392c0df6f5/specification/maintenance/resource-manager/readme.md
+
+## 1.2.0-beta.4 (2023-09-15)
+
+- Fix the string format of `StartOn` and `ExpireOn` in `MaintenanceConfigurationData` serialization.
+
+## 1.2.0-beta.3 (2023-09-05)
+
+### Bugs Fixed
+
+- Fix the missing `MaintenanceConfigurationData.InstallPatches` serialization issue.
+
+## 1.2.0-beta.2 (2023-07-24)
+
+### Features Added
+
+- Bump the api-version to `2023-04-01`.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.34.0.
+- Upgraded dependent Azure.ResourceManager to 1.7.0.
 
 ## 1.2.0-beta.1 (2023-05-30)
 

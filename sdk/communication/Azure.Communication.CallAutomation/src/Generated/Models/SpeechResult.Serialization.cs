@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,7 +17,7 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> speech = default;
+            string speech = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("speech"u8))
@@ -27,7 +26,15 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new SpeechResult(speech.Value);
+            return new SpeechResult(speech);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SpeechResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpeechResult(document.RootElement);
         }
     }
 }

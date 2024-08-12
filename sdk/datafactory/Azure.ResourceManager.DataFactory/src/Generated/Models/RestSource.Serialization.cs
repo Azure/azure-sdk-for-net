@@ -6,61 +6,51 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class RestSource : IUtf8JsonSerializable
+    public partial class RestSource : IUtf8JsonSerializable, IJsonModel<RestSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RestSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RestSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RestSource)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RequestMethod);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestMethod.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, RequestMethod);
             }
             if (Optional.IsDefined(RequestBody))
             {
                 writer.WritePropertyName("requestBody"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RequestBody);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestBody.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, RequestBody);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AdditionalHeaders);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalHeaders.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AdditionalHeaders);
             }
             if (Optional.IsDefined(PaginationRules))
             {
                 writer.WritePropertyName("paginationRules"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PaginationRules);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PaginationRules.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PaginationRules);
             }
             if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(HttpRequestTimeout);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(HttpRequestTimeout.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, HttpRequestTimeout);
             }
             if (Optional.IsDefined(RequestInterval))
             {
@@ -68,55 +58,38 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(RequestInterval);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RequestInterval.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(RequestInterval))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AdditionalColumns);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalColumns.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceRetryCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryCount.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SourceRetryWait);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SourceRetryWait.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxConcurrentConnections);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableMetricsCollection);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -124,30 +97,47 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static RestSource DeserializeRestSource(JsonElement element)
+        RestSource IJsonModel<RestSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RestSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RestSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRestSource(document.RootElement, options);
+        }
+
+        internal static RestSource DeserializeRestSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BinaryData> requestMethod = default;
-            Optional<BinaryData> requestBody = default;
-            Optional<BinaryData> additionalHeaders = default;
-            Optional<BinaryData> paginationRules = default;
-            Optional<BinaryData> httpRequestTimeout = default;
-            Optional<BinaryData> requestInterval = default;
-            Optional<BinaryData> additionalColumns = default;
+            DataFactoryElement<string> requestMethod = default;
+            DataFactoryElement<string> requestBody = default;
+            DataFactoryElement<string> additionalHeaders = default;
+            DataFactoryElement<string> paginationRules = default;
+            DataFactoryElement<string> httpRequestTimeout = default;
+            BinaryData requestInterval = default;
+            DataFactoryElement<IDictionary<string, string>> additionalColumns = default;
             string type = default;
-            Optional<BinaryData> sourceRetryCount = default;
-            Optional<BinaryData> sourceRetryWait = default;
-            Optional<BinaryData> maxConcurrentConnections = default;
-            Optional<BinaryData> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    requestMethod = BinaryData.FromString(property.Value.GetRawText());
+                    requestMethod = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("requestBody"u8))
@@ -167,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    requestBody = BinaryData.FromString(property.Value.GetRawText());
+                    requestBody = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("additionalHeaders"u8))
@@ -176,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    additionalHeaders = BinaryData.FromString(property.Value.GetRawText());
+                    additionalHeaders = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("paginationRules"u8))
@@ -185,7 +175,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    paginationRules = BinaryData.FromString(property.Value.GetRawText());
+                    paginationRules = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("httpRequestTimeout"u8))
@@ -194,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    httpRequestTimeout = BinaryData.FromString(property.Value.GetRawText());
+                    httpRequestTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("requestInterval"u8))
@@ -212,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    additionalColumns = BinaryData.FromString(property.Value.GetRawText());
+                    additionalColumns = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -226,7 +216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryCount = BinaryData.FromString(property.Value.GetRawText());
+                    sourceRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sourceRetryWait"u8))
@@ -235,7 +225,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceRetryWait = BinaryData.FromString(property.Value.GetRawText());
+                    sourceRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxConcurrentConnections"u8))
@@ -244,7 +234,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    maxConcurrentConnections = BinaryData.FromString(property.Value.GetRawText());
+                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("disableMetricsCollection"u8))
@@ -253,13 +243,57 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    disableMetricsCollection = BinaryData.FromString(property.Value.GetRawText());
+                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, requestMethod.Value, requestBody.Value, additionalHeaders.Value, paginationRules.Value, httpRequestTimeout.Value, requestInterval.Value, additionalColumns.Value);
+            return new RestSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                requestMethod,
+                requestBody,
+                additionalHeaders,
+                paginationRules,
+                httpRequestTimeout,
+                requestInterval,
+                additionalColumns);
         }
+
+        BinaryData IPersistableModel<RestSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RestSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RestSource IPersistableModel<RestSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RestSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRestSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RestSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RestSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

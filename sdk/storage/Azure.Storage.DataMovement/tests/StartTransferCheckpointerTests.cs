@@ -1,17 +1,17 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias DMBlobs;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.Models;
-using Azure.Storage.DataMovement.Models.JobPlan;
+using Azure.Storage.Blobs.Tests;
+using DMBlobs::Azure.Storage.DataMovement.Blobs;
+using Azure.Storage.DataMovement.JobPlan;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement.Tests
             DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             var containerName = GetNewContainerName();
             var sourceBlobName = GetNewBlobName();
-            await using DisposingBlobContainer test = await GetTestContainerAsync(containerName: containerName);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName);
 
             BlobBaseClient sourceBlob = await CreateBlockBlob(
                 containerClient: test.Container,
@@ -67,18 +67,18 @@ namespace Azure.Storage.DataMovement.Tests
                 .GetBlobContainerClient(containerName)
                 .GetBlockBlobClient(destinationBlobName));
 
-            StorageResource sourceResource = new BlockBlobStorageResource(sasSourceBlob);
-            StorageResource destinationResource = new BlockBlobStorageResource(sasDestinationBlob);
+            StorageResourceItem sourceResource = new BlockBlobStorageResource(sasSourceBlob);
+            StorageResourceItem destinationResource = new BlockBlobStorageResource(sasDestinationBlob);
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                CheckpointerOptions = new TransferCheckpointerOptions(disposingLocalDirectory.DirectoryPath)
+                CheckpointerOptions = new TransferCheckpointStoreOptions(disposingLocalDirectory.DirectoryPath)
             };
             TransferManager transferManager = new TransferManager(managerOptions);
 
-            TransferOptions transferOptions = new TransferOptions()
+            DataTransferOptions transferOptions = new DataTransferOptions()
             {
-                CreateMode = StorageResourceCreateMode.Fail
+                CreationPreference = StorageResourceCreationPreference.FailIfExists
             };
 
             // Start transfer and await for completion. This transfer will fail
@@ -90,7 +90,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Check the transfer files made and the source and destination
             JobPartPlanFileName checkpointerFileName = new JobPartPlanFileName(
@@ -109,180 +109,6 @@ namespace Azure.Storage.DataMovement.Tests
                 Assert.AreEqual(sourceBlob.Uri.AbsoluteUri, deserializedHeader.SourcePath);
                 Assert.AreEqual(destinationBlob.Uri.AbsoluteUri, deserializedHeader.DestinationPath);
             }
-        }
-
-        [RecordedTest]
-        public async Task CheckpointerMismatch_Source()
-        {
-            // Arrange
-            DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
-            var containerName = GetNewContainerName();
-            await using DisposingBlobContainer test = await GetTestContainerAsync(containerName: containerName);
-
-            // Create source
-            var sourceBlobName = GetNewBlobName();
-            BlockBlobClient sourceBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), sourceBlobName, Constants.KB * 4);
-
-            // Create Destination
-            string destinationBlobName = GetNewBlobName();
-            BlockBlobClient destinationBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), destinationBlobName, Constants.KB * 4);
-
-            StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
-
-            TransferManagerOptions managerOptions = new TransferManagerOptions()
-            {
-                CheckpointerOptions = new TransferCheckpointerOptions(disposingLocalDirectory.DirectoryPath)
-            };
-            TransferManager transferManager = new TransferManager(managerOptions);
-
-            TransferOptions transferOptions = new TransferOptions()
-            {
-                CreateMode = StorageResourceCreateMode.Fail
-            };
-
-            // Start transfer and await for completion.
-            DataTransfer transfer = await transferManager.StartTransferAsync(
-                sourceResource,
-                destinationResource,
-                transferOptions).ConfigureAwait(false);
-
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
-
-            // Act/Assert - resume transfer with wrong source resource.
-            BlockBlobClient newSourceBlob = test.Container.GetBlockBlobClient(GetNewBlobName());
-            StorageResource wrongSourceResource = new BlockBlobStorageResource(newSourceBlob);
-
-            TransferOptions resumeTransferOptions = new TransferOptions()
-            {
-                ResumeFromCheckpointId = transfer.Id
-            };
-
-            Assert.CatchAsync<ArgumentException>(
-                async () => await transferManager.StartTransferAsync(
-                    wrongSourceResource,
-                    destinationResource,
-                    resumeTransferOptions),
-                Errors.MismatchResumeTransferArguments(
-                    "SourcePath",
-                    sourceResource.Uri.AbsoluteUri,
-                    wrongSourceResource.Uri.AbsoluteUri).Message);
-        }
-
-        [RecordedTest]
-        public async Task CheckpointerMismatch_Destination()
-        {
-            // Arrange
-            DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
-            var containerName = GetNewContainerName();
-            await using DisposingBlobContainer test = await GetTestContainerAsync(containerName: containerName);
-
-            // Create source
-            var sourceBlobName = GetNewBlobName();
-            BlockBlobClient sourceBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), sourceBlobName, Constants.KB * 4);
-
-            // Create Destination
-            string destinationBlobName = GetNewBlobName();
-            BlockBlobClient destinationBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), destinationBlobName, Constants.KB * 4);
-
-            StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
-
-            TransferManagerOptions managerOptions = new TransferManagerOptions()
-            {
-                CheckpointerOptions = new TransferCheckpointerOptions(disposingLocalDirectory.DirectoryPath)
-            };
-            TransferManager transferManager = new TransferManager(managerOptions);
-
-            TransferOptions transferOptions = new TransferOptions()
-            {
-                CreateMode = StorageResourceCreateMode.Fail
-            };
-
-            // Start transfer and await for completion.
-            DataTransfer transfer = await transferManager.StartTransferAsync(
-                sourceResource,
-                destinationResource,
-                transferOptions).ConfigureAwait(false);
-
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
-
-            // Act/Assert - resume transfer with wrong destination resource.
-            BlockBlobClient newDestinationBlob = test.Container.GetBlockBlobClient(GetNewBlobName());
-            StorageResource wrongDestinationResource = new BlockBlobStorageResource(newDestinationBlob);
-
-            TransferOptions resumeTransferOptions = new TransferOptions()
-            {
-                ResumeFromCheckpointId = transfer.Id
-            };
-
-            Assert.CatchAsync<ArgumentException>(
-                async () => await transferManager.StartTransferAsync(
-                    sourceResource,
-                    wrongDestinationResource,
-                    resumeTransferOptions),
-                Errors.MismatchResumeTransferArguments(
-                    "DestinationPath",
-                    destinationResource.Uri.AbsoluteUri,
-                    wrongDestinationResource.Uri.AbsoluteUri).Message);
-        }
-
-        [RecordedTest]
-        public async Task CheckpointerMismatch_CreateMode_Overwrite()
-        {
-            // Arrange
-            DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
-            var containerName = GetNewContainerName();
-            await using DisposingBlobContainer test = await GetTestContainerAsync(containerName: containerName);
-
-            // Create source
-            var sourceBlobName = GetNewBlobName();
-            BlockBlobClient sourceBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), sourceBlobName, Constants.KB * 4);
-
-            // Create Destination
-            string destinationBlobName = GetNewBlobName();
-            BlockBlobClient destinationBlob = await CreateBlockBlob(test.Container, Path.GetTempFileName(), destinationBlobName, Constants.KB * 4);
-
-            StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
-            StorageResource destinationResource = new BlockBlobStorageResource(destinationBlob);
-
-            TransferManagerOptions managerOptions = new TransferManagerOptions()
-            {
-                CheckpointerOptions = new TransferCheckpointerOptions(disposingLocalDirectory.DirectoryPath)
-            };
-            TransferManager transferManager = new TransferManager(managerOptions);
-
-            TransferOptions transferOptions = new TransferOptions()
-            {
-                CreateMode = StorageResourceCreateMode.Fail
-            };
-
-            // Start transfer and await for completion.
-            DataTransfer transfer = await transferManager.StartTransferAsync(
-                sourceResource,
-                destinationResource,
-                transferOptions).ConfigureAwait(false);
-
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
-
-            // Act/Assert - resume transfer with wrong CreateMode Resource
-            TransferOptions resumeTransferOptions = new TransferOptions()
-            {
-                CreateMode = StorageResourceCreateMode.Overwrite,
-                ResumeFromCheckpointId = transfer.Id
-            };
-
-            Assert.CatchAsync<ArgumentException>(
-                async () => await transferManager.StartTransferAsync(
-                    sourceResource,
-                    destinationResource,
-                    resumeTransferOptions),
-                Errors.MismatchResumeCreateMode(
-                    false,
-                    StorageResourceCreateMode.Overwrite).Message);
         }
     }
 }

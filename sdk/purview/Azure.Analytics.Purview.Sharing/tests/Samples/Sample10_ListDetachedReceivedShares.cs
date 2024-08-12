@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
             var receivedSharesClient = GetReceivedSharesClient();
 #endif
 
-            List<BinaryData> createResponse = await receivedSharesClient.GetAllDetachedReceivedSharesAsync().ToEnumerableAsync();
+            List<BinaryData> createResponse = await receivedSharesClient.GetAllDetachedReceivedSharesAsync(null, null, new()).ToEnumerableAsync();
 
             #endregion
         }

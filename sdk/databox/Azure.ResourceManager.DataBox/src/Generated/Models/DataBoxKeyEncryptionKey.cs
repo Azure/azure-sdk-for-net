@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -13,24 +14,63 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Encryption key containing details about key to encrypt different keys. </summary>
     public partial class DataBoxKeyEncryptionKey
     {
-        /// <summary> Initializes a new instance of DataBoxKeyEncryptionKey. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxKeyEncryptionKey"/>. </summary>
         /// <param name="kekType"> Type of encryption key used for key encryption. </param>
         public DataBoxKeyEncryptionKey(DataBoxKeyEncryptionKeyType kekType)
         {
             KekType = kekType;
         }
 
-        /// <summary> Initializes a new instance of DataBoxKeyEncryptionKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxKeyEncryptionKey"/>. </summary>
         /// <param name="kekType"> Type of encryption key used for key encryption. </param>
         /// <param name="managedIdentity"> Managed identity properties used for key encryption. </param>
         /// <param name="kekUri"> Key encryption key. It is required in case of Customer managed KekType. </param>
         /// <param name="kekVaultResourceId"> Kek vault resource id. It is required in case of Customer managed KekType. </param>
-        internal DataBoxKeyEncryptionKey(DataBoxKeyEncryptionKeyType kekType, DataBoxManagedIdentity managedIdentity, Uri kekUri, ResourceIdentifier kekVaultResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxKeyEncryptionKey(DataBoxKeyEncryptionKeyType kekType, DataBoxManagedIdentity managedIdentity, Uri kekUri, ResourceIdentifier kekVaultResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KekType = kekType;
             ManagedIdentity = managedIdentity;
             KekUri = kekUri;
             KekVaultResourceId = kekVaultResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxKeyEncryptionKey"/> for deserialization. </summary>
+        internal DataBoxKeyEncryptionKey()
+        {
         }
 
         /// <summary> Type of encryption key used for key encryption. </summary>

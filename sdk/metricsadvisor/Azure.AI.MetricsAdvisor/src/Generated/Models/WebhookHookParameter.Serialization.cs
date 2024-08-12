@@ -59,11 +59,11 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             string endpoint = default;
-            Optional<string> username = default;
-            Optional<string> password = default;
-            Optional<IDictionary<string, string>> headers = default;
-            Optional<string> certificateKey = default;
-            Optional<string> certificatePassword = default;
+            string username = default;
+            string password = default;
+            IDictionary<string, string> headers = default;
+            string certificateKey = default;
+            string certificatePassword = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoint"u8))
@@ -106,7 +106,29 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new WebhookHookParameter(endpoint, username.Value, password.Value, Optional.ToDictionary(headers), certificateKey.Value, certificatePassword.Value);
+            return new WebhookHookParameter(
+                endpoint,
+                username,
+                password,
+                headers ?? new ChangeTrackingDictionary<string, string>(),
+                certificateKey,
+                certificatePassword);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebhookHookParameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebhookHookParameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

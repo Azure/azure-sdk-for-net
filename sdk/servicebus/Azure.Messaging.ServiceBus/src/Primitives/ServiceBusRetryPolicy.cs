@@ -222,11 +222,21 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 await Task.Delay(ServerBusyBaseSleepTime, cancellationToken).ConfigureAwait(false);
-                ResetServerBusy();
             }
             catch (OperationCanceledException)
             {
                 // ignored
+            }
+            catch (Exception ex)
+            {
+                // This is non-impactful to the operation; log as verbose and ignore.
+                Logger.RunOperationExceptionEncounteredVerbose(ex.ToString());
+            }
+            finally
+            {
+                // In the case of cancellation or another exception while
+                // waiting, we still want to reset the server busy state.
+                ResetServerBusy();
             }
         }
     }

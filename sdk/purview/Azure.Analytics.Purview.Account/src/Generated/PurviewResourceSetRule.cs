@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -63,7 +62,7 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='GetResourceSetRuleAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetResourceSetRuleAsync(RequestContext context = null)
+        public virtual async Task<Response> GetResourceSetRuleAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();
@@ -93,7 +92,7 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewResourceSetRule.xml" path="doc/members/member[@name='GetResourceSetRule(RequestContext)']/*" />
-        public virtual Response GetResourceSetRule(RequestContext context = null)
+        public virtual Response GetResourceSetRule(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewResourceSetRule.GetResourceSetRule");
             scope.Start();

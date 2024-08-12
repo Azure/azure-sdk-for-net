@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,102 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2024-07-26)
+
+### Features Added
+- Security enhancement feature snowflake support storage integration.
+- Support 'domain' Property In Dynamics Family.
+- Enable UAMI auth for Data Factory Sql Server connector.
+- Support managed identity for Data Factory Azure Table connector.
+
+### Bugs Fixed
+- Added missing continuation settings for execute dataflow activity.
+
+## 1.1.0 (2024-05-31)
+
+### Features Added
+
+- Added new app model properties for SQL Server family connectors for Data Factory and Synapse.
+- Added query property for Salesforce V2.
+- Added lakehouse table dataset schema property.
+- Added credential property in DynamicsCrm for new feature.
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Bugs Fixed
+- Fixed headers schema issue.
+- Corrected Swagger definitions for SPN, UAMI, and SAMI credentials.
+
+### Other Changes
+- Updated Python configuration.
+- Changed ScriptActivityScriptBlock type property to support parameterization.
+- Updated Swagger for ServiceNowV2 expression app model.
+- Removed redundant credential resources in the .NET SDK.
+- Removed UAMI and SAMI credentials since they will be resolved as ManagedIdentity.
+
+## 1.0.0 (2024-03-14)
+
+This release is the first stable release of the Data Factory Management client library.
+
+### Features Added
+
+- Improved Salesforce V2 properties.
+- Added ServiceNowV2 linkedService, dataSet.
+- Added GoogleBigQuery linkedService, dataSet.
+- Added PostgreSqlV2 linkedService, dataSet.
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Bugs Fixed
+
+- Fixed headers and schema definition.
+- Fixed DataFactoryResource.GetPipelineRuns cannot do pagination.
+
+## 1.0.0-beta.6 (2024-01-26)
+
+### Features Added
+
+  - Added warehouse linkedService, dataSet
+  - Added snowflake v2 linkedService, dataSet
+  - Added SalesforceV2 and SalesforceCloudServiceV2 linkedService, dataSet
+  - Update MySql & Mariadb LinkedService.json with new properties.
+
+### Bugs Fixed
+
+  - Fixed headers and schema definition bug for Azure Function activity and Web Activity.
+  - Added metadata Into StoreWriteSettings For Bug Fixed.
+
+## 1.0.0-beta.5 (2023-11-16)
+
+### Features Added
+
+- Upgraded API version.
+  - Added Some Properties on GoogleAds Connector.
+  - Added Support LakeHouse Connector In ADF.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+## 1.0.0-beta.4 (2023-09-26)
+
+### Features Added
+
+- Upgraded API version.
+
+### Bugs Fixed
+
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `SelfHostedIntegrationRuntimeStatus`.
+
+## 1.0.0-beta.3 (2023-08-02)
+
+### Features Added
+
+- Supported the new `DataFactoryElement<T>` expression type property.
+- Upgraded API version.
+
+### Other Changes
+
+- Upgraded Azure.Core to 1.34.0.
+- Upgraded Azure.ResourceManager to 1.7.0.
 
 ## 1.0.0-beta.2 (2022-08-29)
 

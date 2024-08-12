@@ -34,8 +34,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<MessageDirection> direction = default;
-            Optional<string> text = default;
+            MessageDirection? direction = default;
+            string text = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("direction"u8))
@@ -53,7 +53,23 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new MessageExample(Optional.ToNullable(direction), text.Value);
+            return new MessageExample(direction, text);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MessageExample FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMessageExample(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

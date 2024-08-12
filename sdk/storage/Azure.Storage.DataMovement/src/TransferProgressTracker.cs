@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -13,7 +12,6 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     internal class TransferProgressTracker
     {
-        private readonly IProgress<StorageTransferProgress> _progressHandler;
         private readonly ProgressHandlerOptions _options;
 
         private long _completedCount = 0;
@@ -24,10 +22,9 @@ namespace Azure.Storage.DataMovement
         private long _bytesTransferred = 0;
         private object _bytesTransferredLock = new();
 
-        public TransferProgressTracker(IProgress<StorageTransferProgress> progressHandler, ProgressHandlerOptions options)
+        public TransferProgressTracker(ProgressHandlerOptions options)
         {
-            _progressHandler = progressHandler;
-            _options = options ?? new ProgressHandlerOptions();
+            _options = options;
         }
 
         /// <summary>
@@ -37,7 +34,7 @@ namespace Azure.Storage.DataMovement
         {
             Interlocked.Decrement(ref _inProgressCount);
             Interlocked.Increment(ref _completedCount);
-            _progressHandler?.Report(GetTransferProgress());
+            _options?.ProgressHandler?.Report(GetTransferProgress());
         }
 
         /// <summary>
@@ -47,7 +44,7 @@ namespace Azure.Storage.DataMovement
         {
             Interlocked.Decrement(ref _inProgressCount);
             Interlocked.Increment(ref _skippedCount);
-            _progressHandler?.Report(GetTransferProgress());
+            _options?.ProgressHandler?.Report(GetTransferProgress());
         }
 
         /// <summary>
@@ -57,7 +54,7 @@ namespace Azure.Storage.DataMovement
         {
             Interlocked.Decrement(ref _inProgressCount);
             Interlocked.Increment(ref _failedCount);
-            _progressHandler?.Report(GetTransferProgress());
+            _options?.ProgressHandler?.Report(GetTransferProgress());
         }
 
         /// <summary>
@@ -67,7 +64,7 @@ namespace Azure.Storage.DataMovement
         {
             Interlocked.Decrement(ref _queuedCount);
             Interlocked.Increment(ref _inProgressCount);
-            _progressHandler?.Report(GetTransferProgress());
+            _options?.ProgressHandler?.Report(GetTransferProgress());
         }
 
         /// <summary>
@@ -76,7 +73,7 @@ namespace Azure.Storage.DataMovement
         public void IncrementQueuedFiles()
         {
             Interlocked.Increment(ref _queuedCount);
-            _progressHandler?.Report(GetTransferProgress());
+            _options?.ProgressHandler?.Report(GetTransferProgress());
         }
 
         /// <summary>
@@ -85,19 +82,22 @@ namespace Azure.Storage.DataMovement
         /// <param name="bytesTransferred"></param>
         public void IncrementBytesTransferred(long bytesTransferred)
         {
-            if (_options.TrackBytesTransferred)
+            if (_options != default)
             {
-                lock (_bytesTransferredLock)
+                if ((bool)(_options?.TrackBytesTransferred))
                 {
-                    _bytesTransferred += bytesTransferred;
-                    _progressHandler?.Report(GetTransferProgress());
+                    lock (_bytesTransferredLock)
+                    {
+                        _bytesTransferred += bytesTransferred;
+                        _options?.ProgressHandler?.Report(GetTransferProgress());
+                    }
                 }
             }
         }
 
-        private StorageTransferProgress GetTransferProgress()
+        private DataTransferProgress GetTransferProgress()
         {
-            return new StorageTransferProgress()
+            return new DataTransferProgress()
             {
                 CompletedCount = _completedCount,
                 SkippedCount = _skippedCount,

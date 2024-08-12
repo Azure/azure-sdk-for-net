@@ -15,11 +15,8 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FieldName))
-            {
-                writer.WritePropertyName("fieldName"u8);
-                writer.WriteStringValue(FieldName);
-            }
+            writer.WritePropertyName("fieldName"u8);
+            writer.WriteStringValue(FieldName);
             writer.WriteEndObject();
         }
 
@@ -29,7 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> fieldName = default;
+            string fieldName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fieldName"u8))
@@ -38,7 +35,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SemanticField(fieldName.Value);
+            return new SemanticField(fieldName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SemanticField FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSemanticField(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

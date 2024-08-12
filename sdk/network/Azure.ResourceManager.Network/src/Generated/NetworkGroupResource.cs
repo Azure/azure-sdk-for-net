@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a NetworkGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource" /> using the GetNetworkGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource"/> using the GetNetworkGroup method.
     /// </summary>
     public partial class NetworkGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
+        /// <param name="networkGroupName"> The networkGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string networkGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/networkGroups/{networkGroupName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Network
         private readonly NetworkGroupsRestOperations _networkGroupRestClient;
         private readonly NetworkGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/networkGroups";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkGroupResource"/> class for mocking. </summary>
         protected NetworkGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkGroupResource(ArmClient client, NetworkGroupData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/networkGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkGroupStaticMemberResources and their operations over a NetworkGroupStaticMemberResource. </returns>
         public virtual NetworkGroupStaticMemberCollection GetNetworkGroupStaticMembers()
         {
-            return GetCachedClient(Client => new NetworkGroupStaticMemberCollection(Client, Id));
+            return GetCachedClient(client => new NetworkGroupStaticMemberCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +106,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>StaticMembers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkGroupStaticMemberResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="staticMemberName"> The name of the static member. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkGroupStaticMemberResource>> GetNetworkGroupStaticMemberAsync(string staticMemberName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +137,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>StaticMembers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkGroupStaticMemberResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="staticMemberName"> The name of the static member. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="staticMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="staticMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkGroupStaticMemberResource> GetNetworkGroupStaticMember(string staticMemberName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +167,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +208,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -213,6 +247,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkGroups_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -249,6 +291,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkGroups_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -284,6 +334,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkGroups_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -300,7 +358,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = await _networkGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<NetworkGroupResource>(Response.FromValue(new NetworkGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _networkGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<NetworkGroupResource>(Response.FromValue(new NetworkGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -323,6 +383,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkGroups_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -339,7 +407,9 @@ namespace Azure.ResourceManager.Network
             try
             {
                 var response = _networkGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new NetworkArmOperation<NetworkGroupResource>(Response.FromValue(new NetworkGroupResource(Client, response), response.GetRawResponse()));
+                var uri = _networkGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new NetworkArmOperation<NetworkGroupResource>(Response.FromValue(new NetworkGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

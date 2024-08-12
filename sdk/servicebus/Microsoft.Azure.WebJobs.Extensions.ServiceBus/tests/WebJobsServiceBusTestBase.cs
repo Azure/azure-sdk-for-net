@@ -14,6 +14,7 @@ using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -98,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             SecondaryNamespaceQueueScope = await CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: _isSession,
-                overrideNamespace: ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespace,
+                useSecondaryNamespace: true,
                 lockDuration: TimeSpan.FromSeconds(15));
             _topicSubscriptionCalled1 = new ManualResetEvent(initialState: false);
             _topicSubscriptionCalled2 = new ManualResetEvent(initialState: false);
@@ -334,7 +335,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 QueueRuntimeProperties properties = await client.GetQueueRuntimePropertiesAsync(FirstQueueScope.QueueName, CancellationToken.None);
-                Assert.AreEqual(ExpectedRemainingMessages, properties.TotalMessageCount);
+                Assert.AreEqual(ExpectedRemainingMessages, properties.ActiveMessageCount);
             }
 
             private static bool IsError(LogMessage logMessage)
@@ -351,7 +352,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
                 // if the formatted message is not null and it contains "ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException"
                 // then it's an expected exception
-                if (logMessage.FormattedMessage != null && logMessage.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException"))
+                if (logMessage.FormattedMessage != null &&
+                    (logMessage.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException") ||
+                     // this condition can be removed when https://github.com/Azure/azure-sdk-for-net/issues/37713 is fixed
+                     logMessage.FormattedMessage.Contains("Put token failed. status-code: 404, status-description: The messaging entity")))
                 {
                     return false;
                 }

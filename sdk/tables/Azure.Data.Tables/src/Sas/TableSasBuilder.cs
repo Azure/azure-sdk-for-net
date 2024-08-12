@@ -39,11 +39,27 @@ namespace Azure.Data.Tables.Sas
         public TableSasBuilder(string tableName, string rawPermissions, DateTimeOffset expiresOn)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(rawPermissions, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(rawPermissions, nameof(rawPermissions));
 
             TableName = tableName;
             ExpiresOn = expiresOn;
             Permissions = rawPermissions.ToLowerInvariant();
+        }
+
+        /// <summary>
+        /// Initializes an instance of a <see cref="TableSasBuilder"/>.
+        /// </summary>
+        /// <param name="tableName">The name of the table being made accessible with the shared access signature.</param>
+        /// <param name="identifier">The identifier of the stored access policy that defines the permissions and, optionally, expiry of the shared access signature.
+        /// Note: Either the stored access policy specified by the <paramref name="identifier"/> or the created shared access signature must define an expiry.
+        /// If neither define an expiry or both do, authentication will fail.</param>
+        public TableSasBuilder(string tableName, string identifier)
+        {
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(identifier, nameof(identifier));
+
+            TableName = tableName;
+            Identifier = identifier;
         }
 
         /// <summary>
@@ -142,7 +158,7 @@ namespace Azure.Data.Tables.Sas
         public string PartitionKeyEnd { get; set; }
 
         /// <summary>
-        /// The optional end of the partition key values range being made available.
+        /// The optional end of the row key values range being made available.
         /// <see cref="RowKeyStart"/> must be specified if this value is set.
         /// </summary>
         public string RowKeyEnd { get; set; }
@@ -185,6 +201,7 @@ namespace Azure.Data.Tables.Sas
         /// <returns>
         /// An instance of <see cref="TableSasQueryParameters"/>.
         /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public TableSasQueryParameters ToSasQueryParameters(TableSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
@@ -239,6 +256,7 @@ namespace Azure.Data.Tables.Sas
         /// <returns>
         /// A URL encoded query string representing the SAS.
         /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public string Sign(TableSharedKeyCredential sharedKeyCredential) =>
             ToSasQueryParameters(sharedKeyCredential).ToString();
 

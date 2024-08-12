@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The scanning mode for the vm scan. </summary>
+    /// <summary> The scanning mode for the VM scan. </summary>
     public readonly partial struct DefenderForServersScanningMode : IEquatable<DefenderForServersScanningMode>
     {
         private readonly string _value;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

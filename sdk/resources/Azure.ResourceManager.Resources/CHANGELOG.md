@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.9.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,48 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.8.0 (2024-07-04)
+
+### Features Added
+
+- Added `DeploymentStack` support.
+
+## 1.7.3 (2024-05-07)
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.7.2 (2024-04-29)
+
+### Features Added
+
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+## 1.7.1 (2024-03-23)
+
+### Features Added
+
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added experimental Bicep serialization.
+
+## 1.7.0 (2023-11-16)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.35.0 to 1.36.0
+- Upgraded Azure.ResourceManager from 1.6.0 to 1.9.0
+
+## 1.7.0-beta.1 (2023-08-14)
+
+### Features Added
+
+- Make `ResourcesArmClientMockingExtension`, `ResourcesManagementGroupMockingExtension`, `ResourcesResourceGroupMockingExtension`, `ResourcesSubscriptionMockingExtension` and `ResourcesTenantMockingExtension` public for mocking the extension methods.
 
 ## 1.6.0 (2023-05-31)
 

@@ -6,28 +6,39 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Scanning.Samples
 {
-    public class Samples_PurviewScanClient
+    public partial class Samples_PurviewScanClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetFilter()
+        public void Example_GetFilter_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.GetFilter();
+            Response response = client.GetFilter(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetFilter_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = await client.GetFilterAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -37,11 +48,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetFilter_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.GetFilter();
+            Response response = client.GetFilter(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -52,13 +63,31 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetFilter_Async()
+        public async Task Example_GetFilter_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.GetFilterAsync();
+            Response response = await client.GetFilterAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateOrUpdateFilter_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            using RequestContent content = null;
+            Response response = client.CreateOrUpdateFilter(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -66,32 +95,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetFilter_AllParameters_Async()
+        public async Task Example_CreateOrUpdateFilter_ShortVersion_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.GetFilterAsync();
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateFilter()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-            var data = new { };
-
-            Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
+            using RequestContent content = null;
+            Response response = await client.CreateOrUpdateFilterAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -101,70 +112,56 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateFilter_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
-                    excludeUriPrefixes = new[] {
-            "<String>"
-        },
-                    includeUriPrefixes = new[] {
-            "<String>"
-        },
+                    excludeUriPrefixes = new object[]
+            {
+"<excludeUriPrefixes>"
+            },
+                    includeUriPrefixes = new object[]
+            {
+"<includeUriPrefixes>"
+            },
                 },
-            };
-
-            Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
+            });
+            Response response = client.CreateOrUpdateFilter(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateFilter_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-            var data = new { };
-
-            Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdateFilter_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
-                    excludeUriPrefixes = new[] {
-            "<String>"
-        },
-                    includeUriPrefixes = new[] {
-            "<String>"
-        },
+                    excludeUriPrefixes = new object[]
+            {
+"<excludeUriPrefixes>"
+            },
+                    includeUriPrefixes = new object[]
+            {
+"<includeUriPrefixes>"
+            },
                 },
-            };
-
-            Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
+            });
+            Response response = await client.CreateOrUpdateFilterAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -175,33 +172,49 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public void Example_CreateOrUpdate_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 kind = "AzureSubscriptionCredential",
-            };
-
-            Response response = client.CreateOrUpdate(RequestContent.Create(data));
+            });
+            Response response = client.CreateOrUpdate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "AzureSubscriptionCredential",
+            });
+            Response response = await client.CreateOrUpdateAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdate_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -213,146 +226,24 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                             scanRulesetType = "Custom",
                             resourceNameFilter = new
                             {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
+                                excludePrefixes = new object[]
+            {
+"<excludePrefixes>"
+            },
+                                includePrefixes = new object[]
+            {
+"<includePrefixes>"
+            },
+                                resources = new object[]
+            {
+"<resources>"
+            },
                             },
                             credential = new
                             {
                                 referenceName = "<referenceName>",
                                 credentialType = "AccountKey",
                             },
-                        },
-                        AzureSubscription = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureResourceGroup = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureSynapseWorkspace = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureSynapse = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AdlsGen1 = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AdlsGen2 = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AmazonAccount = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AmazonS3 = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AmazonSql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureCosmosDb = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureDataExplorer = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureFileService = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureSqlDatabase = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AmazonPostgreSql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzurePostgreSql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        SqlServerDatabase = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureSqlDatabaseManagedInstance = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureSqlDataWarehouse = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureMySql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureStorage = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        Teradata = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        Oracle = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        SapS4Hana = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        SapEcc = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        PowerBI = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
                         },
                     },
                     credential = new
@@ -373,9 +264,8 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                     },
                 },
                 kind = "AzureSubscriptionCredential",
-            };
-
-            Response response = client.CreateOrUpdate(RequestContent.Create(data));
+            });
+            Response response = client.CreateOrUpdate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -387,7 +277,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -406,37 +296,17 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-            var data = new
-            {
-                kind = "AzureSubscriptionCredential",
-            };
-
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateOrUpdate_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -448,146 +318,24 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                             scanRulesetType = "Custom",
                             resourceNameFilter = new
                             {
-                                excludePrefixes = new[] {
-                        "<String>"
-                    },
-                                includePrefixes = new[] {
-                        "<String>"
-                    },
-                                resources = new[] {
-                        "<String>"
-                    },
+                                excludePrefixes = new object[]
+            {
+"<excludePrefixes>"
+            },
+                                includePrefixes = new object[]
+            {
+"<includePrefixes>"
+            },
+                                resources = new object[]
+            {
+"<resources>"
+            },
                             },
                             credential = new
                             {
                                 referenceName = "<referenceName>",
                                 credentialType = "AccountKey",
                             },
-                        },
-                        AzureSubscription = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureResourceGroup = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureSynapseWorkspace = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureSynapse = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AdlsGen1 = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AdlsGen2 = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AmazonAccount = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AmazonS3 = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AmazonSql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureCosmosDb = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureDataExplorer = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureFileService = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureSqlDatabase = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AmazonPostgreSql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzurePostgreSql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        SqlServerDatabase = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureSqlDatabaseManagedInstance = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureSqlDataWarehouse = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureMySql = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        AzureStorage = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        Teradata = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        Oracle = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        SapS4Hana = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        SapEcc = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
-                        },
-                        PowerBI = new
-                        {
-                            scanRulesetName = "<scanRulesetName>",
-                            scanRulesetType = "Custom",
                         },
                     },
                     credential = new
@@ -608,9 +356,8 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                     },
                 },
                 kind = "AzureSubscriptionCredential",
-            };
-
-            Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+            });
+            Response response = await client.CreateOrUpdateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -622,7 +369,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -645,28 +392,41 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProperties()
+        public void Example_GetProperties_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.GetProperties();
+            Response response = client.GetProperties(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetProperties_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = await client.GetPropertiesAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_GetProperties_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.GetProperties();
+            Response response = client.GetProperties(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -678,7 +438,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -697,32 +457,17 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProperties_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-            Response response = await client.GetPropertiesAsync();
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetProperties_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.GetPropertiesAsync();
+            Response response = await client.GetPropertiesAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -734,7 +479,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -757,28 +502,41 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.Delete();
+            Response response = client.Delete(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Delete_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = await client.DeleteAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public void Example_Delete_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.Delete();
+            Response response = client.Delete(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -790,7 +548,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -809,32 +567,17 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-            Response response = await client.DeleteAsync();
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Delete_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.DeleteAsync();
+            Response response = await client.DeleteAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -846,7 +589,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
             Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
@@ -869,13 +612,27 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RunScan()
+        public void Example_RunScan_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.RunScan("<runId>");
+            Response response = client.RunScan("<runId>", null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_RunScan_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = await client.RunScanAsync("<runId>", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -885,11 +642,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_RunScan_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.RunScan("<runId>", "<scanLevel>");
+            Response response = client.RunScan("<runId>", "Full", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -906,13 +663,36 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RunScan_Async()
+        public async Task Example_RunScan_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.RunScanAsync("<runId>");
+            Response response = await client.RunScanAsync("<runId>", "Full", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("scanResultId").ToString());
+            Console.WriteLine(result.GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CancelScan_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = client.CancelScan("<runId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -920,36 +700,13 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RunScan_AllParameters_Async()
+        public async Task Example_CancelScan_ShortVersion_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.RunScanAsync("<runId>", "<scanLevel>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("scanResultId").ToString());
-            Console.WriteLine(result.GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_CancelScan()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-            Response response = client.CancelScan("<runId>");
+            Response response = await client.CancelScanAsync("<runId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -959,11 +716,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CancelScan_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.CancelScan("<runId>");
+            Response response = client.CancelScan("<runId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -980,13 +737,36 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CancelScan_Async()
+        public async Task Example_CancelScan_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.CancelScanAsync("<runId>");
+            Response response = await client.CancelScanAsync("<runId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("scanResultId").ToString());
+            Console.WriteLine(result.GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_GetTrigger_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = client.GetTrigger(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -994,36 +774,13 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CancelScan_AllParameters_Async()
+        public async Task Example_GetTrigger_ShortVersion_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.CancelScanAsync("<runId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("scanResultId").ToString());
-            Console.WriteLine(result.GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
-            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetTrigger()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-            Response response = client.GetTrigger();
+            Response response = await client.GetTriggerAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1033,23 +790,23 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetTrigger_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.GetTrigger();
+            Response response = client.GetTrigger(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
@@ -1065,13 +822,48 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrigger_Async()
+        public async Task Example_GetTrigger_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.GetTriggerAsync();
+            Response response = await client.GetTriggerAsync(null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_CreateOrUpdateTrigger_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = client.CreateOrUpdateTrigger(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1079,49 +871,14 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetTrigger_AllParameters_Async()
+        public async Task Example_CreateOrUpdateTrigger_ShortVersion_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.GetTriggerAsync();
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateTrigger()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-            var data = new { };
-
-            Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
+            using RequestContent content = RequestContent.Create(new object());
+            Response response = await client.CreateOrUpdateTriggerAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1131,11 +888,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateOrUpdateTrigger_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -1149,29 +906,36 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                         {
                             additionalProperties = new
                             {
-                                key = new { },
+                                key = new object(),
                             },
-                            minutes = new[] {
-                    1234
-                },
-                            hours = new[] {
-                    1234
-                },
-                            weekDays = new[] {
-                    "Sunday"
-                },
-                            monthDays = new[] {
-                    1234
-                },
-                            monthlyOccurrences = new[] {
-                    new {
-                        additionalProperties = new {
-                            key = new {},
-                        },
-                        day = "Sunday",
-                        occurrence = 1234,
-                    }
-                },
+                            minutes = new object[]
+            {
+1234
+            },
+                            hours = new object[]
+            {
+1234
+            },
+                            weekDays = new object[]
+            {
+"Sunday"
+            },
+                            monthDays = new object[]
+            {
+1234
+            },
+                            monthlyOccurrences = new object[]
+            {
+new
+{
+additionalProperties = new
+{
+key = new object(),
+},
+day = "Sunday",
+occurrence = 1234,
+}
+            },
                         },
                         timeZone = "<timeZone>",
                     },
@@ -1179,21 +943,20 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                     scanLevel = "Full",
                     incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
                 },
-            };
-
-            Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
+            });
+            Response response = client.CreateOrUpdateTrigger(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
@@ -1209,15 +972,99 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateTrigger_Async()
+        public async Task Example_CreateOrUpdateTrigger_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new { };
+            using RequestContent content = RequestContent.Create(new
+            {
+                properties = new
+                {
+                    recurrence = new
+                    {
+                        frequency = "Week",
+                        interval = 1234,
+                        startTime = "2022-05-10T18:57:31.2311892Z",
+                        endTime = "2022-05-10T18:57:31.2311892Z",
+                        schedule = new
+                        {
+                            additionalProperties = new
+                            {
+                                key = new object(),
+                            },
+                            minutes = new object[]
+            {
+1234
+            },
+                            hours = new object[]
+            {
+1234
+            },
+                            weekDays = new object[]
+            {
+"Sunday"
+            },
+                            monthDays = new object[]
+            {
+1234
+            },
+                            monthlyOccurrences = new object[]
+            {
+new
+{
+additionalProperties = new
+{
+key = new object(),
+},
+day = "Sunday",
+occurrence = 1234,
+}
+            },
+                        },
+                        timeZone = "<timeZone>",
+                    },
+                    recurrenceInterval = "<recurrenceInterval>",
+                    scanLevel = "Full",
+                    incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
+                },
+            });
+            Response response = await client.CreateOrUpdateTriggerAsync(content);
 
-            Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<key>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+            Console.WriteLine(result.GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("name").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DeleteTrigger_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            Response response = client.DeleteTrigger(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1225,93 +1072,13 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateTrigger_AllParameters_Async()
+        public async Task Example_DeleteTrigger_ShortVersion_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            var data = new
-            {
-                properties = new
-                {
-                    recurrence = new
-                    {
-                        frequency = "Week",
-                        interval = 1234,
-                        startTime = "2022-05-10T18:57:31.2311892Z",
-                        endTime = "2022-05-10T18:57:31.2311892Z",
-                        schedule = new
-                        {
-                            additionalProperties = new
-                            {
-                                key = new { },
-                            },
-                            minutes = new[] {
-                    1234
-                },
-                            hours = new[] {
-                    1234
-                },
-                            weekDays = new[] {
-                    "Sunday"
-                },
-                            monthDays = new[] {
-                    1234
-                },
-                            monthlyOccurrences = new[] {
-                    new {
-                        additionalProperties = new {
-                            key = new {},
-                        },
-                        day = "Sunday",
-                        occurrence = 1234,
-                    }
-                },
-                        },
-                        timeZone = "<timeZone>",
-                    },
-                    recurrenceInterval = "<recurrenceInterval>",
-                    scanLevel = "Full",
-                    incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
-                },
-            };
-
-            Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
-            Console.WriteLine(result.GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteTrigger()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-            Response response = client.DeleteTrigger();
+            Response response = await client.DeleteTriggerAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1321,23 +1088,23 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_DeleteTrigger_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = client.DeleteTrigger();
+            Response response = client.DeleteTrigger(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
@@ -1349,43 +1116,29 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
             Console.WriteLine(result.GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteTrigger_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-            Response response = await client.DeleteTriggerAsync();
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_DeleteTrigger_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            Response response = await client.DeleteTriggerAsync();
+            Response response = await client.DeleteTriggerAsync(null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
             Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
@@ -1401,13 +1154,28 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetRuns()
+        public void Example_GetRuns_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            foreach (var item in client.GetRuns())
+            foreach (BinaryData item in client.GetRuns(null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetRuns_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
+
+            await foreach (BinaryData item in client.GetRunsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.ToString());
@@ -1418,11 +1186,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetRuns_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            foreach (var item in client.GetRuns())
+            foreach (BinaryData item in client.GetRuns(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("parentId").ToString());
@@ -1433,7 +1201,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 Console.WriteLine(result.GetProperty("assetsClassified").ToString());
                 Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
                 Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("startTime").ToString());
                 Console.WriteLine(result.GetProperty("queuedTime").ToString());
                 Console.WriteLine(result.GetProperty("pipelineStartTime").ToString());
@@ -1455,28 +1223,13 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetRuns_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
-
-            await foreach (var item in client.GetRunsAsync())
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetRuns_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            PurviewScanClient client = new PurviewScanClient(endpoint, "<DataSourceName>", "<ScanName>", credential);
 
-            await foreach (var item in client.GetRunsAsync())
+            await foreach (BinaryData item in client.GetRunsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("parentId").ToString());
@@ -1487,7 +1240,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 Console.WriteLine(result.GetProperty("assetsClassified").ToString());
                 Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
                 Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
-                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+                Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<key>").ToString());
                 Console.WriteLine(result.GetProperty("startTime").ToString());
                 Console.WriteLine(result.GetProperty("queuedTime").ToString());
                 Console.WriteLine(result.GetProperty("pipelineStartTime").ToString());

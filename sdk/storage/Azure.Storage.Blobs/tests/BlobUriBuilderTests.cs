@@ -287,19 +287,15 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             var content = BinaryData.FromString("Hello world!");
-            try
+
+            using (assertPolicy.CheckRequestScope())
             {
-                assertPolicy.CheckRequest = true;
                 // any request with each of these clients
                 await blob.UploadAsync(content);
                 await blockBlob.StageBlockAsync(Convert.ToBase64String(Encoding.UTF8.GetBytes("foo")), content.ToStream());
                 await pageBlob.CreateIfNotExistsAsync(Constants.KB);
                 await appendBlob.CreateIfNotExistsAsync();
                 await blobBase.ExistsAsync();
-            }
-            finally
-            {
-                assertPolicy.CheckRequest = false;
             }
 
             // assertions in pipeline

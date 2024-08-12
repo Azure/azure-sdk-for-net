@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
@@ -33,8 +32,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-02-01";
+            _apiVersion = apiVersion ?? "2023-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, RecoveryPointsRecommendedForMoveContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(vaultName, true);
+            uri.AppendPath("/backupFabrics/", false);
+            uri.AppendPath(fabricName, true);
+            uri.AppendPath("/protectionContainers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/protectedItems/", false);
+            uri.AppendPath(protectedItemName, true);
+            uri.AppendPath("/recoveryPointsRecommendedForMove", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, RecoveryPointsRecommendedForMoveContent content)
@@ -62,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -72,9 +92,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> The String to use. </param>
-        /// <param name="containerName"> The String to use. </param>
-        /// <param name="protectedItemName"> The String to use. </param>
+        /// <param name="fabricName"> The <see cref="string"/> to use. </param>
+        /// <param name="containerName"> The <see cref="string"/> to use. </param>
+        /// <param name="protectedItemName"> The <see cref="string"/> to use. </param>
         /// <param name="content"> List Recovery points Recommended for Move Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="content"/> is null. </exception>
@@ -109,9 +129,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> The String to use. </param>
-        /// <param name="containerName"> The String to use. </param>
-        /// <param name="protectedItemName"> The String to use. </param>
+        /// <param name="fabricName"> The <see cref="string"/> to use. </param>
+        /// <param name="containerName"> The <see cref="string"/> to use. </param>
+        /// <param name="protectedItemName"> The <see cref="string"/> to use. </param>
         /// <param name="content"> List Recovery points Recommended for Move Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="content"/> is null. </exception>
@@ -142,6 +162,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, RecoveryPointsRecommendedForMoveContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName, RecoveryPointsRecommendedForMoveContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -161,9 +189,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> The String to use. </param>
-        /// <param name="containerName"> The String to use. </param>
-        /// <param name="protectedItemName"> The String to use. </param>
+        /// <param name="fabricName"> The <see cref="string"/> to use. </param>
+        /// <param name="containerName"> The <see cref="string"/> to use. </param>
+        /// <param name="protectedItemName"> The <see cref="string"/> to use. </param>
         /// <param name="content"> List Recovery points Recommended for Move Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="content"/> is null. </exception>
@@ -200,9 +228,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="subscriptionId"> The subscription Id. </param>
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> The String to use. </param>
-        /// <param name="containerName"> The String to use. </param>
-        /// <param name="protectedItemName"> The String to use. </param>
+        /// <param name="fabricName"> The <see cref="string"/> to use. </param>
+        /// <param name="containerName"> The <see cref="string"/> to use. </param>
+        /// <param name="protectedItemName"> The <see cref="string"/> to use. </param>
         /// <param name="content"> List Recovery points Recommended for Move Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="fabricName"/>, <paramref name="containerName"/>, <paramref name="protectedItemName"/> or <paramref name="content"/> is null. </exception>

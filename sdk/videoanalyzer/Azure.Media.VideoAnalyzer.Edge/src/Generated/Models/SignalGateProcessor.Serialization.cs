@@ -56,10 +56,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> activationEvaluationWindow = default;
-            Optional<string> activationSignalOffset = default;
-            Optional<string> minimumActivationTime = default;
-            Optional<string> maximumActivationTime = default;
+            string activationEvaluationWindow = default;
+            string activationSignalOffset = default;
+            string minimumActivationTime = default;
+            string maximumActivationTime = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -106,7 +106,30 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SignalGateProcessor(type, name, inputs, activationEvaluationWindow.Value, activationSignalOffset.Value, minimumActivationTime.Value, maximumActivationTime.Value);
+            return new SignalGateProcessor(
+                type,
+                name,
+                inputs,
+                activationEvaluationWindow,
+                activationSignalOffset,
+                minimumActivationTime,
+                maximumActivationTime);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SignalGateProcessor FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSignalGateProcessor(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

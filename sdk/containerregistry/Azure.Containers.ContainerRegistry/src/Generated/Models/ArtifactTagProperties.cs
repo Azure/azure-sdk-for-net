@@ -6,28 +6,21 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Tag attributes. </summary>
     public partial class ArtifactTagProperties
     {
-        /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactTagProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="registryLoginServer"/>, <paramref name="repositoryName"/>, <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
         internal ArtifactTagProperties(string registryLoginServer, string repositoryName, string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
-            Argument.AssertNotNull(registryLoginServer, nameof(registryLoginServer));
-            Argument.AssertNotNull(repositoryName, nameof(repositoryName));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(digest, nameof(digest));
-
             RegistryLoginServer = registryLoginServer;
             RepositoryName = repositoryName;
             Name = name;
@@ -36,7 +29,7 @@ namespace Azure.Containers.ContainerRegistry
             LastUpdatedOn = lastUpdatedOn;
         }
 
-        /// <summary> Initializes a new instance of ArtifactTagProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactTagProperties"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repositoryName"> Image name. </param>
         /// <param name="name"> Tag name. </param>

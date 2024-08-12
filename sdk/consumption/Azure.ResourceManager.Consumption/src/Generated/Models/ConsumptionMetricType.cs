@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The ConsumptionMetricType.
-    /// Serialized Name: Metrictype
-    /// </summary>
+    /// <summary> The ConsumptionMetricType. </summary>
     public readonly partial struct ConsumptionMetricType : IEquatable<ConsumptionMetricType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string AmortizedCostMetricTypeValue = "amortizedcost";
         private const string UsageMetricTypeValue = "usage";
 
-        /// <summary>
-        /// Actual cost data.
-        /// Serialized Name: Metrictype.actualcost
-        /// </summary>
+        /// <summary> Actual cost data. </summary>
         public static ConsumptionMetricType ActualCostMetricType { get; } = new ConsumptionMetricType(ActualCostMetricTypeValue);
-        /// <summary>
-        /// Amortized cost data.
-        /// Serialized Name: Metrictype.amortizedcost
-        /// </summary>
+        /// <summary> Amortized cost data. </summary>
         public static ConsumptionMetricType AmortizedCostMetricType { get; } = new ConsumptionMetricType(AmortizedCostMetricTypeValue);
-        /// <summary>
-        /// Usage data.
-        /// Serialized Name: Metrictype.usage
-        /// </summary>
+        /// <summary> Usage data. </summary>
         public static ConsumptionMetricType UsageMetricType { get; } = new ConsumptionMetricType(UsageMetricTypeValue);
         /// <summary> Determines if two <see cref="ConsumptionMetricType"/> values are the same. </summary>
         public static bool operator ==(ConsumptionMetricType left, ConsumptionMetricType right) => left.Equals(right);
@@ -59,7 +47,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

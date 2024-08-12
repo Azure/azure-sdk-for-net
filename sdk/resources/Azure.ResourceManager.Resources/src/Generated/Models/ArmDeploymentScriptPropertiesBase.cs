@@ -6,15 +6,67 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Common properties for the deployment script. </summary>
     internal partial class ArmDeploymentScriptPropertiesBase
     {
-        /// <summary> Initializes a new instance of ArmDeploymentScriptPropertiesBase. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptPropertiesBase"/>. </summary>
         internal ArmDeploymentScriptPropertiesBase()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptPropertiesBase"/>. </summary>
+        /// <param name="containerSettings"> Container settings. </param>
+        /// <param name="storageAccountSettings"> Storage Account settings. </param>
+        /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </param>
+        /// <param name="provisioningState"> State of the script execution. This only appears in the response. </param>
+        /// <param name="status"> Contains the results of script execution. </param>
+        /// <param name="outputs"> List of script outputs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmDeploymentScriptPropertiesBase(ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ContainerSettings = containerSettings;
+            StorageAccountSettings = storageAccountSettings;
+            CleanupPreference = cleanupPreference;
+            ProvisioningState = provisioningState;
+            Status = status;
+            Outputs = outputs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Container settings. </summary>
@@ -34,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

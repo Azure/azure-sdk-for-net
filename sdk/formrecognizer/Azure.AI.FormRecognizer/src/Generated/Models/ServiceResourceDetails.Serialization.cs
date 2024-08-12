@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -19,7 +18,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             CustomDocumentModelsDetails customDocumentModels = default;
-            Optional<QuotaDetails> customNeuralDocumentModelBuilds = default;
+            ResourceQuotaDetails customNeuralDocumentModelBuilds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDocumentModels"u8))
@@ -33,11 +32,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    customNeuralDocumentModelBuilds = QuotaDetails.DeserializeQuotaDetails(property.Value);
+                    customNeuralDocumentModelBuilds = ResourceQuotaDetails.DeserializeResourceQuotaDetails(property.Value);
                     continue;
                 }
             }
-            return new ServiceResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds.Value);
+            return new ServiceResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ServiceResourceDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeServiceResourceDetails(document.RootElement);
         }
     }
 }

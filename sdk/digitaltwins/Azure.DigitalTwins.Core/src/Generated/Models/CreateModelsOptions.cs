@@ -10,9 +10,18 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class CreateModelsOptions
     {
-        /// <summary> Initializes a new instance of CreateModelsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateModelsOptions"/>. </summary>
         public CreateModelsOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateModelsOptions"/>. </summary>
+        /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        internal CreateModelsOptions(string traceParent, string traceState)
+        {
+            TraceParent = traceParent;
+            TraceState = traceState;
         }
     }
 }

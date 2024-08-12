@@ -6,23 +6,33 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureMLServiceLinkedService : IUtf8JsonSerializable
+    public partial class AzureMLServiceLinkedService : IUtf8JsonSerializable, IJsonModel<AzureMLServiceLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMLServiceLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzureMLServiceLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureMLServiceLinkedService)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -36,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -54,7 +64,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -62,54 +75,35 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("subscriptionId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SubscriptionId);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(SubscriptionId.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, SubscriptionId);
             writer.WritePropertyName("resourceGroupName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ResourceGroupName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(ResourceGroupName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, ResourceGroupName);
             writer.WritePropertyName("mlWorkspaceName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MlWorkspaceName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(MlWorkspaceName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, MLWorkspaceName);
+            if (Optional.IsDefined(Authentication))
+            {
+                writer.WritePropertyName("authentication"u8);
+                JsonSerializer.Serialize(writer, Authentication);
+            }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ServicePrincipalId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServicePrincipalId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ServicePrincipalId);
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue(ServicePrincipalKey);
+                JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Tenant);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Tenant.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Tenant);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -118,30 +112,48 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static AzureMLServiceLinkedService DeserializeAzureMLServiceLinkedService(JsonElement element)
+        AzureMLServiceLinkedService IJsonModel<AzureMLServiceLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureMLServiceLinkedService)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureMLServiceLinkedService(document.RootElement, options);
+        }
+
+        internal static AzureMLServiceLinkedService DeserializeAzureMLServiceLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            BinaryData subscriptionId = default;
-            BinaryData resourceGroupName = default;
-            BinaryData mlWorkspaceName = default;
-            Optional<BinaryData> servicePrincipalId = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
-            Optional<BinaryData> tenant = default;
-            Optional<BinaryData> encryptedCredential = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            DataFactoryElement<string> subscriptionId = default;
+            DataFactoryElement<string> resourceGroupName = default;
+            DataFactoryElement<string> mlWorkspaceName = default;
+            DataFactoryElement<string> authentication = default;
+            DataFactoryElement<string> servicePrincipalId = default;
+            DataFactorySecret servicePrincipalKey = default;
+            DataFactoryElement<string> tenant = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -174,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -211,17 +223,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("subscriptionId"u8))
                         {
-                            subscriptionId = BinaryData.FromString(property0.Value.GetRawText());
+                            subscriptionId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("resourceGroupName"u8))
                         {
-                            resourceGroupName = BinaryData.FromString(property0.Value.GetRawText());
+                            resourceGroupName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mlWorkspaceName"u8))
                         {
-                            mlWorkspaceName = BinaryData.FromString(property0.Value.GetRawText());
+                            mlWorkspaceName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("authentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authentication = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"u8))
@@ -230,7 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalId = BinaryData.FromString(property0.Value.GetRawText());
+                            servicePrincipalId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalKey"u8))
@@ -239,7 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -248,16 +269,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            tenant = BinaryData.FromString(property0.Value.GetRawText());
+                            tenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -266,7 +283,52 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureMLServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, subscriptionId, resourceGroupName, mlWorkspaceName, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, encryptedCredential.Value);
+            return new AzureMLServiceLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                subscriptionId,
+                resourceGroupName,
+                mlWorkspaceName,
+                authentication,
+                servicePrincipalId,
+                servicePrincipalKey,
+                tenant,
+                encryptedCredential);
         }
+
+        BinaryData IPersistableModel<AzureMLServiceLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureMLServiceLinkedService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureMLServiceLinkedService IPersistableModel<AzureMLServiceLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLServiceLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureMLServiceLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureMLServiceLinkedService)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureMLServiceLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

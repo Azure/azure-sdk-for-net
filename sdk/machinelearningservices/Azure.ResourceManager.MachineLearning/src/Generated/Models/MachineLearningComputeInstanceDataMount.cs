@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines an Aml Instance DataMount. </summary>
     public partial class MachineLearningComputeInstanceDataMount
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceDataMount. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataMount"/>. </summary>
         internal MachineLearningComputeInstanceDataMount()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceDataMount. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataMount"/>. </summary>
         /// <param name="source"> Source of the ComputeInstance data mount. </param>
         /// <param name="sourceType"> Data source type. </param>
         /// <param name="mountName"> name of the ComputeInstance data mount. </param>
@@ -27,7 +60,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="mountState"> Mount state. </param>
         /// <param name="mountedOn"> The time when the disk mounted. </param>
         /// <param name="error"> Error of this data mount. </param>
-        internal MachineLearningComputeInstanceDataMount(string source, MachineLearningSourceType? sourceType, string mountName, MachineLearningMountAction? mountAction, string createdBy, string mountPath, MachineLearningMountState? mountState, DateTimeOffset? mountedOn, string error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeInstanceDataMount(string source, MachineLearningSourceType? sourceType, string mountName, MachineLearningMountAction? mountAction, string createdBy, string mountPath, MachineLearningMountState? mountState, DateTimeOffset? mountedOn, string error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
             SourceType = sourceType;
@@ -38,6 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MountState = mountState;
             MountedOn = mountedOn;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Source of the ComputeInstance data mount. </summary>

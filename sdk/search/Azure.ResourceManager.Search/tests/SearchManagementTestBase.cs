@@ -14,18 +14,20 @@ namespace Azure.ResourceManager.Search.Tests
     {
         protected ArmClient Client { get; private set; }
 
-        public AzureLocation DefaultLocation => AzureLocation.EastUS;
+        public AzureLocation DefaultLocation => "eastus2euap";
 
         public SubscriptionResource DefaultLSubscription { get; set; }
 
         protected SearchManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            JsonPathSanitizers.Add("$.value.[*].key");
         }
 
         protected SearchManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$.value.[*].key");
         }
 
         [SetUp]

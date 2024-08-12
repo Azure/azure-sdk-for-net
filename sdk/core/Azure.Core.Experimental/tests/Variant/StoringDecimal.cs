@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringDecimal
     {
@@ -17,7 +17,7 @@ namespace Azure
         [Test]
         public void DecimalImplicit()
         {
-            Value value = (decimal)42.0;
+            Variant value = (decimal)42.0;
             Assert.AreEqual((decimal)42.0, value.As<decimal>());
             Assert.AreEqual(typeof(decimal), value.Type);
 
@@ -30,7 +30,7 @@ namespace Azure
         [Test]
         public void DecimalInOut([ValueSource("DecimalData")] decimal testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             bool success = value.TryGetValue(out decimal result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -43,7 +43,7 @@ namespace Azure
         public void NullableDecimalInDecimalOut([ValueSource("DecimalData")] decimal? testValue)
         {
             decimal? source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
 
             bool success = value.TryGetValue(out decimal result);
             Assert.True(success);
@@ -58,7 +58,7 @@ namespace Azure
         public void DecimalInNullableDecimalOut([ValueSource("DecimalData")] decimal testValue)
         {
             decimal source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
             bool success = value.TryGetValue(out decimal? result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -70,7 +70,7 @@ namespace Azure
         public void NullDecimal()
         {
             decimal? source = null;
-            Value value = source;
+            Variant value = source;
             Assert.Null(value.Type);
             Assert.AreEqual(source, value.As<decimal?>());
             Assert.False(value.As<decimal?>().HasValue);
@@ -79,7 +79,7 @@ namespace Azure
         [Test]
         public void OutAsObject([ValueSource("DecimalData")] decimal testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(decimal), o.GetType());
             Assert.AreEqual(testValue, (decimal)o);

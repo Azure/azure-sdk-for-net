@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement.Samples
@@ -76,6 +73,45 @@ namespace Azure.ResourceManager.CostManagement.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // PrivateView
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_PrivateView()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/PrivateView.json
+            // this example is just showing the usage of "Views_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this TenantResource created on azure
+            // for more information of creating TenantResource, please refer to the document of TenantResource
+            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this TenantsCostManagementViewsResource
+            TenantsCostManagementViewsCollection collection = tenantResource.GetAllTenantsCostManagementViews();
+
+            // invoke the operation
+            string viewName = "swaggerExample";
+            NullableResponse<TenantsCostManagementViewsResource> response = await collection.GetIfExistsAsync(viewName);
+            TenantsCostManagementViewsResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CostManagementViewData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // CreateOrUpdatePrivateView
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -106,16 +142,16 @@ namespace Azure.ResourceManager.CostManagement.Samples
                 Metric = ViewMetricType.ActualCost,
                 Kpis =
 {
-new KpiProperties()
+new ViewKpiProperties()
 {
-ViewKpiType = ViewKpiType.Forecast,
+KpiType = ViewKpiType.Forecast,
 Id = null,
-Enabled = true,
-},new KpiProperties()
+IsEnabled = true,
+},new ViewKpiProperties()
 {
-ViewKpiType = ViewKpiType.Budget,
-Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Consumption/budgets/swaggerDemo",
-Enabled = true,
+KpiType = ViewKpiType.Budget,
+Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Consumption/budgets/swaggerDemo"),
+IsEnabled = true,
 }
 },
                 Pivots =

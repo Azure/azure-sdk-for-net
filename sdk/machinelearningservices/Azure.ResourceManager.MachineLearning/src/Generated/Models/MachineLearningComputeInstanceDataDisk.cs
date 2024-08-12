@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines an Aml Instance DataDisk. </summary>
     public partial class MachineLearningComputeInstanceDataDisk
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceDataDisk. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataDisk"/>. </summary>
         internal MachineLearningComputeInstanceDataDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataDisk"/>. </summary>
         /// <param name="caching"> Caching type of Data Disk. </param>
         /// <param name="diskSizeGB"> The initial disk size in gigabytes. </param>
         /// <param name="lun"> The lun is used to uniquely identify each data disk. If attaching multiple disks, each should have a distinct lun. </param>
         /// <param name="storageAccountType"> type of this storage account. </param>
-        internal MachineLearningComputeInstanceDataDisk(MachineLearningCachingType? caching, int? diskSizeGB, int? lun, MachineLearningStorageAccountType? storageAccountType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeInstanceDataDisk(MachineLearningCachingType? caching, int? diskSizeGB, int? lun, MachineLearningStorageAccountType? storageAccountType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Caching = caching;
             DiskSizeGB = diskSizeGB;
             Lun = lun;
             StorageAccountType = storageAccountType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Caching type of Data Disk. </summary>

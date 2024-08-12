@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The compute resource properties for managed integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeComputeProperties
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeComputeProperties"/>. </summary>
         public SynapseIntegrationRuntimeComputeProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeComputeProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeComputeProperties"/>. </summary>
         /// <param name="location"> The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities. </param>
         /// <param name="nodeSize"> The node size requirement to managed integration runtime. </param>
         /// <param name="numberOfNodes"> The required number of nodes for managed integration runtime. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

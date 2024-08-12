@@ -35,8 +35,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="select">An OData $select clause.</param>
         /// <param name="timeout">The maximum time that the server can spend
-        /// processing the request, in seconds. The default is 30
-        /// seconds.</param>
+        /// processing the request, in seconds. The default is 30 seconds. If
+        /// the value is larger than 30, the default will be used
+        /// instead.</param>
         /// <param name="clientRequestId">The caller-generated request
         /// identity, in the form of a GUID with no decoration such as curly
         /// braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
@@ -68,7 +69,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the maximum time that the server can spend processing
-        /// the request, in seconds. The default is 30 seconds.
+        /// the request, in seconds. The default is 30 seconds. If the value is
+        /// larger than 30, the default will be used instead.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public int? Timeout { get; set; }

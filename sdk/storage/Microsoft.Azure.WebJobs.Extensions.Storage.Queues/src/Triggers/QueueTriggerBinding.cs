@@ -39,8 +39,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
         private readonly IQueueProcessorFactory _queueProcessorFactory;
         private readonly QueueCausalityManager _queueCausalityManager;
         private readonly ConcurrencyManager _concurrencyManager;
+        private readonly IDrainModeManager _drainModeManager;
 
-        public QueueTriggerBinding(string parameterName,
+        public QueueTriggerBinding(
+            string parameterName,
             QueueServiceClient queueServiceClient,
             QueueClient queue,
             ITriggerDataArgumentBinding<QueueMessage> argumentBinding,
@@ -50,7 +52,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             ILoggerFactory loggerFactory,
             IQueueProcessorFactory queueProcessorFactory,
             QueueCausalityManager queueCausalityManager,
-            ConcurrencyManager concurrencyManager)
+            ConcurrencyManager concurrencyManager,
+            IDrainModeManager drainModeManager)
         {
             _queueServiceClient = queueServiceClient ?? throw new ArgumentNullException(nameof(queueServiceClient));
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));
@@ -67,6 +70,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
             _queueProcessorFactory = queueProcessorFactory;
             _converter = CreateConverter(_queue);
             _logger = loggerFactory.CreateLogger<QueueTriggerBinding>();
+            _drainModeManager = drainModeManager;
         }
 
         public Type TriggerValueType
@@ -139,8 +143,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
                 throw new ArgumentNullException(nameof(context));
             }
 
-            var factory = new QueueListenerFactory(_queueServiceClient, _queue, _queueOptions, _exceptionHandler,
-                    _messageEnqueuedWatcherSetter, _loggerFactory, context.Executor, _queueProcessorFactory, _queueCausalityManager, context.Descriptor, _concurrencyManager);
+            var factory = new QueueListenerFactory(
+                _queueServiceClient,
+                _queue,
+                _queueOptions,
+                _exceptionHandler,
+                _messageEnqueuedWatcherSetter,
+                _loggerFactory,
+                context.Executor,
+                _queueProcessorFactory,
+                _queueCausalityManager,
+                context.Descriptor,
+                _concurrencyManager,
+                drainModeManager: _drainModeManager);
 
             return factory.CreateAsync(context.CancellationToken);
         }

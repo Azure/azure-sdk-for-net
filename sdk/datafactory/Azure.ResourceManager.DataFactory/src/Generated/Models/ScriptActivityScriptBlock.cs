@@ -7,44 +7,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Script block of scripts. </summary>
     public partial class ScriptActivityScriptBlock
     {
-        /// <summary> Initializes a new instance of ScriptActivityScriptBlock. </summary>
-        /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
-        /// <param name="scriptType"> The type of the query. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        public ScriptActivityScriptBlock(BinaryData text, ScriptType scriptType)
-        {
-            Argument.AssertNotNull(text, nameof(text));
-
-            Text = text;
-            ScriptType = scriptType;
-            Parameters = new ChangeTrackingList<ScriptActivityParameter>();
-        }
-
-        /// <summary> Initializes a new instance of ScriptActivityScriptBlock. </summary>
-        /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
-        /// <param name="scriptType"> The type of the query. Type: string. </param>
-        /// <param name="parameters"> Array of script parameters. Type: array. </param>
-        internal ScriptActivityScriptBlock(BinaryData text, ScriptType scriptType, IList<ScriptActivityParameter> parameters)
-        {
-            Text = text;
-            ScriptType = scriptType;
-            Parameters = parameters;
-        }
-
         /// <summary>
-        /// The query text. Type: string (or Expression with resultType string).
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -68,9 +44,44 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Text { get; set; }
-        /// <summary> The type of the query. Type: string. </summary>
-        public ScriptType ScriptType { get; set; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
+        /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
+        /// <param name="queryType"> The type of the query. Please refer to the ScriptType for valid options. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="queryType"/> is null. </exception>
+        public ScriptActivityScriptBlock(DataFactoryElement<string> text, DataFactoryElement<string> queryType)
+        {
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(queryType, nameof(queryType));
+
+            Text = text;
+            QueryType = queryType;
+            Parameters = new ChangeTrackingList<ScriptActivityParameter>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
+        /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
+        /// <param name="queryType"> The type of the query. Please refer to the ScriptType for valid options. Type: string (or Expression with resultType string). </param>
+        /// <param name="parameters"> Array of script parameters. Type: array. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScriptActivityScriptBlock(DataFactoryElement<string> text, DataFactoryElement<string> queryType, IList<ScriptActivityParameter> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Text = text;
+            QueryType = queryType;
+            Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/> for deserialization. </summary>
+        internal ScriptActivityScriptBlock()
+        {
+        }
+
+        /// <summary> The query text. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Text { get; set; }
+        /// <summary> The type of the query. Please refer to the ScriptType for valid options. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> QueryType { get; set; }
         /// <summary> Array of script parameters. Type: array. </summary>
         public IList<ScriptActivityParameter> Parameters { get; }
     }

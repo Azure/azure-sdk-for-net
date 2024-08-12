@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Access information for the storage account. </summary>
     public partial class StorageAccountCredentials
     {
-        /// <summary> Initializes a new instance of StorageAccountCredentials. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCredentials"/>. </summary>
         internal StorageAccountCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountCredentials"/>. </summary>
         /// <param name="resourceId"> The ARM resource ID of the storage account. </param>
         /// <param name="primaryKey"> The primary key of the storage account. </param>
         /// <param name="secondaryKey"> The secondary key of the storage account. </param>
-        internal StorageAccountCredentials(string resourceId, string primaryKey, string secondaryKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageAccountCredentials(string resourceId, string primaryKey, string secondaryKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ARM resource ID of the storage account. </summary>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text.Json;
 using Azure.Core.Json;
 using NUnit.Framework;
@@ -382,7 +383,11 @@ namespace Azure.Core.Tests
         }
 
         [TestCaseSource(nameof(NumberValues))]
-        public void CanGetNumber<T, U>(string serializedX, T x, T y, T z, U invalid, Func<MutableJsonElement, (bool TryGet, T Value)> tryGet, Func<MutableJsonElement, T> get)
+        public void CanGetNumber<T, U>(string serializedX, T x, T y, T z, U invalid,
+            Func<MutableJsonElement, (bool TryGet, T Value)> tryGet,
+            Func<MutableJsonElement, T> get,
+            Action<MutableJsonDocument, string, T> set,
+            Func<MutableJsonDocument, string, T, MutableJsonElement> setProperty)
         {
             string json = $"{{\"foo\" : {serializedX}}}";
 
@@ -394,14 +399,13 @@ namespace Azure.Core.Tests
             Assert.AreEqual(x, get(mdoc.RootElement.GetProperty("foo")));
 
             // Get from assigned existing value
-            mdoc.RootElement.GetProperty("foo").Set(y);
-
+            set(mdoc, "foo", y);
             Assert.IsTrue(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet);
             Assert.AreEqual(y, tryGet(mdoc.RootElement.GetProperty("foo")).Value);
             Assert.AreEqual(y, get(mdoc.RootElement.GetProperty("foo")));
 
             // Get from added value
-            mdoc.RootElement.SetProperty("bar", z);
+            setProperty(mdoc, "bar", z);
             Assert.IsTrue(tryGet(mdoc.RootElement.GetProperty("bar")).TryGet);
             Assert.AreEqual(z, tryGet(mdoc.RootElement.GetProperty("bar")).Value);
             Assert.AreEqual(z, get(mdoc.RootElement.GetProperty("bar")));
@@ -409,7 +413,7 @@ namespace Azure.Core.Tests
             // Doesn't work if number change is outside range
             if (invalid is bool testRange && testRange)
             {
-                mdoc.RootElement.GetProperty("foo").Set(invalid);
+                mdoc.RootElement.GetProperty("foo").Set(testRange);
                 Assert.IsFalse(tryGet(mdoc.RootElement.GetProperty("foo")).TryGet);
                 Assert.Throws<FormatException>(() => get(mdoc.RootElement.GetProperty("foo")));
             }
@@ -545,6 +549,36 @@ namespace Azure.Core.Tests
             Assert.Throws<InvalidOperationException>(() => mdoc.RootElement.GetProperty("foo").GetDateTimeOffset());
         }
 
+        [Test]
+        public void StaticMethodsAreSameAsExpected()
+        {
+            var expectedMethods = new List<string> { "GetString", "GetFormatExceptionText", "SerializeToJsonElement", "ParseFromBytes", "GetReaderForElement", "GetFirstSegment", "GetLastSegment", "CopyTo" };
+            var actualMethods = Type.GetType("Azure.Core.Json.MutableJsonElement, Azure.Core").GetMethods(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+
+            var message = $"There are {expectedMethods.Count} static methods expected in MutableJsonElement. If adding a new static method, ensure it is compatible with trimming or is annotated correctly.";
+
+            foreach (var method in actualMethods)
+            {
+                var isExpected = expectedMethods.Contains(method.Name);
+                Assert.IsTrue(isExpected, message);
+            }
+        }
+
+        [Test]
+        public void NestedTypesAreSameAsExpected()
+        {
+            var expectedNestedTypes = new List<string> { "MutableJsonElementConverter", "ArrayEnumerator", "ObjectEnumerator" };
+            var actualNestedTypes = Type.GetType("Azure.Core.Json.MutableJsonElement, Azure.Core").GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+
+            var message = $"There are {expectedNestedTypes.Count} nested types expected in MutableJsonElement. If adding a new nested type, ensure it is compatible with trimming or is annotated correctly.";
+
+            foreach (var nestedType in actualNestedTypes)
+            {
+                var isExpected = expectedNestedTypes.Contains(nestedType.Name);
+                Assert.IsTrue(isExpected, message);
+            }
+        }
+
         #region Helpers
 
         internal static void ValidateToString(string json, MutableJsonElement element)
@@ -556,14 +590,12 @@ namespace Azure.Core.Tests
 
         internal static string FormatDateTime(DateTime d)
         {
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(d);
-            return JsonDocument.Parse(bytes).RootElement.GetString();
+            return MutableJsonElement.SerializeToJsonElement(d).GetString();
         }
 
         internal static string FormatDateTimeOffset(DateTimeOffset d)
         {
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(d);
-            return JsonDocument.Parse(bytes).RootElement.GetString();
+            return MutableJsonElement.SerializeToJsonElement(d).GetString();
         }
 
         public static IEnumerable<object[]> NumberValues()
@@ -572,37 +604,59 @@ namespace Azure.Core.Tests
             // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/integral-numeric-types
             yield return new object[] { "42", (byte)42, (byte)43, (byte)44, 256,
                 (MutableJsonElement e) => (e.TryGetByte(out byte b), b),
-                (MutableJsonElement e) => e.GetByte() };
+                (MutableJsonElement e) => e.GetByte(),
+                (MutableJsonDocument mdoc, string name, byte value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, byte value) => mdoc.RootElement.SetProperty(name, value) };
             yield return new object[] { "42", (sbyte)42, (sbyte)43, (sbyte)44, 128,
                 (MutableJsonElement e) => (e.TryGetSByte(out sbyte b), b),
-                (MutableJsonElement e) => e.GetSByte() };
+                (MutableJsonElement e) => e.GetSByte(),
+                (MutableJsonDocument mdoc, string name, sbyte value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, sbyte value) => mdoc.RootElement.SetProperty(name, value) };
             yield return new object[] { "42", (short)42, (short)43, (short)44, 32768,
                 (MutableJsonElement e) => (e.TryGetInt16(out short i), i),
-                (MutableJsonElement e) => e.GetInt16() };
+                (MutableJsonElement e) => e.GetInt16(),
+                (MutableJsonDocument mdoc, string name, short value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, short value) => mdoc.RootElement.SetProperty(name, value) };
             yield return new object[] { "42", (ushort)42, (ushort)43, (ushort)44, 65536,
                 (MutableJsonElement e) => (e.TryGetUInt16(out ushort i), i),
-                (MutableJsonElement e) => e.GetUInt16() };
+                (MutableJsonElement e) => e.GetUInt16(),
+                (MutableJsonDocument mdoc, string name, ushort value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, ushort value) => mdoc.RootElement.SetProperty(name, value) };
             yield return new object[] { "42", 42, 43, 44, 2147483648,
                 (MutableJsonElement e) => (e.TryGetInt32(out int i), i),
-                (MutableJsonElement e) => e.GetInt32() };
+                (MutableJsonElement e) => e.GetInt32(),
+                (MutableJsonDocument mdoc, string name, int value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, int value) => mdoc.RootElement.SetProperty(name, value) };
             yield return new object[] { "42", 42u, 43u, 44u, 4294967296,
                 (MutableJsonElement e) => (e.TryGetUInt32(out uint i), i),
-                (MutableJsonElement e) => e.GetUInt32() };
+                (MutableJsonElement e) => e.GetUInt32(),
+                (MutableJsonDocument mdoc, string name, uint value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, uint value) => mdoc.RootElement.SetProperty(name, value) };
             yield return new object[] { "42", 42L, 43L, 44L, 9223372036854775808,
                 (MutableJsonElement e) => (e.TryGetInt64(out long i), i),
-                (MutableJsonElement e) => e.GetInt64() };
+                (MutableJsonElement e) => e.GetInt64(),
+                (MutableJsonDocument mdoc, string name, long value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, long value) => mdoc.RootElement.SetProperty(name, value) };
             yield return new object[] { "42", 42ul, 43ul, 44ul, -1,
                 (MutableJsonElement e) => (e.TryGetUInt64(out ulong i), i),
-                (MutableJsonElement e) => e.GetUInt64() };
+                (MutableJsonElement e) => e.GetUInt64(),
+                (MutableJsonDocument mdoc, string name, ulong value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, ulong value) => mdoc.RootElement.SetProperty(name, value) };
             yield return new object[] { "42.1", 42.1f, 43.1f, 44.1f, false, /*don't do range check*/
                 (MutableJsonElement e) => (e.TryGetSingle(out float d), d),
-                (MutableJsonElement e) => e.GetSingle() };
+                (MutableJsonElement e) => e.GetSingle(),
+                (MutableJsonDocument mdoc, string name, float value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, float value) => mdoc.RootElement.SetProperty(name, value) };
             yield return new object[] { "42.1", 42.1d, 43.1d, 44.1d, false,  /*don't do range check*/
                 (MutableJsonElement e) => (e.TryGetDouble(out double d), d),
-                (MutableJsonElement e) => e.GetDouble() };
+                (MutableJsonElement e) => e.GetDouble(),
+                (MutableJsonDocument mdoc, string name, double value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, double value) => mdoc.RootElement.SetProperty(name, value) };
             yield return new object[] { "42.1", 42.1m, 43.1m, 44.1m, false,  /*don't do range check*/
                 (MutableJsonElement e) => (e.TryGetDecimal(out decimal d), d),
-                (MutableJsonElement e) => e.GetDecimal()  };
+                (MutableJsonElement e) => e.GetDecimal(),
+                (MutableJsonDocument mdoc, string name, decimal value) => mdoc.RootElement.GetProperty(name).Set(value),
+                (MutableJsonDocument mdoc, string name, decimal value) => mdoc.RootElement.SetProperty(name, value)  };
         }
 
         #endregion

@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The binding to a JavaScript function. </summary>
     public partial class JavaScriptFunctionBinding : StreamingJobFunctionBinding
     {
-        /// <summary> Initializes a new instance of JavaScriptFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of <see cref="JavaScriptFunctionBinding"/>. </summary>
         public JavaScriptFunctionBinding()
         {
             FunctionBindingType = "Microsoft.StreamAnalytics/JavascriptUdf";
         }
 
-        /// <summary> Initializes a new instance of JavaScriptFunctionBinding. </summary>
+        /// <summary> Initializes a new instance of <see cref="JavaScriptFunctionBinding"/>. </summary>
         /// <param name="functionBindingType"> Indicates the function binding type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="script"> The JavaScript code containing a single function definition. For example: 'function (x, y) { return x + y; }'. </param>
-        internal JavaScriptFunctionBinding(string functionBindingType, string script) : base(functionBindingType)
+        internal JavaScriptFunctionBinding(string functionBindingType, IDictionary<string, BinaryData> serializedAdditionalRawData, string script) : base(functionBindingType, serializedAdditionalRawData)
         {
             Script = script;
             FunctionBindingType = functionBindingType ?? "Microsoft.StreamAnalytics/JavascriptUdf";

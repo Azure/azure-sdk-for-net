@@ -2,17 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.EventHubs.Authorization;
-using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Moq;
 using NUnit.Framework;
 
@@ -79,6 +76,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
 
             var expectedException = new DivideByZeroException();
+            var expectedExceptionOld = new FormatException();
             var partitionId = "fakePart";
             var offset = 12345;
             var sequence = 9987;
@@ -91,12 +89,25 @@ namespace Azure.Messaging.EventHubs.Tests
                     mockProcessor.EventHubName,
                     mockProcessor.ConsumerGroup,
                     partitionId,
-                    offset,
-                    sequence,
+                    mockProcessor.Identifier,
+                    It.Is<CheckpointPosition>(csp =>
+                        csp.SequenceNumber == sequence),
                     cancellationSource.Token))
                 .ThrowsAsync(expectedException);
 
-            Assert.That(async () => await mockProcessor.InvokeUpdateCheckpointAsync(partitionId, offset, sequence, cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
+            mockCheckpointStore
+                .Setup(store => store.UpdateCheckpointAsync(
+                    mockProcessor.FullyQualifiedNamespace,
+                    mockProcessor.EventHubName,
+                    mockProcessor.ConsumerGroup,
+                    partitionId,
+                    offset,
+                    sequence,
+                    cancellationSource.Token))
+                .ThrowsAsync(expectedExceptionOld);
+
+            Assert.That(async () => await mockProcessor.InvokeOldUpdateCheckpointAsync(partitionId, offset, sequence, cancellationSource.Token), Throws.Exception.EqualTo(expectedExceptionOld));
+            Assert.That(async () => await mockProcessor.InvokeUpdateCheckpointAsync(partitionId, new CheckpointPosition(sequence), cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
         }
 
         /// <summary>
@@ -218,7 +229,8 @@ namespace Azure.Messaging.EventHubs.Tests
             protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => throw new NotImplementedException();
 
             public Task<EventProcessorCheckpoint> InvokeGetCheckpointAsync(string partitionId, CancellationToken cancellationToken) => GetCheckpointAsync(partitionId, cancellationToken);
-            public Task InvokeUpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken);
+            public Task InvokeOldUpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken);
+            public Task InvokeUpdateCheckpointAsync(string partitionId, CheckpointPosition checkpointPosition, CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, checkpointPosition, cancellationToken);
             public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeListOwnershipAsync(CancellationToken cancellationToken) => ListOwnershipAsync(cancellationToken);
             public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => ClaimOwnershipAsync(desiredOwnership, cancellationToken);
         }

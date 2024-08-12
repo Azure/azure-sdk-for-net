@@ -7,6 +7,7 @@ using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Primitives;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Azure.WebJobs.Host.Scale;
@@ -33,6 +34,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
         private readonly IConverterManager _converterManager;
         private readonly ServiceBusClientFactory _clientFactory;
         private readonly ConcurrencyManager _concurrencyManager;
+        private readonly IDrainModeManager _drainModeManager;
 
         /// <summary>
         /// Creates a new <see cref="ServiceBusExtensionConfigProvider"/> instance.
@@ -45,7 +47,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             ILoggerFactory loggerFactory,
             IConverterManager converterManager,
             ServiceBusClientFactory clientFactory,
-            ConcurrencyManager concurrencyManager)
+            ConcurrencyManager concurrencyManager,
+            IDrainModeManager drainModeManager,
+            CleanupService cleanupService)
         {
             _options = options.Value;
             _messagingProvider = messagingProvider;
@@ -54,6 +58,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
             _converterManager = converterManager;
             _clientFactory = clientFactory;
             _concurrencyManager = concurrencyManager;
+            _drainModeManager = drainModeManager;
         }
 
         /// <summary>
@@ -101,7 +106,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Config
                 .AddOpenConverter<ServiceBusReceivedMessage, OpenType.Poco>(typeof(MessageToPocoConverter<>), _options.JsonSerializerSettings);
 
             // register our trigger binding provider
-            ServiceBusTriggerAttributeBindingProvider triggerBindingProvider = new ServiceBusTriggerAttributeBindingProvider(_nameResolver, _options, _messagingProvider, _loggerFactory, _converterManager, _clientFactory, _concurrencyManager);
+            ServiceBusTriggerAttributeBindingProvider triggerBindingProvider = new ServiceBusTriggerAttributeBindingProvider(
+                _nameResolver,
+                _options,
+                _messagingProvider,
+                _loggerFactory,
+                _converterManager,
+                _clientFactory,
+                _concurrencyManager,
+                _drainModeManager);
+
             context.AddBindingRule<ServiceBusTriggerAttribute>()
                 .BindToTrigger(triggerBindingProvider);
 

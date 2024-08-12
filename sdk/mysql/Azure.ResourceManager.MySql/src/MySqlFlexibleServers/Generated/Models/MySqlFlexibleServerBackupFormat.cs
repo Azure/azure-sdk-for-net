@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NoneValue = "None";
         private const string CollatedFormatValue = "CollatedFormat";
+        private const string RawValue = "Raw";
 
-        /// <summary> None. </summary>
-        public static MySqlFlexibleServerBackupFormat None { get; } = new MySqlFlexibleServerBackupFormat(NoneValue);
         /// <summary> CollatedFormat. </summary>
         public static MySqlFlexibleServerBackupFormat CollatedFormat { get; } = new MySqlFlexibleServerBackupFormat(CollatedFormatValue);
+        /// <summary> Raw. </summary>
+        public static MySqlFlexibleServerBackupFormat Raw { get; } = new MySqlFlexibleServerBackupFormat(RawValue);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerBackupFormat"/> values are the same. </summary>
         public static bool operator ==(MySqlFlexibleServerBackupFormat left, MySqlFlexibleServerBackupFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlFlexibleServerBackupFormat"/> values are not the same. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

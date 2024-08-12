@@ -6,45 +6,223 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ReportRecordContract
+    public partial class ReportRecordContract : IUtf8JsonSerializable, IJsonModel<ReportRecordContract>
     {
-        internal static ReportRecordContract DeserializeReportRecordContract(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportRecordContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ReportRecordContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReportRecordContract)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(Interval))
+            {
+                writer.WritePropertyName("interval"u8);
+                writer.WriteStringValue(Interval);
+            }
+            if (Optional.IsDefined(Country))
+            {
+                writer.WritePropertyName("country"u8);
+                writer.WriteStringValue(Country);
+            }
+            if (Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("region"u8);
+                writer.WriteStringValue(Region);
+            }
+            if (Optional.IsDefined(Zip))
+            {
+                writer.WritePropertyName("zip"u8);
+                writer.WriteStringValue(Zip);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UserId))
+            {
+                writer.WritePropertyName("userId"u8);
+                writer.WriteStringValue(UserId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProductId))
+            {
+                writer.WritePropertyName("productId"u8);
+                writer.WriteStringValue(ProductId);
+            }
+            if (Optional.IsDefined(ApiId))
+            {
+                writer.WritePropertyName("apiId"u8);
+                writer.WriteStringValue(ApiId);
+            }
+            if (Optional.IsDefined(OperationId))
+            {
+                writer.WritePropertyName("operationId"u8);
+                writer.WriteStringValue(OperationId);
+            }
+            if (Optional.IsDefined(ApiRegion))
+            {
+                writer.WritePropertyName("apiRegion"u8);
+                writer.WriteStringValue(ApiRegion);
+            }
+            if (Optional.IsDefined(SubscriptionResourceId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionResourceId);
+            }
+            if (Optional.IsDefined(CallCountSuccess))
+            {
+                writer.WritePropertyName("callCountSuccess"u8);
+                writer.WriteNumberValue(CallCountSuccess.Value);
+            }
+            if (Optional.IsDefined(CallCountBlocked))
+            {
+                writer.WritePropertyName("callCountBlocked"u8);
+                writer.WriteNumberValue(CallCountBlocked.Value);
+            }
+            if (Optional.IsDefined(CallCountFailed))
+            {
+                writer.WritePropertyName("callCountFailed"u8);
+                writer.WriteNumberValue(CallCountFailed.Value);
+            }
+            if (Optional.IsDefined(CallCountOther))
+            {
+                writer.WritePropertyName("callCountOther"u8);
+                writer.WriteNumberValue(CallCountOther.Value);
+            }
+            if (Optional.IsDefined(CallCountTotal))
+            {
+                writer.WritePropertyName("callCountTotal"u8);
+                writer.WriteNumberValue(CallCountTotal.Value);
+            }
+            if (Optional.IsDefined(Bandwidth))
+            {
+                writer.WritePropertyName("bandwidth"u8);
+                writer.WriteNumberValue(Bandwidth.Value);
+            }
+            if (Optional.IsDefined(CacheHitCount))
+            {
+                writer.WritePropertyName("cacheHitCount"u8);
+                writer.WriteNumberValue(CacheHitCount.Value);
+            }
+            if (Optional.IsDefined(CacheMissCount))
+            {
+                writer.WritePropertyName("cacheMissCount"u8);
+                writer.WriteNumberValue(CacheMissCount.Value);
+            }
+            if (Optional.IsDefined(ApiTimeAvg))
+            {
+                writer.WritePropertyName("apiTimeAvg"u8);
+                writer.WriteNumberValue(ApiTimeAvg.Value);
+            }
+            if (Optional.IsDefined(ApiTimeMin))
+            {
+                writer.WritePropertyName("apiTimeMin"u8);
+                writer.WriteNumberValue(ApiTimeMin.Value);
+            }
+            if (Optional.IsDefined(ApiTimeMax))
+            {
+                writer.WritePropertyName("apiTimeMax"u8);
+                writer.WriteNumberValue(ApiTimeMax.Value);
+            }
+            if (Optional.IsDefined(ServiceTimeAvg))
+            {
+                writer.WritePropertyName("serviceTimeAvg"u8);
+                writer.WriteNumberValue(ServiceTimeAvg.Value);
+            }
+            if (Optional.IsDefined(ServiceTimeMin))
+            {
+                writer.WritePropertyName("serviceTimeMin"u8);
+                writer.WriteNumberValue(ServiceTimeMin.Value);
+            }
+            if (Optional.IsDefined(ServiceTimeMax))
+            {
+                writer.WritePropertyName("serviceTimeMax"u8);
+                writer.WriteNumberValue(ServiceTimeMax.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReportRecordContract IJsonModel<ReportRecordContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReportRecordContract)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReportRecordContract(document.RootElement, options);
+        }
+
+        internal static ReportRecordContract DeserializeReportRecordContract(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> interval = default;
-            Optional<string> country = default;
-            Optional<string> region = default;
-            Optional<string> zip = default;
-            Optional<string> userId = default;
-            Optional<string> productId = default;
-            Optional<string> apiId = default;
-            Optional<string> operationId = default;
-            Optional<string> apiRegion = default;
-            Optional<ResourceIdentifier> subscriptionId = default;
-            Optional<int> callCountSuccess = default;
-            Optional<int> callCountBlocked = default;
-            Optional<int> callCountFailed = default;
-            Optional<int> callCountOther = default;
-            Optional<int> callCountTotal = default;
-            Optional<long> bandwidth = default;
-            Optional<int> cacheHitCount = default;
-            Optional<int> cacheMissCount = default;
-            Optional<double> apiTimeAvg = default;
-            Optional<double> apiTimeMin = default;
-            Optional<double> apiTimeMax = default;
-            Optional<double> serviceTimeAvg = default;
-            Optional<double> serviceTimeMin = default;
-            Optional<double> serviceTimeMax = default;
+            string name = default;
+            DateTimeOffset? timestamp = default;
+            string interval = default;
+            string country = default;
+            string region = default;
+            string zip = default;
+            string userId = default;
+            string productId = default;
+            string apiId = default;
+            string operationId = default;
+            string apiRegion = default;
+            ResourceIdentifier subscriptionId = default;
+            int? callCountSuccess = default;
+            int? callCountBlocked = default;
+            int? callCountFailed = default;
+            int? callCountOther = default;
+            int? callCountTotal = default;
+            long? bandwidth = default;
+            int? cacheHitCount = default;
+            int? cacheMissCount = default;
+            double? apiTimeAvg = default;
+            double? apiTimeMin = default;
+            double? apiTimeMax = default;
+            double? serviceTimeAvg = default;
+            double? serviceTimeMin = default;
+            double? serviceTimeMax = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -241,8 +419,559 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     serviceTimeMax = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReportRecordContract(name.Value, Optional.ToNullable(timestamp), interval.Value, country.Value, region.Value, zip.Value, userId.Value, productId.Value, apiId.Value, operationId.Value, apiRegion.Value, subscriptionId.Value, Optional.ToNullable(callCountSuccess), Optional.ToNullable(callCountBlocked), Optional.ToNullable(callCountFailed), Optional.ToNullable(callCountOther), Optional.ToNullable(callCountTotal), Optional.ToNullable(bandwidth), Optional.ToNullable(cacheHitCount), Optional.ToNullable(cacheMissCount), Optional.ToNullable(apiTimeAvg), Optional.ToNullable(apiTimeMin), Optional.ToNullable(apiTimeMax), Optional.ToNullable(serviceTimeAvg), Optional.ToNullable(serviceTimeMin), Optional.ToNullable(serviceTimeMax));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReportRecordContract(
+                name,
+                timestamp,
+                interval,
+                country,
+                region,
+                zip,
+                userId,
+                productId,
+                apiId,
+                operationId,
+                apiRegion,
+                subscriptionId,
+                callCountSuccess,
+                callCountBlocked,
+                callCountFailed,
+                callCountOther,
+                callCountTotal,
+                bandwidth,
+                cacheHitCount,
+                cacheMissCount,
+                apiTimeAvg,
+                apiTimeMin,
+                apiTimeMax,
+                serviceTimeAvg,
+                serviceTimeMin,
+                serviceTimeMax,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timestamp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    builder.Append("  timestamp: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Interval), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  interval: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Interval))
+                {
+                    builder.Append("  interval: ");
+                    if (Interval.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Interval}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Interval}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Country), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  country: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Country))
+                {
+                    builder.Append("  country: ");
+                    if (Country.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Country}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Country}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Region), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  region: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Region))
+                {
+                    builder.Append("  region: ");
+                    if (Region.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Region}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Region}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Zip), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  zip: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Zip))
+                {
+                    builder.Append("  zip: ");
+                    if (Zip.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Zip}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Zip}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserId))
+                {
+                    builder.Append("  userId: ");
+                    if (UserId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProductId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  productId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProductId))
+                {
+                    builder.Append("  productId: ");
+                    if (ProductId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProductId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProductId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiId))
+                {
+                    builder.Append("  apiId: ");
+                    if (ApiId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OperationId))
+                {
+                    builder.Append("  operationId: ");
+                    if (OperationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{OperationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{OperationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiRegion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiRegion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiRegion))
+                {
+                    builder.Append("  apiRegion: ");
+                    if (ApiRegion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiRegion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiRegion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subscriptionId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubscriptionResourceId))
+                {
+                    builder.Append("  subscriptionId: ");
+                    builder.AppendLine($"'{SubscriptionResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CallCountSuccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  callCountSuccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CallCountSuccess))
+                {
+                    builder.Append("  callCountSuccess: ");
+                    builder.AppendLine($"{CallCountSuccess.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CallCountBlocked), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  callCountBlocked: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CallCountBlocked))
+                {
+                    builder.Append("  callCountBlocked: ");
+                    builder.AppendLine($"{CallCountBlocked.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CallCountFailed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  callCountFailed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CallCountFailed))
+                {
+                    builder.Append("  callCountFailed: ");
+                    builder.AppendLine($"{CallCountFailed.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CallCountOther), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  callCountOther: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CallCountOther))
+                {
+                    builder.Append("  callCountOther: ");
+                    builder.AppendLine($"{CallCountOther.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CallCountTotal), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  callCountTotal: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CallCountTotal))
+                {
+                    builder.Append("  callCountTotal: ");
+                    builder.AppendLine($"{CallCountTotal.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Bandwidth), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bandwidth: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Bandwidth))
+                {
+                    builder.Append("  bandwidth: ");
+                    builder.AppendLine($"'{Bandwidth.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CacheHitCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cacheHitCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CacheHitCount))
+                {
+                    builder.Append("  cacheHitCount: ");
+                    builder.AppendLine($"{CacheHitCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CacheMissCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cacheMissCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CacheMissCount))
+                {
+                    builder.Append("  cacheMissCount: ");
+                    builder.AppendLine($"{CacheMissCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiTimeAvg), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiTimeAvg: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiTimeAvg))
+                {
+                    builder.Append("  apiTimeAvg: ");
+                    builder.AppendLine($"'{ApiTimeAvg.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiTimeMin), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiTimeMin: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiTimeMin))
+                {
+                    builder.Append("  apiTimeMin: ");
+                    builder.AppendLine($"'{ApiTimeMin.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiTimeMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiTimeMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiTimeMax))
+                {
+                    builder.Append("  apiTimeMax: ");
+                    builder.AppendLine($"'{ApiTimeMax.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceTimeAvg), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceTimeAvg: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceTimeAvg))
+                {
+                    builder.Append("  serviceTimeAvg: ");
+                    builder.AppendLine($"'{ServiceTimeAvg.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceTimeMin), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceTimeMin: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceTimeMin))
+                {
+                    builder.Append("  serviceTimeMin: ");
+                    builder.AppendLine($"'{ServiceTimeMin.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceTimeMax), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceTimeMax: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceTimeMax))
+                {
+                    builder.Append("  serviceTimeMax: ");
+                    builder.AppendLine($"'{ServiceTimeMax.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ReportRecordContract>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ReportRecordContract)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ReportRecordContract IPersistableModel<ReportRecordContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReportRecordContract(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReportRecordContract)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReportRecordContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Linked issue: https://github.com/Azure/azure-rest-api-specs/issues/23951")]
         public async Task List()
         {
             _ = await CreateMoverResource(_moverResourceSet, _virtualNetworkId, _moverResourceName, _targetVnetName);

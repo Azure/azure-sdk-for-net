@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<string> NodeAgentSkuIdProperty;
             public readonly PropertyAccessor<NodePlacementConfiguration> NodePlacementConfigurationProperty;
             public readonly PropertyAccessor<OSDisk> OSDiskProperty;
+            public readonly PropertyAccessor<SecurityProfile> SecurityProfileProperty;
+            public readonly PropertyAccessor<ServiceArtifactReference> ServiceArtifactReferenceProperty;
             public readonly PropertyAccessor<WindowsConfiguration> WindowsConfigurationProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
@@ -46,6 +48,8 @@ namespace Microsoft.Azure.Batch
                 this.NodeAgentSkuIdProperty = this.CreatePropertyAccessor<string>(nameof(NodeAgentSkuId), BindingAccess.Read | BindingAccess.Write);
                 this.NodePlacementConfigurationProperty = this.CreatePropertyAccessor<NodePlacementConfiguration>(nameof(NodePlacementConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.OSDiskProperty = this.CreatePropertyAccessor<OSDisk>(nameof(OSDisk), BindingAccess.Read | BindingAccess.Write);
+                this.SecurityProfileProperty = this.CreatePropertyAccessor<SecurityProfile>(nameof(SecurityProfile), BindingAccess.Read | BindingAccess.Write);
+                this.ServiceArtifactReferenceProperty = this.CreatePropertyAccessor<ServiceArtifactReference>(nameof(ServiceArtifactReference), BindingAccess.Read | BindingAccess.Write);
                 this.WindowsConfigurationProperty = this.CreatePropertyAccessor<WindowsConfiguration>(nameof(WindowsConfiguration), BindingAccess.Read | BindingAccess.Write);
             }
 
@@ -86,6 +90,14 @@ namespace Microsoft.Azure.Batch
                 this.OSDiskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.OsDisk, o => new OSDisk(o)),
                     nameof(OSDisk),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.SecurityProfileProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.SecurityProfile, o => new SecurityProfile(o)),
+                    nameof(SecurityProfile),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.ServiceArtifactReferenceProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ServiceArtifactReference, o => new ServiceArtifactReference(o)),
+                    nameof(ServiceArtifactReference),
                     BindingAccess.Read | BindingAccess.Write);
                 this.WindowsConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.WindowsConfiguration, o => new WindowsConfiguration(o)),
@@ -247,6 +259,28 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets specifies the security profile settings for the virtual machine or virtual machine scale set.
+        /// </summary>
+        public SecurityProfile SecurityProfile
+        {
+            get { return this.propertyContainer.SecurityProfileProperty.Value; }
+            set { this.propertyContainer.SecurityProfileProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets specifies the service artifact reference id used to set same image version for all virtual machines 
+        /// in the scale set when using 'latest' image version.
+        /// </summary>
+        /// <remarks>
+        /// The service artifact reference id in the form of /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}
+        /// </remarks>
+        public ServiceArtifactReference ServiceArtifactReference
+        {
+            get { return this.propertyContainer.ServiceArtifactReferenceProperty.Value; }
+            set { this.propertyContainer.ServiceArtifactReferenceProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets windows operating system settings on the Virtual Machine. This property must not be specified if 
         /// the ImageReference property specifies a Linux OS image.
         /// </summary>
@@ -291,6 +325,8 @@ namespace Microsoft.Azure.Batch
                 NodeAgentSKUId = this.NodeAgentSkuId,
                 NodePlacementConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NodePlacementConfiguration, (o) => o.GetTransportObject()),
                 OsDisk = UtilitiesInternal.CreateObjectWithNullCheck(this.OSDisk, (o) => o.GetTransportObject()),
+                SecurityProfile = UtilitiesInternal.CreateObjectWithNullCheck(this.SecurityProfile, (o) => o.GetTransportObject()),
+                ServiceArtifactReference = UtilitiesInternal.CreateObjectWithNullCheck(this.ServiceArtifactReference, (o) => o.GetTransportObject()),
                 WindowsConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.WindowsConfiguration, (o) => o.GetTransportObject()),
             };
 

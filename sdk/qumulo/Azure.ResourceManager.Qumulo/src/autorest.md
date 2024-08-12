@@ -10,11 +10,15 @@ namespace: Azure.ResourceManager.Qumulo
 require: https://github.com/Azure/azure-rest-api-specs/blob/b73e2d320f1ae530ea5e78625dfe14a921dcf011/specification/liftrqumulo/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 directive:
@@ -29,7 +33,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

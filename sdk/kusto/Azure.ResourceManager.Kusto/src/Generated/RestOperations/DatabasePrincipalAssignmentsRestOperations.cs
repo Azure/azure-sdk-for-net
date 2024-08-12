@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Kusto.Models;
@@ -33,8 +32,25 @@ namespace Azure.ResourceManager.Kusto
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-12-29";
+            _apiVersion = apiVersion ?? "2023-08-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, KustoDatabasePrincipalAssignmentNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/checkPrincipalAssignmentNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, KustoDatabasePrincipalAssignmentNameAvailabilityContent content)
@@ -58,15 +74,15 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Checks that the database principal assignment is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="content"> The name of the resource. </param>
@@ -98,8 +114,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Checks that the database principal assignment is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="content"> The name of the resource. </param>
@@ -130,6 +146,24 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string principalAssignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/principalAssignments/", false);
+            uri.AppendPath(principalAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string principalAssignmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -155,8 +189,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Gets a Kusto cluster database principalAssignment. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
@@ -190,8 +224,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Gets a Kusto cluster database principalAssignment. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
@@ -224,6 +258,24 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string principalAssignmentName, KustoDatabasePrincipalAssignmentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/principalAssignments/", false);
+            uri.AppendPath(principalAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string principalAssignmentName, KustoDatabasePrincipalAssignmentData data)
         {
             var message = _pipeline.CreateMessage();
@@ -246,15 +298,15 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Creates a Kusto cluster database principalAssignment. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
@@ -284,8 +336,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Creates a Kusto cluster database principalAssignment. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
@@ -314,6 +366,24 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string principalAssignmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/principalAssignments/", false);
+            uri.AppendPath(principalAssignmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName, string principalAssignmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -339,8 +409,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Deletes a Kusto principalAssignment. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
@@ -369,8 +439,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Deletes a Kusto principalAssignment. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
@@ -398,6 +468,23 @@ namespace Azure.ResourceManager.Kusto
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Kusto/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/principalAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string clusterName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
@@ -422,8 +509,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Lists all Kusto cluster database principalAssignments. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -453,8 +540,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Lists all Kusto cluster database principalAssignments. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

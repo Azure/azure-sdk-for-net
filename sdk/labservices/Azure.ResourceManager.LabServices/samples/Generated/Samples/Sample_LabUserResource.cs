@@ -8,11 +8,8 @@
 using System;
 using System.Threading.Tasks;
 using System.Xml;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.LabServices;
 using Azure.ResourceManager.LabServices.Models;
 
 namespace Azure.ResourceManager.LabServices.Samples
@@ -141,7 +138,7 @@ namespace Azure.ResourceManager.LabServices.Samples
             // invoke the operation
             LabUserInviteRequestContent content = new LabUserInviteRequestContent()
             {
-                Text = BinaryData.FromString("Invitation to lab testlab"),
+                Text = BinaryData.FromString("\"Invitation to lab testlab\""),
             };
             await labUser.InviteAsync(WaitUntil.Completed, content);
 

@@ -42,6 +42,8 @@ namespace Azure.Maps.Routing
         protected MapsRoutingClient() { }
         public MapsRoutingClient(Azure.AzureKeyCredential credential) { }
         public MapsRoutingClient(Azure.AzureKeyCredential credential, Azure.Maps.Routing.MapsRoutingClientOptions options) { }
+        public MapsRoutingClient(Azure.AzureSasCredential credential) { }
+        public MapsRoutingClient(Azure.AzureSasCredential credential, Azure.Maps.Routing.MapsRoutingClientOptions options) { }
         public MapsRoutingClient(Azure.Core.TokenCredential credential, string clientId) { }
         public MapsRoutingClient(Azure.Core.TokenCredential credential, string clientId, Azure.Maps.Routing.MapsRoutingClientOptions options) { }
         public virtual Azure.Response<Azure.Maps.Routing.Models.RouteDirections> GetDirections(Azure.Maps.Routing.RouteDirectionQuery query, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -120,7 +122,7 @@ namespace Azure.Maps.Routing
         public Azure.Maps.Routing.RouteDirectionParameters RouteDirectionParameters { get { throw null; } set { } }
         public Azure.Maps.Routing.RouteRepresentationForBestOrder? RouteRepresentationForBestOrder { get { throw null; } set { } }
         public Azure.Maps.Routing.RouteType? RouteType { get { throw null; } set { } }
-        public Azure.Maps.Routing.SectionType? SectionFilter { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Maps.Routing.SectionType> SectionFilter { get { throw null; } }
         public bool? ShouldReportEffectiveSettings { get { throw null; } set { } }
         public Azure.Maps.Routing.TravelMode? TravelMode { get { throw null; } set { } }
         public Azure.Maps.Routing.TravelTimeType? TravelTimeType { get { throw null; } set { } }
@@ -181,7 +183,7 @@ namespace Azure.Maps.Routing
         public Azure.Maps.Routing.InclineLevel? InclineLevel { get { throw null; } set { } }
         public Azure.Maps.Routing.RouteMatrixQuery Query { get { throw null; } }
         public Azure.Maps.Routing.RouteType? RouteType { get { throw null; } set { } }
-        public Azure.Maps.Routing.SectionType? SectionFilter { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Maps.Routing.SectionType> SectionFilter { get { throw null; } }
         public Azure.Maps.Routing.TravelMode? TravelMode { get { throw null; } set { } }
         public Azure.Maps.Routing.TravelTimeType? TravelTimeType { get { throw null; } set { } }
         public bool? UseTrafficData { get { throw null; } set { } }
@@ -636,6 +638,23 @@ namespace Azure.Maps.Routing.Models
         public static bool operator !=(Azure.Maps.Routing.Models.JunctionType left, Azure.Maps.Routing.Models.JunctionType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class MapsRoutingModelFactory
+    {
+        public static Azure.Maps.Routing.Models.EffectiveSetting EffectiveSetting(string key = null, string value = null) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteData RouteData(Azure.Maps.Routing.Models.RouteSummary summary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteLeg> legs = null, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteSection> sections = null, Azure.Maps.Routing.Models.RouteGuidance guidance = null) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteDirections RouteDirections(string formatVersion = null, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteData> routes = null, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteOptimizedWaypoint> optimizedWaypoints = null, Azure.Maps.Routing.Models.RouteReport report = null) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteGuidance RouteGuidance(System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteInstruction> instructions = null, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteInstructionGroup> instructionGroups = null) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteInstructionGroup RouteInstructionGroup(int? firstInstructionIndex = default(int?), int? lastInstructionIndex = default(int?), int? groupLengthInMeters = default(int?), string groupMessage = null) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteLegSummary RouteLegSummary(int? lengthInMeters = default(int?), int? travelTimeInSeconds = default(int?), int? trafficDelayInSeconds = default(int?), System.DateTimeOffset? departureTime = default(System.DateTimeOffset?), System.DateTimeOffset? arrivalTime = default(System.DateTimeOffset?), int? noTrafficTravelTimeInSeconds = default(int?), int? historicTrafficTravelTimeInSeconds = default(int?), int? liveTrafficIncidentsTravelTimeInSeconds = default(int?), double? fuelConsumptionInLiters = default(double?), double? batteryConsumptionInKwH = default(double?)) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteMatrixResult RouteMatrixResult(string formatVersion = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteMatrix>> matrix = null, Azure.Maps.Routing.Models.RouteMatrixSummary summary = null) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteMatrixSummary RouteMatrixSummary(int? successfulRoutes = default(int?), int? totalRoutes = default(int?)) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteOptimizedWaypoint RouteOptimizedWaypoint(int? providedIndex = default(int?), int? optimizedIndex = default(int?)) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteRangeResult RouteRangeResult(string formatVersion = null, Azure.Maps.Routing.Models.RouteRange reachableRange = null, Azure.Maps.Routing.Models.RouteReport report = null) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteReport RouteReport(System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.EffectiveSetting> effectiveSettings = null) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteSection RouteSection(int? startPointIndex = default(int?), int? endPointIndex = default(int?), Azure.Maps.Routing.Models.ResponseSectionType? sectionType = default(Azure.Maps.Routing.Models.ResponseSectionType?), Azure.Maps.Routing.Models.ResponseTravelMode? travelMode = default(Azure.Maps.Routing.Models.ResponseTravelMode?), Azure.Maps.Routing.Models.TrafficIncidentCategory? simpleCategory = default(Azure.Maps.Routing.Models.TrafficIncidentCategory?), int? effectiveSpeedInKmh = default(int?), int? delayInSeconds = default(int?), Azure.Maps.Routing.Models.DelayMagnitude? delayMagnitude = default(Azure.Maps.Routing.Models.DelayMagnitude?), Azure.Maps.Routing.Models.RouteSectionTec tec = null) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteSectionTec RouteSectionTec(int? effectCode = default(int?), System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteSectionTecCause> causes = null) { throw null; }
+        public static Azure.Maps.Routing.Models.RouteSectionTecCause RouteSectionTecCause(int? mainCauseCode = default(int?), int? subCauseCode = default(int?)) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResponseSectionType : System.IEquatable<Azure.Maps.Routing.Models.ResponseSectionType>
     {
@@ -736,7 +755,7 @@ namespace Azure.Maps.Routing.Models
         public int? PointIndex { get { throw null; } }
         public bool? PossibleCombineWithNext { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RoadNumbers { get { throw null; } }
-        public string RoundaboutExitNumber { get { throw null; } }
+        public long? RoundaboutExitNumber { get { throw null; } }
         public int? RouteOffsetInMeters { get { throw null; } }
         public string SignpostText { get { throw null; } }
         public string StateCode { get { throw null; } }
@@ -790,23 +809,6 @@ namespace Azure.Maps.Routing.Models
         internal RouteMatrixSummary() { }
         public int? SuccessfulRoutes { get { throw null; } }
         public int? TotalRoutes { get { throw null; } }
-    }
-    public static partial class RouteModelFactory
-    {
-        public static Azure.Maps.Routing.Models.EffectiveSetting EffectiveSetting(string key = null, string value = null) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteData RouteData(Azure.Maps.Routing.Models.RouteSummary summary = null, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteLeg> legs = null, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteSection> sections = null, Azure.Maps.Routing.Models.RouteGuidance guidance = null) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteDirections RouteDirections(string formatVersion = null, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteData> routes = null, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteOptimizedWaypoint> optimizedWaypoints = null, Azure.Maps.Routing.Models.RouteReport report = null) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteGuidance RouteGuidance(System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteInstruction> instructions = null, System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteInstructionGroup> instructionGroups = null) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteInstructionGroup RouteInstructionGroup(int? firstInstructionIndex = default(int?), int? lastInstructionIndex = default(int?), int? groupLengthInMeters = default(int?), string groupMessage = null) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteLegSummary RouteLegSummary(int? lengthInMeters = default(int?), int? travelTimeInSeconds = default(int?), int? trafficDelayInSeconds = default(int?), System.DateTimeOffset? departureTime = default(System.DateTimeOffset?), System.DateTimeOffset? arrivalTime = default(System.DateTimeOffset?), int? noTrafficTravelTimeInSeconds = default(int?), int? historicTrafficTravelTimeInSeconds = default(int?), int? liveTrafficIncidentsTravelTimeInSeconds = default(int?), double? fuelConsumptionInLiters = default(double?), double? batteryConsumptionInKwH = default(double?)) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteMatrixResult RouteMatrixResult(string formatVersion = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<Azure.Maps.Routing.Models.RouteMatrix>> matrix = null, Azure.Maps.Routing.Models.RouteMatrixSummary summary = null) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteMatrixSummary RouteMatrixSummary(int? successfulRoutes = default(int?), int? totalRoutes = default(int?)) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteOptimizedWaypoint RouteOptimizedWaypoint(int? providedIndex = default(int?), int? optimizedIndex = default(int?)) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteRangeResult RouteRangeResult(string formatVersion = null, Azure.Maps.Routing.Models.RouteRange reachableRange = null, Azure.Maps.Routing.Models.RouteReport report = null) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteReport RouteReport(System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.EffectiveSetting> effectiveSettings = null) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteSection RouteSection(int? startPointIndex = default(int?), int? endPointIndex = default(int?), Azure.Maps.Routing.Models.ResponseSectionType? sectionType = default(Azure.Maps.Routing.Models.ResponseSectionType?), Azure.Maps.Routing.Models.ResponseTravelMode? travelMode = default(Azure.Maps.Routing.Models.ResponseTravelMode?), Azure.Maps.Routing.Models.TrafficIncidentCategory? simpleCategory = default(Azure.Maps.Routing.Models.TrafficIncidentCategory?), int? effectiveSpeedInKmh = default(int?), int? delayInSeconds = default(int?), Azure.Maps.Routing.Models.DelayMagnitude? delayMagnitude = default(Azure.Maps.Routing.Models.DelayMagnitude?), Azure.Maps.Routing.Models.RouteSectionTec tec = null) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteSectionTec RouteSectionTec(int? effectCode = default(int?), System.Collections.Generic.IEnumerable<Azure.Maps.Routing.Models.RouteSectionTecCause> causes = null) { throw null; }
-        public static Azure.Maps.Routing.Models.RouteSectionTecCause RouteSectionTecCause(int? mainCauseCode = default(int?), int? subCauseCode = default(int?)) { throw null; }
     }
     public partial class RouteOptimizedWaypoint
     {

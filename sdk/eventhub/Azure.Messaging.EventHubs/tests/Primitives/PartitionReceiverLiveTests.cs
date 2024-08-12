@@ -1943,11 +1943,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
                 // Properties
 
-                Assert.That(readMessage.Properties.AbsoluteExpiryTime, Is.EqualTo(message.Properties.AbsoluteExpiryTime), "The expiry time should match.");
+                Assert.That(readMessage.Properties.AbsoluteExpiryTime, Is.EqualTo(readMessage.Properties.CreationTime + message.Header.TimeToLive), "The expiry time should be equal to the computed creation time plus the time to live.");
                 Assert.That(readMessage.Properties.ContentEncoding, Is.EqualTo(message.Properties.ContentEncoding), "The content encoding should match.");
                 Assert.That(readMessage.Properties.ContentType, Is.EqualTo(message.Properties.ContentType), "The content type should match.");
                 Assert.That(readMessage.Properties.CorrelationId, Is.EqualTo(message.Properties.CorrelationId), "The correlation identifier should match.");
-                Assert.That(readMessage.Properties.CreationTime, Is.EqualTo(message.Properties.CreationTime), "The creation time should match.");
+                Assert.That(readMessage.Properties.CreationTime, Is.EqualTo(readMessage.Properties.AbsoluteExpiryTime - message.Header.TimeToLive), "The creation time should be equal to the difference of the expiry time and time to live.");
                 Assert.That(readMessage.Properties.GroupId, Is.EqualTo(message.Properties.GroupId), "The group identifier should match.");
                 Assert.That(readMessage.Properties.GroupSequence, Is.EqualTo(message.Properties.GroupSequence), "The group sequence should match.");
                 Assert.That(readMessage.Properties.MessageId, Is.EqualTo(message.Properties.MessageId), "The message identifier should match.");

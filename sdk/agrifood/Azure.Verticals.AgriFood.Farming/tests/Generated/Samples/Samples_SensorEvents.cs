@@ -6,27 +6,39 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_SensorEvents
+    public partial class Samples_SensorEvents
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSensorEvents()
+        public void Example_GetSensorEvents_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorEventsClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient();
 
-            Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>");
+            Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSensorEvents_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient();
+
+            Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", null, null, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].ToString());
@@ -36,10 +48,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSensorEvents_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorEventsClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient();
 
-            Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, true);
+            Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), true, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorId").ToString());
@@ -48,32 +61,20 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("boundaryId").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("eventDateTime").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("ingestionDateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("measures").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("measures").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("skipToken").ToString());
             Console.WriteLine(result.GetProperty("nextLink").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSensorEvents_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorEventsClient("2022-11-01-preview");
-
-            Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSensorEvents_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetSensorEventsClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            SensorEvents client = new FarmBeatsClient(endpoint, credential).GetSensorEventsClient();
 
-            Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, true);
+            Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), true, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorId").ToString());
@@ -82,7 +83,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("boundaryId").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("eventDateTime").ToString());
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("ingestionDateTime").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("measures").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("measures").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("skipToken").ToString());
             Console.WriteLine(result.GetProperty("nextLink").ToString());
         }

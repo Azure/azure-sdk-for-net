@@ -8,7 +8,7 @@ namespace Azure.Identity
 {
     internal class AppServiceManagedIdentitySource : ManagedIdentitySource
     {
-        // MSI Constants. Docs for MSI are available here https://docs.microsoft.com/azure/app-service/overview-managed-identity
+        // MSI Constants. Docs for MSI are available here https://learn.microsoft.com/azure/app-service/overview-managed-identity
         protected virtual string AppServiceMsiApiVersion { get { throw new NotImplementedException(); } }
         protected virtual string SecretHeaderName { get { throw new NotImplementedException(); } }
         protected virtual string ClientIdHeaderName { get { throw new NotImplementedException(); } }

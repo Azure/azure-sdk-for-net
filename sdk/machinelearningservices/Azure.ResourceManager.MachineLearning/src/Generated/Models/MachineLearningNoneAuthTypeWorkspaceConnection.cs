@@ -5,24 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningNoneAuthTypeWorkspaceConnection. </summary>
     public partial class MachineLearningNoneAuthTypeWorkspaceConnection : MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningNoneAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>. </summary>
         public MachineLearningNoneAuthTypeWorkspaceConnection()
         {
             AuthType = MachineLearningConnectionAuthType.None;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningNoneAuthTypeWorkspaceConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
+        /// <param name="expiryOn"></param>
+        /// <param name="metadata"> Any object. </param>
         /// <param name="target"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        internal MachineLearningNoneAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, string target, string value, MachineLearningValueFormat? valueFormat) : base(authType, category, target, value, valueFormat)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningNoneAuthTypeWorkspaceConnection(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, DateTimeOffset? expiryOn, BinaryData metadata, string target, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, category, expiryOn, metadata, target, serializedAdditionalRawData)
         {
             AuthType = authType;
         }

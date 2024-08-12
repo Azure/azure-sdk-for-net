@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         private const string StandardValue = "Standard";
+        private const string FreeValue = "Free";
 
         /// <summary> Standard. </summary>
         public static PurviewAccountSkuName Standard { get; } = new PurviewAccountSkuName(StandardValue);
+        /// <summary> Free. </summary>
+        public static PurviewAccountSkuName Free { get; } = new PurviewAccountSkuName(FreeValue);
         /// <summary> Determines if two <see cref="PurviewAccountSkuName"/> values are the same. </summary>
         public static bool operator ==(PurviewAccountSkuName left, PurviewAccountSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PurviewAccountSkuName"/> values are not the same. </summary>
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

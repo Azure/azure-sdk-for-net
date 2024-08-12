@@ -58,9 +58,11 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             backendCreateParameters.Uri = new Uri(urlParameter);
             backendCreateParameters.Protocol = BackendProtocol.Http;
             backendCreateParameters.Description = Recording.GenerateAssetName("description");
-            backendCreateParameters.Tls = new BackendTlsProperties(
-                shouldValidateCertificateChain: true,
-                shouldValidateCertificateName: true);
+            backendCreateParameters.Tls = new BackendTlsProperties()
+            {
+                ShouldValidateCertificateChain = true,
+                ShouldValidateCertificateName = true,
+            };
             backendCreateParameters.Credentials = new BackendCredentialsContract();
             backendCreateParameters.Credentials.Authorization = new BackendAuthorizationHeaderCredentials("basic", "opensemame");
             backendCreateParameters.Credentials.Query.Add("sv", new List<string> { "xx", "bb", "cc" });

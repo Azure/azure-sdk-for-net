@@ -12,7 +12,7 @@ Use the client library for Azure Service Bus to:
 
 - Implement complex workflows: message sessions support scenarios that require message ordering or message deferral.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus) | [Product documentation](https://docs.microsoft.com/azure/service-bus/) | [Migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide.md) | [Troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/TROUBLESHOOTING.md)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Messaging.ServiceBus/) | [API reference documentation](https://docs.microsoft.com/dotnet/api/azure.messaging.servicebus) | [Product documentation](https://docs.microsoft.com/azure/service-bus/) | [Migration guide (Microsoft.Azure.ServiceBus)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide.md) | [Migration guide (WindowsAzure.ServiceBus)](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/MigrationGuide_WindowsAzureServiceBus.md) | [Troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/TROUBLESHOOTING.md)
 
 ## Getting started
 
@@ -26,9 +26,9 @@ Use the client library for Azure Service Bus to:
 
   Visual Studio users wishing to take full advantage of the C# 8.0 syntax will need to use Visual Studio 2019 or later.  Visual Studio 2019, including the free Community edition, can be downloaded [here](https://visualstudio.microsoft.com).  Users of Visual Studio 2017 can take advantage of the C# 8 syntax by making use of the [Microsoft.Net.Compilers NuGet package](https://www.nuget.org/packages/Microsoft.Net.Compilers/) and setting the language version, though the editing experience may not be ideal.
 
-  You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).  
+  You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).
 
-  **Important Note:** In order to build or run the [examples](#examples) and the [samples](#next-steps) without modification, use of C# 8.0 is mandatory.  You can still run the samples if you decide to tweak them for other language versions.  
+  **Important Note:** In order to build or run the [examples](#examples) and the [samples](#next-steps) without modification, use of C# 8.0 is mandatory.  You can still run the samples if you decide to tweak them for other language versions.
 
 To quickly create the needed Service Bus resources in Azure and to receive a connection string for them, you can deploy our sample template by clicking:
 
@@ -94,9 +94,9 @@ For more concepts and deeper discussion, see: [Service Bus Advanced Features](ht
 
 ### Client lifetime
 
-The `ServiceBusClient`, senders, receivers, and processors are safe to cache and use as a singleton for the lifetime of the application, which is best practice when messages are being sent or received regularly. They are responsible for efficient management of network, CPU, and memory use, working to keep usage low during periods of inactivity. 
+The `ServiceBusClient`, senders, receivers, and processors are safe to cache and use as a singleton for the lifetime of the application, which is best practice when messages are being sent or received regularly. They are responsible for efficient management of network, CPU, and memory use, working to keep usage low during periods of inactivity.
 
-These types are disposable and calling either `DisposeAsync` or `CloseAsync` is required to ensure that network resources and other unmanaged objects are properly cleaned up.  It is important to note that when a `ServiceBusClient` instance is disposed, it will automatically close and cleanup any senders, receivers, and processors that were created using it.
+These types are disposable and calling either `DisposeAsync` or `CloseAsync` is required to ensure that network resources and other unmanaged objects are properly cleaned up.  It is important to note that when a `ServiceBusClient` instance is disposed, the underlying AMQP connection is closed, therefore any senders, receivers, and processors that were created using it can no longer be used, whether or not the senders, receivers, and processors were explicitly closed. The best practice is to close the senders, receivers, and processors to ensure cleanup of the AMQP links, and then to close the `ServiceBusClient` to ensure the AMQP connection is closed.
 
 ### Thread safety
 
@@ -106,22 +106,35 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 <!-- CLIENT COMMON BAR -->
 [Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) | [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) 
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking)
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
 
-* [Send and receive a message](#send-and-receive-a-message)
-* [Sending a batch of messages](#sending-a-batch-of-messages)
-* [Receiving a batch of messages](#receiving-a-batch-of-messages)
-* [Complete a message](#complete-a-message)
-* [Abandon a message](#abandon-a-message)
-* [Defer a message](#defer-a-message)
-* [Dead letter a message](#dead-letter-a-message)
-* [Using the processor](#using-the-processor)
-* [Authenticating with Azure.Identity](#authenticating-with-azureidentity)
-* [Working with sessions](#working-with-sessions)
-* [More samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/README.md)
+- [Azure Service Bus client library for .NET](#azure-service-bus-client-library-for-net)
+  - [Getting started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Install the package](#install-the-package)
+    - [Authenticate the client](#authenticate-the-client)
+  - [Key concepts](#key-concepts)
+    - [Client lifetime](#client-lifetime)
+    - [Thread safety](#thread-safety)
+    - [Additional concepts](#additional-concepts)
+  - [Examples](#examples)
+    - [Send and receive a message](#send-and-receive-a-message)
+    - [Sending a batch of messages](#sending-a-batch-of-messages)
+    - [Receiving a batch of messages](#receiving-a-batch-of-messages)
+    - [Complete a message](#complete-a-message)
+    - [Abandon a message](#abandon-a-message)
+    - [Defer a message](#defer-a-message)
+    - [Dead letter a message](#dead-letter-a-message)
+    - [Using the Processor](#using-the-processor)
+    - [Authenticating with Azure.Identity](#authenticating-with-azureidentity)
+    - [Registering with ASP.NET Core dependency injection](#registering-with-aspnet-core-dependency-injection)
+    - [Working with Sessions](#working-with-sessions)
+  - [Troubleshooting](#troubleshooting)
+  - [Next steps](#next-steps)
+  - [Contributing](#contributing)
 
 ### Send and receive a message
 
@@ -388,6 +401,13 @@ string fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
 await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ```
 
+### Working with Sessions
+
+[Sessions](https://docs.microsoft.com/azure/service-bus-messaging/message-sessions) provide a mechanism for grouping related messages. In order to use sessions, you need to be working with a session-enabled entity.
+
+- [Sending and receiving session messages](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample03_SendReceiveSessions.md)
+- [Using the session processor](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample05_SessionProcessor.md)
+
 ### Registering with ASP.NET Core dependency injection
 
 To inject `ServiceBusClient` as a dependency in an ASP.NET Core app, install the Azure client library integration for ASP.NET Core package.
@@ -396,60 +416,95 @@ To inject `ServiceBusClient` as a dependency in an ASP.NET Core app, install the
 dotnet add package Microsoft.Extensions.Azure
 ```
 
-Then register the client in the `Startup.ConfigureServices` method:
+Then register the client where your services are configured.  For ASP.NET Core applications, this is often directly in `Program.cs` or the  `StartupConfigureServices` method:
 
-```csharp
+```C# Snippet:DependencyInjectionRegisterClient
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddAzureClients(builder =>
     {
-        builder.AddServiceBusClient(Configuration.GetConnectionString("ServiceBus"));
+        builder.AddServiceBusClient("<< SERVICE BUS CONNECTION STRING >>");
     });
-  
-    services.AddControllers();
-}
-```
 
-To use the preceding code, add this to the configuration for your application:
-
-```json
-{
-  "ConnectionStrings": {
-    "ServiceBus": "<connection_string>"
-  }
+    // Register other services, controllers, and other infrastructure.
 }
 ```
 
 For applications that prefer using a shared `Azure.Identity` credential for their clients, registration looks slightly different:
 
-```csharp
-var fullyQualifiedNamespace = "yournamespace.servicebus.windows.net";
-
+```C# Snippet:DependencyInjectionRegisterClientWithIdentity
 public void ConfigureServices(IServiceCollection services)
+ {
+     services.AddAzureClients(builder =>
+     {
+         // This will register the ServiceBusClient using an Azure Identity credential.
+         builder.AddServiceBusClientWithNamespace("<< YOUR NAMESPACE >>.servicebus.windows.net");
+
+         // By default, DefaultAzureCredential is used, which is likely desired for most
+         // scenarios. If you need to restrict to a specific credential instance, you could
+         // register that instance as the default credential instead.
+         builder.UseCredential(new ManagedIdentityCredential());
+     });
+
+     // Register other services, controllers, and other infrastructure.
+ }
+```
+
+It is also possible to register sub-clients, such as `ServiceBusSender` and `ServiceBusReceiver` with DI using the registered `ServiceBusClient` instance.  For example, to register a sender for each queue that belongs to the namespace:
+
+```C# Snippet:DependencyInjectionRegisterSubClients
+public async Task ConfigureServicesAsync(IServiceCollection services)
 {
+    // Query the available queues for the Service Bus namespace.
+    var adminClient = new ServiceBusAdministrationClient("<< SERVICE BUS CONNECTION STRING >>");
+    var queueNames = new List<string>();
+
+    // Because the result is async, they need to be captured to a standard list to avoid async
+    // calls when registering.  Failure to do so results in an error with the services collection.
+    await foreach (var queue in adminClient.GetQueuesAsync())
+    {
+        queueNames.Add(queue.Name);
+    }
+
+    // After registering the ServiceBusClient, register a named factory for each
+    // queue.  This allows them to be lazily created and managed as singleton instances.
+
     services.AddAzureClients(builder =>
     {
-        // This will register the ServiceBusClient using the default credential.
-        builder.AddServiceBusClientWithNamespace(fullyQualifiedNamespace);
+        builder.AddServiceBusClient("<< SERVICE BUS CONNECTION STRING >>");
 
-        // By default, DefaultAzureCredential is used, which is likely desired for most
-        // scenarios. If you need to restrict to a specific credential instance, you could
-        // register that instance as the default credential instead.
-        builder.UseCredential(new ManagedIdentityCredential());
+        foreach (var queueName in queueNames)
+        {
+            builder.AddClient<ServiceBusSender, ServiceBusClientOptions>((_, _, provider) =>
+                provider
+                    .GetService<ServiceBusClient>()
+                    .CreateSender(queueName)
+            )
+            .WithName(queueName);
+        }
     });
-  
-    services.AddControllers();
+
+    // Register other services, controllers, and other infrastructure.
 }
 ```
 
-For more details, see [Dependency injection with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/dependency-injection).
+Because the senders are named for their associated queue, when injecting, you don't bind to them directly.  Instead, you'll bind to a factory that can be used to retrieve the named sender:
 
-### Working with Sessions
+```C# Snippet:DependencyInjectionBindToNamedSubClients
+public class ServiceBusSendingController : ControllerBase
+{
+    private readonly ServiceBusSender _sender;
 
-[Sessions](https://docs.microsoft.com/azure/service-bus-messaging/message-sessions) provide a mechanism for grouping related messages. In order to use sessions, you need to be working with a session-enabled entity.
+    public ServiceBusSendingController(IAzureClientFactory<ServiceBusSender> serviceBusSenderFactory)
+    {
+        // Though the method is called "CreateClient", the factory will manage the sender as a
+        // singleton, creating a new instance only on the first use.
+        _sender = serviceBusSenderFactory.CreateClient("<< QUEUE NAME >>");
+    }
+}
+```
 
-- [Sending and receiving session messages](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample03_SendReceiveSessions.md)
-- [Using the session processor](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample05_SessionProcessor.md)
+For more details and examples, see [Dependency injection with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection).
 
 ## Troubleshooting
 

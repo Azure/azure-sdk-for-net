@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -33,8 +32,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-29-preview";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string globalRulestackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/certificates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string globalRulestackName)
@@ -59,7 +69,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateObjectGlobalRulestackResourceListResult>> ListAsync(string globalRulestackName, CancellationToken cancellationToken = default)
+        public async Task<Response<GlobalRulestackCertificateObjectListResult>> ListAsync(string globalRulestackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
@@ -69,9 +79,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        CertificateObjectGlobalRulestackResourceListResult value = default;
+                        GlobalRulestackCertificateObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateObjectGlobalRulestackResourceListResult.DeserializeCertificateObjectGlobalRulestackResourceListResult(document.RootElement);
+                        value = GlobalRulestackCertificateObjectListResult.DeserializeGlobalRulestackCertificateObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateObjectGlobalRulestackResourceListResult> List(string globalRulestackName, CancellationToken cancellationToken = default)
+        public Response<GlobalRulestackCertificateObjectListResult> List(string globalRulestackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
@@ -94,14 +104,26 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        CertificateObjectGlobalRulestackResourceListResult value = default;
+                        GlobalRulestackCertificateObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateObjectGlobalRulestackResourceListResult.DeserializeCertificateObjectGlobalRulestackResourceListResult(document.RootElement);
+                        value = GlobalRulestackCertificateObjectListResult.DeserializeGlobalRulestackCertificateObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string globalRulestackName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string globalRulestackName, string name)
@@ -128,7 +150,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateObjectGlobalRulestackResourceData>> GetAsync(string globalRulestackName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<GlobalRulestackCertificateObjectData>> GetAsync(string globalRulestackName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -139,13 +161,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        CertificateObjectGlobalRulestackResourceData value = default;
+                        GlobalRulestackCertificateObjectData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateObjectGlobalRulestackResourceData.DeserializeCertificateObjectGlobalRulestackResourceData(document.RootElement);
+                        value = GlobalRulestackCertificateObjectData.DeserializeGlobalRulestackCertificateObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateObjectGlobalRulestackResourceData)null, message.Response);
+                    return Response.FromValue((GlobalRulestackCertificateObjectData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -157,7 +179,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateObjectGlobalRulestackResourceData> Get(string globalRulestackName, string name, CancellationToken cancellationToken = default)
+        public Response<GlobalRulestackCertificateObjectData> Get(string globalRulestackName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -168,19 +190,31 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        CertificateObjectGlobalRulestackResourceData value = default;
+                        GlobalRulestackCertificateObjectData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateObjectGlobalRulestackResourceData.DeserializeCertificateObjectGlobalRulestackResourceData(document.RootElement);
+                        value = GlobalRulestackCertificateObjectData.DeserializeGlobalRulestackCertificateObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateObjectGlobalRulestackResourceData)null, message.Response);
+                    return Response.FromValue((GlobalRulestackCertificateObjectData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string globalRulestackName, string name, CertificateObjectGlobalRulestackResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string globalRulestackName, string name, GlobalRulestackCertificateObjectData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string globalRulestackName, string name, GlobalRulestackCertificateObjectData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -196,7 +230,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -209,7 +243,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string globalRulestackName, string name, CertificateObjectGlobalRulestackResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string globalRulestackName, string name, GlobalRulestackCertificateObjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -234,7 +268,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string globalRulestackName, string name, CertificateObjectGlobalRulestackResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string globalRulestackName, string name, GlobalRulestackCertificateObjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -250,6 +284,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string globalRulestackName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/", false);
+            uri.AppendPath(globalRulestackName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string globalRulestackName, string name)
@@ -318,6 +364,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string globalRulestackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string globalRulestackName)
         {
             var message = _pipeline.CreateMessage();
@@ -338,7 +392,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateObjectGlobalRulestackResourceListResult>> ListNextPageAsync(string nextLink, string globalRulestackName, CancellationToken cancellationToken = default)
+        public async Task<Response<GlobalRulestackCertificateObjectListResult>> ListNextPageAsync(string nextLink, string globalRulestackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
@@ -349,9 +403,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        CertificateObjectGlobalRulestackResourceListResult value = default;
+                        GlobalRulestackCertificateObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateObjectGlobalRulestackResourceListResult.DeserializeCertificateObjectGlobalRulestackResourceListResult(document.RootElement);
+                        value = GlobalRulestackCertificateObjectListResult.DeserializeGlobalRulestackCertificateObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -365,7 +419,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateObjectGlobalRulestackResourceListResult> ListNextPage(string nextLink, string globalRulestackName, CancellationToken cancellationToken = default)
+        public Response<GlobalRulestackCertificateObjectListResult> ListNextPage(string nextLink, string globalRulestackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
@@ -376,9 +430,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        CertificateObjectGlobalRulestackResourceListResult value = default;
+                        GlobalRulestackCertificateObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateObjectGlobalRulestackResourceListResult.DeserializeCertificateObjectGlobalRulestackResourceListResult(document.RootElement);
+                        value = GlobalRulestackCertificateObjectListResult.DeserializeGlobalRulestackCertificateObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

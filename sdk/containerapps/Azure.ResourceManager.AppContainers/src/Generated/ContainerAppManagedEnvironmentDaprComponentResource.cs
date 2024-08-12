@@ -9,23 +9,26 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppContainers.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppManagedEnvironmentDaprComponent along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppManagedEnvironmentDaprComponentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppManagedEnvironmentDaprComponentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource" /> using the GetContainerAppManagedEnvironmentDaprComponent method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppManagedEnvironmentDaprComponentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppManagedEnvironmentResource"/> using the GetContainerAppManagedEnvironmentDaprComponent method.
     /// </summary>
     public partial class ContainerAppManagedEnvironmentDaprComponentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="environmentName"> The environmentName. </param>
+        /// <param name="componentName"> The componentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string environmentName, string componentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}";
@@ -36,12 +39,15 @@ namespace Azure.ResourceManager.AppContainers
         private readonly DaprComponentsRestOperations _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient;
         private readonly ContainerAppDaprComponentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/daprComponents";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> class for mocking. </summary>
         protected ContainerAppManagedEnvironmentDaprComponentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppManagedEnvironmentDaprComponentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDaprComponentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppManagedEnvironmentDaprComponentResource(ArmClient client, ContainerAppDaprComponentData data) : this(client, data.Id)
@@ -62,9 +68,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/daprComponents";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +101,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>DaprComponents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +140,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DaprComponents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,6 +181,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>DaprComponents_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -173,7 +200,9 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(response);
+                var uri = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -196,6 +225,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>DaprComponents_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -207,7 +244,9 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppContainersArmOperation(response);
+                var uri = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -230,6 +269,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>DaprComponents_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -245,7 +292,9 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = await _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentDaprComponentResource>(Response.FromValue(new ContainerAppManagedEnvironmentDaprComponentResource(Client, response), response.GetRawResponse()));
+                var uri = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentDaprComponentResource>(Response.FromValue(new ContainerAppManagedEnvironmentDaprComponentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -268,6 +317,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>DaprComponents_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -283,7 +340,9 @@ namespace Azure.ResourceManager.AppContainers
             try
             {
                 var response = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentDaprComponentResource>(Response.FromValue(new ContainerAppManagedEnvironmentDaprComponentResource(Client, response), response.GetRawResponse()));
+                var uri = _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppContainersArmOperation<ContainerAppManagedEnvironmentDaprComponentResource>(Response.FromValue(new ContainerAppManagedEnvironmentDaprComponentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -306,14 +365,22 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>DaprComponents_ListSecrets</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppDaprSecret" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppDaprSecret"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppDaprSecret> GetSecretsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppDaprSecret.DeserializeContainerAppDaprSecret, _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDaprComponentResource.GetSecrets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ContainerAppDaprSecret.DeserializeContainerAppDaprSecret(e), _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDaprComponentResource.GetSecrets", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -327,14 +394,22 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>DaprComponents_ListSecrets</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDaprComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppDaprSecret" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppDaprSecret"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppDaprSecret> GetSecrets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentDaprComponentDaprComponentsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppDaprSecret.DeserializeContainerAppDaprSecret, _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDaprComponentResource.GetSecrets", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ContainerAppDaprSecret.DeserializeContainerAppDaprSecret(e), _containerAppManagedEnvironmentDaprComponentDaprComponentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentDaprComponentResource.GetSecrets", "value", null, cancellationToken);
         }
     }
 }

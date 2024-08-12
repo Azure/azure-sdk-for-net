@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Batch
 {
     /// <summary>
     /// A Class representing a BatchApplication along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BatchApplicationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBatchApplicationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BatchAccountResource" /> using the GetBatchApplication method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BatchApplicationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBatchApplicationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BatchAccountResource"/> using the GetBatchApplication method.
     /// </summary>
     public partial class BatchApplicationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BatchApplicationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="applicationName"> The applicationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string applicationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/applications/{applicationName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Batch
         private readonly ApplicationRestOperations _batchApplicationApplicationRestClient;
         private readonly BatchApplicationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts/applications";
+
         /// <summary> Initializes a new instance of the <see cref="BatchApplicationResource"/> class for mocking. </summary>
         protected BatchApplicationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BatchApplicationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BatchApplicationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BatchApplicationResource(ArmClient client, BatchApplicationData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Batch
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts/applications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An object representing collection of BatchApplicationPackageResources and their operations over a BatchApplicationPackageResource. </returns>
         public virtual BatchApplicationPackageCollection GetBatchApplicationPackages()
         {
-            return GetCachedClient(Client => new BatchApplicationPackageCollection(Client, Id));
+            return GetCachedClient(client => new BatchApplicationPackageCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +106,20 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>ApplicationPackage_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchApplicationPackageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionName"> The version of the application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BatchApplicationPackageResource>> GetBatchApplicationPackageAsync(string versionName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +137,20 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>ApplicationPackage_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchApplicationPackageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionName"> The version of the application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BatchApplicationPackageResource> GetBatchApplicationPackage(string versionName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +167,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Application_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +208,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Application_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -214,6 +248,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Application_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -225,7 +267,9 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = await _batchApplicationApplicationRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchArmOperation(response);
+                var uri = _batchApplicationApplicationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BatchArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -248,6 +292,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>Application_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -259,7 +311,9 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = _batchApplicationApplicationRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new BatchArmOperation(response);
+                var uri = _batchApplicationApplicationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BatchArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -281,6 +335,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Application_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,6 +377,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Application_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

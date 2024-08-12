@@ -1,21 +1,41 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0 (2024-08-01)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-2023-02' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/07d286359f828bbc7901e86288a5d62b48ae2052/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/readme.md.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Added Bicep serialization.
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.41.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
+
+## 1.2.0-beta.1 (2023-12-01)
+
+### Features Added
+
+- Track 2 initial commit for ArcVm resources.
+
+## 1.1.0 (2023-11-27)
+
+### Features Added
+
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.0.2 (2023-05-31)
 
 ### Feature Added
 
 - Upgraded API version to 2023-02-01.
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ## 1.0.1 (2023-02-16)
 
@@ -62,7 +82,7 @@ Polishing since last public beta release:
 
 ### Features Added
 
-- Enable write on ArcInstanceResourceGroup.
+- Enabled write on ArcInstanceResourceGroup.
 - Add patch for arcSettings.
 - Created clusterIdentity and arcIdentity that is the identity created/used for cluster registration.
 

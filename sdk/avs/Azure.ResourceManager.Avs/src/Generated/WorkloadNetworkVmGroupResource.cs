@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a WorkloadNetworkVmGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkloadNetworkVmGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkloadNetworkVmGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetWorkloadNetworkVmGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkVmGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkVmGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetWorkloadNetworkVmGroup method.
     /// </summary>
     public partial class WorkloadNetworkVmGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WorkloadNetworkVmGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="vmGroupId"> The vmGroupId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string vmGroupId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/vmGroups/{vmGroupId}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Avs
         private readonly WorkloadNetworksRestOperations _workloadNetworkVmGroupWorkloadNetworksRestClient;
         private readonly WorkloadNetworkVmGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/vmGroups";
+
         /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkVmGroupResource"/> class for mocking. </summary>
         protected WorkloadNetworkVmGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkloadNetworkVmGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkloadNetworkVmGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkloadNetworkVmGroupResource(ArmClient client, WorkloadNetworkVmGroupData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/workloadNetworks/vmGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -95,7 +97,15 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetVMGroup</description>
+        /// <description>WorkloadNetworks_GetVmGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkVmGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,7 +137,15 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_GetVMGroup</description>
+        /// <description>WorkloadNetworks_GetVmGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkVmGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,7 +177,15 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_DeleteVMGroup</description>
+        /// <description>WorkloadNetworks_DeleteVmGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkVmGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,7 +219,15 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_DeleteVMGroup</description>
+        /// <description>WorkloadNetworks_DeleteVmGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkVmGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +261,15 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_UpdateVMGroup</description>
+        /// <description>WorkloadNetworks_UpdateVmGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkVmGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,7 +307,15 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WorkloadNetworks_UpdateVMGroup</description>
+        /// <description>WorkloadNetworks_UpdateVmGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkVmGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -12,7 +12,7 @@ namespace Azure.Maps.Routing.Models
     /// <summary> The result of the query. RouteDirections if the query completed successfully, ErrorResponse otherwise. </summary>
     public partial class RouteDirectionsBatchItemResponse : RouteDirections
     {
-        /// <summary> Initializes a new instance of RouteDirectionsBatchItemResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteDirectionsBatchItemResponse"/>. </summary>
         internal RouteDirectionsBatchItemResponse()
         {
         }

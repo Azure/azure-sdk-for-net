@@ -12,11 +12,13 @@ namespace Azure.Core.Tests
 {
     public class HttpPipelineMessageTest
     {
+        private static ResponseClassifier _classifier = new ResponseClassifier();
+
         [Test]
         public void DisposeNoopsForNullResponse()
         {
             var requestMock = new Mock<Request>();
-            HttpMessage message = new HttpMessage(requestMock.Object, ResponseClassifier.Shared);
+            HttpMessage message = new HttpMessage(requestMock.Object, _classifier);
             message.Dispose();
             requestMock.Verify(r => r.Dispose(), Times.Once);
         }
@@ -26,7 +28,7 @@ namespace Azure.Core.Tests
         {
             var requestMock = new Mock<Request>();
             var responseMock = new Mock<Response>();
-            HttpMessage message = new HttpMessage(requestMock.Object, ResponseClassifier.Shared);
+            HttpMessage message = new HttpMessage(requestMock.Object, _classifier);
             message.Response = responseMock.Object;
             message.Dispose();
             requestMock.Verify(r => r.Dispose(), Times.Once);
@@ -40,7 +42,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(200);
             response.ContentStream = mockStream.Object;
 
-            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            HttpMessage message = new HttpMessage(new MockRequest(), _classifier);
             message.Response = response;
 
             Stream stream = message.ExtractResponseContent();
@@ -56,7 +58,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(200);
             response.ContentStream = null;
 
-            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            HttpMessage message = new HttpMessage(new MockRequest(), _classifier);
             message.Response = response;
 
             Stream stream = message.ExtractResponseContent();
@@ -71,7 +73,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(200);
             response.ContentStream = mockStream.Object;
 
-            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            HttpMessage message = new HttpMessage(new MockRequest(), _classifier);
             message.Response = response;
 
             Stream stream = message.ExtractResponseContent();
@@ -88,7 +90,7 @@ namespace Azure.Core.Tests
             var response = new MockResponse(200);
             response.ContentStream = memoryStream;
 
-            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            HttpMessage message = new HttpMessage(new MockRequest(), _classifier);
             message.Response = response;
 
             Assert.AreEqual(memoryStream.ToArray(), message.Response.Content.ToArray());

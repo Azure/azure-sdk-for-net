@@ -9,7 +9,8 @@ namespace Azure.Messaging.ServiceBus
 {
     internal static class CancellationTokenSourceExtensions
     {
-        public static void CancelAfterLockExpired(this CancellationTokenSource? cancellationTokenSource,
+        public static void CancelAfterLockExpired(
+            this CancellationTokenSource? cancellationTokenSource,
             ServiceBusReceivedMessage receivedMessage)
         {
             if (cancellationTokenSource is null || receivedMessage.LockedUntil == default)
@@ -28,7 +29,8 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        public static void CancelAfterLockExpired(this CancellationTokenSource? cancellationTokenSource,
+        public static void CancelAfterLockExpired(
+            this CancellationTokenSource? cancellationTokenSource,
             ServiceBusSessionReceiver? sessionReceiver)
         {
             if (cancellationTokenSource is null || sessionReceiver is null)

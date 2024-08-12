@@ -2,14 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using System.Threading;
-using System.Threading.Tasks;
-using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -19,14 +17,14 @@ namespace Azure.ResourceManager.Compute
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, string statusOnly, string filter, CancellationToken cancellationToken)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachinesAsync(statusOnly, filter, null, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachinesAsync(statusOnly, filter, cancellationToken);
         }
 
         /// <summary> Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, string statusOnly, string filter, CancellationToken cancellationToken)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachines(statusOnly, filter, null, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachines(statusOnly, filter, cancellationToken);
         }
 
         /// <summary>
@@ -56,16 +54,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
-
-            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location, publisherName, offer, skus);
-            options.Expand = expand;
-            options.Top = top;
-            options.Orderby = orderby;
-
-            return subscriptionResource.GetVirtualMachineImagesAsync(options, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesAsync(location, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -95,16 +84,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetVirtualMachineImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
-
-            SubscriptionResourceGetVirtualMachineImagesOptions options = new SubscriptionResourceGetVirtualMachineImagesOptions(location, publisherName, offer, skus);
-            options.Expand = expand;
-            options.Top = top;
-            options.Orderby = orderby;
-
-            return subscriptionResource.GetVirtualMachineImages(options, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImages(location, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -132,15 +112,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
         public static async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location, edgeZone, publisherName, offer, skus, version);
-
-            return await subscriptionResource.GetVirtualMachineImagesEdgeZoneAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZoneAsync(location, edgeZone, publisherName, offer, skus, version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -168,15 +140,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="edgeZone"/>, <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
         public static Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
-            Argument.AssertNotNullOrEmpty(version, nameof(version));
-
-            SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions(location, edgeZone, publisherName, offer, skus, version);
-
-            return subscriptionResource.GetVirtualMachineImagesEdgeZone(options, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZone(location, edgeZone, publisherName, offer, skus, version, cancellationToken);
         }
 
         /// <summary>
@@ -207,17 +171,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
-
-            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location, edgeZone, publisherName, offer, skus);
-            options.Expand = expand;
-            options.Top = top;
-            options.Orderby = orderby;
-
-            return subscriptionResource.GetVirtualMachineImagesEdgeZonesAsync(options, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZonesAsync(location, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -248,17 +202,75 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string expand = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(edgeZone, nameof(edgeZone));
-            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
-            Argument.AssertNotNullOrEmpty(offer, nameof(offer));
-            Argument.AssertNotNullOrEmpty(skus, nameof(skus));
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZones(location, edgeZone, publisherName, offer, skus, expand, top, orderby, cancellationToken);
+        }
 
-            SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options = new SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions(location, edgeZone, publisherName, offer, skus);
-            options.Expand = expand;
-            options.Top = top;
-            options.Orderby = orderby;
+        /// <summary>
+        /// Lists all of the capacity reservation groups in the subscription. Use the nextLink property in the response to get the next page of capacity reservation groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/capacityReservationGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CapacityReservationGroups_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(this SubscriptionResource subscriptionResource, CapacityReservationGroupGetExpand? expand, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return subscriptionResource.GetVirtualMachineImagesEdgeZones(options, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCapacityReservationGroupsAsync(expand, cancellationToken); // this is important for mocking, we need to call the method with exactly same signature, otherwise we break the existing mocking code.
+        }
+
+        /// <summary>
+        /// Lists all of the capacity reservation groups in the subscription. Use the nextLink property in the response to get the next page of capacity reservation groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/capacityReservationGroups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CapacityReservationGroups_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(this SubscriptionResource subscriptionResource, CapacityReservationGroupGetExpand? expand, CancellationToken cancellationToken)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCapacityReservationGroups(expand, cancellationToken);
         }
     }
 }

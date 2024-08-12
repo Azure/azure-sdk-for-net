@@ -23,11 +23,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         private const string CosmosDBCassandraValue = "CosmosDBCassandra";
+        private const string CosmosDBMongoValue = "CosmosDBMongo";
         private const string CosmosDBSqlValue = "CosmosDBSql";
         private const string AzureBlobStorageValue = "AzureBlobStorage";
 
         /// <summary> CosmosDBCassandra. </summary>
         public static DataTransferComponent CosmosDBCassandra { get; } = new DataTransferComponent(CosmosDBCassandraValue);
+        /// <summary> CosmosDBMongo. </summary>
+        public static DataTransferComponent CosmosDBMongo { get; } = new DataTransferComponent(CosmosDBMongoValue);
         /// <summary> CosmosDBSql. </summary>
         public static DataTransferComponent CosmosDBSql { get; } = new DataTransferComponent(CosmosDBSqlValue);
         /// <summary> AzureBlobStorage. </summary>
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
@@ -23,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Restart_RestartNodes()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/RestartNodes_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/RestartNodes_example.json
             // this example is just showing the usage of "NodeTypes_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -41,21 +38,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            NodeTypeActionContent content = new NodeTypeActionContent(new string[]
+            NodeTypeActionContent content = new NodeTypeActionContent()
             {
+                Nodes =
+{
 "BE_0","BE_3"
-            });
+},
+            };
             await serviceFabricManagedNodeType.RestartAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
         }
 
-        // Reimage nodes
+        // Reimage all nodes By upgrade domain
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Reimage_ReimageNodes()
+        public async Task Reimage_ReimageAllNodesByUpgradeDomain()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/ReimageNodes_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/ReimageNodes_UD_example.json
             // this example is just showing the usage of "NodeTypes_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,10 +73,45 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            NodeTypeActionContent content = new NodeTypeActionContent(new string[]
+            NodeTypeActionContent content = new NodeTypeActionContent()
             {
+                UpdateType = ServiceFabricManagedClusterUpdateType.ByUpgradeDomain,
+            };
+            await serviceFabricManagedNodeType.ReimageAsync(WaitUntil.Completed, content);
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // Reimage nodes
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Reimage_ReimageNodes()
+        {
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/ReimageNodes_example.json
+            // this example is just showing the usage of "NodeTypes_Reimage" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceFabricManagedNodeTypeResource created on azure
+            // for more information of creating ServiceFabricManagedNodeTypeResource, please refer to the document of ServiceFabricManagedNodeTypeResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "resRg";
+            string clusterName = "myCluster";
+            string nodeTypeName = "BE";
+            ResourceIdentifier serviceFabricManagedNodeTypeResourceId = ServiceFabricManagedNodeTypeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, nodeTypeName);
+            ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
+
+            // invoke the operation
+            NodeTypeActionContent content = new NodeTypeActionContent()
+            {
+                Nodes =
+{
 "BE_0","BE_3"
-            });
+},
+            };
             await serviceFabricManagedNodeType.ReimageAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
@@ -87,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DeleteNode_DeleteNodes()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/DeleteNodes_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/DeleteNodes_example.json
             // this example is just showing the usage of "NodeTypes_DeleteNode" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,10 +140,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
             // invoke the operation
-            NodeTypeActionContent content = new NodeTypeActionContent(new string[]
+            NodeTypeActionContent content = new NodeTypeActionContent()
             {
+                Nodes =
+{
 "BE_0","BE_3"
-            });
+},
+            };
             await serviceFabricManagedNodeType.DeleteNodeAsync(WaitUntil.Completed, content);
 
             Console.WriteLine($"Succeeded");
@@ -119,7 +157,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetANodeType()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypeGetOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypeGetOperation_example.json
             // this example is just showing the usage of "NodeTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -151,7 +189,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PatchANodeType()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypePatchOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypePatchOperation_example.json
             // this example is just showing the usage of "NodeTypes_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -190,7 +228,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PatchANodeTypeWhileAutoScaling()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypePatchOperationAutoScale_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypePatchOperationAutoScale_example.json
             // this example is just showing the usage of "NodeTypes_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -234,7 +272,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteANodeType()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypeDeleteOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypeDeleteOperation_example.json
             // this example is just showing the usage of "NodeTypes_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -262,7 +300,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAvailableSkus_ListANodeTypeSKUs()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypeSkusListOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypeSkusListOperation_example.json
             // this example is just showing the usage of "NodeTypeSkus_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -5,23 +5,16 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The result of Autocomplete requests. </summary>
     public partial class AutocompleteItem
     {
-        /// <summary> Initializes a new instance of AutocompleteItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutocompleteItem"/>. </summary>
         /// <param name="text"> The completed term. </param>
         /// <param name="queryPlusText"> The query along with the completed term. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="queryPlusText"/> is null. </exception>
         internal AutocompleteItem(string text, string queryPlusText)
         {
-            Argument.AssertNotNull(text, nameof(text));
-            Argument.AssertNotNull(queryPlusText, nameof(queryPlusText));
-
             Text = text;
             QueryPlusText = queryPlusText;
         }

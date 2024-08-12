@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> API portal properties payload. </summary>
     public partial class AppPlatformApiPortalProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalProperties"/>. </summary>
         public AppPlatformApiPortalProperties()
         {
             GatewayIds = new ChangeTrackingList<ResourceIdentifier>();
@@ -22,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Instances = new ChangeTrackingList<AppPlatformApiPortalInstance>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformApiPortalProperties"/>. </summary>
         /// <param name="provisioningState"> State of the API portal. </param>
         /// <param name="isPublic"> Indicates whether the API portal exposes endpoint. </param>
         /// <param name="uri"> URL of the API portal, exposed when 'public' is true. </param>
@@ -32,7 +64,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="ssoProperties"> Single sign-on related configuration. </param>
         /// <param name="resourceRequests"> The requested resource quantity for required CPU and Memory. </param>
         /// <param name="instances"> Collection of instances belong to API portal. </param>
-        internal AppPlatformApiPortalProperties(AppPlatformApiPortalProvisioningState? provisioningState, bool? isPublic, Uri uri, bool? isHttpsOnly, IList<ResourceIdentifier> gatewayIds, IList<Uri> sourceUris, AppPlatformSsoProperties ssoProperties, AppPlatformApiPortalResourceRequirements resourceRequests, IReadOnlyList<AppPlatformApiPortalInstance> instances)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformApiPortalProperties(AppPlatformApiPortalProvisioningState? provisioningState, bool? isPublic, Uri uri, bool? isHttpsOnly, IList<ResourceIdentifier> gatewayIds, IList<Uri> sourceUris, AppPlatformSsoProperties ssoProperties, AppPlatformApiPortalResourceRequirements resourceRequests, IReadOnlyList<AppPlatformApiPortalInstance> instances, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             IsPublic = isPublic;
@@ -43,6 +76,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             SsoProperties = ssoProperties;
             ResourceRequests = resourceRequests;
             Instances = instances;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> State of the API portal. </summary>

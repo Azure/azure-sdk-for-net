@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Common client library tests</AssemblyTitle>
@@ -30,7 +29,10 @@
     <Compile Include="$(AzureStorageSharedSources)BufferExtensions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ChecksumCalculatingStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)ContentHasher.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)CompatSwitches.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)DisposableBucket.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ExpectContinuePolicy.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)ExpectContinueOnThrottlePolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)HashAlgorithmHasher.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)IDownloadedContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)IHasher.cs" LinkBase="Shared" />

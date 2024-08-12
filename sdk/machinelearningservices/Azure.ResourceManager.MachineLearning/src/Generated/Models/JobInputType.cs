@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Enum to determine the Job Input Type. </summary>
-    internal readonly partial struct JobInputType : IEquatable<JobInputType>
+    public readonly partial struct JobInputType : IEquatable<JobInputType>
     {
         private readonly string _value;
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

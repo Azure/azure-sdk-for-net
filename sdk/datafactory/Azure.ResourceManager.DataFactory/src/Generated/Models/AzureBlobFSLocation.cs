@@ -7,60 +7,32 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The location of azure blobFS dataset. </summary>
     public partial class AzureBlobFSLocation : DatasetLocation
     {
-        /// <summary> Initializes a new instance of AzureBlobFSLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSLocation"/>. </summary>
         public AzureBlobFSLocation()
         {
             DatasetLocationType = "AzureBlobFSLocation";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobFSLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSLocation"/>. </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="fileSystem"> Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string). </param>
-        internal AzureBlobFSLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties, BinaryData fileSystem) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal AzureBlobFSLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> fileSystem) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             FileSystem = fileSystem;
             DatasetLocationType = datasetLocationType ?? "AzureBlobFSLocation";
         }
 
-        /// <summary>
-        /// Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData FileSystem { get; set; }
+        /// <summary> Specify the fileSystem of azure blobFS. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> FileSystem { get; set; }
     }
 }

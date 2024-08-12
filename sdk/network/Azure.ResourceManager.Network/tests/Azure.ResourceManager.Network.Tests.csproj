@@ -4,6 +4,22 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Storage" />
+    <PackageReference Include="Azure.ResourceManager.Resources" />
     <PackageReference Include="Azure.Identity" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="TestData\DeploymentTemplate.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\VmssDeploymentTemplate.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\VmssDeploymentTemplateAsync.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
   </ItemGroup>
 </Project>

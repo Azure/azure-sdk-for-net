@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,12 +20,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> sender = default;
-            Optional<string> messageId = default;
-            Optional<DateTimeOffset> userActionTimeStamp = default;
-            Optional<string> engagementContext = default;
-            Optional<string> userAgent = default;
-            Optional<AcsUserEngagement> engagementType = default;
+            string sender = default;
+            string recipient = default;
+            string messageId = default;
+            DateTimeOffset? userActionTimestamp = default;
+            string engagementContext = default;
+            string userAgent = default;
+            AcsUserEngagement? engagementType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sender"u8))
@@ -34,18 +34,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     sender = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("recipient"u8))
+                {
+                    recipient = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("messageId"u8))
                 {
                     messageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userActionTimeStamp"u8))
+                if (property.NameEquals("userActionTimestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    userActionTimeStamp = property.Value.GetDateTimeOffset("O");
+                    userActionTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("engagementContext"u8))
@@ -68,7 +73,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsEmailEngagementTrackingReportReceivedEventData(sender.Value, messageId.Value, Optional.ToNullable(userActionTimeStamp), engagementContext.Value, userAgent.Value, Optional.ToNullable(engagementType));
+            return new AcsEmailEngagementTrackingReportReceivedEventData(
+                sender,
+                recipient,
+                messageId,
+                userActionTimestamp,
+                engagementContext,
+                userAgent,
+                engagementType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsEmailEngagementTrackingReportReceivedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsEmailEngagementTrackingReportReceivedEventData(document.RootElement);
         }
 
         internal partial class AcsEmailEngagementTrackingReportReceivedEventDataConverter : JsonConverter<AcsEmailEngagementTrackingReportReceivedEventData>
@@ -77,6 +97,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override AcsEmailEngagementTrackingReportReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

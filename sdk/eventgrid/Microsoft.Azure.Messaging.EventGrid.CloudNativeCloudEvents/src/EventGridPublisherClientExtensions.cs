@@ -17,9 +17,7 @@ using System.Threading.Tasks;
 using CloudNative.CloudEvents.SystemTextJson;
 using CloudEvent = CloudNative.CloudEvents.CloudEvent;
 
-#pragma warning disable AZC0001 // Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/registered_namespaces.html): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.Iot, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
 namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
-#pragma warning restore AZC0001 // Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/registered_namespaces.html): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Data, Azure.DigitalTwins, Azure.Iot, Azure.Learn, Azure.Media, Azure.Management, Azure.Messaging, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Azure.Identity, Microsoft.Extensions.Azure
 {
     /// <summary>
     /// This class contains extension methods to enable usage of the CloudNative.CloudEvent
@@ -81,10 +79,10 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
             string activityId = null;
             string traceState = null;
             Activity currentActivity = Activity.Current;
-            if (currentActivity != null && currentActivity.IsW3CFormat())
+            if (currentActivity != null && (currentActivity.IdFormat == ActivityIdFormat.W3C))
             {
                 activityId = currentActivity.Id;
-                traceState = currentActivity.GetTraceState();
+                traceState = currentActivity.TraceStateString;
             }
 
             using var stream = new MemoryStream();

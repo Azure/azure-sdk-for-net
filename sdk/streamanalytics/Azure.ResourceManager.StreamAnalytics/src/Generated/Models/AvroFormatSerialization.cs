@@ -6,22 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes how data from an input is serialized or how data is serialized when written to an output in Avro format. </summary>
     public partial class AvroFormatSerialization : StreamAnalyticsDataSerialization
     {
-        /// <summary> Initializes a new instance of AvroFormatSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvroFormatSerialization"/>. </summary>
         public AvroFormatSerialization()
         {
             EventSerializationType = EventSerializationType.Avro;
         }
 
-        /// <summary> Initializes a new instance of AvroFormatSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvroFormatSerialization"/>. </summary>
         /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties that are associated with the Avro serialization type. Required on PUT (CreateOrReplace) requests. </param>
-        internal AvroFormatSerialization(EventSerializationType eventSerializationType, BinaryData properties) : base(eventSerializationType)
+        internal AvroFormatSerialization(EventSerializationType eventSerializationType, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData properties) : base(eventSerializationType, serializedAdditionalRawData)
         {
             Properties = properties;
             EventSerializationType = eventSerializationType;
@@ -33,7 +35,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

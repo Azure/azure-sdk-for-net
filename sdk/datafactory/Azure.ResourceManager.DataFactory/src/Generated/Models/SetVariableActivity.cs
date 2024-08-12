@@ -7,14 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Set value for a Variable. </summary>
     public partial class SetVariableActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of SetVariableActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SetVariableActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SetVariableActivity(string name) : base(name)
@@ -24,54 +24,40 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "SetVariable";
         }
 
-        /// <summary> Initializes a new instance of SetVariableActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SetVariableActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="policy"> Activity policy. </param>
         /// <param name="variableName"> Name of the variable whose value needs to be set. </param>
         /// <param name="value"> Value to be set. Could be a static value or Expression. </param>
-        internal SetVariableActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, string variableName, BinaryData value) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        /// <param name="setSystemVariable"> If set to true, it sets the pipeline run return value. </param>
+        internal SetVariableActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, SecureInputOutputPolicy policy, string variableName, DataFactoryElement<BinaryData> value, bool? setSystemVariable) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
+            Policy = policy;
             VariableName = variableName;
             Value = value;
+            SetSystemVariable = setSystemVariable;
             ActivityType = activityType ?? "SetVariable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SetVariableActivity"/> for deserialization. </summary>
+        internal SetVariableActivity()
+        {
+        }
+
+        /// <summary> Activity policy. </summary>
+        public SecureInputOutputPolicy Policy { get; set; }
         /// <summary> Name of the variable whose value needs to be set. </summary>
         public string VariableName { get; set; }
-        /// <summary>
-        /// Value to be set. Could be a static value or Expression
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Value { get; set; }
+        /// <summary> Value to be set. Could be a static value or Expression. </summary>
+        public DataFactoryElement<BinaryData> Value { get; set; }
+        /// <summary> If set to true, it sets the pipeline run return value. </summary>
+        public bool? SetSystemVariable { get; set; }
     }
 }

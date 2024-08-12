@@ -16,9 +16,12 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor.Diagnostics;
+using Azure.Messaging.EventHubs.Processor;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
+using System.Diagnostics;
+using static Azure.Messaging.EventHubs.Tests.EventProcessorClientTests;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -52,6 +55,36 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies checkpoint activities are not created when feature flag is off />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task CheckpointStoreActivitySourceDisabled()
+        {
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var mockContext = new Mock<PartitionContext>("65");
+            var mockProcessor = new Mock<EventProcessorClient>(Mock.Of<CheckpointStore>(), "cg", "host", "hub", 50, Mock.Of<TokenCredential>(), null) { CallBase = true };
+
+            mockProcessor
+                .Protected()
+                .Setup<EventHubConnection>("CreateConnection")
+                .Returns(Mock.Of<EventHubConnection>());
+
+            var mockLogger = new Mock<EventProcessorClientEventSource>();
+            mockLogger
+                .Setup(log => log.UpdateCheckpointComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Callback(() => completionSource.TrySetResult(true));
+
+            mockProcessor.Object.Logger = mockLogger.Object;
+
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
+            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 998, default);
+
+            Assert.IsEmpty(listener.Activities);
+        }
+
+        /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient.UpdateCheckpointAsync" />
         ///   method.
         /// </summary>
@@ -80,16 +113,178 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using var _ = SetAppConfigSwitch();
 
-            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
-            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 65, 998, default);
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
+            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 998, default);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             var checkpointActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.EventProcessorCheckpointActivityName);
-            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.NetPeerName, "host"));
+            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, "host"));
             CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, "hub"));
             CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient.OnProcessingEventBatchAsync" /> implementation.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventProcessorClientCreatesScopeForEachEventProcessing()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            using var _ = SetAppConfigSwitch();
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
+
+            var enqueuedTime = DateTimeOffset.UtcNow;
+            var eventBatch = new[]
+            {
+                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123, enqueuedTime: enqueuedTime),
+                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456, enqueuedTime: enqueuedTime)
+            };
+
+            for (int i = 0; i < eventBatch.Length; i++)
+            {
+                eventBatch[i].Properties.Add("Diagnostic-Id", $"00-{i}0112233445566778899aabbccddeeff-0123456789abcdef-01");
+            }
+
+            var mockLogger = new Mock<EventProcessorClientEventSource>();
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.Logger = mockLogger.Object;
+            processorClient.ProcessEventAsync += _ => Task.CompletedTask;
+
+            await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition("0"), cancellationSource.Token);
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            // Validate the diagnostics.
+
+            var expectedTags = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>(MessagingClientDiagnostics.DestinationName, "eventHub"),
+                new KeyValuePair<string, object>(MessagingClientDiagnostics.ServerAddress, "namespace"),
+                new KeyValuePair<string, object>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext),
+                new KeyValuePair<string, object>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeMilliseconds())
+            };
+
+            var activities = listener.Activities.ToList();
+            Assert.AreEqual(eventBatch.Length, activities.Count);
+
+            foreach (var activity in activities)
+            {
+                Assert.AreEqual(DiagnosticProperty.EventProcessorProcessingActivityName, activity.OperationName);
+                Assert.That(activity.Links, Has.Exactly(1).Items);
+                Assert.That(activity.Links.Select(a => a.Context.SpanId), Has.One.EqualTo(activity.ParentSpanId));
+                Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
+                Assert.AreEqual(ActivityStatusCode.Unset, activity.Status);
+                Assert.AreEqual(ActivityKind.Consumer, activity.Kind);
+            }
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient.OnProcessingEventBatchAsync" /> implementation
+        ///   when processing callback throws
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventProcessorClientCreatesScopeError()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            using var _ = SetAppConfigSwitch();
+
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
+            var eventBatch = new[]
+            {
+                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123),
+                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456)
+            };
+
+            var mockLogger = new Mock<EventProcessorClientEventSource>();
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.Logger = mockLogger.Object;
+            processorClient.ProcessEventAsync += _ => throw new TimeoutException();
+
+            await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition("0"), cancellationSource.Token).IgnoreExceptions();
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            // Validate the diagnostics.
+
+            var expectedTags = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>(MessagingClientDiagnostics.DestinationName, "eventHub"),
+                new KeyValuePair<string, object>(MessagingClientDiagnostics.ServerAddress, "namespace"),
+                new KeyValuePair<string, object>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext),
+                new KeyValuePair<string, object>("error.type", typeof(TimeoutException).FullName),
+            };
+
+            var activities = listener.Activities.ToList();
+            Assert.AreEqual(eventBatch.Length, activities.Count);
+
+            foreach (var activity in activities)
+            {
+                Assert.AreEqual(DiagnosticProperty.EventProcessorProcessingActivityName, activity.OperationName);
+                Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
+                Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
+                Assert.AreEqual(ActivityKind.Consumer, activity.Kind);
+                Assert.IsEmpty(activity.TagObjects.Where(t => t.Key == DiagnosticProperty.EnqueuedTimeAttribute));
+            }
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient.OnProcessingEventBatchAsync" /> implementation
+        ///   when received message does not have trace context.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventProcessorClientCreatesScopeForEachEventProcessingWithoutRemoteLink()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+            using var _ = SetAppConfigSwitch();
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
+
+            var enqueuedTime = DateTimeOffset.UtcNow;
+            var eventBatch = new[]
+            {
+                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123, enqueuedTime: enqueuedTime),
+                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456, enqueuedTime: enqueuedTime)
+            };
+
+            var mockLogger = new Mock<EventProcessorClientEventSource>();
+            var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
+
+            processorClient.Logger = mockLogger.Object;
+            processorClient.ProcessEventAsync += _ => Task.CompletedTask;
+
+            await processorClient.InvokeOnProcessingEventBatchAsync(eventBatch, new TestEventProcessorPartition("0"), cancellationSource.Token).IgnoreExceptions();
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            // Validate the diagnostics.
+
+            var expectedTags = new List<KeyValuePair<string, object>>()
+            {
+                new KeyValuePair<string, object>(MessagingClientDiagnostics.DestinationName, "eventHub"),
+                new KeyValuePair<string, object>(MessagingClientDiagnostics.ServerAddress, "namespace"),
+                new KeyValuePair<string, object>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext),
+                new KeyValuePair<string, object>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeMilliseconds())
+            };
+
+            var activities = listener.Activities.ToList();
+            Assert.AreEqual(eventBatch.Length, activities.Count);
+
+            foreach (var activity in activities)
+            {
+                Assert.AreEqual(DiagnosticProperty.EventProcessorProcessingActivityName, activity.OperationName);
+                Assert.IsEmpty(activity.Links);
+                Assert.That(expectedTags, Is.SubsetOf(activity.TagObjects.ToList()));
+                Assert.AreEqual(ActivityKind.Consumer, activity.Kind);
+            }
             cancellationSource.Cancel();
         }
 
@@ -107,13 +302,12 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static Task InvokeUpdateCheckpointAsync(EventProcessorClient target,
                                                         string partitionId,
-                                                        long offset,
-                                                        long? sequenceNumber,
+                                                        long sequenceNumber,
                                                         CancellationToken cancellationToken) =>
             (Task)
                 typeof(EventProcessorClient)
-                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic)
-                    .Invoke(target, new object[] { partitionId, offset, sequenceNumber, cancellationToken });
+                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic, new Type[] { typeof(string), typeof(CheckpointPosition), typeof(CancellationToken) })
+                    .Invoke(target, new object[] { partitionId, new CheckpointPosition(sequenceNumber), cancellationToken });
 
         /// <summary>
         /// Sets and returns the app config switch to enable Activity Source. The switch must be disposed at the end of the test.

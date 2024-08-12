@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The GalleryTargetExtendedLocation. </summary>
     public partial class GalleryTargetExtendedLocation
     {
-        /// <summary> Initializes a new instance of GalleryTargetExtendedLocation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryTargetExtendedLocation"/>. </summary>
         public GalleryTargetExtendedLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of GalleryTargetExtendedLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryTargetExtendedLocation"/>. </summary>
         /// <param name="name"> The name of the region. </param>
         /// <param name="extendedLocation"> The name of the extended location. </param>
         /// <param name="extendedLocationReplicaCount"> The number of replicas of the Image Version to be created per extended location. This property is updatable. </param>
         /// <param name="galleryStorageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="encryption"> Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact. </param>
-        internal GalleryTargetExtendedLocation(string name, GalleryExtendedLocation extendedLocation, int? extendedLocationReplicaCount, EdgeZoneStorageAccountType? galleryStorageAccountType, EncryptionImages encryption)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryTargetExtendedLocation(string name, GalleryExtendedLocation extendedLocation, int? extendedLocationReplicaCount, EdgeZoneStorageAccountType? galleryStorageAccountType, EncryptionImages encryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ExtendedLocation = extendedLocation;
             ExtendedLocationReplicaCount = extendedLocationReplicaCount;
             GalleryStorageAccountType = galleryStorageAccountType;
             Encryption = encryption;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the region. </summary>

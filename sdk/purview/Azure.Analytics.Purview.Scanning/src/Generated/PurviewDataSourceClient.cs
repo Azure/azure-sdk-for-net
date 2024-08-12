@@ -7,7 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Initializes a new instance of PurviewDataSourceClient. </summary>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="dataSourceName"> The String to use. </param>
+        /// <param name="dataSourceName"> The <see cref="string"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/> or <paramref name="credential"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataSourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Purview.Scanning
 
         /// <summary> Initializes a new instance of PurviewDataSourceClient. </summary>
         /// <param name="endpoint"> The scanning endpoint of your purview account. Example: https://{accountName}.scan.purview.azure.com. </param>
-        /// <param name="dataSourceName"> The String to use. </param>
+        /// <param name="dataSourceName"> The <see cref="string"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="dataSourceName"/> or <paramref name="credential"/> is null. </exception>
@@ -143,7 +143,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewDataSourceClient.xml" path="doc/members/member[@name='GetPropertiesAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetPropertiesAsync(RequestContext context = null)
+        public virtual async Task<Response> GetPropertiesAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewDataSourceClient.GetProperties");
             scope.Start();
@@ -173,7 +173,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewDataSourceClient.xml" path="doc/members/member[@name='GetProperties(RequestContext)']/*" />
-        public virtual Response GetProperties(RequestContext context = null)
+        public virtual Response GetProperties(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewDataSourceClient.GetProperties");
             scope.Start();
@@ -203,7 +203,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewDataSourceClient.xml" path="doc/members/member[@name='DeleteAsync(RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(RequestContext context = null)
+        public virtual async Task<Response> DeleteAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewDataSourceClient.Delete");
             scope.Start();
@@ -233,7 +233,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewDataSourceClient.xml" path="doc/members/member[@name='Delete(RequestContext)']/*" />
-        public virtual Response Delete(RequestContext context = null)
+        public virtual Response Delete(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewDataSourceClient.Delete");
             scope.Start();
@@ -263,11 +263,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewDataSourceClient.xml" path="doc/members/member[@name='GetScansAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetScansAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetScansAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScansRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScansNextPageRequest(nextLink, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewDataSourceClient.GetScans", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewDataSourceClient.GetScans", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -284,11 +284,11 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewDataSourceClient.xml" path="doc/members/member[@name='GetScans(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetScans(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetScans(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScansRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScansNextPageRequest(nextLink, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewDataSourceClient.GetScans", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewDataSourceClient.GetScans", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(RequestContent content, RequestContext context)

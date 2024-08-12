@@ -188,6 +188,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             options.PrefetchCount = 0;
             options.SessionIdleTimeout = TimeSpan.FromSeconds(1);
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(0);
+            options.MaxAutoLockRenewalDuration = Timeout.InfiniteTimeSpan;
         }
 
         [Test]
@@ -394,17 +395,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             mockReceiver.Setup(r => r.SessionId).Returns("sessionId");
             mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
             mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
-            mockReceiver.Setup(r => r.SessionLockedUntil).Returns(DateTimeOffset.UtcNow.AddSeconds(-5));
-
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1", sessionId: "sessionId");
             var processArgs = new ProcessSessionMessageEventArgs(
-                ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1", sessionId: "sessionId"),
+                message,
                 mockReceiver.Object,
                 CancellationToken.None);
 
+            bool sessionLockLostEventRaised = false;
+
             mockProcessor.ProcessMessageAsync += args =>
             {
+                args.SessionLockLostAsync += (lockLostArgs) =>
+                {
+                    sessionLockLostEventRaised = true;
+                    Assert.IsNull(lockLostArgs.Exception);
+                    return Task.CompletedTask;
+                };
                 processMessageCalled = true;
-                Assert.IsTrue(args.SessionLockCancellationToken.IsCancellationRequested);
                 return Task.CompletedTask;
             };
 
@@ -425,14 +432,35 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 sessionCloseCalled = true;
                 return Task.CompletedTask;
             };
-
             await mockProcessor.OnProcessSessionMessageAsync(processArgs);
             await mockProcessor.OnSessionInitializingAsync(processSessionArgs);
+
+            Assert.IsFalse(sessionLockLostEventRaised);
+            await processArgs.OnSessionLockLostAsync(new SessionLockLostEventArgs(message, DateTimeOffset.Now, null));
+            Assert.IsTrue(sessionLockLostEventRaised);
+
             await mockProcessor.OnSessionClosingAsync(processSessionArgs);
 
             Assert.IsTrue(processMessageCalled);
             Assert.IsTrue(sessionOpenCalled);
             Assert.IsTrue(sessionCloseCalled);
+        }
+
+        [Test]
+        public void CanUpdateConcurrencyOnMockSessionProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            mockProcessor.UpdateConcurrency(5, 2);
+            Assert.AreEqual(5, mockProcessor.MaxConcurrentSessions);
+            Assert.AreEqual(2, mockProcessor.MaxConcurrentCallsPerSession);
+        }
+
+        [Test]
+        public void CanUpdatePrefetchOnMockSessionProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            mockProcessor.UpdatePrefetchCount(10);
+            Assert.AreEqual(10, mockProcessor.PrefetchCount);
         }
 
         [Test]
@@ -460,29 +488,5 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 #pragma warning restore SA1402 // File may only contain a single type
     {
         protected internal override ServiceBusProcessor InnerProcessor { get; } = new MockProcessor();
-
-        public MockSessionProcessor() : base()
-        {
-        }
-
-        protected internal override async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
-        {
-            await base.OnProcessSessionMessageAsync(args);
-        }
-
-        protected internal override async Task OnProcessErrorAsync(ProcessErrorEventArgs args)
-        {
-            await base.OnProcessErrorAsync(args);
-        }
-
-        protected internal override async Task OnSessionInitializingAsync(ProcessSessionEventArgs args)
-        {
-            await base.OnSessionInitializingAsync(args);
-        }
-
-        protected internal override async Task OnSessionClosingAsync(ProcessSessionEventArgs args)
-        {
-            await base.OnSessionClosingAsync(args);
-        }
     }
 }

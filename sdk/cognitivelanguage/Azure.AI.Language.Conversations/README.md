@@ -1,11 +1,19 @@
 # Azure Cognitive Language Services Conversations client library for .NET
 
-Conversational Language Understanding - aka CLU for short - is a cloud-based conversational AI service which provides many language understanding capabilities like:
+The Azure.AI.Language.Conversations client library provides a suite of APIs for conversational language analysis capabilities like conversation language understanding and orchestration, conversational summarization and conversational personally identifiable information (PII) detection.
 
+Conversation Language Understanding - aka CLU for short - is a cloud-based conversational AI service which provides many language understanding capabilities like:
 - Conversation App: It's used in extracting intents and entities in conversations
 - Workflow app: Acts like an orchestrator to select the best candidate to analyze conversations to get best response from apps like Qna, Luis, and Conversation App
 
-[Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Samples][conversationanalysis_samples] | [Product documentation][conversationanalysis_docs] | [Analysis REST API documentation][conversationanalysis_restdocs] | [Authoring REST API documentation][conversationanalysis_restdocs_authoring]
+Conversation Summarization is one feature offered by Azure AI Language, which is a combination of generative Large Language models and task-optimized encoder models that offer summarization solutions with higher quality, cost efficiency, and lower latency.
+
+Conversation PII detection another feature offered by Azure AI Language, which is a collection of machine learning and AI algorithms to identify, categorize, and redact sensitive information in text. The Conversational PII model is a specialized model for handling speech transcriptions and the more informal, conversational tone of meeting and call transcripts. 
+
+[Source code][conversationanalysis_client_src] | [Package (NuGet)][conversationanalysis_nuget_package] | [API reference documentation][conversationanalysis_refdocs] | [Samples][conversationanalysis_samples] | [Product documentation][conversationanalysis_docs] | [Analysis REST API documentation][conversationanalysis_restdocs]
+
+> [!NOTE]
+> Conversational Authoring is not supported in version 2.0.0-beta.1. If you use Conversational Authoring, please continue to use version 1.1.0. You can find the [samples][conversationalauthoring_samples] here.
 
 ## Getting started
 
@@ -44,6 +52,7 @@ Start by importing the namespace for the [`ConversationAnalysisClient`][conversa
 
 ```C# Snippet:ConversationAnalysisClient_Namespaces
 using Azure.Core;
+using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations;
 ```
 
@@ -58,26 +67,9 @@ AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
 ```
 
-#### Create a ConversationAuthoringClient
-
-To use the `ConversationAuthoringClient`, use the following namespace in addition to those above, if needed.
-
-```C# Snippet:ConversationAuthoringClient_Namespace
-using Azure.AI.Language.Conversations.Authoring;
-```
-
-With your **endpoint** and **API key**, you can instantiate a `ConversationAuthoringClient`:
-
-```C# Snippet:ConversationAuthoringClient_Create
-Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
-AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-
-ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
-```
-
 #### Create a client using Azure Active Directory authentication
 
-You can also create a `ConversationAnalysisClient` or `ConversationAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
+You can also create a `ConversationAnalysisClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
 Using the [DefaultAzureCredential] you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more all without changing code.
 
 Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], you'll first need to [install the Azure.Identity package][azure_identity_install].
@@ -120,7 +112,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -130,7 +122,7 @@ The Azure.AI.Language.Conversations client library provides both synchronous and
 
 The following examples show common scenarios using the `client` [created above](#create-a-conversationanalysisclient).
 
-### Analyze a conversation
+### Extract intents and entities from a conversation (Conversation Language Understanding)
 
 To analyze a conversation, you can call the `AnalyzeConversation()` method:
 
@@ -138,63 +130,51 @@ To analyze a conversation, you can call the `AnalyzeConversation()` method:
 string projectName = "Menu";
 string deploymentName = "production";
 
-var data = new
-{
-    analysisInput = new
+AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
+    new ConversationAnalysisInput(
+        new TextConversationItem(
+            id: "1",
+            participantId: "participant1",
+            text: "Send an email to Carol about tomorrow's demo")),
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
-        conversationItem = new
-        {
-            text = "Send an email to Carol about tomorrow's demo",
-            id = "1",
-            participantId = "1",
-        }
-    },
-    parameters = new
-    {
-        projectName,
-        deploymentName,
-
         // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
-    },
-    kind = "Conversation",
-};
+        StringIndexType = StringIndexType.Utf16CodeUnit,
+    });
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data));
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
+ConversationActionResult conversationActionResult = response.Value as ConversationActionResult;
+ConversationPrediction conversationPrediction = conversationActionResult.Result.Prediction as ConversationPrediction;
 
-using JsonDocument result = JsonDocument.Parse(response.ContentStream);
-JsonElement conversationalTaskResult = result.RootElement;
-JsonElement conversationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
-
-Console.WriteLine($"Top intent: {conversationPrediction.GetProperty("topIntent").GetString()}");
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
-foreach (JsonElement intent in conversationPrediction.GetProperty("intents").EnumerateArray())
+foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
-    Console.WriteLine($"Category: {intent.GetProperty("category").GetString()}");
-    Console.WriteLine($"Confidence: {intent.GetProperty("confidenceScore").GetSingle()}");
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
     Console.WriteLine();
 }
 
 Console.WriteLine("Entities:");
-foreach (JsonElement entity in conversationPrediction.GetProperty("entities").EnumerateArray())
+foreach (ConversationEntity entity in conversationPrediction.Entities)
 {
-    Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
-    Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
-    Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
-    Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
-    Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
+    Console.WriteLine($"Category: {entity.Category}");
+    Console.WriteLine($"Text: {entity.Text}");
+    Console.WriteLine($"Offset: {entity.Offset}");
+    Console.WriteLine($"Length: {entity.Length}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
 
-    if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
+    if (entity.Resolutions != null && entity.Resolutions.Any())
     {
-        foreach (JsonElement resolution in resolutions.EnumerateArray())
+        foreach (ResolutionBase resolution in entity.Resolutions)
         {
-            if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+            if (resolution is DateTimeResolution dateTimeResolution)
             {
-                Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-                Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-                Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                Console.WriteLine($"Value: {dateTimeResolution.Value}");
                 Console.WriteLine();
             }
         }
@@ -208,33 +188,23 @@ Additional options can be passed to `AnalyzeConversation` like enabling more ver
 string projectName = "Menu";
 string deploymentName = "production";
 
-var data = new
+AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
+    new ConversationAnalysisInput(
+        new TextConversationItem(
+            id: "1",
+            participantId: "participant1",
+            text: "Send an email to Carol about tomorrow's demo")),
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
 {
-    analysisInput = new
-    {
-        conversationItem = new
-        {
-            text = "Send an email to Carol about tomorrow's demo",
-            id = "1",
-            participantId = "1",
-        }
-    },
-    parameters = new
-    {
-        projectName,
-        deploymentName,
-        verbose = true,
+    // Use Utf16CodeUnit for strings in .NET.
+    StringIndexType = StringIndexType.Utf16CodeUnit,
+    Verbose = true,
+});
 
-        // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
-    },
-    kind = "Conversation",
-};
-
-Response response = client.AnalyzeConversation(RequestContent.Create(data));
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ```
 
-### Analyze a conversation in a different language
+#### Extract intents and entities from a conversation in a different language (Conversation Language Understanding)
 
 The `language` property can be set to specify the language of the conversation:
 
@@ -242,69 +212,48 @@ The `language` property can be set to specify the language of the conversation:
 string projectName = "Menu";
 string deploymentName = "production";
 
-var data = new
-{
-    analysisInput = new
+AnalyzeConversationInput data =
+    new ConversationLanguageUnderstandingInput(
+        new ConversationAnalysisInput(
+            new TextConversationItem(
+                id: "1",
+                participantId: "participant1",
+                text: "Enviar un email a Carol acerca de la presentación de mañana")
+            {
+                Language = "es"
+            }),
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
-        conversationItem = new
-        {
-            text = "Enviar un email a Carol acerca de la presentación de mañana",
-            language = "es",
-            id = "1",
-            participantId = "1",
-        }
-    },
-    parameters = new
-    {
-        projectName,
-        deploymentName,
-        verbose = true,
-
         // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
-    },
-    kind = "Conversation",
-};
+        StringIndexType = StringIndexType.Utf16CodeUnit,
+        Verbose = true
+    });
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data));
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
 ```
 
-### Analyze a conversation using an orchestration project
+### Orchestrate a conversation between various conversation apps like Question Answering app, CLU app
 
-To analyze a conversation using an orchestration project, you can call the `AnalyzeConversation()` method just like the conversation project.
+To analyze a conversation using an orchestration project, you can call the `AnalyzeConversations()` method just like the conversation project.
 
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPrediction
 string projectName = "DomainOrchestrator";
 string deploymentName = "production";
-
-var data = new
-{
-    analysisInput = new
+AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
+    new ConversationAnalysisInput(
+        new TextConversationItem(
+            id: "1",
+            participantId: "participant1",
+            text: "How are you?")),
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
-        conversationItem = new
-        {
-            text = "How are you?",
-            id = "1",
-            participantId = "1",
-        }
-    },
-    parameters = new
-    {
-        projectName,
-        deploymentName,
+        StringIndexType = StringIndexType.Utf16CodeUnit,
+    });
 
-        // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
-    },
-    kind = "Conversation",
-};
-
-Response response = client.AnalyzeConversation(RequestContent.Create(data));
-
-using JsonDocument result = JsonDocument.Parse(response.ContentStream);
-JsonElement conversationalTaskResult = result.RootElement;
-JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
+ConversationActionResult conversationResult = response.Value as ConversationActionResult;
+OrchestrationPrediction orchestrationPrediction = conversationResult.Result.Prediction as OrchestrationPrediction;
 ```
 
 #### Question Answering prediction
@@ -312,119 +261,201 @@ JsonElement orchestrationPrediction = conversationalTaskResult.GetProperty("resu
 If your conversation was analyzed by Question Answering, it will include an intent - perhaps even the top intent - from which you can retrieve answers:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionQnA
-string respondingProjectName = orchestrationPrediction.GetProperty("topIntent").GetString();
-JsonElement targetIntentResult = orchestrationPrediction.GetProperty("intents").GetProperty(respondingProjectName);
+string respondingProjectName = orchestrationPrediction.TopIntent;
+Console.WriteLine($"Top intent: {respondingProjectName}");
 
-if (targetIntentResult.GetProperty("targetProjectKind").GetString() == "QuestionAnswering")
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
+
+if (targetIntentResult is QuestionAnsweringTargetIntentResult questionAnsweringTargetIntentResult)
 {
-    Console.WriteLine($"Top intent: {respondingProjectName}");
-
-    JsonElement questionAnsweringResponse = targetIntentResult.GetProperty("result");
+    AnswersResult questionAnsweringResponse = questionAnsweringTargetIntentResult.Result;
     Console.WriteLine($"Question Answering Response:");
-    foreach (JsonElement answer in questionAnsweringResponse.GetProperty("answers").EnumerateArray())
+    foreach (KnowledgeBaseAnswer answer in questionAnsweringResponse.Answers)
     {
-        Console.WriteLine(answer.GetProperty("answer").GetString());
+        Console.WriteLine(answer.Answer?.ToString());
     }
 }
 ```
 
-#### Conversational summarization
+#### CLU prediction
 
-To summarize a conversation, you can use the `AnalyzeConversation` method overload that returns an `Operation<BinaryData>`:
+If your conversation was analyzed by a CLU application, it will include an intent and entities:
+
+```C# Snippet:ConversationAnalysis_AnalyzeConversationOrchestrationPredictionConversation
+string respondingProjectName = orchestrationPrediction.TopIntent;
+TargetIntentResult targetIntentResult = orchestrationPrediction.Intents[respondingProjectName];
+
+if (targetIntentResult is ConversationTargetIntentResult conversationTargetIntent)
+{
+    ConversationResult conversationResult = conversationTargetIntent.Result;
+    ConversationPrediction conversationPrediction = conversationResult.Prediction;
+
+    Console.WriteLine($"Top Intent: {conversationPrediction.TopIntent}");
+    Console.WriteLine($"Intents:");
+    foreach (ConversationIntent intent in conversationPrediction.Intents)
+    {
+        Console.WriteLine($"Intent Category: {intent.Category}");
+        Console.WriteLine($"Confidence: {intent.Confidence}");
+        Console.WriteLine();
+    }
+}
+```
+
+### Summarize a conversation
+
+To summarize a conversation, you can use the `AnalyzeConversationsAsync` method overload that returns an `Response<AnalyzeConversationOperationState>`:
 
 ```C# Snippet:AnalyzeConversation_ConversationSummarization
-var data = new
-{
-    analysisInput = new
+MultiLanguageConversationInput input = new MultiLanguageConversationInput(
+    new List<ConversationInput>
     {
-        conversations = new[]
+        new TextConversation("1", "en", new List<TextConversationItem>()
         {
-            new
-            {
-                conversationItems = new[]
-                {
-                    new
-                    {
-                        text = "Hello, how can I help you?",
-                        id = "1",
-                        role = "Agent",
-                        participantId = "Agent_1",
-                    },
-                    new
-                    {
-                        text = "How to upgrade Office? I am getting error messages the whole day.",
-                        id = "2",
-                        role = "Customer",
-                        participantId = "Customer_1",
-                    },
-                    new
-                    {
-                        text = "Press the upgrade button please. Then sign in and follow the instructions.",
-                        id = "3",
-                        role = "Agent",
-                        participantId = "Agent_1",
-                    },
-                },
-                id = "1",
-                language = "en",
-                modality = "text",
-            },
-        }
-    },
-    tasks = new[]
+            new TextConversationItem("1", "Agent", "Hello, how can I help you?"),
+            new TextConversationItem("2", "Customer", "How to upgrade Office? I am getting error messages the whole day."),
+            new TextConversationItem("3", "Agent", "Press the upgrade button please. Then sign in and follow the instructions.")
+        })
+    });
+List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
     {
-        new
+        new SummarizationOperationAction()
         {
-            taskName = "Issue task",
-            kind = "ConversationalSummarizationTask",
-            parameters = new
+            ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
             {
-                summaryAspects = new[]
-                {
-                    "issue",
-                }
-            },
+                SummaryAspect.Issue,
+            }),
+            Name = "Issue task",
         },
-        new
+        new SummarizationOperationAction()
         {
-            taskName = "Resolution task",
-            kind = "ConversationalSummarizationTask",
-            parameters = new
+            ActionContent = new ConversationSummarizationActionContent(new List<SummaryAspect>
             {
-                summaryAspects = new[]
-                {
-                    "resolution",
-                }
-            },
-        },
-    },
-};
-
-Operation<BinaryData> analyzeConversationOperation = client.AnalyzeConversations(WaitUntil.Completed, RequestContent.Create(data));
-
-using JsonDocument result = JsonDocument.Parse(analyzeConversationOperation.Value.ToStream());
-JsonElement jobResults = result.RootElement;
-foreach (JsonElement task in jobResults.GetProperty("tasks").GetProperty("items").EnumerateArray())
-{
-    Console.WriteLine($"Task name: {task.GetProperty("taskName").GetString()}");
-    JsonElement results = task.GetProperty("results");
-    foreach (JsonElement conversation in results.GetProperty("conversations").EnumerateArray())
-    {
-        Console.WriteLine($"Conversation: #{conversation.GetProperty("id").GetString()}");
-        Console.WriteLine("Summaries:");
-        foreach (JsonElement summary in conversation.GetProperty("summaries").EnumerateArray())
-        {
-            Console.WriteLine($"Text: {summary.GetProperty("text").GetString()}");
-            Console.WriteLine($"Aspect: {summary.GetProperty("aspect").GetString()}");
+                SummaryAspect.Resolution,
+            }),
+            Name = "Resolution task",
         }
-        Console.WriteLine();
+    };
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
+
+AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
+
+foreach (var operationResult in operationState.Actions.Items)
+{
+    Console.WriteLine($"Operation action name: {operationResult.Name}");
+    if (operationResult is SummarizationOperationResult summarizationOperationResult)
+    {
+        SummaryResult results = summarizationOperationResult.Results;
+        foreach (ConversationsSummaryResult conversation in results.Conversations)
+        {
+            Console.WriteLine($"Conversation: #{conversation.Id}");
+            Console.WriteLine("Summaries:");
+            foreach (SummaryResultItem summary in conversation.Summaries)
+            {
+                Console.WriteLine($"Text: {summary.Text}");
+                Console.WriteLine($"Aspect: {summary.Aspect}");
+            }
+            if (conversation.Warnings != null && conversation.Warnings.Any())
+            {
+                Console.WriteLine("Warnings:");
+                foreach (InputWarning warning in conversation.Warnings)
+                {
+                    Console.WriteLine($"Code: {warning.Code}");
+                    Console.WriteLine($"Message: {warning.Message}");
+                }
+            }
+            Console.WriteLine();
+        }
+    }
+    if (operationState.Errors != null && operationState.Errors.Any())
+    {
+        Console.WriteLine("Errors:");
+        foreach (ConversationError error in operationState.Errors)
+        {
+            Console.WriteLine($"Error: {error.Code} - {error}");
+        }
+    }
+}
+```
+
+### Extract PII from a conversation
+
+To detect and redact PII in a conversation, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` that  returns an `Response<AnalyzeConversationOperationState>`::
+
+```C# Snippet:AnalyzeConversation_ConversationPii
+MultiLanguageConversationInput input = new MultiLanguageConversationInput(
+    new List<ConversationInput>
+    {
+        new TextConversation("1", "en", new List<TextConversationItem>()
+        {
+            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide you name?"),
+            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+            new TextConversationItem(id : "3", participantId : "Agent_1", text : "Thank you John, that has been updated in our system.")
+        })
+    });
+List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
+    {
+        new PiiOperationAction()
+        {
+            ActionContent = new ConversationPiiActionContent(),
+            Name = "Conversation PII",
+        }
+    };
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
+
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
+
+AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
+
+foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
+{
+    Console.WriteLine($"Operation action name: {operationResult.Name}");
+
+    if (operationResult is ConversationPiiOperationResult piiOperationResult)
+    {
+        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
+        {
+            Console.WriteLine($"Conversation: #{conversation.Id}");
+            Console.WriteLine("Detected Entities:");
+            foreach (ConversationPiiItemResult item in conversation.ConversationItems)
+            {
+                foreach (NamedEntity entity in item.Entities)
+                {
+                    Console.WriteLine($"  Category: {entity.Category}");
+                    Console.WriteLine($"  Subcategory: {entity.Subcategory}");
+                    Console.WriteLine($"  Text: {entity.Text}");
+                    Console.WriteLine($"  Offset: {entity.Offset}");
+                    Console.WriteLine($"  Length: {entity.Length}");
+                    Console.WriteLine($"  Confidence score: {entity.ConfidenceScore}");
+                    Console.WriteLine();
+                }
+            }
+            if (conversation.Warnings != null && conversation.Warnings.Any())
+            {
+                Console.WriteLine("Warnings:");
+                foreach (InputWarning warning in conversation.Warnings)
+                {
+                    Console.WriteLine($"Code: {warning.Code}");
+                    Console.WriteLine($"Message: {warning.Message}");
+                }
+            }
+            Console.WriteLine();
+        }
+    }
+    if (operationState.Errors != null && operationState.Errors.Any())
+    {
+        Console.WriteLine("Errors:");
+        foreach (ConversationError error in operationState.Errors)
+        {
+            Console.WriteLine($"Error: {error.Code} - {error}");
+        }
     }
 }
 ```
 
 ### Additional samples
 
-Browser our [samples][conversationanalysis_samples] for more examples of how to analyze conversations.
+Browse our [samples][conversationanalysis_samples] for more examples of how to analyze conversations.
 
 ## Troubleshooting
 
@@ -551,5 +582,5 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_docs_demos]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/quickstart
 [conversationanalysis_docs_features]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
 [conversationanalysis_refdocs]: https://docs.microsoft.com/dotnet/api/azure.ai.language.conversations
-[conversationanalysis_restdocs]: https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime
-[conversationanalysis_restdocs_authoring]: https://learn.microsoft.com/rest/api/language/2023-04-01/conversational-analysis-authoring
+[conversationanalysis_restdocs]: https://learn.microsoft.com/rest/api/language/
+[conversationalauthoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/Azure.AI.Language.Conversations_1.1.0/sdk/cognitivelanguage/Azure.AI.Language.Conversations#create-a-conversationauthoringclient

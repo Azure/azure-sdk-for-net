@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
     /// Managed data disk type. IOPS and throughput are given by the disk size, to see more information go to https://docs.microsoft.com/en-us/azure/virtual-machines/disks-types.
-    /// 
+    ///
     /// </summary>
     public readonly partial struct ServiceFabricManagedDataDiskType : IEquatable<ServiceFabricManagedDataDiskType>
     {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

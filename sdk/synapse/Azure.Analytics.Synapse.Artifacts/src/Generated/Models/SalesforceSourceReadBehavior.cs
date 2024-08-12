@@ -10,8 +10,8 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The read behavior for the operation. Default is Query. </summary>
-    public readonly partial struct SalesforceSourceReadBehavior : IEquatable<SalesforceSourceReadBehavior>
+    /// <summary> The Salesforce read behavior for the operation. </summary>
+    internal readonly partial struct SalesforceSourceReadBehavior : IEquatable<SalesforceSourceReadBehavior>
     {
         private readonly string _value;
 
@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

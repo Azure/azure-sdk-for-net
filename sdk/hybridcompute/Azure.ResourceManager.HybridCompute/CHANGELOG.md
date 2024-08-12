@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.11 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,62 @@
 
 ### Other Changes
 
+## 1.0.0-beta.10 (2024-07-19)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2024-03' to 'package-preview-2024-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b48d5d72073a296514d3d4db77887d8711526ccc/specification/hybridcompute/resource-manager/readme.md
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Added experimental Bicep serialization.
+
+## 1.0.0-beta.9 (2024-06-07)
+
+### Features Added
+
+- Upgraded api-version tag to 'package-preview-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/5f0ca7e524c788be5f2b7e7488076dadba7b26ce/specification/hybridcompute/resource-manager/readme.md.
+    - Added esu license operations for hybrid machine.
+    - Added network sevurity perimeter operations for hybrid machine.
+
+## 1.0.0-beta.8 (2024-05-07)
+
+### Features Added
+
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Bugs Fixed
+
+- Fixed format type of ESU license status
+
+## 1.0.0-beta.7 (2024-01-03)
+
+### Features Added
+
+- Upgraded api-version tag to 'package-preview-2023-10'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f6278b35fb38d62aadb7a4327a876544d5d7e1e4/specification/hybridcompute/resource-manager/readme.md.
+    - Added run commands for hybrid machine.
+
+## 1.0.0-beta.6 (2023-11-29)
+
+### Features Added
+
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.0.0-beta.5 (2023-10-17)
+
+### Features Added
+
+- Added install patches for hybrid machine
+- Added assess patches for hybrid machine
+
 ## 1.0.0-beta.4 (2023-05-30)
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
@@ -24,6 +75,7 @@
 ## 1.0.0-beta.3 (2023-04-17)
 
 ### Bugs Fixed
+
 - Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `AgentConfiguration`.
 
 ## 1.0.0-beta.2 (2023-02-17)

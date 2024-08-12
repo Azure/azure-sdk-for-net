@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement.Samples
@@ -119,7 +116,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             }, "Cost anomaly detected in the resource"),
                 Schedule = new ScheduleProperties(ScheduleFrequency.Daily, DateTimeOffset.Parse("2020-06-19T22:21:51.1287144Z"), DateTimeOffset.Parse("2021-06-19T22:21:51.1287144Z")),
                 Status = ScheduledActionStatus.Enabled,
-                ViewId = "/providers/Microsoft.CostManagement/views/swaggerExample",
+                ViewId = new ResourceIdentifier("/providers/Microsoft.CostManagement/views/swaggerExample"),
                 Kind = ScheduledActionKind.InsightAlert,
             };
             string ifMatch = "";
@@ -180,7 +177,7 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
 },
                 },
                 Status = ScheduledActionStatus.Enabled,
-                ViewId = "/providers/Microsoft.CostManagement/views/swaggerExample",
+                ViewId = new ResourceIdentifier("/providers/Microsoft.CostManagement/views/swaggerExample"),
                 Kind = ScheduledActionKind.Email,
             };
             string ifMatch = "";
@@ -252,6 +249,46 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
             bool result = await collection.ExistsAsync(name);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // ScheduledActionByScope
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ScheduledActionByScope()
+        {
+            // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/scheduledAction-get-shared.json
+            // this example is just showing the usage of "ScheduledActions_GetByScope" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this ScheduledActionResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            ScheduledActionCollection collection = client.GetScheduledActions(scopeId);
+
+            // invoke the operation
+            string name = "monthlyCostByResource";
+            NullableResponse<ScheduledActionResource> response = await collection.GetIfExistsAsync(name);
+            ScheduledActionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ScheduledActionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

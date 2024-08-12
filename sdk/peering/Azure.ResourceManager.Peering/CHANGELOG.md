@@ -1,14 +1,37 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.1 (2023-11-29)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.2.0 (2023-09-19)
+
+### Bugs Fixed
+
+- Fixed the [issue 38759](https://github.com/Azure/azure-sdk-for-net/issues/38759).
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.28.0 to 1.35.0
+- Upgraded Azure.ResourceManager from 1.4.0 to 1.7.0
 
 ## 1.2.0-beta.1 (2023-05-31)
 
@@ -31,6 +54,7 @@
 ## 1.1.0 (2022-12-13)
 
 ### Features Added
+
 Added new APIs from 2022-10-01 API:
 - RoutingPreferenceUnbilledPrefix
 

@@ -1,40 +1,61 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("RouterWorker")]
     public partial class RouterWorker
     {
-        /// <summary>
-        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
-        /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        /// <summary> Initializes a new instance of a worker. </summary>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
+        public RouterWorker(string workerId)
+        {
+            Argument.AssertNotNullOrWhiteSpace(workerId, nameof(workerId));
+
+            Id = workerId;
+
+            _labels = new ChangeTrackingDictionary<string, BinaryData>();
+            _tags = new ChangeTrackingDictionary<string, BinaryData>();
+        }
 
         /// <summary>
-        /// A set of non-identifying attributes attached to this worker.
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.
         /// </summary>
-        public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
-        /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
-        public IDictionary<string, ChannelConfiguration> ChannelConfigurations { get; } = new Dictionary<string, ChannelConfiguration>();
+        /// <summary>
+        /// A set of non-identifying attributes attached to this worker. Values must be primitive values - number, string, boolean.
+        /// </summary>
+        public IDictionary<string, RouterValue> Tags { get; } = new Dictionary<string, RouterValue>();
 
-        /// <summary> The queue(s) that this worker can receive work from. </summary>
-        public IDictionary<string, RouterQueueAssignment> QueueAssignments { get; } = new Dictionary<string, RouterQueueAssignment>();
+        /// <summary> Collection of channel(s) this worker can handle and their impact on the workers capacity. </summary>
+        public IList<RouterChannel> Channels { get; } = new List<RouterChannel>();
+
+        /// <summary> Collection of queue(s) that this worker can receive work from. </summary>
+        public IList<string> Queues { get; } = new List<string>();
+
+        /// <summary> The total capacity score this worker has to manage multiple concurrent jobs. </summary>
+        public int? Capacity { get; set; }
+
+        /// <summary> A flag indicating whether this worker is open to receive offers or not. </summary>
+        public bool? AvailableForOffers { get; set; }
+
+        /// <summary> If this is set, the worker will only receive up to this many new offers at a time. </summary>
+        public int? MaxConcurrentOffers { get; set; }
 
         [CodeGenMember("Labels")]
-        internal IDictionary<string, object> _labels
+        internal IDictionary<string, BinaryData> _labels
         {
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? Labels?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {
@@ -42,20 +63,20 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value);
+                        Labels[label.Key] = new RouterValue(label.Value.ToObjectFromJson());
                     }
                 }
             }
         }
 
         [CodeGenMember("Tags")]
-        internal IDictionary<string, object> _tags
+        internal IDictionary<string, BinaryData> _tags
         {
             get
             {
                 return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key, x => x.Value.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? Tags?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {
@@ -63,47 +84,21 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     foreach (var tag in value)
                     {
-                        Tags[tag.Key] = new LabelValue(tag.Value);
+                        Tags[tag.Key] = new RouterValue(tag.Value.ToObjectFromJson());
                     }
                 }
             }
         }
 
-        [CodeGenMember("ChannelConfigurations")]
-        internal IDictionary<string, ChannelConfiguration> _channelConfigurations {
-            get
-            {
-                return ChannelConfigurations ?? new ChangeTrackingDictionary<string, ChannelConfiguration>();
-            }
-            set
-            {
-                foreach (var channelConfiguration in value)
-                {
-                    ChannelConfigurations[channelConfiguration.Key] = new ChannelConfiguration(channelConfiguration.Value.CapacityCostPerJob)
-                    {
-                        MaxNumberOfJobs = channelConfiguration.Value.MaxNumberOfJobs
-                    };
-                }
-            }
-        }
+        /// <summary> The entity tag for this resource. </summary>
+        [CodeGenMember("Etag")]
+        public ETag ETag { get; }
 
-        [CodeGenMember("QueueAssignments")]
-        internal IDictionary<string, object> _queueAssignments
+        internal virtual RequestContent ToRequestContent()
         {
-            get
-            {
-                return QueueAssignments != null
-                    ? QueueAssignments.ToDictionary(x => x.Key,
-                        x => (object)x.Value)
-                    : new ChangeTrackingDictionary<string, object>();
-            }
-            set
-            {
-                foreach (var queueAssignment in value)
-                {
-                    QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
-                }
-            }
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

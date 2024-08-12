@@ -1,0 +1,29 @@
+{
+  "Name": "UefiSettings",
+  "ProtocolName": "Models.UefiSettings",
+  "SummaryComment": "Specifies the security settings like secure boot and vTPM used while creating the virtual machine.",
+  "Properties": [
+    {
+      "Key": {
+        "Type": "bool?",
+        "Name": "SecureBootEnabled",
+        "SummaryComment": "Specifies whether secure boot should be enabled on the virtual machine.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "bool?",
+        "Name": "VTpmEnabled",
+        "SummaryComment": "Specifies whether vTPM should be enabled on the virtual machine.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    }
+  ]
+}

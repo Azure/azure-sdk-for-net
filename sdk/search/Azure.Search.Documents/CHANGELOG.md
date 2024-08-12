@@ -1,6 +1,6 @@
 # Release History
 
-## 11.5.0-beta.3 (Unreleased)
+## 11.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,119 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.6.0 (2024-07-17)
+
+### Features Added
+- Added support for `2024-07-01` service version.
+- `SemanticSearchOptions` now supports `SemanticQuery`, which allows for specifying a semantic query that is only used
+  for semantic reranking.
+- `VectorQuery` now supports `Oversampling` and `Weight`, which allows for specifying richer configurations on how
+  vector queries affect search results.
+- Added support for `VectorizableTextQuery`, which allows for passing a text-based query that is vectorized service-side
+  by `VectorSearchVectorizer`s configured on the index so that vectorization doesn't need to happen before querying.
+- Added support for "bring your own endpoint" with `VectorSearchVectorizer`, with implementations `AzureOpenAIVectorizer`
+  and `WebApiVectorizer`. This enables the service to use a user-provided configuration for vectorizing text, rather 
+  than requiring all client-side calls to vectorize before querying, allowing for easier standardization of vectorization.
+- Added support for compression with `VectorSearchCompression`, with implementations `BinaryQuantizationCompression`
+  and `ScalarQuantizationCompression`. This allows for reducing the size of vectors in the index, which can reduce
+  storage costs and improve querying performance.
+- Added support for `VectorEncodingFormat`, which allows for specifying the encoding format of the vector data.
+- Added support for `AzureOpenAIEmbeddingSkill`, which is a skill that uses the Azure OpenAI service to create text 
+  embeddings during indexing.
+- Added support for index projections with `SearchIndexerIndexProjection`, which allows for specifying how indexed 
+  documents are projected in the index (or indexes).
+- Added support for "narrow" types in `SearchFieldDataType`. This allows for specifying smaller types for vector fields
+  to reduce storage costs and improve querying performance.
+- Added support for `SearchIndexerDataIdentity`, which allows for specifying the identity for the data source for the 
+  indexer.
+- `SearchField` and `SearchableField` now support `IsStored` and `VectorEncodingFormat` configurations. `IsStored` allows
+  for specifying behaviors on how the index will retain vector data (enabling the ability to reduce storage costs), and
+  `VectorEncodingFormat` allows for specifying the encoding format of the vector data.
+- `OcrSkill` now supports `LineEnding`, which allows for specifying the line ending character used by the OCR skill.
+- `SplitSkill` now supports `MaximumPagesToTake` and `PageOverlapLength`, which allows for specifying how the split
+  skill behaves when splitting documents into pages.
+- `SearchServiceLimits` now supports `MaxStoragePerIndexInBytes`, which shows the maximum storage allowed per index.
+
+### Breaking Changes
+
+- All service concepts that have been in preview but not included in the `2024-07-01` GA have been removed. This
+  includes concepts such as index aliases, normalizers, Azure Machine Learning skills, hybrid search, and more.
+
+## 11.6.0-beta.4 (2024-05-06)
+
+### Features Added
+- Added support for new embedding models `text-embedding-3-small` and `text-embedding-3-large`, as part of our existing `AzureOpenAIVectorizer` and `AzureOpenAIEmbeddingSkill` features. 
+- Added support for `AIServicesVisionVectorizer` and `VisionVectorizeSkill` to generate embeddings for an image or text using the Azure AI Services Vision Vectorize API.
+- Added support for `AzureMachineLearningVectorizer`, allowing users to specify an Azure Machine Learning endpoint deployed via the Azure AI Studio Model Catalog to generate vector embeddings of query strings.
+- Added support for `byte` to `SearchFieldDataType`.
+
+## 11.6.0-beta.3 (2024-03-05)
+
+### Features Added
+- Added the `VectorSearch.Compressions` property, which can be utilized to configure options specific to the compression method used during indexing or querying.
+- Added the `SearchField.IsStored`, `VectorSearchField.IsStored`, and `VectorSearchFieldAttribute.IsStored` property. It represent an immutable value indicating whether the field will be persisted separately on disk to be returned in a search result. This property is applicable only for vector fields.
+- Added support for `sbyte` and `int16` to `SearchFieldDataType`.
+
+## 11.6.0-beta.2 (2024-02-05)
+
+### Features Added
+- Publicly exposed HttpPipeline for all search clients.
+
+### Bugs Fixed
+- Removed the unintentional addition of the abstract keyword to the `KnowledgeStoreProjectionSelector` and `KnowledgeStoreStorageProjectionSelector` types.
+
+## 11.6.0-beta.1 (2024-01-17)
+
+### Features Added
+- Added all the new types and updated the names as defined in the GA version [11.5.0](https://www.nuget.org/packages/Azure.Search.Documents/11.5.0).
+
+## 11.5.1 (2023-11-28)
+
+### Bugs Fixed
+- Fix paging issue for semantic and vector search ([#40137](https://github.com/Azure/azure-sdk-for-net/issues/40137)).
+
+## 11.5.0 (2023-11-10)
+
+### Features Added
+- Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md).
+- Added support for [Semantic Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample08_SemanticSearch.md).
+- Added support for [`PiiDetectionSkill`](https://learn.microsoft.com/azure/search/cognitive-search-skill-pii-detection). It allows you extracts personal information from an input text and gives you the option of masking it using the Text Analytics API.
+- Added new languages for `OcrSkill` and `ImageAnalysisSkill` as we have upgraded them to use Cognitive Services Computer Vision v3.2, which now includes support for additional languages. Refer to the language lists [here](https://docs.microsoft.com/azure/cognitive-services/computer-vision/language-support).
+- Added new languages for ` SplitSkill`. Language lists can be found [here](https://learn.microsoft.com/azure/search/cognitive-search-skill-textsplit#skill-parameters).
+- Deprecated `SentimentSkill.SkillVersion.V1` and `EntityRecognitionSkill.SkillVersion.V1`; use `SentimentSkill.SkillVersion.V3` and `EntityRecognitionSkill.SkillVersion.V3` instead.
+
+## 11.5.0-beta.5 (2023-10-09)
+
+### Features Added
+- Added support for `VectorSearch.Vectorizers`, which contains configuration options for vectorizing text vector queries, and `VectorSearch.Profiles`, which define combinations of configurations to use with vector search.
+- Added the `VectorSearchAlgorithmConfiguration` base type, containing configuration options specific to the algorithm used during indexing and/or querying. Derived classes include `ExhaustiveKnnVectorSearchAlgorithmConfiguration` and `HnswVectorSearchAlgorithmConfiguration`.
+- Added the `SearchOptions.VectorQueries` base type, which is used for the query parameters for vector and hybrid search queries. Derived classes include `VectorizableTextQuery` and `RawVectorQuery`. With `RawVectorQuery`, users can pass raw vector values for vector search, while `VectorizableTextQuery` allows the passing of text values to be vectorized for vector search.
+- Added `SearchOptions.VectorFilterMode`, determining whether filters are applied before or after vector search is executed.
+- Added `SearchOptions.SemanticQuery`, which enables the setting of a dedicated search query for semantic reranking, semantic captions, and semantic answers.
+- Added support for `AzureOpenAIEmbeddingSkill`, which enables the generation of vector embeddings for given text inputs using the Azure Open AI service.
+- Added `SearchIndexStatistics.VectorIndexSize`, which reports the amount of memory consumed by vectors in the index.
+- Added `KnowledgeStore.Parameters`, which defines a dictionary of knowledge store-specific configuration properties.
+- Added `SearchIndexerSkillset.IndexProjections`, which specifies additional projections to secondary search indexes.
+
+### Breaking Changes
+- In `SearchOptions`, the `IList<SearchQueryVector> Vectors` property has been removed in favor of the abstract base type `IList<VectorQuery> VectorQueries`.
+- In `SearchField`, the `vectorSearchConfiguration` property has been removed in favor of the new `VectorSearchProfile` property.
+- In `VectorSearch`, `AlgorithmConfigurations` has been renamed to `Algorithms`.
+
+## 11.5.0-beta.4 (2023-08-07)
+
+### Features Added
+- Added the ability to perform multiple vectors query searches.
+- Added support for vector queries over multiple fields.
+
+## 11.5.0-beta.3 (2023-07-11)
+
+### Features Added
+- Added support for [Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch.md).
+
+### Bugs Fixed
+- Fixed issue with `QueryCaptionsType.None` in semantic search, resolving an invalid response to the service ([#37164](https://github.com/Azure/azure-sdk-for-net/issues/37164)).
 
 ## 11.5.0-beta.2 (2022-10-11)
 

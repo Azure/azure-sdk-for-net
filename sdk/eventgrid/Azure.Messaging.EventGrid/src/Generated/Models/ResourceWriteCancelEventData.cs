@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceWriteCancel event. This is raised when a resource create or update operation is canceled. </summary>
     public partial class ResourceWriteCancelEventData
     {
-        /// <summary> Initializes a new instance of ResourceWriteCancelEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceWriteCancelEventData"/>. </summary>
         internal ResourceWriteCancelEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceWriteCancelEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceWriteCancelEventData"/>. </summary>
         /// <param name="tenantId"> The tenant ID of the resource. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="resourceGroup"> The resource group of the resource. </param>

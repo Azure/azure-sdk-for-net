@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
@@ -35,6 +34,49 @@ namespace Azure.ResourceManager.Monitor
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2019-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri, string metricnames, string metricnamespace, string timespan, TimeSpan? interval, string aggregation, string sensitivities, string filter, MonitorResultType? resultType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Insights/metricBaselines", false);
+            if (metricnames != null)
+            {
+                uri.AppendQuery("metricnames", metricnames, true);
+            }
+            if (metricnamespace != null)
+            {
+                uri.AppendQuery("metricnamespace", metricnamespace, true);
+            }
+            if (timespan != null)
+            {
+                uri.AppendQuery("timespan", timespan, true);
+            }
+            if (interval != null)
+            {
+                uri.AppendQuery("interval", interval.Value, "P", true);
+            }
+            if (aggregation != null)
+            {
+                uri.AppendQuery("aggregation", aggregation, true);
+            }
+            if (sensitivities != null)
+            {
+                uri.AppendQuery("sensitivities", sensitivities, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (resultType != null)
+            {
+                uri.AppendQuery("resultType", resultType.Value.ToSerialString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string resourceUri, string metricnames, string metricnamespace, string timespan, TimeSpan? interval, string aggregation, string sensitivities, string filter, MonitorResultType? resultType)

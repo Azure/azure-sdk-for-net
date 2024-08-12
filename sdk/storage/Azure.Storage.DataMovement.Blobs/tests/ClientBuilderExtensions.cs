@@ -1,21 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+extern alias BaseBlobs;
 
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Test.Shared;
 using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
-    Azure.Storage.Blobs.BlobServiceClient,
-    Azure.Storage.Blobs.BlobClientOptions>;
+    BaseBlobs::Azure.Storage.Blobs.BlobServiceClient,
+    BaseBlobs::Azure.Storage.Blobs.BlobClientOptions>;
+using BaseBlobs::Azure.Storage.Blobs;
+using BaseBlobs::Azure.Storage.Blobs.Models;
+using Azure.Storage.Blobs.Tests;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
-    public static partial class ClientBuilderExtensions
+    internal static class ClientBuilderExtensions
     {
+        public static string GetNewContainerName(this BlobsClientBuilder clientBuilder)
+            => $"test-container-{clientBuilder.Recording.Random.NewGuid()}";
+
+        public static BlobServiceClient GetServiceClient_SharedKey(this BlobsClientBuilder clientBuilder, BlobClientOptions options = default)
+            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
+
         /// <summary>
         /// Creates a new <see cref="ClientBuilder{TServiceClient, TServiceClientOptions}"/>
         /// setup to generate <see cref="BlobServiceClient"/>s.
@@ -31,43 +37,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 (uri, tokenCredential, clientOptions) => new BlobServiceClient(uri, tokenCredential, clientOptions),
                 (uri, azureSasCredential, clientOptions) => new BlobServiceClient(uri, azureSasCredential, clientOptions),
                 () => new BlobClientOptions(serviceVersion));
-        public static string GetNewContainerName(this BlobsClientBuilder clientBuilder)
-            => $"test-container-{clientBuilder.Recording.Random.NewGuid()}";
-        public static string GetNewBlobName(this BlobsClientBuilder clientBuilder)
-            => $"test-blob-{clientBuilder.Recording.Random.NewGuid()}";
-        public static string GetNewBlobDirectoryName(this BlobsClientBuilder clientBuilder)
-            => $"test-directory-{clientBuilder.Recording.Random.NewGuid()}";
-        public static string GetNewBlockName(this BlobsClientBuilder clientBuilder)
-            => $"test-block-{clientBuilder.Recording.Random.NewGuid()}";
-        public static string GetNewNonAsciiBlobName(this BlobsClientBuilder clientBuilder)
-            => $"test-β£©þ‽%3A-{clientBuilder.Recording.Random.NewGuid()}";
-
-        public static BlobServiceClient GetServiceClient_SharedKey(this BlobsClientBuilder clientBuilder, BlobClientOptions options = default)
-            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
-
-        public static BlobServiceClient GetServiceClient_SecondaryAccount_SharedKey(this BlobsClientBuilder clientBuilder)
-            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigSecondary);
-
-        public static BlobServiceClient GetServiceClient_PreviewAccount_SharedKey(this BlobsClientBuilder clientBuilder)
-            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPreviewBlob);
-
-        public static BlobServiceClient GetServiceClient_PremiumBlobAccount_SharedKey(this BlobsClientBuilder clientBuilder)
-            => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPremiumBlob);
-
-        public static BlobServiceClient GetServiceClient_OAuth(this BlobsClientBuilder clientBuilder)
-            => clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth);
-
-        public static BlobServiceClient GetServiceClient_OAuthAccount_SharedKey(this BlobsClientBuilder clientBuilder) =>
-            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigOAuth);
-
-        public static BlobServiceClient GetServiceClient_ManagedDisk(this BlobsClientBuilder clientBuilder) =>
-            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigManagedDisk);
-
-        public static BlobServiceClient GetServiceClient_Hns(this BlobsClientBuilder clientBuilder) =>
-            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigHierarchicalNamespace);
-
-        public static BlobServiceClient GetServiceClient_SoftDelete(this BlobsClientBuilder clientBuilder) =>
-            clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigSoftDelete);
 
         public static async Task<DisposingBlobContainer> GetTestContainerAsync(
             this BlobsClientBuilder clientBuilder,
@@ -82,35 +51,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             if (publicAccessType == default)
             {
-                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
+                publicAccessType = PublicAccessType.None;
             }
 
             BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateIfNotExistsAsync(metadata: metadata, publicAccessType: publicAccessType.Value);
             return new DisposingBlobContainer(container);
-        }
-
-        /// <summary>
-        /// Makes a new instrumented BlobClient pointing to the same resource but with new client options.
-        /// </summary>
-        /// <param name="oldClient">
-        /// Client to copy.
-        /// </param>
-        /// <param name="modifyOptions">
-        /// How to modify prebuild instrumented clientoptions.
-        /// </param>
-        /// <param name="credential">
-        /// Optional shared key credential to use. Defaults to <see cref="TenantConfigurationBuilder.GetNewSharedKeyCredentials"/>.
-        /// </param>
-        public static BlobClient RotateBlobClientSharedKey(
-            this BlobsClientBuilder clientBuilder,
-            BlobClient oldClient,
-            Action<BlobClientOptions> modifyOptions,
-            StorageSharedKeyCredential credential = default)
-        {
-            var newOptions = clientBuilder.GetOptions();
-            modifyOptions?.Invoke(newOptions);
-            return clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(new BlobClient(oldClient.Uri, credential ?? clientBuilder.Tenants.GetNewSharedKeyCredentials(), newOptions));
         }
     }
 }

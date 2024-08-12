@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> List of properties of the device. </summary>
     public partial class DeviceProperties
     {
-        /// <summary> Initializes a new instance of DeviceProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeviceProperties"/>. </summary>
         public DeviceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProperties"/>. </summary>
         /// <param name="deviceVendor"> Name of the device Vendor. </param>
         /// <param name="deviceModel"> Model of the device. </param>
         /// <param name="linkSpeedInMbps"> Link speed. </param>
-        internal DeviceProperties(string deviceVendor, string deviceModel, int? linkSpeedInMbps)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceProperties(string deviceVendor, string deviceModel, int? linkSpeedInMbps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeviceVendor = deviceVendor;
             DeviceModel = deviceModel;
             LinkSpeedInMbps = linkSpeedInMbps;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the device Vendor. </summary>

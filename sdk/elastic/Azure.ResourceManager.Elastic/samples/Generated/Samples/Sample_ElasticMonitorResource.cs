@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Elastic;
 using Azure.ResourceManager.Elastic.Models;
 using Azure.ResourceManager.Resources;
 
@@ -163,7 +160,7 @@ namespace Azure.ResourceManager.Elastic.Samples
             ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (MonitoredResource item in elasticMonitorResource.GetMonitoredResourcesAsync())
+            await foreach (MonitoredResourceContent item in elasticMonitorResource.GetMonitoredResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

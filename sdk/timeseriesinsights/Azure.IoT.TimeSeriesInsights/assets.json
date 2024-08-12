@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/timeseriesinsights/Azure.IoT.TimeSeriesInsights",
+  "Tag": "net/timeseriesinsights/Azure.IoT.TimeSeriesInsights_148450a505"
+}

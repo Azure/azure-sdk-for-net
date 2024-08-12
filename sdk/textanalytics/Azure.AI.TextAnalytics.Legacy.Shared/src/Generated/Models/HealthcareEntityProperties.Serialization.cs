@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -21,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             }
             string text = default;
             HealthcareEntityCategory category = default;
-            Optional<string> subcategory = default;
+            string subcategory = default;
             int offset = default;
             int length = default;
             double confidenceScore = default;
@@ -58,7 +57,21 @@ namespace Azure.AI.TextAnalytics.Legacy
                     continue;
                 }
             }
-            return new HealthcareEntityProperties(text, category, subcategory.Value, offset, length, confidenceScore);
+            return new HealthcareEntityProperties(
+                text,
+                category,
+                subcategory,
+                offset,
+                length,
+                confidenceScore);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HealthcareEntityProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHealthcareEntityProperties(document.RootElement);
         }
     }
 }

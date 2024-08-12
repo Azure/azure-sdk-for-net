@@ -5,17 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Request to validate preference of transport and data center. </summary>
     public partial class PreferencesValidationContent : DataBoxValidationInputContent
     {
-        /// <summary> Initializes a new instance of PreferencesValidationContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreferencesValidationContent"/>. </summary>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         public PreferencesValidationContent(DataBoxSkuName deviceType)
         {
             DeviceType = deviceType;
             ValidationType = DataBoxValidationInputDiscriminator.ValidatePreferences;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PreferencesValidationContent"/>. </summary>
+        /// <param name="validationType"> Identifies the type of validation request. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="preference"> Preference of transport and data center. </param>
+        /// <param name="deviceType"> Device type to be used for the job. </param>
+        internal PreferencesValidationContent(DataBoxValidationInputDiscriminator validationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataBoxOrderPreferences preference, DataBoxSkuName deviceType) : base(validationType, serializedAdditionalRawData)
+        {
+            Preference = preference;
+            DeviceType = deviceType;
+            ValidationType = validationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PreferencesValidationContent"/> for deserialization. </summary>
+        internal PreferencesValidationContent()
+        {
         }
 
         /// <summary> Preference of transport and data center. </summary>

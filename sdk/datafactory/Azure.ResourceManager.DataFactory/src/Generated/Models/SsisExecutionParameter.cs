@@ -6,30 +6,21 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SSIS execution parameter. </summary>
     public partial class SsisExecutionParameter
     {
-        /// <summary> Initializes a new instance of SsisExecutionParameter. </summary>
-        /// <param name="value"> SSIS package execution parameter value. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SsisExecutionParameter(BinaryData value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value;
-        }
-
         /// <summary>
-        /// SSIS package execution parameter value. Type: string (or Expression with resultType string).
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -53,6 +44,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Value { get; set; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionParameter"/>. </summary>
+        /// <param name="value"> SSIS package execution parameter value. Type: string (or Expression with resultType string). </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SsisExecutionParameter(DataFactoryElement<string> value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionParameter"/>. </summary>
+        /// <param name="value"> SSIS package execution parameter value. Type: string (or Expression with resultType string). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisExecutionParameter(DataFactoryElement<string> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SsisExecutionParameter"/> for deserialization. </summary>
+        internal SsisExecutionParameter()
+        {
+        }
+
+        /// <summary> SSIS package execution parameter value. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Value { get; set; }
     }
 }

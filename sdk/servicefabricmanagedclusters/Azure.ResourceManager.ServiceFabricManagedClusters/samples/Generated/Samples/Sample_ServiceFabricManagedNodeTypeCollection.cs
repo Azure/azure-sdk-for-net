@@ -8,12 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
@@ -25,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListNodeTypeOfTheSpecifiedManagedCluster()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypeListOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypeListOperation_example.json
             // this example is just showing the usage of "NodeTypes_ListByManagedClusters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +59,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetANodeType()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypeGetOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypeGetOperation_example.json
             // this example is just showing the usage of "NodeTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +94,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetANodeType()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypeGetOperation_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypeGetOperation_example.json
             // this example is just showing the usage of "NodeTypes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,12 +120,55 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get a node type
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetANodeType()
+        {
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypeGetOperation_example.json
+            // this example is just showing the usage of "NodeTypes_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceFabricManagedClusterResource created on azure
+            // for more information of creating ServiceFabricManagedClusterResource, please refer to the document of ServiceFabricManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "resRg";
+            string clusterName = "myCluster";
+            ResourceIdentifier serviceFabricManagedClusterResourceId = ServiceFabricManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            ServiceFabricManagedClusterResource serviceFabricManagedCluster = client.GetServiceFabricManagedClusterResource(serviceFabricManagedClusterResourceId);
+
+            // get the collection of this ServiceFabricManagedNodeTypeResource
+            ServiceFabricManagedNodeTypeCollection collection = serviceFabricManagedCluster.GetServiceFabricManagedNodeTypes();
+
+            // invoke the operation
+            string nodeTypeName = "FE";
+            NullableResponse<ServiceFabricManagedNodeTypeResource> response = await collection.GetIfExistsAsync(nodeTypeName);
+            ServiceFabricManagedNodeTypeResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ServiceFabricManagedNodeTypeData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Put a node type with auto-scale parameters
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PutANodeTypeWithAutoScaleParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypePutOperationAutoScale_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypePutOperationAutoScale_example.json
             // this example is just showing the usage of "NodeTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -212,7 +252,7 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PutANodeTypeWithMaximumParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypePutOperation_example_max.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypePutOperation_example_max.json
             // this example is just showing the usage of "NodeTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -232,7 +272,7 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
             ServiceFabricManagedNodeTypeCollection collection = serviceFabricManagedCluster.GetServiceFabricManagedNodeTypes();
 
             // invoke the operation
-            string nodeTypeName = "BE";
+            string nodeTypeName = "BE-testResourceGroup-testRegion-test";
             ServiceFabricManagedNodeTypeData data = new ServiceFabricManagedNodeTypeData()
             {
                 IsPrimary = false,
@@ -275,6 +315,10 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
 }),
 ForceUpdateTag = "v.1.0",
 IsAutomaticUpgradeEnabled = true,
+SetupOrder =
+{
+VmssExtensionSetupOrder.BeforeSFRuntime
+},
 }
 },
                 UserAssignedIdentities =
@@ -288,7 +332,8 @@ new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/reso
 new NodeTypeFrontendConfiguration()
 {
 LoadBalancerBackendAddressPoolId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/loadBalancers/test-LB/backendAddressPools/LoadBalancerBEAddressPool"),
-LoadBalancerInboundNatPoolId = new ResourceIdentifier(" /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/loadBalancers/test-LB/inboundNatPools/LoadBalancerNATPool"),
+LoadBalancerInboundNatPoolId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/loadBalancers/test-LB/inboundNatPools/LoadBalancerNATPool"),
+ApplicationGatewayBackendAddressPoolId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/applicationGateways/appgw-test/backendAddressPools/appgwBepoolTest"),
 }
 },
                 AdditionalDataDisks =
@@ -298,6 +343,68 @@ new NodeTypeVmssDataDisk(1,256,ServiceFabricManagedDataDiskType.StandardSsdLrs,"
                 IsEncryptionAtHostEnabled = true,
                 IsAcceleratedNetworkingEnabled = true,
                 UseDefaultPublicLoadBalancer = true,
+                IsOverProvisioningEnabled = false,
+                IsSpotVm = true,
+                UseEphemeralOSDisk = true,
+                SpotRestoreTimeout = "PT30M",
+                EvictionPolicy = SpotNodeVmEvictionPolicyType.Deallocate,
+                SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
+                VmSetupActions =
+{
+VmSetupAction.EnableContainers,VmSetupAction.EnableHyperV
+},
+                SecurityType = ServiceFabricManagedClusterSecurityType.TrustedLaunch,
+                IsSecureBootEnabled = true,
+                IsNodePublicIPEnabled = true,
+                IsNodePublicIPv6Enabled = true,
+                NatGatewayId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/natGateways/myNatGateway"),
+                ServiceArtifactReferenceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Compute/galleries/myGallery/serviceArtifacts/myServiceArtifact/vmArtifactsProfiles/myVmArtifactProfile"),
+                DscpConfigurationId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/dscpConfigurations/myDscpConfig"),
+                AdditionalNetworkInterfaceConfigurations =
+{
+new AdditionalNetworkInterfaceConfiguration("nic-1",new ServiceFabricManagedClusterIPConfiguration[]
+{
+new ServiceFabricManagedClusterIPConfiguration("ipconfig-1")
+{
+ApplicationGatewayBackendAddressPools =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/applicationGateways/appgw-test/backendAddressPools/appgwBepoolTest"),
+}
+},
+LoadBalancerBackendAddressPools =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/loadBalancers/test-LB/backendAddressPools/LoadBalancerBEAddressPool"),
+}
+},
+LoadBalancerInboundNatPools =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/loadBalancers/test-LB/inboundNatPools/LoadBalancerNATPool"),
+}
+},
+SubnetId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1"),
+PrivateIPAddressVersion = ServiceFabricManagedClusterPrivateIPAddressVersion.IPv4,
+PublicIPAddressConfiguration = new ServiceFabricManagedClusterPublicIPAddressConfiguration("publicip-1")
+{
+IPTags =
+{
+new ManagedClusterIPTag("RoutingPreference","Internet")
+},
+PublicIPAddressVersion = ServiceFabricManagedClusterPublicIPAddressVersion.IPv4,
+},
+}
+})
+{
+EnableAcceleratedNetworking = true,
+DscpConfigurationId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resRg/providers/Microsoft.Network/dscpConfigurations/myDscpConfig"),
+}
+},
+                ComputerNamePrefix = "BE",
             };
             ArmOperation<ServiceFabricManagedNodeTypeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, data);
             ServiceFabricManagedNodeTypeResource result = lro.Value;
@@ -314,7 +421,7 @@ new NodeTypeVmssDataDisk(1,256,ServiceFabricManagedDataDiskType.StandardSsdLrs,"
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PutANodeTypeWithMinimumParameters()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypePutOperation_example_min.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypePutOperation_example_min.json
             // this example is just showing the usage of "NodeTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -361,7 +468,7 @@ new NodeTypeVmssDataDisk(1,256,ServiceFabricManagedDataDiskType.StandardSsdLrs,"
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PutAnStatelessNodeTypeWithTemporaryDiskForServiceFabric()
         {
-            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2022-01-01/examples/NodeTypePutOperationStateless_example.json
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypePutOperationStateless_example.json
             // this example is just showing the usage of "NodeTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -405,6 +512,206 @@ Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                 HasMultiplePlacementGroups = true,
                 IsEncryptionAtHostEnabled = true,
                 UseTempDataDisk = true,
+            };
+            ArmOperation<ServiceFabricManagedNodeTypeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, data);
+            ServiceFabricManagedNodeTypeResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ServiceFabricManagedNodeTypeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Put node type with custom vm image
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_PutNodeTypeWithCustomVmImage()
+        {
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypePutOperationCustomImage_example.json
+            // this example is just showing the usage of "NodeTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceFabricManagedClusterResource created on azure
+            // for more information of creating ServiceFabricManagedClusterResource, please refer to the document of ServiceFabricManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "resRg";
+            string clusterName = "myCluster";
+            ResourceIdentifier serviceFabricManagedClusterResourceId = ServiceFabricManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            ServiceFabricManagedClusterResource serviceFabricManagedCluster = client.GetServiceFabricManagedClusterResource(serviceFabricManagedClusterResourceId);
+
+            // get the collection of this ServiceFabricManagedNodeTypeResource
+            ServiceFabricManagedNodeTypeCollection collection = serviceFabricManagedCluster.GetServiceFabricManagedNodeTypes();
+
+            // invoke the operation
+            string nodeTypeName = "BE";
+            ServiceFabricManagedNodeTypeData data = new ServiceFabricManagedNodeTypeData()
+            {
+                IsPrimary = false,
+                VmInstanceCount = 10,
+                DataDiskSizeInGB = 200,
+                VmSize = "Standard_D3",
+                VmImageResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-custom-image/providers/Microsoft.Compute/galleries/myCustomImages/images/Win2019DC"),
+            };
+            ArmOperation<ServiceFabricManagedNodeTypeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, data);
+            ServiceFabricManagedNodeTypeResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ServiceFabricManagedNodeTypeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Put node type with dedicated hosts
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_PutNodeTypeWithDedicatedHosts()
+        {
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypePutOperationDedicatedHost_example.json
+            // this example is just showing the usage of "NodeTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceFabricManagedClusterResource created on azure
+            // for more information of creating ServiceFabricManagedClusterResource, please refer to the document of ServiceFabricManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "resRg";
+            string clusterName = "myCluster";
+            ResourceIdentifier serviceFabricManagedClusterResourceId = ServiceFabricManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            ServiceFabricManagedClusterResource serviceFabricManagedCluster = client.GetServiceFabricManagedClusterResource(serviceFabricManagedClusterResourceId);
+
+            // get the collection of this ServiceFabricManagedNodeTypeResource
+            ServiceFabricManagedNodeTypeCollection collection = serviceFabricManagedCluster.GetServiceFabricManagedNodeTypes();
+
+            // invoke the operation
+            string nodeTypeName = "BE";
+            ServiceFabricManagedNodeTypeData data = new ServiceFabricManagedNodeTypeData()
+            {
+                IsPrimary = false,
+                VmInstanceCount = 10,
+                DataDiskSizeInGB = 200,
+                DataDiskType = ServiceFabricManagedDataDiskType.StandardSsdLrs,
+                PlacementProperties =
+{
+},
+                Capacities =
+{
+},
+                VmSize = "Standard_D8s_v3",
+                VmImagePublisher = "MicrosoftWindowsServer",
+                VmImageOffer = "WindowsServer",
+                VmImageSku = "2019-Datacenter",
+                VmImageVersion = "latest",
+                Zones =
+{
+"1"
+},
+                HostGroupId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testhostgroupRG/providers/Microsoft.Compute/hostGroups/testHostGroup",
+            };
+            ArmOperation<ServiceFabricManagedNodeTypeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, data);
+            ServiceFabricManagedNodeTypeResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ServiceFabricManagedNodeTypeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Put node type with shared galleries custom vm image
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_PutNodeTypeWithSharedGalleriesCustomVmImage()
+        {
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypePutOperationCustomSharedGalleriesImage_example.json
+            // this example is just showing the usage of "NodeTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceFabricManagedClusterResource created on azure
+            // for more information of creating ServiceFabricManagedClusterResource, please refer to the document of ServiceFabricManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "resRg";
+            string clusterName = "myCluster";
+            ResourceIdentifier serviceFabricManagedClusterResourceId = ServiceFabricManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            ServiceFabricManagedClusterResource serviceFabricManagedCluster = client.GetServiceFabricManagedClusterResource(serviceFabricManagedClusterResourceId);
+
+            // get the collection of this ServiceFabricManagedNodeTypeResource
+            ServiceFabricManagedNodeTypeCollection collection = serviceFabricManagedCluster.GetServiceFabricManagedNodeTypes();
+
+            // invoke the operation
+            string nodeTypeName = "BE";
+            ServiceFabricManagedNodeTypeData data = new ServiceFabricManagedNodeTypeData()
+            {
+                IsPrimary = false,
+                VmInstanceCount = 10,
+                DataDiskSizeInGB = 200,
+                VmSize = "Standard_D3",
+                VmSharedGalleryImageId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-custom-image/providers/Microsoft.Compute/sharedGalleries/35349201-a0b3-405e-8a23-9f1450984307-SFSHAREDGALLERY/images/TestNoProdContainerDImage/versions/latest"),
+            };
+            ArmOperation<ServiceFabricManagedNodeTypeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, data);
+            ServiceFabricManagedNodeTypeResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ServiceFabricManagedNodeTypeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Put node type with vm image plan
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_PutNodeTypeWithVmImagePlan()
+        {
+            // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/stable/2024-04-01/examples/NodeTypePutOperationVmImagePlan_example.json
+            // this example is just showing the usage of "NodeTypes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ServiceFabricManagedClusterResource created on azure
+            // for more information of creating ServiceFabricManagedClusterResource, please refer to the document of ServiceFabricManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "resRg";
+            string clusterName = "myCluster";
+            ResourceIdentifier serviceFabricManagedClusterResourceId = ServiceFabricManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            ServiceFabricManagedClusterResource serviceFabricManagedCluster = client.GetServiceFabricManagedClusterResource(serviceFabricManagedClusterResourceId);
+
+            // get the collection of this ServiceFabricManagedNodeTypeResource
+            ServiceFabricManagedNodeTypeCollection collection = serviceFabricManagedCluster.GetServiceFabricManagedNodeTypes();
+
+            // invoke the operation
+            string nodeTypeName = "BE";
+            ServiceFabricManagedNodeTypeData data = new ServiceFabricManagedNodeTypeData()
+            {
+                IsPrimary = false,
+                VmInstanceCount = 10,
+                DataDiskSizeInGB = 200,
+                VmSize = "Standard_D3",
+                VmImagePublisher = "testpublisher",
+                VmImageOffer = "windows_2022_test",
+                VmImageSku = "win_2022_test_20_10_gen2",
+                VmImageVersion = "latest",
+                VmImagePlan = new VmImagePlan()
+                {
+                    Name = "win_2022_test_20_10_gen2",
+                    Product = "windows_2022_test",
+                    Publisher = "testpublisher",
+                },
             };
             ArmOperation<ServiceFabricManagedNodeTypeResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, nodeTypeName, data);
             ServiceFabricManagedNodeTypeResource result = lro.Value;

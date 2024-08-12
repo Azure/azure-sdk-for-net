@@ -52,7 +52,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
             var remoteDependencyDataType = new RemoteDependencyData(2, activity, ref activityTagsProcessor).Type;
-            var expectedType = RemoteDependencyData.s_sqlDbs.Contains(dbSystem) ? "SQL" : dbSystem;
+            var expectedType = AzMonListExtensions.s_dbSystems.Contains(dbSystem) ? "SQL" : dbSystem;
 
             Assert.Equal(expectedType, remoteDependencyDataType);
         }
@@ -117,7 +117,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetStatus(Status.Ok);
             activity.SetTag(SemanticConventions.AttributeHttpMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpUrl, httpUrl); // only adding test via http.url. all possible combinations are covered in AzMonListExtensionsTests.
-            activity.SetTag(SemanticConventions.AttributeHttpStatusCode, null);
+            activity.SetTag(SemanticConventions.AttributeHttpHost, "www.foo.bar");
+            activity.SetTag(SemanticConventions.AttributeHttpStatusCode, "200");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
@@ -126,7 +127,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("GET /search", remoteDependencyData.Name);
             Assert.Equal(activity.Context.SpanId.ToHexString(), remoteDependencyData.Id);
             Assert.Equal(httpUrl, remoteDependencyData.Data);
-            Assert.Equal("0", remoteDependencyData.ResultCode);
+            Assert.Equal("www.foo.bar", remoteDependencyData.Target);
+            Assert.Equal("200", remoteDependencyData.ResultCode);
             Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
             Assert.Equal(activity.GetStatus() != Status.Error, remoteDependencyData.Success);
             Assert.True(remoteDependencyData.Properties.Count == 0);

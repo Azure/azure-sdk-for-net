@@ -9,7 +9,7 @@ This package contains a C# SDK for Azure Communication Call Automation.
 Install the Azure Communication CallAutomation client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Communication.CallAutomation --prerelease
+dotnet add package Azure.Communication.CallAutomation
 ```
 
 ### Prerequisites
@@ -73,7 +73,7 @@ public IActionResult OnMidConnectionCallBackEvent([FromBody] CloudEvent[] events
         if (events != null)
         {
             // Helper function to parse CloudEvent to a CallAutomation event.
-            CallAutomationEventData callBackEvent = CallAutomationEventParser.Parse(events.FirstOrDefault());
+            CallAutomationEventBase callBackEvent = CallAutomationEventParser.Parse(events.FirstOrDefault());
 
             switch (callBackEvent)
             {
@@ -114,7 +114,7 @@ public IActionResult OnMidConnectionCallBackEvent([FromBody] CloudEvent[] events
 
 ### Handle Mid-Connection events with CallAutomation's EventProcessor
 To easily handle mid-connection events, Call Automation's SDK provides easier way to handle these events.
-Take a look at `CallAutomationEventProcessor`. this will ensure corelation between call and events more easily.
+Take a look at `CallAutomationEventProcessor`. this will ensure correlation between call and events more easily.
 ```C#
 [HttpPost]
 [Route("/CallBackEvent")]

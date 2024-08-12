@@ -18,6 +18,6 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-Response response = await sentShareClient.GetSentShareInvitationAsync("sentShareId", "sentShareInvitationId");
+Response response = await sentShareClient.GetSentShareInvitationAsync("sentShareId", "sentShareInvitationId", new());
 ```
 

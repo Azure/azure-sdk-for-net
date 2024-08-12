@@ -6,17 +6,50 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> Describes a reference to Key Vault Key. </summary>
+    /// <summary> Describes a reference to key vault key. </summary>
     public partial class StorageCacheEncryptionKeyVaultKeyReference
     {
-        /// <summary> Initializes a new instance of StorageCacheEncryptionKeyVaultKeyReference. </summary>
-        /// <param name="keyUri"> The URL referencing a key encryption key in Key Vault. </param>
-        /// <param name="sourceVault"> Describes a resource Id to source Key Vault. </param>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheEncryptionKeyVaultKeyReference"/>. </summary>
+        /// <param name="keyUri"> The URL referencing a key encryption key in key vault. </param>
+        /// <param name="sourceVault"> Describes a resource Id to source key vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyUri"/> or <paramref name="sourceVault"/> is null. </exception>
         public StorageCacheEncryptionKeyVaultKeyReference(Uri keyUri, WritableSubResource sourceVault)
         {
@@ -27,9 +60,25 @@ namespace Azure.ResourceManager.StorageCache.Models
             SourceVault = sourceVault;
         }
 
-        /// <summary> The URL referencing a key encryption key in Key Vault. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheEncryptionKeyVaultKeyReference"/>. </summary>
+        /// <param name="keyUri"> The URL referencing a key encryption key in key vault. </param>
+        /// <param name="sourceVault"> Describes a resource Id to source key vault. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheEncryptionKeyVaultKeyReference(Uri keyUri, WritableSubResource sourceVault, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            KeyUri = keyUri;
+            SourceVault = sourceVault;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheEncryptionKeyVaultKeyReference"/> for deserialization. </summary>
+        internal StorageCacheEncryptionKeyVaultKeyReference()
+        {
+        }
+
+        /// <summary> The URL referencing a key encryption key in key vault. </summary>
         public Uri KeyUri { get; set; }
-        /// <summary> Describes a resource Id to source Key Vault. </summary>
+        /// <summary> Describes a resource Id to source key vault. </summary>
         internal WritableSubResource SourceVault { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SourceVaultId

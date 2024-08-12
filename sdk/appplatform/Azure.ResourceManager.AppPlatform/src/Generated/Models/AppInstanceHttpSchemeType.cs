@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary>
     /// Scheme to use for connecting to the host. Defaults to HTTP.
-    /// 
+    ///
     /// Possible enum values:
     ///  - `"HTTP"` means that the scheme used will be http://
     ///  - `"HTTPS"` means that the scheme used will be https://
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

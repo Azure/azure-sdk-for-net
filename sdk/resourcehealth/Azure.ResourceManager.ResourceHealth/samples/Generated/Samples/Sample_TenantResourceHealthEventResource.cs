@@ -9,8 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Samples
 {
@@ -21,7 +19,7 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSecurityAdvisoryImpactedResourcesByTenantIdAndEventId_ListSecurityAdvisoryImpactedResourcesByTenantId()
         {
-            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/stable/2022-10-01/examples/SecurityAdvisoryImpactedResources_ListByTenantId_ListByEventId.json
+            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/SecurityAdvisoryImpactedResources_ListByTenantId_ListByEventId.json
             // this example is just showing the usage of "SecurityAdvisoryImpactedResources_ListByTenantIdAndEventId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_EventByTenantIdAndTrackingId()
         {
-            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/stable/2022-10-01/examples/Event_GetByTenantIdAndTrackingId.json
+            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/Event_GetByTenantIdAndTrackingId.json
             // this example is just showing the usage of "Event_GetByTenantIdAndTrackingId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,8 +79,8 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task FetchDetailsByTenantIdAndTrackingId_EventDetailsByTenantIdAndTrackingId()
         {
-            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/stable/2022-10-01/examples/Event_fetchDetailsByTenantIdAndTrackingId.json
-            // this example is just showing the usage of "Event_fetchDetailsByTenantIdAndTrackingId" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/Event_fetchDetailsByTenantIdAndTrackingId.json
+            // this example is just showing the usage of "Event_FetchDetailsByTenantIdAndTrackingId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

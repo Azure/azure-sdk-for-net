@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
@@ -12,24 +14,58 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Role assignment entity. </summary>
     public partial class BillingBenefitsRoleAssignmentEntity
     {
-        /// <summary> Initializes a new instance of BillingBenefitsRoleAssignmentEntity. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsRoleAssignmentEntity"/>. </summary>
         internal BillingBenefitsRoleAssignmentEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsRoleAssignmentEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsRoleAssignmentEntity"/>. </summary>
         /// <param name="id"> Role assignment entity id. </param>
         /// <param name="name"> Role assignment entity name. </param>
         /// <param name="principalId"> Principal Id. </param>
         /// <param name="roleDefinitionId"> Role definition id. </param>
         /// <param name="scope"> Scope of the role assignment entity. </param>
-        internal BillingBenefitsRoleAssignmentEntity(ResourceIdentifier id, string name, string principalId, ResourceIdentifier roleDefinitionId, ResourceIdentifier scope)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsRoleAssignmentEntity(ResourceIdentifier id, string name, string principalId, ResourceIdentifier roleDefinitionId, ResourceIdentifier scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
             PrincipalId = principalId;
             RoleDefinitionId = roleDefinitionId;
             Scope = scope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Role assignment entity id. </summary>

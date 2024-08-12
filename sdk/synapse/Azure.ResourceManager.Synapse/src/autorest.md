@@ -13,10 +13,22 @@ namespace: Azure.ResourceManager.Synapse
 tag: package-composite-v2
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Update
+  - SqlPoolSensitivityLabels_CreateOrUpdate
+  - SqlPoolSensitivityLabels_Delete
 skip-csproj: true
+use-core-datafactory-replacements: false
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true   # Mitigate the duplication schema 'ErrorResponse' issue
+use-model-reader-writer: true
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 rename-mapping:
   AzureADOnlyAuthentication: SynapseAadOnlyAuthentication
@@ -171,6 +183,8 @@ rename-mapping:
   KustoPoolUpdate.properties.workspaceUID: WorkspaceUid|uuid
   PrivateLinkResources: SynapseKustoPoolPrivateLinkList
   KustoPoolPrivateLinkResources: SynapseKustoPoolPrivateLinkData
+  IntegrationRuntimeStatus.type: RuntimeType
+  EntityReference.type: IntegrationRuntimeEntityReferenceType
 
 prepend-rp-prefix:
   - AttachedDatabaseConfiguration
@@ -195,7 +209,7 @@ prepend-rp-prefix:
   - ExtendedSqlPoolBlobAuditingPolicyListResult
   - GeoBackupPolicy
   - GeoBackupPolicyListResult
-  - IPFirewallRuleInfo
+  - IpFirewallRuleInfo
   - Key
   - KustoPool
   - MaintenanceWindows
@@ -281,7 +295,7 @@ prepend-rp-prefix:
   - IntegrationRuntimeEntityReferenceType
   - IntegrationRuntimeInternalChannelEncryptionMode
   - IntegrationRuntimeLicenseType
-  - IntegrationRuntimeNodeIPAddress
+  - IntegrationRuntimeNodeIpAddress
   - IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint
   - IntegrationRuntimeOutboundNetworkDependenciesEndpoint
   - IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails
@@ -294,8 +308,8 @@ prepend-rp-prefix:
   - IntegrationRuntimeUpdateResult
   - IotHubDataConnection
   - IotHubDataFormat
-  - IPFirewallRuleInfoListResult
-  - IPFirewallRuleProperties
+  - IpFirewallRuleInfoListResult
+  - IpFirewallRuleProperties
   - LanguageExtension
   - LanguageExtensionName
   - LanguageExtensionsList
@@ -365,7 +379,7 @@ override-operation-name:
   KustoPoolChildResource_CheckNameAvailability: CheckKustoPoolChildResourceNameAvailability
   KustoPoolPrincipalAssignments_CheckNameAvailability: CheckKustoPoolPrincipalAssignmentNameAvailability
   KustoPools_CheckNameAvailability: CheckKustoPoolNameAvailability
-  KustoPoolDataConnections_dataConnectionValidation: ValidateDataConnection
+  KustoPoolDataConnections_DataConnectionValidation: ValidateDataConnection
   IntegrationRuntimeNodeIpAddress_Get: GetIntegrationRuntimeNodeIPAddress
   KustoPoolPrivateLinkResources_List: GetAllKustoPoolPrivateLinkData
 
@@ -382,7 +396,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -424,6 +438,12 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/connectionPolicies/{connectionPolicyName}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
+
+suppress-abstract-base-class:
+- SynapseDatabaseData
+- SynapseDataConnectionData
+- SynapseIntegrationRuntimeProperties
+- SynapseIntegrationRuntimeStatus
 
 directive:
   - remove-operation: Get_IntegrationRuntimeStart

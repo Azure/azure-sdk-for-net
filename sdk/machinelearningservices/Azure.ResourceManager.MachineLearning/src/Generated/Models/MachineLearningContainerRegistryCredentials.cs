@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,28 +14,62 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningContainerRegistryCredentials. </summary>
     public partial class MachineLearningContainerRegistryCredentials
     {
-        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerRegistryCredentials"/>. </summary>
         internal MachineLearningContainerRegistryCredentials()
         {
             Passwords = new ChangeTrackingList<MachineLearningPasswordDetail>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
-        /// <param name="location"></param>
-        /// <param name="username"></param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerRegistryCredentials"/>. </summary>
+        /// <param name="location"> The location of the workspace ACR. </param>
         /// <param name="passwords"></param>
-        internal MachineLearningContainerRegistryCredentials(AzureLocation? location, string username, IReadOnlyList<MachineLearningPasswordDetail> passwords)
+        /// <param name="username"> The username of the workspace ACR. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningContainerRegistryCredentials(AzureLocation? location, IReadOnlyList<MachineLearningPasswordDetail> passwords, string username, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
-            Username = username;
             Passwords = passwords;
+            Username = username;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the location. </summary>
+        /// <summary> The location of the workspace ACR. </summary>
         public AzureLocation? Location { get; }
-        /// <summary> Gets the username. </summary>
-        public string Username { get; }
         /// <summary> Gets the passwords. </summary>
         public IReadOnlyList<MachineLearningPasswordDetail> Passwords { get; }
+        /// <summary> The username of the workspace ACR. </summary>
+        public string Username { get; }
     }
 }

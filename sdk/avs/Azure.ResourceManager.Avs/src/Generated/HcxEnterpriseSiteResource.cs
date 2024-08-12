@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a HcxEnterpriseSite along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="HcxEnterpriseSiteResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetHcxEnterpriseSiteResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetHcxEnterpriseSite method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HcxEnterpriseSiteResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetHcxEnterpriseSiteResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetHcxEnterpriseSite method.
     /// </summary>
     public partial class HcxEnterpriseSiteResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HcxEnterpriseSiteResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="hcxEnterpriseSiteName"> The hcxEnterpriseSiteName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string hcxEnterpriseSiteName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/hcxEnterpriseSites/{hcxEnterpriseSiteName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Avs
         private readonly HcxEnterpriseSitesRestOperations _hcxEnterpriseSiteRestClient;
         private readonly HcxEnterpriseSiteData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/hcxEnterpriseSites";
+
         /// <summary> Initializes a new instance of the <see cref="HcxEnterpriseSiteResource"/> class for mocking. </summary>
         protected HcxEnterpriseSiteResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "HcxEnterpriseSiteResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HcxEnterpriseSiteResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HcxEnterpriseSiteResource(ArmClient client, HcxEnterpriseSiteData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/hcxEnterpriseSites";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -87,7 +89,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get an HCX Enterprise Site by name in a private cloud
+        /// Get an HCX on-premises key by name in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -96,6 +98,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,7 +129,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get an HCX Enterprise Site by name in a private cloud
+        /// Get an HCX on-premises key by name in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +169,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Delete an HCX Enterprise Site in a private cloud
+        /// Delete HCX on-premises key in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -160,6 +178,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,7 +198,9 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _hcxEnterpriseSiteRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation(response);
+                var uri = _hcxEnterpriseSiteRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AvsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -185,7 +213,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Delete an HCX Enterprise Site in a private cloud
+        /// Delete HCX on-premises key in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -194,6 +222,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,7 +242,9 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _hcxEnterpriseSiteRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AvsArmOperation(response);
+                var uri = _hcxEnterpriseSiteRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AvsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -219,7 +257,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update an HCX Enterprise Site in a private cloud
+        /// Create or update an activation key for on-premises HCX site
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -228,6 +266,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,7 +290,9 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = await _hcxEnterpriseSiteRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<HcxEnterpriseSiteResource>(Response.FromValue(new HcxEnterpriseSiteResource(Client, response), response.GetRawResponse()));
+                var uri = _hcxEnterpriseSiteRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AvsArmOperation<HcxEnterpriseSiteResource>(Response.FromValue(new HcxEnterpriseSiteResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -257,7 +305,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update an HCX Enterprise Site in a private cloud
+        /// Create or update an activation key for on-premises HCX site
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -266,6 +314,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +338,9 @@ namespace Azure.ResourceManager.Avs
             try
             {
                 var response = _hcxEnterpriseSiteRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AvsArmOperation<HcxEnterpriseSiteResource>(Response.FromValue(new HcxEnterpriseSiteResource(Client, response), response.GetRawResponse()));
+                var uri = _hcxEnterpriseSiteRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AvsArmOperation<HcxEnterpriseSiteResource>(Response.FromValue(new HcxEnterpriseSiteResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

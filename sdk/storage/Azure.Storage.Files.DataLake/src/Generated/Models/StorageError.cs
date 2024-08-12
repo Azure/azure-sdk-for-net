@@ -10,12 +10,12 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary> The StorageError. </summary>
     internal partial class StorageError
     {
-        /// <summary> Initializes a new instance of StorageError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageError"/>. </summary>
         internal StorageError()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageError. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageError"/>. </summary>
         /// <param name="error"> The service error response object. </param>
         internal StorageError(StorageErrorError error)
         {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.ManagedServices.Models
     /// <summary> The properties of the registration assignment. </summary>
     public partial class ManagedServicesRegistrationAssignmentProperties
     {
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationAssignmentProperties"/>. </summary>
         /// <param name="registrationId"> The fully qualified path of the registration definition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registrationId"/> is null. </exception>
         public ManagedServicesRegistrationAssignmentProperties(ResourceIdentifier registrationId)
@@ -23,15 +56,22 @@ namespace Azure.ResourceManager.ManagedServices.Models
             RegistrationId = registrationId;
         }
 
-        /// <summary> Initializes a new instance of ManagedServicesRegistrationAssignmentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationAssignmentProperties"/>. </summary>
         /// <param name="registrationId"> The fully qualified path of the registration definition. </param>
         /// <param name="provisioningState"> The current provisioning state of the registration assignment. </param>
         /// <param name="registrationDefinition"> The registration definition associated with the registration assignment. </param>
-        internal ManagedServicesRegistrationAssignmentProperties(ResourceIdentifier registrationId, ManagedServicesProvisioningState? provisioningState, ManagedServicesRegistrationAssignmentRegistrationData registrationDefinition)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServicesRegistrationAssignmentProperties(ResourceIdentifier registrationId, ManagedServicesProvisioningState? provisioningState, ManagedServicesRegistrationAssignmentRegistrationData registrationDefinition, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegistrationId = registrationId;
             ProvisioningState = provisioningState;
             RegistrationDefinition = registrationDefinition;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesRegistrationAssignmentProperties"/> for deserialization. </summary>
+        internal ManagedServicesRegistrationAssignmentProperties()
+        {
         }
 
         /// <summary> The fully qualified path of the registration definition. </summary>

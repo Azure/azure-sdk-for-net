@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A Class representing a ContainerAppDetectorPropertyRevision along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppDetectorPropertyRevisionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetContainerAppDetectorPropertyRevisionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource" /> using the GetContainerAppDetectorPropertyRevision method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ContainerAppDetectorPropertyRevisionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetContainerAppDetectorPropertyRevisionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ContainerAppResource"/> using the GetContainerAppDetectorPropertyRevision method.
     /// </summary>
     public partial class ContainerAppDetectorPropertyRevisionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppDetectorPropertyRevisionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="containerAppName"> The containerAppName. </param>
+        /// <param name="revisionName"> The revisionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/revisionsApi/revisions/{revisionName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ContainerAppsDiagnosticsRestOperations _containerAppDetectorPropertyRevisionContainerAppsDiagnosticsRestClient;
         private readonly ContainerAppRevisionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/detectorProperties/revisions";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppDetectorPropertyRevisionResource"/> class for mocking. </summary>
         protected ContainerAppDetectorPropertyRevisionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ContainerAppDetectorPropertyRevisionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ContainerAppDetectorPropertyRevisionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ContainerAppDetectorPropertyRevisionResource(ArmClient client, ContainerAppRevisionData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/detectorProperties/revisions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetRevision</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyRevisionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetRevision</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorPropertyRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

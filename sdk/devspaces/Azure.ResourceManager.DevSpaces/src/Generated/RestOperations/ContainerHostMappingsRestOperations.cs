@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DevSpaces.Models;
@@ -37,6 +36,21 @@ namespace Azure.ResourceManager.DevSpaces
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetContainerHostMappingRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, ContainerHostMapping containerHostMapping)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevSpaces/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkContainerHostMapping", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetContainerHostMappingRequest(string subscriptionId, string resourceGroupName, AzureLocation location, ContainerHostMapping containerHostMapping)
         {
             var message = _pipeline.CreateMessage();
@@ -56,7 +70,7 @@ namespace Azure.ResourceManager.DevSpaces
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(containerHostMapping);
+            content.JsonWriter.WriteObjectValue(containerHostMapping, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -66,7 +80,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group to which the resource belongs. </param>
         /// <param name="location"> Location of the container host. </param>
-        /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
+        /// <param name="containerHostMapping"> The <see cref="ContainerHostMapping"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerHostMapping"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -98,7 +112,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="resourceGroupName"> Resource group to which the resource belongs. </param>
         /// <param name="location"> Location of the container host. </param>
-        /// <param name="containerHostMapping"> The ContainerHostMapping to use. </param>
+        /// <param name="containerHostMapping"> The <see cref="ContainerHostMapping"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="containerHostMapping"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>

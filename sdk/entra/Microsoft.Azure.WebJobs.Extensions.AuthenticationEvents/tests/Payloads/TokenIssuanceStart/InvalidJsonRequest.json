@@ -1,0 +1,42 @@
+{
+  "type": "microsoft.graph.authenticationEvent.tokenIssuanceStart",
+  "source": "/tenants/00000000-0000-0000-0000-000000000002/applications/00000000-0000-0000-0000-000000000001",
+  "data": {
+    "@odata.type": "microsoft.graph.onTokenIssuanceStartCalloutData",
+    "tenantId": "00000000-0000-0000-0000-000000000002",
+    "authenticationEventListenerId": "00000000-0000-0000-0000-000000000003",
+    "customAuthenticationExtensionId": "00000000-0000-0000-0000-000000000004",
+    "authenticationContext": {
+      "correlationId": "00000000-0000-0000-0000-000000000005",
+      "client": {
+        "ip": "127.0.0.1",
+        "locale": "en-us",
+        "market": "en-us"
+      },
+      "protocol": "OAUTH2.0",
+      "clientServicePrincipal": {
+        "id": "00000000-0000-0000-0000-000000000005",
+        "appId": "00000000-0000-0000-0000-000000000001",
+        "appDisplayName": "My Test application",
+        "displayName": "My Test application"
+      },
+      "resourceServicePrincipal": {
+        "id": "00000000-0000-0000-0000-000000000006",
+        "appId": "00000000-0000-0000-0000-000000000001",
+        "appDisplayName": "My Test application",
+        "displayName": "My Test application"
+      },
+      "user": {
+        "createdDateTime": "2016-03-01T15:23:40Z",
+        "displayName": "Bob",
+        "givenName": "Bob Smith",
+        "id": "00000000-0000-0000-0000-000000000007",
+        "mail": "bob@contoso.com",
+        "preferredLanguage": "en-us",
+        "surname": "Smith",
+        "userPrincipalName": "bob@contoso.com",
+        "userType": "Member",
+      }
+    }
+  }
+}

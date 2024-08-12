@@ -6,59 +6,89 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DistcpSettings : IUtf8JsonSerializable
+    public partial class DistcpSettings : IUtf8JsonSerializable, IJsonModel<DistcpSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistcpSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DistcpSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DistcpSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DistcpSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("resourceManagerEndpoint"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ResourceManagerEndpoint);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(ResourceManagerEndpoint.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, ResourceManagerEndpoint);
             writer.WritePropertyName("tempScriptPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TempScriptPath);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(TempScriptPath.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, TempScriptPath);
             if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
+                JsonSerializer.Serialize(writer, DistcpOptions);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(DistcpOptions);
+				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DistcpOptions.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DistcpSettings DeserializeDistcpSettings(JsonElement element)
+        DistcpSettings IJsonModel<DistcpSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DistcpSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DistcpSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDistcpSettings(document.RootElement, options);
+        }
+
+        internal static DistcpSettings DeserializeDistcpSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            BinaryData resourceManagerEndpoint = default;
-            BinaryData tempScriptPath = default;
-            Optional<BinaryData> distcpOptions = default;
+            DataFactoryElement<string> resourceManagerEndpoint = default;
+            DataFactoryElement<string> tempScriptPath = default;
+            DataFactoryElement<string> distcpOptions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceManagerEndpoint"u8))
                 {
-                    resourceManagerEndpoint = BinaryData.FromString(property.Value.GetRawText());
+                    resourceManagerEndpoint = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tempScriptPath"u8))
                 {
-                    tempScriptPath = BinaryData.FromString(property.Value.GetRawText());
+                    tempScriptPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("distcpOptions"u8))
@@ -67,11 +97,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    distcpOptions = BinaryData.FromString(property.Value.GetRawText());
+                    distcpOptions = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DistcpSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DistcpSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DistcpSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DistcpSettings IPersistableModel<DistcpSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DistcpSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDistcpSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DistcpSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DistcpSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,23 +15,57 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a direct peering. </summary>
     public partial class DirectPeeringProperties
     {
-        /// <summary> Initializes a new instance of DirectPeeringProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringProperties"/>. </summary>
         public DirectPeeringProperties()
         {
             Connections = new ChangeTrackingList<PeeringDirectConnection>();
         }
 
-        /// <summary> Initializes a new instance of DirectPeeringProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DirectPeeringProperties"/>. </summary>
         /// <param name="connections"> The set of connections that constitute a direct peering. </param>
         /// <param name="useForPeeringService"> The flag that indicates whether or not the peering is used for peering service. </param>
         /// <param name="peerAsn"> The reference of the peer ASN. </param>
         /// <param name="directPeeringType"> The type of direct peering. </param>
-        internal DirectPeeringProperties(IList<PeeringDirectConnection> connections, bool? useForPeeringService, WritableSubResource peerAsn, DirectPeeringType? directPeeringType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DirectPeeringProperties(IList<PeeringDirectConnection> connections, bool? useForPeeringService, WritableSubResource peerAsn, DirectPeeringType? directPeeringType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Connections = connections;
             UseForPeeringService = useForPeeringService;
             PeerAsn = peerAsn;
             DirectPeeringType = directPeeringType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The set of connections that constitute a direct peering. </summary>

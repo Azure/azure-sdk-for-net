@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary>
-    /// Restart policy for all containers within the container group. 
+    /// Restart policy for all containers within the container group.
     /// - `Always` Always restart
     /// - `OnFailure` Restart on failure
     /// - `Never` Never restart
-    /// 
+    ///
     /// </summary>
     public readonly partial struct ContainerGroupRestartPolicy : IEquatable<ContainerGroupRestartPolicy>
     {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

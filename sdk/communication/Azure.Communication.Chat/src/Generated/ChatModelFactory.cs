@@ -14,7 +14,7 @@ namespace Azure.Communication.Chat
     /// <summary> Model factory for models. </summary>
     public static partial class ChatModelFactory
     {
-        /// <summary> Initializes a new instance of ChatError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Chat.ChatError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>
@@ -28,7 +28,7 @@ namespace Azure.Communication.Chat
             return new ChatError(code, message, target, details?.ToList(), innerError);
         }
 
-        /// <summary> Initializes a new instance of AddChatParticipantsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Chat.AddChatParticipantsResult"/>. </summary>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
         /// <returns> A new <see cref="Chat.AddChatParticipantsResult"/> instance for mocking. </returns>
         public static AddChatParticipantsResult AddChatParticipantsResult(IEnumerable<ChatError> invalidParticipants = null)

@@ -8,7 +8,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Http" />
-    <PackageReference Include="Microsoft.NET.Sdk.Functions" />
+		<PackageReference Include="Microsoft.Azure.WebJobs.Extensions" />
+		<PackageReference Include="Microsoft.NET.Sdk.Functions" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

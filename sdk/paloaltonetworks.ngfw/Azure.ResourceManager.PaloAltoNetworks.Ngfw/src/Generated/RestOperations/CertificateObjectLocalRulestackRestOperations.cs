@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-29-preview";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByLocalRulestacksRequestUri(string subscriptionId, string resourceGroupName, string localRulestackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
+            uri.AppendPath(localRulestackName, true);
+            uri.AppendPath("/certificates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByLocalRulestacksRequest(string subscriptionId, string resourceGroupName, string localRulestackName)
@@ -65,7 +79,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateObjectLocalRulestackResourceListResult>> ListByLocalRulestacksAsync(string subscriptionId, string resourceGroupName, string localRulestackName, CancellationToken cancellationToken = default)
+        public async Task<Response<LocalRulestackCertificateObjectListResult>> ListByLocalRulestacksAsync(string subscriptionId, string resourceGroupName, string localRulestackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +91,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        CertificateObjectLocalRulestackResourceListResult value = default;
+                        LocalRulestackCertificateObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateObjectLocalRulestackResourceListResult.DeserializeCertificateObjectLocalRulestackResourceListResult(document.RootElement);
+                        value = LocalRulestackCertificateObjectListResult.DeserializeLocalRulestackCertificateObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +108,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateObjectLocalRulestackResourceListResult> ListByLocalRulestacks(string subscriptionId, string resourceGroupName, string localRulestackName, CancellationToken cancellationToken = default)
+        public Response<LocalRulestackCertificateObjectListResult> ListByLocalRulestacks(string subscriptionId, string resourceGroupName, string localRulestackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,14 +120,30 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        CertificateObjectLocalRulestackResourceListResult value = default;
+                        LocalRulestackCertificateObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateObjectLocalRulestackResourceListResult.DeserializeCertificateObjectLocalRulestackResourceListResult(document.RootElement);
+                        value = LocalRulestackCertificateObjectListResult.DeserializeLocalRulestackCertificateObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string localRulestackName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
+            uri.AppendPath(localRulestackName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string name)
@@ -146,7 +176,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateObjectLocalRulestackResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string localRulestackName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<LocalRulestackCertificateObjectData>> GetAsync(string subscriptionId, string resourceGroupName, string localRulestackName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +189,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        CertificateObjectLocalRulestackResourceData value = default;
+                        LocalRulestackCertificateObjectData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateObjectLocalRulestackResourceData.DeserializeCertificateObjectLocalRulestackResourceData(document.RootElement);
+                        value = LocalRulestackCertificateObjectData.DeserializeLocalRulestackCertificateObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateObjectLocalRulestackResourceData)null, message.Response);
+                    return Response.FromValue((LocalRulestackCertificateObjectData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -179,7 +209,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateObjectLocalRulestackResourceData> Get(string subscriptionId, string resourceGroupName, string localRulestackName, string name, CancellationToken cancellationToken = default)
+        public Response<LocalRulestackCertificateObjectData> Get(string subscriptionId, string resourceGroupName, string localRulestackName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +222,35 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        CertificateObjectLocalRulestackResourceData value = default;
+                        LocalRulestackCertificateObjectData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateObjectLocalRulestackResourceData.DeserializeCertificateObjectLocalRulestackResourceData(document.RootElement);
+                        value = LocalRulestackCertificateObjectData.DeserializeLocalRulestackCertificateObjectData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CertificateObjectLocalRulestackResourceData)null, message.Response);
+                    return Response.FromValue((LocalRulestackCertificateObjectData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string name, CertificateObjectLocalRulestackResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string localRulestackName, string name, LocalRulestackCertificateObjectData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
+            uri.AppendPath(localRulestackName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string name, LocalRulestackCertificateObjectData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -224,7 +270,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -239,7 +285,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string localRulestackName, string name, CertificateObjectLocalRulestackResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string localRulestackName, string name, LocalRulestackCertificateObjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -268,7 +314,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="localRulestackName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string localRulestackName, string name, CertificateObjectLocalRulestackResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string localRulestackName, string name, LocalRulestackCertificateObjectData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -286,6 +332,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string localRulestackName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/", false);
+            uri.AppendPath(localRulestackName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string localRulestackName, string name)
@@ -366,6 +428,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateListByLocalRulestacksNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string localRulestackName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByLocalRulestacksNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string localRulestackName)
         {
             var message = _pipeline.CreateMessage();
@@ -388,7 +458,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CertificateObjectLocalRulestackResourceListResult>> ListByLocalRulestacksNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string localRulestackName, CancellationToken cancellationToken = default)
+        public async Task<Response<LocalRulestackCertificateObjectListResult>> ListByLocalRulestacksNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string localRulestackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -401,9 +471,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        CertificateObjectLocalRulestackResourceListResult value = default;
+                        LocalRulestackCertificateObjectListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CertificateObjectLocalRulestackResourceListResult.DeserializeCertificateObjectLocalRulestackResourceListResult(document.RootElement);
+                        value = LocalRulestackCertificateObjectListResult.DeserializeLocalRulestackCertificateObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -419,7 +489,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="localRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CertificateObjectLocalRulestackResourceListResult> ListByLocalRulestacksNextPage(string nextLink, string subscriptionId, string resourceGroupName, string localRulestackName, CancellationToken cancellationToken = default)
+        public Response<LocalRulestackCertificateObjectListResult> ListByLocalRulestacksNextPage(string nextLink, string subscriptionId, string resourceGroupName, string localRulestackName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -432,9 +502,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case 200:
                     {
-                        CertificateObjectLocalRulestackResourceListResult value = default;
+                        LocalRulestackCertificateObjectListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CertificateObjectLocalRulestackResourceListResult.DeserializeCertificateObjectLocalRulestackResourceListResult(document.RootElement);
+                        value = LocalRulestackCertificateObjectListResult.DeserializeLocalRulestackCertificateObjectListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -76,7 +75,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorEvents.xml" path="doc/members/member[@name='GetSensorEventsAsync(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetSensorEventsAsync(string sensorId, string sensorPartnerId, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, bool? excludeDuplicateEvents = null, RequestContext context = null)
+        public virtual async Task<Response> GetSensorEventsAsync(string sensorId, string sensorPartnerId, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, bool? excludeDuplicateEvents, RequestContext context)
         {
             Argument.AssertNotNull(sensorId, nameof(sensorId));
             Argument.AssertNotNull(sensorPartnerId, nameof(sensorPartnerId));
@@ -122,7 +121,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SensorEvents.xml" path="doc/members/member[@name='GetSensorEvents(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)']/*" />
-        public virtual Response GetSensorEvents(string sensorId, string sensorPartnerId, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, bool? excludeDuplicateEvents = null, RequestContext context = null)
+        public virtual Response GetSensorEvents(string sensorId, string sensorPartnerId, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, bool? excludeDuplicateEvents, RequestContext context)
         {
             Argument.AssertNotNull(sensorId, nameof(sensorId));
             Argument.AssertNotNull(sensorPartnerId, nameof(sensorPartnerId));

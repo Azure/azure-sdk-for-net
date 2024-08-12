@@ -7,142 +7,87 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// A marketplace resource.
-    /// Serialized Name: Marketplace
-    /// </summary>
+    /// <summary> A marketplace resource. </summary>
     public partial class ConsumptionMarketplace : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionMarketplace. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionMarketplace"/>. </summary>
         internal ConsumptionMarketplace()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionMarketplace. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionMarketplace"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="billingPeriodId">
-        /// The id of the billing period resource that the usage belongs to.
-        /// Serialized Name: Marketplace.properties.billingPeriodId
-        /// </param>
-        /// <param name="usageStartOn">
-        /// The start of the date time range covered by the usage detail.
-        /// Serialized Name: Marketplace.properties.usageStart
-        /// </param>
-        /// <param name="usageEndOn">
-        /// The end of the date time range covered by the usage detail.
-        /// Serialized Name: Marketplace.properties.usageEnd
-        /// </param>
-        /// <param name="resourceRate">
-        /// The marketplace resource rate.
-        /// Serialized Name: Marketplace.properties.resourceRate
-        /// </param>
-        /// <param name="offerName">
-        /// The type of offer.
-        /// Serialized Name: Marketplace.properties.offerName
-        /// </param>
-        /// <param name="resourceGroup">
-        /// The name of resource group.
-        /// Serialized Name: Marketplace.properties.resourceGroup
-        /// </param>
-        /// <param name="additionalInfo">
-        /// Additional information.
-        /// Serialized Name: Marketplace.properties.additionalInfo
-        /// </param>
-        /// <param name="orderNumber">
-        /// The order number.
-        /// Serialized Name: Marketplace.properties.orderNumber
-        /// </param>
-        /// <param name="instanceName">
-        /// The name of the resource instance that the usage is about.
-        /// Serialized Name: Marketplace.properties.instanceName
-        /// </param>
-        /// <param name="instanceId">
-        /// The uri of the resource instance that the usage is about.
-        /// Serialized Name: Marketplace.properties.instanceId
-        /// </param>
-        /// <param name="currency">
-        /// The ISO currency in which the meter is charged, for example, USD.
-        /// Serialized Name: Marketplace.properties.currency
-        /// </param>
-        /// <param name="consumedQuantity">
-        /// The quantity of usage.
-        /// Serialized Name: Marketplace.properties.consumedQuantity
-        /// </param>
-        /// <param name="unitOfMeasure">
-        /// The unit of measure.
-        /// Serialized Name: Marketplace.properties.unitOfMeasure
-        /// </param>
-        /// <param name="pretaxCost">
-        /// The amount of cost before tax.
-        /// Serialized Name: Marketplace.properties.pretaxCost
-        /// </param>
-        /// <param name="isEstimated">
-        /// The estimated usage is subject to change.
-        /// Serialized Name: Marketplace.properties.isEstimated
-        /// </param>
-        /// <param name="meterId">
-        /// The meter id (GUID).
-        /// Serialized Name: Marketplace.properties.meterId
-        /// </param>
-        /// <param name="subscriptionGuid">
-        /// Subscription guid.
-        /// Serialized Name: Marketplace.properties.subscriptionGuid
-        /// </param>
-        /// <param name="subscriptionName">
-        /// Subscription name.
-        /// Serialized Name: Marketplace.properties.subscriptionName
-        /// </param>
-        /// <param name="accountName">
-        /// Account name.
-        /// Serialized Name: Marketplace.properties.accountName
-        /// </param>
-        /// <param name="departmentName">
-        /// Department name.
-        /// Serialized Name: Marketplace.properties.departmentName
-        /// </param>
-        /// <param name="consumedService">
-        /// Consumed service name.
-        /// Serialized Name: Marketplace.properties.consumedService
-        /// </param>
-        /// <param name="costCenter">
-        /// The cost center of this department if it is a department and a costcenter exists
-        /// Serialized Name: Marketplace.properties.costCenter
-        /// </param>
-        /// <param name="additionalProperties">
-        /// Additional details of this usage item. By default this is not populated, unless it's specified in $expand.
-        /// Serialized Name: Marketplace.properties.additionalProperties
-        /// </param>
-        /// <param name="publisherName">
-        /// The name of publisher.
-        /// Serialized Name: Marketplace.properties.publisherName
-        /// </param>
-        /// <param name="planName">
-        /// The name of plan.
-        /// Serialized Name: Marketplace.properties.planName
-        /// </param>
-        /// <param name="isRecurringCharge">
-        /// Flag indicating whether this is a recurring charge or not.
-        /// Serialized Name: Marketplace.properties.isRecurringCharge
-        /// </param>
-        /// <param name="etag">
-        /// The etag for the resource.
-        /// Serialized Name: Resource.etag
-        /// </param>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: Resource.tags
-        /// </param>
-        internal ConsumptionMarketplace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? resourceRate, string offerName, string resourceGroup, string additionalInfo, string orderNumber, string instanceName, string instanceId, string currency, decimal? consumedQuantity, string unitOfMeasure, decimal? pretaxCost, bool? isEstimated, Guid? meterId, Guid? subscriptionGuid, string subscriptionName, string accountName, string departmentName, string consumedService, string costCenter, string additionalProperties, string publisherName, string planName, bool? isRecurringCharge, ETag? etag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="billingPeriodId"> The id of the billing period resource that the usage belongs to. </param>
+        /// <param name="usageStartOn"> The start of the date time range covered by the usage detail. </param>
+        /// <param name="usageEndOn"> The end of the date time range covered by the usage detail. </param>
+        /// <param name="resourceRate"> The marketplace resource rate. </param>
+        /// <param name="offerName"> The type of offer. </param>
+        /// <param name="resourceGroup"> The name of resource group. </param>
+        /// <param name="additionalInfo"> Additional information. </param>
+        /// <param name="orderNumber"> The order number. </param>
+        /// <param name="instanceName"> The name of the resource instance that the usage is about. </param>
+        /// <param name="instanceId"> The uri of the resource instance that the usage is about. </param>
+        /// <param name="currency"> The ISO currency in which the meter is charged, for example, USD. </param>
+        /// <param name="consumedQuantity"> The quantity of usage. </param>
+        /// <param name="unitOfMeasure"> The unit of measure. </param>
+        /// <param name="pretaxCost"> The amount of cost before tax. </param>
+        /// <param name="isEstimated"> The estimated usage is subject to change. </param>
+        /// <param name="meterId"> The meter id (GUID). </param>
+        /// <param name="subscriptionGuid"> Subscription guid. </param>
+        /// <param name="subscriptionName"> Subscription name. </param>
+        /// <param name="accountName"> Account name. </param>
+        /// <param name="departmentName"> Department name. </param>
+        /// <param name="consumedService"> Consumed service name. </param>
+        /// <param name="costCenter"> The cost center of this department if it is a department and a costcenter exists. </param>
+        /// <param name="additionalProperties"> Additional details of this usage item. By default this is not populated, unless it's specified in $expand. </param>
+        /// <param name="publisherName"> The name of publisher. </param>
+        /// <param name="planName"> The name of plan. </param>
+        /// <param name="isRecurringCharge"> Flag indicating whether this is a recurring charge or not. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionMarketplace(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? resourceRate, string offerName, string resourceGroup, string additionalInfo, string orderNumber, string instanceName, string instanceId, string currency, decimal? consumedQuantity, string unitOfMeasure, decimal? pretaxCost, bool? isEstimated, Guid? meterId, Guid? subscriptionGuid, string subscriptionName, string accountName, string departmentName, string consumedService, string costCenter, string additionalProperties, string publisherName, string planName, bool? isRecurringCharge, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BillingPeriodId = billingPeriodId;
             UsageStartOn = usageStartOn;
@@ -172,147 +117,64 @@ namespace Azure.ResourceManager.Consumption.Models
             IsRecurringCharge = isRecurringCharge;
             ETag = etag;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The id of the billing period resource that the usage belongs to.
-        /// Serialized Name: Marketplace.properties.billingPeriodId
-        /// </summary>
+        /// <summary> The id of the billing period resource that the usage belongs to. </summary>
         public string BillingPeriodId { get; }
-        /// <summary>
-        /// The start of the date time range covered by the usage detail.
-        /// Serialized Name: Marketplace.properties.usageStart
-        /// </summary>
+        /// <summary> The start of the date time range covered by the usage detail. </summary>
         public DateTimeOffset? UsageStartOn { get; }
-        /// <summary>
-        /// The end of the date time range covered by the usage detail.
-        /// Serialized Name: Marketplace.properties.usageEnd
-        /// </summary>
+        /// <summary> The end of the date time range covered by the usage detail. </summary>
         public DateTimeOffset? UsageEndOn { get; }
-        /// <summary>
-        /// The marketplace resource rate.
-        /// Serialized Name: Marketplace.properties.resourceRate
-        /// </summary>
+        /// <summary> The marketplace resource rate. </summary>
         public decimal? ResourceRate { get; }
-        /// <summary>
-        /// The type of offer.
-        /// Serialized Name: Marketplace.properties.offerName
-        /// </summary>
+        /// <summary> The type of offer. </summary>
         public string OfferName { get; }
-        /// <summary>
-        /// The name of resource group.
-        /// Serialized Name: Marketplace.properties.resourceGroup
-        /// </summary>
+        /// <summary> The name of resource group. </summary>
         public string ResourceGroup { get; }
-        /// <summary>
-        /// Additional information.
-        /// Serialized Name: Marketplace.properties.additionalInfo
-        /// </summary>
+        /// <summary> Additional information. </summary>
         public string AdditionalInfo { get; }
-        /// <summary>
-        /// The order number.
-        /// Serialized Name: Marketplace.properties.orderNumber
-        /// </summary>
+        /// <summary> The order number. </summary>
         public string OrderNumber { get; }
-        /// <summary>
-        /// The name of the resource instance that the usage is about.
-        /// Serialized Name: Marketplace.properties.instanceName
-        /// </summary>
+        /// <summary> The name of the resource instance that the usage is about. </summary>
         public string InstanceName { get; }
-        /// <summary>
-        /// The uri of the resource instance that the usage is about.
-        /// Serialized Name: Marketplace.properties.instanceId
-        /// </summary>
+        /// <summary> The uri of the resource instance that the usage is about. </summary>
         public string InstanceId { get; }
-        /// <summary>
-        /// The ISO currency in which the meter is charged, for example, USD.
-        /// Serialized Name: Marketplace.properties.currency
-        /// </summary>
+        /// <summary> The ISO currency in which the meter is charged, for example, USD. </summary>
         public string Currency { get; }
-        /// <summary>
-        /// The quantity of usage.
-        /// Serialized Name: Marketplace.properties.consumedQuantity
-        /// </summary>
+        /// <summary> The quantity of usage. </summary>
         public decimal? ConsumedQuantity { get; }
-        /// <summary>
-        /// The unit of measure.
-        /// Serialized Name: Marketplace.properties.unitOfMeasure
-        /// </summary>
+        /// <summary> The unit of measure. </summary>
         public string UnitOfMeasure { get; }
-        /// <summary>
-        /// The amount of cost before tax.
-        /// Serialized Name: Marketplace.properties.pretaxCost
-        /// </summary>
+        /// <summary> The amount of cost before tax. </summary>
         public decimal? PretaxCost { get; }
-        /// <summary>
-        /// The estimated usage is subject to change.
-        /// Serialized Name: Marketplace.properties.isEstimated
-        /// </summary>
+        /// <summary> The estimated usage is subject to change. </summary>
         public bool? IsEstimated { get; }
-        /// <summary>
-        /// The meter id (GUID).
-        /// Serialized Name: Marketplace.properties.meterId
-        /// </summary>
+        /// <summary> The meter id (GUID). </summary>
         public Guid? MeterId { get; }
-        /// <summary>
-        /// Subscription guid.
-        /// Serialized Name: Marketplace.properties.subscriptionGuid
-        /// </summary>
+        /// <summary> Subscription guid. </summary>
         public Guid? SubscriptionGuid { get; }
-        /// <summary>
-        /// Subscription name.
-        /// Serialized Name: Marketplace.properties.subscriptionName
-        /// </summary>
+        /// <summary> Subscription name. </summary>
         public string SubscriptionName { get; }
-        /// <summary>
-        /// Account name.
-        /// Serialized Name: Marketplace.properties.accountName
-        /// </summary>
+        /// <summary> Account name. </summary>
         public string AccountName { get; }
-        /// <summary>
-        /// Department name.
-        /// Serialized Name: Marketplace.properties.departmentName
-        /// </summary>
+        /// <summary> Department name. </summary>
         public string DepartmentName { get; }
-        /// <summary>
-        /// Consumed service name.
-        /// Serialized Name: Marketplace.properties.consumedService
-        /// </summary>
+        /// <summary> Consumed service name. </summary>
         public string ConsumedService { get; }
-        /// <summary>
-        /// The cost center of this department if it is a department and a costcenter exists
-        /// Serialized Name: Marketplace.properties.costCenter
-        /// </summary>
+        /// <summary> The cost center of this department if it is a department and a costcenter exists. </summary>
         public string CostCenter { get; }
-        /// <summary>
-        /// Additional details of this usage item. By default this is not populated, unless it's specified in $expand.
-        /// Serialized Name: Marketplace.properties.additionalProperties
-        /// </summary>
+        /// <summary> Additional details of this usage item. By default this is not populated, unless it's specified in $expand. </summary>
         public string AdditionalProperties { get; }
-        /// <summary>
-        /// The name of publisher.
-        /// Serialized Name: Marketplace.properties.publisherName
-        /// </summary>
+        /// <summary> The name of publisher. </summary>
         public string PublisherName { get; }
-        /// <summary>
-        /// The name of plan.
-        /// Serialized Name: Marketplace.properties.planName
-        /// </summary>
+        /// <summary> The name of plan. </summary>
         public string PlanName { get; }
-        /// <summary>
-        /// Flag indicating whether this is a recurring charge or not.
-        /// Serialized Name: Marketplace.properties.isRecurringCharge
-        /// </summary>
+        /// <summary> Flag indicating whether this is a recurring charge or not. </summary>
         public bool? IsRecurringCharge { get; }
-        /// <summary>
-        /// The etag for the resource.
-        /// Serialized Name: Resource.etag
-        /// </summary>
+        /// <summary> The etag for the resource. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: Resource.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

@@ -5,18 +5,17 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Network default admin rule. </summary>
     public partial class NetworkDefaultAdminRule : BaseAdminRuleData
     {
-        /// <summary> Initializes a new instance of NetworkDefaultAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDefaultAdminRule"/>. </summary>
         public NetworkDefaultAdminRule()
         {
             Sources = new ChangeTrackingList<AddressPrefixItem>();
@@ -26,13 +25,14 @@ namespace Azure.ResourceManager.Network.Models
             Kind = AdminRuleKind.Default;
         }
 
-        /// <summary> Initializes a new instance of NetworkDefaultAdminRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDefaultAdminRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
         /// <param name="flag"> Default rule flag. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
@@ -44,7 +44,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="priority"> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal NetworkDefaultAdminRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRuleKind kind, ETag? etag, string description, string flag, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        internal NetworkDefaultAdminRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string description, string flag, SecurityConfigurationRuleProtocol? protocol, IReadOnlyList<AddressPrefixItem> sources, IReadOnlyList<AddressPrefixItem> destinations, IReadOnlyList<string> sourcePortRanges, IReadOnlyList<string> destinationPortRanges, SecurityConfigurationRuleAccess? access, int? priority, SecurityConfigurationRuleDirection? direction, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Description = description;
             Flag = flag;
@@ -57,6 +58,7 @@ namespace Azure.ResourceManager.Network.Models
             Priority = priority;
             Direction = direction;
             ProvisioningState = provisioningState;
+            ResourceGuid = resourceGuid;
             Kind = kind;
         }
 
@@ -82,5 +84,7 @@ namespace Azure.ResourceManager.Network.Models
         public SecurityConfigurationRuleDirection? Direction { get; }
         /// <summary> The provisioning state of the resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> Unique identifier for this resource. </summary>
+        public Guid? ResourceGuid { get; }
     }
 }

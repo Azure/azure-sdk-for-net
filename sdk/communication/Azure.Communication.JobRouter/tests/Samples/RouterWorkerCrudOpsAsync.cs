@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -21,6 +17,22 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         {
             // create a client
             JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
+
+            // Create a distribution policy
+            string distributionPolicyId = "distribution-policy";
+            var distributionPolicyOptions = new CreateDistributionPolicyOptions(distributionPolicyId, TimeSpan.FromMinutes(5), new LongestIdleMode());
+            Response<DistributionPolicy> distributionPolicyResponse = await routerAdministrationClient.CreateDistributionPolicyAsync(distributionPolicyOptions);
+            Console.WriteLine($"Created distribution policy with id: {distributionPolicyResponse.Value.Id}");
+
+            // Create queues
+            string[] queueIds = new[] { "worker-q-1", "worker-q-2", "worker-q-3" };
+            foreach (var queueId in queueIds)
+            {
+                var queueOptions = new CreateQueueOptions(queueId, distributionPolicyId);
+                Response<RouterQueue> queueResponse = await routerAdministrationClient.CreateQueueAsync(queueOptions);
+                Console.WriteLine($"Created queue with id: {queueResponse.Value.Id}");
+            }
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateRouterWorker_Async
 
@@ -29,30 +41,26 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(
                     workerId: routerWorkerId,
-                    totalCapacity: 100)
+                    capacity: 100)
                 {
-                    QueueIds =
+                    Queues = { "worker-q-1", "worker-q-2" },
+                    Channels =
                     {
-                        ["worker-q-1"] = new RouterQueueAssignment(),
-                        ["worker-q-2"] = new RouterQueueAssignment()
-                    },
-                    ChannelConfigurations =
-                    {
-                        ["WebChat"] = new ChannelConfiguration(1),
-                        ["WebChatEscalated"] = new ChannelConfiguration(20),
-                        ["Voip"] = new ChannelConfiguration(100)
+                        new RouterChannel("WebChat", 1),
+                        new RouterChannel("WebChatEscalated", 20),
+                        new RouterChannel("Voip",100)
                     },
                     Labels =
                     {
-                        ["Location"] = new LabelValue("NA"),
-                        ["English"] = new LabelValue(7),
-                        ["O365"] = new LabelValue(true),
-                        ["Xbox_Support"] = new LabelValue(false)
+                        ["Location"] = new RouterValue("NA"),
+                        ["English"] = new RouterValue(7),
+                        ["O365"] = new RouterValue(true),
+                        ["Xbox_Support"] = new RouterValue(false)
                     },
                     Tags =
                     {
-                        ["Name"] = new LabelValue("John Doe"),
-                        ["Department"] = new LabelValue("IT_HelpDesk")
+                        ["Name"] = new RouterValue("John Doe"),
+                        ["Department"] = new RouterValue("IT_HelpDesk")
                     }
                 }
             );
@@ -66,7 +74,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> queriedWorker = await routerClient.GetWorkerAsync(routerWorkerId);
 
             Console.WriteLine($"Successfully fetched worker with id: {queriedWorker.Value.Id}");
-            Console.WriteLine($"Worker associated with queues: {queriedWorker.Value.QueueAssignments.Values.ToList()}");
+            Console.WriteLine($"Worker associated with queues: {queriedWorker.Value.Queues}");
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterWorker_Async
 
@@ -80,27 +88,26 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // 5. Increase capacityCostPerJob for channel `WebChatEscalated` to 50
 
             Response<RouterWorker> updateWorker = await routerClient.UpdateWorkerAsync(
-                new UpdateWorkerOptions(routerWorkerId)
+                new RouterWorker(routerWorkerId)
                 {
-                    QueueIds = { ["worker-q-3"] = new RouterQueueAssignment() },
-                    ChannelConfigurations = { ["WebChatEscalated"] = new ChannelConfiguration(50), },
+                    Queues = { "worker-q-3", },
+                    Channels = { new RouterChannel("WebChatEscalated", 50), },
                     Labels =
                     {
-                        ["O365"] = new LabelValue("Supported"),
-                        ["Xbox_Support"] = new LabelValue(null),
-                        ["Xbox_Support_EN"] = new LabelValue(true),
+                        ["O365"] = new RouterValue("Supported"),
+                        ["Xbox_Support"] = new RouterValue(null),
+                        ["Xbox_Support_EN"] = new RouterValue(true),
                     }
                 });
 
             Console.WriteLine($"Worker successfully updated with id: {updateWorker.Value.Id}");
-            Console.Write($"Worker now associated with {updateWorker.Value.QueueAssignments.Count} queues"); // 3 queues
+            Console.Write($"Worker now associated with {updateWorker.Value.Queues.Count} queues"); // 3 queues
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateRouterWorker_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_RegisterRouterWorker_Async
 
-            updateWorker = await routerClient.UpdateWorkerAsync(
-                options: new UpdateWorkerOptions(workerId: routerWorkerId) { AvailableForOffers = true, });
+            updateWorker = await routerClient.UpdateWorkerAsync(new RouterWorker(routerWorkerId) { AvailableForOffers = true, });
 
             Console.WriteLine($"Worker successfully registered with status set to: {updateWorker.Value.State}");
 
@@ -108,8 +115,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeregisterRouterWorker_Async
 
-            updateWorker = await routerClient.UpdateWorkerAsync(
-                options: new UpdateWorkerOptions(workerId: routerWorkerId) { AvailableForOffers = false, });
+            updateWorker = await routerClient.UpdateWorkerAsync(new RouterWorker(routerWorkerId) { AvailableForOffers = false, });
 
             Console.WriteLine($"Worker successfully de-registered with status set to: {updateWorker.Value.State}");
 
@@ -117,26 +123,23 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterWorkers_Async
 
-            AsyncPageable<RouterWorkerItem> workers = routerClient.GetWorkersAsync();
-            await foreach (Page<RouterWorkerItem> asPage in workers.AsPages(pageSizeHint: 10))
+            AsyncPageable<RouterWorker> workers = routerClient.GetWorkersAsync(null, null);
+            await foreach (Page<RouterWorker> asPage in workers.AsPages(pageSizeHint: 10))
             {
-                foreach (RouterWorkerItem? workerPaged in asPage.Values)
+                foreach (RouterWorker? workerPaged in asPage.Values)
                 {
-                    Console.WriteLine($"Listing exception policy with id: {workerPaged.Worker.Id}");
+                    Console.WriteLine($"Listing exception policy with id: {workerPaged.Id}");
                 }
             }
 
             // Additionally workers can be queried with several filters like queueId, capacity, state etc.
-            workers = routerClient.GetWorkersAsync(new GetWorkersOptions()
-            {
-                ChannelId = "Voip", State = RouterWorkerStateSelector.All
-            });
+            workers = routerClient.GetWorkersAsync(channelId: "Voip", state: RouterWorkerStateSelector.All, queueId: null, hasCapacity: null, cancellationToken: default);
 
-            await foreach (Page<RouterWorkerItem> asPage in workers.AsPages(pageSizeHint: 10))
+            await foreach (Page<RouterWorker> asPage in workers.AsPages(pageSizeHint: 10))
             {
-                foreach (RouterWorkerItem? workerPaged in asPage.Values)
+                foreach (RouterWorker? workerPaged in asPage.Values)
                 {
-                    Console.WriteLine($"Listing exception policy with id: {workerPaged.Worker.Id}");
+                    Console.WriteLine($"Listing exception policy with id: {workerPaged.Id}");
                 }
             }
 

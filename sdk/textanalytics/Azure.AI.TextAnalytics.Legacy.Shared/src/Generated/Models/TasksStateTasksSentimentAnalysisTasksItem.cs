@@ -6,21 +6,20 @@
 #nullable disable
 
 using System;
-using Azure.AI.TextAnalytics.Legacy;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
     /// <summary> The TasksStateTasksSentimentAnalysisTasksItem. </summary>
     internal partial class TasksStateTasksSentimentAnalysisTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksSentimentAnalysisTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksSentimentAnalysisTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         internal TasksStateTasksSentimentAnalysisTasksItem(DateTimeOffset lastUpdateDateTime, State status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksSentimentAnalysisTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksSentimentAnalysisTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>

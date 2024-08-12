@@ -14,23 +14,56 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Mars agent details. </summary>
     public partial class MarsAgentDetails
     {
-        /// <summary> Initializes a new instance of MarsAgentDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MarsAgentDetails"/>. </summary>
         internal MarsAgentDetails()
         {
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of MarsAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarsAgentDetails"/>. </summary>
         /// <param name="id"> The Mars agent Id. </param>
         /// <param name="name"> The Mars agent name. </param>
         /// <param name="biosId"> The Mars agent Bios Id. </param>
         /// <param name="fabricObjectId"> The fabric object Id. </param>
         /// <param name="fqdn"> The Mars agent Fqdn. </param>
         /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the Mars agent. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the Mars agent. </param>
         /// <param name="health"> The health of the Mars agent. </param>
         /// <param name="healthErrors"> The health errors. </param>
-        internal MarsAgentDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MarsAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -38,9 +71,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             FabricObjectId = fabricObjectId;
             Fqdn = fqdn;
             Version = version;
-            LastHeartbeatUtc = lastHeartbeatUtc;
+            LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
             Health = health;
             HealthErrors = healthErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Mars agent Id. </summary>
@@ -50,16 +84,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The Mars agent Bios Id. </summary>
         public string BiosId { get; }
         /// <summary> The fabric object Id. </summary>
-        public string FabricObjectId { get; }
+        public ResourceIdentifier FabricObjectId { get; }
         /// <summary> The Mars agent Fqdn. </summary>
         public string Fqdn { get; }
         /// <summary> The version. </summary>
         public string Version { get; }
         /// <summary> The last heartbeat received from the Mars agent. </summary>
-        public DateTimeOffset? LastHeartbeatUtc { get; }
+        public DateTimeOffset? LastHeartbeatReceivedOn { get; }
         /// <summary> The health of the Mars agent. </summary>
-        public ProtectionHealth? Health { get; }
+        public SiteRecoveryProtectionHealth? Health { get; }
         /// <summary> The health errors. </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
     }
 }

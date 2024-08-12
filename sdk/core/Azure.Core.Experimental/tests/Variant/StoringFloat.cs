@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringFloat
     {
@@ -21,7 +21,7 @@ namespace Azure
         [Test]
         public void FloatImplicit([ValueSource("FloatData")] float testValue)
         {
-            Value value = testValue;
+            Variant value = testValue;
             Assert.AreEqual(testValue, value.As<float>());
             Assert.AreEqual(typeof(float), value.Type);
 
@@ -34,10 +34,10 @@ namespace Azure
         [Test]
         public void FloatCreate([ValueSource("FloatData")] float testValue)
         {
-            Value value;
+            Variant value;
             using (MemoryWatch.Create())
             {
-                value = Value.Create(testValue);
+                value = Variant.Create(testValue);
             }
 
             Assert.AreEqual(testValue, value.As<float>());
@@ -47,7 +47,7 @@ namespace Azure
 
             using (MemoryWatch.Create())
             {
-                value = Value.Create(source);
+                value = Variant.Create(source);
             }
 
             Assert.AreEqual(source, value.As<float?>());
@@ -57,7 +57,7 @@ namespace Azure
         [Test]
         public void FloatInOut([ValueSource("FloatData")] float testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             bool success = value.TryGetValue(out float result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -70,7 +70,7 @@ namespace Azure
         public void NullableFloatInFloatOut([ValueSource("FloatData")] float? testValue)
         {
             float? source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
 
             bool success = value.TryGetValue(out float result);
             Assert.True(success);
@@ -85,7 +85,7 @@ namespace Azure
         public void FloatInNullableFloatOut([ValueSource("FloatData")] float testValue)
         {
             float source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
             bool success = value.TryGetValue(out float? result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -98,7 +98,7 @@ namespace Azure
         {
             float i = testValue;
             object o = i;
-            Value value = new(o);
+            Variant value = new(o);
 
             Assert.AreEqual(typeof(float), value.Type);
             Assert.True(value.TryGetValue(out float result));
@@ -121,7 +121,7 @@ namespace Azure
         public void NullFloat()
         {
             float? source = null;
-            Value value = source;
+            Variant value = source;
             Assert.Null(value.Type);
             Assert.AreEqual(source, value.As<float?>());
             Assert.False(value.As<float?>().HasValue);
@@ -130,7 +130,7 @@ namespace Azure
         [Test]
         public void OutAsObject([ValueSource("FloatData")] float testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(float), o.GetType());
             Assert.AreEqual(testValue, (float)o);

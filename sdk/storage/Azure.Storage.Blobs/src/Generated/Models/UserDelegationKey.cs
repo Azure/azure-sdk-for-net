@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> A user delegation key. </summary>
     public partial class UserDelegationKey
     {
-        /// <summary> Initializes a new instance of UserDelegationKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserDelegationKey"/>. </summary>
         /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
         /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
         /// <param name="signedStartsOn"> The date-time the key is active. </param>

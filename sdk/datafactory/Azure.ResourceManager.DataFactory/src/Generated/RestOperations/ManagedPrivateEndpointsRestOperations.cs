@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataFactory.Models;
@@ -35,6 +34,23 @@ namespace Azure.ResourceManager.DataFactory
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2018-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByFactoryRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendPath("/managedPrivateEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByFactoryRequest(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName)
@@ -68,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="managedVirtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedPrivateEndpointListResponse>> ListByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryPrivateEndpointListResult>> ListByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -81,9 +97,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        ManagedPrivateEndpointListResponse value = default;
+                        DataFactoryPrivateEndpointListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedPrivateEndpointListResponse.DeserializeManagedPrivateEndpointListResponse(document.RootElement);
+                        value = DataFactoryPrivateEndpointListResult.DeserializeDataFactoryPrivateEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -99,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="managedVirtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedPrivateEndpointListResponse> ListByFactory(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
+        public Response<DataFactoryPrivateEndpointListResult> ListByFactory(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +128,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        ManagedPrivateEndpointListResponse value = default;
+                        DataFactoryPrivateEndpointListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedPrivateEndpointListResponse.DeserializeManagedPrivateEndpointListResponse(document.RootElement);
+                        value = DataFactoryPrivateEndpointListResult.DeserializeDataFactoryPrivateEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -122,7 +138,25 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, FactoryPrivateEndpointData data, string ifMatch)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, DataFactoryPrivateEndpointData data, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendPath("/managedPrivateEndpoints/", false);
+            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, DataFactoryPrivateEndpointData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -148,7 +182,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -165,7 +199,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="managedVirtualNetworkName"/>, <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="managedVirtualNetworkName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FactoryPrivateEndpointData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, FactoryPrivateEndpointData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryPrivateEndpointData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, DataFactoryPrivateEndpointData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -180,9 +214,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryPrivateEndpointData value = default;
+                        DataFactoryPrivateEndpointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FactoryPrivateEndpointData.DeserializeFactoryPrivateEndpointData(document.RootElement);
+                        value = DataFactoryPrivateEndpointData.DeserializeDataFactoryPrivateEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -201,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="managedVirtualNetworkName"/>, <paramref name="managedPrivateEndpointName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="managedVirtualNetworkName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FactoryPrivateEndpointData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, FactoryPrivateEndpointData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<DataFactoryPrivateEndpointData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, DataFactoryPrivateEndpointData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -216,14 +250,32 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryPrivateEndpointData value = default;
+                        DataFactoryPrivateEndpointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FactoryPrivateEndpointData.DeserializeFactoryPrivateEndpointData(document.RootElement);
+                        value = DataFactoryPrivateEndpointData.DeserializeDataFactoryPrivateEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendPath("/managedPrivateEndpoints/", false);
+            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, string ifNoneMatch)
@@ -264,7 +316,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="managedVirtualNetworkName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="managedVirtualNetworkName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FactoryPrivateEndpointData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryPrivateEndpointData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -278,13 +330,13 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryPrivateEndpointData value = default;
+                        DataFactoryPrivateEndpointData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FactoryPrivateEndpointData.DeserializeFactoryPrivateEndpointData(document.RootElement);
+                        value = DataFactoryPrivateEndpointData.DeserializeDataFactoryPrivateEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FactoryPrivateEndpointData)null, message.Response);
+                    return Response.FromValue((DataFactoryPrivateEndpointData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -300,7 +352,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="managedVirtualNetworkName"/> or <paramref name="managedPrivateEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="managedVirtualNetworkName"/> or <paramref name="managedPrivateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FactoryPrivateEndpointData> Get(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<DataFactoryPrivateEndpointData> Get(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -314,16 +366,34 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryPrivateEndpointData value = default;
+                        DataFactoryPrivateEndpointData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FactoryPrivateEndpointData.DeserializeFactoryPrivateEndpointData(document.RootElement);
+                        value = DataFactoryPrivateEndpointData.DeserializeDataFactoryPrivateEndpointData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FactoryPrivateEndpointData)null, message.Response);
+                    return Response.FromValue((DataFactoryPrivateEndpointData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/managedVirtualNetworks/", false);
+            uri.AppendPath(managedVirtualNetworkName, true);
+            uri.AppendPath("/managedPrivateEndpoints/", false);
+            uri.AppendPath(managedPrivateEndpointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, string managedPrivateEndpointName)
@@ -408,6 +478,14 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        internal RequestUriBuilder CreateListByFactoryNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByFactoryNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName)
         {
             var message = _pipeline.CreateMessage();
@@ -431,7 +509,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="managedVirtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ManagedPrivateEndpointListResponse>> ListByFactoryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryPrivateEndpointListResult>> ListByFactoryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -445,9 +523,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        ManagedPrivateEndpointListResponse value = default;
+                        DataFactoryPrivateEndpointListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ManagedPrivateEndpointListResponse.DeserializeManagedPrivateEndpointListResponse(document.RootElement);
+                        value = DataFactoryPrivateEndpointListResult.DeserializeDataFactoryPrivateEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -464,7 +542,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="managedVirtualNetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ManagedPrivateEndpointListResponse> ListByFactoryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
+        public Response<DataFactoryPrivateEndpointListResult> ListByFactoryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -478,9 +556,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        ManagedPrivateEndpointListResponse value = default;
+                        DataFactoryPrivateEndpointListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ManagedPrivateEndpointListResponse.DeserializeManagedPrivateEndpointListResponse(document.RootElement);
+                        value = DataFactoryPrivateEndpointListResult.DeserializeDataFactoryPrivateEndpointListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

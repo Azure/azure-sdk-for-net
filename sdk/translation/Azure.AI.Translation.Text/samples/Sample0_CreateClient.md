@@ -12,9 +12,9 @@ Once you have the value for the API key, create an `AzureKeyCredential`.
 
 With the value of the `AzureKeyCredential`, you can create the [TextTranslationClient][translator_client_class]:
 
-```C#
-AzureKeyCredential credential = new("<apiKey>");
-TextTranslationClient client = new(credential);
+```C# Snippet:CreateTextTranslationClientWithKey
+string apiKey = "<Text Translator Resource API Key>";
+TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey));
 ```
 
 > Replace `<apiKey>` with a value created in [Creating Cognitive Services resource](#creating-cognitive-services-resource).
@@ -25,9 +25,10 @@ Once you have the value for the API key and Region, create an `AzureKeyCredentia
 
 With the value of the `AzureKeyCredential` and a `Region`, you can create the [TextTranslationClient][translator_client_class]:
 
-```C#
-AzureKeyCredential credential = new("<apiKey>");
-TextTranslationClient client = new(credential, "<region>");
+```C# Snippet:CreateTextTranslationClientWithRegion
+string apiKey = "<Text Translator Resource API Key>";
+string region = "<Text Translator Azure Region>";
+TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey), region);
 ```
 
 > Replace `<apiKey>` and `<region>` with a value created in [Creating Cognitive Services resource](#creating-cognitive-services-resource).
@@ -38,10 +39,10 @@ When Translator service is configured to use [Virtual Network (VNET)][translator
 
 Once you have your resource configured and you have your custom subdomain value and your API key, you can create the [TextTranslationClient][translator_client_class]:
 
-```C#
-Uri endpoint = new("<endpoint>");
-AzureKeyCredential credential = new("<apiKey>");
-TextTranslationClient client = new(credential, endpoint);
+```C# Snippet:CreateTextTranslationClientWithEndpoint
+string endpoint = "<Text Translator Resource Endpoint>";
+string apiKey = "<Text Translator Resource API Key>";
+TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey), new Uri(endpoint));
 ```
 
 > Replace `<apiKey>` with a value created in [Creating Cognitive Services resource](#creating-cognitive-services-resource).
@@ -52,8 +53,9 @@ Instead of API key and Region authentication you can use JWT token. For informat
 
 Once you have the value for the token, create an class that extends `Azure.Core.TokenCredential`. With the value of the `AzureKeyCredential` and your service returning tokens, you can create the [TextTranslationClient][translator_client_class]:
 
-```C#
-TokenCredential credential = new CustomTokenCredential();
+```C# Snippet:CreateTextTranslationClientWithToken
+string token = "<Cognitive Services Token>";
+TokenCredential credential = new StaticAccessTokenCredential(new AccessToken(token, DateTimeOffset.Now.AddMinutes(1)));
 TextTranslationClient client = new(credential);
 ```
 

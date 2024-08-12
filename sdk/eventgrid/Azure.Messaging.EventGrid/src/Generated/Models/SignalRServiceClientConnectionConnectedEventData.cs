@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.SignalRService.ClientConnectionConnected event. </summary>
     public partial class SignalRServiceClientConnectionConnectedEventData
     {
-        /// <summary> Initializes a new instance of SignalRServiceClientConnectionConnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRServiceClientConnectionConnectedEventData"/>. </summary>
         internal SignalRServiceClientConnectionConnectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRServiceClientConnectionConnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRServiceClientConnectionConnectedEventData"/>. </summary>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="hubName"> The hub of connected client connection. </param>
         /// <param name="connectionId"> The connection Id of connected client connection. </param>

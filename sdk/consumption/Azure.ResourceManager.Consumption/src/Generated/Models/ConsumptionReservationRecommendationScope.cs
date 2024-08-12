@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The ConsumptionReservationRecommendationScope.
-    /// Serialized Name: Scope
-    /// </summary>
+    /// <summary> The ConsumptionReservationRecommendationScope. </summary>
     public readonly partial struct ConsumptionReservationRecommendationScope : IEquatable<ConsumptionReservationRecommendationScope>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string SingleValue = "Single";
         private const string SharedValue = "Shared";
 
-        /// <summary>
-        /// Single
-        /// Serialized Name: Scope.Single
-        /// </summary>
+        /// <summary> Single. </summary>
         public static ConsumptionReservationRecommendationScope Single { get; } = new ConsumptionReservationRecommendationScope(SingleValue);
-        /// <summary>
-        /// Shared
-        /// Serialized Name: Scope.Shared
-        /// </summary>
+        /// <summary> Shared. </summary>
         public static ConsumptionReservationRecommendationScope Shared { get; } = new ConsumptionReservationRecommendationScope(SharedValue);
         /// <summary> Determines if two <see cref="ConsumptionReservationRecommendationScope"/> values are the same. </summary>
         public static bool operator ==(ConsumptionReservationRecommendationScope left, ConsumptionReservationRecommendationScope right) => left.Equals(right);
@@ -53,7 +44,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

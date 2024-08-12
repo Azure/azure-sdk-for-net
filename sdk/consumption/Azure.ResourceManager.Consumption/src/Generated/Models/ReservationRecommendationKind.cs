@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Specifies the kind of reservation recommendation.
-    /// Serialized Name: ReservationRecommendationKind
-    /// </summary>
+    /// <summary> Specifies the kind of reservation recommendation. </summary>
     internal readonly partial struct ReservationRecommendationKind : IEquatable<ReservationRecommendationKind>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string LegacyValue = "legacy";
         private const string ModernValue = "modern";
 
-        /// <summary>
-        /// legacy
-        /// Serialized Name: ReservationRecommendationKind.legacy
-        /// </summary>
+        /// <summary> legacy. </summary>
         public static ReservationRecommendationKind Legacy { get; } = new ReservationRecommendationKind(LegacyValue);
-        /// <summary>
-        /// modern
-        /// Serialized Name: ReservationRecommendationKind.modern
-        /// </summary>
+        /// <summary> modern. </summary>
         public static ReservationRecommendationKind Modern { get; } = new ReservationRecommendationKind(ModernValue);
         /// <summary> Determines if two <see cref="ReservationRecommendationKind"/> values are the same. </summary>
         public static bool operator ==(ReservationRecommendationKind left, ReservationRecommendationKind right) => left.Equals(right);
@@ -53,7 +44,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

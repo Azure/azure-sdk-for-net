@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class SubscriptionKeysContract
+    public partial class SubscriptionKeysContract : IUtf8JsonSerializable, IJsonModel<SubscriptionKeysContract>
     {
-        internal static SubscriptionKeysContract DeserializeSubscriptionKeysContract(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionKeysContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SubscriptionKeysContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionKeysContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubscriptionKeysContract)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PrimaryKey))
+            {
+                writer.WritePropertyName("primaryKey"u8);
+                writer.WriteStringValue(PrimaryKey);
+            }
+            if (Optional.IsDefined(SecondaryKey))
+            {
+                writer.WritePropertyName("secondaryKey"u8);
+                writer.WriteStringValue(SecondaryKey);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SubscriptionKeysContract IJsonModel<SubscriptionKeysContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionKeysContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubscriptionKeysContract)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionKeysContract(document.RootElement, options);
+        }
+
+        internal static SubscriptionKeysContract DeserializeSubscriptionKeysContract(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            string primaryKey = default;
+            string secondaryKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKey"u8))
@@ -32,8 +91,107 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     secondaryKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SubscriptionKeysContract(primaryKey.Value, secondaryKey.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SubscriptionKeysContract(primaryKey, secondaryKey, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  primaryKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimaryKey))
+                {
+                    builder.Append("  primaryKey: ");
+                    if (PrimaryKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secondaryKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondaryKey))
+                {
+                    builder.Append("  secondaryKey: ");
+                    if (SecondaryKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryKey}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SubscriptionKeysContract>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionKeysContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionKeysContract)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SubscriptionKeysContract IPersistableModel<SubscriptionKeysContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionKeysContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSubscriptionKeysContract(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionKeysContract)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SubscriptionKeysContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,15 +8,36 @@ azure-arm: true
 csharp: true
 library-name: Nginx
 namespace: Azure.ResourceManager.Nginx
-require: https://github.com/Azure/azure-rest-api-specs/blob/2f28b5026a4b44adefd0237087acb0c48cfe31a6/specification/nginx/resource-manager/readme.md
-tag: package-2022-08-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/d1f4d6fcf1bbb2e71a32bb2079de12f17fedf56a/specification/nginx/resource-manager/readme.md
+tag: package-2024-01-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
- 
+#mgmt-debug:
+#  show-serialized-names: true
+
+rename-mapping:
+  NginxNetworkInterfaceConfiguration.subnetId: -|arm-id
+  NginxPrivateIPAddress.privateIPAddress: -|ip-address
+  NginxPrivateIPAddress.subnetId: -|arm-id
+  AnalysisCreate : NginxAnalysisContent
+  AnalysisCreateConfig: NginxAnalysisConfig
+  NginxCertificateErrorResponseBody: NginxCertificateError
+
+prepend-rp-prefix:
+  - ProvisioningState
+  - ResourceSku
+  - AnalysisDiagnostic
+  - AnalysisResult
+  - ScaleProfile
+  - ScaleProfileCapacity
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -25,7 +46,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -47,5 +68,4 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-
 ```

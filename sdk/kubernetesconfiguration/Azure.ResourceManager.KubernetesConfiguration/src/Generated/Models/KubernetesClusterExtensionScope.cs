@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Scope of the extension. It can be either Cluster or Namespace; but not both. </summary>
     public partial class KubernetesClusterExtensionScope
     {
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionScope. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionScope"/>. </summary>
         public KubernetesClusterExtensionScope()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterExtensionScope. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionScope"/>. </summary>
         /// <param name="cluster"> Specifies that the scope of the extension is Cluster. </param>
         /// <param name="namespace"> Specifies that the scope of the extension is Namespace. </param>
-        internal KubernetesClusterExtensionScope(ScopeCluster cluster, ScopeNamespace @namespace)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesClusterExtensionScope(ScopeCluster cluster, ScopeNamespace @namespace, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Cluster = cluster;
             Namespace = @namespace;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies that the scope of the extension is Cluster. </summary>

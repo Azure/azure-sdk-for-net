@@ -80,6 +80,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(keyName);
 
             KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+            if (!IsManagedHSM && _serviceVersion >= KeyClientOptions.ServiceVersion.V7_5)
+            {
+                Assert.That(keyReturned.Properties.HsmPlatform, Is.Not.Null.And.Not.Empty);
+            }
 
             AssertKeyVaultKeysEqual(ecHsmkey, keyReturned);
 
@@ -142,6 +146,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(keyName);
 
             KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+            if (!IsManagedHSM && _serviceVersion >= KeyClientOptions.ServiceVersion.V7_5)
+            {
+                Assert.That(keyReturned.Properties.HsmPlatform, Is.Not.Null.And.Not.Empty);
+            }
 
             AssertKeyVaultKeysEqual(rsaHsmkey, keyReturned);
 

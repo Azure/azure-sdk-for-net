@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -21,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
             string text = default;
             IReadOnlyList<float> boundingBox = default;
-            Optional<float> confidence = default;
+            float? confidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -49,7 +48,15 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new TextWord(text, boundingBox, Optional.ToNullable(confidence));
+            return new TextWord(text, boundingBox, confidence);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TextWord FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTextWord(document.RootElement);
         }
     }
 }

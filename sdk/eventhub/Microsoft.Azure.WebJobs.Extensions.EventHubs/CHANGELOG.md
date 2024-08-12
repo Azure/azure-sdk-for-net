@@ -1,6 +1,6 @@
 # Release History
 
-## 5.5.0-beta.1 (Unreleased)
+## 6.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,101 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 6.3.5 (2024-08-01)
+
+### Other Changes
+
+- Bump dependency on `Azure.Messaging.EventHubs` to 5.11.5.
+
+## 6.3.4 (2024-07-25)
+
+### Other Changes
+
+- When the trigger's connection property is set to a valid connection string instead of an informational name, the mistake will be detected and sensitive information will be redacted from the error message to avoid accidental capture in logs and similar mechanisms.
+
+## 6.3.3 (2024-06-13)
+
+### Other Changes
+
+- To mitigate a vulnerability, updating the transitive dependency for `Azure.Identity` to v1.11.4 via version bump to `Microsoft.Extensions.Azure`.
+
+## 6.3.2 (2024-04-29)
+
+### Bugs Fixed
+
+- Fixed an issue with scale metrics computation, potentially causing unnecessary scale-up.
+
+## 6.3.1 (2024-04-17)
+
+### Other Changes
+
+- To mitigate a [disclosure vulnerability](https://github.com/advisories/GHSA-wvxc-855f-jvrv), updating the transitive dependency for `Azure.Identity` to v1.11.1 via version bump to `Microsoft.Extensions.Azure`.
+
+## 6.3.0 (2024-04-10)
+
+### Features Added
+
+- Added a new setting to `EventHubOptions` to allow checkpointing to be disabled for applications that always want to use their `initialOffsetOptions` when starting to process a new partition.
+
+## 6.2.0 (2024-03-05)
+
+### Other Changes
+
+- Adjusted checkpointing logic to no longer write a checkpoint when the listener is shutting down.  This was necessary to prevent potential data loss from occurring when shutting down Function retries.  Because the trigger cannot know if the Function host would have retried a failure if it were not shutting down, we cannot assume that it is safe to checkpoint. This change ensures that the batch of events being processed when shut down was requested will be retried by another instance or the next time the Function app is run.
+
+- Updated the `Azure.Messaging.EventHubs`, which includes a new build of the AMQP transport library. The notable bug fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
+
+## 6.1.0 (2024-02-13)
+
+### Bugs Fixed
+
+- The `SystemProperties` binding will now return certain item as string values instead of an AMQP structure that requires calling `ToString()` to read.  The affected system properties are:
+  - MessageId
+  - CorelationId
+  - To
+  - ReplyTo
+
+- Avoid race condition when determining whether to checkpoint when the host is in the process of shutting down.
+
+### Other Changes
+
+- Updated the `Azure.Messaging.EventHubs` dependency, which includes optimized defaults of the host platform to be used for AMQP buffers.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  This update also enables support for TLS 1.3.
+
+## 6.0.2 (2023-11-13)
+
+### Other Changes
+
+- Bump dependency on `Microsoft.Extensions.Azure` to prevent transitive dependency on deprecated version of `Azure.Identity`.
+
+## 6.0.1 (2023-10-10)
+
+### Bugs Fixed
+
+- Added support for the legacy checkpoint format when making scaling decisions.
+
+## 6.0.0 (2023-09-12)
+
+### Breaking Changes
+
+- The default batch size has changed to 100 events.  Previously, the default batch size was 10.
+
+  This setting represents the maximum number of events from Event Hubs that the function can receive when it's invoked. The decision to change the default was based on developer feedback, testing, and a desire to match the defaults used by the Azure SDK for Event Hubs.  This change will be beneficial to the average scenario by helping to improve performance as well as lower costs due to fewer function executions.
+
+  We recommend testing to ensure no breaking changes are introducing to your function app before updating existing applications to version 6.0.0 or newer of the Event Hubs extension, especially if you have code code that was written to expect 10 as the max event batch size.
+
+### Bugs Fixed
+
+- Fixed an issue where checkpoints were not always written when using a minimum batch size with low throughput.
+
+## 5.5.0 (2023-08-11)
+
+### Bugs Fixed
+
+- When binding to a `CancellationToken`, the token will no longer be signaled when in Drain Mode.
+  To detect if the function app is in Drain Mode, use dependency injection to inject the
+  `IDrainModeManager`, and check the `IsDrainModeEnabled` property. Additionally, checkpointing
+  will now occur when the function app is in Drain Mode.
 
 ## 5.4.0 (2023-06-06)
 

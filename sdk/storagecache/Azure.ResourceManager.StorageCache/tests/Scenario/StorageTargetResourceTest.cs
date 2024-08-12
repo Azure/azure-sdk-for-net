@@ -21,11 +21,11 @@ namespace Azure.ResourceManager.StorageCache.Tests.Scenario
             // it's very heavy to create storage cache (~20 minutes), so provide an option to use precreated resource
             //   set preCreated to true and updated the resourceGroup, cacheName below to use pre created resource
             //   set preCreated to false to create new one
-            bool preCreated = true;
+            bool preCreated = false;
             this.DefaultStorageCache = preCreated ?
                 await this.RetrieveExistingStorageCache(
-                    resourceGroupName: @"sdkexplorerexecution10",
-                    cacheName: @"sc1") :
+                    resourceGroupName: this.DefaultResourceGroup.Id.Name,
+                    cacheName: @"testsc5594") :
                 await this.CreateOrUpdateStorageCache();
         }
 

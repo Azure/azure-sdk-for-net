@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -68,7 +68,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SeasonalFields.xml" path="doc/members/member[@name='GetSeasonalFieldAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSeasonalFieldAsync(string partyId, string seasonalFieldId, RequestContext context = null)
+        public virtual async Task<Response> GetSeasonalFieldAsync(string partyId, string seasonalFieldId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
@@ -105,7 +105,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SeasonalFields.xml" path="doc/members/member[@name='GetSeasonalField(string,string,RequestContext)']/*" />
-        public virtual Response GetSeasonalField(string partyId, string seasonalFieldId, RequestContext context = null)
+        public virtual Response GetSeasonalField(string partyId, string seasonalFieldId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(seasonalFieldId, nameof(seasonalFieldId));
@@ -293,7 +293,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SeasonalFields.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -328,7 +328,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SeasonalFields.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(string,RequestContext)']/*" />
-        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
+        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -384,13 +384,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SeasonalFields.xml" path="doc/members/member[@name='GetSeasonalFieldsByPartyIdAsync(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSeasonalFieldsByPartyIdAsync(string partyId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropProductIds = null, IEnumerable<string> cropIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSeasonalFieldsByPartyIdAsync(string partyId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropProductIds, IEnumerable<string> cropIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSeasonalFieldsByPartyIdRequest(partyId, farmIds, fieldIds, seasonIds, cropProductIds, cropIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSeasonalFieldsByPartyIdNextPageRequest(nextLink, partyId, farmIds, fieldIds, seasonIds, cropProductIds, cropIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFieldsByPartyId", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFieldsByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -431,13 +431,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SeasonalFields.xml" path="doc/members/member[@name='GetSeasonalFieldsByPartyId(string,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSeasonalFieldsByPartyId(string partyId, IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropProductIds = null, IEnumerable<string> cropIds = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSeasonalFieldsByPartyId(string partyId, IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropProductIds, IEnumerable<string> cropIds, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSeasonalFieldsByPartyIdRequest(partyId, farmIds, fieldIds, seasonIds, cropProductIds, cropIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSeasonalFieldsByPartyIdNextPageRequest(nextLink, partyId, farmIds, fieldIds, seasonIds, cropProductIds, cropIds, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFieldsByPartyId", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFieldsByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -475,11 +475,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SeasonalFields.xml" path="doc/members/member[@name='GetSeasonalFieldsAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSeasonalFieldsAsync(IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropProductIds = null, IEnumerable<string> cropIds = null, IEnumerable<string> seasonalFieldIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSeasonalFieldsAsync(IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropProductIds, IEnumerable<string> cropIds, IEnumerable<string> seasonalFieldIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSeasonalFieldsRequest(farmIds, fieldIds, seasonIds, cropProductIds, cropIds, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSeasonalFieldsNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropProductIds, cropIds, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFields", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFields", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -517,11 +517,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SeasonalFields.xml" path="doc/members/member[@name='GetSeasonalFields(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSeasonalFields(IEnumerable<string> farmIds = null, IEnumerable<string> fieldIds = null, IEnumerable<string> seasonIds = null, IEnumerable<string> cropProductIds = null, IEnumerable<string> cropIds = null, IEnumerable<string> seasonalFieldIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSeasonalFields(IEnumerable<string> farmIds, IEnumerable<string> fieldIds, IEnumerable<string> seasonIds, IEnumerable<string> cropProductIds, IEnumerable<string> cropIds, IEnumerable<string> seasonalFieldIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSeasonalFieldsRequest(farmIds, fieldIds, seasonIds, cropProductIds, cropIds, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSeasonalFieldsNextPageRequest(nextLink, farmIds, fieldIds, seasonIds, cropProductIds, cropIds, seasonalFieldIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFields", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SeasonalFields.GetSeasonalFields", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -544,7 +544,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/SeasonalFields.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string seasonalFieldId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string seasonalFieldId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(partyId, nameof(partyId));
@@ -584,7 +584,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/SeasonalFields.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string seasonalFieldId, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string seasonalFieldId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(partyId, nameof(partyId));
@@ -614,63 +614,63 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/parties/", false);
             uri.AppendPath(partyId, true);
             uri.AppendPath("/seasonal-fields", false);
-            if (farmIds != null && Optional.IsCollectionDefined(farmIds))
+            if (farmIds != null && !(farmIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in farmIds)
                 {
                     uri.AppendQuery("farmIds", param, true);
                 }
             }
-            if (fieldIds != null && Optional.IsCollectionDefined(fieldIds))
+            if (fieldIds != null && !(fieldIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in fieldIds)
                 {
                     uri.AppendQuery("fieldIds", param, true);
                 }
             }
-            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
+            if (seasonIds != null && !(seasonIds is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in seasonIds)
                 {
                     uri.AppendQuery("seasonIds", param, true);
                 }
             }
-            if (cropProductIds != null && Optional.IsCollectionDefined(cropProductIds))
+            if (cropProductIds != null && !(cropProductIds is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in cropProductIds)
                 {
                     uri.AppendQuery("cropProductIds", param, true);
                 }
             }
-            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
+            if (cropIds != null && !(cropIds is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in cropIds)
                 {
                     uri.AppendQuery("cropIds", param, true);
                 }
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && !(ids is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList5 && changeTrackingList5.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList6 && changeTrackingList6.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList7 && changeTrackingList7.IsUndefined))
             {
                 foreach (var param in statuses)
                 {
@@ -768,63 +768,63 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/seasonal-fields", false);
-            if (farmIds != null && Optional.IsCollectionDefined(farmIds))
+            if (farmIds != null && !(farmIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in farmIds)
                 {
                     uri.AppendQuery("farmIds", param, true);
                 }
             }
-            if (fieldIds != null && Optional.IsCollectionDefined(fieldIds))
+            if (fieldIds != null && !(fieldIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in fieldIds)
                 {
                     uri.AppendQuery("fieldIds", param, true);
                 }
             }
-            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
+            if (seasonIds != null && !(seasonIds is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in seasonIds)
                 {
                     uri.AppendQuery("seasonIds", param, true);
                 }
             }
-            if (cropProductIds != null && Optional.IsCollectionDefined(cropProductIds))
+            if (cropProductIds != null && !(cropProductIds is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in cropProductIds)
                 {
                     uri.AppendQuery("cropProductIds", param, true);
                 }
             }
-            if (cropIds != null && Optional.IsCollectionDefined(cropIds))
+            if (cropIds != null && !(cropIds is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in cropIds)
                 {
                     uri.AppendQuery("cropIds", param, true);
                 }
             }
-            if (seasonalFieldIds != null && Optional.IsCollectionDefined(seasonalFieldIds))
+            if (seasonalFieldIds != null && !(seasonalFieldIds is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 foreach (var param in seasonalFieldIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList5 && changeTrackingList5.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList6 && changeTrackingList6.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList7 && changeTrackingList7.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

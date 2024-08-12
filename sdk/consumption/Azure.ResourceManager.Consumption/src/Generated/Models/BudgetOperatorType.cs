@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The operator to use for comparison.
-    /// Serialized Name: BudgetOperatorType
-    /// </summary>
+    /// <summary> The operator to use for comparison. </summary>
     public readonly partial struct BudgetOperatorType : IEquatable<BudgetOperatorType>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         private const string InValue = "In";
 
-        /// <summary>
-        /// In
-        /// Serialized Name: BudgetOperatorType.In
-        /// </summary>
+        /// <summary> In. </summary>
         public static BudgetOperatorType In { get; } = new BudgetOperatorType(InValue);
         /// <summary> Determines if two <see cref="BudgetOperatorType"/> values are the same. </summary>
         public static bool operator ==(BudgetOperatorType left, BudgetOperatorType right) => left.Equals(right);
@@ -47,7 +41,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

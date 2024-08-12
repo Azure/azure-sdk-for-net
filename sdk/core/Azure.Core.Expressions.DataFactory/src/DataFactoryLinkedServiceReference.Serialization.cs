@@ -8,13 +8,14 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Core.Expressions.DataFactory
 {
+    [JsonConverter(typeof(DataFactoryLinkedServiceReferenceConverter))]
     public partial class DataFactoryLinkedServiceReference : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ReferenceType.ToString());
+            writer.WriteStringValue(ReferenceKind.ToString());
             writer.WritePropertyName("referenceName"u8);
             writer.WriteStringValue(ReferenceName);
             if (Optional.IsCollectionDefined(Parameters))
@@ -46,14 +47,14 @@ namespace Azure.Core.Expressions.DataFactory
             {
                 return null;
             }
-            DataFactoryLinkedServiceReferenceType type = default;
+            DataFactoryLinkedServiceReferenceKind kind = default;
             string? referenceName = default;
             Optional<IDictionary<string, BinaryData?>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new DataFactoryLinkedServiceReferenceType(property.Value.GetString());
+                    kind = new DataFactoryLinkedServiceReferenceKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("referenceName"u8))
@@ -83,7 +84,7 @@ namespace Azure.Core.Expressions.DataFactory
                     continue;
                 }
             }
-            return new DataFactoryLinkedServiceReference(type, referenceName, Optional.ToDictionary(parameters));
+            return new DataFactoryLinkedServiceReference(kind, referenceName, Optional.ToDictionary(parameters));
         }
 
         internal partial class DataFactoryLinkedServiceReferenceConverter : JsonConverter<DataFactoryLinkedServiceReference?>

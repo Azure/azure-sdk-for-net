@@ -47,8 +47,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<string> synonyms = default;
-            Optional<bool> ignoreCase = default;
-            Optional<bool> expand = default;
+            bool? ignoreCase = default;
+            bool? expand = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SynonymTokenFilter(odataType, name, synonyms, Optional.ToNullable(ignoreCase), Optional.ToNullable(expand));
+            return new SynonymTokenFilter(odataType, name, synonyms, ignoreCase, expand);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SynonymTokenFilter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSynonymTokenFilter(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

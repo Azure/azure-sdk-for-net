@@ -26,7 +26,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests
 {
     [NonParallelizable]
     [LiveOnly(true)]
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
                             ""targetUnprocessedEventThreshold"": 1
                         }
                     }
-                }   
+                }
             }";
 
             // Function1Name uses connection string
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
                 var settings = new Dictionary<string, string>()
                 {
                     { $"{EventHubConnection1}", EventHubsTestEnvironment.Instance.EventHubsConnectionString },
-                    { $"{EventHubConnection2}:fullyQualifiedNamespace", $"{EventHubsTestEnvironment.Instance.EventHubsNamespace}.servicebus.windows.net" },
+                    { $"{EventHubConnection2}:fullyQualifiedNamespace", EventHubsTestEnvironment.Instance.FullyQualifiedNamespace },
                     { "AzureWebJobsStorage", StorageTestEnvironment.Instance.StorageConnectionString }
                 };
 
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
 
                 FakeNameResolver nameResolver = new FakeNameResolver();
                 nameResolver.Add(EventHubConnection1, EventHubsTestEnvironment.Instance.EventHubsConnectionString);
-                nameResolver.Add(EventHubConnection2, $"{EventHubsTestEnvironment.Instance.EventHubsNamespace}.servicebus.windows.net");
+                nameResolver.Add(EventHubConnection2, EventHubsTestEnvironment.Instance.FullyQualifiedNamespace);
                 services.AddSingleton<INameResolver>(nameResolver);
             })
             .ConfigureWebJobsScale((context, builder) =>

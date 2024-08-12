@@ -4,9 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#region Snippet:Azure_Communication_Rooms_Tests_UsingStatements
-//@@ using Azure.Communication.Rooms
-#endregion Snippet:Azure_Communication_Rooms_Tests_UsingStatements
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Communication.Rooms;
@@ -40,6 +37,8 @@ namespace Azure.Communication.Rooms.Tests
 
                 // Assert
                 Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
+                Assert.AreEqual(createRoomResponse.GetRawResponse().Status, 201);
+                ValidateRoom(createCommunicationRoom);
                 var createdRoomId = createCommunicationRoom.Id;
 
                 // Act: Get Room
@@ -48,13 +47,19 @@ namespace Azure.Communication.Rooms.Tests
 
                 // Assert:
                 Assert.AreEqual(createdRoomId, getCommunicationRoom.Id);
+                Assert.AreEqual(getRoomResponse.GetRawResponse().Status, 200);
+                ValidateRoom(getCommunicationRoom);
 
                 // Act: Update Room
-                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom.AddDays(1), validUntil.AddDays(2));
+                validFrom = validFrom.AddDays(10);
+                validUntil = validUntil.AddDays(10);
+                Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
                 // Assert:
                 Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);
+                Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
+                ValidateRoom(updateCommunicationRoom);
 
                 // Act: Delete Room
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
@@ -104,7 +109,8 @@ namespace Azure.Communication.Rooms.Tests
                 CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
 
                 // Assert
-                Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
+                Assert.AreEqual(createRoomResponse.GetRawResponse().Status, 201);
+                ValidateRoom(createCommunicationRoom);
 
                 var createdRoomId = createCommunicationRoom.Id;
 
@@ -113,7 +119,8 @@ namespace Azure.Communication.Rooms.Tests
                 CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
 
                 // Assert
-                Assert.AreEqual(createdRoomId, getCommunicationRoom.Id);
+                Assert.AreEqual(getRoomResponse.GetRawResponse().Status, 200);
+                ValidateRoom(getCommunicationRoom);
 
                 // Act Update Room
                 validFrom = validFrom.AddDays(30);
@@ -123,7 +130,8 @@ namespace Azure.Communication.Rooms.Tests
                 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
 
                 // Assert
-                Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);
+                Assert.AreEqual(updateRoomResponse.GetRawResponse().Status, 200);
+                ValidateRoom(updateCommunicationRoom);
 
                 // Act: Delete Room
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
@@ -148,29 +156,215 @@ namespace Azure.Communication.Rooms.Tests
         }
 
         [Test]
-        public async Task GetRoomsLiveTest_FirstRoomIsNotNull_Succeed()
+        public async Task CreateRoom_WithNoAttributes_Succeed()
+        {
+            // Arrange
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+
+            // Act
+            var createdRoom = await roomsClient.CreateRoomAsync();
+
+            // Assert
+            Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
+            ValidateRoom(createdRoom.Value);
+        }
+
+        [Test]
+        public async Task CreateRoom_WithOnlyParticipants_Succeed()
+        {
+            // Arrange
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+            var participant1 = await communicationIdentityClient.CreateUserAsync();
+            List<RoomParticipant> roomParticipants = new List<RoomParticipant>()
+            {
+                new RoomParticipant(participant1.Value)
+            };
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+
+            // Act
+            var createdRoom = await roomsClient.CreateRoomAsync(participants: roomParticipants);
+
+            // Assert
+            Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
+            ValidateRoom(createdRoom.Value);
+        }
+
+        [Test]
+        public async Task CreateRoom_WithAllOptionalParameters_Succeed()
+        {
+            // Arrange
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+            var participant1 = await communicationIdentityClient.CreateUserAsync();
+            List<RoomParticipant> roomParticipants = new List<RoomParticipant>()
+            {
+                new RoomParticipant(participant1.Value)
+            };
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(1);
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+
+            // Act
+            var createdRoom = await roomsClient.CreateRoomAsync(participants: roomParticipants, validFrom: validFrom, validUntil: validUntil);
+
+            // Assert
+            Assert.AreEqual(createdRoom.GetRawResponse().Status, 201);
+            ValidateRoom(createdRoom.Value);
+        }
+
+        [Test]
+        public void CreateRoom_WithTimeRangeExceedMax_Fail()
+        {
+            // Arrange
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(200);
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+
+            // Act and Assert
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(validFrom: validFrom, validUntil: validUntil));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
+        [Test]
+        public void CreateRoom_WithPastValidUntil_Fail()
+        {
+            // Arrange;
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var validFrom = DateTime.UtcNow.AddDays(-10);
+            var validUntil = validFrom.AddDays(-20);
+
+            // Act and Assert
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(validFrom: validFrom, validUntil: validUntil));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
+        [Test]
+        public void CreateRoom_WithInvalidParticipantMri_Fail()
+        {
+            // Arrange
+            List<RoomParticipant> roomParticipants = new List<RoomParticipant>()
+            {
+                new RoomParticipant(new CommunicationUserIdentifier("invalid_mri"))
+            };
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+
+            // Act and Assert
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(participants: roomParticipants));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
+        [Test]
+        public void GetRoom_WithInvalidFormatRoomId_Fail()
+        {
+            // Arrange
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+
+            // Act and Assert
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync("invalid_id"));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
+        [Test]
+        public async Task UpdateRoom_WithTimeRangeExceedMax_Fail()
+        {
+            // Arrange
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(10);
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(validFrom: validFrom, validUntil: validUntil);
+
+            // Act and Assert
+            validUntil = validFrom.AddDays(200);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, validFrom: validFrom, validUntil: validUntil));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
+         [Test]
+        public async Task UpdateRoom_WithPastValidUntil_Fail()
+        {
+            // Arrange
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(10);
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(validFrom: validFrom, validUntil: validUntil);
+
+            // Act and Assert
+            validUntil = validFrom.AddDays(-20);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, validFrom: validFrom, validUntil: validUntil));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
+        [Test]
+        public void UpdateRoom_WithInvalidFormatRoomId_Fail()
+        {
+            // Arrange
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(10);
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+
+            // Act and Assert
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync("invalid_id", validFrom: validFrom, validUntil: validUntil));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
+        [Test]
+        public async Task UpdateRoom_WithDeletedRoom_Fail()
+        {
+            // Arrange
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(10);
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(validFrom: validFrom, validUntil: validUntil);
+            await roomsClient.DeleteRoomAsync(createRoomResponse.Value.Id);
+
+            // Act and assert
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, validFrom: validFrom, validUntil: validUntil));
+            Assert.NotNull(ex);
+            Assert.AreEqual(404, ex?.Status);
+        }
+
+        [Test]
+        public async Task AddOrUpdateParticipants_IncorrectlyFormattedMri_Fail()
+        {
+            // Arrange
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var createRoomResponse = await roomsClient.CreateRoomAsync();
+            List<RoomParticipant> roomParticipants = new List<RoomParticipant>()
+            {
+                new RoomParticipant(new CommunicationUserIdentifier("invalid_mri"))
+            };
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.AddOrUpdateParticipantsAsync(createRoomResponse.Value.Id, participants: roomParticipants));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
+        [Test]
+        public async Task GetRoomsLiveTest_FirstTwoPagesOfRoomIsNotNull_Succeed()
         {
             // Arrange
             RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
             // First create a room to ensure that the list rooms will not be empty.
             CommunicationRoom createdRoom = await roomsClient.CreateRoomAsync();
-            CommunicationRoom? firstActiveRoom = null;
+            int roomCounter = 0;
             try
             {
                 AsyncPageable<CommunicationRoom> allActiveRooms = roomsClient.GetRoomsAsync();
                 await foreach (CommunicationRoom room in allActiveRooms)
                 {
-                    if (room is not null)
+                    if (roomCounter > 60)
                     {
-                        firstActiveRoom = room;
                         break;
                     }
+                    ValidateRoom(room);
+                    roomCounter++;
                 }
-                Assert.IsNotNull(firstActiveRoom);
-                Assert.IsNotNull(firstActiveRoom?.Id);
-                Assert.IsNotNull(firstActiveRoom?.CreatedAt);
-                Assert.IsNotNull(firstActiveRoom?.ValidFrom);
-                Assert.IsNotNull(firstActiveRoom?.ValidUntil);
             }
             catch (Exception ex)
             {
@@ -247,9 +441,13 @@ namespace Azure.Communication.Rooms.Tests
                 };
                 // Act
                 Response removeParticipantsResponse = await roomsClient.RemoveParticipantsAsync(createdRoomId, toRemoveCommunicationUsers);
+                AsyncPageable<RoomParticipant> existingParticipants = roomsClient.GetParticipantsAsync(createdRoomId);
+                List<RoomParticipant> removeRoomParticipantsResult = await allParticipants.ToEnumerableAsync();
 
                 // Assert
                 Assert.AreEqual(200, removeParticipantsResponse.Status);
+                Assert.AreEqual(1, removeRoomParticipantsResult.Count, "Expected Room participants count to be 1 after removal");
+                Assert.IsTrue(removeRoomParticipantsResult.Any(x => x.CommunicationIdentifier.Equals(participant3.CommunicationIdentifier)), "Expected participants to contain user3 after add or update.");
 
                 // Clean up
                 Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
@@ -400,44 +598,83 @@ namespace Azure.Communication.Rooms.Tests
         }
 
         [Test]
-        public async Task AcsRoomTimePartialUpdateLiveTest()
+        public async Task RemoveParticipants_NonExistentParticipants_Success()
         {
-            if (Mode != Core.TestFramework.RecordedTestMode.Playback)
+            // Arrange
+            CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var createRoomResponse = await roomsClient.CreateRoomAsync();
+            var participant1 = await communicationIdentityClient.CreateUserAsync();
+            List<CommunicationUserIdentifier> communicationUsers = new List<CommunicationUserIdentifier>()
             {
-                RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+                participant1
+            };
 
-                var validFrom = DateTime.UtcNow;
-                var validUntil = validFrom.AddDays(1);
+            // Act
+            Response removeParticipantResponse = await roomsClient.RemoveParticipantsAsync(createRoomResponse.Value.Id, participantIdentifiers: communicationUsers);
+            AsyncPageable<RoomParticipant> allParticipants = roomsClient.GetParticipantsAsync(createRoomResponse.Value.Id);
+            List<RoomParticipant> removeRoomParticipantsResult = await allParticipants.ToEnumerableAsync();
 
-                try
-                {
-                    // Arrange: Create Room
-                    Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom);
-                    CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
-                    Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
-                    var createdRoomId = createCommunicationRoom.Id;
+            // Assert
+            Assert.AreEqual(removeParticipantResponse.Status, 200);
+            Assert.AreEqual(removeRoomParticipantsResult.Count, 0);
+        }
 
-                    // Act: Update Room
-                    Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
-                    CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
+        [Test]
+        public async Task RemoveParticipants_IncorrectlyFormattedMri_Fail()
+        {
+            // Arrange
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var createRoomResponse = await roomsClient.CreateRoomAsync();
+            List<CommunicationUserIdentifier> communicationUsers = new List<CommunicationUserIdentifier>()
+            {
+                new CommunicationUserIdentifier("invalid_mri")
+            };
 
-                    // Assert
-                    Assert.AreEqual(createdRoomId, updateCommunicationRoom.Id);
+            // Act and assert
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.RemoveParticipantsAsync(createRoomResponse.Value.Id, participantIdentifiers: communicationUsers));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
 
-                    // Clean up
-                    Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
-                    Assert.AreEqual(204, deleteRoomResponse.Status);
-                }
-                catch (RequestFailedException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    Assert.Fail($"Unexpected error: {ex}");
-                }
-                catch (Exception ex)
-                {
-                    Assert.Fail($"Unexpected error: {ex}");
-                }
-            }
+        [Test]
+        public async Task DeleteRoom_Success()
+        {
+            // Arrange
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var createRoomResponse = await roomsClient.CreateRoomAsync();
+            var createdRoomId = createRoomResponse.Value.Id;
+
+            // Act
+            Response deleteRoomResponse = await roomsClient.DeleteRoomAsync(createdRoomId);
+
+            // Assert:
+            Assert.AreEqual(204, deleteRoomResponse.Status);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync(createdRoomId));
+            Assert.NotNull(ex);
+            Assert.AreEqual(404, ex?.Status);
+        }
+
+        [Test]
+        public void DeleteInvalidRoomId_Fail()
+        {
+            // Arrange
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var ivnalidRoomId = "123";
+
+            // Act and Assert:
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.DeleteRoomAsync(ivnalidRoomId));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
+        private void ValidateRoom(CommunicationRoom? room)
+        {
+            Assert.NotNull(room);
+            Assert.NotNull(room?.Id);
+            Assert.NotNull(room?.CreatedAt);
+            Assert.NotNull(room?.ValidFrom);
+            Assert.NotNull(room?.ValidUntil);
         }
     }
 }

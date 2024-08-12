@@ -41,7 +41,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             string keyVaultEndpoint = default;
             string keyVaultClientId = default;
-            Optional<string> keyVaultClientSecret = default;
+            string keyVaultClientSecret = default;
             string servicePrincipalIdNameInKV = default;
             string servicePrincipalSecretNameInKV = default;
             string tenantId = default;
@@ -78,7 +78,29 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new ServicePrincipalInKVParam(keyVaultEndpoint, keyVaultClientId, keyVaultClientSecret.Value, servicePrincipalIdNameInKV, servicePrincipalSecretNameInKV, tenantId);
+            return new ServicePrincipalInKVParam(
+                keyVaultEndpoint,
+                keyVaultClientId,
+                keyVaultClientSecret,
+                servicePrincipalIdNameInKV,
+                servicePrincipalSecretNameInKV,
+                tenantId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ServicePrincipalInKVParam FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeServicePrincipalInKVParam(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

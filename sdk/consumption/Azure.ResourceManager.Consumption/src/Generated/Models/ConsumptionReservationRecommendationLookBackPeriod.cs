@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The ConsumptionReservationRecommendationLookBackPeriod.
-    /// Serialized Name: LookBackPeriod
-    /// </summary>
+    /// <summary> The ConsumptionReservationRecommendationLookBackPeriod. </summary>
     public readonly partial struct ConsumptionReservationRecommendationLookBackPeriod : IEquatable<ConsumptionReservationRecommendationLookBackPeriod>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string Last30DaysValue = "Last30Days";
         private const string Last60DaysValue = "Last60Days";
 
-        /// <summary>
-        /// Use 7 days of data for recommendations
-        /// Serialized Name: LookBackPeriod.Last7Days
-        /// </summary>
+        /// <summary> Use 7 days of data for recommendations. </summary>
         public static ConsumptionReservationRecommendationLookBackPeriod Last07Days { get; } = new ConsumptionReservationRecommendationLookBackPeriod(Last07DaysValue);
-        /// <summary>
-        /// Use 30 days of data for recommendations
-        /// Serialized Name: LookBackPeriod.Last30Days
-        /// </summary>
+        /// <summary> Use 30 days of data for recommendations. </summary>
         public static ConsumptionReservationRecommendationLookBackPeriod Last30Days { get; } = new ConsumptionReservationRecommendationLookBackPeriod(Last30DaysValue);
-        /// <summary>
-        /// Use 60 days of data for recommendations
-        /// Serialized Name: LookBackPeriod.Last60Days
-        /// </summary>
+        /// <summary> Use 60 days of data for recommendations. </summary>
         public static ConsumptionReservationRecommendationLookBackPeriod Last60Days { get; } = new ConsumptionReservationRecommendationLookBackPeriod(Last60DaysValue);
         /// <summary> Determines if two <see cref="ConsumptionReservationRecommendationLookBackPeriod"/> values are the same. </summary>
         public static bool operator ==(ConsumptionReservationRecommendationLookBackPeriod left, ConsumptionReservationRecommendationLookBackPeriod right) => left.Equals(right);
@@ -59,7 +47,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

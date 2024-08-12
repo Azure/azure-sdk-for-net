@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppContainers;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Resources;
 
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetContainerApps_ListContainerAppsBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_ListBySubscription.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_ListBySubscription.json
             // this example is just showing the usage of "ContainerApps_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_Get.json
             // this example is just showing the usage of "ContainerApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -68,7 +65,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string containerAppName = "testcontainerApp0";
+            string containerAppName = "testcontainerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
             ContainerAppResource containerApp = client.GetContainerAppResource(containerAppResourceId);
 
@@ -87,7 +84,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_Delete.json
             // this example is just showing the usage of "ContainerApps_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string containerAppName = "testWorkerApp0";
+            string containerAppName = "testworkerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
             ContainerAppResource containerApp = client.GetContainerAppResource(containerAppResourceId);
 
@@ -114,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PatchContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_Patch.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_Patch.json
             // this example is just showing the usage of "ContainerApps_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string containerAppName = "testcontainerApp0";
+            string containerAppName = "testcontainerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
             ContainerAppResource containerApp = client.GetContainerAppResource(containerAppResourceId);
 
@@ -143,7 +140,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
 {
 new ContainerAppRevisionTrafficWeight()
 {
-RevisionName = "testcontainerApp0-ab1234",
+RevisionName = "testcontainerapp0-ab1234",
 Weight = 100,
 Label = "production",
 }
@@ -183,6 +180,7 @@ Description = "Allowing all IP's within the subnet below to access containerapp"
                         IsApiLoggingEnabled = true,
                     },
                     MaxInactiveRevisions = 10,
+                    ServiceType = "redis",
                 },
                 Template = new ContainerAppTemplate()
                 {
@@ -190,12 +188,12 @@ Description = "Allowing all IP's within the subnet below to access containerapp"
 {
 new ContainerAppInitContainer()
 {
-Image = "repo/testcontainerApp0:v4",
+Image = "repo/testcontainerapp0:v4",
 Name = "testinitcontainerApp0",
 Resources = new AppContainerResources()
 {
-Cpu = 0.2,
-Memory = "100Mi",
+Cpu = 0.5,
+Memory = "1Gi",
 },
 }
 },
@@ -220,8 +218,8 @@ PeriodSeconds = 3,
 ProbeType = ContainerAppProbeType.Liveness,
 }
 },
-Image = "repo/testcontainerApp0:v1",
-Name = "testcontainerApp0",
+Image = "repo/testcontainerapp0:v1",
+Name = "testcontainerapp0",
 }
 },
                     Scale = new ContainerAppScale()
@@ -244,6 +242,14 @@ Metadata =
 }
 },
                     },
+                    ServiceBinds =
+{
+new ContainerAppServiceBind()
+{
+ServiceId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/containerApps/service"),
+Name = "service",
+}
+},
                 },
                 Tags =
 {
@@ -266,7 +272,7 @@ Metadata =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCustomHostNameAnalysis_AnalyzeCustomHostname()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_ListCustomHostNameAnalysis.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_ListCustomHostNameAnalysis.json
             // this example is just showing the usage of "ContainerApps_ListCustomHostNameAnalysis" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -278,7 +284,7 @@ Metadata =
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string containerAppName = "testcontainerApp0";
+            string containerAppName = "testcontainerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
             ContainerAppResource containerApp = client.GetContainerAppResource(containerAppResourceId);
 
@@ -294,7 +300,7 @@ Metadata =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSecrets_ListContainerAppsSecrets()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_ListSecrets.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_ListSecrets.json
             // this example is just showing the usage of "ContainerApps_ListSecrets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -306,7 +312,7 @@ Metadata =
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
-            string containerAppName = "testcontainerApp0";
+            string containerAppName = "testcontainerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
             ContainerAppResource containerApp = client.GetContainerAppResource(containerAppResourceId);
 
@@ -324,7 +330,7 @@ Metadata =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAuthToken_GetContainerAppAuthToken()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_GetAuthToken.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_GetAuthToken.json
             // this example is just showing the usage of "ContainerApps_GetAuthToken" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -336,7 +342,7 @@ Metadata =
             // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
             string subscriptionId = "651f8027-33e8-4ec4-97b4-f6e9f3dc8744";
             string resourceGroupName = "rg";
-            string containerAppName = "testcontainerApp0";
+            string containerAppName = "testcontainerapp0";
             ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
             ContainerAppResource containerApp = client.GetContainerAppResource(containerAppResourceId);
 
@@ -344,6 +350,70 @@ Metadata =
             ContainerAppAuthToken result = await containerApp.GetAuthTokenAsync();
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Start Container App
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Start_StartContainerApp()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_Start.json
+            // this example is just showing the usage of "ContainerApps_Start" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerAppResource created on azure
+            // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string containerAppName = "testworkerapp0";
+            ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
+            ContainerAppResource containerApp = client.GetContainerAppResource(containerAppResourceId);
+
+            // invoke the operation
+            ArmOperation<ContainerAppResource> lro = await containerApp.StartAsync(WaitUntil.Completed);
+            ContainerAppResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerAppData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Stop Container App
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Stop_StopContainerApp()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2024-03-01/examples/ContainerApps_Stop.json
+            // this example is just showing the usage of "ContainerApps_Stop" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerAppResource created on azure
+            // for more information of creating ContainerAppResource, please refer to the document of ContainerAppResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "rg";
+            string containerAppName = "testworkerApp0";
+            ResourceIdentifier containerAppResourceId = ContainerAppResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerAppName);
+            ContainerAppResource containerApp = client.GetContainerAppResource(containerAppResourceId);
+
+            // invoke the operation
+            ArmOperation<ContainerAppResource> lro = await containerApp.StopAsync(WaitUntil.Completed);
+            ContainerAppResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerAppData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

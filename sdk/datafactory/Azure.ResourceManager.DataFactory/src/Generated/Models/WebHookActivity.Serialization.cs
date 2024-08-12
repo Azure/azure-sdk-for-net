@@ -6,17 +6,32 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class WebHookActivity : IUtf8JsonSerializable
+    public partial class WebHookActivity : IUtf8JsonSerializable, IJsonModel<WebHookActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebHookActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<WebHookActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebHookActivity)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (Optional.IsDefined(Policy))
+            {
+                writer.WritePropertyName("policy"u8);
+                writer.WriteObjectValue(Policy, options);
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
@@ -26,13 +41,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -51,47 +76,49 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("method"u8);
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Uri);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Uri);
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
             }
-            if (Optional.IsDefined(Headers))
+            if (Optional.IsCollectionDefined(RequestHeaders))
             {
                 writer.WritePropertyName("headers"u8);
+                writer.WriteStartObject();
+                foreach (var item in RequestHeaders)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Headers);
+				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Headers.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Body);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Body.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Body);
             }
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue(Authentication, options);
             }
             if (Optional.IsDefined(ReportStatusOnCallBack))
             {
                 writer.WritePropertyName("reportStatusOnCallBack"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ReportStatusOnCallBack);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ReportStatusOnCallBack.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ReportStatusOnCallBack);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -100,34 +127,63 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static WebHookActivity DeserializeWebHookActivity(JsonElement element)
+        WebHookActivity IJsonModel<WebHookActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebHookActivity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebHookActivity(document.RootElement, options);
+        }
+
+        internal static WebHookActivity DeserializeWebHookActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            SecureInputOutputPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<ActivityUserProperty>> userProperties = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             WebHookActivityMethod method = default;
-            BinaryData url = default;
-            Optional<string> timeout = default;
-            Optional<BinaryData> headers = default;
-            Optional<BinaryData> body = default;
-            Optional<WebActivityAuthentication> authentication = default;
-            Optional<BinaryData> reportStatusOnCallBack = default;
+            DataFactoryElement<string> url = default;
+            string timeout = default;
+            IDictionary<string, BinaryData> headers = default;
+            DataFactoryElement<string> body = default;
+            WebActivityAuthentication authentication = default;
+            DataFactoryElement<bool> reportStatusOnCallBack = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("policy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policy = SecureInputOutputPolicy.DeserializeSecureInputOutputPolicy(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -143,16 +199,34 @@ namespace Azure.ResourceManager.DataFactory.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new PipelineActivityState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("onInactiveMarkAs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ActivityDependency> array = new List<ActivityDependency>();
+                    List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -163,10 +237,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
+                    List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -187,7 +261,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("url"u8))
                         {
-                            url = BinaryData.FromString(property0.Value.GetRawText());
+                            url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("timeout"u8))
@@ -201,7 +275,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            headers = BinaryData.FromString(property0.Value.GetRawText());
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            headers = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("body"u8))
@@ -210,7 +296,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            body = BinaryData.FromString(property0.Value.GetRawText());
+                            body = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authentication"u8))
@@ -219,7 +305,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value);
+                            authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("reportStatusOnCallBack"u8))
@@ -228,7 +314,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            reportStatusOnCallBack = BinaryData.FromString(property0.Value.GetRawText());
+                            reportStatusOnCallBack = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                     }
@@ -237,7 +323,54 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebHookActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, method, url, timeout.Value, headers.Value, body.Value, authentication.Value, reportStatusOnCallBack.Value);
+            return new WebHookActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                policy,
+                method,
+                url,
+                timeout,
+                headers ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                body,
+                authentication,
+                reportStatusOnCallBack);
         }
+
+        BinaryData IPersistableModel<WebHookActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebHookActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WebHookActivity IPersistableModel<WebHookActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebHookActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebHookActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebHookActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

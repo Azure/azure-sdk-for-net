@@ -11,7 +11,7 @@ Below are the packages contained in Azure Maps:
 - [Azure.Maps.Routing][route] allows you to get the routing information for multiple origins and destinations.
 - [Azure.Maps.Search][search] supports many searching functionalities for entities, point of interests (POI) or streets, and also supports reverse geocode a coordinate to a place or an entity.
 - [Azure.Maps.Geolocation][geolocation] allows you to get the ISO country code for the provided IP address.
-
+- [Azure.Maps.TimeZone][timezone]
 ### Install the package
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
@@ -21,6 +21,7 @@ dotnet add package Azure.Maps.Rendering --prerelease
 dotnet add package Azure.Maps.Routing --prerelease
 dotnet add package Azure.Maps.Search --prerelease
 dotnet add package Azure.Maps.Geolocation --prerelease
+dotnet add package Azure.Maps.TimeZone --prerelease
 ```
 
 Azure.Maps.Common will be automatically installed when you install other packages.
@@ -54,7 +55,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -219,6 +220,7 @@ additional questions or comments.
 [route]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Routing
 [geolocation]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Geolocation
 [search]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Search
+[timezone]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.TimeZone
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/

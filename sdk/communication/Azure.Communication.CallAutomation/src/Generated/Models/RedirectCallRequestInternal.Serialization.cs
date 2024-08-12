@@ -19,12 +19,20 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("target"u8);
             writer.WriteObjectValue(Target);
-            if (Optional.IsDefined(CustomContext))
+            if (Optional.IsDefined(CustomCallingContext))
             {
-                writer.WritePropertyName("customContext"u8);
-                writer.WriteObjectValue(CustomContext);
+                writer.WritePropertyName("customCallingContext"u8);
+                writer.WriteObjectValue(CustomCallingContext);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

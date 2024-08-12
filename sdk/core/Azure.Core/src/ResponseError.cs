@@ -75,7 +75,8 @@ namespace Azure
         /// </summary>
         internal IReadOnlyList<ResponseError> Details { get; }
 
-        private class Converter : JsonConverter<ResponseError?>
+        // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
+        internal class Converter : JsonConverter<ResponseError?>
         {
             public override ResponseError? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

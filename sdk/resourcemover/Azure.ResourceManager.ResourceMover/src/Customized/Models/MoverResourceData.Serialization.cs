@@ -13,11 +13,11 @@ namespace Azure.ResourceManager.ResourceMover
     {
         internal static MoverResourceData DeserializeMoverResourceData(JsonElement element)
         {
-            Optional<Models.MoverResourceProperties> properties = default;
+            Models.MoverResourceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"))
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ResourceMover
                     continue;
                 }
             }
-            return new MoverResourceData(id, name, type, systemData.Value, properties.Value);
+            return new MoverResourceData(id, name, type, systemData, properties, null);
         }
     }
 }

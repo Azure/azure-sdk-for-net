@@ -21,6 +21,7 @@ namespace Azure
     public class RequestFailedException : Exception, ISerializable
     {
         private const string DefaultMessage = "Service request failed.";
+        internal const string NoContentOnSuccessMessage = "Service request succeeded. Response content and headers are not included to avoid logging sensitive data.";
 
         /// <summary>
         /// Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
@@ -82,13 +83,13 @@ namespace Azure
             ErrorCode = errorCode;
         }
 
-        internal RequestFailedException(int status, (string Message, ResponseError? Error) details) :
+        private RequestFailedException(int status, (string Message, ResponseError? Error) details) :
             this(status, details.Message, details.Error?.Code, null)
         {
         }
 
-        internal RequestFailedException(int status, (string FormatMessage, string? ErrorCode, IDictionary<string, string>? Data) details, Exception? innerException) :
-            this(status, details.FormatMessage, details.ErrorCode, innerException)
+        private RequestFailedException(int status, ErrorDetails details, Exception? innerException) :
+            this(status, details.Message, details.ErrorCode, innerException)
         {
             if (details.Data != null)
             {
@@ -122,7 +123,7 @@ namespace Azure
         /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
         /// <param name="detailsParser">The parser to use to parse the response content.</param>
         public RequestFailedException(Response response, Exception? innerException, RequestFailedDetailsParser? detailsParser)
-            : this(response.Status, GetRequestFailedExceptionContent(response, detailsParser), innerException)
+            : this(response.Status, CreateExceptionDetails(response, detailsParser), innerException)
         {
             _response = response;
         }
@@ -151,12 +152,15 @@ namespace Azure
         /// </summary>
         public Response? GetRawResponse() => _response;
 
-        internal static (string FormattedError, string? ErrorCode, IDictionary<string, string>? Data) GetRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
+        private static ErrorDetails CreateExceptionDetails(Response response, RequestFailedDetailsParser? parser)
         {
             BufferResponseIfNeeded(response);
             parser ??= response.RequestFailedDetailsParser;
 
-            bool parseSuccess = parser == null ? TryExtractErrorContent(response, out ResponseError? error, out IDictionary<string, string>? additionalInfo) : parser.TryParse(response, out error, out additionalInfo);
+            bool parseSuccess = parser == null ?
+                DefaultRequestFailedDetailsParser.TryParseDetails(response, out ResponseError? error, out IDictionary<string, string>? additionalInfo) :
+                parser.TryParse(response, out error, out additionalInfo);
+
             if (!parseSuccess)
             {
                 error = null;
@@ -164,22 +168,49 @@ namespace Azure
             }
             StringBuilder messageBuilder = new();
 
-            messageBuilder
-                .AppendLine(error?.Message ?? DefaultMessage)
-                .Append("Status: ")
-                .Append(response.Status.ToString(CultureInfo.InvariantCulture));
+            AppendStatusAndReason(response, error, messageBuilder);
 
-            if (!string.IsNullOrEmpty(response.ReasonPhrase))
+            AppendErrorCodeAndAdditionalInfo(error, additionalInfo, messageBuilder);
+
+            if (response.IsError)
             {
-                messageBuilder.Append(" (")
-                    .Append(response.ReasonPhrase)
-                    .AppendLine(")");
+                AppendContentAndHeaders(response, messageBuilder);
             }
             else
             {
-                messageBuilder.AppendLine();
+                messageBuilder
+                    .AppendLine()
+                    .AppendLine(NoContentOnSuccessMessage);
             }
 
+            var formatMessage = messageBuilder.ToString();
+            return new(formatMessage, error?.Code, additionalInfo);
+        }
+
+        private static void AppendContentAndHeaders(Response response, StringBuilder messageBuilder)
+        {
+            if (response.ContentStream is MemoryStream && ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
+            {
+                messageBuilder
+                    .AppendLine()
+                    .AppendLine("Content:")
+                    .AppendLine(response.Content.ToString());
+            }
+
+            messageBuilder
+                .AppendLine()
+                .AppendLine("Headers:");
+
+            foreach (HttpHeader responseHeader in response.Headers)
+            {
+                string headerValue = response.Sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
+                string header = $"{responseHeader.Name}: {headerValue}";
+                messageBuilder.AppendLine(header);
+            }
+        }
+
+        private static void AppendErrorCodeAndAdditionalInfo(ResponseError? error, IDictionary<string, string>? additionalInfo, StringBuilder messageBuilder)
+        {
             if (!string.IsNullOrWhiteSpace(error?.Code))
             {
                 messageBuilder.Append("ErrorCode: ")
@@ -200,28 +231,25 @@ namespace Azure
                         .AppendLine(info.Value);
                 }
             }
+        }
 
-            if (response.ContentStream is MemoryStream && ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
-            {
-                messageBuilder
-                    .AppendLine()
-                    .AppendLine("Content:")
-                    .AppendLine(response.Content.ToString());
-            }
-
+        private static void AppendStatusAndReason(Response response, ResponseError? error, StringBuilder messageBuilder)
+        {
             messageBuilder
-                .AppendLine()
-                .AppendLine("Headers:");
+                            .AppendLine(error?.Message ?? DefaultMessage)
+                            .Append("Status: ")
+                            .Append(response.Status.ToString(CultureInfo.InvariantCulture));
 
-            foreach (HttpHeader responseHeader in response.Headers)
+            if (!string.IsNullOrEmpty(response.ReasonPhrase))
             {
-                string headerValue = response.Sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
-                string header = $"{responseHeader.Name}: {headerValue}";
-                messageBuilder.AppendLine(header);
+                messageBuilder.Append(" (")
+                    .Append(response.ReasonPhrase)
+                    .AppendLine(")");
             }
-
-            var formatMessage = messageBuilder.ToString();
-            return (formatMessage, error?.Code, additionalInfo);
+            else
+            {
+                messageBuilder.AppendLine();
+            }
         }
 
         private static void BufferResponseIfNeeded(Response response)
@@ -243,38 +271,27 @@ namespace Azure
             response.ContentStream = bufferedStream;
         }
 
-        internal static bool TryExtractErrorContent(Response response, out ResponseError? error, out IDictionary<string, string>? data)
-        {
-            error = null;
-            data = null;
-
-            try
-            {
-                // The response content is buffered at this point.
-                string? content = response.Content.ToString();
-
-                // Optimistic check for JSON object we expect
-                if (content == null || !content.StartsWith("{", StringComparison.OrdinalIgnoreCase))
-                {
-                    return false;
-                }
-                // Try the ErrorResponse format and fallback to the ResponseError format.
-                error = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content)?.Error;
-                error ??= System.Text.Json.JsonSerializer.Deserialize<ResponseError>(content);
-            }
-            catch (Exception)
-            {
-                // Ignore any failures - unexpected content will be
-                // included verbatim in the detailed error message
-            }
-
-            return error != null;
-        }
-
-        private class ErrorResponse
+        // This class needs to be internal rather than private so that it can be used by the System.Text.Json source generator
+        internal class ErrorResponse
         {
             [System.Text.Json.Serialization.JsonPropertyName("error")]
             public ResponseError? Error { get; set; }
+        }
+
+        private readonly struct ErrorDetails
+        {
+            public ErrorDetails(string message, string? errorCode, IDictionary<string, string>? data)
+            {
+                Message = message;
+                ErrorCode = errorCode;
+                Data = data;
+            }
+
+            public string Message { get; }
+
+            public string? ErrorCode { get; }
+
+            public IDictionary<string, string>? Data { get; }
         }
     }
 }

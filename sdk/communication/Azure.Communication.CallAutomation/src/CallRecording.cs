@@ -62,6 +62,7 @@ namespace Azure.Communication.CallAutomation
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
+                    PauseOnStart = options.PauseOnStart,
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
@@ -85,16 +86,16 @@ namespace Azure.Communication.CallAutomation
                     }
                 }
 
-                if (options.ExternalStorage is not null)
+                if (options.RecordingStorage != null)
                 {
-                    request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
+                    // This is required only when blob storage in use
+                    if (options.RecordingStorage is AzureBlobContainerRecordingStorage blobStorage)
+                    {
+                        request.ExternalStorage = new RecordingStorageInternal(blobStorage.RecordingStorageKind, blobStorage.RecordingDestinationContainerUri);
+                    }
                 }
 
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-                return _callRecordingRestClient.StartRecording(request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken: cancellationToken);
+                return _callRecordingRestClient.StartRecording(request, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
             {
@@ -123,6 +124,7 @@ namespace Azure.Communication.CallAutomation
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
+                    PauseOnStart = options.PauseOnStart,
                 };
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
@@ -146,16 +148,16 @@ namespace Azure.Communication.CallAutomation
                     }
                 }
 
-                if (options.ExternalStorage is not null)
+                if (options.RecordingStorage != null)
                 {
-                    request.ExternalStorage = TranslateExternalStorageToInternal(options.ExternalStorage);
+                    // This is required only when blob storage in use
+                    if (options.RecordingStorage is AzureBlobContainerRecordingStorage blobStorage)
+                    {
+                        request.ExternalStorage = new RecordingStorageInternal(blobStorage.RecordingStorageKind, blobStorage.RecordingDestinationContainerUri);
+                    }
                 }
 
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-                return await _callRecordingRestClient.StartRecordingAsync(request,
-                    repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                return await _callRecordingRestClient.StartRecordingAsync(request, cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -629,24 +631,5 @@ namespace Azure.Communication.CallAutomation
                 throw;
             }
         }
-
-        #region private functions
-
-        private static ExternalStorageInternal TranslateExternalStorageToInternal(ExternalStorage externalStorage)
-        {
-            ExternalStorageInternal result = null;
-
-            if (externalStorage is BlobStorage blobStorage)
-            {
-                result = new ExternalStorageInternal(blobStorage.StorageType)
-                {
-                    BlobStorage = new BlobStorageInternal(blobStorage.ContainerUri.AbsoluteUri),
-                };
-            }
-
-            return result;
-        }
-
-        #endregion private functions
     }
 }

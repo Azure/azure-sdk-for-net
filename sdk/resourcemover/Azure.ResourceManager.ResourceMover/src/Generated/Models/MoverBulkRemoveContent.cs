@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,55 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the request body for bulk remove of move resources operation. </summary>
     public partial class MoverBulkRemoveContent
     {
-        /// <summary> Initializes a new instance of MoverBulkRemoveContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MoverBulkRemoveContent"/>. </summary>
         public MoverBulkRemoveContent()
         {
             MoverResources = new ChangeTrackingList<ResourceIdentifier>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MoverBulkRemoveContent"/>. </summary>
+        /// <param name="validateOnly"> Gets or sets a value indicating whether the operation needs to only run pre-requisite. </param>
+        /// <param name="moverResources"> Gets or sets the list of resource Id's, by default it accepts move resource id's unless the input type is switched via moveResourceInputType property. </param>
+        /// <param name="moverResourceInputType"> Defines the move resource input type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MoverBulkRemoveContent(bool? validateOnly, IList<ResourceIdentifier> moverResources, MoverResourceInputType? moverResourceInputType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ValidateOnly = validateOnly;
+            MoverResources = moverResources;
+            MoverResourceInputType = moverResourceInputType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets a value indicating whether the operation needs to only run pre-requisite. </summary>

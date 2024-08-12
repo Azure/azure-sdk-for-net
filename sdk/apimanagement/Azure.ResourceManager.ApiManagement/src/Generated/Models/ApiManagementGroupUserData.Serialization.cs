@@ -6,18 +6,49 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementGroupUserData : IUtf8JsonSerializable
+    public partial class ApiManagementGroupUserData : IUtf8JsonSerializable, IJsonModel<ApiManagementGroupUserData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementGroupUserData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApiManagementGroupUserData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGroupUserData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiManagementGroupUserData)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
@@ -36,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Identities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,12 +91,51 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("registrationDate"u8);
                 writer.WriteStringValue(RegistriesOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
+            {
+                writer.WritePropertyName("groups"u8);
+                writer.WriteStartArray();
+                foreach (var item in Groups)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiManagementGroupUserData DeserializeApiManagementGroupUserData(JsonElement element)
+        ApiManagementGroupUserData IJsonModel<ApiManagementGroupUserData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGroupUserData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiManagementGroupUserData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementGroupUserData(document.RootElement, options);
+        }
+
+        internal static ApiManagementGroupUserData DeserializeApiManagementGroupUserData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,15 +143,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ApiManagementUserState> state = default;
-            Optional<string> note = default;
-            Optional<IList<UserIdentityContract>> identities = default;
-            Optional<string> firstName = default;
-            Optional<string> lastName = default;
-            Optional<string> email = default;
-            Optional<DateTimeOffset> registrationDate = default;
-            Optional<IReadOnlyList<GroupContractProperties>> groups = default;
+            SystemData systemData = default;
+            ApiManagementUserState? state = default;
+            string note = default;
+            IList<UserIdentityContract> identities = default;
+            string firstName = default;
+            string lastName = default;
+            string email = default;
+            DateTimeOffset? registrationDate = default;
+            IReadOnlyList<GroupContractProperties> groups = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -140,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<UserIdentityContract> array = new List<UserIdentityContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UserIdentityContract.DeserializeUserIdentityContract(item));
+                                array.Add(UserIdentityContract.DeserializeUserIdentityContract(item, options));
                             }
                             identities = array;
                             continue;
@@ -178,7 +250,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<GroupContractProperties> array = new List<GroupContractProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GroupContractProperties.DeserializeGroupContractProperties(item));
+                                array.Add(GroupContractProperties.DeserializeGroupContractProperties(item, options));
                             }
                             groups = array;
                             continue;
@@ -186,8 +258,299 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApiManagementGroupUserData(id, name, type, systemData.Value, Optional.ToNullable(state), note.Value, Optional.ToList(identities), firstName.Value, lastName.Value, email.Value, Optional.ToNullable(registrationDate), Optional.ToList(groups));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApiManagementGroupUserData(
+                id,
+                name,
+                type,
+                systemData,
+                state,
+                note,
+                identities ?? new ChangeTrackingList<UserIdentityContract>(),
+                firstName,
+                lastName,
+                email,
+                registrationDate,
+                groups ?? new ChangeTrackingList<GroupContractProperties>(),
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("    state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Note), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    note: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Note))
+                {
+                    builder.Append("    note: ");
+                    if (Note.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Note}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Note}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    identities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Identities))
+                {
+                    if (Identities.Any())
+                    {
+                        builder.Append("    identities: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Identities)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    identities: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FirstName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    firstName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FirstName))
+                {
+                    builder.Append("    firstName: ");
+                    if (FirstName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FirstName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FirstName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    lastName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastName))
+                {
+                    builder.Append("    lastName: ");
+                    if (LastName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Email), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    email: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Email))
+                {
+                    builder.Append("    email: ");
+                    if (Email.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Email}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Email}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistriesOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    registrationDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegistriesOn))
+                {
+                    builder.Append("    registrationDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(RegistriesOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Groups), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    groups: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Groups))
+                {
+                    if (Groups.Any())
+                    {
+                        builder.Append("    groups: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Groups)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    groups: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ApiManagementGroupUserData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGroupUserData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementGroupUserData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApiManagementGroupUserData IPersistableModel<ApiManagementGroupUserData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGroupUserData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApiManagementGroupUserData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementGroupUserData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApiManagementGroupUserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

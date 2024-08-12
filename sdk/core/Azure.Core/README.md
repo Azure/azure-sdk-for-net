@@ -42,7 +42,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -232,17 +232,15 @@ SecretClient client = mock.Object;
 KeyVaultSecret secret = client.GetSecret("Name");
 ```
 
-More on mocking in [mocking samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Mocking.md).
+More on mocking in [Unit testing and mocking with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking).
 
-## Distributed tracing with Application Insights
+## Distributed tracing with OpenTelemetry
 
-Application Insights, a feature of Azure Monitor, is an extensible Application Performance Management (APM) service for developers and DevOps professionals. Use it to monitor your live applications. It will automatically detect performance anomalies, and includes powerful analytics tools to help you diagnose issues and to understand what users actually do with your app
-
-If your application already uses ApplicationInsights, automatic collection of Azure SDK traces is supported since version `2.12.0`.
-
-To setup ApplicationInsights tracking for your application follow the [Start Monitoring Application](https://docs.microsoft.com/azure/azure-monitor/learn/dotnetcore-quick-start) guide.
+Azure SDKs are instrumented for distributed tracing using [OpenTelemetry](https://opentelemetry.io/). Distributed tracing allows to follow request through multiple services, record how long network or logical call take along with structured properties describing such operations.
 
 More on diagnostics in [diagnostics samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+To setup distributed tracing for your application follow your observability vendor documentation. If you use Azure Monitor, follow the [Start Monitoring Application](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-enable?tabs=aspnetcore) guide.
 
 ## Troubleshooting
 

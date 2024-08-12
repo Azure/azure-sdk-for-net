@@ -12,108 +12,75 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Modern Reservation transaction resource.
-    /// Serialized Name: ModernReservationTransaction
-    /// </summary>
+    /// <summary> Modern Reservation transaction resource. </summary>
     public partial class ConsumptionModernReservationTransaction : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionModernReservationTransaction. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationTransaction"/>. </summary>
         internal ConsumptionModernReservationTransaction()
         {
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionModernReservationTransaction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernReservationTransaction"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="amount">
-        /// The charge of the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.amount
-        /// </param>
-        /// <param name="armSkuName">
-        /// This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records.
-        /// Serialized Name: ModernReservationTransaction.properties.armSkuName
-        /// </param>
-        /// <param name="billingFrequency">
-        /// The billing frequency, which can be either one-time or recurring.
-        /// Serialized Name: ModernReservationTransaction.properties.billingFrequency
-        /// </param>
-        /// <param name="billingProfileId">
-        /// Billing profile Id.
-        /// Serialized Name: ModernReservationTransaction.properties.billingProfileId
-        /// </param>
-        /// <param name="billingProfileName">
-        /// Billing profile name.
-        /// Serialized Name: ModernReservationTransaction.properties.billingProfileName
-        /// </param>
-        /// <param name="currency">
-        /// The ISO currency in which the transaction is charged, for example, USD.
-        /// Serialized Name: ModernReservationTransaction.properties.currency
-        /// </param>
-        /// <param name="description">
-        /// The description of the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.description
-        /// </param>
-        /// <param name="transactOn">
-        /// The date of the transaction
-        /// Serialized Name: ModernReservationTransaction.properties.eventDate
-        /// </param>
-        /// <param name="eventType">
-        /// The type of the transaction (Purchase, Cancel or Refund).
-        /// Serialized Name: ModernReservationTransaction.properties.eventType
-        /// </param>
-        /// <param name="invoice">
-        /// Invoice Number
-        /// Serialized Name: ModernReservationTransaction.properties.invoice
-        /// </param>
-        /// <param name="invoiceId">
-        /// Invoice Id as on the invoice where the specific transaction appears.
-        /// Serialized Name: ModernReservationTransaction.properties.invoiceId
-        /// </param>
-        /// <param name="invoiceSectionId">
-        /// Invoice Section Id
-        /// Serialized Name: ModernReservationTransaction.properties.invoiceSectionId
-        /// </param>
-        /// <param name="invoiceSectionName">
-        /// Invoice Section Name.
-        /// Serialized Name: ModernReservationTransaction.properties.invoiceSectionName
-        /// </param>
-        /// <param name="purchasingSubscriptionGuid">
-        /// The subscription guid that makes the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.purchasingSubscriptionGuid
-        /// </param>
-        /// <param name="purchasingSubscriptionName">
-        /// The subscription name that makes the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.purchasingSubscriptionName
-        /// </param>
-        /// <param name="quantity">
-        /// The quantity of the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.quantity
-        /// </param>
-        /// <param name="region">
-        /// The region of the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.region
-        /// </param>
-        /// <param name="reservationOrderId">
-        /// The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations.
-        /// Serialized Name: ModernReservationTransaction.properties.reservationOrderId
-        /// </param>
-        /// <param name="reservationOrderName">
-        /// The name of the reservation order.
-        /// Serialized Name: ModernReservationTransaction.properties.reservationOrderName
-        /// </param>
-        /// <param name="term">
-        /// This is the term of the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.term
-        /// </param>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: ReservationTransactionResource.tags
-        /// </param>
-        internal ConsumptionModernReservationTransaction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, decimal? amount, string armSkuName, string billingFrequency, ResourceIdentifier billingProfileId, string billingProfileName, string currency, string description, DateTimeOffset? transactOn, string eventType, string invoice, ResourceIdentifier invoiceId, ResourceIdentifier invoiceSectionId, string invoiceSectionName, Guid? purchasingSubscriptionGuid, string purchasingSubscriptionName, decimal? quantity, string region, string reservationOrderId, string reservationOrderName, string term, IReadOnlyList<string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="amount"> The charge of the transaction. </param>
+        /// <param name="armSkuName"> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </param>
+        /// <param name="billingFrequency"> The billing frequency, which can be either one-time or recurring. </param>
+        /// <param name="billingProfileId"> Billing profile Id. </param>
+        /// <param name="billingProfileName"> Billing profile name. </param>
+        /// <param name="currency"> The ISO currency in which the transaction is charged, for example, USD. </param>
+        /// <param name="description"> The description of the transaction. </param>
+        /// <param name="transactOn"> The date of the transaction. </param>
+        /// <param name="eventType"> The type of the transaction (Purchase, Cancel or Refund). </param>
+        /// <param name="invoice"> Invoice Number. </param>
+        /// <param name="invoiceId"> Invoice Id as on the invoice where the specific transaction appears. </param>
+        /// <param name="invoiceSectionId"> Invoice Section Id. </param>
+        /// <param name="invoiceSectionName"> Invoice Section Name. </param>
+        /// <param name="purchasingSubscriptionGuid"> The subscription guid that makes the transaction. </param>
+        /// <param name="purchasingSubscriptionName"> The subscription name that makes the transaction. </param>
+        /// <param name="quantity"> The quantity of the transaction. </param>
+        /// <param name="region"> The region of the transaction. </param>
+        /// <param name="reservationOrderId"> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </param>
+        /// <param name="reservationOrderName"> The name of the reservation order. </param>
+        /// <param name="term"> This is the term of the transaction. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionModernReservationTransaction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, decimal? amount, string armSkuName, string billingFrequency, ResourceIdentifier billingProfileId, string billingProfileName, string currency, string description, DateTimeOffset? transactOn, string eventType, string invoice, ResourceIdentifier invoiceId, ResourceIdentifier invoiceSectionId, string invoiceSectionName, Guid? purchasingSubscriptionGuid, string purchasingSubscriptionName, decimal? quantity, string region, string reservationOrderId, string reservationOrderName, string term, IReadOnlyList<string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Amount = amount;
             ArmSkuName = armSkuName;
@@ -136,112 +103,50 @@ namespace Azure.ResourceManager.Consumption.Models
             ReservationOrderName = reservationOrderName;
             Term = term;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The charge of the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.amount
-        /// </summary>
+        /// <summary> The charge of the transaction. </summary>
         public decimal? Amount { get; }
-        /// <summary>
-        /// This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records.
-        /// Serialized Name: ModernReservationTransaction.properties.armSkuName
-        /// </summary>
+        /// <summary> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </summary>
         public string ArmSkuName { get; }
-        /// <summary>
-        /// The billing frequency, which can be either one-time or recurring.
-        /// Serialized Name: ModernReservationTransaction.properties.billingFrequency
-        /// </summary>
+        /// <summary> The billing frequency, which can be either one-time or recurring. </summary>
         public string BillingFrequency { get; }
-        /// <summary>
-        /// Billing profile Id.
-        /// Serialized Name: ModernReservationTransaction.properties.billingProfileId
-        /// </summary>
+        /// <summary> Billing profile Id. </summary>
         public ResourceIdentifier BillingProfileId { get; }
-        /// <summary>
-        /// Billing profile name.
-        /// Serialized Name: ModernReservationTransaction.properties.billingProfileName
-        /// </summary>
+        /// <summary> Billing profile name. </summary>
         public string BillingProfileName { get; }
-        /// <summary>
-        /// The ISO currency in which the transaction is charged, for example, USD.
-        /// Serialized Name: ModernReservationTransaction.properties.currency
-        /// </summary>
+        /// <summary> The ISO currency in which the transaction is charged, for example, USD. </summary>
         public string Currency { get; }
-        /// <summary>
-        /// The description of the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.description
-        /// </summary>
+        /// <summary> The description of the transaction. </summary>
         public string Description { get; }
-        /// <summary>
-        /// The date of the transaction
-        /// Serialized Name: ModernReservationTransaction.properties.eventDate
-        /// </summary>
+        /// <summary> The date of the transaction. </summary>
         public DateTimeOffset? TransactOn { get; }
-        /// <summary>
-        /// The type of the transaction (Purchase, Cancel or Refund).
-        /// Serialized Name: ModernReservationTransaction.properties.eventType
-        /// </summary>
+        /// <summary> The type of the transaction (Purchase, Cancel or Refund). </summary>
         public string EventType { get; }
-        /// <summary>
-        /// Invoice Number
-        /// Serialized Name: ModernReservationTransaction.properties.invoice
-        /// </summary>
+        /// <summary> Invoice Number. </summary>
         public string Invoice { get; }
-        /// <summary>
-        /// Invoice Id as on the invoice where the specific transaction appears.
-        /// Serialized Name: ModernReservationTransaction.properties.invoiceId
-        /// </summary>
+        /// <summary> Invoice Id as on the invoice where the specific transaction appears. </summary>
         public ResourceIdentifier InvoiceId { get; }
-        /// <summary>
-        /// Invoice Section Id
-        /// Serialized Name: ModernReservationTransaction.properties.invoiceSectionId
-        /// </summary>
+        /// <summary> Invoice Section Id. </summary>
         public ResourceIdentifier InvoiceSectionId { get; }
-        /// <summary>
-        /// Invoice Section Name.
-        /// Serialized Name: ModernReservationTransaction.properties.invoiceSectionName
-        /// </summary>
+        /// <summary> Invoice Section Name. </summary>
         public string InvoiceSectionName { get; }
-        /// <summary>
-        /// The subscription guid that makes the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.purchasingSubscriptionGuid
-        /// </summary>
+        /// <summary> The subscription guid that makes the transaction. </summary>
         public Guid? PurchasingSubscriptionGuid { get; }
-        /// <summary>
-        /// The subscription name that makes the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.purchasingSubscriptionName
-        /// </summary>
+        /// <summary> The subscription name that makes the transaction. </summary>
         public string PurchasingSubscriptionName { get; }
-        /// <summary>
-        /// The quantity of the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.quantity
-        /// </summary>
+        /// <summary> The quantity of the transaction. </summary>
         public decimal? Quantity { get; }
-        /// <summary>
-        /// The region of the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.region
-        /// </summary>
+        /// <summary> The region of the transaction. </summary>
         public string Region { get; }
-        /// <summary>
-        /// The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations.
-        /// Serialized Name: ModernReservationTransaction.properties.reservationOrderId
-        /// </summary>
+        /// <summary> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </summary>
         public string ReservationOrderId { get; }
-        /// <summary>
-        /// The name of the reservation order.
-        /// Serialized Name: ModernReservationTransaction.properties.reservationOrderName
-        /// </summary>
+        /// <summary> The name of the reservation order. </summary>
         public string ReservationOrderName { get; }
-        /// <summary>
-        /// This is the term of the transaction.
-        /// Serialized Name: ModernReservationTransaction.properties.term
-        /// </summary>
+        /// <summary> This is the term of the transaction. </summary>
         public string Term { get; }
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: ReservationTransactionResource.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IReadOnlyList<string> Tags { get; }
     }
 }

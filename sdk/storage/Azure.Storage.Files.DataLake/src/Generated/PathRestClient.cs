@@ -10,7 +10,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.DataLake.Models;
@@ -31,10 +30,10 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2023-05-03". </param>
         /// <param name="xMsLeaseDuration"> The lease duration is required to acquire a lease, and specifies the duration of the lease in seconds.  The lease duration must be between 15 and 60 seconds or -1 for infinite lease. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2021-06-08", int? xMsLeaseDuration = null)
+        public PathRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, int? xMsLeaseDuration = null)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -844,7 +843,7 @@ namespace Azure.Storage.Files.DataLake
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(int? timeout, bool? recursive, string continuation, string leaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
+        internal HttpMessage CreateDeleteRequest(int? timeout, bool? recursive, string continuation, string leaseId, string ifMatch, string ifNoneMatch, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, bool? paginated)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -862,6 +861,10 @@ namespace Azure.Storage.Files.DataLake
             if (continuation != null)
             {
                 uri.AppendQuery("continuation", continuation, true);
+            }
+            if (paginated != null)
+            {
+                uri.AppendQuery("paginated", paginated.Value, true);
             }
             request.Uri = uri;
             request.Headers.Add("x-ms-version", _version);
@@ -898,16 +901,18 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="paginated"> If true, paginated behavior will be seen. Pagination is for the recursive ACL checks as a POSIX requirement in the server and Delete in an atomic operation once the ACL checks are completed. If false or missing, normal default behavior will kick in, which may timeout in case of very large directories due to recursive ACL checks. This new parameter is introduced for backward compatibility. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Delete the file or directory. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
-        public async Task<ResponseWithHeaders<PathDeleteHeaders>> DeleteAsync(int? timeout = null, bool? recursive = null, string continuation = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<PathDeleteHeaders>> DeleteAsync(int? timeout = null, bool? recursive = null, string continuation = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, bool? paginated = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(timeout, recursive, continuation, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateDeleteRequest(timeout, recursive, continuation, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, paginated);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PathDeleteHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
@@ -923,16 +928,18 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
         /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="paginated"> If true, paginated behavior will be seen. Pagination is for the recursive ACL checks as a POSIX requirement in the server and Delete in an atomic operation once the ACL checks are completed. If false or missing, normal default behavior will kick in, which may timeout in case of very large directories due to recursive ACL checks. This new parameter is introduced for backward compatibility. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Delete the file or directory. This operation supports conditional HTTP requests.  For more information, see [Specifying Conditional Headers for Blob Service Operations](https://docs.microsoft.com/en-us/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </remarks>
-        public ResponseWithHeaders<PathDeleteHeaders> Delete(int? timeout = null, bool? recursive = null, string continuation = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<PathDeleteHeaders> Delete(int? timeout = null, bool? recursive = null, string continuation = null, string leaseId = null, string ifMatch = null, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, bool? paginated = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateDeleteRequest(timeout, recursive, continuation, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince);
+            using var message = CreateDeleteRequest(timeout, recursive, continuation, leaseId, ifMatch, ifNoneMatch, ifModifiedSince, ifUnmodifiedSince, paginated);
             _pipeline.Send(message, cancellationToken);
             var headers = new PathDeleteHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
+                case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);

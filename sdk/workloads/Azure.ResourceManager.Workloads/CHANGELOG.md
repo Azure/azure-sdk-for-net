@@ -1,14 +1,26 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2023-11-30)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.1.0-beta.1 (2023-05-31)
 
@@ -35,7 +47,7 @@ This release is first stable release for the Workloads Management library.
 
 ### Features Added
 
-ACSS 
+ACSS
   - Child Instances now have instance level Start stop operations.
   - Added support for SAP Trans Fileshare configs
   - Added SAP SID as property for HANA provider

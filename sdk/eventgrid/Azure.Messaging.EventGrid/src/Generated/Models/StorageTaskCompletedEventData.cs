@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Storage.StorageTaskCompleted event. </summary>
     public partial class StorageTaskCompletedEventData
     {
-        /// <summary> Initializes a new instance of StorageTaskCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTaskCompletedEventData"/>. </summary>
         internal StorageTaskCompletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageTaskCompletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTaskCompletedEventData"/>. </summary>
         /// <param name="status"> The status for a storage task. </param>
         /// <param name="completedDateTime"> The time at which a storage task was completed. </param>
         /// <param name="taskExecutionId"> The execution id for a storage task. </param>

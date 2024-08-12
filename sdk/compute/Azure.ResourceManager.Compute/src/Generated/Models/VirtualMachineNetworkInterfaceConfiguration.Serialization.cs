@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +14,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineNetworkInterfaceConfiguration : IUtf8JsonSerializable
+    public partial class VirtualMachineNetworkInterfaceConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineNetworkInterfaceConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineNetworkInterfaceConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<VirtualMachineNetworkInterfaceConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -59,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings);
+                writer.WriteObjectValue(DnsSettings, options);
             }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -67,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,27 +86,70 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("dscpConfiguration"u8);
                 JsonSerializer.Serialize(writer, DscpConfiguration);
             }
+            if (Optional.IsDefined(AuxiliaryMode))
+            {
+                writer.WritePropertyName("auxiliaryMode"u8);
+                writer.WriteStringValue(AuxiliaryMode.Value.ToString());
+            }
+            if (Optional.IsDefined(AuxiliarySku))
+            {
+                writer.WritePropertyName("auxiliarySku"u8);
+                writer.WriteStringValue(AuxiliarySku.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineNetworkInterfaceConfiguration DeserializeVirtualMachineNetworkInterfaceConfiguration(JsonElement element)
+        VirtualMachineNetworkInterfaceConfiguration IJsonModel<VirtualMachineNetworkInterfaceConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineNetworkInterfaceConfiguration(document.RootElement, options);
+        }
+
+        internal static VirtualMachineNetworkInterfaceConfiguration DeserializeVirtualMachineNetworkInterfaceConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            Optional<bool> primary = default;
-            Optional<ComputeDeleteOption> deleteOption = default;
-            Optional<bool> enableAcceleratedNetworking = default;
-            Optional<bool> disableTcpStateTracking = default;
-            Optional<bool> enableFpga = default;
-            Optional<bool> enableIPForwarding = default;
-            Optional<WritableSubResource> networkSecurityGroup = default;
-            Optional<VirtualMachineNetworkInterfaceDnsSettingsConfiguration> dnsSettings = default;
-            Optional<IList<VirtualMachineNetworkInterfaceIPConfiguration>> ipConfigurations = default;
-            Optional<WritableSubResource> dscpConfiguration = default;
+            bool? primary = default;
+            ComputeDeleteOption? deleteOption = default;
+            bool? enableAcceleratedNetworking = default;
+            bool? disableTcpStateTracking = default;
+            bool? enableFpga = default;
+            bool? enableIPForwarding = default;
+            WritableSubResource networkSecurityGroup = default;
+            VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default;
+            IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations = default;
+            WritableSubResource dscpConfiguration = default;
+            ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode = default;
+            ComputeNetworkInterfaceAuxiliarySku? auxiliarySku = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -182,7 +235,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            dnsSettings = VirtualMachineNetworkInterfaceDnsSettingsConfiguration.DeserializeVirtualMachineNetworkInterfaceDnsSettingsConfiguration(property0.Value);
+                            dnsSettings = VirtualMachineNetworkInterfaceDnsSettingsConfiguration.DeserializeVirtualMachineNetworkInterfaceDnsSettingsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))
@@ -194,7 +247,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<VirtualMachineNetworkInterfaceIPConfiguration> array = new List<VirtualMachineNetworkInterfaceIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachineNetworkInterfaceIPConfiguration.DeserializeVirtualMachineNetworkInterfaceIPConfiguration(item));
+                                array.Add(VirtualMachineNetworkInterfaceIPConfiguration.DeserializeVirtualMachineNetworkInterfaceIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -208,11 +261,79 @@ namespace Azure.ResourceManager.Compute.Models
                             dscpConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("auxiliaryMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            auxiliaryMode = new ComputeNetworkInterfaceAuxiliaryMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("auxiliarySku"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            auxiliarySku = new ComputeNetworkInterfaceAuxiliarySku(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineNetworkInterfaceConfiguration(name, Optional.ToNullable(primary), Optional.ToNullable(deleteOption), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), Optional.ToNullable(enableIPForwarding), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), dscpConfiguration);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineNetworkInterfaceConfiguration(
+                name,
+                primary,
+                deleteOption,
+                enableAcceleratedNetworking,
+                disableTcpStateTracking,
+                enableFpga,
+                enableIPForwarding,
+                networkSecurityGroup,
+                dnsSettings,
+                ipConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceIPConfiguration>(),
+                dscpConfiguration,
+                auxiliaryMode,
+                auxiliarySku,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachineNetworkInterfaceConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachineNetworkInterfaceConfiguration IPersistableModel<VirtualMachineNetworkInterfaceConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineNetworkInterfaceConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachineNetworkInterfaceConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

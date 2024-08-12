@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Specifies the kind of charge summary.
-    /// Serialized Name: ChargeSummaryKind
-    /// </summary>
+    /// <summary> Specifies the kind of charge summary. </summary>
     internal readonly partial struct ChargeSummaryKind : IEquatable<ChargeSummaryKind>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string LegacyValue = "legacy";
         private const string ModernValue = "modern";
 
-        /// <summary>
-        /// legacy
-        /// Serialized Name: ChargeSummaryKind.legacy
-        /// </summary>
+        /// <summary> legacy. </summary>
         public static ChargeSummaryKind Legacy { get; } = new ChargeSummaryKind(LegacyValue);
-        /// <summary>
-        /// modern
-        /// Serialized Name: ChargeSummaryKind.modern
-        /// </summary>
+        /// <summary> modern. </summary>
         public static ChargeSummaryKind Modern { get; } = new ChargeSummaryKind(ModernValue);
         /// <summary> Determines if two <see cref="ChargeSummaryKind"/> values are the same. </summary>
         public static bool operator ==(ChargeSummaryKind left, ChargeSummaryKind right) => left.Equals(right);
@@ -53,7 +44,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

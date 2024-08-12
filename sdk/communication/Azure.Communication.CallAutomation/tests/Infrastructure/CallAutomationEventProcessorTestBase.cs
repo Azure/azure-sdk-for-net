@@ -23,13 +23,14 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string CorelationId = "someCorelationId";
         protected const string SourceUser = "SOURCE_USER_ID";
         protected const string TargetUser = "TARGET_USER_ID";
+        protected const string TransfereeUser = "TRANSFEREE_USER_ID";
         protected const int defaultTestTimeout = 3;
         private const string NoneMediaSubscriptionId = "null";
         private const string MediaSubscriptionId = "\"mediaSubscriptionId\"";
         protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscriptionId);
         protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload = string.Format(DummyPayload, MediaSubscriptionId);
 
-        protected const string DummyPayload = "{{\"callConnectionId\": \"someCallConnectionId\",\"serverCallId\": \"someServerCallId\",\"targets\": [{{\"rawId\":\"targetId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"targetId\"}}}}],\"sourceIdentity\":{{\"rawId\":\"sourceId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"sourceId\"}}}},\"callConnectionState\": \"connecting\",\"subject\": \"dummySubject\",\"callbackUri\": \"https://bot.contoso.com/callback\",\"mediaSubscriptionId\": {0}}}";
+        protected const string DummyPayload = "{{\"callConnectionId\": \"someCallConnectionId\",\"serverCallId\": \"someServerCallId\",\"targets\": [{{\"rawId\":\"targetId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"targetId\"}}}}],\"source\":{{\"rawId\":\"sourceId\",\"kind\":\"communicationUser\",\"communicationUser\":{{\"id\":\"sourceId\"}}}},\"callConnectionState\": \"connecting\",\"subject\": \"dummySubject\",\"callbackUri\": \"https://bot.contoso.com/callback\",\"mediaSubscriptionId\": {0}}}";
 
         protected const string TransferCallOrRemoveParticipantsPayload = "{\"operationContext\": \"someOperationContext\"}";
 
@@ -40,6 +41,13 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected const string GetParticipantsPayload = "{\"values\":[{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},{\"identifier\":{\"rawId\":\"participantId2\",\"kind\":\"phoneNumber\",\"phoneNumber\":{\"value\":\"+11234567\"}},\"isMuted\":true}]}";
 
         protected const string RemoveParticipantPayload = AddParticipantsPayload;
+
+        protected const string DialogPayload = "{\"dialogId\":\"dialogId\",\"dialogInputType\":\"powerVirtualAgent\"}";
+
+        protected const string CancelAddParticipantPayload = "{" +
+                                    "\"operationContext\": \"someOperationContext\"," +
+                                    "\"invitationId\": \"invitationId\"" +
+                                    "}";
 
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, CallAutomationClientOptions ? options = default)
         {

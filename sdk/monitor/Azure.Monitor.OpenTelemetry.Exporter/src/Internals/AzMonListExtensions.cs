@@ -2,13 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class AzMonListExtensions
     {
+        /// <summary>
+        /// Recognized database systems.
+        /// <see href="https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/database/database-spans.md#connection-level-attributes"/>.
+        /// </summary>
+        // TODO: This single item HashSet is used to map "mssql" to "SQL". This could be replaced with a helper method.
+        internal static readonly HashSet<string?> s_dbSystems = new HashSet<string?>() { "mssql" };
+
         ///<summary>
         /// Gets http request url from activity tag objects.
         ///</summary>
@@ -239,6 +247,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return target;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static string? GetTargetUsingServerAttributes(this AzMonList tagObjects, string defaultPort)
+        {
+            var values = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerSocketAddress, SemanticConventions.AttributeServerPort);
+            string? target = values[0]?.ToString() ?? values[1]?.ToString();
+            var port = values[2]?.ToString();
+            if (!string.IsNullOrWhiteSpace(target) &&  port != null && port != defaultPort)
+            {
+                target = target + ":" + port;
+            }
+
+            return target;
+        }
+
         ///<summary>
         /// Gets Http dependency target from activity tag objects.
         ///</summary>
@@ -291,16 +313,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         ///</summary>
         internal static (string? DbName, string? DbTarget) GetDbDependencyTargetAndName(this AzMonList tagObjects)
         {
-            string? target = null;
-            string defaultPort = GetDefaultDbPort(AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString());
-            var peerService = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributePeerService)?.ToString();
-            if (!string.IsNullOrWhiteSpace(peerService))
-            {
-                target = peerService;
-            }
+            var peerServiceAndDbSystem = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributePeerService, SemanticConventions.AttributeDbSystem);
+            string? target = peerServiceAndDbSystem[0]?.ToString();
+            var defaultPort = GetDefaultDbPort(peerServiceAndDbSystem[1]?.ToString());
+
             if (string.IsNullOrWhiteSpace(target))
             {
-                target = tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
+                target = tagObjects.GetTargetUsingServerAttributes(defaultPort) ?? tagObjects.GetTargetUsingNetPeerAttributes(defaultPort);
             }
 
             var dbName = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbName)?.ToString();
@@ -333,6 +352,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     return tagObjects.GetHttpDependencyTarget();
                 case OperationType.Db:
                     return tagObjects.GetDbDependencyTargetAndName().DbTarget;
+                case OperationType.Messaging:
+                    return tagObjects.GetMessagingUrlAndSourceOrTarget(ActivityKind.Producer).SourceOrTarget;
                 default:
                     return null;
             }
@@ -368,7 +389,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 case OperationType.Db:
                     {
                         var dbSystem = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeDbSystem)?.ToString();
-                        return RemoteDependencyData.s_sqlDbs.Contains(dbSystem) ? "SQL" : dbSystem?.Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
+                        return AzMonListExtensions.s_dbSystems.Contains(dbSystem) ? "SQL" : dbSystem?.Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
                     }
                 case OperationType.Rpc:
                     {

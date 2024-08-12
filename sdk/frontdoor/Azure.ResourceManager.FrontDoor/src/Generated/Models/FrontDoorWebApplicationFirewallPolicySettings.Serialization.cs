@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorWebApplicationFirewallPolicySettings : IUtf8JsonSerializable
+    public partial class FrontDoorWebApplicationFirewallPolicySettings : IUtf8JsonSerializable, IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledState))
             {
@@ -46,21 +56,78 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteStringValue(RequestBodyCheck.Value.ToString());
             }
+            if (Optional.IsDefined(JavascriptChallengeExpirationInMinutes))
+            {
+                writer.WritePropertyName("javascriptChallengeExpirationInMinutes"u8);
+                writer.WriteNumberValue(JavascriptChallengeExpirationInMinutes.Value);
+            }
+            writer.WritePropertyName("logScrubbing"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(ScrubbingRules))
+            {
+                writer.WritePropertyName("scrubbingRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in ScrubbingRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorWebApplicationFirewallPolicySettings DeserializeFrontDoorWebApplicationFirewallPolicySettings(JsonElement element)
+        FrontDoorWebApplicationFirewallPolicySettings IJsonModel<FrontDoorWebApplicationFirewallPolicySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorWebApplicationFirewallPolicySettings(document.RootElement, options);
+        }
+
+        internal static FrontDoorWebApplicationFirewallPolicySettings DeserializeFrontDoorWebApplicationFirewallPolicySettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<PolicyEnabledState> enabledState = default;
-            Optional<FrontDoorWebApplicationFirewallPolicyMode> mode = default;
-            Optional<Uri> redirectUrl = default;
-            Optional<int> customBlockResponseStatusCode = default;
-            Optional<string> customBlockResponseBody = default;
-            Optional<PolicyRequestBodyCheck> requestBodyCheck = default;
+            PolicyEnabledState? enabledState = default;
+            FrontDoorWebApplicationFirewallPolicyMode? mode = default;
+            Uri redirectUrl = default;
+            int? customBlockResponseStatusCode = default;
+            string customBlockResponseBody = default;
+            PolicyRequestBodyCheck? requestBodyCheck = default;
+            int? javascriptChallengeExpirationInMinutes = default;
+            WebApplicationFirewallScrubbingState? state = default;
+            IList<WebApplicationFirewallScrubbingRules> scrubbingRules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledState"u8))
@@ -113,8 +180,98 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     requestBodyCheck = new PolicyRequestBodyCheck(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("javascriptChallengeExpirationInMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    javascriptChallengeExpirationInMinutes = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("logScrubbing"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("state"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            state = new WebApplicationFirewallScrubbingState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("scrubbingRules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WebApplicationFirewallScrubbingRules> array = new List<WebApplicationFirewallScrubbingRules>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(WebApplicationFirewallScrubbingRules.DeserializeWebApplicationFirewallScrubbingRules(item, options));
+                            }
+                            scrubbingRules = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FrontDoorWebApplicationFirewallPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), redirectUrl.Value, Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value, Optional.ToNullable(requestBodyCheck));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FrontDoorWebApplicationFirewallPolicySettings(
+                enabledState,
+                mode,
+                redirectUrl,
+                customBlockResponseStatusCode,
+                customBlockResponseBody,
+                requestBodyCheck,
+                javascriptChallengeExpirationInMinutes,
+                state,
+                scrubbingRules ?? new ChangeTrackingList<WebApplicationFirewallScrubbingRules>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FrontDoorWebApplicationFirewallPolicySettings IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFrontDoorWebApplicationFirewallPolicySettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicySettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FrontDoorWebApplicationFirewallPolicySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

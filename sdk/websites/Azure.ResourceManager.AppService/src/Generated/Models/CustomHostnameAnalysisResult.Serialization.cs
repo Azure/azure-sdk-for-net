@@ -5,26 +5,87 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CustomHostnameAnalysisResult : IUtf8JsonSerializable
+    public partial class CustomHostnameAnalysisResult : IUtf8JsonSerializable, IJsonModel<CustomHostnameAnalysisResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomHostnameAnalysisResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CustomHostnameAnalysisResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomHostnameAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomHostnameAnalysisResult)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(IsHostnameAlreadyVerified))
+            {
+                writer.WritePropertyName("isHostnameAlreadyVerified"u8);
+                writer.WriteBooleanValue(IsHostnameAlreadyVerified.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationTest))
+            {
+                writer.WritePropertyName("customDomainVerificationTest"u8);
+                writer.WriteStringValue(CustomDomainVerificationTest.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationFailureInfo))
+            {
+                writer.WritePropertyName("customDomainVerificationFailureInfo"u8);
+                JsonSerializer.Serialize(writer, CustomDomainVerificationFailureInfo);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HasConflictOnScaleUnit))
+            {
+                writer.WritePropertyName("hasConflictOnScaleUnit"u8);
+                writer.WriteBooleanValue(HasConflictOnScaleUnit.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HasConflictAcrossSubscription))
+            {
+                writer.WritePropertyName("hasConflictAcrossSubscription"u8);
+                writer.WriteBooleanValue(HasConflictAcrossSubscription.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConflictingAppResourceId))
+            {
+                writer.WritePropertyName("conflictingAppResourceId"u8);
+                writer.WriteStringValue(ConflictingAppResourceId);
+            }
             if (Optional.IsCollectionDefined(CNameRecords))
             {
                 writer.WritePropertyName("cNameRecords"u8);
@@ -76,31 +137,62 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomHostnameAnalysisResult DeserializeCustomHostnameAnalysisResult(JsonElement element)
+        CustomHostnameAnalysisResult IJsonModel<CustomHostnameAnalysisResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomHostnameAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomHostnameAnalysisResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomHostnameAnalysisResult(document.RootElement, options);
+        }
+
+        internal static CustomHostnameAnalysisResult DeserializeCustomHostnameAnalysisResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> isHostnameAlreadyVerified = default;
-            Optional<DnsVerificationTestResult> customDomainVerificationTest = default;
-            Optional<ResponseError> customDomainVerificationFailureInfo = default;
-            Optional<bool> hasConflictOnScaleUnit = default;
-            Optional<bool> hasConflictAcrossSubscription = default;
-            Optional<string> conflictingAppResourceId = default;
-            Optional<IList<string>> cNameRecords = default;
-            Optional<IList<string>> txtRecords = default;
-            Optional<IList<string>> aRecords = default;
-            Optional<IList<string>> alternateCNameRecords = default;
-            Optional<IList<string>> alternateTxtRecords = default;
+            SystemData systemData = default;
+            bool? isHostnameAlreadyVerified = default;
+            DnsVerificationTestResult? customDomainVerificationTest = default;
+            ResponseError customDomainVerificationFailureInfo = default;
+            bool? hasConflictOnScaleUnit = default;
+            bool? hasConflictAcrossSubscription = default;
+            string conflictingAppResourceId = default;
+            IList<string> cNameRecords = default;
+            IList<string> txtRecords = default;
+            IList<string> aRecords = default;
+            IList<string> alternateCNameRecords = default;
+            IList<string> alternateTxtRecords = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -264,8 +356,438 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomHostnameAnalysisResult(id, name, type, systemData.Value, Optional.ToNullable(isHostnameAlreadyVerified), Optional.ToNullable(customDomainVerificationTest), customDomainVerificationFailureInfo.Value, Optional.ToNullable(hasConflictOnScaleUnit), Optional.ToNullable(hasConflictAcrossSubscription), conflictingAppResourceId.Value, Optional.ToList(cNameRecords), Optional.ToList(txtRecords), Optional.ToList(aRecords), Optional.ToList(alternateCNameRecords), Optional.ToList(alternateTxtRecords), kind.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CustomHostnameAnalysisResult(
+                id,
+                name,
+                type,
+                systemData,
+                isHostnameAlreadyVerified,
+                customDomainVerificationTest,
+                customDomainVerificationFailureInfo,
+                hasConflictOnScaleUnit,
+                hasConflictAcrossSubscription,
+                conflictingAppResourceId,
+                cNameRecords ?? new ChangeTrackingList<string>(),
+                txtRecords ?? new ChangeTrackingList<string>(),
+                aRecords ?? new ChangeTrackingList<string>(),
+                alternateCNameRecords ?? new ChangeTrackingList<string>(),
+                alternateTxtRecords ?? new ChangeTrackingList<string>(),
+                kind,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHostnameAlreadyVerified), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isHostnameAlreadyVerified: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsHostnameAlreadyVerified))
+                {
+                    builder.Append("    isHostnameAlreadyVerified: ");
+                    var boolValue = IsHostnameAlreadyVerified.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomDomainVerificationTest), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    customDomainVerificationTest: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomDomainVerificationTest))
+                {
+                    builder.Append("    customDomainVerificationTest: ");
+                    builder.AppendLine($"'{CustomDomainVerificationTest.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomDomainVerificationFailureInfo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    customDomainVerificationFailureInfo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CustomDomainVerificationFailureInfo))
+                {
+                    builder.Append("    customDomainVerificationFailureInfo: ");
+                    builder.AppendLine($"'{CustomDomainVerificationFailureInfo.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasConflictOnScaleUnit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hasConflictOnScaleUnit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HasConflictOnScaleUnit))
+                {
+                    builder.Append("    hasConflictOnScaleUnit: ");
+                    var boolValue = HasConflictOnScaleUnit.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasConflictAcrossSubscription), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    hasConflictAcrossSubscription: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HasConflictAcrossSubscription))
+                {
+                    builder.Append("    hasConflictAcrossSubscription: ");
+                    var boolValue = HasConflictAcrossSubscription.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConflictingAppResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    conflictingAppResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConflictingAppResourceId))
+                {
+                    builder.Append("    conflictingAppResourceId: ");
+                    if (ConflictingAppResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConflictingAppResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConflictingAppResourceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CNameRecords), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    cNameRecords: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CNameRecords))
+                {
+                    if (CNameRecords.Any())
+                    {
+                        builder.Append("    cNameRecords: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CNameRecords)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TxtRecords), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    txtRecords: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TxtRecords))
+                {
+                    if (TxtRecords.Any())
+                    {
+                        builder.Append("    txtRecords: ");
+                        builder.AppendLine("[");
+                        foreach (var item in TxtRecords)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ARecords), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    aRecords: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ARecords))
+                {
+                    if (ARecords.Any())
+                    {
+                        builder.Append("    aRecords: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ARecords)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlternateCNameRecords), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    alternateCNameRecords: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AlternateCNameRecords))
+                {
+                    if (AlternateCNameRecords.Any())
+                    {
+                        builder.Append("    alternateCNameRecords: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AlternateCNameRecords)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AlternateTxtRecords), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    alternateTxtRecords: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AlternateTxtRecords))
+                {
+                    if (AlternateTxtRecords.Any())
+                    {
+                        builder.Append("    alternateTxtRecords: ");
+                        builder.AppendLine("[");
+                        foreach (var item in AlternateTxtRecords)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<CustomHostnameAnalysisResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomHostnameAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomHostnameAnalysisResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CustomHostnameAnalysisResult IPersistableModel<CustomHostnameAnalysisResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomHostnameAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomHostnameAnalysisResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomHostnameAnalysisResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomHostnameAnalysisResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

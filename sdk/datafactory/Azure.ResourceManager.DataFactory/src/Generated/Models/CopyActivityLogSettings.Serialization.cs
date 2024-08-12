@@ -6,45 +6,79 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class CopyActivityLogSettings : IUtf8JsonSerializable
+    public partial class CopyActivityLogSettings : IUtf8JsonSerializable, IJsonModel<CopyActivityLogSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyActivityLogSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CopyActivityLogSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyActivityLogSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CopyActivityLogSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(LogLevel);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogLevel.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, LogLevel);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
+                JsonSerializer.Serialize(writer, EnableReliableLogging);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(EnableReliableLogging);
+				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableReliableLogging.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static CopyActivityLogSettings DeserializeCopyActivityLogSettings(JsonElement element)
+        CopyActivityLogSettings IJsonModel<CopyActivityLogSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyActivityLogSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CopyActivityLogSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCopyActivityLogSettings(document.RootElement, options);
+        }
+
+        internal static CopyActivityLogSettings DeserializeCopyActivityLogSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BinaryData> logLevel = default;
-            Optional<BinaryData> enableReliableLogging = default;
+            DataFactoryElement<string> logLevel = default;
+            DataFactoryElement<bool> enableReliableLogging = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logLevel"u8))
@@ -53,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    logLevel = BinaryData.FromString(property.Value.GetRawText());
+                    logLevel = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("enableReliableLogging"u8))
@@ -62,11 +96,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableReliableLogging = BinaryData.FromString(property.Value.GetRawText());
+                    enableReliableLogging = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CopyActivityLogSettings(logLevel.Value, enableReliableLogging.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CopyActivityLogSettings(logLevel, enableReliableLogging, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CopyActivityLogSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyActivityLogSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CopyActivityLogSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CopyActivityLogSettings IPersistableModel<CopyActivityLogSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyActivityLogSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCopyActivityLogSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CopyActivityLogSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CopyActivityLogSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

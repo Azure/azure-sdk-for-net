@@ -91,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
                 var settings = new Dictionary<string, string>()
                 {
                     { "AzureWebJobsServiceBus", ServiceBusTestEnvironment.Instance.ServiceBusConnectionString },
-                    { "ServiceBusConnection2:fullyQualifiedNamespace", $"{SecondQueueScope.NamespaceName}.servicebus.windows.net" },
+                    { "ServiceBusConnection2:fullyQualifiedNamespace", ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace },
                     { "Microsoft.Azure.WebJobs.Extensions.ServiceBus", "1" }
                 };
 

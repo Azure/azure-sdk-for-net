@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using Azure.Core;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {

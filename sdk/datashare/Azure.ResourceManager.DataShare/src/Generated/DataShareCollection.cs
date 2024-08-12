@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataShareResource" /> and their operations.
-    /// Each <see cref="DataShareResource" /> in the collection will belong to the same instance of <see cref="DataShareAccountResource" />.
-    /// To get a <see cref="DataShareCollection" /> instance call the GetDataShares method from an instance of <see cref="DataShareAccountResource" />.
+    /// A class representing a collection of <see cref="DataShareResource"/> and their operations.
+    /// Each <see cref="DataShareResource"/> in the collection will belong to the same instance of <see cref="DataShareAccountResource"/>.
+    /// To get a <see cref="DataShareCollection"/> instance call the GetDataShares method from an instance of <see cref="DataShareAccountResource"/>.
     /// </summary>
     public partial class DataShareCollection : ArmCollection, IEnumerable<DataShareResource>, IAsyncEnumerable<DataShareResource>
     {
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create a share 
+        /// Create a share
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -62,6 +61,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Shares_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,7 +88,9 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = await _dataShareSharesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataShareArmOperation<DataShareResource>(Response.FromValue(new DataShareResource(Client, response), response.GetRawResponse()));
+                var uri = _dataShareSharesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataShareArmOperation<DataShareResource>(Response.FromValue(new DataShareResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +103,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create a share 
+        /// Create a share
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -103,6 +112,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Shares_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +139,9 @@ namespace Azure.ResourceManager.DataShare
             try
             {
                 var response = _dataShareSharesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareName, data, cancellationToken);
-                var operation = new DataShareArmOperation<DataShareResource>(Response.FromValue(new DataShareResource(Client, response), response.GetRawResponse()));
+                var uri = _dataShareSharesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DataShareArmOperation<DataShareResource>(Response.FromValue(new DataShareResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -135,7 +154,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Get a share 
+        /// Get a share
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -144,6 +163,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Shares_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,7 +199,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Get a share 
+        /// Get a share
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -181,6 +208,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Shares_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +254,26 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Shares_ListByAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation Token. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataShareResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataShareResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataShareResource> GetAllAsync(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSharesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSharesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareResource(Client, DataShareData.DeserializeDataShareData(e)), _dataShareSharesClientDiagnostics, Pipeline, "DataShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareResource(Client, DataShareData.DeserializeDataShareData(e)), _dataShareSharesClientDiagnostics, Pipeline, "DataShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,18 +287,26 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Shares_ListByAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation Token. </param>
         /// <param name="filter"> Filters the results using OData syntax. </param>
         /// <param name="orderby"> Sorts the results using OData syntax. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataShareResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataShareResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataShareResource> GetAll(string skipToken = null, string filter = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareSharesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareSharesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareResource(Client, DataShareData.DeserializeDataShareData(e)), _dataShareSharesClientDiagnostics, Pipeline, "DataShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareResource(Client, DataShareData.DeserializeDataShareData(e)), _dataShareSharesClientDiagnostics, Pipeline, "DataShareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -268,6 +319,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Shares_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +363,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Shares_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="shareName"> The name of the share to retrieve. </param>
@@ -320,6 +387,96 @@ namespace Azure.ResourceManager.DataShare
             {
                 var response = _dataShareSharesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Shares_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="shareName"> The name of the share to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataShareResource>> GetIfExistsAsync(string shareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+
+            using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataShareSharesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Shares_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="shareName"> The name of the share to retrieve. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="shareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="shareName"/> is null. </exception>
+        public virtual NullableResponse<DataShareResource> GetIfExists(string shareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(shareName, nameof(shareName));
+
+            using var scope = _dataShareSharesClientDiagnostics.CreateScope("DataShareCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataShareSharesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, shareName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

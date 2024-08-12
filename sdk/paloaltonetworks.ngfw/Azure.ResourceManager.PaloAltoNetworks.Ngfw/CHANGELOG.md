@@ -1,14 +1,52 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2023-11-24)
+
+### Features Added
+
+- Added support for Non-RFC 1918 prefixes as TrustedRanges
+- Support for new regions Japan East and Brazil South
+
+### Bugs Fixed
+
+- Accessibility bug fixes
+
+### Other Changes
+
+- Improved validations and better error messages
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.0.0 (2023-07-14)
+
+This release is the first stable release of the Azure PaloAltoNetworks.Ngfw Management client library.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `Firewall` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the format of all binary type properties / parameters.
+- Corrected all acronyms that not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters that end with units.
+- Optimized the name of some models and functions.
 
 ## 1.0.0-beta.1 (2023-05-04)
 

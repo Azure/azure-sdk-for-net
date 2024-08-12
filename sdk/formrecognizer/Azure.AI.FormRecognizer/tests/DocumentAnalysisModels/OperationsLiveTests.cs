@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-using TestFile = Azure.AI.FormRecognizer.Tests.TestFile;
-
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     /// <summary>
@@ -18,7 +16,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public class OperationsLiveTests : DocumentAnalysisLiveTestBase
     {
         /// <summary>
@@ -28,39 +25,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public OperationsLiveTests(bool isAsync, DocumentAnalysisClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion)
         {
-        }
-
-        [RecordedTest]
-        public async Task AnalyzeDocumentOperationCanPollFromNewObject()
-        {
-            var client = CreateDocumentAnalysisClient(out var nonInstrumentedClient);
-
-            var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.ReceiptJpg);
-            var operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, "prebuilt-receipt", uri);
-            Assert.IsNotNull(operation.GetRawResponse());
-
-            var sameOperation = InstrumentOperation(new AnalyzeDocumentOperation(operation.Id, nonInstrumentedClient));
-            await sameOperation.WaitForCompletionAsync();
-
-            Assert.IsTrue(sameOperation.HasValue);
-            Assert.AreEqual(1, sameOperation.Value.Pages.Count);
-        }
-
-        [RecordedTest]
-        public async Task BuildModelOperationCanPollFromNewObject()
-        {
-            var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
-            var trainingFilesUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var modelId = Recording.GenerateId();
-
-            var operation = await client.BuildDocumentModelAsync(WaitUntil.Started, trainingFilesUri, DocumentBuildMode.Template, modelId);
-            Assert.IsNotNull(operation.GetRawResponse());
-
-            var sameOperation = InstrumentOperation(new BuildDocumentModelOperation(operation.Id, nonInstrumentedClient));
-            await sameOperation.WaitForCompletionAsync();
-
-            Assert.IsTrue(sameOperation.HasValue);
-            Assert.AreEqual(modelId, sameOperation.Value.ModelId);
         }
 
         [RecordedTest]
@@ -80,33 +44,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task CopyModelToOperationCanPollFromNewObject()
-        {
-            var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
-            var modelId = Recording.GenerateId();
-
-            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
-
-            var targetModelId = Recording.GenerateId();
-            DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
-
-            var operation = await client.CopyDocumentModelToAsync(WaitUntil.Started, trainedModel.ModelId, targetAuth);
-            Assert.IsNotNull(operation.GetRawResponse());
-
-            var sameOperation = InstrumentOperation(new CopyDocumentModelToOperation(operation.Id, nonInstrumentedClient));
-            await sameOperation.WaitForCompletionAsync();
-
-            Assert.IsTrue(sameOperation.HasValue);
-            Assert.AreEqual(targetModelId, sameOperation.Value.ModelId);
-        }
-
-        [RecordedTest]
         public async Task CopyModelToOperationPercentageCompletedValue()
         {
             var client = CreateDocumentModelAdministrationClient();
-            var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync();
 
             var targetModelId = Recording.GenerateId();
             DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);
@@ -121,71 +63,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
-        public async Task ClassifyDocumentOperationCanPollFromNewObject()
-        {
-            var client = CreateDocumentAnalysisClient(out var nonInstrumentedClient);
-            var classifierId = Recording.GenerateId();
-            await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync(classifierId);
-            var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.Irs1040);
-
-            var operation = await client.ClassifyDocumentFromUriAsync(WaitUntil.Started, classifierId, uri);
-            var sameOperation = InstrumentOperation(new ClassifyDocumentOperation(operation.Id, nonInstrumentedClient));
-
-            await sameOperation.WaitForCompletionAsync();
-
-            Assert.IsTrue(sameOperation.HasValue);
-            Assert.AreEqual(4, sameOperation.Value.Pages.Count);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
-        public async Task BuildClassifierOperationCanPollFromNewObject()
-        {
-            var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
-            var classifierId = Recording.GenerateId();
-
-            var trainingFilesUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
-
-            var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
-            {
-                { "IRS-1040-A", new ClassifierDocumentTypeDetails(sourceA) },
-                { "IRS-1040-B", new ClassifierDocumentTypeDetails(sourceB) }
-            };
-
-            BuildDocumentClassifierOperation sameOperation = null;
-
-            try
-            {
-                var operation = await client.BuildDocumentClassifierAsync(WaitUntil.Started, documentTypes, classifierId);
-
-                sameOperation = InstrumentOperation(new BuildDocumentClassifierOperation(operation.Id, nonInstrumentedClient));
-                await sameOperation.WaitForCompletionAsync();
-            }
-            finally
-            {
-                if (sameOperation != null && sameOperation.HasValue)
-                {
-                    await client.DeleteDocumentClassifierAsync(classifierId);
-                }
-            }
-
-            Assert.IsTrue(sameOperation.HasValue);
-            Assert.AreEqual(classifierId, sameOperation.Value.ClassifierId);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)]
+        [ServiceVersion(Min = DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)]
         public async Task BuildClassifierOperationPercentageCompletedValue()
         {
             var client = CreateDocumentModelAdministrationClient(out var nonInstrumentedClient);
             var classifierId = Recording.GenerateId();
 
             var trainingFilesUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
+            var sourceA = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
 
             var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {

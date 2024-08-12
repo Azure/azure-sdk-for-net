@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement.Samples
@@ -58,7 +55,7 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
 },
                 },
                 Status = ScheduledActionStatus.Enabled,
-                ViewId = "/providers/Microsoft.CostManagement/views/swaggerExample",
+                ViewId = new ResourceIdentifier("/providers/Microsoft.CostManagement/views/swaggerExample"),
                 Kind = ScheduledActionKind.Email,
             };
             string ifMatch = "";

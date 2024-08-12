@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Select video tracks from the input by specifying an attribute and an attribute filter. </summary>
     public partial class SelectVideoTrackByAttribute : VideoTrackDescriptor
     {
-        /// <summary> Initializes a new instance of SelectVideoTrackByAttribute. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectVideoTrackByAttribute"/>. </summary>
         /// <param name="attribute"> The TrackAttribute to filter the tracks by. </param>
         /// <param name="filter"> The type of AttributeFilter to apply to the TrackAttribute in order to select the tracks. </param>
         public SelectVideoTrackByAttribute(TrackAttribute attribute, TrackAttributeFilter filter)
@@ -20,17 +23,23 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.SelectVideoTrackByAttribute";
         }
 
-        /// <summary> Initializes a new instance of SelectVideoTrackByAttribute. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectVideoTrackByAttribute"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="attribute"> The TrackAttribute to filter the tracks by. </param>
         /// <param name="filter"> The type of AttributeFilter to apply to the TrackAttribute in order to select the tracks. </param>
         /// <param name="filterValue"> The value to filter the tracks by.  Only used when AttributeFilter.ValueEquals is specified for the Filter property. For TrackAttribute.Bitrate, this should be an integer value in bits per second (e.g: '1500000').  The TrackAttribute.Language is not supported for video tracks. </param>
-        internal SelectVideoTrackByAttribute(string odataType, TrackAttribute attribute, TrackAttributeFilter filter, string filterValue) : base(odataType)
+        internal SelectVideoTrackByAttribute(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, TrackAttribute attribute, TrackAttributeFilter filter, string filterValue) : base(odataType, serializedAdditionalRawData)
         {
             Attribute = attribute;
             Filter = filter;
             FilterValue = filterValue;
             OdataType = odataType ?? "#Microsoft.Media.SelectVideoTrackByAttribute";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelectVideoTrackByAttribute"/> for deserialization. </summary>
+        internal SelectVideoTrackByAttribute()
+        {
         }
 
         /// <summary> The TrackAttribute to filter the tracks by. </summary>

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The ConsumptionReservationRecommendationTerm.
-    /// Serialized Name: Term
-    /// </summary>
+    /// <summary> The ConsumptionReservationRecommendationTerm. </summary>
     public readonly partial struct ConsumptionReservationRecommendationTerm : IEquatable<ConsumptionReservationRecommendationTerm>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string P1YValue = "P1Y";
         private const string P3YValue = "P3Y";
 
-        /// <summary>
-        /// 1 year reservation term
-        /// Serialized Name: Term.P1Y
-        /// </summary>
+        /// <summary> 1 year reservation term. </summary>
         public static ConsumptionReservationRecommendationTerm P1Y { get; } = new ConsumptionReservationRecommendationTerm(P1YValue);
-        /// <summary>
-        /// 3 year reservation term
-        /// Serialized Name: Term.P3Y
-        /// </summary>
+        /// <summary> 3 year reservation term. </summary>
         public static ConsumptionReservationRecommendationTerm P3Y { get; } = new ConsumptionReservationRecommendationTerm(P3YValue);
         /// <summary> Determines if two <see cref="ConsumptionReservationRecommendationTerm"/> values are the same. </summary>
         public static bool operator ==(ConsumptionReservationRecommendationTerm left, ConsumptionReservationRecommendationTerm right) => left.Equals(right);
@@ -53,7 +44,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

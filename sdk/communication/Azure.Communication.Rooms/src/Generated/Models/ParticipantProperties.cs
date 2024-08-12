@@ -10,7 +10,7 @@ namespace Azure.Communication.Rooms
     /// <summary> The ParticipantProperties. </summary>
     internal partial class ParticipantProperties
     {
-        /// <summary> Initializes a new instance of ParticipantProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParticipantProperties"/>. </summary>
         /// <param name="role"> The role of a room participant. The default value is Attendee. </param>
         public ParticipantProperties(ParticipantRole? role)
         {

@@ -89,8 +89,7 @@ namespace Azure.ResourceManager.Dynatrace.Tests
                         null,
                         new System.Uri("http://www.contoso.com/"),
                         aadDomains,
-                        DynatraceProvisioningState.Accepted
-                    )
+                        DynatraceProvisioningState.Accepted, null)
                 }
             };
         }

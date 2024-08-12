@@ -9,7 +9,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
@@ -29,7 +28,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             JsonPathSanitizers.Add("$..functionKey");
             JsonPathSanitizers.Add("$..appKey");
             SanitizedHeaders.Add("x-ms-content-sha256");
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.comminication.azure.com"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.comminication.azure.com" });
         }
 
         [SetUp]
@@ -44,6 +43,8 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             var mode = TestEnvironment.Mode ?? Mode;
             if (mode != RecordedTestMode.Playback)
             {
+                await Task.Delay(TimeSpan.FromSeconds(3));
+
                 var testName = TestContext.CurrentContext.Test.FullName;
 
                 var popTestResources = _testCleanupTasks.TryRemove(testName, out var cleanupTasks);
@@ -53,8 +54,19 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                     {
                         while (cleanupTasks.Count > 0)
                         {
+                            await Task.Delay(TimeSpan.FromSeconds(1));
+
                             var executableTask = cleanupTasks.Pop();
-                            await Task.Run(() => executableTask.Start());
+                            try
+                            {
+                                await Task.Run(() => executableTask.Start());
+                            }
+                            catch (Exception)
+                            {
+                                // Retry after delay
+                                await Task.Delay(TimeSpan.FromSeconds(3));
+                                await Task.Run(() => executableTask.Start());
+                            }
                         }
                     }
                 }
@@ -109,9 +121,9 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                 {
                     Name = classificationPolicyName,
                     FallbackQueueId = createQueueResponse.Value.Id,
-                    QueueSelectors =
+                    QueueSelectorAttachments =
                     {
-                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(createQueueResponse.Value.Id)))
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new RouterValue(createQueueResponse.Value.Id)))
                     }
                 });
             AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(createClassificationPolicyResponse.Value.Id)));
@@ -125,12 +137,12 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             var createDistributionPolicyResponse = await CreateDistributionPolicy(uniqueIdentifier);
             var queueId = GenerateUniqueId($"{IdPrefix}-{uniqueIdentifier}");
             var queueName = "DefaultQueue-Sdk-Test" + queueId;
-            var queueLabels = new Dictionary<string, LabelValue> { ["Label_1"] = new("Value_1") };
+            var queueLabels = new Dictionary<string, RouterValue?> { ["Label_1"] = new("Value_1") };
             var createQueueResponse = await routerClient.CreateQueueAsync(
                 new CreateQueueOptions(queueId, createDistributionPolicyResponse.Value.Id)
                 {
                     Name = queueName,
-                    Labels = { ["Label_1"] = new LabelValue("Value_1") }
+                    Labels = { ["Label_1"] = new RouterValue("Value_1") }
                 });
 
             AssertQueueResponseIsEqual(createQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, queueLabels);
@@ -161,7 +173,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
 
         #region Support assertions
 
-        protected void AssertQueueResponseIsEqual(Response<Models.RouterQueue> upsertQueueResponse, string queueId, string distributionPolicyId, string? queueName = default, IDictionary<string, LabelValue>? queueLabels = default, string? exceptionPolicyId = default)
+        protected void AssertQueueResponseIsEqual(Response<RouterQueue> upsertQueueResponse, string queueId, string distributionPolicyId, string? queueName = default, IDictionary<string, RouterValue?>? queueLabels = default, string? exceptionPolicyId = default)
         {
             var response = upsertQueueResponse.Value;
 
@@ -171,8 +183,13 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             if (queueLabels != default)
             {
                 var labelsWithID = queueLabels.ToDictionary(k => k.Key, k => k.Value);
-                labelsWithID.Add("Id", new LabelValue(queueId));
-                Assert.AreEqual(labelsWithID.ToDictionary(x => x.Key, x => x.Value.Value), response.Labels.ToDictionary(x => x.Key, x => x.Value.Value));
+
+                if (!labelsWithID.ContainsKey("Id"))
+                {
+                    labelsWithID.Add("Id", new RouterValue(queueId));
+                }
+
+                Assert.AreEqual(labelsWithID.ToDictionary(x => x.Key, x => x.Value?.Value), response.Labels.ToDictionary(x => x.Key, x => x.Value?.Value));
             }
 
             if (exceptionPolicyId != default)
@@ -181,24 +198,34 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             }
         }
 
-        protected void AssertRegisteredWorkerIsValid(Response<RouterWorker> routerWorkerResponse, string workerId, IEnumerable<string> queueAssignmentList, int? totalCapacity, IDictionary<string, LabelValue>? workerLabels = default, Dictionary<string, ChannelConfiguration>? channelConfigList = default)
+        protected void AssertRegisteredWorkerIsValid(Response<RouterWorker> routerWorkerResponse, string workerId,
+            IList<string> queues, int? capacity,
+            IDictionary<string, RouterValue?>? workerLabels = default,
+            IList<RouterChannel>? channelsList = default,
+            IDictionary<string, RouterValue?>? workerTags = default)
         {
             var response = routerWorkerResponse.Value;
 
             Assert.AreEqual(workerId, response.Id);
-            Assert.AreEqual(queueAssignmentList.Count(), response.QueueAssignments.Count);
-            Assert.AreEqual(totalCapacity, response.TotalCapacity);
+            Assert.AreEqual(queues.Count(), response.Queues.Count);
+            Assert.AreEqual(capacity, response.Capacity);
 
             if (workerLabels != default)
             {
                 var labelsWithID = workerLabels.ToDictionary(k => k.Key, k => k.Value);
-                labelsWithID.Add("Id", new LabelValue(workerId));
+                labelsWithID.Add("Id", new RouterValue(workerId));
                 Assert.AreEqual(labelsWithID, response.Labels);
             }
 
-            if (channelConfigList != default)
+            if (workerTags != default)
             {
-                Assert.AreEqual(channelConfigList.Count, response.ChannelConfigurations.Count);
+                var tags = workerTags.ToDictionary(k => k.Key, k => k.Value);
+                Assert.AreEqual(tags, response.Tags);
+            }
+
+            if (channelsList != default)
+            {
+                Assert.AreEqual(channelsList.Count, response.Channels.Count);
             }
         }
 

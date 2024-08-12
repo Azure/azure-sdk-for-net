@@ -3,18 +3,72 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+
+#if AZURE_MONITOR_EXPORTER
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+#elif LIVE_METRICS_EXPORTER
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+#elif ASP_NET_CORE_DISTRO
+using Azure.Monitor.OpenTelemetry.AspNetCore;
+#endif
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 {
+#if ASP_NET_CORE_DISTRO
+#pragma warning disable SA1649 // File name should match first type name
+    internal class DefaultPlatformDistro : IPlatform
+#pragma warning restore SA1649 // File name should match first type name
+#else
     internal class DefaultPlatform : IPlatform
+#endif
     {
-        public string? GetEnvironmentVariable(string name) => Environment.GetEnvironmentVariable(name);
+        internal static readonly IPlatform Instance
+#if ASP_NET_CORE_DISTRO
+            = new DefaultPlatformDistro();
+#else
+            = new DefaultPlatform();
+#endif
 
-        public IDictionary GetEnvironmentVariables() => Environment.GetEnvironmentVariables();
+        private readonly IDictionary _environmentVariables;
+
+#if ASP_NET_CORE_DISTRO
+        public DefaultPlatformDistro()
+#else
+        public DefaultPlatform()
+#endif
+        {
+            try
+            {
+                _environmentVariables = LoadEnvironmentVariables();
+            }
+            catch (Exception ex)
+            {
+#if AZURE_MONITOR_EXPORTER
+                AzureMonitorExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
+#elif LIVE_METRICS_EXPORTER
+                LiveMetricsExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
+#elif ASP_NET_CORE_DISTRO
+                AzureMonitorAspNetCoreEventSource.Log.FailedToReadEnvironmentVariables(ex);
+#endif
+                _environmentVariables = new Dictionary<string, object>();
+            }
+        }
+
+        private static IDictionary LoadEnvironmentVariables()
+        {
+            var variables = new Dictionary<string, string?>();
+            foreach (var key in EnvironmentVariableConstants.HashSetDefinedEnvironmentVariables)
+            {
+                variables.Add(key, Environment.GetEnvironmentVariable(key));
+            }
+            return variables;
+        }
+
+        public string? GetEnvironmentVariable(string name) => _environmentVariables[name]?.ToString();
 
         public string GetOSPlatformName()
         {
@@ -36,19 +90,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 
         public bool IsOSPlatform(OSPlatform osPlatform) => RuntimeInformation.IsOSPlatform(osPlatform);
 
-        public bool CreateDirectory(string path)
-        {
-            try
-            {
-                Directory.CreateDirectory(path);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                AzureMonitorExporterEventSource.Log.WriteError("ErrorCreatingStorageFolder", ex);
-                return false;
-            }
-        }
+        /// <summary>
+        /// Creates all directories and subdirectories in the specified path unless they already exist.
+        /// </summary>
+        /// <exception>This method does not catch any exceptions thrown by <see cref="Directory.CreateDirectory(string)"/>.</exception>
+        /// <param name="path">The directory to create</param>
+        public void CreateDirectory(string path) => Directory.CreateDirectory(path);
 
         public string GetEnvironmentUserName() => Environment.UserName;
 

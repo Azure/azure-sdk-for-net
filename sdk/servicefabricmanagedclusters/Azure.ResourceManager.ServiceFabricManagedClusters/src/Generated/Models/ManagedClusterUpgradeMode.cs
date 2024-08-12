@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
     /// The upgrade mode of the cluster when new Service Fabric runtime version is available.
-    /// 
+    ///
     /// </summary>
     public readonly partial struct ManagedClusterUpgradeMode : IEquatable<ManagedClusterUpgradeMode>
     {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

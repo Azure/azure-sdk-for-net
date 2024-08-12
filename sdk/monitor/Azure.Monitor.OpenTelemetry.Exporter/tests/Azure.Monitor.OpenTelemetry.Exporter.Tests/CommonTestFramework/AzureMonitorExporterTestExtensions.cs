@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
@@ -69,7 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         /// <summary>
         /// Extension methods to simplify registering of <see cref="AzureMonitorTraceExporter"/> with <see cref="MockTransmitter"/> for unit tests.
         /// </summary>
-        internal static TracerProviderBuilder AddAzureMonitorTraceExporterForTest(this TracerProviderBuilder builder, out List<TelemetryItem> telemetryItems)
+        internal static TracerProviderBuilder AddAzureMonitorTraceExporterForTest(this TracerProviderBuilder builder, out List<TelemetryItem> telemetryItems, Action<AzureMonitorExporterOptions>? configure = null)
         {
             if (builder == null)
             {
@@ -78,7 +79,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             telemetryItems = new List<TelemetryItem>();
 
-            return builder.AddProcessor(new SimpleActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(telemetryItems))));
+            var options = new AzureMonitorExporterOptions();
+            configure?.Invoke(options);
+
+            builder.SetSampler(new ApplicationInsightsSampler(options.SamplingRatio));
+
+            return builder.AddProcessor(new SimpleActivityExportProcessor(new AzureMonitorTraceExporter(options, new MockTransmitter(telemetryItems))));
         }
     }
 }

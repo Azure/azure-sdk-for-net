@@ -11,7 +11,7 @@ using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class StandardMetricsExtractionProcessor : BaseProcessor<Activity>
+    internal sealed class StandardMetricsExtractionProcessor : BaseProcessor<Activity>
     {
         private bool _disposed;
         private AzureMonitorResource? _resource;
@@ -42,15 +42,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public override void OnEnd(Activity activity)
         {
-            if (activity.Kind == ActivityKind.Server)
+            if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
             {
                 if (_requestDuration.Enabled)
                 {
                     activity.SetTag("_MS.ProcessedByMetricExtractors", "(Name: X,Ver:'1.1')");
-                    ReportRequestDurationMetric(activity, SemanticConventions.AttributeHttpStatusCode);
+                    ReportRequestDurationMetric(activity);
                 }
             }
-            if (activity.Kind == ActivityKind.Client || activity.Kind == ActivityKind.Internal)
+            if (activity.Kind == ActivityKind.Client || activity.Kind == ActivityKind.Internal || activity.Kind == ActivityKind.Producer)
             {
                 if (_dependencyDuration.Enabled)
                 {
@@ -58,16 +58,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     ReportDependencyDurationMetric(activity);
                 }
             }
-
-            // TODO: other activity kinds
         }
 
-        private void ReportRequestDurationMetric(Activity activity, string statusCodeAttribute)
+        private void ReportRequestDurationMetric(Activity activity)
         {
             string? statusCodeAttributeValue = null;
             foreach (ref readonly var tag in activity.EnumerateTagObjects())
             {
-                if (tag.Key == statusCodeAttribute)
+                if (tag.Key == SemanticConventions.AttributeHttpResponseStatusCode || tag.Key == SemanticConventions.AttributeHttpStatusCode)
                 {
                     statusCodeAttributeValue = tag.Value?.ToString();
                     break;
@@ -90,11 +88,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 
-            var dependencyTarget = activityTagsProcessor.MappedTags.GetDependencyTarget(activityTagsProcessor.activityType);
+            string? dependencyTarget;
+            string? statusCode;
 
-            var statusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpStatusCode)?.ToString();
+            if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
+            {
+                // Reverting it for dependency type checks below
+                activityTagsProcessor.activityType &= ~OperationType.V2;
 
-            var dependencyType = activityTagsProcessor.MappedTags.GetDependencyType(activityTagsProcessor.activityType);
+                dependencyTarget = activityTagsProcessor.MappedTags.GetNewSchemaDependencyTarget(activityTagsProcessor.activityType);
+
+                statusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
+            }
+            else
+            {
+                dependencyTarget = activityTagsProcessor.MappedTags.GetDependencyTarget(activityTagsProcessor.activityType);
+
+                statusCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpStatusCode)?.ToString();
+            }
+
+            string? dependencyType;
+            if (activityTagsProcessor.AzureNamespace != null)
+            {
+                dependencyType = TraceHelper.GetAzureSDKDependencyType(activity.Kind, activityTagsProcessor.AzureNamespace);
+            }
+            else
+            {
+                dependencyType = activity.Kind == ActivityKind.Internal ? "InProc" : activityTagsProcessor.MappedTags.GetDependencyType(activityTagsProcessor.activityType);
+            }
 
             TagList tags = default;
             tags.Add(new KeyValuePair<string, object?>(StandardMetricConstants.DependencyTargetKey, dependencyTarget));
@@ -108,6 +129,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             // Report metric
             _dependencyDuration.Record(activity.Duration.TotalMilliseconds, tags);
+
+            activityTagsProcessor.Return();
         }
 
         protected override void Dispose(bool disposing)

@@ -63,7 +63,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -130,7 +130,7 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-Response response = await sentShareClient.GetSentShareAsync("sentShareId");
+Response response = await sentShareClient.GetSentShareAsync("sentShareId", new());
 ```
 
 #### List Sent Shares
@@ -142,7 +142,7 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-List<BinaryData> response = await sentShareClient.GetAllSentSharesAsync("referenceName").ToEnumerableAsync();
+List<BinaryData> response = await sentShareClient.GetAllSentSharesAsync("referenceName", null, null, new()).ToEnumerableAsync();
 ```
 
 #### Create a Share Invitation to a User
@@ -198,7 +198,7 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-Response response = await sentShareClient.GetSentShareInvitationAsync("sentShareId", "sentShareInvitationId");
+Response response = await sentShareClient.GetSentShareInvitationAsync("sentShareId", "sentShareInvitationId", new());
 ```
 
 #### List sent share invitations
@@ -210,7 +210,7 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("sentShareId").ToEnumerableAsync();
+List<BinaryData> sentShareInvitations = await sentShareClient.GetAllSentShareInvitationsAsync("sentShareId", null, null, new()).ToEnumerableAsync();
 ```
 
 #### Delete a sent share invitation
@@ -222,7 +222,7 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-Operation operation = await sentShareClient.DeleteSentShareInvitationAsync(WaitUntil.Completed, "sentShareId", "sentShareInvitationId");
+Operation operation = await sentShareClient.DeleteSentShareInvitationAsync(WaitUntil.Completed, "sentShareId", "sentShareInvitationId", new());
 ```
 
 #### Delete a sent share
@@ -234,7 +234,7 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var sentShareClient = new SentSharesClient(endPoint, credential);
 
-Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Completed, "sentShareId");
+Operation operation = await sentShareClient.DeleteSentShareAsync(WaitUntil.Completed, "sentShareId", new());
 ```
 
 ### Data Consumer Examples
@@ -257,7 +257,7 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
-List<BinaryData> createResponse = await receivedSharesClient.GetAllDetachedReceivedSharesAsync().ToEnumerableAsync();
+List<BinaryData> createResponse = await receivedSharesClient.GetAllDetachedReceivedSharesAsync(null, null, new()).ToEnumerableAsync();
 ```
 
 #### Attach a received share
@@ -306,7 +306,7 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
-Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedShareId");
+Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedShareId", new());
 ```
 
 #### List attached received shares
@@ -318,7 +318,7 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
-List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedReceivedSharesAsync("referenceName").ToEnumerableAsync();
+List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedReceivedSharesAsync("referenceName", null, null, new()).ToEnumerableAsync();
 ```
 
 #### Delete a received share
@@ -330,7 +330,7 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
-Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "receivedShareId");
+Operation operation = await receivedSharesClient.DeleteReceivedShareAsync(WaitUntil.Completed, "receivedShareId", new());
 ```
 
 ### Share Resouce Examples
@@ -346,7 +346,7 @@ var credential = new DefaultAzureCredential();
 var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
 var shareResourcesClient = new ShareResourcesClient(endPoint, credential);
 
-List<BinaryData> createResponse = await shareResourcesClient.GetAllShareResourcesAsync().ToEnumerableAsync();
+List<BinaryData> createResponse = await shareResourcesClient.GetAllShareResourcesAsync(null, null, null).ToEnumerableAsync();
 ```
 
 

@@ -41,6 +41,20 @@ var credential = new DefaultAzureCredential();
 var client = new LogsIngestionClient(endpoint, credential);
 ```
 
+#### Configure client for Azure sovereign cloud
+
+By default, `LogsIngestionClient` is configured to connect to the Azure public cloud. To connect to a sovereign cloud instead, set the `LogsIngestionClientOptions.Audience` property. For example:
+
+```C# Snippet:CreateLogsIngestionClientWithOptions
+var endpoint = new Uri("<data_collection_endpoint_uri>");
+var credential = new DefaultAzureCredential();
+var clientOptions = new LogsIngestionClientOptions
+{
+    Audience = LogsIngestionAudience.AzureChina
+};
+var client = new LogsIngestionClient(endpoint, credential, clientOptions);
+```
+
 ### Upload the logs
 
 For examples of logs ingestion, see the [Examples](#examples) section.
@@ -80,7 +94,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -251,9 +265,7 @@ Console.WriteLine("Table entry count: " +
 
 ## Troubleshooting
 
-### Enabling logging
-
-The Azure SDK for .NET offers a consistent logging story to aid in troubleshooting application errors and expedite their resolution. The logs produced will capture the application's flow before reaching the terminal state to help locate the root issue. For information on enabling logging, see [Logging with the Azure SDK for .NET][logging].
+For details on diagnosing various failure scenarios, see our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.Ingestion/TROUBLESHOOTING.md).
 
 ## Next steps
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<int> statusCode = default;
-            Optional<RouteMatrixResultResponse> response = default;
+            int? statusCode = default;
+            RouteMatrixResultResponse response = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -41,7 +40,15 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteMatrix(Optional.ToNullable(statusCode), response.Value);
+            return new RouteMatrix(statusCode, response);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteMatrix FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteMatrix(document.RootElement);
         }
     }
 }

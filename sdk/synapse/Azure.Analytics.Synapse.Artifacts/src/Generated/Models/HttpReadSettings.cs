@@ -9,16 +9,16 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Sftp read settings. </summary>
+    /// <summary> Http read settings. </summary>
     public partial class HttpReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of HttpReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpReadSettings"/>. </summary>
         public HttpReadSettings()
         {
             Type = "HttpReadSettings";
         }
 
-        /// <summary> Initializes a new instance of HttpReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -26,9 +26,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="requestBody"> The HTTP request body to the RESTful API if requestMethod is POST. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalHeaders"> The additional HTTP headers in the request to the RESTful API. Type: string (or Expression with resultType string). </param>
         /// <param name="requestTimeout"> Specifies the timeout for a HTTP client to get HTTP response from HTTP server. </param>
-        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. </param>
+        /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
-        internal HttpReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object requestMethod, object requestBody, object additionalHeaders, object requestTimeout, bool? enablePartitionDiscovery, object partitionRootPath) : base(type, maxConcurrentConnections, additionalProperties)
+        /// <param name="additionalColumns"> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </param>
+        internal HttpReadSettings(string type, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object requestMethod, object requestBody, object additionalHeaders, object requestTimeout, object enablePartitionDiscovery, object partitionRootPath, object additionalColumns) : base(type, maxConcurrentConnections, additionalProperties)
         {
             RequestMethod = requestMethod;
             RequestBody = requestBody;
@@ -36,6 +37,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             RequestTimeout = requestTimeout;
             EnablePartitionDiscovery = enablePartitionDiscovery;
             PartitionRootPath = partitionRootPath;
+            AdditionalColumns = additionalColumns;
             Type = type ?? "HttpReadSettings";
         }
 
@@ -47,9 +49,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object AdditionalHeaders { get; set; }
         /// <summary> Specifies the timeout for a HTTP client to get HTTP response from HTTP server. </summary>
         public object RequestTimeout { get; set; }
-        /// <summary> Indicates whether to enable partition discovery. </summary>
-        public bool? EnablePartitionDiscovery { get; set; }
+        /// <summary> Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean). </summary>
+        public object EnablePartitionDiscovery { get; set; }
         /// <summary> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </summary>
         public object PartitionRootPath { get; set; }
+        /// <summary> Specifies the additional columns to be added to source data. Type: array of objects(AdditionalColumns) (or Expression with resultType array of objects). </summary>
+        public object AdditionalColumns { get; set; }
     }
 }

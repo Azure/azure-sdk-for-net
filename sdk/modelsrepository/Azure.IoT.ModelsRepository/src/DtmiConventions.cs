@@ -20,7 +20,7 @@ namespace Azure.IoT.ModelsRepository
         // The first character may not be a digit, and the last character may not be an underscore.
         // The version length is limited to nine digits, because the number 999,999,999 fits in a 32-bit signed integer value.
         // The first digit may not be zero, so there is no ambiguity regarding whether version 1 matches version 01 since the latter is invalid.
-        private static readonly Regex s_validDtmiRegex = new Regex(@"^dtmi:[A-Za-z](?:[A-Za-z0-9_]*[A-Za-z0-9])?(?::[A-Za-z](?:[A-Za-z0-9_]*[A-Za-z0-9])?)*;[1-9][0-9]{0,8}$");
+        private static readonly Regex s_validDtmiRegex = new Regex(@"^dtmi:[A-Za-z](?:[A-Za-z0-9_]*[A-Za-z0-9])?(?::[A-Za-z](?:[A-Za-z0-9_]*[A-Za-z0-9])?)*(?:;[1-9][0-9]{0,8}(?:\.[1-9][0-9]{0,5})?)?$");
 
         /// <summary>
         /// Indicates whether a given string DTMI value is well-formed.

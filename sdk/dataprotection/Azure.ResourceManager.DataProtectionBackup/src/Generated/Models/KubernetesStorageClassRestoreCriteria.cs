@@ -5,15 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Item Level kubernetes storage class target info for restore operation. </summary>
     public partial class KubernetesStorageClassRestoreCriteria : ItemLevelRestoreCriteria
     {
-        /// <summary> Initializes a new instance of KubernetesStorageClassRestoreCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesStorageClassRestoreCriteria"/>. </summary>
         public KubernetesStorageClassRestoreCriteria()
         {
             ObjectType = "KubernetesStorageClassRestoreCriteria";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesStorageClassRestoreCriteria"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="selectedStorageClassName"> Selected storage class name. </param>
+        /// <param name="provisioner"> Provisioner of the storage class. </param>
+        internal KubernetesStorageClassRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string selectedStorageClassName, string provisioner) : base(objectType, serializedAdditionalRawData)
+        {
+            SelectedStorageClassName = selectedStorageClassName;
+            Provisioner = provisioner;
+            ObjectType = objectType ?? "KubernetesStorageClassRestoreCriteria";
         }
 
         /// <summary> Selected storage class name. </summary>

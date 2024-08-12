@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The port range. </summary>
     public partial class AgentPoolNetworkPortRange
     {
-        /// <summary> Initializes a new instance of AgentPoolNetworkPortRange. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkPortRange"/>. </summary>
         public AgentPoolNetworkPortRange()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentPoolNetworkPortRange. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolNetworkPortRange"/>. </summary>
         /// <param name="portStart"> The minimum port that is included in the range. It should be ranged from 1 to 65535, and be less than or equal to portEnd. </param>
         /// <param name="portEnd"> The maximum port that is included in the range. It should be ranged from 1 to 65535, and be greater than or equal to portStart. </param>
         /// <param name="protocol"> The network protocol of the port. </param>
-        internal AgentPoolNetworkPortRange(int? portStart, int? portEnd, AgentPoolNetworkPortProtocol? protocol)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolNetworkPortRange(int? portStart, int? portEnd, AgentPoolNetworkPortProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PortStart = portStart;
             PortEnd = portEnd;
             Protocol = protocol;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The minimum port that is included in the range. It should be ranged from 1 to 65535, and be less than or equal to portEnd. </summary>

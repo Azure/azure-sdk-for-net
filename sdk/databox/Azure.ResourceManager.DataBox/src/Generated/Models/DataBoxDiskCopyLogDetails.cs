@@ -5,23 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Copy Log Details for a disk. </summary>
     public partial class DataBoxDiskCopyLogDetails : CopyLogDetails
     {
-        /// <summary> Initializes a new instance of DataBoxDiskCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskCopyLogDetails"/>. </summary>
         internal DataBoxDiskCopyLogDetails()
         {
             CopyLogDetailsType = DataBoxOrderType.DataBoxDisk;
         }
 
-        /// <summary> Initializes a new instance of DataBoxDiskCopyLogDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxDiskCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="diskSerialNumber"> Disk Serial Number. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
-        internal DataBoxDiskCopyLogDetails(DataBoxOrderType copyLogDetailsType, string diskSerialNumber, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType)
+        internal DataBoxDiskCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string diskSerialNumber, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType, serializedAdditionalRawData)
         {
             DiskSerialNumber = diskSerialNumber;
             ErrorLogLink = errorLogLink;

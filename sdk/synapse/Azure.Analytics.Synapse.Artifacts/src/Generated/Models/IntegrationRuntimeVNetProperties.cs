@@ -6,21 +6,20 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> VNet properties for managed integration runtime. </summary>
     public partial class IntegrationRuntimeVNetProperties
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeVNetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeVNetProperties"/>. </summary>
         public IntegrationRuntimeVNetProperties()
         {
             PublicIPs = new ChangeTrackingList<string>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeVNetProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeVNetProperties"/>. </summary>
         /// <param name="vNetId"> The ID of the VNet that this integration runtime will join. </param>
         /// <param name="subnet"> The name of the subnet this integration runtime will join. </param>
         /// <param name="publicIPs"> Resource IDs of the public IP addresses that this integration runtime will use. </param>

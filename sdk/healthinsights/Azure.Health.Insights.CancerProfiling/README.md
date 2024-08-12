@@ -67,11 +67,11 @@ The Cancer Profiling model allows you to infer cancer attributes such as tumor s
 ### Cancer Profiling
 
 ```C# Snippet:HealthInsightsCancerProfilingClientInferCancerProfileAsync
-OncoPhenotypeResult oncoPhenotypeResult = default;
+OncoPhenotypeResults oncoResults = default;
 try
 {
-    Operation<OncoPhenotypeResult> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
-    oncoPhenotypeResult = operation.Value;
+    Operation<OncoPhenotypeResults> operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
+    oncoResults = operation.Value;
 }
 catch (Exception ex)
 {
@@ -81,37 +81,25 @@ catch (Exception ex)
 ```
 ```C# Snippet:HealthInsightsCancerProfilingInferCancerProfileAsyncViewResults
 // View operation results
-if (oncoPhenotypeResult.Status == JobStatus.Succeeded)
+foreach (OncoPhenotypePatientResult patientResult in oncoResults.Patients)
 {
-    OncoPhenotypeResults oncoResults = oncoPhenotypeResult.Results;
-    foreach (OncoPhenotypePatientResult patientResult in oncoResults.Patients)
+    Console.WriteLine($"\n==== Inferences of Patient {patientResult.Id} ====");
+    foreach (OncoPhenotypeInference oncoInference in patientResult.Inferences)
     {
-        Console.WriteLine($"\n==== Inferences of Patient {patientResult.Id} ====");
-        foreach (OncoPhenotypeInference oncoInference in patientResult.Inferences)
+        Console.WriteLine($"\n=== Clinical Type: {oncoInference.Type.ToString()}  Value: {oncoInference.Value}   ConfidenceScore: {oncoInference.ConfidenceScore} ===");
+        foreach (InferenceEvidence evidence in oncoInference.Evidence)
         {
-            Console.WriteLine($"\n=== Clinical Type: {oncoInference.Type.ToString()}  Value: {oncoInference.Value}   ConfidenceScore: {oncoInference.ConfidenceScore} ===");
-            foreach (InferenceEvidence evidence in oncoInference.Evidence)
+            if (evidence.PatientDataEvidence != null)
             {
-                if (evidence.PatientDataEvidence != null)
-                {
-                    var dataEvidence = evidence.PatientDataEvidence;
-                    Console.WriteLine($"Evidence {dataEvidence.Id} {dataEvidence.Offset} {dataEvidence.Length} {dataEvidence.Text}");
-                }
-                if (evidence.PatientInfoEvidence != null)
-                {
-                    var infoEvidence = evidence.PatientInfoEvidence;
-                    Console.WriteLine($"Evidence {infoEvidence.System} {infoEvidence.Code} {infoEvidence.Name} {infoEvidence.Value}");
-                }
+                var dataEvidence = evidence.PatientDataEvidence;
+                Console.WriteLine($"Evidence {dataEvidence.Id} {dataEvidence.Offset} {dataEvidence.Length} {dataEvidence.Text}");
+            }
+            if (evidence.PatientInfoEvidence != null)
+            {
+                var infoEvidence = evidence.PatientInfoEvidence;
+                Console.WriteLine($"Evidence {infoEvidence.System} {infoEvidence.Code} {infoEvidence.Name} {infoEvidence.Value}");
             }
         }
-    }
-}
-else
-{
-    IReadOnlyList<ResponseError> oncoErrors = oncoPhenotypeResult.Errors;
-    foreach (ResponseError error in oncoErrors)
-    {
-        Console.WriteLine($"{error.Code} : {error.Message}");
     }
 }
 ```

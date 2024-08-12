@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
     /// condition operator
-    /// 
+    ///
     /// should be specified when combining multiple detection conditions
     /// </summary>
     public readonly partial struct DetectionConditionOperator : IEquatable<DetectionConditionOperator>
@@ -43,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

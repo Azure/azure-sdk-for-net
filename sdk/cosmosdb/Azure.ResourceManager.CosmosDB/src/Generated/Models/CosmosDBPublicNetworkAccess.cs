@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
+        private const string SecuredByPerimeterValue = "SecuredByPerimeter";
 
         /// <summary> Enabled. </summary>
         public static CosmosDBPublicNetworkAccess Enabled { get; } = new CosmosDBPublicNetworkAccess(EnabledValue);
         /// <summary> Disabled. </summary>
         public static CosmosDBPublicNetworkAccess Disabled { get; } = new CosmosDBPublicNetworkAccess(DisabledValue);
+        /// <summary> SecuredByPerimeter. </summary>
+        public static CosmosDBPublicNetworkAccess SecuredByPerimeter { get; } = new CosmosDBPublicNetworkAccess(SecuredByPerimeterValue);
         /// <summary> Determines if two <see cref="CosmosDBPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(CosmosDBPublicNetworkAccess left, CosmosDBPublicNetworkAccess right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBPublicNetworkAccess"/> values are not the same. </summary>
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

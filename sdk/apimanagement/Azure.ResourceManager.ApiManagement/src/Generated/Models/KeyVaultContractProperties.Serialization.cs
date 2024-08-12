@@ -5,20 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class KeyVaultContractProperties : IUtf8JsonSerializable
+    public partial class KeyVaultContractProperties : IUtf8JsonSerializable, IJsonModel<KeyVaultContractProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultContractProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KeyVaultContractProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultContractProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KeyVaultContractProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LastStatus))
             {
                 writer.WritePropertyName("lastStatus"u8);
-                writer.WriteObjectValue(LastStatus);
+                writer.WriteObjectValue(LastStatus, options);
             }
             if (Optional.IsDefined(SecretIdentifier))
             {
@@ -30,18 +42,49 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultContractProperties DeserializeKeyVaultContractProperties(JsonElement element)
+        KeyVaultContractProperties IJsonModel<KeyVaultContractProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultContractProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KeyVaultContractProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultContractProperties(document.RootElement, options);
+        }
+
+        internal static KeyVaultContractProperties DeserializeKeyVaultContractProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<KeyVaultLastAccessStatusContractProperties> lastStatus = default;
-            Optional<string> secretIdentifier = default;
-            Optional<string> identityClientId = default;
+            KeyVaultLastAccessStatusContractProperties lastStatus = default;
+            string secretIdentifier = default;
+            string identityClientId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastStatus"u8))
@@ -50,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    lastStatus = KeyVaultLastAccessStatusContractProperties.DeserializeKeyVaultLastAccessStatusContractProperties(property.Value);
+                    lastStatus = KeyVaultLastAccessStatusContractProperties.DeserializeKeyVaultLastAccessStatusContractProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secretIdentifier"u8))
@@ -63,8 +106,122 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     identityClientId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KeyVaultContractProperties(secretIdentifier.Value, identityClientId.Value, lastStatus.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KeyVaultContractProperties(secretIdentifier, identityClientId, serializedAdditionalRawData, lastStatus);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastStatus))
+                {
+                    builder.Append("  lastStatus: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, LastStatus, options, 2, false, "  lastStatus: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretIdentifier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secretIdentifier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecretIdentifier))
+                {
+                    builder.Append("  secretIdentifier: ");
+                    if (SecretIdentifier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecretIdentifier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecretIdentifier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identityClientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdentityClientId))
+                {
+                    builder.Append("  identityClientId: ");
+                    if (IdentityClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IdentityClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IdentityClientId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<KeyVaultContractProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultContractProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultContractProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KeyVaultContractProperties IPersistableModel<KeyVaultContractProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultContractProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKeyVaultContractProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultContractProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KeyVaultContractProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

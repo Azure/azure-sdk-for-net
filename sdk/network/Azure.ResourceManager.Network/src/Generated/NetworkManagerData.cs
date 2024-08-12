@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -19,25 +19,27 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkManagerData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkManagerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerData"/>. </summary>
         public NetworkManagerData()
         {
             NetworkManagerScopeAccesses = new ChangeTrackingList<NetworkConfigurationDeploymentType>();
         }
 
-        /// <summary> Initializes a new instance of NetworkManagerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkManagerData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="systemData"> The system metadata related to this resource. </param>
         /// <param name="description"> A description of the network manager. </param>
         /// <param name="networkManagerScopes"> Scope of Network Manager. </param>
         /// <param name="networkManagerScopeAccesses"> Scope Access. </param>
         /// <param name="provisioningState"> The provisioning state of the network manager resource. </param>
-        internal NetworkManagerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, SystemData systemData, string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        internal NetworkManagerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, SystemData systemData, string description, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes, IList<NetworkConfigurationDeploymentType> networkManagerScopeAccesses, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             SystemData = systemData;
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.Network
             NetworkManagerScopes = networkManagerScopes;
             NetworkManagerScopeAccesses = networkManagerScopeAccesses;
             ProvisioningState = provisioningState;
+            ResourceGuid = resourceGuid;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -59,5 +62,7 @@ namespace Azure.ResourceManager.Network
         public IList<NetworkConfigurationDeploymentType> NetworkManagerScopeAccesses { get; }
         /// <summary> The provisioning state of the network manager resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> Unique identifier for this resource. </summary>
+        public Guid? ResourceGuid { get; }
     }
 }

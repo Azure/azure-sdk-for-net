@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerNamespaceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of PartnerNamespaceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PartnerNamespaceData(AzureLocation location) : base(location)
         {
@@ -27,19 +59,20 @@ namespace Azure.ResourceManager.EventGrid
             InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
-        /// <summary> Initializes a new instance of PartnerNamespaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="privateEndpointConnections"></param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the partner namespace. </param>
         /// <param name="partnerRegistrationFullyQualifiedId">
         /// The fully qualified ARM Id of the partner registration that should be associated with this partner namespace. This takes the following format:
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}.
         /// </param>
+        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this partner namespace. </param>
         /// <param name="endpoint"> Endpoint for the partner namespace. </param>
         /// <param name="publicNetworkAccess">
         /// This determines if traffic is allowed over public network. By default it is enabled.
@@ -51,19 +84,27 @@ namespace Azure.ResourceManager.EventGrid
         /// This determines if events published to this partner namespace should use the source attribute in the event payload
         /// or use the channel name in the header when matching to the partner topic. If none is specified, source attribute routing will be used to match the partner topic.
         /// </param>
-        internal PartnerNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, PartnerNamespaceProvisioningState? provisioningState, ResourceIdentifier partnerRegistrationFullyQualifiedId, Uri endpoint, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, PartnerTopicRoutingMode? partnerTopicRoutingMode) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, PartnerNamespaceProvisioningState? provisioningState, ResourceIdentifier partnerRegistrationFullyQualifiedId, TlsVersion? minimumTlsVersionAllowed, Uri endpoint, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, PartnerTopicRoutingMode? partnerTopicRoutingMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
             PartnerRegistrationFullyQualifiedId = partnerRegistrationFullyQualifiedId;
+            MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
             Endpoint = endpoint;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIPRules = inboundIPRules;
             IsLocalAuthDisabled = isLocalAuthDisabled;
             PartnerTopicRoutingMode = partnerTopicRoutingMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the private endpoint connections. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceData"/> for deserialization. </summary>
+        internal PartnerNamespaceData()
+        {
+        }
+
+        /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Provisioning state of the partner namespace. </summary>
         public PartnerNamespaceProvisioningState? ProvisioningState { get; }
@@ -72,6 +113,8 @@ namespace Azure.ResourceManager.EventGrid
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}.
         /// </summary>
         public ResourceIdentifier PartnerRegistrationFullyQualifiedId { get; set; }
+        /// <summary> Minimum TLS version of the publisher allowed to publish to this partner namespace. </summary>
+        public TlsVersion? MinimumTlsVersionAllowed { get; set; }
         /// <summary> Endpoint for the partner namespace. </summary>
         public Uri Endpoint { get; }
         /// <summary>

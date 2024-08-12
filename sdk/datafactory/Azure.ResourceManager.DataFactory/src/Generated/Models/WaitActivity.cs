@@ -7,18 +7,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> This activity suspends pipeline execution for the specified interval. </summary>
     public partial class WaitActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of WaitActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WaitActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
-        /// <param name="waitTimeInSeconds"> Duration in seconds. </param>
+        /// <param name="waitTimeInSeconds"> Duration in seconds. Type: integer (or Expression with resultType integer). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="waitTimeInSeconds"/> is null. </exception>
-        public WaitActivity(string name, BinaryData waitTimeInSeconds) : base(name)
+        public WaitActivity(string name, DataFactoryElement<int> waitTimeInSeconds) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(waitTimeInSeconds, nameof(waitTimeInSeconds));
@@ -27,50 +27,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "Wait";
         }
 
-        /// <summary> Initializes a new instance of WaitActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WaitActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="waitTimeInSeconds"> Duration in seconds. </param>
-        internal WaitActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, BinaryData waitTimeInSeconds) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        /// <param name="waitTimeInSeconds"> Duration in seconds. Type: integer (or Expression with resultType integer). </param>
+        internal WaitActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> waitTimeInSeconds) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             WaitTimeInSeconds = waitTimeInSeconds;
             ActivityType = activityType ?? "Wait";
         }
 
-        /// <summary>
-        /// Duration in seconds.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData WaitTimeInSeconds { get; set; }
+        /// <summary> Initializes a new instance of <see cref="WaitActivity"/> for deserialization. </summary>
+        internal WaitActivity()
+        {
+        }
+
+        /// <summary> Duration in seconds. Type: integer (or Expression with resultType integer). </summary>
+        public DataFactoryElement<int> WaitTimeInSeconds { get; set; }
     }
 }

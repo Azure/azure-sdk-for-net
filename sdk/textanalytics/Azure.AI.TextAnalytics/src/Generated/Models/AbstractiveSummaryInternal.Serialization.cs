@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             string text = default;
-            Optional<IList<SummaryContextInternal>> contexts = default;
+            IList<SummaryContextInternal> contexts = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -61,7 +61,23 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummaryInternal(text, Optional.ToList(contexts));
+            return new AbstractiveSummaryInternal(text, contexts ?? new ChangeTrackingList<SummaryContextInternal>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AbstractiveSummaryInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAbstractiveSummaryInternal(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

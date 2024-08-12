@@ -11,10 +11,10 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary>
-    /// Type of API to create. 
-    ///  * `http` creates a REST API 
-    ///  * `soap` creates a SOAP pass-through API  
-    ///  * `websocket` creates websocket API 
+    /// Type of API to create.
+    ///  * `http` creates a REST API
+    ///  * `soap` creates a SOAP pass-through API
+    ///  * `websocket` creates websocket API
     ///  * `graphql` creates GraphQL API.
     /// </summary>
     public readonly partial struct SoapApiType : IEquatable<SoapApiType>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

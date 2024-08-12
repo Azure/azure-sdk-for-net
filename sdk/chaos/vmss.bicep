@@ -23,7 +23,8 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2020-07-0
 }
 
 resource networkSecurityGroupName_NRMS_Rule_102 'Microsoft.Network/networkSecurityGroups/securityRules@2021-05-01' = {
-  name: '${networkSecurityGroup.name}/NRMS-Rule-102'
+  name: 'NRMS-Rule-102'
+  parent: networkSecurityGroup
   properties: {
     description: 'Created by Azure Core Security managed policy, rule can be deleted but do not change source ips, please see aka.ms/cainsgpolicy'
     protocol: '*'
@@ -42,7 +43,8 @@ resource networkSecurityGroupName_NRMS_Rule_102 'Microsoft.Network/networkSecuri
 }
 
 resource networkSecurityGroupName_NRMS_Rule_103 'Microsoft.Network/networkSecurityGroups/securityRules@2021-05-01' = {
-  name: '${networkSecurityGroup.name}/NRMS-Rule-103'
+  name: 'NRMS-Rule-103'
+  parent: networkSecurityGroup
   properties: {
     description: 'Default NRMS Corpnet rule, rule can be deleted but do not change source ips, please see aka.ms/cainsgpolicy'
     protocol: '*'
@@ -61,7 +63,8 @@ resource networkSecurityGroupName_NRMS_Rule_103 'Microsoft.Network/networkSecuri
 }
 
 resource networkSecurityGroupName_NRMS_Rule_104 'Microsoft.Network/networkSecurityGroups/securityRules@2021-05-01' = {
-  name: '${networkSecurityGroup.name}/NRMS-Rule-104'
+  name: 'NRMS-Rule-104'
+  parent: networkSecurityGroup
   properties: {
     description: 'Created by Azure Core Security managed policy, rule can be deleted but do not change source ips, please see aka.ms/cainsgpolicy'
     protocol: '*'
@@ -80,7 +83,8 @@ resource networkSecurityGroupName_NRMS_Rule_104 'Microsoft.Network/networkSecuri
 }
 
 resource networkSecurityGroupName_NRMS_Rule_105 'Microsoft.Network/networkSecurityGroups/securityRules@2021-05-01' = {
-  name: '${networkSecurityGroup.name}/NRMS-Rule-105'
+  name: 'NRMS-Rule-105'
+  parent: networkSecurityGroup
   properties: {
     description: 'DO NOT DELETE - Will result in ICM Sev 2 - Azure Core Security, see aka.ms/cainsgpolicy'
     protocol: '*'
@@ -115,7 +119,8 @@ resource networkSecurityGroupName_NRMS_Rule_105 'Microsoft.Network/networkSecuri
 }
 
 resource networkSecurityGroupName_NRMS_Rule_106 'Microsoft.Network/networkSecurityGroups/securityRules@2021-05-01' = {
-  name: '${networkSecurityGroup.name}/NRMS-Rule-106'
+  name: 'NRMS-Rule-106'
+  parent: networkSecurityGroup
   properties: {
     description: 'DO NOT DELETE - Will result in ICM Sev 2 - Azure Core Security, see aka.ms/cainsgpolicy'
     protocol: 'Tcp'
@@ -136,7 +141,8 @@ resource networkSecurityGroupName_NRMS_Rule_106 'Microsoft.Network/networkSecuri
 }
 
 resource networkSecurityGroupName_NRMS_Rule_107 'Microsoft.Network/networkSecurityGroups/securityRules@2021-05-01' = {
-  name: '${networkSecurityGroup.name}/NRMS-Rule-107'
+  name: 'NRMS-Rule-107'
+  parent: networkSecurityGroup
   properties: {
     description: 'DO NOT DELETE - Will result in ICM Sev 2 - Azure Core Security, see aka.ms/cainsgpolicy'
     protocol: 'Tcp'
@@ -160,7 +166,8 @@ resource networkSecurityGroupName_NRMS_Rule_107 'Microsoft.Network/networkSecuri
 }
 
 resource networkSecurityGroupName_NRMS_Rule_108 'Microsoft.Network/networkSecurityGroups/securityRules@2021-05-01' = {
-  name: '${networkSecurityGroup.name}/NRMS-Rule-108'
+  name: 'NRMS-Rule-108'
+  parent: networkSecurityGroup
   properties: {
     description: 'DO NOT DELETE - Will result in ICM Sev 2 - Azure Core Security, see aka.ms/cainsgpolicy'
     protocol: '*'
@@ -193,7 +200,8 @@ resource networkSecurityGroupName_NRMS_Rule_108 'Microsoft.Network/networkSecuri
 }
 
 resource networkSecurityGroupName_NRMS_Rule_109 'Microsoft.Network/networkSecurityGroups/securityRules@2021-05-01' = {
-  name: '${networkSecurityGroup.name}/NRMS-Rule-109'
+  name: 'NRMS-Rule-109'
+  parent: networkSecurityGroup
   properties: {
     description: 'DO NOT DELETE - Will result in ICM Sev 2 - Azure Core Security, see aka.ms/cainsgpolicy'
     protocol: '*'
@@ -412,5 +420,6 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-10-01-prev
   properties: {
     principalId: experiment.identity.principalId
     roleDefinitionId: resourceId('Microsoft.Authorization/roleDefinitions', virtualMachineContributorRoleId)
+    principalType: 'ServicePrincipal'
   }
 }

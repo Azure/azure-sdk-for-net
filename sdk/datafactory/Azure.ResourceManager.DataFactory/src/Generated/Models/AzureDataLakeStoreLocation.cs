@@ -7,24 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The location of azure data lake store dataset. </summary>
     public partial class AzureDataLakeStoreLocation : DatasetLocation
     {
-        /// <summary> Initializes a new instance of AzureDataLakeStoreLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLocation"/>. </summary>
         public AzureDataLakeStoreLocation()
         {
             DatasetLocationType = "AzureDataLakeStoreLocation";
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeStoreLocation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLocation"/>. </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal AzureDataLakeStoreLocation(string datasetLocationType, BinaryData folderPath, BinaryData fileName, IDictionary<string, BinaryData> additionalProperties) : base(datasetLocationType, folderPath, fileName, additionalProperties)
+        internal AzureDataLakeStoreLocation(string datasetLocationType, DataFactoryElement<string> folderPath, DataFactoryElement<string> fileName, IDictionary<string, BinaryData> additionalProperties) : base(datasetLocationType, folderPath, fileName, additionalProperties)
         {
             DatasetLocationType = datasetLocationType ?? "AzureDataLakeStoreLocation";
         }

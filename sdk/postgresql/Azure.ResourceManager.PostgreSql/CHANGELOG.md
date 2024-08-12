@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,80 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.6 (2024-05-07)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.2.0-beta.5 (2024-03-28)
+
+### Features Added
+
+- Added backwards compatibility model factory methods to support features added in version 1.1.3.
+
+## 1.2.0-beta.4 (2024-03-26)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added experimental Bicep serialization.
+
+## 1.1.3 (2024-03-25)
+
+### Features Added
+
+- Added model factory.
+
+## 1.1.2 (2024-03-25)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this document for more details.
+- Added experimental Bicep serialization.
+- Added GetIfExists methods.
+- Added mocking types.
+
+## 1.2.0-beta.3 (2023-11-29)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.2.0-beta.2 (2023-07-18)
+
+This release uses api version 2023-03-01-preview for PostgreSQL flexible server.
+
+### Features Added
+
+- Data Encryption support for Geo-backup enabled servers.
+- ReviveDropped. This allows you to revive the dropped servers.
+- Migration
+- Performance tier scaling for Storage
+- Long Term Retention Backup
+- LogFiles
+
+### Breaking Changes
+
+- Updated response object for ExecuteLocationBasedCapabilities.
+- New properties added for Storage object under PostgreSqlFlexibleServerData to support features like IOPS scaling and Storage AutoGrow. StorageSizeInGB property available under Storage.
+
+### Bugs Fixed
+
+- ReplicaCapacity under PostgreSqlFlexibleServerData is now marked as read-only as this cannot be updated.
+- Removed unsupported IdentityType "SystemAssigned".
+- Renamed KeyType for Data encryption feature from unsupported SystemAssigned to supported SystemManaged.
+- Support Network object to be updated as part of PostgreSqlFlexibleServerPatch call.
+- Remove unsupported ReplicationRoles GeoSyncReplica, Secondary, SyncReplica, WalReplica.
 
 ## 1.2.0-beta.1 (2023-05-31)
 

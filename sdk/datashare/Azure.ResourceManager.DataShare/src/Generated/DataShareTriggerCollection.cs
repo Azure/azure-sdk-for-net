@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataShareTriggerResource" /> and their operations.
-    /// Each <see cref="DataShareTriggerResource" /> in the collection will belong to the same instance of <see cref="ShareSubscriptionResource" />.
-    /// To get a <see cref="DataShareTriggerCollection" /> instance call the GetDataShareTriggers method from an instance of <see cref="ShareSubscriptionResource" />.
+    /// A class representing a collection of <see cref="DataShareTriggerResource"/> and their operations.
+    /// Each <see cref="DataShareTriggerResource"/> in the collection will belong to the same instance of <see cref="ShareSubscriptionResource"/>.
+    /// To get a <see cref="DataShareTriggerCollection"/> instance call the GetDataShareTriggers method from an instance of <see cref="ShareSubscriptionResource"/>.
     /// </summary>
     public partial class DataShareTriggerCollection : ArmCollection, IEnumerable<DataShareTriggerResource>, IAsyncEnumerable<DataShareTriggerResource>
     {
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create a Trigger 
+        /// Create a Trigger
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -62,6 +61,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +101,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create a Trigger 
+        /// Create a Trigger
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -103,6 +110,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,6 +160,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerName"> The name of the trigger. </param>
@@ -181,6 +204,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,16 +250,24 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Triggers_ListByShareSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataShareTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataShareTriggerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataShareTriggerResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareTriggerTriggersRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareTriggerTriggersRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareTriggerResource(Client, DataShareTriggerData.DeserializeDataShareTriggerData(e)), _dataShareTriggerTriggersClientDiagnostics, Pipeline, "DataShareTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareTriggerResource(Client, DataShareTriggerData.DeserializeDataShareTriggerData(e)), _dataShareTriggerTriggersClientDiagnostics, Pipeline, "DataShareTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,16 +281,24 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Triggers_ListByShareSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataShareTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataShareTriggerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataShareTriggerResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareTriggerTriggersRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareTriggerTriggersRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareTriggerResource(Client, DataShareTriggerData.DeserializeDataShareTriggerData(e)), _dataShareTriggerTriggersClientDiagnostics, Pipeline, "DataShareTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareTriggerResource(Client, DataShareTriggerData.DeserializeDataShareTriggerData(e)), _dataShareTriggerTriggersClientDiagnostics, Pipeline, "DataShareTriggerCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -264,6 +311,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +355,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerName"> The name of the trigger. </param>
@@ -316,6 +379,96 @@ namespace Azure.ResourceManager.DataShare
             {
                 var response = _dataShareTriggerTriggersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, triggerName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/triggers/{triggerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Triggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="triggerName"> The name of the trigger. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataShareTriggerResource>> GetIfExistsAsync(string triggerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+
+            using var scope = _dataShareTriggerTriggersClientDiagnostics.CreateScope("DataShareTriggerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataShareTriggerTriggersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, triggerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareTriggerResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareTriggerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/triggers/{triggerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Triggers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="triggerName"> The name of the trigger. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        public virtual NullableResponse<DataShareTriggerResource> GetIfExists(string triggerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(triggerName, nameof(triggerName));
+
+            using var scope = _dataShareTriggerTriggersClientDiagnostics.CreateScope("DataShareTriggerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataShareTriggerTriggersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, triggerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareTriggerResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareTriggerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

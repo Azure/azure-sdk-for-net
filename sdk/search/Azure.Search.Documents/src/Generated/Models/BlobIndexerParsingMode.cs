@@ -37,9 +37,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public static BlobIndexerParsingMode DelimitedText { get; } = new BlobIndexerParsingMode(DelimitedTextValue);
         /// <summary> Set to json to extract structured content from JSON files. </summary>
         public static BlobIndexerParsingMode Json { get; } = new BlobIndexerParsingMode(JsonValue);
-        /// <summary> Set to jsonArray to extract individual elements of a JSON array as separate documents in Azure Cognitive Search. </summary>
+        /// <summary> Set to jsonArray to extract individual elements of a JSON array as separate documents. </summary>
         public static BlobIndexerParsingMode JsonArray { get; } = new BlobIndexerParsingMode(JsonArrayValue);
-        /// <summary> Set to jsonLines to extract individual JSON entities, separated by a new line, as separate documents in Azure Cognitive Search. </summary>
+        /// <summary> Set to jsonLines to extract individual JSON entities, separated by a new line, as separate documents. </summary>
         public static BlobIndexerParsingMode JsonLines { get; } = new BlobIndexerParsingMode(JsonLinesValue);
         /// <summary> Determines if two <see cref="BlobIndexerParsingMode"/> values are the same. </summary>
         public static bool operator ==(BlobIndexerParsingMode left, BlobIndexerParsingMode right) => left.Equals(right);
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

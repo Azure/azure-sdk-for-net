@@ -2,16 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Diagnostics;
+using Microsoft.IdentityModel.Abstractions;
 
 namespace Azure.Identity
 {
     [EventSource(Name = EventSourceName)]
-    internal sealed class AzureIdentityEventSource : AzureEventSource
+    internal sealed class AzureIdentityEventSource : AzureEventSource, IIdentityLogger
     {
         private const string EventSourceName = "Azure-Identity";
 
@@ -25,6 +27,8 @@ namespace Azure.Identity
         private const int MsalLogInfoEvent = 8;
         private const int MsalLogWarningEvent = 9;
         private const int MsalLogErrorEvent = 10;
+        private const int MsalLogCriticalEvent = 23;
+        private const int MsalLogAlwaysEvent = 24;
         private const int InteractiveAuthenticationThreadPoolExecutionEvent = 11;
         private const int InteractiveAuthenticationInlineExecutionEvent = 12;
         private const int DefaultAzureCredentialCredentialSelectedEvent = 13;
@@ -48,6 +52,45 @@ namespace Azure.Identity
         private AzureIdentityEventSource() : base(EventSourceName) { }
 
         public static AzureIdentityEventSource Singleton { get; } = new AzureIdentityEventSource();
+
+        public bool IsEnabled(EventLogLevel eventLogLevel)
+        {
+            return eventLogLevel switch
+            {
+                EventLogLevel.Critical => IsEnabled(EventLevel.Critical, EventKeywords.All),
+                EventLogLevel.Error => IsEnabled(EventLevel.Error, EventKeywords.All),
+                EventLogLevel.Warning => IsEnabled(EventLevel.Warning, EventKeywords.All),
+                EventLogLevel.Informational => IsEnabled(EventLevel.Informational, EventKeywords.All),
+                EventLogLevel.Verbose => IsEnabled(EventLevel.Verbose, EventKeywords.All),
+                EventLogLevel.LogAlways => IsEnabled(EventLevel.LogAlways, EventKeywords.All),
+                _ => false,
+            };
+        }
+
+        public void Log(LogEntry entry)
+        {
+            switch (entry.EventLogLevel)
+            {
+                case EventLogLevel.Critical when IsEnabled(EventLevel.Critical, EventKeywords.All):
+                    LogMsalCritical(entry.Message);
+                    break;
+                case EventLogLevel.Error when IsEnabled(EventLevel.Error, EventKeywords.All):
+                    LogMsalError(entry.Message);
+                    break;
+                case EventLogLevel.Warning when IsEnabled(EventLevel.Warning, EventKeywords.All):
+                    LogMsalWarning(entry.Message);
+                    break;
+                case EventLogLevel.Informational when IsEnabled(EventLevel.Informational, EventKeywords.All):
+                    LogMsalInformational(entry.Message);
+                    break;
+                case EventLogLevel.Verbose when IsEnabled(EventLevel.Verbose, EventKeywords.All):
+                    LogMsalVerbose(entry.Message);
+                    break;
+                case EventLogLevel.LogAlways when IsEnabled(EventLevel.LogAlways, EventKeywords.All):
+                    LogMsalAlways(entry.Message);
+                    break;
+            }
+        }
 
         [NonEvent]
         public void GetToken(string method, TokenRequestContext context)
@@ -73,6 +116,7 @@ namespace Azure.Identity
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(GetTokenSucceededEvent, Level = EventLevel.Informational, Message = "{0} succeeded. Scopes: {1} ParentRequestId: {2} ExpiresOn: {3}")]
         public void GetTokenSucceeded(string method, string scopes, string parentRequestId, string expiresOn)
         {
@@ -88,6 +132,7 @@ namespace Azure.Identity
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(GetTokenFailedEvent, Level = EventLevel.Informational, Message = "{0} was unable to retrieve an access token. Scopes: {1} ParentRequestId: {2} Exception: {3}")]
         public void GetTokenFailed(string method, string scopes, string parentRequestId, string exception)
         {
@@ -194,6 +239,12 @@ namespace Azure.Identity
             }
         }
 
+        [Event(MsalLogCriticalEvent, Level = EventLevel.Critical, Message = "{0}")]
+        public void LogMsalCritical(string message)
+        {
+            WriteEvent(MsalLogCriticalEvent, message);
+        }
+
         [Event(MsalLogErrorEvent, Level = EventLevel.Error, Message = "{0}")]
         public void LogMsalError(string message)
         {
@@ -216,6 +267,12 @@ namespace Azure.Identity
         public void LogMsalVerbose(string message)
         {
             WriteEvent(MsalLogVerboseEvent, message);
+        }
+
+        [Event(MsalLogAlwaysEvent, Level = EventLevel.LogAlways, Message = "{0}")]
+        public void LogMsalAlways(string message)
+        {
+            WriteEvent(MsalLogAlwaysEvent, message);
         }
 
         [NonEvent]
@@ -308,6 +365,7 @@ namespace Azure.Identity
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(AuthenticatedAccountDetailsEvent, Level = EventLevel.Informational, Message = AuthenticatedAccountDetailsMessage)]
         public void AuthenticatedAccountDetails(string clientId, string tenantId, string upn, string objectId)
         {

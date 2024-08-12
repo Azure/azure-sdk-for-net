@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             AnalyzeTextLROTaskKind kind = "Unknown";
-            Optional<string> taskName = default;
+            string taskName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -46,7 +46,23 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new UnknownAnalyzeTextLROTask(taskName.Value, kind);
+            return new UnknownAnalyzeTextLROTask(taskName, kind);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownAnalyzeTextLROTask FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownAnalyzeTextLROTask(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AnalyzeTextLROTask>(this);
+            return content;
         }
     }
 }

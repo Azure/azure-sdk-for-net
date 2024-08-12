@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceTypeSkuResource" /> and their operations.
-    /// Each <see cref="ResourceTypeSkuResource" /> in the collection will belong to the same instance of <see cref="ResourceTypeRegistrationResource" />.
-    /// To get a <see cref="ResourceTypeSkuCollection" /> instance call the GetResourceTypeSkus method from an instance of <see cref="ResourceTypeRegistrationResource" />.
+    /// A class representing a collection of <see cref="ResourceTypeSkuResource"/> and their operations.
+    /// Each <see cref="ResourceTypeSkuResource"/> in the collection will belong to the same instance of <see cref="ResourceTypeRegistrationResource"/>.
+    /// To get a <see cref="ResourceTypeSkuCollection"/> instance call the GetResourceTypeSkus method from an instance of <see cref="ResourceTypeRegistrationResource"/>.
     /// </summary>
     public partial class ResourceTypeSkuCollection : ArmCollection, IEnumerable<ResourceTypeSkuResource>, IAsyncEnumerable<ResourceTypeSkuResource>
     {
@@ -63,6 +62,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>Skus_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -81,7 +88,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _resourceTypeSkuSkusRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response), response.GetRawResponse()));
+                var uri = _resourceTypeSkuSkusRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>Skus_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -122,7 +139,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _resourceTypeSkuSkusRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response), response.GetRawResponse()));
+                var uri = _resourceTypeSkuSkusRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -144,6 +163,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +209,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sku"> The SKU. </param>
@@ -219,15 +254,23 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>Skus_ListByResourceTypeRegistrations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceTypeSkuResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceTypeSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceTypeSkuResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,15 +284,23 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>Skus_ListByResourceTypeRegistrations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceTypeSkuResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceTypeSkuResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceTypeSkuResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceTypeSkuSkusRestClient.CreateListByResourceTypeRegistrationsNextPageRequest(nextLink, Id.SubscriptionId, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceTypeSkuResource(Client, ResourceTypeSkuData.DeserializeResourceTypeSkuData(e)), _resourceTypeSkuSkusClientDiagnostics, Pipeline, "ResourceTypeSkuCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,6 +313,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +357,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sku"> The SKU. </param>
@@ -314,6 +381,96 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 var response = _resourceTypeSkuSkusRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceTypeSkuResource>> GetIfExistsAsync(string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceTypeSkuSkusRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceTypeSkuResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/resourcetypeRegistrations/{resourceType}/skus/{sku}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sku"> The SKU. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sku"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
+        public virtual NullableResponse<ResourceTypeSkuResource> GetIfExists(string sku, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sku, nameof(sku));
+
+            using var scope = _resourceTypeSkuSkusClientDiagnostics.CreateScope("ResourceTypeSkuCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceTypeSkuSkusRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceTypeSkuResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceTypeSkuResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraKeyspacePropertiesConfig : IUtf8JsonSerializable
+    public partial class CassandraKeyspacePropertiesConfig : IUtf8JsonSerializable, IJsonModel<CassandraKeyspacePropertiesConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraKeyspacePropertiesConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CassandraKeyspacePropertiesConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CassandraKeyspacePropertiesConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CassandraKeyspacePropertiesConfig)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Throughput))
             {
@@ -23,19 +35,50 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AutoscaleSettings))
             {
                 writer.WritePropertyName("autoscaleSettings"u8);
-                writer.WriteObjectValue(AutoscaleSettings);
+                writer.WriteObjectValue(AutoscaleSettings, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static CassandraKeyspacePropertiesConfig DeserializeCassandraKeyspacePropertiesConfig(JsonElement element)
+        CassandraKeyspacePropertiesConfig IJsonModel<CassandraKeyspacePropertiesConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CassandraKeyspacePropertiesConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CassandraKeyspacePropertiesConfig)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCassandraKeyspacePropertiesConfig(document.RootElement, options);
+        }
+
+        internal static CassandraKeyspacePropertiesConfig DeserializeCassandraKeyspacePropertiesConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> throughput = default;
-            Optional<AutoscaleSettings> autoscaleSettings = default;
+            int? throughput = default;
+            AutoscaleSettings autoscaleSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughput"u8))
@@ -53,11 +96,97 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    autoscaleSettings = AutoscaleSettings.DeserializeAutoscaleSettings(property.Value);
+                    autoscaleSettings = AutoscaleSettings.DeserializeAutoscaleSettings(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CassandraKeyspacePropertiesConfig(Optional.ToNullable(throughput), autoscaleSettings.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CassandraKeyspacePropertiesConfig(throughput, autoscaleSettings, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Throughput), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  throughput: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Throughput))
+                {
+                    builder.Append("  throughput: ");
+                    builder.AppendLine($"{Throughput.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AutoscaleMaxThroughput", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  autoscaleSettings: ");
+                builder.AppendLine("{");
+                builder.Append("    maxThroughput: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AutoscaleSettings))
+                {
+                    builder.Append("  autoscaleSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AutoscaleSettings, options, 2, false, "  autoscaleSettings: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<CassandraKeyspacePropertiesConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CassandraKeyspacePropertiesConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(CassandraKeyspacePropertiesConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CassandraKeyspacePropertiesConfig IPersistableModel<CassandraKeyspacePropertiesConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CassandraKeyspacePropertiesConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCassandraKeyspacePropertiesConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CassandraKeyspacePropertiesConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CassandraKeyspacePropertiesConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

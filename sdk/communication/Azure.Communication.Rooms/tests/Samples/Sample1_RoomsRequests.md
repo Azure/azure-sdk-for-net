@@ -33,6 +33,19 @@ List<RoomParticipant> invitedParticipants = new List<RoomParticipant>
 
 Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, invitedParticipants);
 CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
+
+// Starting in 1.1.0-beta.1 release,CreateRoom function also takes roomCreateOptions as parameter
+bool pstnDialOutEnabled = true;
+CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
+{
+    ValidFrom = validFrom,
+    ValidUntil = validUntil,
+    PstnDialOutEnabled = pstnDialOutEnabled,
+    Participants = invitedParticipants
+};
+
+createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions);
+createCommunicationRoom = createRoomResponse.Value;
 ```
 
 ## Update an existing room
@@ -43,6 +56,17 @@ To update an existing ACS room, call the `UpdateRoom` or `UpdateRoomAsync` funct
 validUntil = validFrom.AddDays(30);
 Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
 CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
+
+// Starting in 1.1.0 release,UpdateRoom function also takes roomCreateOptions as parameter
+UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
+{
+    ValidFrom = validFrom,
+    ValidUntil = validUntil,
+    PstnDialOutEnabled = pstnDialOutEnabled,
+};
+
+updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, roomUpdateOptions);
+updateCommunicationRoom = updateRoomResponse.Value;
 ```
 
 ## Get an existing room
@@ -54,6 +78,27 @@ Response<CommunicationRoom> getRoomResponse = await roomsClient.GetRoomAsync(cre
 CommunicationRoom getCommunicationRoom = getRoomResponse.Value;
 ```
 
+### Get all rooms
+All valid rooms created under an ACS resource can be retrieved by calling the `GetRooms` or `GetRoomsAsync` function from `RoomsClient`.
+```C# Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomsAsync
+// Retrieve the first 2 pages of active rooms
+const int PageSize = 30;
+const int PageCount = 2;
+int maxRoomCount = PageCount * PageSize;
+int counter = 1;
+
+AsyncPageable<CommunicationRoom> allRooms = roomsClient.GetRoomsAsync();
+await foreach (CommunicationRoom room in allRooms)
+{
+    Console.WriteLine($"Room with id {room.Id} is valid from {room.ValidFrom} to {room.ValidUntil}.");
+    counter++;
+
+    if (counter == maxRoomCount)
+    {
+        break;
+    }
+}
+```
 
 ## Delete an existing room
 

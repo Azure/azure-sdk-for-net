@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<int> minNodeCount = default;
-            Optional<bool> enabled = default;
-            Optional<int> maxNodeCount = default;
+            int? minNodeCount = default;
+            bool? enabled = default;
+            int? maxNodeCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minNodeCount"u8))
@@ -75,7 +75,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new AutoScaleProperties(Optional.ToNullable(minNodeCount), Optional.ToNullable(enabled), Optional.ToNullable(maxNodeCount));
+            return new AutoScaleProperties(minNodeCount, enabled, maxNodeCount);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AutoScaleProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAutoScaleProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class AutoScalePropertiesConverter : JsonConverter<AutoScaleProperties>
@@ -84,6 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override AutoScaleProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -12,7 +12,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary>
     /// Model factory that enables mocking for the Azure.Communication.PhoneNumbers library.
     /// </summary>
-    [CodeGenModel("PhoneNumbersModelFactory")]
+    [CodeGenModel("CommunicationPhoneNumbersModelFactory")]
     [CodeGenSuppress("PhoneNumberAreaCodes", typeof(IEnumerable<PhoneNumberAreaCode>), typeof(string))]
     [CodeGenSuppress("PhoneNumberCountries", typeof(IEnumerable<PhoneNumberCountry>), typeof(string))]
     [CodeGenSuppress("PhoneNumberLocalities", typeof(IEnumerable<PhoneNumberLocality>), typeof(string))]

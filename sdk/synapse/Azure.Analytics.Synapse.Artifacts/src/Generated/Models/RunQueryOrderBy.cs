@@ -10,7 +10,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> An object to provide order by options for listing runs. </summary>
     public partial class RunQueryOrderBy
     {
-        /// <summary> Initializes a new instance of RunQueryOrderBy. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunQueryOrderBy"/>. </summary>
         /// <param name="orderBy"> Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status. </param>
         /// <param name="order"> Sorting order of the parameter. </param>
         public RunQueryOrderBy(RunQueryOrderByField orderBy, RunQueryOrder order)

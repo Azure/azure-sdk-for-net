@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -278,6 +279,51 @@ namespace Azure.Search.Documents.Tests
             {
                 IndexName = isSample ? SharedSearchResources.SearchResourcesForSamples.IndexName : SharedSearchResources.SearchResourcesForTests.IndexName,
             };
+        }
+
+        /// <summary>
+        /// Create a hotels index with the standard test documents and as many
+        /// extra empty documents needed to test.
+        /// </summary>
+        /// <param name="size">The total number of documents in the index.</param>
+        /// <returns>SearchResources for testing.</returns>
+        public static async Task<SearchResources> CreateLargeHotelsIndexAsync(SearchTestBase fixture, int size, bool includeVectors = false, bool isSample = false)
+        {
+            // Start with the standard test hotels
+            SearchResources resources = await CreateWithHotelsIndexAsync(fixture, isSample);
+
+            // Create empty hotels with just an ID for the rest
+            int existingDocumentCount = TestDocuments.Length;
+            IEnumerable<string> hotelIds =
+                Enumerable.Range(
+                    existingDocumentCount + 1,
+                    size - existingDocumentCount)
+                .Select(id => id.ToString());
+
+            List<SearchDocument> hotels = new();
+
+            if (includeVectors)
+            {
+                hotels = hotelIds.Select(id => new SearchDocument { ["hotelId"] = id, ["descriptionVector"] = VectorSearchEmbeddings.DefaultVectorizeDescription }).ToList();
+            }
+            else
+            {
+                Random random = new();
+                hotels = hotelIds.Select(id => new SearchDocument { ["hotelId"] = id, ["rating"] = random.Next(1, 6) }).ToList();
+            }
+
+            // Upload the empty hotels in batches of 1000 until we're complete
+            SearchClient client = resources.GetSearchClient();
+            for (int i = 0; i < hotels.Count; i += 1000)
+            {
+                IEnumerable<SearchDocument> nextHotels = hotels.Skip(i).Take(1000);
+                if (!nextHotels.Any())
+                { break; }
+                await client.IndexDocumentsAsync(IndexDocumentsBatch.Upload(nextHotels));
+                await resources.WaitForIndexingAsync();
+            }
+
+            return resources;
         }
         #endregion Create Test Resources
 

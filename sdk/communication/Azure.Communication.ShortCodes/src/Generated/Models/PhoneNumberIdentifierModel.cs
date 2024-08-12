@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
     /// <summary> A phone number. </summary>
     internal partial class PhoneNumberIdentifierModel
     {
-        /// <summary> Initializes a new instance of PhoneNumberIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberIdentifierModel"/>. </summary>
         /// <param name="value"> The phone number in E.164 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PhoneNumberIdentifierModel(string value)

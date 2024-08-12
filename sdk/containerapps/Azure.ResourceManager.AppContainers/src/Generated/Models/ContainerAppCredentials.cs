@@ -6,28 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App credentials. </summary>
     public partial class ContainerAppCredentials
     {
-        /// <summary> Initializes a new instance of ContainerAppCredentials. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCredentials"/>. </summary>
         public ContainerAppCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppCredentials"/>. </summary>
         /// <param name="clientId"> Client Id. </param>
         /// <param name="clientSecret"> Client Secret. </param>
         /// <param name="tenantId"> Tenant Id. </param>
+        /// <param name="kind"> Kind of auth github does for deploying the template. </param>
         /// <param name="subscriptionId"> Subscription Id. </param>
-        internal ContainerAppCredentials(string clientId, string clientSecret, Guid? tenantId, string subscriptionId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppCredentials(string clientId, string clientSecret, Guid? tenantId, string kind, string subscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
             TenantId = tenantId;
+            Kind = kind;
             SubscriptionId = subscriptionId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Client Id. </summary>
@@ -36,6 +73,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string ClientSecret { get; set; }
         /// <summary> Tenant Id. </summary>
         public Guid? TenantId { get; set; }
+        /// <summary> Kind of auth github does for deploying the template. </summary>
+        public string Kind { get; set; }
         /// <summary> Subscription Id. </summary>
         public string SubscriptionId { get; set; }
     }

@@ -1,5 +1,5 @@
 # Defining Custom Credential types
-The Azure.Identity library covers a broad range of Azure Active Directory authentication scenarios. However, it's possible the credential implementations in Azure.Identity might not meet the specific needs your application, or an application might want to avoid taking a dependency on the Azure.Identity library.
+The Azure.Identity library covers a broad range of Microsoft Entra authentication scenarios. However, it's possible the credential implementations in Azure.Identity might not meet the specific needs your application, or an application might want to avoid taking a dependency on the Azure.Identity library.
 
 ## Authenticating with a prefetched access token
 

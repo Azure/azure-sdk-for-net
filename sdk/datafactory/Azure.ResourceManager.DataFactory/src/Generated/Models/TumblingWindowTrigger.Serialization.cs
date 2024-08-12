@@ -6,25 +6,40 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TumblingWindowTrigger : IUtf8JsonSerializable
+    public partial class TumblingWindowTrigger : IUtf8JsonSerializable, IJsonModel<TumblingWindowTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TumblingWindowTrigger>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<TumblingWindowTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("pipeline"u8);
-            writer.WriteObjectValue(Pipeline);
+            writer.WriteObjectValue(Pipeline, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(TriggerType);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RuntimeState))
+            {
+                writer.WritePropertyName("runtimeState"u8);
+                writer.WriteStringValue(RuntimeState.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
@@ -40,7 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -61,18 +79,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Delay))
             {
                 writer.WritePropertyName("delay"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Delay);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Delay.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Delay);
             }
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy);
+                writer.WriteObjectValue(RetryPolicy, options);
             }
             if (Optional.IsCollectionDefined(DependsOn))
             {
@@ -80,7 +94,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,38 +105,55 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static TumblingWindowTrigger DeserializeTumblingWindowTrigger(JsonElement element)
+        TumblingWindowTrigger IJsonModel<TumblingWindowTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTumblingWindowTrigger(document.RootElement, options);
+        }
+
+        internal static TumblingWindowTrigger DeserializeTumblingWindowTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             TriggerPipelineReference pipeline = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<FactoryTriggerRuntimeState> runtimeState = default;
-            Optional<IList<BinaryData>> annotations = default;
+            string description = default;
+            DataFactoryTriggerRuntimeState? runtimeState = default;
+            IList<BinaryData> annotations = default;
             TumblingWindowFrequency frequency = default;
             int interval = default;
             DateTimeOffset startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<BinaryData> delay = default;
+            DateTimeOffset? endTime = default;
+            DataFactoryElement<string> delay = default;
             int maxConcurrency = default;
-            Optional<RetryPolicy> retryPolicy = default;
-            Optional<IList<DependencyReference>> dependsOn = default;
+            RetryPolicy retryPolicy = default;
+            IList<DependencyReference> dependsOn = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipeline"u8))
                 {
-                    pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(property.Value);
+                    pipeline = TriggerPipelineReference.DeserializeTriggerPipelineReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -141,7 +172,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    runtimeState = new FactoryTriggerRuntimeState(property.Value.GetString());
+                    runtimeState = new DataFactoryTriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("annotations"u8))
@@ -204,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            delay = BinaryData.FromString(property0.Value.GetRawText());
+                            delay = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("maxConcurrency"u8))
@@ -218,7 +249,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            retryPolicy = RetryPolicy.DeserializeRetryPolicy(property0.Value);
+                            retryPolicy = RetryPolicy.DeserializeRetryPolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dependsOn"u8))
@@ -230,7 +261,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DependencyReference> array = new List<DependencyReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DependencyReference.DeserializeDependencyReference(item));
+                                array.Add(DependencyReference.DeserializeDependencyReference(item, options));
                             }
                             dependsOn = array;
                             continue;
@@ -241,7 +272,52 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TumblingWindowTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, pipeline, frequency, interval, startTime, Optional.ToNullable(endTime), delay.Value, maxConcurrency, retryPolicy.Value, Optional.ToList(dependsOn));
+            return new TumblingWindowTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                pipeline,
+                frequency,
+                interval,
+                startTime,
+                endTime,
+                delay,
+                maxConcurrency,
+                retryPolicy,
+                dependsOn ?? new ChangeTrackingList<DependencyReference>());
         }
+
+        BinaryData IPersistableModel<TumblingWindowTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TumblingWindowTrigger IPersistableModel<TumblingWindowTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TumblingWindowTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTumblingWindowTrigger(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TumblingWindowTrigger)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TumblingWindowTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

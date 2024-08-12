@@ -7,18 +7,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for CosmosDB (MongoDB API) data source. </summary>
-    public partial class CosmosDBMongoDBApiLinkedService : FactoryLinkedServiceDefinition
+    public partial class CosmosDBMongoDBApiLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of CosmosDBMongoDBApiLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiLinkedService"/>. </summary>
         /// <param name="connectionString"> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
-        public CosmosDBMongoDBApiLinkedService(BinaryData connectionString, BinaryData database)
+        public CosmosDBMongoDBApiLinkedService(DataFactoryElement<string> connectionString, DataFactoryElement<string> database)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
             Argument.AssertNotNull(database, nameof(database));
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "CosmosDbMongoDbApi";
         }
 
-        /// <summary> Initializes a new instance of CosmosDBMongoDBApiLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="isServerVersionAbove32"> Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="connectionString"> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string). </param>
-        internal CosmosDBMongoDBApiLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData isServerVersionAbove32, BinaryData connectionString, BinaryData database) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CosmosDBMongoDBApiLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<bool> isServerVersionAbove32, DataFactoryElement<string> connectionString, DataFactoryElement<string> database) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             IsServerVersionAbove32 = isServerVersionAbove32;
             ConnectionString = connectionString;
@@ -46,98 +46,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "CosmosDbMongoDbApi";
         }
 
-        /// <summary>
-        /// Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData IsServerVersionAbove32 { get; set; }
-        /// <summary>
-        /// The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ConnectionString { get; set; }
-        /// <summary>
-        /// The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Database { get; set; }
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiLinkedService"/> for deserialization. </summary>
+        internal CosmosDBMongoDBApiLinkedService()
+        {
+        }
+
+        /// <summary> Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
+        public DataFactoryElement<bool> IsServerVersionAbove32 { get; set; }
+        /// <summary> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
+        public DataFactoryElement<string> ConnectionString { get; set; }
+        /// <summary> The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Database { get; set; }
     }
 }

@@ -16,13 +16,16 @@ using Moq;
 using Azure.Storage.Queues.Specialized;
 using Moq.Protected;
 using Azure.Core.TestFramework;
+using Azure.Identity;
+using NUnit.Framework.Internal;
+using BenchmarkDotNet.Disassemblers;
 
 namespace Azure.Storage.Queues.Test
 {
     public class QueueClientTests : QueueTestBase
     {
-        public QueueClientTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public QueueClientTests(bool async, QueueClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -124,7 +127,7 @@ namespace Azure.Storage.Queues.Test
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri(Tenants.TestConfigPremiumBlob.BlobServiceEndpoint).ToHttp();
 
             // Act
@@ -162,6 +165,103 @@ namespace Azure.Storage.Queues.Test
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => new QueueClient(uri, new AzureSasCredential(sas)),
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+        [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.PublicAudience);
+
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint))
+            {
+                QueueName = test.Queue.Name,
+            };
+
+            QueueClient aadQueue = InstrumentClient(new QueueClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                options));
+
+            // Assert
+            bool exists = await aadQueue.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            QueueClientOptions options = GetOptionsWithAudience(new QueueAudience($"https://{test.Queue.AccountName}.queue.core.windows.net/"));
+
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint))
+            {
+                QueueName = test.Queue.Name,
+            };
+
+            QueueClient aadQueue = InstrumentClient(new QueueClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                options));
+
+            // Assert
+            bool exists = await aadQueue.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.CreateQueueServiceAccountAudience(test.Queue.AccountName));
+
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint))
+            {
+                QueueName = test.Queue.Name,
+            };
+
+            QueueClient aadQueue = InstrumentClient(new QueueClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                options));
+
+            // Assert
+            bool exists = await aadQueue.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Arrange
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            QueueClientOptions options = GetOptionsWithAudience(new QueueAudience("https://badaudience.queue.core.windows.net"));
+
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint))
+            {
+                QueueName = test.Queue.Name,
+            };
+
+            QueueClient aadQueue = InstrumentClient(new QueueClient(
+                uriBuilder.ToUri(),
+                new MockCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadQueue.ExistsAsync(),
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -212,7 +312,35 @@ namespace Azure.Storage.Queues.Test
         {
             // Arrange
             var queueName = GetNewQueueName();
-            QueueServiceClient service = QueuesClientBuilder.GetServiceClient_OAuth();
+            QueueServiceClient service = GetServiceClient_OAuth();
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            try
+            {
+                // Act
+                Response result = await queue.CreateAsync();
+
+                // Assert
+                Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
+            }
+            finally
+            {
+                await queue.DeleteIfExistsAsync();
+            }
+        }
+
+        // Not possible to record
+        [LiveOnly]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2021_06_08)]
+        public async Task CreateAsync_WithOauthBearerChallenge()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueClientOptions options = new QueueClientOptions
+            {
+                Audience = QueueAudience.CreateQueueServiceAccountAudience("account"),
+            };
+            QueueServiceClient service = GetServiceClient_OAuth(options);
             QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
 
             try
@@ -365,7 +493,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedQueueClient.CreateIfNotExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -414,7 +542,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedQueueClient.ExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -460,7 +588,7 @@ namespace Azure.Storage.Queues.Test
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 unauthorizedQueueClient.DeleteIfExistsAsync(),
-                e => Assert.AreEqual("ResourceNotFound", e.ErrorCode));
+                e => Assert.AreEqual("NoAuthenticationInformation", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -1664,8 +1792,10 @@ namespace Azure.Storage.Queues.Test
                     constants.Sas.SharedKeyCredential,
                     GetOptions()));
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri =  queueClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             QueueSasBuilder sasBuilder = new QueueSasBuilder(permissions, expiresOn)
@@ -1678,6 +1808,7 @@ namespace Azure.Storage.Queues.Test
                 Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -1704,8 +1835,10 @@ namespace Azure.Storage.Queues.Test
                 QueueName = queueName
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = queueClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = queueClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             QueueSasBuilder sasBuilder2 = new QueueSasBuilder(permissions, expiresOn)
@@ -1718,6 +1851,7 @@ namespace Azure.Storage.Queues.Test
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -1842,13 +1976,52 @@ namespace Azure.Storage.Queues.Test
         [RecordedTest]
         public void CanMockClientConstructors()
         {
+            TokenCredential mockTokenCredential = new Mock<TokenCredential>().Object;
             // One has to call .Object to trigger constructor. It's lazy.
             var mock = new Mock<QueueClient>(TestConfigDefault.ConnectionString, "queuename", new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(TestConfigDefault.ConnectionString, "queuename").Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), GetNewSharedKeyCredentials(), new QueueClientOptions()).Object;
             mock = new Mock<QueueClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new QueueClientOptions()).Object;
-            mock = new Mock<QueueClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace), new QueueClientOptions()).Object;
+            mock = new Mock<QueueClient>(new Uri("https://test/test"), mockTokenCredential, new QueueClientOptions()).Object;
+        }
+
+        [RecordedTest]
+        [TestCase("", null)]
+        [TestCase("u", QueueAccessPolicyPermissions.Update)]
+        [TestCase("au", QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Update)]
+        [TestCase("rap", QueueAccessPolicyPermissions.Read | QueueAccessPolicyPermissions.Add | QueueAccessPolicyPermissions.Process)]
+        [TestCase("raup", QueueAccessPolicyPermissions.All)]
+        public async Task QueueClientPolicyPermissions_CheckIfSetCorrectly(string expectedPermissionsStr, QueueAccessPolicyPermissions? expectedPermissionsEnum)
+        {
+            await using DisposingQueue test = await GetTestQueueAsync();
+
+            QueueSignedIdentifier[] signedIdentifiers = new[]
+            {
+                new QueueSignedIdentifier
+                {
+                    Id = GetNewString(),
+                    AccessPolicy =
+                        new QueueAccessPolicy
+                        {
+                            StartsOn =  Recording.UtcNow.AddHours(-1),
+                            ExpiresOn =  Recording.UtcNow.AddHours(1),
+                            Permissions = expectedPermissionsStr
+                        }
+                }
+            };
+            await test.Queue.SetAccessPolicyAsync(signedIdentifiers);
+
+            Response<IEnumerable<Models.QueueSignedIdentifier>> getResult = await test.Queue.GetAccessPolicyAsync();
+            Models.QueueSignedIdentifier acl = getResult.Value.First();
+
+            string actualPermissionsStr = acl.AccessPolicy.Permissions;
+            QueueAccessPolicyPermissions? actualPermissionsEnum = acl.AccessPolicy.QueueAccessPolicyPermissions;
+
+            if (string.IsNullOrEmpty(expectedPermissionsStr)) expectedPermissionsStr = null;
+
+            Assert.AreEqual(expectedPermissionsStr, actualPermissionsStr);
+            Assert.AreEqual(expectedPermissionsEnum.ToPermissionsString(), actualPermissionsEnum.ToPermissionsString());
         }
     }
 }

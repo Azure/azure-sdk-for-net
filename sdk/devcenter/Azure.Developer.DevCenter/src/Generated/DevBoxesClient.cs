@@ -6,10 +6,12 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Developer.DevCenter.Models;
 
 namespace Azure.Developer.DevCenter
 {
@@ -21,7 +23,6 @@ namespace Azure.Developer.DevCenter
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _projectName;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
@@ -37,25 +38,20 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Initializes a new instance of DevBoxesClient. </summary>
         /// <param name="endpoint"> The DevCenter-specific URI to operate on. </param>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public DevBoxesClient(Uri endpoint, string projectName, TokenCredential credential) : this(endpoint, projectName, credential, new DevCenterClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DevBoxesClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DevCenterClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of DevBoxesClient. </summary>
         /// <param name="endpoint"> The DevCenter-specific URI to operate on. </param>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="projectName"/> or <paramref name="credential"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        public DevBoxesClient(Uri endpoint, string projectName, TokenCredential credential, DevCenterClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DevBoxesClient(Uri endpoint, TokenCredential credential, DevCenterClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new DevCenterClientOptions();
 
@@ -63,10 +59,43 @@ namespace Azure.Developer.DevCenter
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
-            _projectName = projectName;
             _apiVersion = options.Version;
         }
 
+        /// <summary> Gets a pool. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="poolName"> Pool name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolAsync(string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<DevBoxPool>> GetPoolAsync(string projectName, string poolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetPoolAsync(projectName, poolName, context).ConfigureAwait(false);
+            return Response.FromValue(DevBoxPool.FromResponse(response), response);
+        }
+
+        /// <summary> Gets a pool. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="poolName"> Pool name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPool(string,string,CancellationToken)']/*" />
+        public virtual Response<DevBoxPool> GetPool(string projectName, string poolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetPool(projectName, poolName, context);
+            return Response.FromValue(DevBoxPool.FromResponse(response), response);
+        }
+
         /// <summary>
         /// [Protocol Method] Gets a pool
         /// <list type="bullet">
@@ -75,24 +104,31 @@ namespace Azure.Developer.DevCenter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetPoolAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="poolName"> Pool name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetPoolAsync(string poolName, RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetPoolAsync(string projectName, string poolName, RequestContext context)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetPool");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPoolRequest(poolName, context);
+                using HttpMessage message = CreateGetPoolRequest(projectName, poolName, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -110,25 +146,114 @@ namespace Azure.Developer.DevCenter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetPool(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="poolName"> Pool name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPool(string,RequestContext)']/*" />
-        public virtual Response GetPool(string poolName, RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPool(string,string,RequestContext)']/*" />
+        public virtual Response GetPool(string projectName, string poolName, RequestContext context)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetPool");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPoolRequest(poolName, context);
+                using HttpMessage message = CreateGetPoolRequest(projectName, poolName, context);
                 return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a schedule. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="poolName"> Pool name. </param>
+        /// <param name="scheduleName"> Display name for the Schedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetScheduleAsync(string,string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<DevBoxSchedule>> GetScheduleAsync(string projectName, string poolName, string scheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetScheduleAsync(projectName, poolName, scheduleName, context).ConfigureAwait(false);
+            return Response.FromValue(DevBoxSchedule.FromResponse(response), response);
+        }
+
+        /// <summary> Gets a schedule. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="poolName"> Pool name. </param>
+        /// <param name="scheduleName"> Display name for the Schedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedule(string,string,string,CancellationToken)']/*" />
+        public virtual Response<DevBoxSchedule> GetSchedule(string projectName, string poolName, string scheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetSchedule(projectName, poolName, scheduleName, context);
+            return Response.FromValue(DevBoxSchedule.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets a schedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetScheduleAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="poolName"> Pool name. </param>
+        /// <param name="scheduleName"> Display name for the Schedule. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetScheduleAsync(string,string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetScheduleAsync(string projectName, string poolName, string scheduleName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetSchedule");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetScheduleRequest(projectName, poolName, scheduleName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -145,27 +270,34 @@ namespace Azure.Developer.DevCenter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSchedule(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
-        /// <param name="scheduleName"> The name of a schedule. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="poolName"> Pool name. </param>
+        /// <param name="scheduleName"> Display name for the Schedule. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetScheduleByPoolAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetScheduleByPoolAsync(string poolName, string scheduleName, RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedule(string,string,string,RequestContext)']/*" />
+        public virtual Response GetSchedule(string projectName, string poolName, string scheduleName, RequestContext context)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetScheduleByPool");
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetSchedule");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetScheduleByPoolRequest(poolName, scheduleName, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetScheduleRequest(projectName, poolName, scheduleName, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -174,35 +306,80 @@ namespace Azure.Developer.DevCenter
             }
         }
 
+        /// <summary> Gets a Dev Box. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxAsync(string,string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<DevBox>> GetDevBoxAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDevBoxAsync(projectName, userId, devBoxName, context).ConfigureAwait(false);
+            return Response.FromValue(DevBox.FromResponse(response), response);
+        }
+
+        /// <summary> Gets a Dev Box. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBox(string,string,string,CancellationToken)']/*" />
+        public virtual Response<DevBox> GetDevBox(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDevBox(projectName, userId, devBoxName, context);
+            return Response.FromValue(DevBox.FromResponse(response), response);
+        }
+
         /// <summary>
-        /// [Protocol Method] Gets a schedule.
+        /// [Protocol Method] Gets a Dev Box
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDevBoxAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
-        /// <param name="scheduleName"> The name of a schedule. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetScheduleByPool(string,string,RequestContext)']/*" />
-        public virtual Response GetScheduleByPool(string poolName, string scheduleName, RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxAsync(string,string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetDevBoxAsync(string projectName, string userId, string devBoxName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(scheduleName, nameof(scheduleName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetScheduleByPool");
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetDevBox");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetScheduleByPoolRequest(poolName, scheduleName, context);
-                return _pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateGetDevBoxRequest(projectName, userId, devBoxName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -219,27 +396,34 @@ namespace Azure.Developer.DevCenter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDevBox(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxByUserAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDevBoxByUserAsync(string devBoxName, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBox(string,string,string,RequestContext)']/*" />
+        public virtual Response GetDevBox(string projectName, string userId, string devBoxName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetDevBoxByUser");
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetDevBox");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDevBoxByUserRequest(devBoxName, userId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                using HttpMessage message = CreateGetDevBoxRequest(projectName, userId, devBoxName, context);
+                return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -248,35 +432,80 @@ namespace Azure.Developer.DevCenter
             }
         }
 
+        /// <summary> Gets RDP Connection info. </summary>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnectionAsync(string,string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<RemoteConnection>> GetRemoteConnectionAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetRemoteConnectionAsync(projectName, userId, devBoxName, context).ConfigureAwait(false);
+            return Response.FromValue(RemoteConnection.FromResponse(response), response);
+        }
+
+        /// <summary> Gets RDP Connection info. </summary>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnection(string,string,string,CancellationToken)']/*" />
+        public virtual Response<RemoteConnection> GetRemoteConnection(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetRemoteConnection(projectName, userId, devBoxName, context);
+            return Response.FromValue(RemoteConnection.FromResponse(response), response);
+        }
+
         /// <summary>
-        /// [Protocol Method] Gets a Dev Box
+        /// [Protocol Method] Gets RDP Connection info
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRemoteConnectionAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxByUser(string,string,RequestContext)']/*" />
-        public virtual Response GetDevBoxByUser(string devBoxName, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnectionAsync(string,string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetRemoteConnectionAsync(string projectName, string userId, string devBoxName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetDevBoxByUser");
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetRemoteConnection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDevBoxByUserRequest(devBoxName, userId, context);
-                return _pipeline.ProcessMessage(message, context);
+                using HttpMessage message = CreateGetRemoteConnectionRequest(projectName, userId, devBoxName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -293,26 +522,121 @@ namespace Azure.Developer.DevCenter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRemoteConnection(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnectionAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRemoteConnectionAsync(string devBoxName, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnection(string,string,string,RequestContext)']/*" />
+        public virtual Response GetRemoteConnection(string projectName, string userId, string devBoxName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetRemoteConnection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRemoteConnectionRequest(devBoxName, userId, context);
+                using HttpMessage message = CreateGetRemoteConnectionRequest(projectName, userId, devBoxName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets an action. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="actionName"> The name of the action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxActionAsync(string,string,string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<DevBoxAction>> GetDevBoxActionAsync(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetDevBoxActionAsync(projectName, userId, devBoxName, actionName, context).ConfigureAwait(false);
+            return Response.FromValue(DevBoxAction.FromResponse(response), response);
+        }
+
+        /// <summary> Gets an action. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="actionName"> The name of the action. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxAction(string,string,string,string,CancellationToken)']/*" />
+        public virtual Response<DevBoxAction> GetDevBoxAction(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetDevBoxAction(projectName, userId, devBoxName, actionName, context);
+            return Response.FromValue(DevBoxAction.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets an action.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDevBoxActionAsync(string,string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="actionName"> The name of the action. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxActionAsync(string,string,string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetDevBoxActionAsync(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetDevBoxAction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetDevBoxActionRequest(projectName, userId, devBoxName, actionName, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -323,33 +647,42 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets RDP Connection info
+        /// [Protocol Method] Gets an action.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDevBoxAction(string,string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="actionName"> The name of the action. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnection(string,string,RequestContext)']/*" />
-        public virtual Response GetRemoteConnection(string devBoxName, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxAction(string,string,string,string,RequestContext)']/*" />
+        public virtual Response GetDevBoxAction(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetRemoteConnection");
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetDevBoxAction");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetRemoteConnectionRequest(devBoxName, userId, context);
+                using HttpMessage message = CreateGetDevBoxActionRequest(projectName, userId, devBoxName, actionName, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -359,8 +692,9 @@ namespace Azure.Developer.DevCenter
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Gets an Upcoming Action.
+        /// [Protocol Method] Skips an occurrence of an action.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -369,26 +703,161 @@ namespace Azure.Developer.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
-        /// <param name="upcomingActionId"> The upcoming action id. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="actionName"> The name of the action. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingActionAsync(string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetUpcomingActionAsync(string devBoxName, string upcomingActionId, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='SkipActionAsync(string,string,string,string,RequestContext)']/*" />
+        public virtual async Task<Response> SkipActionAsync(string projectName, string userId, string devBoxName, string actionName, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(upcomingActionId, nameof(upcomingActionId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetUpcomingAction");
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.SkipAction");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUpcomingActionRequest(devBoxName, upcomingActionId, userId, context);
+                using HttpMessage message = CreateSkipActionRequest(projectName, userId, devBoxName, actionName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Skips an occurrence of an action.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="actionName"> The name of the action. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='SkipAction(string,string,string,string,RequestContext)']/*" />
+        public virtual Response SkipAction(string projectName, string userId, string devBoxName, string actionName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.SkipAction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSkipActionRequest(projectName, userId, devBoxName, actionName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delays the occurrence of an action. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="actionName"> The name of the action. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayActionAsync(string,string,string,string,DateTimeOffset,CancellationToken)']/*" />
+        public virtual async Task<Response<DevBoxAction>> DelayActionAsync(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DelayActionAsync(projectName, userId, devBoxName, actionName, delayUntil, context).ConfigureAwait(false);
+            return Response.FromValue(DevBoxAction.FromResponse(response), response);
+        }
+
+        /// <summary> Delays the occurrence of an action. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="actionName"> The name of the action. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayAction(string,string,string,string,DateTimeOffset,CancellationToken)']/*" />
+        public virtual Response<DevBoxAction> DelayAction(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = DelayAction(projectName, userId, devBoxName, actionName, delayUntil, context);
+            return Response.FromValue(DevBoxAction.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delays the occurrence of an action.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DelayActionAsync(string,string,string,string,DateTimeOffset,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="actionName"> The name of the action. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayActionAsync(string,string,string,string,DateTimeOffset,RequestContext)']/*" />
+        public virtual async Task<Response> DelayActionAsync(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
+
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.DelayAction");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDelayActionRequest(projectName, userId, devBoxName, actionName, delayUntil, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -399,35 +868,43 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets an Upcoming Action.
+        /// [Protocol Method] Delays the occurrence of an action.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DelayAction(string,string,string,string,DateTimeOffset,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
-        /// <param name="upcomingActionId"> The upcoming action id. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="actionName"> The name of the action. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingAction(string,string,string,RequestContext)']/*" />
-        public virtual Response GetUpcomingAction(string devBoxName, string upcomingActionId, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayAction(string,string,string,string,DateTimeOffset,RequestContext)']/*" />
+        public virtual Response DelayAction(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(upcomingActionId, nameof(upcomingActionId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(actionName, nameof(actionName));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.GetUpcomingAction");
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.DelayAction");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUpcomingActionRequest(devBoxName, upcomingActionId, userId, context);
+                using HttpMessage message = CreateDelayActionRequest(projectName, userId, devBoxName, actionName, delayUntil, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -437,162 +914,36 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        /// <summary>
-        /// [Protocol Method] Skips an Upcoming Action.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
-        /// <param name="upcomingActionId"> The upcoming action id. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='SkipUpcomingActionAsync(string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> SkipUpcomingActionAsync(string devBoxName, string upcomingActionId, string userId = "me", RequestContext context = null)
+        /// <summary> Lists available pools. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolsAsync(string,CancellationToken)']/*" />
+        public virtual AsyncPageable<DevBoxPool> GetPoolsAsync(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(upcomingActionId, nameof(upcomingActionId));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.SkipUpcomingAction");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSkipUpcomingActionRequest(devBoxName, upcomingActionId, userId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(projectName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, projectName, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBoxPool.DeserializeDevBoxPool(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
         }
 
-        /// <summary>
-        /// [Protocol Method] Skips an Upcoming Action.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
-        /// <param name="upcomingActionId"> The upcoming action id. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='SkipUpcomingAction(string,string,string,RequestContext)']/*" />
-        public virtual Response SkipUpcomingAction(string devBoxName, string upcomingActionId, string userId = "me", RequestContext context = null)
+        /// <summary> Lists available pools. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPools(string,CancellationToken)']/*" />
+        public virtual Pageable<DevBoxPool> GetPools(string projectName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(upcomingActionId, nameof(upcomingActionId));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.SkipUpcomingAction");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateSkipUpcomingActionRequest(devBoxName, upcomingActionId, userId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Delays an Upcoming Action.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
-        /// <param name="upcomingActionId"> The upcoming action id. </param>
-        /// <param name="delayUntil"> The delayed action time (UTC). </param>
-        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayUpcomingActionAsync(string,string,DateTimeOffset,string,RequestContext)']/*" />
-        public virtual async Task<Response> DelayUpcomingActionAsync(string devBoxName, string upcomingActionId, DateTimeOffset delayUntil, string userId = "me", RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(upcomingActionId, nameof(upcomingActionId));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.DelayUpcomingAction");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDelayUpcomingActionRequest(devBoxName, upcomingActionId, delayUntil, userId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Delays an Upcoming Action.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
-        /// <param name="upcomingActionId"> The upcoming action id. </param>
-        /// <param name="delayUntil"> The delayed action time (UTC). </param>
-        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/>, <paramref name="upcomingActionId"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayUpcomingAction(string,string,DateTimeOffset,string,RequestContext)']/*" />
-        public virtual Response DelayUpcomingAction(string devBoxName, string upcomingActionId, DateTimeOffset delayUntil, string userId = "me", RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
-            Argument.AssertNotNullOrEmpty(upcomingActionId, nameof(upcomingActionId));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
-
-            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.DelayUpcomingAction");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDelayUpcomingActionRequest(devBoxName, upcomingActionId, delayUntil, userId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(projectName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, projectName, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBoxPool.DeserializeDevBoxPool(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -603,19 +954,27 @@ namespace Azure.Developer.DevCenter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetPoolsAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolsAsync(int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetPoolsAsync(int? maxCount = null, string filter = null, RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolsAsync(string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetPoolsAsync(string projectName, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(maxCount, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, maxCount, filter, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(projectName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, projectName, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -626,19 +985,63 @@ namespace Azure.Developer.DevCenter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetPools(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPools(int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetPools(int? maxCount = null, string filter = null, RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPools(string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetPools(string projectName, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(maxCount, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, maxCount, filter, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(projectName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, projectName, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists available schedules for a pool. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="poolName"> Pool name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesAsync(string,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<DevBoxSchedule> GetSchedulesAsync(string projectName, string poolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(projectName, poolName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, projectName, poolName, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBoxSchedule.DeserializeDevBoxSchedule(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedules", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists available schedules for a pool. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="poolName"> Pool name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedules(string,string,CancellationToken)']/*" />
+        public virtual Pageable<DevBoxSchedule> GetSchedules(string projectName, string poolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(projectName, poolName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, projectName, poolName, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBoxSchedule.DeserializeDevBoxSchedule(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedules", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -649,24 +1052,29 @@ namespace Azure.Developer.DevCenter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSchedulesAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="poolName"> Pool name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesByPoolAsync(string,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSchedulesByPoolAsync(string poolName, int? maxCount = null, string filter = null, RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesAsync(string,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetSchedulesAsync(string projectName, string poolName, RequestContext context)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesByPoolRequest(poolName, maxCount, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesByPoolNextPageRequest(nextLink, poolName, maxCount, filter, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedulesByPool", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(projectName, poolName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, projectName, poolName, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedules", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -677,24 +1085,233 @@ namespace Azure.Developer.DevCenter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSchedules(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="poolName"> Pool name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesByPool(string,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSchedulesByPool(string poolName, int? maxCount = null, string filter = null, RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedules(string,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetSchedules(string projectName, string poolName, RequestContext context)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesByPoolRequest(poolName, maxCount, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesByPoolNextPageRequest(nextLink, poolName, maxCount, filter, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedulesByPool", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(projectName, poolName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, projectName, poolName, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedules", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxesAsync(CancellationToken)']/*" />
+        public virtual AsyncPageable<DevBox> GetAllDevBoxesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBox.DeserializeDevBox(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxes", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxes(CancellationToken)']/*" />
+        public virtual Pageable<DevBox> GetAllDevBoxes(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBox.DeserializeDevBox(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxes", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists Dev Boxes that the caller has access to in the DevCenter.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetAllDevBoxesAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxesAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAllDevBoxesAsync(RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxes", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists Dev Boxes that the caller has access to in the DevCenter.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetAllDevBoxes(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxes(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAllDevBoxes(RequestContext context)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxes", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUserAsync(string,CancellationToken)']/*" />
+        public virtual AsyncPageable<DevBox> GetAllDevBoxesByUserAsync(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBox.DeserializeDevBox(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxesByUser", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUser(string,CancellationToken)']/*" />
+        public virtual Pageable<DevBox> GetAllDevBoxesByUser(string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBox.DeserializeDevBox(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxesByUser", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists Dev Boxes in the Dev Center for a particular user.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetAllDevBoxesByUserAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUserAsync(string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetAllDevBoxesByUserAsync(string userId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxesByUser", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists Dev Boxes in the Dev Center for a particular user.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetAllDevBoxesByUser(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUser(string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetAllDevBoxesByUser(string userId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxesByUser", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists Dev Boxes in the project for a particular user. </summary>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxesAsync(string,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<DevBox> GetDevBoxesAsync(string projectName, string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxesRequest(projectName, userId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxesNextPageRequest(nextLink, projectName, userId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBox.DeserializeDevBox(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxes", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists Dev Boxes in the project for a particular user. </summary>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxes(string,string,CancellationToken)']/*" />
+        public virtual Pageable<DevBox> GetDevBoxes(string projectName, string userId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxesRequest(projectName, userId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxesNextPageRequest(nextLink, projectName, userId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBox.DeserializeDevBox(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxes", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -705,24 +1322,29 @@ namespace Azure.Developer.DevCenter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDevBoxesAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxesByUserAsync(string,string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDevBoxesByUserAsync(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxesAsync(string,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetDevBoxesAsync(string projectName, string userId, RequestContext context)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxesByUserRequest(userId, filter, maxCount, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxesByUser", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxesRequest(projectName, userId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxesNextPageRequest(nextLink, projectName, userId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxes", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -733,84 +1355,257 @@ namespace Azure.Developer.DevCenter
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDevBoxes(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxesByUser(string,string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDevBoxesByUser(string userId = "me", string filter = null, int? maxCount = null, RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxes(string,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetDevBoxes(string projectName, string userId, RequestContext context)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxesByUserRequest(userId, filter, maxCount, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxesByUser", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxesRequest(projectName, userId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxesNextPageRequest(nextLink, projectName, userId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxes", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists actions on a Dev Box. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxActionsAsync(string,string,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<DevBoxAction> GetDevBoxActionsAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxActionsRequest(projectName, userId, devBoxName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxActionsNextPageRequest(nextLink, projectName, userId, devBoxName, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBoxAction.DeserializeDevBoxAction(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxActions", "value", "nextLink", context);
+        }
+
+        /// <summary> Lists actions on a Dev Box. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxActions(string,string,string,CancellationToken)']/*" />
+        public virtual Pageable<DevBoxAction> GetDevBoxActions(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxActionsRequest(projectName, userId, devBoxName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxActionsNextPageRequest(nextLink, projectName, userId, devBoxName, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBoxAction.DeserializeDevBoxAction(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxActions", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] Lists upcoming actions on a Dev Box.
+        /// [Protocol Method] Lists actions on a Dev Box.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDevBoxActionsAsync(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingActionsAsync(string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetUpcomingActionsAsync(string devBoxName, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxActionsAsync(string,string,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetDevBoxActionsAsync(string projectName, string userId, string devBoxName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUpcomingActionsRequest(devBoxName, userId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUpcomingActionsNextPageRequest(nextLink, devBoxName, userId, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetUpcomingActions", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxActionsRequest(projectName, userId, devBoxName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxActionsNextPageRequest(nextLink, projectName, userId, devBoxName, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxActions", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] Lists upcoming actions on a Dev Box.
+        /// [Protocol Method] Lists actions on a Dev Box.
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetDevBoxActions(string,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetUpcomingActions(string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetUpcomingActions(string devBoxName, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxActions(string,string,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetDevBoxActions(string projectName, string userId, string devBoxName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetUpcomingActionsRequest(devBoxName, userId, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetUpcomingActionsNextPageRequest(nextLink, devBoxName, userId, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetUpcomingActions", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxActionsRequest(projectName, userId, devBoxName, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxActionsNextPageRequest(nextLink, projectName, userId, devBoxName, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxActions", "value", "nextLink", context);
+        }
+
+        /// <summary> Delays all actions. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayAllActionsAsync(string,string,string,DateTimeOffset,CancellationToken)']/*" />
+        public virtual AsyncPageable<DevBoxActionDelayResult> DelayAllActionsAsync(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateDelayAllActionsRequest(projectName, userId, devBoxName, delayUntil, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateDelayAllActionsNextPageRequest(nextLink, projectName, userId, devBoxName, delayUntil, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBoxActionDelayResult.DeserializeDevBoxActionDelayResult(e), ClientDiagnostics, _pipeline, "DevBoxesClient.DelayAllActions", "value", "nextLink", context);
+        }
+
+        /// <summary> Delays all actions. </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayAllActions(string,string,string,DateTimeOffset,CancellationToken)']/*" />
+        public virtual Pageable<DevBoxActionDelayResult> DelayAllActions(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateDelayAllActionsRequest(projectName, userId, devBoxName, delayUntil, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateDelayAllActionsNextPageRequest(nextLink, projectName, userId, devBoxName, delayUntil, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBoxActionDelayResult.DeserializeDevBoxActionDelayResult(e), ClientDiagnostics, _pipeline, "DevBoxesClient.DelayAllActions", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] Creates or updates a Dev Box.
+        /// [Protocol Method] Delays all actions.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DelayAllActionsAsync(string,string,string,DateTimeOffset,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayAllActionsAsync(string,string,string,DateTimeOffset,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> DelayAllActionsAsync(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateDelayAllActionsRequest(projectName, userId, devBoxName, delayUntil, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateDelayAllActionsNextPageRequest(nextLink, projectName, userId, devBoxName, delayUntil, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.DelayAllActions", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Delays all actions.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DelayAllActions(string,string,string,DateTimeOffset,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayAllActions(string,string,string,DateTimeOffset,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> DelayAllActions(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateDelayAllActionsRequest(projectName, userId, devBoxName, delayUntil, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateDelayAllActionsNextPageRequest(nextLink, projectName, userId, devBoxName, delayUntil, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.DelayAllActions", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or replaces a Dev Box.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -820,26 +1615,28 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The DevCenter Project upon which to execute the operation. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/>, <paramref name="content"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='CreateDevBoxAsync(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateDevBoxAsync(WaitUntil waitUntil, string devBoxName, RequestContent content, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='CreateDevBoxAsync(WaitUntil,string,string,string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> CreateDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
             Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.CreateDevBox");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateDevBoxRequest(devBoxName, content, userId, context);
+                using HttpMessage message = CreateCreateDevBoxRequest(projectName, userId, devBoxName, content, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.CreateDevBox", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -850,7 +1647,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Creates or updates a Dev Box.
+        /// [Protocol Method] Creates or replaces a Dev Box.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -860,26 +1657,28 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The DevCenter Project upon which to execute the operation. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/>, <paramref name="content"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='CreateDevBox(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CreateDevBox(WaitUntil waitUntil, string devBoxName, RequestContent content, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='CreateDevBox(WaitUntil,string,string,string,RequestContent,RequestContext)']/*" />
+        public virtual Operation<BinaryData> CreateDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
             Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
             Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.CreateDevBox");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateDevBoxRequest(devBoxName, content, userId, context);
+                using HttpMessage message = CreateCreateDevBoxRequest(projectName, userId, devBoxName, content, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DevBoxesClient.CreateDevBox", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
@@ -889,6 +1688,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes a Dev Box.
         /// <list type="bullet">
@@ -900,25 +1700,27 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DeleteDevBoxAsync(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation> DeleteDevBoxAsync(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DeleteDevBoxAsync(WaitUntil,string,string,string,RequestContext)']/*" />
+        public virtual async Task<Operation> DeleteDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.DeleteDevBox");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteDevBoxRequest(devBoxName, userId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateDeleteDevBoxRequest(projectName, userId, devBoxName, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -927,6 +1729,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Deletes a Dev Box.
         /// <list type="bullet">
@@ -938,25 +1741,27 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DeleteDevBox(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual Operation DeleteDevBox(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DeleteDevBox(WaitUntil,string,string,string,RequestContext)']/*" />
+        public virtual Operation DeleteDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.DeleteDevBox");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteDevBoxRequest(devBoxName, userId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateDeleteDevBoxRequest(projectName, userId, devBoxName, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.DeleteDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -965,6 +1770,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Starts a Dev Box
         /// <list type="bullet">
@@ -976,25 +1782,27 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StartDevBoxAsync(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation> StartDevBoxAsync(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StartDevBoxAsync(WaitUntil,string,string,string,RequestContext)']/*" />
+        public virtual async Task<Operation> StartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.StartDevBox");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartDevBoxRequest(devBoxName, userId, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateStartDevBoxRequest(projectName, userId, devBoxName, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1003,6 +1811,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Starts a Dev Box
         /// <list type="bullet">
@@ -1014,25 +1823,27 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StartDevBox(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual Operation StartDevBox(WaitUntil waitUntil, string devBoxName, string userId = "me", RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StartDevBox(WaitUntil,string,string,string,RequestContext)']/*" />
+        public virtual Operation StartDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.StartDevBox");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStartDevBoxRequest(devBoxName, userId, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateStartDevBoxRequest(projectName, userId, devBoxName, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1041,6 +1852,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Stops a Dev Box
         /// <list type="bullet">
@@ -1052,26 +1864,28 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="hibernate"> Optional parameter to hibernate the dev box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StopDevBoxAsync(WaitUntil,string,string,bool?,RequestContext)']/*" />
-        public virtual async Task<Operation> StopDevBoxAsync(WaitUntil waitUntil, string devBoxName, string userId = "me", bool? hibernate = null, RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StopDevBoxAsync(WaitUntil,string,string,string,bool?,RequestContext)']/*" />
+        public virtual async Task<Operation> StopDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.StopDevBox");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopDevBoxRequest(devBoxName, userId, hibernate, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                using HttpMessage message = CreateStopDevBoxRequest(projectName, userId, devBoxName, hibernate, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1080,6 +1894,7 @@ namespace Azure.Developer.DevCenter
             }
         }
 
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
         /// [Protocol Method] Stops a Dev Box
         /// <list type="bullet">
@@ -1091,26 +1906,28 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="devBoxName"> The name of a Dev Box. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="hibernate"> Optional parameter to hibernate the dev box. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StopDevBox(WaitUntil,string,string,bool?,RequestContext)']/*" />
-        public virtual Operation StopDevBox(WaitUntil waitUntil, string devBoxName, string userId = "me", bool? hibernate = null, RequestContext context = null)
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='StopDevBox(WaitUntil,string,string,string,bool?,RequestContext)']/*" />
+        public virtual Operation StopDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, bool? hibernate = null, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
 
             using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.StopDevBox");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateStopDevBoxRequest(devBoxName, userId, hibernate, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.Location, context, waitUntil);
+                using HttpMessage message = CreateStopDevBoxRequest(projectName, userId, devBoxName, hibernate, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.StopDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1119,7 +1936,89 @@ namespace Azure.Developer.DevCenter
             }
         }
 
-        internal HttpMessage CreateGetPoolsRequest(int? maxCount, string filter, RequestContext context)
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Restarts a Dev Box
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='RestartDevBoxAsync(WaitUntil,string,string,string,RequestContext)']/*" />
+        public virtual async Task<Operation> RestartDevBoxAsync(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.RestartDevBox");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRestartDevBoxRequest(projectName, userId, devBoxName, context);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DevBoxesClient.RestartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
+        /// <summary>
+        /// [Protocol Method] Restarts a Dev Box
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
+        /// <param name="devBoxName"> Display name for the Dev Box. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
+        /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='RestartDevBox(WaitUntil,string,string,string,RequestContext)']/*" />
+        public virtual Operation RestartDevBox(WaitUntil waitUntil, string projectName, string userId, string devBoxName, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(userId, nameof(userId));
+            Argument.AssertNotNullOrEmpty(devBoxName, nameof(devBoxName));
+
+            using var scope = ClientDiagnostics.CreateScope("DevBoxesClient.RestartDevBox");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateRestartDevBoxRequest(projectName, userId, devBoxName, context);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DevBoxesClient.RestartDevBox", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateGetPoolsRequest(string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1127,23 +2026,15 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/pools", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetPoolRequest(string poolName, RequestContext context)
+        internal HttpMessage CreateGetPoolRequest(string projectName, string poolName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1151,7 +2042,7 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -1160,7 +2051,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetSchedulesByPoolRequest(string poolName, int? maxCount, string filter, RequestContext context)
+        internal HttpMessage CreateGetSchedulesRequest(string projectName, string poolName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1168,25 +2059,17 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolName, true);
             uri.AppendPath("/schedules", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetScheduleByPoolRequest(string poolName, string scheduleName, RequestContext context)
+        internal HttpMessage CreateGetScheduleRequest(string projectName, string poolName, string scheduleName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1194,7 +2077,7 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/pools/", false);
             uri.AppendPath(poolName, true);
             uri.AppendPath("/schedules/", false);
@@ -1205,33 +2088,37 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetDevBoxesByUserRequest(string userId, string filter, int? maxCount, RequestContext context)
+        internal HttpMessage CreateGetAllDevBoxesRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
-            uri.AppendPath("/users/", false);
-            uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetDevBoxByUserRequest(string devBoxName, string userId, RequestContext context)
+        internal HttpMessage CreateGetAllDevBoxesByUserRequest(string userId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDevBoxesRequest(string projectName, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1239,7 +2126,25 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDevBoxRequest(string projectName, string userId, string devBoxName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
@@ -1250,7 +2155,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateCreateDevBoxRequest(string devBoxName, RequestContent content, string userId, RequestContext context)
+        internal HttpMessage CreateCreateDevBoxRequest(string projectName, string userId, string devBoxName, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -1258,7 +2163,7 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
@@ -1271,7 +2176,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateDeleteDevBoxRequest(string devBoxName, string userId, RequestContext context)
+        internal HttpMessage CreateDeleteDevBoxRequest(string projectName, string userId, string devBoxName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202204);
             var request = message.Request;
@@ -1279,7 +2184,7 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
@@ -1290,7 +2195,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateStartDevBoxRequest(string devBoxName, string userId, RequestContext context)
+        internal HttpMessage CreateStartDevBoxRequest(string projectName, string userId, string devBoxName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -1298,7 +2203,7 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
@@ -1310,7 +2215,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateStopDevBoxRequest(string devBoxName, string userId, bool? hibernate, RequestContext context)
+        internal HttpMessage CreateStopDevBoxRequest(string projectName, string userId, string devBoxName, bool? hibernate, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier202);
             var request = message.Request;
@@ -1318,7 +2223,7 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
@@ -1334,7 +2239,27 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetRemoteConnectionRequest(string devBoxName, string userId, RequestContext context)
+        internal HttpMessage CreateRestartDevBoxRequest(string projectName, string userId, string devBoxName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendPath(":restart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetRemoteConnectionRequest(string projectName, string userId, string devBoxName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1342,7 +2267,7 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
@@ -1354,7 +2279,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetUpcomingActionsRequest(string devBoxName, string userId, RequestContext context)
+        internal HttpMessage CreateGetDevBoxActionsRequest(string projectName, string userId, string devBoxName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1362,19 +2287,19 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
-            uri.AppendPath("/upcomingActions", false);
+            uri.AppendPath("/actions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetUpcomingActionRequest(string devBoxName, string upcomingActionId, string userId, RequestContext context)
+        internal HttpMessage CreateGetDevBoxActionRequest(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1382,20 +2307,20 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
-            uri.AppendPath("/upcomingActions/", false);
-            uri.AppendPath(upcomingActionId, true);
+            uri.AppendPath("/actions/", false);
+            uri.AppendPath(actionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateSkipUpcomingActionRequest(string devBoxName, string upcomingActionId, string userId, RequestContext context)
+        internal HttpMessage CreateSkipActionRequest(string projectName, string userId, string devBoxName, string actionName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -1403,13 +2328,13 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
-            uri.AppendPath("/upcomingActions/", false);
-            uri.AppendPath(upcomingActionId, true);
+            uri.AppendPath("/actions/", false);
+            uri.AppendPath(actionName, true);
             uri.AppendPath(":skip", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -1417,7 +2342,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateDelayUpcomingActionRequest(string devBoxName, string upcomingActionId, DateTimeOffset delayUntil, string userId, RequestContext context)
+        internal HttpMessage CreateDelayActionRequest(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1425,22 +2350,43 @@ namespace Azure.Developer.DevCenter
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/projects/", false);
-            uri.AppendPath(_projectName, true);
+            uri.AppendPath(projectName, true);
             uri.AppendPath("/users/", false);
             uri.AppendPath(userId, true);
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
-            uri.AppendPath("/upcomingActions/", false);
-            uri.AppendPath(upcomingActionId, true);
+            uri.AppendPath("/actions/", false);
+            uri.AppendPath(actionName, true);
             uri.AppendPath(":delay", false);
-            uri.AppendQuery("delayUntil", delayUntil, "O", true);
+            uri.AppendQuery("until", delayUntil, "O", true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetPoolsNextPageRequest(string nextLink, int? maxCount, string filter, RequestContext context)
+        internal HttpMessage CreateDelayAllActionsRequest(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/projects/", false);
+            uri.AppendPath(projectName, true);
+            uri.AppendPath("/users/", false);
+            uri.AppendPath(userId, true);
+            uri.AppendPath("/devboxes/", false);
+            uri.AppendPath(devBoxName, true);
+            uri.AppendPath("/actions:delay", false);
+            uri.AppendQuery("until", delayUntil, "O", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetPoolsNextPageRequest(string nextLink, string projectName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1453,7 +2399,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetSchedulesByPoolNextPageRequest(string nextLink, string poolName, int? maxCount, string filter, RequestContext context)
+        internal HttpMessage CreateGetSchedulesNextPageRequest(string nextLink, string projectName, string poolName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1466,7 +2412,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetDevBoxesByUserNextPageRequest(string nextLink, string userId, string filter, int? maxCount, RequestContext context)
+        internal HttpMessage CreateGetAllDevBoxesNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1479,7 +2425,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetUpcomingActionsNextPageRequest(string nextLink, string devBoxName, string userId, RequestContext context)
+        internal HttpMessage CreateGetAllDevBoxesByUserNextPageRequest(string nextLink, string userId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1490,6 +2436,56 @@ namespace Azure.Developer.DevCenter
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        internal HttpMessage CreateGetDevBoxesNextPageRequest(string nextLink, string projectName, string userId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDevBoxActionsNextPageRequest(string nextLink, string projectName, string userId, string devBoxName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDelayAllActionsNextPageRequest(string nextLink, string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         private static ResponseClassifier _responseClassifier200;

@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Set of conditions in the Rewrite Rule in Application Gateway. </summary>
     public partial class ApplicationGatewayRewriteRuleCondition
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleCondition. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRuleCondition"/>. </summary>
         public ApplicationGatewayRewriteRuleCondition()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayRewriteRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayRewriteRuleCondition"/>. </summary>
         /// <param name="variable"> The condition parameter of the RewriteRuleCondition. </param>
         /// <param name="pattern"> The pattern, either fixed string or regular expression, that evaluates the truthfulness of the condition. </param>
         /// <param name="ignoreCase"> Setting this parameter to truth value with force the pattern to do a case in-sensitive comparison. </param>
         /// <param name="negate"> Setting this value as truth will force to check the negation of the condition given by the user. </param>
-        internal ApplicationGatewayRewriteRuleCondition(string variable, string pattern, bool? ignoreCase, bool? negate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayRewriteRuleCondition(string variable, string pattern, bool? ignoreCase, bool? negate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Variable = variable;
             Pattern = pattern;
             IgnoreCase = ignoreCase;
             Negate = negate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The condition parameter of the RewriteRuleCondition. </summary>

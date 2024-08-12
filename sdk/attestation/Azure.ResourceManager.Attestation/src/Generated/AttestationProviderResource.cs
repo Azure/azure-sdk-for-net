@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Attestation.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,13 +20,16 @@ namespace Azure.ResourceManager.Attestation
 {
     /// <summary>
     /// A Class representing an AttestationProvider along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AttestationProviderResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAttestationProviderResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAttestationProvider method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AttestationProviderResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAttestationProviderResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAttestationProvider method.
     /// </summary>
     public partial class AttestationProviderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AttestationProviderResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="providerName"> The providerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string providerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}";
@@ -40,12 +42,15 @@ namespace Azure.ResourceManager.Attestation
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly AttestationProviderData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Attestation/attestationProviders";
+
         /// <summary> Initializes a new instance of the <see cref="AttestationProviderResource"/> class for mocking. </summary>
         protected AttestationProviderResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AttestationProviderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AttestationProviderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AttestationProviderResource(ArmClient client, AttestationProviderData data) : this(client, data.Id)
@@ -68,9 +73,6 @@ namespace Azure.ResourceManager.Attestation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Attestation/attestationProviders";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,7 +99,7 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> An object representing collection of AttestationPrivateEndpointConnectionResources and their operations over a AttestationPrivateEndpointConnectionResource. </returns>
         public virtual AttestationPrivateEndpointConnectionCollection GetAttestationPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new AttestationPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new AttestationPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,12 +113,20 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AttestationPrivateEndpointConnectionResource>> GetAttestationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -134,12 +144,20 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AttestationPrivateEndpointConnectionResource> GetAttestationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -156,6 +174,14 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,6 +215,14 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -221,6 +255,14 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -232,7 +274,9 @@ namespace Azure.ResourceManager.Attestation
             try
             {
                 var response = await _attestationProviderRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AttestationArmOperation(response);
+                var uri = _attestationProviderRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AttestationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -255,6 +299,14 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -266,7 +318,9 @@ namespace Azure.ResourceManager.Attestation
             try
             {
                 var response = _attestationProviderRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new AttestationArmOperation(response);
+                var uri = _attestationProviderRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AttestationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -288,6 +342,14 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,6 +385,14 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Client supplied parameters. </param>
@@ -357,14 +427,18 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_ListByProvider</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AttestationPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AttestationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AttestationPrivateLinkResource> GetPrivateLinkResourcesByProviderAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByProviderRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "AttestationProviderResource.GetPrivateLinkResourcesByProvider", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "AttestationProviderResource.GetPrivateLinkResourcesByProvider", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -378,14 +452,18 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_ListByProvider</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AttestationPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AttestationPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AttestationPrivateLinkResource> GetPrivateLinkResourcesByProvider(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByProviderRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "AttestationProviderResource.GetPrivateLinkResourcesByProvider", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AttestationPrivateLinkResource.DeserializeAttestationPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "AttestationProviderResource.GetPrivateLinkResourcesByProvider", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -398,6 +476,14 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -453,6 +539,14 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -507,6 +601,14 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -556,6 +658,14 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -604,6 +714,14 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -656,6 +774,14 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -5,7 +5,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
     internal static class Constants
     {
-        public static readonly char[] HeaderSeparator = { ',' };
+        public static readonly char[] HeaderSeparator = { ',', ' '};
         public const string AllowedAllOrigins = "*";
 
         // WebPubSubOptions can be set by customers.

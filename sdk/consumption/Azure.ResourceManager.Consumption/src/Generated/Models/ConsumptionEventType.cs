@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Identifies the type of the event.
-    /// Serialized Name: EventType
-    /// </summary>
+    /// <summary> Identifies the type of the event. </summary>
     public readonly partial struct ConsumptionEventType : IEquatable<ConsumptionEventType>
     {
         private readonly string _value;
@@ -34,45 +31,21 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string NewCreditValue = "NewCredit";
         private const string CreditExpiredValue = "CreditExpired";
 
-        /// <summary>
-        /// SettledCharges
-        /// Serialized Name: EventType.SettledCharges
-        /// </summary>
+        /// <summary> SettledCharges. </summary>
         public static ConsumptionEventType SettledCharges { get; } = new ConsumptionEventType(SettledChargesValue);
-        /// <summary>
-        /// PendingCharges
-        /// Serialized Name: EventType.PendingCharges
-        /// </summary>
+        /// <summary> PendingCharges. </summary>
         public static ConsumptionEventType PendingCharges { get; } = new ConsumptionEventType(PendingChargesValue);
-        /// <summary>
-        /// PendingAdjustments
-        /// Serialized Name: EventType.PendingAdjustments
-        /// </summary>
+        /// <summary> PendingAdjustments. </summary>
         public static ConsumptionEventType PendingAdjustments { get; } = new ConsumptionEventType(PendingAdjustmentsValue);
-        /// <summary>
-        /// PendingNewCredit
-        /// Serialized Name: EventType.PendingNewCredit
-        /// </summary>
+        /// <summary> PendingNewCredit. </summary>
         public static ConsumptionEventType PendingNewCredit { get; } = new ConsumptionEventType(PendingNewCreditValue);
-        /// <summary>
-        /// PendingExpiredCredit
-        /// Serialized Name: EventType.PendingExpiredCredit
-        /// </summary>
+        /// <summary> PendingExpiredCredit. </summary>
         public static ConsumptionEventType PendingExpiredCredit { get; } = new ConsumptionEventType(PendingExpiredCreditValue);
-        /// <summary>
-        /// UnKnown
-        /// Serialized Name: EventType.UnKnown
-        /// </summary>
+        /// <summary> UnKnown. </summary>
         public static ConsumptionEventType UnKnown { get; } = new ConsumptionEventType(UnKnownValue);
-        /// <summary>
-        /// NewCredit
-        /// Serialized Name: EventType.NewCredit
-        /// </summary>
+        /// <summary> NewCredit. </summary>
         public static ConsumptionEventType NewCredit { get; } = new ConsumptionEventType(NewCreditValue);
-        /// <summary>
-        /// CreditExpired
-        /// Serialized Name: EventType.CreditExpired
-        /// </summary>
+        /// <summary> CreditExpired. </summary>
         public static ConsumptionEventType CreditExpired { get; } = new ConsumptionEventType(CreditExpiredValue);
         /// <summary> Determines if two <see cref="ConsumptionEventType"/> values are the same. </summary>
         public static bool operator ==(ConsumptionEventType left, ConsumptionEventType right) => left.Equals(right);
@@ -89,7 +62,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

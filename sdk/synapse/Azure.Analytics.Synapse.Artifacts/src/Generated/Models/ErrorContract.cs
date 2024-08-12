@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Contains details when the response code indicates an error. </summary>
     internal partial class ErrorContract
     {
-        /// <summary> Initializes a new instance of ErrorContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorContract"/>. </summary>
         internal ErrorContract()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorContract"/>. </summary>
         /// <param name="error"> The error details. </param>
         internal ErrorContract(ErrorResponse error)
         {

@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A rule condition based on a certain number of locations failing. </summary>
     public partial class LocationThresholdRuleCondition : AlertRuleCondition
     {
-        /// <summary> Initializes a new instance of LocationThresholdRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationThresholdRuleCondition"/>. </summary>
         /// <param name="failedLocationCount"> the number of locations that must fail to activate the alert. </param>
         public LocationThresholdRuleCondition(int failedLocationCount)
         {
@@ -20,20 +21,26 @@ namespace Azure.ResourceManager.Monitor.Models
             OdataType = "Microsoft.Azure.Management.Insights.Models.LocationThresholdRuleCondition";
         }
 
-        /// <summary> Initializes a new instance of LocationThresholdRuleCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocationThresholdRuleCondition"/>. </summary>
         /// <param name="odataType"> specifies the type of condition. This can be one of three types: ManagementEventRuleCondition (occurrences of management events), LocationThresholdRuleCondition (based on the number of failures of a web test), and ThresholdRuleCondition (based on the threshold of a metric). </param>
         /// <param name="dataSource">
         /// the resource from which the rule collects its data. For this type dataSource will always be of type RuleMetricDataSource.
         /// Please note <see cref="RuleDataSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="RuleManagementEventDataSource"/> and <see cref="RuleMetricDataSource"/>.
         /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day. </param>
         /// <param name="failedLocationCount"> the number of locations that must fail to activate the alert. </param>
-        internal LocationThresholdRuleCondition(string odataType, RuleDataSource dataSource, TimeSpan? windowSize, int failedLocationCount) : base(odataType, dataSource)
+        internal LocationThresholdRuleCondition(string odataType, RuleDataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan? windowSize, int failedLocationCount) : base(odataType, dataSource, serializedAdditionalRawData)
         {
             WindowSize = windowSize;
             FailedLocationCount = failedLocationCount;
             OdataType = odataType ?? "Microsoft.Azure.Management.Insights.Models.LocationThresholdRuleCondition";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LocationThresholdRuleCondition"/> for deserialization. </summary>
+        internal LocationThresholdRuleCondition()
+        {
         }
 
         /// <summary> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. If specified then it must be between 5 minutes and 1 day. </summary>

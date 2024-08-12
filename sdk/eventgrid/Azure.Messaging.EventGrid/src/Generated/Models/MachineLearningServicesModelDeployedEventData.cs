@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.ModelDeployed event. </summary>
     public partial class MachineLearningServicesModelDeployedEventData
     {
-        /// <summary> Initializes a new instance of MachineLearningServicesModelDeployedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelDeployedEventData"/>. </summary>
         internal MachineLearningServicesModelDeployedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningServicesModelDeployedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelDeployedEventData"/>. </summary>
         /// <param name="serviceName"> The name of the deployed service. </param>
         /// <param name="serviceComputeType"> The compute type (e.g. ACI, AKS) of the deployed service. </param>
         /// <param name="modelIds"> A common separated list of model IDs. The IDs of the models deployed in the service. </param>

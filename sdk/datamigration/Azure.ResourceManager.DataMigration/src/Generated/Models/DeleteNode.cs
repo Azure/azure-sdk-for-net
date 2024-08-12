@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Details of node to be deleted. </summary>
     public partial class DeleteNode
     {
-        /// <summary> Initializes a new instance of DeleteNode. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeleteNode"/>. </summary>
         public DeleteNode()
         {
         }
 
-        /// <summary> Initializes a new instance of DeleteNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteNode"/>. </summary>
         /// <param name="nodeName"> The name of node to delete. </param>
         /// <param name="integrationRuntimeName"> The name of integration runtime. </param>
-        internal DeleteNode(string nodeName, string integrationRuntimeName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeleteNode(string nodeName, string integrationRuntimeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NodeName = nodeName;
             IntegrationRuntimeName = integrationRuntimeName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of node to delete. </summary>

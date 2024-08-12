@@ -144,7 +144,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// rescheduled when another Compute Node becomes available. Possible
         /// values include: 'idle', 'rebooting', 'reimaging', 'running',
         /// 'unusable', 'creating', 'starting', 'waitingForStartTask',
-        /// 'startTaskFailed', 'unknown', 'leavingPool', 'offline', 'preempted'
+        /// 'startTaskFailed', 'unknown', 'leavingPool', 'offline',
+        /// 'preempted', 'upgradingOS'
         /// </remarks>
         [JsonProperty(PropertyName = "state")]
         public ComputeNodeState? State { get; set; }

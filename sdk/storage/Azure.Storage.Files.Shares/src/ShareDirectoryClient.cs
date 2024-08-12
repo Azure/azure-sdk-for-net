@@ -8,9 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
-using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -121,8 +121,8 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary>
-        /// Determines whether the client is able to generate a SAS.
-        /// If the client is authenticated with a <see cref="StorageSharedKeyCredential"/>.
+        /// Indicates whether the client is able to generate a SAS uri.
+        /// Client can generate a SAS url if it is authenticated with a <see cref="StorageSharedKeyCredential"/>.
         /// </summary>
         public virtual bool CanGenerateSasUri => ClientConfiguration.SharedKeyCredential != null;
 
@@ -190,6 +190,7 @@ namespace Azure.Storage.Files.Shares
             string directoryPath,
             ShareClientOptions options)
         {
+            Argument.AssertNotNullOrWhiteSpace(shareName, nameof(shareName));
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
             ShareUriBuilder uriBuilder =
@@ -228,7 +229,9 @@ namespace Azure.Storage.Files.Shares
                   directoryUri: directoryUri,
                   authentication: (HttpPipelinePolicy)null,
                   options: options,
-                  storageSharedKeyCredential: null)
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -257,7 +260,9 @@ namespace Azure.Storage.Files.Shares
                   directoryUri: directoryUri,
                   authentication: credential.AsPolicy(),
                   options: options,
-                  storageSharedKeyCredential: credential)
+                  storageSharedKeyCredential: credential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -286,7 +291,13 @@ namespace Azure.Storage.Files.Shares
             Uri directoryUri,
             AzureSasCredential credential,
             ShareClientOptions options = default)
-            : this(directoryUri, credential.AsPolicy<ShareUriBuilder>(directoryUri), options, sasCredential:credential)
+            : this(
+                  directoryUri,
+                  credential.AsPolicy<ShareUriBuilder>(directoryUri),
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: credential,
+                  tokenCredential: null)
         {
         }
 
@@ -315,9 +326,13 @@ namespace Azure.Storage.Files.Shares
             ShareClientOptions options = default)
             : this(
                   directoryUri: directoryUri,
-                  authentication: credential.AsPolicy(options),
+                  authentication: credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? ShareAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
                   options: options ?? new ShareClientOptions(),
-                  storageSharedKeyCredential: null)
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(directoryUri);
         }
@@ -325,86 +340,6 @@ namespace Azure.Storage.Files.Shares
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
         /// class.
-        /// </summary>
-        /// <param name="directoryUri">
-        /// A <see cref="Uri"/> referencing the directory that includes the
-        /// name of the account, the name of the share, and the path of the
-        /// directory.
-        /// </param>
-        /// <param name="authentication">
-        /// An optional authentication policy used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        internal ShareDirectoryClient(
-            Uri directoryUri,
-            HttpPipelinePolicy authentication,
-            ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential)
-        {
-            Argument.AssertNotNull(directoryUri, nameof(directoryUri));
-            options ??= new ShareClientOptions();
-            _uri = directoryUri;
-            _clientConfiguration = new ShareClientConfiguration(
-                pipeline: options.Build(authentication),
-                sharedKeyCredential: storageSharedKeyCredential,
-                sasCredential: default,
-                clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options);
-            _directoryRestClient = BuildDirectoryRestClient(directoryUri);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="directoryUri">
-        /// A <see cref="Uri"/> referencing the directory that includes the
-        /// name of the account, the name of the share, and the path of the
-        /// directory.
-        /// </param>
-        /// <param name="authentication">
-        /// An optional authentication policy used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        /// <param name="sasCredential">
-        /// The shared access signature used to sign requests.
-        /// </param>
-        internal ShareDirectoryClient(
-            Uri directoryUri,
-            HttpPipelinePolicy authentication,
-            ShareClientOptions options,
-            AzureSasCredential sasCredential)
-        {
-            Argument.AssertNotNull(directoryUri, nameof(directoryUri));
-            options ??= new ShareClientOptions();
-            _uri = directoryUri;
-            _clientConfiguration = new ShareClientConfiguration(
-                pipeline: options.Build(authentication),
-                sasCredential: sasCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options);
-            _directoryRestClient = BuildDirectoryRestClient(directoryUri);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareFileClient"/>
-        /// class.
-        ///
-        /// This will create an instance that uses the same diagnostics as another
-        /// client. This client will be used within another API call of the parent
-        /// client (namely Rename). This is in the case that the new child client
-        /// has different credentials than the parent client.
         /// </summary>
         /// <param name="directoryUri">
         /// A <see cref="Uri"/> referencing the directory that includes the
@@ -432,6 +367,56 @@ namespace Azure.Storage.Files.Shares
                 sharedKeyCredential: default,
                 clientDiagnostics: diagnostics,
                 clientOptions: options);
+            _directoryRestClient = BuildDirectoryRestClient(directoryUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareDirectoryClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="directoryUri">
+        /// A <see cref="Uri"/> referencing the directory that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// directory.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The SAS credential used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
+        internal ShareDirectoryClient(
+            Uri directoryUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            AzureSasCredential sasCredential,
+            TokenCredential tokenCredential)
+        {
+            Argument.AssertNotNull(directoryUri, nameof(directoryUri));
+            options ??= new ShareClientOptions();
+            _uri = directoryUri;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: storageSharedKeyCredential,
+                sasCredential: sasCredential,
+                tokenCredential: tokenCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                clientOptions: options)
+            {
+                Audience = options.Audience ?? ShareAudience.DefaultAudience,
+            };
             _directoryRestClient = BuildDirectoryRestClient(directoryUri);
         }
 
@@ -546,21 +531,15 @@ namespace Azure.Storage.Files.Shares
 
         #region Create
         /// <summary>
-        /// The <see cref="Create"/> operation creates a new directory
+        /// The <see cref="Create(ShareDirectoryCreateOptions, CancellationToken)"/> operation creates a new directory
         /// at the specified <see cref="Uri"/>.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
         /// Create Directory</see>.
         /// </summary>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this directory.
-        /// </param>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the directory.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set on the directory.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -575,20 +554,19 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareDirectoryInfo> Create(
-            Metadata metadata = default,
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
+            ShareDirectoryCreateOptions options = default,
             CancellationToken cancellationToken = default) =>
             CreateInternal(
-                metadata,
-                smbProperties,
-                filePermission,
-                false, // async
-                cancellationToken)
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission?.Permission,
+                filePermissionFormat: options?.FilePermission?.PermissionFormat,
+                async: false, // async
+                cancellationToken: cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateAsync"/> operation creates a new directory
+        /// The <see cref="Create(Metadata, FileSmbProperties, string, CancellationToken)"/> operation creates a new directory
         /// at the specified <see cref="Uri"/>.
         ///
         /// For more information, see
@@ -616,15 +594,100 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<ShareDirectoryInfo> Create(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken) =>
+            CreateInternal(
+                metadata,
+                smbProperties,
+                filePermission,
+                filePermissionFormat: null,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateAsync(ShareDirectoryCreateOptions, CancellationToken)"/> operation creates a new directory
+        /// at the specified <see cref="Uri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
+        /// created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         public virtual async Task<Response<ShareDirectoryInfo>> CreateAsync(
-            Metadata metadata = default,
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
+            ShareDirectoryCreateOptions options = default,
             CancellationToken cancellationToken = default) =>
+            await CreateInternal(
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission?.Permission,
+                filePermissionFormat: options?.FilePermission?.PermissionFormat,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateAsync(Metadata, FileSmbProperties, string, CancellationToken)"/> operation creates a new directory
+        /// at the specified <see cref="Uri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
+        /// created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ShareDirectoryInfo>> CreateAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken) =>
             await CreateInternal(
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: null,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -645,6 +708,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermission">
         /// Optional file permission to set on the directory.
+        /// </param>
+        /// <param name="filePermissionFormat">
+        /// Optional file permission format.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -668,6 +734,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
+            FilePermissionFormat? filePermissionFormat,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -702,6 +769,7 @@ namespace Azure.Storage.Files.Shares
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                             metadata: metadata,
                             filePermission: filePermission,
+                            filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken)
@@ -715,6 +783,7 @@ namespace Azure.Storage.Files.Shares
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.FileTimeNow,
                             metadata: metadata,
                             filePermission: filePermission,
+                            filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken);
@@ -741,7 +810,7 @@ namespace Azure.Storage.Files.Shares
 
         #region CreateIfNotExists
         /// <summary>
-        /// The <see cref="CreateIfNotExists"/> operation creates a new directory,
+        /// The <see cref="CreateIfNotExistsAsync(ShareDirectoryCreateOptions, CancellationToken)"/> operation creates a new directory,
         /// if it does not already exists.  If the directory already exists, it is not
         /// modified.
         ///
@@ -749,14 +818,8 @@ namespace Azure.Storage.Files.Shares
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
         /// Create Directory</see>.
         /// </summary>
-        /// <param name="metadata">
-        /// Optional custom metadata to set for this directory.
-        /// </param>
-        /// <param name="smbProperties">
-        /// Optional SMB properties to set for the directory.
-        /// </param>
-        /// <param name="filePermission">
-        /// Optional file permission to set on the directory.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -771,19 +834,18 @@ namespace Azure.Storage.Files.Shares
         /// a failure occurs.
         /// </remarks>
         public virtual Response<ShareDirectoryInfo> CreateIfNotExists(
-            Metadata metadata = default,
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
+            ShareDirectoryCreateOptions options = default,
             CancellationToken cancellationToken = default) =>
             CreateIfNotExistsInternal(
-                metadata,
-                smbProperties,
-                filePermission,
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission?.Permission,
+                filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsAsync"/> operation creates a new directory,
+        /// The <see cref="CreateIfNotExists(Metadata, FileSmbProperties, string, CancellationToken)"/> operation creates a new directory,
         /// if it does not already exists.  If the directory already exists, it is not
         /// modified.
         ///
@@ -812,15 +874,100 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<ShareDirectoryInfo> CreateIfNotExists(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken) =>
+            CreateIfNotExistsInternal(
+                metadata,
+                smbProperties,
+                filePermission,
+                filePermissionFormat: null,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync(ShareDirectoryCreateOptions, CancellationToken)"/> operation creates a new directory,
+        /// if it does not already exists.  If the directory already exists, it is not
+        /// modified.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
+        /// created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
         public virtual async Task<Response<ShareDirectoryInfo>> CreateIfNotExistsAsync(
-            Metadata metadata = default,
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
+            ShareDirectoryCreateOptions options = default,
             CancellationToken cancellationToken = default) =>
+            await CreateIfNotExistsInternal(
+                metadata: options?.Metadata,
+                smbProperties: options?.SmbProperties,
+                filePermission: options?.FilePermission?.Permission,
+                filePermissionFormat: options?.FilePermission?.PermissionFormat,
+                async: true,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync(Metadata, FileSmbProperties, string, CancellationToken)"/> operation creates a new directory,
+        /// if it does not already exists.  If the directory already exists, it is not
+        /// modified.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-directory">
+        /// Create Directory</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Optional custom metadata to set for this directory.
+        /// </param>
+        /// <param name="smbProperties">
+        /// Optional SMB properties to set for the directory.
+        /// </param>
+        /// <param name="filePermission">
+        /// Optional file permission to set on the directory.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageDirectoryInfo}"/> describing the newly
+        /// created directory.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<ShareDirectoryInfo>> CreateIfNotExistsAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            Metadata metadata,
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken) =>
             await CreateIfNotExistsInternal(
                 metadata,
                 smbProperties,
                 filePermission,
+                filePermissionFormat: null,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -841,6 +988,9 @@ namespace Azure.Storage.Files.Shares
         /// </param>
         /// <param name="filePermission">
         /// Optional file permission to set on the directory.
+        /// </param>
+        /// <param name="filePermissionFormat">
+        /// Optional file permission format.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -864,6 +1014,7 @@ namespace Azure.Storage.Files.Shares
             Metadata metadata,
             FileSmbProperties smbProperties,
             string filePermission,
+            FilePermissionFormat? filePermissionFormat,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -879,6 +1030,7 @@ namespace Azure.Storage.Files.Shares
                         metadata,
                         smbProperties,
                         filePermission,
+                        filePermissionFormat,
                         async,
                         cancellationToken,
                         operationName: operationName ?? $"{nameof(ShareDirectoryClient)}.{nameof(CreateIfNotExists)}")
@@ -1385,7 +1537,73 @@ namespace Azure.Storage.Files.Shares
 
         #region SetHttpHeaders
         /// <summary>
-        /// The <see cref="SetHttpHeaders"/> operation sets system
+        /// The <see cref="SetHttpHeaders(ShareDirectorySetHttpHeadersOptions, CancellationToken)"/> operation sets system
+        /// properties on the directory.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-properties">
+        /// Set Directory Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareDirectoryInfo> SetHttpHeaders(
+            ShareDirectorySetHttpHeadersOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            SetHttpHeadersInternal(
+                options?.SmbProperties,
+                options?.FilePermission?.Permission,
+                options?.FilePermission?.PermissionFormat,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="SetHttpHeadersAsync(ShareDirectorySetHttpHeadersOptions, CancellationToken)"/> operation sets system
+        /// properties on the directory.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-properties">Set Directory Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{StorageFileInfo}"/> describing the
+        /// state of the file.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareDirectoryInfo>> SetHttpHeadersAsync(
+            ShareDirectorySetHttpHeadersOptions options = default,
+            CancellationToken cancellationToken = default) =>
+            await SetHttpHeadersInternal(
+                options?.SmbProperties,
+                options?.FilePermission?.Permission,
+                options?.FilePermission?.PermissionFormat,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="SetHttpHeaders(FileSmbProperties, string, CancellationToken)"/> operation sets system
         /// properties on the directory.
         ///
         /// For more information, see
@@ -1410,19 +1628,23 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Response<ShareDirectoryInfo> SetHttpHeaders(
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken) =>
             SetHttpHeadersInternal(
                 smbProperties,
                 filePermission,
+                filePermissionFormat: default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetHttpHeadersAsync"/> operation sets system
+        /// The <see cref="SetHttpHeadersAsync(FileSmbProperties, string, CancellationToken)"/> operation sets system
         /// properties on the directory.
         ///
         /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/set-directory-properties">Set Directory Properties</see>.
@@ -1445,13 +1667,17 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual async Task<Response<ShareDirectoryInfo>> SetHttpHeadersAsync(
-            FileSmbProperties smbProperties = default,
-            string filePermission = default,
-            CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            FileSmbProperties smbProperties,
+            string filePermission,
+            CancellationToken cancellationToken) =>
             await SetHttpHeadersInternal(
                 smbProperties,
                 filePermission,
+                filePermissionFormat: default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1468,7 +1694,10 @@ namespace Azure.Storage.Files.Shares
         /// Optional SMB properties to set for the directory.
         /// </param>
         /// <param name="filePermission">
-        /// Optional file permission to set ofr the directory.
+        /// Optional file permission to set for the directory.
+        /// </param>
+        /// <param name="filePermissionFormat">
+        /// Optional file permission format.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1488,6 +1717,7 @@ namespace Azure.Storage.Files.Shares
         private async Task<Response<ShareDirectoryInfo>> SetHttpHeadersInternal(
             FileSmbProperties smbProperties,
             string filePermission,
+            FilePermissionFormat? filePermissionFormat,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1520,6 +1750,7 @@ namespace Azure.Storage.Files.Shares
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             filePermission: filePermission,
+                            filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken)
@@ -1532,6 +1763,7 @@ namespace Azure.Storage.Files.Shares
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString() ?? Constants.File.Preserve,
                             filePermission: filePermission,
+                            filePermissionFormat: filePermissionFormat,
                             filePermissionKey: smbProps.FilePermissionKey,
                             fileChangeTime: smbProps.FileChangedOn.ToFileDateTimeString(),
                             cancellationToken: cancellationToken);
@@ -2576,7 +2808,7 @@ namespace Azure.Storage.Files.Shares
                     // TODO: Change this so that the ShareUriBuilder can accept a string for the SAS
                     // Or have an extension UriBuilder which can parse out the SAS.
                     ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri);
-                    UriBuilder sourceUriBuilder = new UriBuilder(Uri);
+                    ShareUriBuilder sourceUriBuilder = new ShareUriBuilder(Uri);
                     // There's already a check in at the client constructor to prevent both SAS in Uri and AzureSasCredential
                     if (shareUriBuilder.Sas == null && ClientConfiguration.SasCredential != null)
                     {
@@ -2621,6 +2853,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         // No SAS in the destination, use the source credentials to build the destination path
                         destUriBuilder.DirectoryOrFilePath = destinationPath;
+                        destUriBuilder.Sas = sourceUriBuilder.Sas;
                         destDirectoryClient = new ShareDirectoryClient(
                             destUriBuilder.ToUri(),
                             ClientConfiguration);
@@ -2640,12 +2873,13 @@ namespace Azure.Storage.Files.Shares
                     if (async)
                     {
                         response = await destDirectoryClient.DirectoryRestClient.RenameAsync(
-                            renameSource: sourceUriBuilder.Uri.AbsoluteUri,
+                            renameSource: sourceUriBuilder.ToUri().AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             sourceLeaseId: options?.SourceConditions?.LeaseId,
                             destinationLeaseId: options?.DestinationConditions?.LeaseId,
                             filePermission: options?.FilePermission,
+                            filePermissionFormat: options?.FilePermissionFormat,
                             filePermissionKey: options?.SmbProperties?.FilePermissionKey,
                             metadata: options?.Metadata,
                             copyFileSmbInfo: copyFileSmbInfo,
@@ -2655,12 +2889,13 @@ namespace Azure.Storage.Files.Shares
                     else
                     {
                         response = destDirectoryClient.DirectoryRestClient.Rename(
-                            renameSource: sourceUriBuilder.Uri.AbsoluteUri,
+                            renameSource: sourceUriBuilder.ToUri().AbsoluteUri,
                             replaceIfExists: options?.ReplaceIfExists,
                             ignoreReadOnly: options?.IgnoreReadOnly,
                             sourceLeaseId: options?.SourceConditions?.LeaseId,
                             destinationLeaseId: options?.DestinationConditions?.LeaseId,
                             filePermission: options?.FilePermission,
+                            filePermissionFormat: options?.FilePermissionFormat,
                             filePermissionKey: options?.SmbProperties?.FilePermissionKey,
                             metadata: options?.Metadata,
                             copyFileSmbInfo: copyFileSmbInfo,
@@ -2851,7 +3086,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -2916,7 +3151,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -2979,7 +3214,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -3044,7 +3279,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -3258,12 +3493,49 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn) =>
+            GenerateSasUri(permissions, expiresOn, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(ShareFileSasPermissions, DateTimeOffset)"/>
+        /// returns a <see cref="Uri"/> that generates a Share Directory Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties and
+        /// parameters passed. The SAS is signed by the shared key credential
+        /// of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a service SAS</see>.
+        /// </summary>
+        /// <param name="permissions">
+        /// Required. Specifies the list of permissions to be associated with the SAS.
+        /// See <see cref="ShareFileSasPermissions"/>.
+        /// </param>
+        /// <param name="expiresOn">
+        /// Required. Specifies the time at which the SAS becomes invalid. This field
+        /// must be omitted if it has been specified in an associated stored access policy.
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual Uri GenerateSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn, out string stringToSign) =>
             GenerateSasUri(new ShareSasBuilder(permissions, expiresOn)
             {
                 ShareName = ShareName,
                 FilePath = Path
-            });
+            }, out stringToSign);
 
         /// <summary>
         /// The <see cref="GenerateSasUri(ShareSasBuilder)"/> returns a
@@ -3288,7 +3560,39 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasBuilder builder)
+            => GenerateSasUri(builder, out _);
+
+        /// <summary>
+        /// The <see cref="GenerateSasUri(ShareSasBuilder)"/> returns a
+        /// <see cref="Uri"/> that generates a Share Directory Service
+        /// Shared Access Signature (SAS) Uri based on the Client properties
+        /// and and builder. The SAS is signed by the shared key credential
+        /// of the client.
+        ///
+        /// To check if the client is able to sign a Service Sas see
+        /// <see cref="CanGenerateSasUri"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/constructing-a-service-sas">
+        /// Constructing a Service SAS</see>.
+        /// </summary>
+        /// <param name="builder">
+        /// Used to generate a Shared Access Signature (SAS)
+        /// </param>
+        /// <param name="stringToSign">
+        /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Uri"/> containing the SAS Uri.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="Exception"/> will be thrown if a failure occurs.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        public virtual Uri GenerateSasUri(ShareSasBuilder builder, out string stringToSign)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
 
@@ -3315,7 +3619,7 @@ namespace Azure.Storage.Files.Shares
             }
             ShareUriBuilder sasUri = new ShareUriBuilder(Uri)
             {
-                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential).ToString()
+                Query = builder.ToSasQueryParameters(ClientConfiguration.SharedKeyCredential, out stringToSign).ToString()
             };
             return sasUri.ToUri();
         }

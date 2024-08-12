@@ -51,8 +51,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             EndpointBase endpoint = default;
-            Optional<ImageProperties> image = default;
-            Optional<SamplingOptions> samplingOptions = default;
+            ImageProperties image = default;
+            SamplingOptions samplingOptions = default;
             SpatialAnalysisOperationBase operation = default;
             string type = default;
             string name = default;
@@ -108,7 +108,30 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new CognitiveServicesVisionProcessor(type, name, inputs, endpoint, image.Value, samplingOptions.Value, operation);
+            return new CognitiveServicesVisionProcessor(
+                type,
+                name,
+                inputs,
+                endpoint,
+                image,
+                samplingOptions,
+                operation);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CognitiveServicesVisionProcessor FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCognitiveServicesVisionProcessor(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.MachineLearning
     /// </summary>
     public partial class MachineLearningDataVersionData : ResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningDataVersionData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionData"/>. </summary>
         /// <param name="properties">
         /// [Required] Additional attributes of the entity.
         /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -32,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningDataVersionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,9 +75,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// Please note <see cref="MachineLearningDataVersionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningTable"/>, <see cref="MachineLearningUriFileDataVersion"/> and <see cref="MachineLearningUriFolderDataVersion"/>.
         /// </param>
-        internal MachineLearningDataVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningDataVersionProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningDataVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MachineLearningDataVersionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDataVersionData"/> for deserialization. </summary>
+        internal MachineLearningDataVersionData()
+        {
         }
 
         /// <summary>

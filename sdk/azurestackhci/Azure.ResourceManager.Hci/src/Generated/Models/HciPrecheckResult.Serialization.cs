@@ -6,25 +6,53 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciPrecheckResult : IUtf8JsonSerializable
+    public partial class HciPrecheckResult : IUtf8JsonSerializable, IJsonModel<HciPrecheckResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciPrecheckResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HciPrecheckResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HciPrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HciPrecheckResult)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                writer.WriteObjectValue(Tags, options);
+            }
+            if (Optional.IsDefined(HealthCheckTags))
+            {
+                writer.WritePropertyName("healthCheckTags"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(HealthCheckTags);
+#else
+                using (JsonDocument document = JsonDocument.Parse(HealthCheckTags))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(Title))
             {
@@ -61,6 +89,11 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("targetResourceName"u8);
                 writer.WriteStringValue(TargetResourceName);
             }
+            if (Optional.IsDefined(TargetResourceType))
+            {
+                writer.WritePropertyName("targetResourceType"u8);
+                writer.WriteStringValue(TargetResourceType);
+            }
             if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
@@ -76,32 +109,71 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("healthCheckSource"u8);
                 writer.WriteStringValue(HealthCheckSource);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HciPrecheckResult DeserializeHciPrecheckResult(JsonElement element)
+        HciPrecheckResult IJsonModel<HciPrecheckResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HciPrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HciPrecheckResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHciPrecheckResult(document.RootElement, options);
+        }
+
+        internal static HciPrecheckResult DeserializeHciPrecheckResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<HciPrecheckResultTags> tags = default;
-            Optional<string> title = default;
-            Optional<HciClusterStatus> status = default;
-            Optional<UpdateSeverity> severity = default;
-            Optional<string> description = default;
-            Optional<string> remediation = default;
-            Optional<string> targetResourceId = default;
-            Optional<string> targetResourceName = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> additionalData = default;
-            Optional<string> healthCheckSource = default;
+            string name = default;
+            string displayName = default;
+            HciPrecheckResultTags tags = default;
+            BinaryData healthCheckTags = default;
+            string title = default;
+            HciClusterStatus? status = default;
+            UpdateSeverity? severity = default;
+            string description = default;
+            string remediation = default;
+            string targetResourceId = default;
+            string targetResourceName = default;
+            string targetResourceType = default;
+            DateTimeOffset? timestamp = default;
+            string additionalData = default;
+            string healthCheckSource = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -110,7 +182,16 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value);
+                    tags = HciPrecheckResultTags.DeserializeHciPrecheckResultTags(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("healthCheckTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    healthCheckTags = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("title"u8))
@@ -156,6 +237,11 @@ namespace Azure.ResourceManager.Hci.Models
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("targetResourceType"u8))
+                {
+                    targetResourceType = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -175,8 +261,383 @@ namespace Azure.ResourceManager.Hci.Models
                     healthCheckSource = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HciPrecheckResult(name.Value, tags.Value, title.Value, Optional.ToNullable(status), Optional.ToNullable(severity), description.Value, remediation.Value, targetResourceId.Value, targetResourceName.Value, Optional.ToNullable(timestamp), additionalData.Value, healthCheckSource.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HciPrecheckResult(
+                name,
+                displayName,
+                tags,
+                healthCheckTags,
+                title,
+                status,
+                severity,
+                description,
+                remediation,
+                targetResourceId,
+                targetResourceName,
+                targetResourceType,
+                timestamp,
+                additionalData,
+                healthCheckSource,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  displayName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DisplayName))
+                {
+                    builder.Append("  displayName: ");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Tags))
+                {
+                    builder.Append("  tags: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Tags, options, 2, false, "  tags: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HealthCheckTags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  healthCheckTags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HealthCheckTags))
+                {
+                    builder.Append("  healthCheckTags: ");
+                    builder.AppendLine($"'{HealthCheckTags.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Title), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  title: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Title))
+                {
+                    builder.Append("  title: ");
+                    if (Title.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Title}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Title}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Severity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  severity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Severity))
+                {
+                    builder.Append("  severity: ");
+                    builder.AppendLine($"'{Severity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Remediation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  remediation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Remediation))
+                {
+                    builder.Append("  remediation: ");
+                    if (Remediation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Remediation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Remediation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetResourceID: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetResourceId))
+                {
+                    builder.Append("  targetResourceID: ");
+                    if (TargetResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetResourceId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetResourceName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetResourceName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetResourceName))
+                {
+                    builder.Append("  targetResourceName: ");
+                    if (TargetResourceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetResourceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetResourceName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetResourceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  targetResourceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TargetResourceType))
+                {
+                    builder.Append("  targetResourceType: ");
+                    if (TargetResourceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetResourceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetResourceType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timestamp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    builder.Append("  timestamp: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  additionalData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AdditionalData))
+                {
+                    builder.Append("  additionalData: ");
+                    if (AdditionalData.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AdditionalData}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AdditionalData}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HealthCheckSource), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  healthCheckSource: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HealthCheckSource))
+                {
+                    builder.Append("  healthCheckSource: ");
+                    if (HealthCheckSource.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HealthCheckSource}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HealthCheckSource}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<HciPrecheckResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciPrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(HciPrecheckResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HciPrecheckResult IPersistableModel<HciPrecheckResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciPrecheckResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHciPrecheckResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciPrecheckResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HciPrecheckResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

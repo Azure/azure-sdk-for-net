@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DevCenter.Models;
@@ -35,6 +34,25 @@ namespace Azure.ResourceManager.DevCenter
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByDevCenterRequestUri(string subscriptionId, string resourceGroupName, string devCenterName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/devcenters/", false);
+            uri.AppendPath(devCenterName, true);
+            uri.AppendPath("/images", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByDevCenterRequest(string subscriptionId, string resourceGroupName, string devCenterName, int? top)
@@ -120,6 +138,27 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByGalleryRequestUri(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/devcenters/", false);
+            uri.AppendPath(devCenterName, true);
+            uri.AppendPath("/galleries/", false);
+            uri.AppendPath(galleryName, true);
+            uri.AppendPath("/images", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByGalleryRequest(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top)
@@ -211,6 +250,24 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/devcenters/", false);
+            uri.AppendPath(devCenterName, true);
+            uri.AppendPath("/galleries/", false);
+            uri.AppendPath(galleryName, true);
+            uri.AppendPath("/images/", false);
+            uri.AppendPath(imageName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName)
@@ -307,6 +364,14 @@ namespace Azure.ResourceManager.DevCenter
             }
         }
 
+        internal RequestUriBuilder CreateListByDevCenterNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByDevCenterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -383,6 +448,14 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByGalleryNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByGalleryNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, int? top)

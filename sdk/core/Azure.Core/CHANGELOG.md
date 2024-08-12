@@ -1,6 +1,6 @@
 # Release History
 
-## 1.34.0-beta.1 (Unreleased)
+## 1.43.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,108 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.42.0 (2024-08-01)
+
+### Other Changes
+
+- Improved memory performance for Event Source formatting [#43947](https://github.com/Azure/azure-sdk-for-net/pull/43947)
+- Upgraded dependency on System.Text.Encodings.Web to 6.0.0
+- Upgraded dependency on Microsoft.Bcl.AsyncInterfaces to 6.0.0
+
+## 1.41.0 (2024-07-11)
+
+### Bugs Fixed
+
+- Fixed an issue that could result in `BearerTokenAuthenticationPolicy` fails to refresh a token, resulting in a `OperationCanceledException` ([#44882](https://github.com/Azure/azure-sdk-for-net/pull/44882)).
+- Fixed case where a GeoJSON string could not be deserialized when the BoundingBox JSON value ("bbox") was set explicitly to null ([#44835](https://github.com/Azure/azure-sdk-for-net/pull/44835)).
+
+## 1.40.0 (2024-06-06)
+
+### Features Added
+
+- Added `RefreshOn` property to `AccessToken` and updated `BearerTokenAuthenticationPolicy` to refresh long-lived credentials according to this value ([#43836](https://github.com/Azure/azure-sdk-for-net/issues/43836)).
+
+### Bugs Fixed
+
+- Fixed User-Agent telemetry so that it properly escapes operating system information if it contains non-ascii characters ([#44386](https://github.com/Azure/azure-sdk-for-net/pull/44386)).
+- Fixed case where Operation.Id was not being set for incomplete long-running operations ([#44098](https://github.com/Azure/azure-sdk-for-net/pull/44098)).
+
+### Other Changes
+
+- Improved memory performance for HTTP message sanitization ([#43818](https://github.com/Azure/azure-sdk-for-net/pull/43818)).
+- Added `DynamicallyAccessedMembers` attribute to type parameter in `Operation<T>.Rehydrate` method ([#44208](https://github.com/Azure/azure-sdk-for-net/pull/44208)).
+
+## 1.39.0 (2024-04-18)
+
+### Features Added
+
+- Add `Operation.Rehydrate` and `Operation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Other Changes
+
+- `RequestFailedException` will not include the response content or headers in the message when the `IsError` property of the response is `false`.
+
+## 1.38.0 (2024-02-26)
+
+### Features Added
+
+- Add `GetRehydrationToken` to `Operation` for rehydration purpose.
+
+### Other Changes
+
+- Additional Azure data centers are now included in `AzureLocation`.  The following were added:
+  - China East 3
+  - China North 3
+  - Israel Central
+  - Italy North
+  - Poland Central
+  - Sweden South
+
+## 1.37.0 (2024-01-11)
+
+### Bugs Fixed
+
+- Fixed exponential retry behavior so that delay milliseconds greater than `Int32.MaxValue` do not trigger an exception.
+- Fixed `DelayStrategy` behavior to no longer shift the delay to be used over by one attempt. Previously, the first delay would be what should have been used for the second, and the second was what should have been used for the third, etc. Note, this would only be observed when using `DelayStrategy` outside of a `RetryPolicy` or `RetryOptions`.
+- Do not add the `error.type` attribute twice when tracing is enabled.
+- Do not suppress nested activities when they occur in the context of Consumer/Server activities (e.g. `BlobClient.Download` is no longer suppressed under `EventHubs.Process`).
+
+### Other Changes
+- Remove targets for .NET Core 2.1 and .NET 5 since they are out of support. Azure.Core is no longer compatible with .NET Core 2.1 after removal of target. The remaining targets are unchanged.
+
+## 1.36.0 (2023-11-10)
+
+### Features Added
+
+- Added `RequiresUnreferencedCode` attribute to `RequestContent.Create(object)` overloads that use reflection to serialize the input object.  This provides support for native AOT compilation when Azure.Core is used for diagnostics.
+- Use System.Text.Json source generation to deserialize the error response in `RequestFailedException` on `net6.0` and above targets.
+
+### Breaking Changes
+
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
+- Suppress client activity creation by Azure clients if it happens in scope of another activity created by an Azure client.
+- Changed how `ActivitySource` name is constructed for clients that use single-worded activity names (without dot).  We now append provided activity name as is to the client namespace name. Previously, the provided activity name was omitted and the `ActivitySource` name matched the provided client namespace.
+- Distributed tracing with `ActivitySource` for HTTP and REST-based client libraries is declared stable. [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) is no longer required for most of the newly released libraries. Tracing for messaging libraries remains experimental.
+- Added nullable annotation to `ResourceIdentifier.TryParse` parameter `input`.
+
+## 1.35.0 (2023-09-07)
+
+### Features Added
+
+- Expand the set of supported `DynamicData` property types to included heterogeneous arrays of allowed types.
+
+### Breaking Changes
+
+- Added the nullability annotation to `NullableResponse<T>.Value` to indicate that it is a nullable type.
+
+## 1.34.0 (2023-07-11)
+
+### Features Added
+
+- Added `IsCaeEnabled` property to `TokenRequestContext` to enabled per-request support for Continuous Access Evaluation
+- Updated dependency on System.Diagnostics.DiagnosticSource
+- Added `ContentLengthLong` property to `ResponseHeaders`
 
 ## 1.33.0 (2023-06-16)
 

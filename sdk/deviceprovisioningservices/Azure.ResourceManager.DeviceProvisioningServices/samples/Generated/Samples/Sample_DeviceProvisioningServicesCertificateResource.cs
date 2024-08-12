@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DeviceProvisioningServices;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
@@ -77,7 +74,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             {
                 Properties = new DeviceProvisioningServicesCertificateProperties()
                 {
-                    Certificate = BinaryData.FromString("############################################"),
+                    Certificate = BinaryData.FromString("\"############################################\""),
                 },
             };
             ArmOperation<DeviceProvisioningServicesCertificateResource> lro = await deviceProvisioningServicesCertificate.UpdateAsync(WaitUntil.Completed, data);

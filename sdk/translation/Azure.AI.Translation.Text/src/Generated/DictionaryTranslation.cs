@@ -8,14 +8,45 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Translation source term. </summary>
     public partial class DictionaryTranslation
     {
-        /// <summary> Initializes a new instance of DictionaryTranslation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryTranslation"/>. </summary>
         /// <param name="normalizedTarget">
         /// A string giving the normalized form of this term in the target language.
         /// This value should be used as input to lookup examples.
@@ -28,15 +59,15 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="posTag"> A string associating this term with a part-of-speech tag. </param>
         /// <param name="confidence">
-        /// A value between 0.0 and 1.0 which represents the "confidence" 
-        /// (or perhaps more accurately, "probability in the training data") of that translation pair. 
+        /// A value between 0.0 and 1.0 which represents the "confidence"
+        /// (or perhaps more accurately, "probability in the training data") of that translation pair.
         /// The sum of confidence scores for one source word may or may not sum to 1.0.
         /// </param>
         /// <param name="prefixWord">
         /// A string giving the word to display as a prefix of the translation. Currently,
         /// this is the gendered determiner of nouns, in languages that have gendered determiners.
-        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish. 
-        /// This is only dependent on the translation, and not on the source. 
+        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish.
+        /// This is only dependent on the translation, and not on the source.
         /// If there is no prefix, it will be the empty string.
         /// </param>
         /// <param name="backTranslations">
@@ -62,7 +93,7 @@ namespace Azure.AI.Translation.Text
             BackTranslations = backTranslations.ToList();
         }
 
-        /// <summary> Initializes a new instance of DictionaryTranslation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DictionaryTranslation"/>. </summary>
         /// <param name="normalizedTarget">
         /// A string giving the normalized form of this term in the target language.
         /// This value should be used as input to lookup examples.
@@ -75,15 +106,15 @@ namespace Azure.AI.Translation.Text
         /// </param>
         /// <param name="posTag"> A string associating this term with a part-of-speech tag. </param>
         /// <param name="confidence">
-        /// A value between 0.0 and 1.0 which represents the "confidence" 
-        /// (or perhaps more accurately, "probability in the training data") of that translation pair. 
+        /// A value between 0.0 and 1.0 which represents the "confidence"
+        /// (or perhaps more accurately, "probability in the training data") of that translation pair.
         /// The sum of confidence scores for one source word may or may not sum to 1.0.
         /// </param>
         /// <param name="prefixWord">
         /// A string giving the word to display as a prefix of the translation. Currently,
         /// this is the gendered determiner of nouns, in languages that have gendered determiners.
-        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish. 
-        /// This is only dependent on the translation, and not on the source. 
+        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish.
+        /// This is only dependent on the translation, and not on the source.
         /// If there is no prefix, it will be the empty string.
         /// </param>
         /// <param name="backTranslations">
@@ -92,7 +123,8 @@ namespace Azure.AI.Translation.Text
         /// looked up is "fly", then it is guaranteed that "fly" will be in the backTranslations list).
         /// However, it is not guaranteed to be in the first position, and often will not be.
         /// </param>
-        internal DictionaryTranslation(string normalizedTarget, string displayTarget, string posTag, float confidence, string prefixWord, IReadOnlyList<BackTranslation> backTranslations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DictionaryTranslation(string normalizedTarget, string displayTarget, string posTag, float confidence, string prefixWord, IReadOnlyList<BackTranslation> backTranslations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NormalizedTarget = normalizedTarget;
             DisplayTarget = displayTarget;
@@ -100,6 +132,12 @@ namespace Azure.AI.Translation.Text
             Confidence = confidence;
             PrefixWord = prefixWord;
             BackTranslations = backTranslations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryTranslation"/> for deserialization. </summary>
+        internal DictionaryTranslation()
+        {
         }
 
         /// <summary>
@@ -117,16 +155,16 @@ namespace Azure.AI.Translation.Text
         /// <summary> A string associating this term with a part-of-speech tag. </summary>
         public string PosTag { get; }
         /// <summary>
-        /// A value between 0.0 and 1.0 which represents the "confidence" 
-        /// (or perhaps more accurately, "probability in the training data") of that translation pair. 
+        /// A value between 0.0 and 1.0 which represents the "confidence"
+        /// (or perhaps more accurately, "probability in the training data") of that translation pair.
         /// The sum of confidence scores for one source word may or may not sum to 1.0.
         /// </summary>
         public float Confidence { get; }
         /// <summary>
         /// A string giving the word to display as a prefix of the translation. Currently,
         /// this is the gendered determiner of nouns, in languages that have gendered determiners.
-        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish. 
-        /// This is only dependent on the translation, and not on the source. 
+        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish.
+        /// This is only dependent on the translation, and not on the source.
         /// If there is no prefix, it will be the empty string.
         /// </summary>
         public string PrefixWord { get; }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,40 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.3 (2024-05-07)
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.1.2 (2024-04-29)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+## 1.1.1 (2024-03-23)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added experimental Bicep serialization.
+
+### Bugs Fixed
+
+- Change ResourceType from `Microsoft.Authorization/roleManagementPolicyAssignment` to `Microsoft.Authorization/roleManagementPolicyAssignments`
+- Fixed [the issue](https://github.com/Azure/azure-sdk-for-net/issues/40050) by removing the three extra operations of `DenyAssignments_ListForResource` , `DenyAssignments_ListForResourceGroup` , and `DenyAssignments_List`.
+
+## 1.1.0 (2023-11-21)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
 
 ## 1.1.0-beta.1 (2023-05-25)
 

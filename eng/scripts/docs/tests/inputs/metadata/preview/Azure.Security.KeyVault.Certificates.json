@@ -12,8 +12,6 @@
   "ArtifactName": "Azure.Security.KeyVault.Certificates",
   "ReleaseStatus": "2022-09-20",
   "Namespaces": [
-    "Azure.Security.KeyVault.Certificates",
-    "Microsoft.Extensions.Azure",
-    "OutOfDate.Namespaces"
+    "Some.New.Namespace"
   ]
 }

@@ -6,25 +6,103 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBMetricValue
+    public partial class CosmosDBMetricValue : IUtf8JsonSerializable, IJsonModel<CosmosDBMetricValue>
     {
-        internal static CosmosDBMetricValue DeserializeCosmosDBMetricValue(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBMetricValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<CosmosDBMetricValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBMetricValue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBMetricValue)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("_count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Average))
+            {
+                writer.WritePropertyName("average"u8);
+                writer.WriteNumberValue(Average.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Maximum))
+            {
+                writer.WritePropertyName("maximum"u8);
+                writer.WriteNumberValue(Maximum.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Minimum))
+            {
+                writer.WritePropertyName("minimum"u8);
+                writer.WriteNumberValue(Minimum.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Total))
+            {
+                writer.WritePropertyName("total"u8);
+                writer.WriteNumberValue(Total.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CosmosDBMetricValue IJsonModel<CosmosDBMetricValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBMetricValue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBMetricValue)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBMetricValue(document.RootElement, options);
+        }
+
+        internal static CosmosDBMetricValue DeserializeCosmosDBMetricValue(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> count = default;
-            Optional<double> average = default;
-            Optional<double> maximum = default;
-            Optional<double> minimum = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<double> total = default;
+            int? count = default;
+            double? average = default;
+            double? maximum = default;
+            double? minimum = default;
+            DateTimeOffset? timestamp = default;
+            double? total = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_count"u8))
@@ -81,8 +159,159 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     total = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CosmosDBMetricValue(
+                count,
+                average,
+                maximum,
+                minimum,
+                timestamp,
+                total,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Count), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  _count: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Count))
+                {
+                    builder.Append("  _count: ");
+                    builder.AppendLine($"{Count.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Average), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  average: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Average))
+                {
+                    builder.Append("  average: ");
+                    builder.AppendLine($"'{Average.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Maximum), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximum: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Maximum))
+                {
+                    builder.Append("  maximum: ");
+                    builder.AppendLine($"'{Maximum.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Minimum), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minimum: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Minimum))
+                {
+                    builder.Append("  minimum: ");
+                    builder.AppendLine($"'{Minimum.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timestamp: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Timestamp))
+                {
+                    builder.Append("  timestamp: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Total), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  total: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Total))
+                {
+                    builder.Append("  total: ");
+                    builder.AppendLine($"'{Total.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<CosmosDBMetricValue>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBMetricValue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBMetricValue)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CosmosDBMetricValue IPersistableModel<CosmosDBMetricValue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBMetricValue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCosmosDBMetricValue(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBMetricValue)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CosmosDBMetricValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

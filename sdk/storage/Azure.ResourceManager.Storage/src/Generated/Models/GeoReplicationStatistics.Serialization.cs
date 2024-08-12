@@ -6,22 +6,103 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class GeoReplicationStatistics
+    public partial class GeoReplicationStatistics : IUtf8JsonSerializable, IJsonModel<GeoReplicationStatistics>
     {
-        internal static GeoReplicationStatistics DeserializeGeoReplicationStatistics(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoReplicationStatistics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<GeoReplicationStatistics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GeoReplicationStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastSyncOn))
+            {
+                writer.WritePropertyName("lastSyncTime"u8);
+                writer.WriteStringValue(LastSyncOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CanFailover))
+            {
+                writer.WritePropertyName("canFailover"u8);
+                writer.WriteBooleanValue(CanFailover.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CanPlannedFailover))
+            {
+                writer.WritePropertyName("canPlannedFailover"u8);
+                writer.WriteBooleanValue(CanPlannedFailover.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PostFailoverRedundancy))
+            {
+                writer.WritePropertyName("postFailoverRedundancy"u8);
+                writer.WriteStringValue(PostFailoverRedundancy.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PostPlannedFailoverRedundancy))
+            {
+                writer.WritePropertyName("postPlannedFailoverRedundancy"u8);
+                writer.WriteStringValue(PostPlannedFailoverRedundancy.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        GeoReplicationStatistics IJsonModel<GeoReplicationStatistics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GeoReplicationStatistics>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGeoReplicationStatistics(document.RootElement, options);
+        }
+
+        internal static GeoReplicationStatistics DeserializeGeoReplicationStatistics(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<GeoReplicationStatus> status = default;
-            Optional<DateTimeOffset> lastSyncTime = default;
-            Optional<bool> canFailover = default;
+            GeoReplicationStatus? status = default;
+            DateTimeOffset? lastSyncTime = default;
+            bool? canFailover = default;
+            bool? canPlannedFailover = default;
+            PostFailoverRedundancy? postFailoverRedundancy = default;
+            PostPlannedFailoverRedundancy? postPlannedFailoverRedundancy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -51,8 +132,188 @@ namespace Azure.ResourceManager.Storage.Models
                     canFailover = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("canPlannedFailover"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    canPlannedFailover = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("postFailoverRedundancy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    postFailoverRedundancy = new PostFailoverRedundancy(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("postPlannedFailoverRedundancy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    postPlannedFailoverRedundancy = new PostPlannedFailoverRedundancy(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GeoReplicationStatistics(Optional.ToNullable(status), Optional.ToNullable(lastSyncTime), Optional.ToNullable(canFailover));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GeoReplicationStatistics(
+                status,
+                lastSyncTime,
+                canFailover,
+                canPlannedFailover,
+                postFailoverRedundancy,
+                postPlannedFailoverRedundancy,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastSyncOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastSyncTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastSyncOn))
+                {
+                    builder.Append("  lastSyncTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastSyncOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanFailover), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  canFailover: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CanFailover))
+                {
+                    builder.Append("  canFailover: ");
+                    var boolValue = CanFailover.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanPlannedFailover), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  canPlannedFailover: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CanPlannedFailover))
+                {
+                    builder.Append("  canPlannedFailover: ");
+                    var boolValue = CanPlannedFailover.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PostFailoverRedundancy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  postFailoverRedundancy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PostFailoverRedundancy))
+                {
+                    builder.Append("  postFailoverRedundancy: ");
+                    builder.AppendLine($"'{PostFailoverRedundancy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PostPlannedFailoverRedundancy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  postPlannedFailoverRedundancy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PostPlannedFailoverRedundancy))
+                {
+                    builder.Append("  postPlannedFailoverRedundancy: ");
+                    builder.AppendLine($"'{PostPlannedFailoverRedundancy.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<GeoReplicationStatistics>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GeoReplicationStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GeoReplicationStatistics IPersistableModel<GeoReplicationStatistics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GeoReplicationStatistics>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGeoReplicationStatistics(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GeoReplicationStatistics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

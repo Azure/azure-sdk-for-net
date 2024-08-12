@@ -21,8 +21,7 @@ ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new Azur
 You can download our [sample data](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety/tests/Samples/sample_data), read in the text and initialize `AnalyzeTextOptions` with it. Then call `AnalyzeText` to get analysis result.
 
 ```C# Snippet:Azure_AI_ContentSafety_AnalyzeText
-string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "text.txt");
-string text = File.ReadAllText(datapath);
+string text = "You are an idiot";
 
 var request = new AnalyzeTextOptions(text);
 
@@ -37,10 +36,10 @@ catch (RequestFailedException ex)
     throw;
 }
 
-Console.WriteLine("Hate severity: {0}", response.Value.HateResult?.Severity ?? 0);
-Console.WriteLine("SelfHarm severity: {0}", response.Value.SelfHarmResult?.Severity ?? 0);
-Console.WriteLine("Sexual severity: {0}", response.Value.SexualResult?.Severity ?? 0);
-Console.WriteLine("Violence severity: {0}", response.Value.ViolenceResult?.Severity ?? 0);
+Console.WriteLine("Hate severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate)?.Severity ?? 0);
+Console.WriteLine("SelfHarm severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.SelfHarm)?.Severity ?? 0);
+Console.WriteLine("Sexual severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Sexual)?.Severity ?? 0);
+Console.WriteLine("Violence severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Violence)?.Severity ?? 0);
 ```
 
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety/README.md

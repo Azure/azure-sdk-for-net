@@ -11,6 +11,6 @@ namespace Azure.Communication.CallAutomation
     public abstract class PlaySource
     {
         /// <summary> Defines the identifier to be used for caching related media. </summary>
-        public string PlaySourceId { get; set; }
+        public string PlaySourceCacheId { get; set; }
     }
 }

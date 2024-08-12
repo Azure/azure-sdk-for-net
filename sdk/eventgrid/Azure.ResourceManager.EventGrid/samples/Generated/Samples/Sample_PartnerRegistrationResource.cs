@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PartnerRegistrationsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/PartnerRegistrations_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerRegistrations_Get.json
             // this example is just showing the usage of "PartnerRegistrations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerRegistrationResource created on azure
             // for more information of creating PartnerRegistrationResource, please refer to the document of PartnerRegistrationResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string partnerRegistrationName = "examplePartnerRegistrationName1";
             ResourceIdentifier partnerRegistrationResourceId = PartnerRegistrationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, partnerRegistrationName);
@@ -55,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_PartnerRegistrationsDelete()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/PartnerRegistrations_Delete.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerRegistrations_Delete.json
             // this example is just showing the usage of "PartnerRegistrations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerRegistrationResource created on azure
             // for more information of creating PartnerRegistrationResource, please refer to the document of PartnerRegistrationResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string partnerRegistrationName = "examplePartnerRegistrationName1";
             ResourceIdentifier partnerRegistrationResourceId = PartnerRegistrationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, partnerRegistrationName);
@@ -82,7 +79,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PartnerRegistrationsUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/PartnerRegistrations_Update.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerRegistrations_Update.json
             // this example is just showing the usage of "PartnerRegistrations_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerRegistrationResource created on azure
             // for more information of creating PartnerRegistrationResource, please refer to the document of PartnerRegistrationResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string partnerRegistrationName = "examplePartnerRegistrationName1";
             ResourceIdentifier partnerRegistrationResourceId = PartnerRegistrationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, partnerRegistrationName);
@@ -103,8 +100,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             {
                 Tags =
 {
-["tag1"] = "value1",
-["tag2"] = "value2",
+["NewKey"] = "NewValue",
 },
             };
             await partnerRegistration.UpdateAsync(WaitUntil.Completed, patch);
@@ -117,7 +113,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPartnerRegistrations_PartnerRegistrationsListBySubscription()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/PartnerRegistrations_ListBySubscription.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerRegistrations_ListBySubscription.json
             // this example is just showing the usage of "PartnerRegistrations_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 

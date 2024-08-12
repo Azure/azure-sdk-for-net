@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
         {
             // Update Configuration
             string configurationName = "array_nulls";
-            var data = new ServerConfigurationData()
+            var data = new CosmosDBForPostgreSqlServerConfigurationData()
             {
                 Value = "false"
             };
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Tests
         {
             // Update Configuration
             string configurationName = "array_nulls";
-            var data = new ServerConfigurationData()
+            var data = new CosmosDBForPostgreSqlServerConfigurationData()
             {
                 Value = "false"
             };

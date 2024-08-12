@@ -11,14 +11,15 @@
 
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" /> 
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)\HttpPipelineMessageHandler.cs" LinkBase="Shared" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
 </Project>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,18 +13,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Batch inference settings per deployment. </summary>
     public partial class MachineLearningBatchDeploymentProperties : MachineLearningEndpointDeploymentProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningBatchDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchDeploymentProperties"/>. </summary>
         public MachineLearningBatchDeploymentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningBatchDeploymentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningBatchDeploymentProperties"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
+        /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="compute"> Compute target for batch inference operation. </param>
+        /// <param name="deploymentConfiguration">
+        /// Properties relevant to different deployment types.
+        /// Please note <see cref="BatchDeploymentConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BatchPipelineComponentDeploymentConfiguration"/>.
+        /// </param>
         /// <param name="errorThreshold">
         /// Error threshold, if the error count for the entire input goes above this value,
         /// the batch inference will be aborted. Range is [-1, int.MaxValue].
@@ -54,9 +61,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Retry Settings for the batch inference operation.
         /// If not provided, will default to the defaults defined in BatchRetrySettings.
         /// </param>
-        internal MachineLearningBatchDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, string compute, int? errorThreshold, MachineLearningBatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, MachineLearningAssetReferenceBase model, MachineLearningBatchOutputAction? outputAction, string outputFileName, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningDeploymentResourceConfiguration resources, MachineLearningBatchRetrySettings retrySettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties)
+        internal MachineLearningBatchDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, string compute, BatchDeploymentConfiguration deploymentConfiguration, int? errorThreshold, MachineLearningBatchLoggingLevel? loggingLevel, int? maxConcurrencyPerInstance, long? miniBatchSize, MachineLearningAssetReferenceBase model, MachineLearningBatchOutputAction? outputAction, string outputFileName, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningDeploymentResourceConfiguration resources, MachineLearningBatchRetrySettings retrySettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties, serializedAdditionalRawData)
         {
             Compute = compute;
+            DeploymentConfiguration = deploymentConfiguration;
             ErrorThreshold = errorThreshold;
             LoggingLevel = loggingLevel;
             MaxConcurrencyPerInstance = maxConcurrencyPerInstance;
@@ -71,6 +79,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Compute target for batch inference operation. </summary>
         public string Compute { get; set; }
+        /// <summary>
+        /// Properties relevant to different deployment types.
+        /// Please note <see cref="BatchDeploymentConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BatchPipelineComponentDeploymentConfiguration"/>.
+        /// </summary>
+        public BatchDeploymentConfiguration DeploymentConfiguration { get; set; }
         /// <summary>
         /// Error threshold, if the error count for the entire input goes above this value,
         /// the batch inference will be aborted. Range is [-1, int.MaxValue].

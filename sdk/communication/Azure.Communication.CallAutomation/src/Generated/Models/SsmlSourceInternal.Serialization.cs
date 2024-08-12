@@ -17,7 +17,20 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("ssmlText"u8);
             writer.WriteStringValue(SsmlText);
+            if (Optional.IsDefined(CustomVoiceEndpointId))
+            {
+                writer.WritePropertyName("customVoiceEndpointId"u8);
+                writer.WriteStringValue(CustomVoiceEndpointId);
+            }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

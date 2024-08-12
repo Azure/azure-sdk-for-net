@@ -6,15 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class OraclePartitionSettings : IUtf8JsonSerializable
+    public partial class OraclePartitionSettings : IUtf8JsonSerializable, IJsonModel<OraclePartitionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OraclePartitionSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<OraclePartitionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OraclePartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OraclePartitionSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PartitionNames))
             {
@@ -22,49 +33,71 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PartitionNames);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionNames.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(PartitionNames))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionColumnName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionColumnName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PartitionColumnName);
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionUpperBound);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionUpperBound.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PartitionUpperBound);
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
+                JsonSerializer.Serialize(writer, PartitionLowerBound);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionLowerBound);
+				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionLowerBound.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static OraclePartitionSettings DeserializeOraclePartitionSettings(JsonElement element)
+        OraclePartitionSettings IJsonModel<OraclePartitionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OraclePartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OraclePartitionSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOraclePartitionSettings(document.RootElement, options);
+        }
+
+        internal static OraclePartitionSettings DeserializeOraclePartitionSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BinaryData> partitionNames = default;
-            Optional<BinaryData> partitionColumnName = default;
-            Optional<BinaryData> partitionUpperBound = default;
-            Optional<BinaryData> partitionLowerBound = default;
+            BinaryData partitionNames = default;
+            DataFactoryElement<string> partitionColumnName = default;
+            DataFactoryElement<string> partitionUpperBound = default;
+            DataFactoryElement<string> partitionLowerBound = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionNames"u8))
@@ -82,7 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionColumnName = BinaryData.FromString(property.Value.GetRawText());
+                    partitionColumnName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionUpperBound"u8))
@@ -91,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionUpperBound = BinaryData.FromString(property.Value.GetRawText());
+                    partitionUpperBound = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionLowerBound"u8))
@@ -100,11 +133,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionLowerBound = BinaryData.FromString(property.Value.GetRawText());
+                    partitionLowerBound = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OraclePartitionSettings(partitionNames.Value, partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OraclePartitionSettings(partitionNames, partitionColumnName, partitionUpperBound, partitionLowerBound, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OraclePartitionSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OraclePartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OraclePartitionSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OraclePartitionSettings IPersistableModel<OraclePartitionSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OraclePartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOraclePartitionSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OraclePartitionSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OraclePartitionSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

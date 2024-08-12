@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,22 +14,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM workload-specific backup item representing the Classic Compute VM. </summary>
     public partial class IaasClassicComputeVmProtectableItem : IaasVmProtectableItem
     {
-        /// <summary> Initializes a new instance of IaasClassicComputeVmProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasClassicComputeVmProtectableItem"/>. </summary>
         public IaasClassicComputeVmProtectableItem()
         {
             ProtectableItemType = "Microsoft.ClassicCompute/virtualMachines";
         }
 
-        /// <summary> Initializes a new instance of IaasClassicComputeVmProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasClassicComputeVmProtectableItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="protectableItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="virtualMachineId"> Fully qualified ARM ID of the virtual machine. </param>
         /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
         /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
-        internal IaasClassicComputeVmProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, ResourceIdentifier virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, virtualMachineId, virtualMachineVersion, resourceGroup)
+        internal IaasClassicComputeVmProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, serializedAdditionalRawData, virtualMachineId, virtualMachineVersion, resourceGroup)
         {
             ProtectableItemType = protectableItemType ?? "Microsoft.ClassicCompute/virtualMachines";
         }

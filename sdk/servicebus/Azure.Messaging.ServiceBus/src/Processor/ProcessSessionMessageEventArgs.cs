@@ -31,22 +31,25 @@ namespace Azure.Messaging.ServiceBus
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
-        /// The <see cref="System.Threading.CancellationToken"/> instance is cancelled when the lock renewal failed to
-        /// renew the lock, or the <see cref="ServiceBusSessionProcessorOptions.MaxAutoLockRenewalDuration"/> has elapsed,
-        /// or when the session lock has been lost, or if <see cref="ReleaseSession"/> is called.
+        /// An event that is raised when the session lock is lost. This event is only raised for the scope of the Process Session Message handler.
+        /// Once the handler returns, the event will not be raised. There are two cases in which this event can be raised:
+        /// <list type="numbered">
+        ///     <item>
+        ///         <description>When the session lock has expired based on the <see cref="SessionLockedUntil"/> property</description>
+        ///     </item>
+        ///     <item>
+        ///         <description>When a non-transient exception occurs while attempting to renew the session lock.</description>
+        ///     </item>
+        /// </list>
         /// </summary>
-        public CancellationToken SessionLockCancellationToken
-        {
-            get
-            {
-                if (_manager != null)
-                {
-                    return _manager.SessionLockCancellationToken;
-                }
-                // for mocking
-                return _sessionReceiver.SessionLockedUntil < DateTimeOffset.UtcNow ? new CancellationToken(true) : default;
-            }
-        }
+        public event Func<SessionLockLostEventArgs, Task> SessionLockLostAsync;
+
+        /// <summary>
+        /// Invokes the session lock lost event handler after a session lock is lost.
+        /// This method can be overridden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the lock lost event.</param>
+        protected internal virtual Task OnSessionLockLostAsync(SessionLockLostEventArgs args) => SessionLockLostAsync?.Invoke(args) ?? Task.CompletedTask;
 
         internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages => _receiveActions.Messages;
 
@@ -122,6 +125,15 @@ namespace Azure.Messaging.ServiceBus
         internal ProcessSessionMessageEventArgs(
             ServiceBusReceivedMessage message,
             SessionReceiverManager manager,
+            string identifier,
+            CancellationToken cancellationToken) : this(message, manager, cancellationToken)
+        {
+            Identifier = identifier;
+        }
+
+        internal ProcessSessionMessageEventArgs(
+            ServiceBusReceivedMessage message,
+            SessionReceiverManager manager,
             CancellationToken cancellationToken)
         {
             Message = message;
@@ -129,18 +141,8 @@ namespace Azure.Messaging.ServiceBus
 
             // manager would be null in scenarios where customers are using the public constructor for testing purposes.
             _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
-            _receiveActions = new ProcessorReceiveActions(message, default /* session locks are not message based */, manager, false);
+            _receiveActions = new ProcessorReceiveActions(this, _manager, false /* session locks are not message based */);
             CancellationToken = cancellationToken;
-        }
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        internal ProcessSessionMessageEventArgs(
-            ServiceBusReceivedMessage message,
-            SessionReceiverManager manager,
-            string identifier,
-            CancellationToken cancellationToken) : this(message, manager, cancellationToken)
-        {
-            Identifier = identifier;
         }
 
         /// <inheritdoc cref="ServiceBusSessionReceiver.GetSessionStateAsync(CancellationToken)"/>
@@ -265,5 +267,12 @@ namespace Azure.Messaging.ServiceBus
         public virtual ProcessorReceiveActions GetReceiveActions() => _receiveActions;
 
         internal void EndExecutionScope() => _receiveActions.EndExecutionScope();
+
+        internal CancellationTokenRegistration RegisterSessionLockLostHandler() =>
+            _manager.SessionLockCancellationToken.Register(
+                () => OnSessionLockLostAsync(new SessionLockLostEventArgs(
+                    Message,
+                    SessionLockedUntil,
+                    _manager.SessionLockLostException)));
     }
 }

@@ -14,27 +14,25 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Gets or sets the virtual machine resource settings. </summary>
     public partial class VirtualMachineResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of VirtualMachineResourceSettings. </summary>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
-        public VirtualMachineResourceSettings(string targetResourceName) : base(targetResourceName)
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineResourceSettings"/>. </summary>
+        public VirtualMachineResourceSettings()
         {
-            Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-
             Tags = new ChangeTrackingDictionary<string, string>();
             UserManagedIdentities = new ChangeTrackingList<ResourceIdentifier>();
             ResourceType = "Microsoft.Compute/virtualMachines";
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
+        /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Gets or sets the Resource tags. </param>
         /// <param name="userManagedIdentities"> Gets or sets user-managed identities. </param>
         /// <param name="targetAvailabilityZone"> Gets or sets the target availability zone. </param>
         /// <param name="targetVmSize"> Gets or sets the target virtual machine size. </param>
         /// <param name="targetAvailabilitySetId"> Gets or sets the target availability set id for virtual machines not in an availability set at source. </param>
-        internal VirtualMachineResourceSettings(string resourceType, string targetResourceName, IDictionary<string, string> tags, IList<ResourceIdentifier> userManagedIdentities, MoverTargetAvailabilityZone? targetAvailabilityZone, string targetVmSize, ResourceIdentifier targetAvailabilitySetId) : base(resourceType, targetResourceName)
+        internal VirtualMachineResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> tags, IList<ResourceIdentifier> userManagedIdentities, MoverTargetAvailabilityZone? targetAvailabilityZone, string targetVmSize, ResourceIdentifier targetAvailabilitySetId) : base(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData)
         {
             Tags = tags;
             UserManagedIdentities = userManagedIdentities;

@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string ReadWriteMountValue = "ReadWriteMount";
         private const string UploadValue = "Upload";
+        private const string DirectValue = "Direct";
 
         /// <summary> ReadWriteMount. </summary>
         public static MachineLearningOutputDeliveryMode ReadWriteMount { get; } = new MachineLearningOutputDeliveryMode(ReadWriteMountValue);
         /// <summary> Upload. </summary>
         public static MachineLearningOutputDeliveryMode Upload { get; } = new MachineLearningOutputDeliveryMode(UploadValue);
+        /// <summary> Direct. </summary>
+        public static MachineLearningOutputDeliveryMode Direct { get; } = new MachineLearningOutputDeliveryMode(DirectValue);
         /// <summary> Determines if two <see cref="MachineLearningOutputDeliveryMode"/> values are the same. </summary>
         public static bool operator ==(MachineLearningOutputDeliveryMode left, MachineLearningOutputDeliveryMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningOutputDeliveryMode"/> values are not the same. </summary>
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

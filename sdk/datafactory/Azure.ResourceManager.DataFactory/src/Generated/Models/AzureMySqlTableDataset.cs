@@ -7,24 +7,24 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Azure MySQL database dataset. </summary>
-    public partial class AzureMySqlTableDataset : FactoryDatasetDefinition
+    public partial class AzureMySqlTableDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of AzureMySqlTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMySqlTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureMySqlTableDataset(FactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
+        public AzureMySqlTableDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             DatasetType = "AzureMySqlTable";
         }
 
-        /// <summary> Initializes a new instance of AzureMySqlTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMySqlTableDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -36,74 +36,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="tableName"> The Azure MySQL database table name. Type: string (or Expression with resultType string). </param>
         /// <param name="table"> The name of Azure MySQL database table. Type: string (or Expression with resultType string). </param>
-        internal AzureMySqlTableDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData tableName, BinaryData table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal AzureMySqlTableDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DataFactoryElement<string> table) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
             Table = table;
             DatasetType = datasetType ?? "AzureMySqlTable";
         }
 
-        /// <summary>
-        /// The Azure MySQL database table name. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData TableName { get; set; }
-        /// <summary>
-        /// The name of Azure MySQL database table. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Table { get; set; }
+        /// <summary> Initializes a new instance of <see cref="AzureMySqlTableDataset"/> for deserialization. </summary>
+        internal AzureMySqlTableDataset()
+        {
+        }
+
+        /// <summary> The Azure MySQL database table name. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> TableName { get; set; }
+        /// <summary> The name of Azure MySQL database table. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Table { get; set; }
     }
 }

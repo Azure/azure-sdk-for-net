@@ -14,6 +14,8 @@ namespace Azure.Messaging.EventHubs.Producer
     ///   to configure its behavior.
     /// </summary>
     ///
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    ///
     public class EventHubBufferedProducerClientOptions
     {
         /// <summary>The number of batches that may be sent concurrently across all partitions.</summary>

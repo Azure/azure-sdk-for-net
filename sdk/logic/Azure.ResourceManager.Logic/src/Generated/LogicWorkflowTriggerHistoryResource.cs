@@ -9,22 +9,25 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing a LogicWorkflowTriggerHistory along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogicWorkflowTriggerHistoryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogicWorkflowTriggerHistoryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowTriggerResource" /> using the GetLogicWorkflowTriggerHistory method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogicWorkflowTriggerHistoryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogicWorkflowTriggerHistoryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowTriggerResource"/> using the GetLogicWorkflowTriggerHistory method.
     /// </summary>
     public partial class LogicWorkflowTriggerHistoryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogicWorkflowTriggerHistoryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workflowName"> The workflowName. </param>
+        /// <param name="triggerName"> The triggerName. </param>
+        /// <param name="historyName"> The historyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string triggerName, string historyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/triggers/{triggerName}/histories/{historyName}";
@@ -35,12 +38,15 @@ namespace Azure.ResourceManager.Logic
         private readonly WorkflowTriggerHistoriesRestOperations _logicWorkflowTriggerHistoryWorkflowTriggerHistoriesRestClient;
         private readonly LogicWorkflowTriggerHistoryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/triggers/histories";
+
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowTriggerHistoryResource"/> class for mocking. </summary>
         protected LogicWorkflowTriggerHistoryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogicWorkflowTriggerHistoryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogicWorkflowTriggerHistoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogicWorkflowTriggerHistoryResource(ArmClient client, LogicWorkflowTriggerHistoryData data) : this(client, data.Id)
@@ -61,9 +67,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/triggers/histories";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +100,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowTriggerHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +139,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowTriggerHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,6 +180,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_Resubmit</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowTriggerHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -190,6 +217,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowTriggerHistories_Resubmit</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowTriggerHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

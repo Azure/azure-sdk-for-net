@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class UpstreamAuthSettings : IUtf8JsonSerializable
+    public partial class UpstreamAuthSettings : IUtf8JsonSerializable, IJsonModel<UpstreamAuthSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpstreamAuthSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<UpstreamAuthSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UpstreamAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UpstreamAuthSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthType))
             {
@@ -23,19 +35,50 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("managedIdentity"u8);
-                writer.WriteObjectValue(ManagedIdentity);
+                writer.WriteObjectValue(ManagedIdentity, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static UpstreamAuthSettings DeserializeUpstreamAuthSettings(JsonElement element)
+        UpstreamAuthSettings IJsonModel<UpstreamAuthSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UpstreamAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UpstreamAuthSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpstreamAuthSettings(document.RootElement, options);
+        }
+
+        internal static UpstreamAuthSettings DeserializeUpstreamAuthSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<UpstreamAuthType> type = default;
-            Optional<ManagedIdentitySettings> managedIdentity = default;
+            UpstreamAuthType? type = default;
+            ManagedIdentitySettings managedIdentity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -53,11 +96,97 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    managedIdentity = ManagedIdentitySettings.DeserializeManagedIdentitySettings(property.Value);
+                    managedIdentity = ManagedIdentitySettings.DeserializeManagedIdentitySettings(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UpstreamAuthSettings(Optional.ToNullable(type), managedIdentity.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UpstreamAuthSettings(type, managedIdentity, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{AuthType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ManagedIdentityResource", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  managedIdentity: ");
+                builder.AppendLine("{");
+                builder.Append("    resource: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ManagedIdentity))
+                {
+                    builder.Append("  managedIdentity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ManagedIdentity, options, 2, false, "  managedIdentity: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<UpstreamAuthSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpstreamAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(UpstreamAuthSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UpstreamAuthSettings IPersistableModel<UpstreamAuthSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpstreamAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUpstreamAuthSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UpstreamAuthSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UpstreamAuthSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

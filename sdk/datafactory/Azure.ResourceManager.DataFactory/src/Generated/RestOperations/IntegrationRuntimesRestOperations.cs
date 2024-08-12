@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataFactory.Models;
@@ -35,6 +34,21 @@ namespace Azure.ResourceManager.DataFactory
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2018-06-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByFactoryRequestUri(string subscriptionId, string resourceGroupName, string factoryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByFactoryRequest(string subscriptionId, string resourceGroupName, string factoryName)
@@ -65,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationRuntimeListResponse>> ListByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryIntegrationRuntimeListResult>> ListByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,9 +91,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        IntegrationRuntimeListResponse value = default;
+                        DataFactoryIntegrationRuntimeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationRuntimeListResponse.DeserializeIntegrationRuntimeListResponse(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeListResult.DeserializeDataFactoryIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -94,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationRuntimeListResponse> ListByFactory(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
+        public Response<DataFactoryIntegrationRuntimeListResult> ListByFactory(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -106,9 +120,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        IntegrationRuntimeListResponse value = default;
+                        DataFactoryIntegrationRuntimeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IntegrationRuntimeListResponse.DeserializeIntegrationRuntimeListResponse(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeListResult.DeserializeDataFactoryIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -116,7 +130,23 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, FactoryIntegrationRuntimeData data, string ifMatch)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, DataFactoryIntegrationRuntimeData data, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, DataFactoryIntegrationRuntimeData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -140,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -156,7 +186,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FactoryIntegrationRuntimeData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, FactoryIntegrationRuntimeData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryIntegrationRuntimeData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, DataFactoryIntegrationRuntimeData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -170,9 +200,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryIntegrationRuntimeData value = default;
+                        DataFactoryIntegrationRuntimeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FactoryIntegrationRuntimeData.DeserializeFactoryIntegrationRuntimeData(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -190,7 +220,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FactoryIntegrationRuntimeData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, FactoryIntegrationRuntimeData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<DataFactoryIntegrationRuntimeData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, DataFactoryIntegrationRuntimeData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -204,14 +234,30 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryIntegrationRuntimeData value = default;
+                        DataFactoryIntegrationRuntimeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FactoryIntegrationRuntimeData.DeserializeFactoryIntegrationRuntimeData(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string ifNoneMatch)
@@ -249,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FactoryIntegrationRuntimeData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryIntegrationRuntimeData>> GetAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -262,14 +308,14 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryIntegrationRuntimeData value = default;
+                        DataFactoryIntegrationRuntimeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FactoryIntegrationRuntimeData.DeserializeFactoryIntegrationRuntimeData(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
                 case 404:
-                    return Response.FromValue((FactoryIntegrationRuntimeData)null, message.Response);
+                    return Response.FromValue((DataFactoryIntegrationRuntimeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -284,7 +330,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FactoryIntegrationRuntimeData> Get(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<DataFactoryIntegrationRuntimeData> Get(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -297,20 +343,36 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryIntegrationRuntimeData value = default;
+                        DataFactoryIntegrationRuntimeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FactoryIntegrationRuntimeData.DeserializeFactoryIntegrationRuntimeData(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 304:
                 case 404:
-                    return Response.FromValue((FactoryIntegrationRuntimeData)null, message.Response);
+                    return Response.FromValue((DataFactoryIntegrationRuntimeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, FactoryIntegrationRuntimePatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, DataFactoryIntegrationRuntimePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, DataFactoryIntegrationRuntimePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -330,7 +392,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -345,7 +407,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FactoryIntegrationRuntimeData>> UpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, FactoryIntegrationRuntimePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryIntegrationRuntimeData>> UpdateAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, DataFactoryIntegrationRuntimePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -359,9 +421,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryIntegrationRuntimeData value = default;
+                        DataFactoryIntegrationRuntimeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FactoryIntegrationRuntimeData.DeserializeFactoryIntegrationRuntimeData(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -378,7 +440,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FactoryIntegrationRuntimeData> Update(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, FactoryIntegrationRuntimePatch patch, CancellationToken cancellationToken = default)
+        public Response<DataFactoryIntegrationRuntimeData> Update(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, DataFactoryIntegrationRuntimePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -392,14 +454,30 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        FactoryIntegrationRuntimeData value = default;
+                        DataFactoryIntegrationRuntimeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FactoryIntegrationRuntimeData.DeserializeFactoryIntegrationRuntimeData(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
@@ -478,6 +556,23 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        internal RequestUriBuilder CreateGetStatusRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/getStatus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetStatusRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
         {
             var message = _pipeline.CreateMessage();
@@ -509,7 +604,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationRuntimeStatusResult>> GetStatusAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryIntegrationRuntimeStatusResult>> GetStatusAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -522,9 +617,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        IntegrationRuntimeStatusResult value = default;
+                        DataFactoryIntegrationRuntimeStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationRuntimeStatusResult.DeserializeIntegrationRuntimeStatusResult(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -540,7 +635,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationRuntimeStatusResult> GetStatus(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, CancellationToken cancellationToken = default)
+        public Response<DataFactoryIntegrationRuntimeStatusResult> GetStatus(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -553,14 +648,31 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        IntegrationRuntimeStatusResult value = default;
+                        DataFactoryIntegrationRuntimeStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IntegrationRuntimeStatusResult.DeserializeIntegrationRuntimeStatusResult(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOutboundNetworkDependenciesEndpointsRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListOutboundNetworkDependenciesEndpointsRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
@@ -648,6 +760,23 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        internal RequestUriBuilder CreateGetConnectionInfoRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/getConnectionInfo", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetConnectionInfoRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
         {
             var message = _pipeline.CreateMessage();
@@ -733,6 +862,23 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        internal RequestUriBuilder CreateRegenerateAuthKeyRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, IntegrationRuntimeRegenerateKeyContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/regenerateAuthKey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRegenerateAuthKeyRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, IntegrationRuntimeRegenerateKeyContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -754,7 +900,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -824,6 +970,23 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAuthKeysRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/listAuthKeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListAuthKeysRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
@@ -911,6 +1074,23 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        internal RequestUriBuilder CreateStartRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
         {
             var message = _pipeline.CreateMessage();
@@ -986,6 +1166,23 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
@@ -1065,6 +1262,23 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        internal RequestUriBuilder CreateSyncCredentialsRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/syncCredentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSyncCredentialsRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
         {
             var message = _pipeline.CreateMessage();
@@ -1138,6 +1352,23 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetMonitoringDataRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/monitoringData", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetMonitoringDataRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
@@ -1225,6 +1456,23 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        internal RequestUriBuilder CreateUpgradeRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/upgrade", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpgradeRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName)
         {
             var message = _pipeline.CreateMessage();
@@ -1300,6 +1548,23 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        internal RequestUriBuilder CreateRemoveLinksRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, LinkedIntegrationRuntimeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/removeLinks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRemoveLinksRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, LinkedIntegrationRuntimeContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -1321,7 +1586,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1383,6 +1648,23 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        internal RequestUriBuilder CreateCreateLinkedIntegrationRuntimeRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, CreateLinkedIntegrationRuntimeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/integrationRuntimes/", false);
+            uri.AppendPath(integrationRuntimeName, true);
+            uri.AppendPath("/linkedIntegrationRuntime", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateLinkedIntegrationRuntimeRequest(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, CreateLinkedIntegrationRuntimeContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -1404,7 +1686,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1419,7 +1701,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationRuntimeStatusResult>> CreateLinkedIntegrationRuntimeAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, CreateLinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryIntegrationRuntimeStatusResult>> CreateLinkedIntegrationRuntimeAsync(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, CreateLinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1433,9 +1715,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        IntegrationRuntimeStatusResult value = default;
+                        DataFactoryIntegrationRuntimeStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationRuntimeStatusResult.DeserializeIntegrationRuntimeStatusResult(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1452,7 +1734,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="integrationRuntimeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationRuntimeStatusResult> CreateLinkedIntegrationRuntime(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, CreateLinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
+        public Response<DataFactoryIntegrationRuntimeStatusResult> CreateLinkedIntegrationRuntime(string subscriptionId, string resourceGroupName, string factoryName, string integrationRuntimeName, CreateLinkedIntegrationRuntimeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1466,14 +1748,22 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        IntegrationRuntimeStatusResult value = default;
+                        DataFactoryIntegrationRuntimeStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IntegrationRuntimeStatusResult.DeserializeIntegrationRuntimeStatusResult(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeStatusResult.DeserializeDataFactoryIntegrationRuntimeStatusResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFactoryNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string factoryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByFactoryNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string factoryName)
@@ -1498,7 +1788,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationRuntimeListResponse>> ListByFactoryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
+        public async Task<Response<DataFactoryIntegrationRuntimeListResult>> ListByFactoryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1511,9 +1801,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        IntegrationRuntimeListResponse value = default;
+                        DataFactoryIntegrationRuntimeListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationRuntimeListResponse.DeserializeIntegrationRuntimeListResponse(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeListResult.DeserializeDataFactoryIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1529,7 +1819,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationRuntimeListResponse> ListByFactoryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
+        public Response<DataFactoryIntegrationRuntimeListResult> ListByFactoryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1542,9 +1832,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        IntegrationRuntimeListResponse value = default;
+                        DataFactoryIntegrationRuntimeListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IntegrationRuntimeListResponse.DeserializeIntegrationRuntimeListResponse(document.RootElement);
+                        value = DataFactoryIntegrationRuntimeListResult.DeserializeDataFactoryIntegrationRuntimeListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

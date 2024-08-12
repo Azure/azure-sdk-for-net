@@ -10,12 +10,12 @@ namespace Azure.IoT.Hub.Service.Models
     /// <summary> The SymmetricKey. </summary>
     public partial class SymmetricKey
     {
-        /// <summary> Initializes a new instance of SymmetricKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="SymmetricKey"/>. </summary>
         public SymmetricKey()
         {
         }
 
-        /// <summary> Initializes a new instance of SymmetricKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="SymmetricKey"/>. </summary>
         /// <param name="primaryKey"> The base64 encoded primary key of the device. </param>
         /// <param name="secondaryKey"> The base64 encoded secondary key of the device. </param>
         internal SymmetricKey(string primaryKey, string secondaryKey)

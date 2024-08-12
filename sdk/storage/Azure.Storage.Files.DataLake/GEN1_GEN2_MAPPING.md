@@ -49,7 +49,7 @@
 <td>Concurrent Append</td>
 <td>API to perform concurrent append at server. The offset at which append will occur is determined by server.</td>
 <td>FileClient.Append()</td>
-<td>Pass in an offset equal to the current file length.</td>
+<td>Pass in an offset equal to the current file length, then call Flush() with an offset of the previous file length + the length of the new content.  Also note that Gen 2 does not handle concurrency, so in multi-writer scenarios, the customer application needs to coordinate writes to an individial file.</td>
 </tr>
 <tr>
 <td>Create Directory</td>

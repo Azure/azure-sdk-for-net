@@ -131,6 +131,11 @@ namespace Azure.Security.KeyVault.Keys
         public string RecoveryLevel { get => _attributes.RecoveryLevel; internal set => _attributes.RecoveryLevel = value; }
 
         /// <summary>
+        /// Gets the underlying HSM platform.
+        /// </summary>
+        public string HsmPlatform { get => _attributes.HsmPlatform; internal set => _attributes.HsmPlatform = value; }
+
+        /// <summary>
         /// Gets or sets the policy rules under which the key can be exported.
         /// </summary>
         public KeyReleasePolicy ReleasePolicy { get; set; }

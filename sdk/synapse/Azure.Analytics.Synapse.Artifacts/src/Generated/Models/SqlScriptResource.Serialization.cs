@@ -31,10 +31,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<string> type = default;
-            Optional<string> etag = default;
+            string type = default;
+            string etag = default;
             SqlScript properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +64,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlScriptResource(id.Value, name, type.Value, etag.Value, properties);
+            return new SqlScriptResource(id, name, type, etag, properties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SqlScriptResource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlScriptResource(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class SqlScriptResourceConverter : JsonConverter<SqlScriptResource>
@@ -73,6 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SqlScriptResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

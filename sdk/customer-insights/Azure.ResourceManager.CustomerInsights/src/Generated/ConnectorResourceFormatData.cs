@@ -19,13 +19,45 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class ConnectorResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of ConnectorResourceFormatData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectorResourceFormatData"/>. </summary>
         public ConnectorResourceFormatData()
         {
             ConnectorProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ConnectorResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectorResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +73,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="state"> State of connector. </param>
         /// <param name="tenantId"> The hub name. </param>
         /// <param name="isInternal"> If this is an internal connector. </param>
-        internal ConnectorResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? connectorId, string connectorName, ConnectorType? connectorType, string displayName, string description, IDictionary<string, BinaryData> connectorProperties, DateTimeOffset? created, DateTimeOffset? lastModified, ConnectorState? state, Guid? tenantId, bool? isInternal) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? connectorId, string connectorName, ConnectorType? connectorType, string displayName, string description, IDictionary<string, BinaryData> connectorProperties, DateTimeOffset? created, DateTimeOffset? lastModified, ConnectorState? state, Guid? tenantId, bool? isInternal, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ConnectorId = connectorId;
             ConnectorName = connectorName;
@@ -54,6 +87,7 @@ namespace Azure.ResourceManager.CustomerInsights
             State = state;
             TenantId = tenantId;
             IsInternal = isInternal;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID of the connector. </summary>
@@ -72,7 +106,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

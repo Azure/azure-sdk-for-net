@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Specifies the kind of usage details.
-    /// Serialized Name: UsageDetailsKind
-    /// </summary>
+    /// <summary> Specifies the kind of usage details. </summary>
     internal readonly partial struct UsageDetailsKind : IEquatable<UsageDetailsKind>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string LegacyValue = "legacy";
         private const string ModernValue = "modern";
 
-        /// <summary>
-        /// legacy
-        /// Serialized Name: UsageDetailsKind.legacy
-        /// </summary>
+        /// <summary> legacy. </summary>
         public static UsageDetailsKind Legacy { get; } = new UsageDetailsKind(LegacyValue);
-        /// <summary>
-        /// modern
-        /// Serialized Name: UsageDetailsKind.modern
-        /// </summary>
+        /// <summary> modern. </summary>
         public static UsageDetailsKind Modern { get; } = new UsageDetailsKind(ModernValue);
         /// <summary> Determines if two <see cref="UsageDetailsKind"/> values are the same. </summary>
         public static bool operator ==(UsageDetailsKind left, UsageDetailsKind right) => left.Equals(right);
@@ -53,7 +44,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

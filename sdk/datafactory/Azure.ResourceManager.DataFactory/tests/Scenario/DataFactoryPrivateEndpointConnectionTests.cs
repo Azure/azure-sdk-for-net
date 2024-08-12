@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             var dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
 
             string connectionName = "DataFactory-5673.860b8eaf-a2d6-4870-96c3-784cfff79b42";
-            FactoryPrivateEndpointConnectionCreateOrUpdateContent data = new FactoryPrivateEndpointConnectionCreateOrUpdateContent()
+            DataFactoryPrivateEndpointConnectionCreateOrUpdateContent data = new DataFactoryPrivateEndpointConnectionCreateOrUpdateContent()
             {
                 Properties = new PrivateLinkConnectionApprovalRequest()
                 {
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     {
                         Id = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DataFactory-RG-7129/providers/Microsoft.Network/privateEndpoints/dafasfsdf"),
                     },
-                    PrivateLinkServiceConnectionState = new PrivateLinkConnectionState("Approved", "Auto-Approved", "None"),
+                    PrivateLinkServiceConnectionState = new PrivateLinkConnectionState("Approved", "Auto-Approved", "None", null),
                 },
             };
-            var connection = await dataFactory.GetFactoryPrivateEndpointConnections().CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
+            var connection = await dataFactory.GetDataFactoryPrivateEndpointConnections().CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
             Assert.IsNotNull(connection);
         }
 
@@ -55,22 +55,22 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             var dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
 
             // GetAll
-            var list = await dataFactory.GetFactoryPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
+            var list = await dataFactory.GetDataFactoryPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
 
             // Get
             string connectionName = list.FirstOrDefault().Data.Name;
-            var connection = await dataFactory.GetFactoryPrivateEndpointConnections().GetAsync(connectionName);
+            var connection = await dataFactory.GetDataFactoryPrivateEndpointConnections().GetAsync(connectionName);
             Assert.IsNotNull(connection);
             Assert.AreEqual(connectionName, connection.Value.Data.Name);
 
             // Exist
-            bool flag = await dataFactory.GetFactoryPrivateEndpointConnections().ExistsAsync(connectionName);
+            bool flag = await dataFactory.GetDataFactoryPrivateEndpointConnections().ExistsAsync(connectionName);
             Assert.IsTrue(flag);
 
             // Delete
             await connection.Value.DeleteAsync(WaitUntil.Completed);
-            flag = await dataFactory.GetFactoryPrivateEndpointConnections().ExistsAsync(connectionName);
+            flag = await dataFactory.GetDataFactoryPrivateEndpointConnections().ExistsAsync(connectionName);
             Assert.IsFalse(flag);
         }
     }

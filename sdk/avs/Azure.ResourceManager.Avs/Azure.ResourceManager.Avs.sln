@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{5B30A6C9-8F7C-499D-A725-EA03E8882458}") = "Azure.ResourceManager.Avs", "src\Azure.ResourceManager.Avs.csproj", "{702E46D7-6C74-4447-9B3E-C66BBDFE253A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Avs", "src\Azure.ResourceManager.Avs.csproj", "{702E46D7-6C74-4447-9B3E-C66BBDFE253A}"
 EndProject
-Project("{5B30A6C9-8F7C-499D-A725-EA03E8882458}") = "Azure.ResourceManager.Avs.Tests", "tests\Azure.ResourceManager.Avs.Tests.csproj", "{E024EB23-1536-4B05-AA4B-53E131E6DDD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Avs.Tests", "tests\Azure.ResourceManager.Avs.Tests.csproj", "{E024EB23-1536-4B05-AA4B-53E131E6DDD7}"
 EndProject
-Project("{5B30A6C9-8F7C-499D-A725-EA03E8882458}") = "Azure.ResourceManager.Avs.Samples", "samples\Azure.ResourceManager.Avs.Samples.csproj", "{a814622b-76ab-4d85-bfd6-370994955eaa}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Avs.Samples", "samples\Azure.ResourceManager.Avs.Samples.csproj", "{A814622B-76AB-4D85-BFD6-370994955EAA}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {82B4A9B0-CBCF-4A87-9524-69B8199C2FF8}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{E024EB23-1536-4B05-AA4B-53E131E6DDD7}.Release|x64.Build.0 = Release|Any CPU
 		{E024EB23-1536-4B05-AA4B-53E131E6DDD7}.Release|x86.ActiveCfg = Release|Any CPU
 		{E024EB23-1536-4B05-AA4B-53E131E6DDD7}.Release|x86.Build.0 = Release|Any CPU
+		{A814622B-76AB-4D85-BFD6-370994955EAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A814622B-76AB-4D85-BFD6-370994955EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A814622B-76AB-4D85-BFD6-370994955EAA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A814622B-76AB-4D85-BFD6-370994955EAA}.Debug|x64.Build.0 = Debug|Any CPU
+		{A814622B-76AB-4D85-BFD6-370994955EAA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A814622B-76AB-4D85-BFD6-370994955EAA}.Debug|x86.Build.0 = Debug|Any CPU
+		{A814622B-76AB-4D85-BFD6-370994955EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A814622B-76AB-4D85-BFD6-370994955EAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A814622B-76AB-4D85-BFD6-370994955EAA}.Release|x64.ActiveCfg = Release|Any CPU
+		{A814622B-76AB-4D85-BFD6-370994955EAA}.Release|x64.Build.0 = Release|Any CPU
+		{A814622B-76AB-4D85-BFD6-370994955EAA}.Release|x86.ActiveCfg = Release|Any CPU
+		{A814622B-76AB-4D85-BFD6-370994955EAA}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {82B4A9B0-CBCF-4A87-9524-69B8199C2FF8}
 	EndGlobalSection
 EndGlobal

@@ -1,12 +1,54 @@
 # Release History
 
+## 1.15.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.14.0 (2024-05-24)
+
+### Other Changes
+* Update `System.IdentityModel.Tokens.Jwt` to 6.35.0
+* Update `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.25.2
+
+## 1.13.0 (2024-02-06)
+
+### Other Changes
+* Update `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.24.0
+* Update `Microsoft.Azure.SignalR.Serverless.Protocols` to 1.10.0
+
+## 1.12.0 (2023-11-07)
+### Features Added
+* Added `RetryOptions` to `SignalROptions` to configure retry policy for SignalR Service REST API calls. For more infomation about cutomize retry options, see samples.
+* Added `HttpClientTimeout` to `SignalROptions` to configure HTTP client timeout for SignalR Service REST API calls. The default value is 100 seconds. User can also set "AzureSignalRHttpClientTimeout" in the app settings to override the default value.
+
+### Bugs Fixed
+* Fixed the issue when using customized server endpoint with Azure AD credential.
+* Fixed the issue that SignalR trigger is not working with secondary connection string.
+
+### Other Changes
+* Upgraded  `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` from 1.21.6 to 1.22.0
+
+## 1.11.2 (2023-09-12)
+
+### Bugs Fixed
+* Fixed the issue when using customized server endpoint with Azure AD credential.
+
+### Other Changes
+* Upgraded  `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` from 1.21.4 to 1.21.6
+
 ## 1.11.0 (2023-06-17)
 
 ### Bugs Fixed
 * Fixed the bug that a wrong exception is thrown when the SignalR connection is not found using REST API to close a connection or add a connection to group.
 
 ### Other Changes
-* Upgraded  `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.21.3
+* Upgraded  `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.21.4
 
 ## 1.10.0 (2023-04-11)
 

@@ -6,14 +6,48 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Information on the configuration of flow log and traffic analytics (optional) . </summary>
     public partial class FlowLogInformation
     {
-        /// <summary> Initializes a new instance of FlowLogInformation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlowLogInformation"/>. </summary>
         /// <param name="targetResourceId"> The ID of the resource to configure for flow log and traffic analytics (optional) . </param>
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
@@ -28,21 +62,30 @@ namespace Azure.ResourceManager.Network.Models
             Enabled = enabled;
         }
 
-        /// <summary> Initializes a new instance of FlowLogInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowLogInformation"/>. </summary>
         /// <param name="targetResourceId"> The ID of the resource to configure for flow log and traffic analytics (optional) . </param>
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
+        /// <param name="identity"> FlowLog resource Managed Identity. </param>
         /// <param name="storageId"> ID of the storage account which is used to store the flow log. </param>
         /// <param name="enabled"> Flag to enable/disable flow logging. </param>
         /// <param name="retentionPolicy"> Parameters that define the retention policy for flow log. </param>
         /// <param name="format"> Parameters that define the flow log format. </param>
-        internal FlowLogInformation(ResourceIdentifier targetResourceId, TrafficAnalyticsProperties flowAnalyticsConfiguration, ResourceIdentifier storageId, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlowLogInformation(ResourceIdentifier targetResourceId, TrafficAnalyticsProperties flowAnalyticsConfiguration, ManagedServiceIdentity identity, ResourceIdentifier storageId, bool enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetResourceId = targetResourceId;
             FlowAnalyticsConfiguration = flowAnalyticsConfiguration;
+            Identity = identity;
             StorageId = storageId;
             Enabled = enabled;
             RetentionPolicy = retentionPolicy;
             Format = format;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlowLogInformation"/> for deserialization. </summary>
+        internal FlowLogInformation()
+        {
         }
 
         /// <summary> The ID of the resource to configure for flow log and traffic analytics (optional) . </summary>
@@ -61,6 +104,8 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
+        /// <summary> FlowLog resource Managed Identity. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> ID of the storage account which is used to store the flow log. </summary>
         public ResourceIdentifier StorageId { get; set; }
         /// <summary> Flag to enable/disable flow logging. </summary>

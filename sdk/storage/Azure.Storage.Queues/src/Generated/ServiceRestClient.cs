@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
 
 namespace Azure.Storage.Queues
@@ -30,9 +30,9 @@ namespace Azure.Storage.Queues
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, queue or message that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2018-03-28". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2018-03-28")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -40,7 +40,7 @@ namespace Azure.Storage.Queues
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(QueueServiceProperties storageServiceProperties, int? timeout)
+        internal HttpMessage CreateSetPropertiesRequest(QueueServiceProperties queueServiceProperties, int? timeout)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -59,24 +59,24 @@ namespace Azure.Storage.Queues
             request.Headers.Add("Accept", "application/xml");
             request.Headers.Add("Content-Type", "application/xml");
             var content = new XmlWriterContent();
-            content.XmlWriter.WriteObjectValue(storageServiceProperties, "StorageServiceProperties");
+            content.XmlWriter.WriteObjectValue(queueServiceProperties, "StorageServiceProperties");
             request.Content = content;
             return message;
         }
 
         /// <summary> Sets properties for a storage account's Queue service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="storageServiceProperties"> The StorageService properties. </param>
+        /// <param name="queueServiceProperties"> The StorageService properties. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(QueueServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceProperties"/> is null. </exception>
+        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(QueueServiceProperties queueServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (storageServiceProperties == null)
+            if (queueServiceProperties == null)
             {
-                throw new ArgumentNullException(nameof(storageServiceProperties));
+                throw new ArgumentNullException(nameof(queueServiceProperties));
             }
 
-            using var message = CreateSetPropertiesRequest(storageServiceProperties, timeout);
+            using var message = CreateSetPropertiesRequest(queueServiceProperties, timeout);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ServiceSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -89,18 +89,18 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> Sets properties for a storage account's Queue service endpoint, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="storageServiceProperties"> The StorageService properties. </param>
+        /// <param name="queueServiceProperties"> The StorageService properties. </param>
         /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageServiceProperties"/> is null. </exception>
-        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(QueueServiceProperties storageServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="queueServiceProperties"/> is null. </exception>
+        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(QueueServiceProperties queueServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
         {
-            if (storageServiceProperties == null)
+            if (queueServiceProperties == null)
             {
-                throw new ArgumentNullException(nameof(storageServiceProperties));
+                throw new ArgumentNullException(nameof(queueServiceProperties));
             }
 
-            using var message = CreateSetPropertiesRequest(storageServiceProperties, timeout);
+            using var message = CreateSetPropertiesRequest(queueServiceProperties, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ServiceSetPropertiesHeaders(message.Response);
             switch (message.Response.Status)
@@ -273,7 +273,7 @@ namespace Azure.Storage.Queues
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null && Optional.IsCollectionDefined(include))
+            if (include != null && !(include is Common.ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }

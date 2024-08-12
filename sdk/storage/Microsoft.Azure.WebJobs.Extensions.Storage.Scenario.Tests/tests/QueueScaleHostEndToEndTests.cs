@@ -120,7 +120,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
                 var settings = new Dictionary<string, string>()
                 {
                     { QueueConnection1, TestEnvironment.PrimaryStorageAccountConnectionString },
-                    { $"{QueueConnection2}:queueServiceUri", $"https://{_fixture.QueueServiceClient.AccountName}.queue.core.windows.net" }
+                    { $"{QueueConnection2}:queueServiceUri", _fixture.QueueServiceClient.Uri.AbsoluteUri }
                 };
 
                 // Adding app setting

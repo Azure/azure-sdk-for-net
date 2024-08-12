@@ -14,6 +14,12 @@ namespace Azure.Storage.DataMovement
         internal const int MaxJobPartReaders = 64;
         internal const int MaxJobChunkTasks = 3000;
         internal const int StatusCheckInSec = 10;
+        internal const int DefaultArrayPoolArraySize = 4 * 1024;
+
+        internal const long DefaultInitialTransferSize = 32 * Constants.MB;
+        internal const long DefaultChunkSize = 4 * Constants.MB;
+
+        public const char PathForwardSlashDelimiterChar = '/';
 
         internal static class ConcurrencyTuner
         {
@@ -51,171 +57,114 @@ namespace Azure.Storage.DataMovement
             internal const string Closing = "Closing log ";
         }
 
+        internal const int OneByte = 1;
+        internal const int ShortSizeInBytes = 2;
+        internal const int LongSizeInBytes = 8;
+        internal const int IntSizeInBytes = 4;
+        internal const int GuidSizeInBytes = 16;
+        internal const string StringTypeStr = "string";
+        internal const string StringArrayTypeStr = "string[]";
+
         /// <summary>
-        /// Constants used for plan job transfer files
+        /// Constants used for job plan files.
         /// </summary>
-        internal static class PlanFile
+        internal static class JobPlanFile
         {
             internal const string SchemaVersion_b1 = "b1";
-            internal const string SchemaVersion = SchemaVersion_b1; // TODO: remove b for beta
+            internal const string SchemaVersion = SchemaVersion_b1;
 
-            // Job Plan file extension. e.g. the file extension will look like {transferid}--{jobpartNumber}.steV{schemaVersion}
-            internal const string FileExtension = ".steV";
-            internal const string JobPlanFileNameDelimiter = "--";
+            internal const string FileExtension = ".ndm";
+
+            internal const int VersionStrLength = 2;
+            internal const int VersionStrNumBytes = VersionStrLength * 2;
+            internal const int ProviderIdMaxLength = 5;
+            internal const int ProviderIdNumBytes = ProviderIdMaxLength * 2;
+
+            internal const int VersionIndex = 0;
+            internal const int TransferIdIndex = VersionIndex + VersionStrNumBytes;
+            internal const int CrateTimeIndex = TransferIdIndex + GuidSizeInBytes;
+            internal const int OperationTypeIndex = CrateTimeIndex + LongSizeInBytes;
+            internal const int SourceProviderIdIndex = OperationTypeIndex + OneByte;
+            internal const int DestinationProviderIdIndex = SourceProviderIdIndex + ProviderIdNumBytes;
+            internal const int IsContainerIndex = DestinationProviderIdIndex + ProviderIdNumBytes;
+            internal const int EnumerationCompleteIndex = IsContainerIndex + OneByte;
+            internal const int JobStatusIndex = EnumerationCompleteIndex + OneByte;
+            internal const int ParentSourcePathOffsetIndex = JobStatusIndex + IntSizeInBytes;
+            internal const int ParentSourcePathLengthIndex = ParentSourcePathOffsetIndex + IntSizeInBytes;
+            internal const int ParentDestPathOffsetIndex = ParentSourcePathLengthIndex + IntSizeInBytes;
+            internal const int ParentDestPathLengthIndex = ParentDestPathOffsetIndex + IntSizeInBytes;
+            internal const int SourceCheckpointDataOffsetIndex = ParentDestPathLengthIndex + IntSizeInBytes;
+            internal const int SourceCheckpointDataLengthIndex = SourceCheckpointDataOffsetIndex + IntSizeInBytes;
+            internal const int DestinationCheckpointDataOffsetIndex = SourceCheckpointDataLengthIndex + IntSizeInBytes;
+            internal const int DestinationCheckpointDataLengthIndex = DestinationCheckpointDataOffsetIndex + IntSizeInBytes;
+            internal const int VariableLengthStartIndex = DestinationCheckpointDataLengthIndex + IntSizeInBytes;
+        }
+
+        /// <summary>
+        /// Constants used for job part plan files.
+        /// </summary>
+        internal static class JobPartPlanFile
+        {
+            internal const string SchemaVersion_b1 = "b1";
+            internal const string SchemaVersion_b2 = "b2";
+            internal const string SchemaVersion_b3 = "b3";
+            internal const string SchemaVersion = SchemaVersion_b3; // TODO: remove b for beta
+
+            // Job Plan file extension. e.g. the file extension will look like {transferid}.{jobpartNumber}.ndmpart
+            internal const string FileExtension = ".ndmpart";
             internal const int JobPartLength = 5;
             internal const int IdSize = 36; // Size of a guid with hyphens
-            internal const int CustomHeaderMaxBytes = 256;
-            internal const int Padding = 8;
-
-            internal const int OneByte = 1;
-            internal const int LongSizeInBytes = 8;
-            internal const int UShortSizeInBytes = 2;
 
             // UTF-8 encoding, so 2 bytes per char
             internal const int VersionStrLength = 2;
             internal const int VersionStrNumBytes = VersionStrLength * 2;
-            internal const int TransferIdStrLength = 36;
-            internal const int TransferIdStrNumBytes = TransferIdStrLength * 2;
-            internal const int PathStrMaxLength = 4096;
-            internal const int PathStrNumBytes = PathStrMaxLength * 2;
-            internal const int ExtraQueryMaxLength = 1000;
-            internal const int ExtraQueryNumBytes = ExtraQueryMaxLength * 2;
-            internal const int HeaderValueMaxLength = 1000;
-            internal const int HeaderValueNumBytes = HeaderValueMaxLength * 2;
-            internal const int MetadataStrMaxLength = 4096;
-            internal const int MetadataStrNumBytes = MetadataStrMaxLength * 2;
-            internal const int BlobTagsStrMaxLength = 4096;
-            internal const int BlobTagsStrNumBytes = BlobTagsStrMaxLength * 2;
+            internal const int TypeIdMaxStrLength = 10;
+            internal const int TypeIdNumBytes = TypeIdMaxStrLength * 2;
 
-            /// <summary>Index: 0</summary>
-            internal const int VersionIndex = 0; // Index: 0
-            /// <summary>Index: 4</summary>
-            internal const int StartTimeIndex = VersionIndex + VersionStrNumBytes;
-            /// <summary>Index: 12</summary>
-            internal const int TransferIdIndex = StartTimeIndex + LongSizeInBytes;
-            /// <summary>Index: 84</summary>
-            internal const int PartNumberIndex = TransferIdIndex + TransferIdStrNumBytes;
-            /// <summary>Index: 92</summary>
-            internal const int SourcePathLengthIndex = PartNumberIndex + LongSizeInBytes;
-            /// <summary>Index: 94</summary>
-            internal const int SourcePathIndex = SourcePathLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 8,286</summary>
-            internal const int SourceExtraQueryLengthIndex = SourcePathIndex + PathStrNumBytes;
-            /// <summary>Index: 8,288</summary>
-            internal const int SourceExtraQueryIndex = SourceExtraQueryLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 10,288</summary>
-            internal const int DestinationPathLengthIndex = SourceExtraQueryIndex + ExtraQueryNumBytes;
-            /// <summary>Index: 10,290</summary>
-            internal const int DestinationPathIndex = DestinationPathLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 18,482</summary>
-            internal const int DestinationExtraQueryLengthIndex = DestinationPathIndex + PathStrNumBytes;
-            /// <summary>Index: 18,484</summary>
-            internal const int DestinationExtraQueryIndex = DestinationExtraQueryLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 20,484</summary>
-            internal const int IsFinalPartIndex = DestinationExtraQueryIndex + ExtraQueryNumBytes;
-            /// <summary>Index: 20,485</summary>
-            internal const int ForceWriteIndex = IsFinalPartIndex + OneByte;
-            /// <summary>Index: 20,486</summary>
-            internal const int ForceIfReadOnlyIndex = ForceWriteIndex + OneByte;
-            /// <summary>Index: 20,487</summary>
-            internal const int AutoDecompressIndex = ForceIfReadOnlyIndex + OneByte;
-            /// <summary>Index: 20,488</summary>
-            internal const int PriorityIndex = AutoDecompressIndex + OneByte;
-            /// <summary>Index: 20,489</summary>
-            internal const int TTLAfterCompletionIndex = PriorityIndex + OneByte;
-            /// <summary>Index: 20,497</summary>
-            internal const int FromToIndex = TTLAfterCompletionIndex + LongSizeInBytes;
-            /// <summary>Index: 20,498</summary>
-            internal const int FolderPropertyModeIndex = FromToIndex + OneByte;
-            /// <summary>Index: 20,499</summary>
-            internal const int NumberChunksIndex = FolderPropertyModeIndex + OneByte;
-
-            // JobPartPlanDestinationBlob Indexes
-            /// <summary>Index: 20,500</summary>
-            internal const int DstBlobTypeIndex = NumberChunksIndex + LongSizeInBytes;
-            /// <summary>Index: 20,501</summary>
-            internal const int DstBlobNoGuessMimeTypeIndex = DstBlobTypeIndex + OneByte;
-            /// <summary>Index: 20,502</summary>
-            internal const int DstBlobContentTypeLengthIndex = DstBlobNoGuessMimeTypeIndex + OneByte;
-            /// <summary>Index: 20,504</summary>
-            internal const int DstBlobContentTypeIndex = DstBlobContentTypeLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 22,504</summary>
-            internal const int DstBlobContentEncodingLengthIndex = DstBlobContentTypeIndex + HeaderValueNumBytes;
-            /// <summary>Index: 22,506</summary>
-            internal const int DstBlobContentEncodingIndex = DstBlobContentEncodingLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 24,506</summary>
-            internal const int DstBlobContentLanguageLengthIndex = DstBlobContentEncodingIndex + HeaderValueNumBytes;
-            /// <summary>Index: 24,508</summary>
-            internal const int DstBlobContentLanguageIndex = DstBlobContentLanguageLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 26,508</summary>
-            internal const int DstBlobContentDispositionLengthIndex = DstBlobContentLanguageIndex + HeaderValueNumBytes;
-            /// <summary>Index: 26,510</summary>
-            internal const int DstBlobContentDispositionIndex = DstBlobContentDispositionLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 28,510</summary>
-            internal const int DstBlobCacheControlLengthIndex = DstBlobContentDispositionIndex + HeaderValueNumBytes;
-            /// <summary>Index: 28,512</summary>
-            internal const int DstBlobCacheControlIndex = DstBlobCacheControlLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 30,512</summary>
-            internal const int DstBlobBlockBlobTierIndex = DstBlobCacheControlIndex + HeaderValueNumBytes;
-            /// <summary>Index: 30,513</summary>
-            internal const int DstBlobPageBlobTierIndex = DstBlobBlockBlobTierIndex + OneByte;
-            /// <summary>Index: 30,514</summary>
-            internal const int DstBlobPutMd5Index = DstBlobPageBlobTierIndex + OneByte;
-            /// <summary>Index: 30,515</summary>
-            internal const int DstBlobMetadataLengthIndex = DstBlobPutMd5Index + OneByte;
-            /// <summary>Index: 30,517</summary>
-            internal const int DstBlobMetadataIndex = DstBlobMetadataLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 38,709</summary>
-            internal const int DstBlobTagsLengthIndex = DstBlobMetadataIndex + MetadataStrNumBytes;
-            /// <summary>Index: 38,717</summary>
-            internal const int DstBlobTagsIndex = DstBlobTagsLengthIndex + LongSizeInBytes;
-            /// <summary>Index: 46,909</summary>
-            internal const int DstBlobIsSourceEncrypted = DstBlobTagsIndex + BlobTagsStrNumBytes;
-            /// <summary>Index: 46,910</summary>
-            internal const int DstBlobCpkScopeInfoLengthIndex = DstBlobIsSourceEncrypted + OneByte;
-            /// <summary>Index: 46,912</summary>
-            internal const int DstBlobCpkScopeInfoIndex = DstBlobCpkScopeInfoLengthIndex + UShortSizeInBytes;
-            /// <summary>Index: 48,912</summary>
-            internal const int DstBlobBlockSizeIndex = DstBlobCpkScopeInfoIndex + HeaderValueNumBytes;
-
-            // JobPartPlanDestinationLocal Indexes
-            /// <summary>Index: 48,920</summary>
-            internal const int DstLocalPreserveLastModifiedTimeIndex = DstBlobBlockSizeIndex + LongSizeInBytes;
-            /// <summary>Index: 48,921</summary>
-            internal const int DstLocalMD5VerificationOptionIndex = DstLocalPreserveLastModifiedTimeIndex + OneByte;
-
-            /// <summary>Index: 48,922</summary>
-            internal const int PreserveSMBPermissionsIndex = DstLocalMD5VerificationOptionIndex + OneByte;
-            /// <summary>Index: 48,923</summary>
-            internal const int PreserveSMBInfoIndex = PreserveSMBPermissionsIndex + OneByte;
-            /// <summary>Index: 48,924</summary>
-            internal const int S2SGetPropertiesInBackendIndex = PreserveSMBInfoIndex + OneByte;
-            /// <summary>Index: 48,925</summary>
-            internal const int S2SSourceChangeValidationIndex = S2SGetPropertiesInBackendIndex + OneByte;
-            /// <summary>Index: 48,926</summary>
-            internal const int DestLengthValidationIndex = S2SSourceChangeValidationIndex + OneByte;
-            /// <summary>Index: 48,927</summary>
-            internal const int S2SInvalidMetadataHandleOptionIndex = DestLengthValidationIndex + OneByte;
-            /// <summary>Index: 48,928</summary>
-            internal const int DeleteSnapshotsOptionIndex = S2SInvalidMetadataHandleOptionIndex + OneByte;
-            /// <summary>Index: 48,929</summary>
-            internal const int PermanentDeleteOptionIndex = DeleteSnapshotsOptionIndex + OneByte;
-            /// <summary>Index: 48,930</summary>
-            internal const int RehydratePriorityTypeIndex = PermanentDeleteOptionIndex + OneByte;
-            /// <summary>Index: 48,931</summary>
-            internal const int AtomicJobStatusIndex = RehydratePriorityTypeIndex + OneByte;
-            /// <summary>Index: 48,932</summary>
-            internal const int AtomicPartStatusIndex = AtomicJobStatusIndex + OneByte;
-            /// <summary>
-            /// Size of the JobPart Header: 48,933
-            /// </summary>
-            internal const int JobPartHeaderSizeInBytes = AtomicPartStatusIndex + OneByte;
+            internal const int VersionIndex = 0;
+            internal const int TransferIdIndex = VersionIndex + VersionStrNumBytes;
+            internal const int PartNumberIndex = TransferIdIndex + GuidSizeInBytes;
+            internal const int CreateTimeIndex = PartNumberIndex + LongSizeInBytes;
+            internal const int SourceTypeIdIndex = CreateTimeIndex + LongSizeInBytes;
+            internal const int DestinationTypeIdIndex = SourceTypeIdIndex + TypeIdNumBytes;
+            internal const int SourcePathOffsetIndex = DestinationTypeIdIndex + TypeIdNumBytes;
+            internal const int SourcePathLengthIndex = SourcePathOffsetIndex + IntSizeInBytes;
+            internal const int DestinationPathOffsetIndex = SourcePathLengthIndex + IntSizeInBytes;
+            internal const int DestinationPathLengthIndex = DestinationPathOffsetIndex + IntSizeInBytes;
+            internal const int CreatePreferenceIndex = DestinationPathLengthIndex + IntSizeInBytes;
+            internal const int InitialTransferSizeIndex = CreatePreferenceIndex + OneByte;
+            internal const int ChunkSizeIndex = InitialTransferSizeIndex + LongSizeInBytes;
+            internal const int PriorityIndex = ChunkSizeIndex + LongSizeInBytes;
+            internal const int JobPartStatusIndex = PriorityIndex + OneByte;
+            internal const int VariableLengthStartIndex = JobPartStatusIndex + IntSizeInBytes;
         }
 
         internal static class ErrorCode
         {
             internal static readonly string[] CannotOverwrite = { "BlobAlreadyExists", "Cannot overwrite file." };
             internal static readonly string[] AccessDenied = { "AuthenticationFailed", "AuthorizationFailure", "access denied" };
+        }
+
+        internal static class ResourceProperties
+        {
+            internal const string AccessTier = "AccessTier";
+            internal const string BlobType = "BlobType";
+            internal const string CreationTime = "CreationTime";
+            internal const string ChangedOnTime = "ChangedOnTime";
+            internal const string ContentType = "ContentType";
+            internal const string ContentHash = "ContentHash";
+            internal const string ContentEncoding = "ContentEncoding";
+            internal const string ContentLanguage = "ContentLanguage";
+            internal const string ContentDisposition = "ContentDisposition";
+            internal const string CacheControl = "CacheControl";
+            internal const string ETag = "ETag";
+            internal const string LastModified = "LastModified";
+            internal const string LastWrittenOn = "LastWrittenOn";
+            internal const string Metadata = "Metadata";
+            internal const string FileAttributes = "FileAttributes";
+            internal const string FilePermissions = "FilePermissions";
+            internal const string SourceFilePermissionKey = "SourceFilePermissionKey";
+            internal const string DestinationFilePermissionKey = "DestinationFilePermissionKey";
         }
     }
 }

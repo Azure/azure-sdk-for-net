@@ -34,7 +34,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             string clientId = default;
-            Optional<string> clientSecret = default;
+            string clientSecret = default;
             string tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,7 +54,23 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new ServicePrincipalParam(clientId, clientSecret.Value, tenantId);
+            return new ServicePrincipalParam(clientId, clientSecret, tenantId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ServicePrincipalParam FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeServicePrincipalParam(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

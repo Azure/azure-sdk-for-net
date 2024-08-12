@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
@@ -20,15 +19,15 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataFactoryData(AzureLocation location) : base(location)
         {
-            GlobalParameters = new ChangeTrackingDictionary<string, FactoryGlobalParameterSpecification>();
+            GlobalParameters = new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, DateTimeOffset? createdOn, string version, FactoryPurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, FactoryGlobalParameterSpecification> globalParameters, FactoryEncryptionConfiguration encryption, FactoryPublicNetworkAccess? publicNetworkAccess, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal DataFactoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, DateTimeOffset? createdOn, string version, DataFactoryPurviewConfiguration purviewConfiguration, FactoryRepoConfiguration repoConfiguration, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters, DataFactoryEncryptionConfiguration encryption, DataFactoryPublicNetworkAccess? publicNetworkAccess, ETag? eTag, IDictionary<string, BinaryData> additionalProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
@@ -65,6 +64,11 @@ namespace Azure.ResourceManager.DataFactory
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryData"/> for deserialization. </summary>
+        internal DataFactoryData()
+        {
+        }
+
         /// <summary> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Factory provisioning state, example Succeeded. </summary>
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Version of the factory. </summary>
         public string Version { get; }
         /// <summary> Purview information of the factory. </summary>
-        internal FactoryPurviewConfiguration PurviewConfiguration { get; set; }
+        internal DataFactoryPurviewConfiguration PurviewConfiguration { get; set; }
         /// <summary> Purview resource id. </summary>
         public ResourceIdentifier PurviewResourceId
         {
@@ -82,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory
             set
             {
                 if (PurviewConfiguration is null)
-                    PurviewConfiguration = new FactoryPurviewConfiguration();
+                    PurviewConfiguration = new DataFactoryPurviewConfiguration();
                 PurviewConfiguration.PurviewResourceId = value;
             }
         }
@@ -94,11 +98,11 @@ namespace Azure.ResourceManager.DataFactory
         /// </summary>
         public FactoryRepoConfiguration RepoConfiguration { get; set; }
         /// <summary> List of parameters for factory. </summary>
-        public IDictionary<string, FactoryGlobalParameterSpecification> GlobalParameters { get; }
+        public IDictionary<string, DataFactoryGlobalParameterProperties> GlobalParameters { get; }
         /// <summary> Properties to enable Customer Managed Key for the factory. </summary>
-        public FactoryEncryptionConfiguration Encryption { get; set; }
+        public DataFactoryEncryptionConfiguration Encryption { get; set; }
         /// <summary> Whether or not public network access is allowed for the data factory. </summary>
-        public FactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DataFactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
         public ETag? ETag { get; }
         /// <summary>
@@ -107,7 +111,7 @@ namespace Azure.ResourceManager.DataFactory
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

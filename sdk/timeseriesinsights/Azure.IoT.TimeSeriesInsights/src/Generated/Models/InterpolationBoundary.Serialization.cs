@@ -30,7 +30,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<TimeSpan> span = default;
+            TimeSpan? span = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("span"u8))
@@ -43,7 +43,23 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new InterpolationBoundary(Optional.ToNullable(span));
+            return new InterpolationBoundary(span);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InterpolationBoundary FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInterpolationBoundary(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

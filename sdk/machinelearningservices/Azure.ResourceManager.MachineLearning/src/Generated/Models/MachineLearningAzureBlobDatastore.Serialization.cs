@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAzureBlobDatastore : IUtf8JsonSerializable
+    public partial class MachineLearningAzureBlobDatastore : IUtf8JsonSerializable, IJsonModel<MachineLearningAzureBlobDatastore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAzureBlobDatastore>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningAzureBlobDatastore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAzureBlobDatastore>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountName))
             {
@@ -69,10 +79,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("serviceDataAccessAuthIdentity"u8);
                 writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
             }
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                if (ResourceGroup != null)
+                {
+                    writer.WritePropertyName("resourceGroup"u8);
+                    writer.WriteStringValue(ResourceGroup);
+                }
+                else
+                {
+                    writer.WriteNull("resourceGroup");
+                }
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                if (SubscriptionId != null)
+                {
+                    writer.WritePropertyName("subscriptionId"u8);
+                    writer.WriteStringValue(SubscriptionId);
+                }
+                else
+                {
+                    writer.WriteNull("subscriptionId");
+                }
+            }
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials);
+            writer.WriteObjectValue(Credentials, options);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
+            if (Optional.IsDefined(IntellectualProperty))
+            {
+                if (IntellectualProperty != null)
+                {
+                    writer.WritePropertyName("intellectualProperty"u8);
+                    writer.WriteObjectValue(IntellectualProperty, options);
+                }
+                else
+                {
+                    writer.WriteNull("intellectualProperty");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsDefault))
+            {
+                writer.WritePropertyName("isDefault"u8);
+                writer.WriteBooleanValue(IsDefault.Value);
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -121,26 +172,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningAzureBlobDatastore DeserializeMachineLearningAzureBlobDatastore(JsonElement element)
+        MachineLearningAzureBlobDatastore IJsonModel<MachineLearningAzureBlobDatastore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAzureBlobDatastore>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningAzureBlobDatastore(document.RootElement, options);
+        }
+
+        internal static MachineLearningAzureBlobDatastore DeserializeMachineLearningAzureBlobDatastore(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> containerName = default;
-            Optional<string> endpoint = default;
-            Optional<string> protocol = default;
-            Optional<MachineLearningServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
+            string accountName = default;
+            string containerName = default;
+            string endpoint = default;
+            string protocol = default;
+            MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default;
+            string resourceGroup = default;
+            string subscriptionId = default;
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
-            Optional<bool> isDefault = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IntellectualProperty intellectualProperty = default;
+            bool? isDefault = default;
+            string description = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -192,14 +277,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     serviceDataAccessAuthIdentity = new MachineLearningServiceDataAccessAuthIdentity(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("resourceGroup"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        resourceGroup = null;
+                        continue;
+                    }
+                    resourceGroup = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("subscriptionId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        subscriptionId = null;
+                        continue;
+                    }
+                    subscriptionId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("credentials"u8))
                 {
-                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value);
+                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datastoreType"u8))
                 {
                     datastoreType = new DatastoreType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("intellectualProperty"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        intellectualProperty = null;
+                        continue;
+                    }
+                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isDefault"u8))
@@ -251,8 +366,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningAzureBlobDatastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault), accountName.Value, containerName.Value, endpoint.Value, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningAzureBlobDatastore(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                credentials,
+                datastoreType,
+                intellectualProperty,
+                isDefault,
+                accountName,
+                containerName,
+                endpoint,
+                protocol,
+                serviceDataAccessAuthIdentity,
+                resourceGroup,
+                subscriptionId);
         }
+
+        BinaryData IPersistableModel<MachineLearningAzureBlobDatastore>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAzureBlobDatastore>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningAzureBlobDatastore IPersistableModel<MachineLearningAzureBlobDatastore>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAzureBlobDatastore>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningAzureBlobDatastore(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningAzureBlobDatastore)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningAzureBlobDatastore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

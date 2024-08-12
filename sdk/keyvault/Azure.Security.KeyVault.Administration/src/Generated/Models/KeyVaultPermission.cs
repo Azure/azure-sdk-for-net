@@ -6,14 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role definition permissions. </summary>
     public partial class KeyVaultPermission
     {
-        /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPermission"/>. </summary>
         public KeyVaultPermission()
         {
             Actions = new ChangeTrackingList<string>();
@@ -22,7 +21,7 @@ namespace Azure.Security.KeyVault.Administration
             NotDataActions = new ChangeTrackingList<KeyVaultDataAction>();
         }
 
-        /// <summary> Initializes a new instance of KeyVaultPermission. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPermission"/>. </summary>
         /// <param name="actions"> Action permissions that are granted. </param>
         /// <param name="notActions"> Action permissions that are excluded but not denied. They may be granted by other role definitions assigned to a principal. </param>
         /// <param name="dataActions"> Data action permissions that are granted. </param>

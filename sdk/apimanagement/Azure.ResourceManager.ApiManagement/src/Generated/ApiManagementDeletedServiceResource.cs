@@ -9,23 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A Class representing an ApiManagementDeletedService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ApiManagementDeletedServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetApiManagementDeletedServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetApiManagementDeletedService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementDeletedServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementDeletedServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetApiManagementDeletedService method.
     /// </summary>
     public partial class ApiManagementDeletedServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementDeletedServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="serviceName"> The serviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string serviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}";
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly DeletedServicesRestOperations _apiManagementDeletedServiceDeletedServicesRestClient;
         private readonly ApiManagementDeletedServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/locations/deletedservices";
+
         /// <summary> Initializes a new instance of the <see cref="ApiManagementDeletedServiceResource"/> class for mocking. </summary>
         protected ApiManagementDeletedServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ApiManagementDeletedServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementDeletedServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApiManagementDeletedServiceResource(ArmClient client, ApiManagementDeletedServiceData data) : this(client, data.Id)
@@ -62,9 +66,6 @@ namespace Azure.ResourceManager.ApiManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/locations/deletedservices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +99,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementDeletedServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +139,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>DeletedServices_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementDeletedServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +178,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedServices_Purge</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementDeletedServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +220,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedServices_Purge</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementDeletedServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

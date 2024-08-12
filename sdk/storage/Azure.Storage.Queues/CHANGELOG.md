@@ -1,6 +1,6 @@
 # Release History
 
-## 12.15.0-beta.2 (Unreleased)
+## 12.20.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,56 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.20.0-beta.1 (2024-08-06)
+
+### Features Added
+- Added support for service version 2024-11-04.
+- Added ability to retrieve SAS string to sign for debugging purposes.
+- Add Queue Permissions enum to represent QueueAccessPolicy.Permissions #37653
+
+## 12.19.1 (2024-07-25)
+
+### Bugs Fixed
+- Fixed \[BUG\] Azure Blob Storage Client SDK No Longer Supports Globalization Invariant Mode for Account Key Authentication #45052
+
+## 12.19.0 (2024-07-16)
+
+### Features Added
+- Includes all features from 12.19.0-beta.1.
+
+## 12.19.0-beta.1 (2024-06-11)
+- Added support for service version 2024-08-04.
+- This package will now respect the QueueClientOptions.ServiceVersion specified by the customer, or default to the latest version.
+- Added more detailed messaging for authorization failure cases.
+
+## 12.18.0 (2024-05-13)
+- Includes all features from 12.18.0-beta.1 and 12.18.0-beta.2.
+- Fixed bug where `QueueClient` did not throw an exception on empty/null queue names when constructing a client.
+
+## 12.18.0-beta.2 (2024-04-15)
+- Added support for service version 2024-05-04.
+
+## 12.18.0-beta.1 (2023-12-05)
+- Added support for service version 2024-02-04.
+
+## 12.17.1 (2023-11-13)
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 12.17.0 (2023-11-06)
+- Includes all features from 12.17.0-beta.1.
+
+## 12.17.0-beta.1 (2023-10-16)
+- Added support for QueueClientOptions.Audience
+
+## 12.16.0 (2023-09-12)
+- Includes all features from 12.16.0-beta.1.
+
+## 12.16.0-beta.1 (2023-08-08)
+- This release contains bug fixes to improve quality.
+
+## 12.15.0 (2023-07-11)
+- Includes all features from 12.15.0-beta.1.
 
 ## 12.15.0-beta.1 (2023-05-30)
 - This release contains bug fixes to improve quality.

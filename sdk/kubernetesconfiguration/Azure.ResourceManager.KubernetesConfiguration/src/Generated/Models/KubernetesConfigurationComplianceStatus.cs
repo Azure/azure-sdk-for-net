@@ -6,28 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     /// <summary> Compliance Status details. </summary>
     public partial class KubernetesConfigurationComplianceStatus
     {
-        /// <summary> Initializes a new instance of KubernetesConfigurationComplianceStatus. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationComplianceStatus"/>. </summary>
         internal KubernetesConfigurationComplianceStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of KubernetesConfigurationComplianceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesConfigurationComplianceStatus"/>. </summary>
         /// <param name="complianceState"> The compliance state of the configuration. </param>
         /// <param name="lastConfigAppliedOn"> Datetime the configuration was last applied. </param>
         /// <param name="message"> Message from when the configuration was applied. </param>
         /// <param name="messageLevel"> Level of the message. </param>
-        internal KubernetesConfigurationComplianceStatus(KubernetesConfigurationComplianceStateType? complianceState, DateTimeOffset? lastConfigAppliedOn, string message, KubernetesConfigurationMesageLevel? messageLevel)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesConfigurationComplianceStatus(KubernetesConfigurationComplianceStateType? complianceState, DateTimeOffset? lastConfigAppliedOn, string message, KubernetesConfigurationMesageLevel? messageLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComplianceState = complianceState;
             LastConfigAppliedOn = lastConfigAppliedOn;
             Message = message;
             MessageLevel = messageLevel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The compliance state of the configuration. </summary>

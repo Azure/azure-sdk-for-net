@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -58,12 +58,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IntegrationRuntimeState> state = default;
-            Optional<ManagedVirtualNetworkReference> managedVirtualNetwork = default;
+            IntegrationRuntimeState? state = default;
+            ManagedVirtualNetworkReference managedVirtualNetwork = default;
             IntegrationRuntimeType type = default;
-            Optional<string> description = default;
-            Optional<IntegrationRuntimeComputeProperties> computeProperties = default;
-            Optional<IntegrationRuntimeSsisProperties> ssisProperties = default;
+            string description = default;
+            IntegrationRuntimeComputeProperties computeProperties = default;
+            IntegrationRuntimeSsisProperties ssisProperties = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ManagedIntegrationRuntime(type, description.Value, additionalProperties, Optional.ToNullable(state), managedVirtualNetwork.Value, computeProperties.Value, ssisProperties.Value);
+            return new ManagedIntegrationRuntime(
+                type,
+                description,
+                additionalProperties,
+                state,
+                managedVirtualNetwork,
+                computeProperties,
+                ssisProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ManagedIntegrationRuntime FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeManagedIntegrationRuntime(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class ManagedIntegrationRuntimeConverter : JsonConverter<ManagedIntegrationRuntime>
@@ -138,6 +161,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override ManagedIntegrationRuntime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -7,26 +7,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The NetworkRack patch resource definition. </summary>
+    /// <summary> Base tracked resource type for PATCH updates. </summary>
     public partial class NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkRackPatch. </summary>
-        public NetworkRackPatch()
-        {
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
-
         /// <summary>
-        /// Resource properties.
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -50,7 +43,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Properties { get; set; }
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkRackPatch"/>. </summary>
+        public NetworkRackPatch()
+        {
+            Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkRackPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkRackPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

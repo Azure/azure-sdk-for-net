@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFlowReference : IUtf8JsonSerializable
+    public partial class DataFlowReference : IUtf8JsonSerializable, IJsonModel<DataFlowReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFlowReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataFlowReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFlowReference)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ReferenceType.ToString());
@@ -27,7 +36,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DatasetParameters);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DatasetParameters.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(DatasetParameters))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(Parameters))
@@ -45,7 +57,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndObject();
@@ -56,22 +71,39 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static DataFlowReference DeserializeDataFlowReference(JsonElement element)
+        DataFlowReference IJsonModel<DataFlowReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFlowReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowReference(document.RootElement, options);
+        }
+
+        internal static DataFlowReference DeserializeDataFlowReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataFlowReferenceType type = default;
             string referenceName = default;
-            Optional<BinaryData> datasetParameters = default;
-            Optional<IDictionary<string, BinaryData>> parameters = default;
+            BinaryData datasetParameters = default;
+            IDictionary<string, BinaryData> parameters = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +151,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowReference(type, referenceName, datasetParameters.Value, Optional.ToDictionary(parameters), additionalProperties);
+            return new DataFlowReference(type, referenceName, datasetParameters, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalProperties);
         }
+
+        BinaryData IPersistableModel<DataFlowReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFlowReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataFlowReference IPersistableModel<DataFlowReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFlowReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFlowReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFlowReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

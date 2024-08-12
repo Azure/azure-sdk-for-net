@@ -14,40 +14,28 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new instance of the DialogOptions.
         /// </summary>
-        /// <param name="dialogInputType"></param>
-        /// <param name="botAppId"></param>
-        /// <param name="dialogContext"></param>
-        public StartDialogOptions(DialogInputType dialogInputType, string botAppId, IDictionary<string, object> dialogContext)
+        /// <param name="dialog"></param>
+        public StartDialogOptions(BaseDialog dialog)
         {
-            DialogInputType = dialogInputType;
-            BotAppId = botAppId;
-            DialogContext = dialogContext;
             DialogId = Guid.NewGuid().ToString();
+            Dialog = dialog;
         }
         /// <summary>
         /// Creates a new instance of the DialogOptions.
         /// </summary>
-        /// <param name="dialogInputType"></param>
-        /// <param name="botAppId"></param>
-        /// <param name="dialogContext"></param>
-        /// /// <param name="dialogId"></param>
-        public StartDialogOptions(string dialogId, DialogInputType dialogInputType, string botAppId, IDictionary<string, object> dialogContext)
+        /// <param name="dialogId"></param>
+        /// <param name="dialog"></param>
+        public StartDialogOptions(string dialogId, BaseDialog dialog)
         {
-            DialogInputType = dialogInputType;
-            BotAppId = botAppId;
-            DialogContext = dialogContext;
             DialogId = dialogId;
+            Dialog = dialog;
         }
 
         /// <summary> Dialog Id</summary>
         public string DialogId { get; }
         /// <summary> Determines the type of the dialog. </summary>
-        public DialogInputType DialogInputType { get; }
+        public BaseDialog Dialog { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
-        /// <summary> Bot identifier. </summary>
-        public string BotAppId { get; }
-        /// <summary> Dialog context. </summary>
-        public IDictionary<string, object> DialogContext { get; }
     }
 }

@@ -5,31 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class KeyVaultResourceSettings : IUtf8JsonSerializable
+    public partial class KeyVaultResourceSettings : IUtf8JsonSerializable, IJsonModel<KeyVaultResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultResourceSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<KeyVaultResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KeyVaultResourceSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName"u8);
-            writer.WriteStringValue(TargetResourceName);
+            if (Optional.IsDefined(TargetResourceName))
+            {
+                writer.WritePropertyName("targetResourceName"u8);
+                writer.WriteStringValue(TargetResourceName);
+            }
+            if (Optional.IsDefined(TargetResourceGroupName))
+            {
+                writer.WritePropertyName("targetResourceGroupName"u8);
+                writer.WriteStringValue(TargetResourceGroupName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KeyVaultResourceSettings DeserializeKeyVaultResourceSettings(JsonElement element)
+        KeyVaultResourceSettings IJsonModel<KeyVaultResourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KeyVaultResourceSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeyVaultResourceSettings(document.RootElement, options);
+        }
+
+        internal static KeyVaultResourceSettings DeserializeKeyVaultResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string resourceType = default;
             string targetResourceName = default;
+            string targetResourceGroupName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -42,8 +93,49 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("targetResourceGroupName"u8))
+                {
+                    targetResourceGroupName = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KeyVaultResourceSettings(resourceType, targetResourceName);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KeyVaultResourceSettings(resourceType, targetResourceName, targetResourceGroupName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KeyVaultResourceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultResourceSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KeyVaultResourceSettings IPersistableModel<KeyVaultResourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKeyVaultResourceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KeyVaultResourceSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KeyVaultResourceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

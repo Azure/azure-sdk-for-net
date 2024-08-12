@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,10 +16,91 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class AppConfigurationPrivateEndpointConnectionReference
+    public partial class AppConfigurationPrivateEndpointConnectionReference : IUtf8JsonSerializable, IJsonModel<AppConfigurationPrivateEndpointConnectionReference>
     {
-        internal static AppConfigurationPrivateEndpointConnectionReference DeserializeAppConfigurationPrivateEndpointConnectionReference(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationPrivateEndpointConnectionReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AppConfigurationPrivateEndpointConnectionReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationPrivateEndpointConnectionReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppConfigurationPrivateEndpointConnectionReference)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(PrivateEndpoint))
+            {
+                writer.WritePropertyName("privateEndpoint"u8);
+                JsonSerializer.Serialize(writer, PrivateEndpoint);
+            }
+            if (Optional.IsDefined(ConnectionState))
+            {
+                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
+                writer.WriteObjectValue(ConnectionState, options);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AppConfigurationPrivateEndpointConnectionReference IJsonModel<AppConfigurationPrivateEndpointConnectionReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationPrivateEndpointConnectionReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppConfigurationPrivateEndpointConnectionReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppConfigurationPrivateEndpointConnectionReference(document.RootElement, options);
+        }
+
+        internal static AppConfigurationPrivateEndpointConnectionReference DeserializeAppConfigurationPrivateEndpointConnectionReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,10 +108,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AppConfigurationProvisioningState> provisioningState = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<AppConfigurationPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            SystemData systemData = default;
+            AppConfigurationProvisioningState? provisioningState = default;
+            WritableSubResource privateEndpoint = default;
+            AppConfigurationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -86,14 +173,181 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = AppConfigurationPrivateLinkServiceConnectionState.DeserializeAppConfigurationPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = AppConfigurationPrivateLinkServiceConnectionState.DeserializeAppConfigurationPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppConfigurationPrivateEndpointConnectionReference(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), privateEndpoint, privateLinkServiceConnectionState.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppConfigurationPrivateEndpointConnectionReference(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                privateEndpoint,
+                privateLinkServiceConnectionState,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PrivateEndpointId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateEndpoint: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      privateEndpoint: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateEndpoint))
+                {
+                    builder.Append("    privateEndpoint: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PrivateEndpoint, options, 4, false, "    privateEndpoint: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    privateLinkServiceConnectionState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionState))
+                {
+                    builder.Append("    privateLinkServiceConnectionState: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ConnectionState, options, 4, false, "    privateLinkServiceConnectionState: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AppConfigurationPrivateEndpointConnectionReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationPrivateEndpointConnectionReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AppConfigurationPrivateEndpointConnectionReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppConfigurationPrivateEndpointConnectionReference IPersistableModel<AppConfigurationPrivateEndpointConnectionReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationPrivateEndpointConnectionReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppConfigurationPrivateEndpointConnectionReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppConfigurationPrivateEndpointConnectionReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppConfigurationPrivateEndpointConnectionReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

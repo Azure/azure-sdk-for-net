@@ -37,5 +37,7 @@ directive:
   from: swagger-document
   where: $.definitions.AccessPolicy
   transform: >
+    $.properties.Start["x-nullable"] = true;
+    $.properties.Expiry["x-nullable"] = true;
     $.properties.Permission["x-nullable"] = true;
 ```

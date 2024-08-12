@@ -6,26 +6,36 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureMLExecutePipelineActivity : IUtf8JsonSerializable
+    public partial class AzureMLExecutePipelineActivity : IUtf8JsonSerializable, IJsonModel<AzureMLExecutePipelineActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMLExecutePipelineActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzureMLExecutePipelineActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLExecutePipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivity)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                JsonSerializer.Serialize(writer, LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -36,13 +46,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,56 +72,36 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(MlPipelineId))
+            if (Optional.IsDefined(MLPipelineId))
             {
                 writer.WritePropertyName("mlPipelineId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MlPipelineId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MlPipelineId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MLPipelineId);
             }
-            if (Optional.IsDefined(MlPipelineEndpointId))
+            if (Optional.IsDefined(MLPipelineEndpointId))
             {
                 writer.WritePropertyName("mlPipelineEndpointId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MlPipelineEndpointId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MlPipelineEndpointId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MLPipelineEndpointId);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Version);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Version.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Version);
             }
             if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ExperimentName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExperimentName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ExperimentName);
             }
-            if (Optional.IsDefined(MlPipelineParameters))
+            if (Optional.IsDefined(MLPipelineParameters))
             {
                 writer.WritePropertyName("mlPipelineParameters"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MlPipelineParameters);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MlPipelineParameters.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MLPipelineParameters);
             }
             if (Optional.IsDefined(DataPathAssignments))
             {
@@ -109,26 +109,21 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DataPathAssignments);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DataPathAssignments.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(DataPathAssignments))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
-            if (Optional.IsDefined(MlParentRunId))
+            if (Optional.IsDefined(MLParentRunId))
             {
                 writer.WritePropertyName("mlParentRunId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MlParentRunId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MlParentRunId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MLParentRunId);
             }
             if (Optional.IsDefined(ContinueOnStepFailure))
             {
                 writer.WritePropertyName("continueOnStepFailure"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ContinueOnStepFailure);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ContinueOnStepFailure.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ContinueOnStepFailure);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -137,33 +132,52 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static AzureMLExecutePipelineActivity DeserializeAzureMLExecutePipelineActivity(JsonElement element)
+        AzureMLExecutePipelineActivity IJsonModel<AzureMLExecutePipelineActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLExecutePipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureMLExecutePipelineActivity(document.RootElement, options);
+        }
+
+        internal static AzureMLExecutePipelineActivity DeserializeAzureMLExecutePipelineActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<FactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<ActivityUserProperty>> userProperties = default;
-            Optional<BinaryData> mlPipelineId = default;
-            Optional<BinaryData> mlPipelineEndpointId = default;
-            Optional<BinaryData> version = default;
-            Optional<BinaryData> experimentName = default;
-            Optional<BinaryData> mlPipelineParameters = default;
-            Optional<BinaryData> dataPathAssignments = default;
-            Optional<BinaryData> mlParentRunId = default;
-            Optional<BinaryData> continueOnStepFailure = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
+            DataFactoryElement<string> mlPipelineId = default;
+            DataFactoryElement<string> mlPipelineEndpointId = default;
+            DataFactoryElement<string> version = default;
+            DataFactoryElement<string> experimentName = default;
+            DataFactoryElement<IDictionary<string, string>> mlPipelineParameters = default;
+            BinaryData dataPathAssignments = default;
+            DataFactoryElement<string> mlParentRunId = default;
+            DataFactoryElement<bool> continueOnStepFailure = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("policy"u8))
@@ -183,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -201,16 +215,34 @@ namespace Azure.ResourceManager.DataFactory.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new PipelineActivityState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("onInactiveMarkAs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ActivityDependency> array = new List<ActivityDependency>();
+                    List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -221,10 +253,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<ActivityUserProperty> array = new List<ActivityUserProperty>();
+                    List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityUserProperty.DeserializeActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -244,7 +276,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mlPipelineId = BinaryData.FromString(property0.Value.GetRawText());
+                            mlPipelineId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mlPipelineEndpointId"u8))
@@ -253,7 +285,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mlPipelineEndpointId = BinaryData.FromString(property0.Value.GetRawText());
+                            mlPipelineEndpointId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("version"u8))
@@ -262,7 +294,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            version = BinaryData.FromString(property0.Value.GetRawText());
+                            version = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("experimentName"u8))
@@ -271,7 +303,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            experimentName = BinaryData.FromString(property0.Value.GetRawText());
+                            experimentName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mlPipelineParameters"u8))
@@ -280,7 +312,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mlPipelineParameters = BinaryData.FromString(property0.Value.GetRawText());
+                            mlPipelineParameters = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("dataPathAssignments"u8))
@@ -298,7 +330,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            mlParentRunId = BinaryData.FromString(property0.Value.GetRawText());
+                            mlParentRunId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("continueOnStepFailure"u8))
@@ -307,7 +339,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            continueOnStepFailure = BinaryData.FromString(property0.Value.GetRawText());
+                            continueOnStepFailure = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                     }
@@ -316,7 +348,56 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureMLExecutePipelineActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, mlPipelineId.Value, mlPipelineEndpointId.Value, version.Value, experimentName.Value, mlPipelineParameters.Value, dataPathAssignments.Value, mlParentRunId.Value, continueOnStepFailure.Value);
+            return new AzureMLExecutePipelineActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                mlPipelineId,
+                mlPipelineEndpointId,
+                version,
+                experimentName,
+                mlPipelineParameters,
+                dataPathAssignments,
+                mlParentRunId,
+                continueOnStepFailure);
         }
+
+        BinaryData IPersistableModel<AzureMLExecutePipelineActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLExecutePipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureMLExecutePipelineActivity IPersistableModel<AzureMLExecutePipelineActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLExecutePipelineActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureMLExecutePipelineActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureMLExecutePipelineActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureMLExecutePipelineActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

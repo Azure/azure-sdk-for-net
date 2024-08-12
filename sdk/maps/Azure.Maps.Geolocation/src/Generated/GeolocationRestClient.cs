@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -29,7 +28,7 @@ namespace Azure.Maps.Geolocation
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> server parameter. </param>
-        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Azure AD security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Azure AD security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following [articles](https://aka.ms/amauthdetails) for guidance. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public GeolocationRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, string apiVersion = "1.0")
@@ -41,7 +40,7 @@ namespace Azure.Maps.Geolocation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateGetLocationRequest(string ipAddress, JsonFormat? format)
+        internal HttpMessage CreateGetLocationRequest(JsonFormat format, string ipAddress)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,7 +48,7 @@ namespace Azure.Maps.Geolocation
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/geolocation/ip/", false);
-            uri.AppendPath(format.Value.ToString(), true);
+            uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             uri.AppendQuery("ip", ipAddress, true);
             request.Uri = uri;
@@ -61,25 +60,23 @@ namespace Azure.Maps.Geolocation
             return message;
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        /// 
-        /// 
-        /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
-        /// </summary>
+        /// <summary> Use to get the ISO country code for a given IP address. </summary>
+        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public async Task<Response<CountryRegionResult>> GetLocationAsync(string ipAddress, JsonFormat? format = null, CancellationToken cancellationToken = default)
+        /// <remarks>
+        ///
+        /// The `Get IP To Location` API is an HTTP `GET` request that, given an IP address, returns the ISO country code from which that IP address is located. Developers can use this information to block or alter certain content based on geographical locations where the application is being viewed from.
+        /// </remarks>
+        public async Task<Response<CountryRegionResult>> GetLocationAsync(JsonFormat format, string ipAddress, CancellationToken cancellationToken = default)
         {
             if (ipAddress == null)
             {
                 throw new ArgumentNullException(nameof(ipAddress));
             }
-            format ??= JsonFormat.Json;
 
-            using var message = CreateGetLocationRequest(ipAddress, format);
+            using var message = CreateGetLocationRequest(format, ipAddress);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -95,25 +92,23 @@ namespace Azure.Maps.Geolocation
             }
         }
 
-        /// <summary>
-        /// **Applies to:** see pricing [tiers](https://aka.ms/AzureMapsPricingTier).
-        /// 
-        /// 
-        /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
-        /// </summary>
+        /// <summary> Use to get the ISO country code for a given IP address. </summary>
+        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public Response<CountryRegionResult> GetLocation(string ipAddress, JsonFormat? format = null, CancellationToken cancellationToken = default)
+        /// <remarks>
+        ///
+        /// The `Get IP To Location` API is an HTTP `GET` request that, given an IP address, returns the ISO country code from which that IP address is located. Developers can use this information to block or alter certain content based on geographical locations where the application is being viewed from.
+        /// </remarks>
+        public Response<CountryRegionResult> GetLocation(JsonFormat format, string ipAddress, CancellationToken cancellationToken = default)
         {
             if (ipAddress == null)
             {
                 throw new ArgumentNullException(nameof(ipAddress));
             }
-            format ??= JsonFormat.Json;
 
-            using var message = CreateGetLocationRequest(ipAddress, format);
+            using var message = CreateGetLocationRequest(format, ipAddress);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

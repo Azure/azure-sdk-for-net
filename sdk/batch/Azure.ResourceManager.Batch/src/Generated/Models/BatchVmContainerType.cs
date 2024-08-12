@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         private const string DockerCompatibleValue = "DockerCompatible";
+        private const string CriCompatibleValue = "CriCompatible";
 
-        /// <summary> DockerCompatible. </summary>
+        /// <summary> A Docker compatible container technology will be used to launch the containers. </summary>
         public static BatchVmContainerType DockerCompatible { get; } = new BatchVmContainerType(DockerCompatibleValue);
+        /// <summary> A CRI based technology will be used to launch the containers. </summary>
+        public static BatchVmContainerType CriCompatible { get; } = new BatchVmContainerType(CriCompatibleValue);
         /// <summary> Determines if two <see cref="BatchVmContainerType"/> values are the same. </summary>
         public static bool operator ==(BatchVmContainerType left, BatchVmContainerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BatchVmContainerType"/> values are not the same. </summary>
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

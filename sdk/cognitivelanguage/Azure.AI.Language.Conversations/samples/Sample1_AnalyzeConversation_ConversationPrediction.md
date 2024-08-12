@@ -2,6 +2,16 @@
 
 This sample demonstrates how to analyze an utterance. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
+You can work with request and response content more easily by using our [Dynamic JSON](https://aka.ms/azsdk/net/dynamiccontent) feature. This is illustrated in the following sample.
+
+Start by importing the namespace for the `ConversationAnalysisClient` and related classes:
+
+```C# Snippet:ConversationAnalysisClient_Namespaces
+using Azure.Core;
+using Azure.Core.Serialization;
+using Azure.AI.Language.Conversations;
+```
+
 To analyze an utterance, you need to first create a `ConversationAnalysisClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:ConversationAnalysisClient_Create
@@ -19,63 +29,51 @@ Once you have created a client, you can call synchronous or asynchronous methods
 string projectName = "Menu";
 string deploymentName = "production";
 
-var data = new
-{
-    analysisInput = new
+AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
+    new ConversationAnalysisInput(
+        new TextConversationItem(
+            id: "1",
+            participantId: "participant1",
+            text: "Send an email to Carol about tomorrow's demo")),
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
-        conversationItem = new
-        {
-            text = "Send an email to Carol about tomorrow's demo",
-            id = "1",
-            participantId = "1",
-        }
-    },
-    parameters = new
-    {
-        projectName,
-        deploymentName,
-
         // Use Utf16CodeUnit for strings in .NET.
-        stringIndexType = "Utf16CodeUnit",
-    },
-    kind = "Conversation",
-};
+        StringIndexType = StringIndexType.Utf16CodeUnit,
+    });
 
-Response response = client.AnalyzeConversation(RequestContent.Create(data));
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
+ConversationActionResult conversationActionResult = response.Value as ConversationActionResult;
+ConversationPrediction conversationPrediction = conversationActionResult.Result.Prediction as ConversationPrediction;
 
-using JsonDocument result = JsonDocument.Parse(response.ContentStream);
-JsonElement conversationalTaskResult = result.RootElement;
-JsonElement conversationPrediction = conversationalTaskResult.GetProperty("result").GetProperty("prediction");
-
-Console.WriteLine($"Top intent: {conversationPrediction.GetProperty("topIntent").GetString()}");
+Console.WriteLine($"Top intent: {conversationPrediction.TopIntent}");
 
 Console.WriteLine("Intents:");
-foreach (JsonElement intent in conversationPrediction.GetProperty("intents").EnumerateArray())
+foreach (ConversationIntent intent in conversationPrediction.Intents)
 {
-    Console.WriteLine($"Category: {intent.GetProperty("category").GetString()}");
-    Console.WriteLine($"Confidence: {intent.GetProperty("confidenceScore").GetSingle()}");
+    Console.WriteLine($"Category: {intent.Category}");
+    Console.WriteLine($"Confidence: {intent.Confidence}");
     Console.WriteLine();
 }
 
 Console.WriteLine("Entities:");
-foreach (JsonElement entity in conversationPrediction.GetProperty("entities").EnumerateArray())
+foreach (ConversationEntity entity in conversationPrediction.Entities)
 {
-    Console.WriteLine($"Category: {entity.GetProperty("category").GetString()}");
-    Console.WriteLine($"Text: {entity.GetProperty("text").GetString()}");
-    Console.WriteLine($"Offset: {entity.GetProperty("offset").GetInt32()}");
-    Console.WriteLine($"Length: {entity.GetProperty("length").GetInt32()}");
-    Console.WriteLine($"Confidence: {entity.GetProperty("confidenceScore").GetSingle()}");
+    Console.WriteLine($"Category: {entity.Category}");
+    Console.WriteLine($"Text: {entity.Text}");
+    Console.WriteLine($"Offset: {entity.Offset}");
+    Console.WriteLine($"Length: {entity.Length}");
+    Console.WriteLine($"Confidence: {entity.Confidence}");
     Console.WriteLine();
 
-    if (entity.TryGetProperty("resolutions", out JsonElement resolutions))
+    if (entity.Resolutions != null && entity.Resolutions.Any())
     {
-        foreach (JsonElement resolution in resolutions.EnumerateArray())
+        foreach (ResolutionBase resolution in entity.Resolutions)
         {
-            if (resolution.GetProperty("resolutionKind").GetString() == "DateTimeResolution")
+            if (resolution is DateTimeResolution dateTimeResolution)
             {
-                Console.WriteLine($"Datetime Sub Kind: {resolution.GetProperty("dateTimeSubKind").GetString()}");
-                Console.WriteLine($"Timex: {resolution.GetProperty("timex").GetString()}");
-                Console.WriteLine($"Value: {resolution.GetProperty("value").GetString()}");
+                Console.WriteLine($"Datetime Sub Kind: {dateTimeResolution.DateTimeSubKind}");
+                Console.WriteLine($"Timex: {dateTimeResolution.Timex}");
+                Console.WriteLine($"Value: {dateTimeResolution.Value}");
                 Console.WriteLine();
             }
         }
@@ -88,5 +86,6 @@ foreach (JsonElement entity in conversationPrediction.GetProperty("entities").En
 Using the same `data` definition above, you can make an asynchronous request by calling `AnalyzeConversationAsync`:
 
 ```C# Snippet:ConversationAnalysis_AnalyzeConversationAsync
-Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+Response<AnalyzeConversationActionResult> response = await client.AnalyzeConversationAsync(data);
+ConversationActionResult conversationResult = response.Value as ConversationActionResult;
 ```

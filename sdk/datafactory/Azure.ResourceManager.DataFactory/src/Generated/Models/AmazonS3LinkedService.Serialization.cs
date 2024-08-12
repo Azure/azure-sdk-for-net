@@ -6,23 +6,33 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AmazonS3LinkedService : IUtf8JsonSerializable
+    public partial class AmazonS3LinkedService : IUtf8JsonSerializable, IJsonModel<AmazonS3LinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonS3LinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AmazonS3LinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3LinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmazonS3LinkedService)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -36,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -54,7 +64,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -64,48 +77,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AuthenticationType);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AuthenticationType.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AuthenticationType);
             }
             if (Optional.IsDefined(AccessKeyId))
             {
                 writer.WritePropertyName("accessKeyId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AccessKeyId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AccessKeyId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, AccessKeyId);
             }
             if (Optional.IsDefined(SecretAccessKey))
             {
                 writer.WritePropertyName("secretAccessKey"u8);
-                writer.WriteObjectValue(SecretAccessKey);
+                JsonSerializer.Serialize(writer, SecretAccessKey);
             }
             if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ServiceUri);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServiceUri.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ServiceUri);
             }
             if (Optional.IsDefined(SessionToken))
             {
                 writer.WritePropertyName("sessionToken"u8);
-                writer.WriteObjectValue(SessionToken);
+                JsonSerializer.Serialize(writer, SessionToken);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -114,29 +111,46 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static AmazonS3LinkedService DeserializeAmazonS3LinkedService(JsonElement element)
+        AmazonS3LinkedService IJsonModel<AmazonS3LinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3LinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmazonS3LinkedService)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmazonS3LinkedService(document.RootElement, options);
+        }
+
+        internal static AmazonS3LinkedService DeserializeAmazonS3LinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<BinaryData> authenticationType = default;
-            Optional<BinaryData> accessKeyId = default;
-            Optional<FactorySecretBaseDefinition> secretAccessKey = default;
-            Optional<BinaryData> serviceUrl = default;
-            Optional<FactorySecretBaseDefinition> sessionToken = default;
-            Optional<BinaryData> encryptedCredential = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            DataFactoryElement<string> authenticationType = default;
+            DataFactoryElement<string> accessKeyId = default;
+            DataFactorySecret secretAccessKey = default;
+            DataFactoryElement<string> serviceUrl = default;
+            DataFactorySecret sessionToken = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -169,7 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -210,7 +224,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            authenticationType = BinaryData.FromString(property0.Value.GetRawText());
+                            authenticationType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessKeyId"u8))
@@ -219,7 +233,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            accessKeyId = BinaryData.FromString(property0.Value.GetRawText());
+                            accessKeyId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("secretAccessKey"u8))
@@ -228,7 +242,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            secretAccessKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            secretAccessKey = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("serviceUrl"u8))
@@ -237,7 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            serviceUrl = BinaryData.FromString(property0.Value.GetRawText());
+                            serviceUrl = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sessionToken"u8))
@@ -246,16 +260,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sessionToken = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            sessionToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -264,7 +274,50 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonS3LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, authenticationType.Value, accessKeyId.Value, secretAccessKey.Value, serviceUrl.Value, sessionToken.Value, encryptedCredential.Value);
+            return new AmazonS3LinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                authenticationType,
+                accessKeyId,
+                secretAccessKey,
+                serviceUrl,
+                sessionToken,
+                encryptedCredential);
         }
+
+        BinaryData IPersistableModel<AmazonS3LinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3LinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AmazonS3LinkedService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AmazonS3LinkedService IPersistableModel<AmazonS3LinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3LinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAmazonS3LinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AmazonS3LinkedService)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AmazonS3LinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,12 +7,19 @@ azure-arm: true
 csharp: true
 library-name: ProviderShortName
 namespace: Azure.ResourceManager.ProviderShortName
-require: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/ProviderNameLowercase/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/main/specification/ProviderNameLowercase/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 tagPrefix SwaggerVersionTag
 
@@ -23,7 +30,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

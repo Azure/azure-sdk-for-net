@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetApp.Models;
@@ -33,11 +32,30 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetStatusRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        internal RequestUriBuilder CreateGetLatestStatusRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/latestBackupStatus/current", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetLatestStatusRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -54,7 +72,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(poolName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
-            uri.AppendPath("/backupStatus", false);
+            uri.AppendPath("/latestBackupStatus/current", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -62,8 +80,8 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        /// <summary> Get the status of the backup for a volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get the latest status of the backup for a volume. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -71,7 +89,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetAppVolumeBackupStatus>> GetStatusAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppVolumeBackupStatus>> GetLatestStatusAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -79,7 +97,7 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var message = CreateGetStatusRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            using var message = CreateGetLatestStatusRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -95,8 +113,8 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Get the status of the backup for a volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get the latest status of the backup for a volume. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -104,7 +122,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetAppVolumeBackupStatus> GetStatus(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
+        public Response<NetAppVolumeBackupStatus> GetLatestStatus(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,7 +130,7 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var message = CreateGetStatusRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            using var message = CreateGetLatestStatusRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -128,7 +146,26 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal HttpMessage CreateGetVolumeRestoreStatusRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        internal RequestUriBuilder CreateGetVolumeLatestRestoreStatusRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/latestRestoreStatus/current", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetVolumeLatestRestoreStatusRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -145,7 +182,7 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(poolName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
-            uri.AppendPath("/restoreStatus", false);
+            uri.AppendPath("/latestRestoreStatus/current", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -153,8 +190,8 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        /// <summary> Get the status of the restore for a volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get the latest status of the restore for a volume. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -162,7 +199,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetAppRestoreStatus>> GetVolumeRestoreStatusAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetAppRestoreStatus>> GetVolumeLatestRestoreStatusAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -170,7 +207,7 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var message = CreateGetVolumeRestoreStatusRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            using var message = CreateGetVolumeLatestRestoreStatusRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -186,8 +223,8 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Get the status of the restore for a volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get the latest status of the restore for a volume. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -195,7 +232,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetAppRestoreStatus> GetVolumeRestoreStatus(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
+        public Response<NetAppRestoreStatus> GetVolumeLatestRestoreStatus(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -203,7 +240,7 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
-            using var message = CreateGetVolumeRestoreStatusRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            using var message = CreateGetVolumeLatestRestoreStatusRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -219,11 +256,8 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        internal RequestUriBuilder CreateListByVaultRequestUri(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string filter)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -232,36 +266,34 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/capacityPools/", false);
-            uri.AppendPath(poolName, true);
-            uri.AppendPath("/volumes/", false);
-            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/backupVaults/", false);
+            uri.AppendPath(backupVaultName, true);
             uri.AppendPath("/backups", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
+            return uri;
         }
 
-        /// <summary> List all backups for a volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List all backups Under a Backup Vault. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
-        /// <param name="poolName"> The name of the capacity pool. </param>
-        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
+        /// <param name="filter"> An option to specify the VolumeResourceId. If present, then only returns the backups under the specified volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupsList>> ListAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="backupVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BackupsList>> ListByVaultAsync(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            using var message = CreateListByVaultRequest(subscriptionId, resourceGroupName, accountName, backupVaultName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -277,24 +309,23 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> List all backups for a volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List all backups Under a Backup Vault. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
-        /// <param name="poolName"> The name of the capacity pool. </param>
-        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
+        /// <param name="filter"> An option to specify the VolumeResourceId. If present, then only returns the backups under the specified volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupsList> List(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="backupVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BackupsList> ListByVault(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName);
+            using var message = CreateListByVaultRequest(subscriptionId, resourceGroupName, accountName, backupVaultName, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -310,7 +341,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/backupVaults/", false);
+            uri.AppendPath(backupVaultName, true);
+            uri.AppendPath("/backups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -323,10 +372,8 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/capacityPools/", false);
-            uri.AppendPath(poolName, true);
-            uri.AppendPath("/volumes/", false);
-            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/backupVaults/", false);
+            uri.AppendPath(backupVaultName, true);
             uri.AppendPath("/backups/", false);
             uri.AppendPath(backupName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -336,26 +383,24 @@ namespace Azure.ResourceManager.NetApp
             return message;
         }
 
-        /// <summary> Gets the specified backup of the volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get the specified Backup under Backup Vault. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
-        /// <param name="poolName"> The name of the capacity pool. </param>
-        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetAppBackupData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<NetAppBackupData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, backupName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, backupVaultName, backupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -373,26 +418,24 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Gets the specified backup of the volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get the specified Backup under Backup Vault. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
-        /// <param name="poolName"> The name of the capacity pool. </param>
-        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetAppBackupData> Get(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<NetAppBackupData> Get(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, backupName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, accountName, backupVaultName, backupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -410,7 +453,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, NetAppBackupData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, NetAppBackupData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/backupVaults/", false);
+            uri.AppendPath(backupVaultName, true);
+            uri.AppendPath("/backups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, NetAppBackupData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -423,10 +484,8 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/capacityPools/", false);
-            uri.AppendPath(poolName, true);
-            uri.AppendPath("/volumes/", false);
-            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/backupVaults/", false);
+            uri.AppendPath(backupVaultName, true);
             uri.AppendPath("/backups/", false);
             uri.AppendPath(backupName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -434,81 +493,93 @@ namespace Azure.ResourceManager.NetApp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Create a backup for the volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create a backup under the Backup Vault. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
-        /// <param name="poolName"> The name of the capacity pool. </param>
-        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="data"> Backup object supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="backupName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, NetAppBackupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/>, <paramref name="backupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, NetAppBackupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, backupName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, backupVaultName, backupName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
-                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Create a backup for the volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Create a backup under the Backup Vault. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
-        /// <param name="poolName"> The name of the capacity pool. </param>
-        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="data"> Backup object supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="backupName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, NetAppBackupData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/>, <paramref name="backupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, NetAppBackupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, backupName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, accountName, backupVaultName, backupName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
-                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, NetAppVolumeBackupPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, NetAppBackupVaultBackupPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/backupVaults/", false);
+            uri.AppendPath(backupVaultName, true);
+            uri.AppendPath("/backups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, NetAppBackupVaultBackupPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -521,10 +592,8 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/capacityPools/", false);
-            uri.AppendPath(poolName, true);
-            uri.AppendPath("/volumes/", false);
-            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/backupVaults/", false);
+            uri.AppendPath(backupVaultName, true);
             uri.AppendPath("/backups/", false);
             uri.AppendPath(backupName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -532,34 +601,32 @@ namespace Azure.ResourceManager.NetApp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Patch a backup for the volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Patch a Backup under the Backup Vault. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
-        /// <param name="poolName"> The name of the capacity pool. </param>
-        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="patch"> Backup object supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="backupName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, NetAppVolumeBackupPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/>, <paramref name="backupName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, NetAppBackupVaultBackupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, backupName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, backupVaultName, backupName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -571,28 +638,26 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Patch a backup for the volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Patch a Backup under the Backup Vault. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
-        /// <param name="poolName"> The name of the capacity pool. </param>
-        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="patch"> Backup object supplied in the body of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="backupName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, NetAppVolumeBackupPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/>, <paramref name="backupName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, NetAppBackupVaultBackupPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, backupName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, accountName, backupVaultName, backupName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -604,7 +669,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/backupVaults/", false);
+            uri.AppendPath(backupVaultName, true);
+            uri.AppendPath("/backups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -617,42 +700,38 @@ namespace Azure.ResourceManager.NetApp
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendPath("/capacityPools/", false);
-            uri.AppendPath(poolName, true);
-            uri.AppendPath("/volumes/", false);
-            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/backupVaults/", false);
+            uri.AppendPath(backupVaultName, true);
             uri.AppendPath("/backups/", false);
             uri.AppendPath(backupName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Delete a backup of the volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Delete a Backup under the Backup Vault. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
-        /// <param name="poolName"> The name of the capacity pool. </param>
-        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, backupName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, backupVaultName, backupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -661,30 +740,27 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        /// <summary> Delete a backup of the volume. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Delete a Backup under the Backup Vault. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
-        /// <param name="poolName"> The name of the capacity pool. </param>
-        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
         /// <param name="backupName"> The name of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="backupVaultName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
             Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, backupName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, accountName, backupVaultName, backupName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
                 case 202:
                 case 204:
                     return message.Response;
@@ -693,97 +769,91 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal HttpMessage CreateRestoreFilesRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, NetAppVolumeBackupBackupRestoreFilesContent content)
+        internal RequestUriBuilder CreateListByVaultNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
+        internal HttpMessage CreateListByVaultNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string filter)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
-            uri.AppendPath(accountName, true);
-            uri.AppendPath("/capacityPools/", false);
-            uri.AppendPath(poolName, true);
-            uri.AppendPath("/volumes/", false);
-            uri.AppendPath(volumeName, true);
-            uri.AppendPath("/backups/", false);
-            uri.AppendPath(backupName, true);
-            uri.AppendPath("/restoreFiles", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
-            request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
-            request.Content = content0;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Restore the specified files from the specified backup to the active filesystem. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List all backups Under a Backup Vault. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
-        /// <param name="poolName"> The name of the capacity pool. </param>
-        /// <param name="volumeName"> The name of the volume. </param>
-        /// <param name="backupName"> The name of the backup. </param>
-        /// <param name="content"> Restore payload supplied in the body of the operation. </param>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
+        /// <param name="filter"> An option to specify the VolumeResourceId. If present, then only returns the backups under the specified volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="backupName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RestoreFilesAsync(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, NetAppVolumeBackupBackupRestoreFilesContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="backupVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BackupsList>> ListByVaultNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string filter = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
 
-            using var message = CreateRestoreFilesRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, backupName, content);
+            using var message = CreateListByVaultNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, backupVaultName, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
-                    return message.Response;
+                    {
+                        BackupsList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = BackupsList.DeserializeBackupsList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Restore the specified files from the specified backup to the active filesystem. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List all backups Under a Backup Vault. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the NetApp account. </param>
-        /// <param name="poolName"> The name of the capacity pool. </param>
-        /// <param name="volumeName"> The name of the volume. </param>
-        /// <param name="backupName"> The name of the backup. </param>
-        /// <param name="content"> Restore payload supplied in the body of the operation. </param>
+        /// <param name="backupVaultName"> The name of the Backup Vault. </param>
+        /// <param name="filter"> An option to specify the VolumeResourceId. If present, then only returns the backups under the specified volume. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/>, <paramref name="backupName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/>, <paramref name="volumeName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RestoreFiles(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName, NetAppVolumeBackupBackupRestoreFilesContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="backupVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="backupVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BackupsList> ListByVaultNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string filter = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
-            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
-            Argument.AssertNotNullOrEmpty(backupName, nameof(backupName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(backupVaultName, nameof(backupVaultName));
 
-            using var message = CreateRestoreFilesRequest(subscriptionId, resourceGroupName, accountName, poolName, volumeName, backupName, content);
+            using var message = CreateListByVaultNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, backupVaultName, filter);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
-                    return message.Response;
+                    {
+                        BackupsList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = BackupsList.DeserializeBackupsList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }

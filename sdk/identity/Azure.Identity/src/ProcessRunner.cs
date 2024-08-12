@@ -23,6 +23,7 @@ namespace Azure.Identity
         private readonly CancellationTokenSource _timeoutCts;
         private CancellationTokenRegistration _ctRegistration;
         private bool _logPII;
+        public int ExitCode => _process.ExitCode;
 
         public ProcessRunner(IProcess process, TimeSpan timeout, bool logPII, CancellationToken cancellationToken)
         {

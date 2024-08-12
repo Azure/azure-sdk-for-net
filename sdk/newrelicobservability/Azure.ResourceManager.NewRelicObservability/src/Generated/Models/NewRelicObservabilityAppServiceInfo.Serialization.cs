@@ -5,22 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicObservabilityAppServiceInfo
+    public partial class NewRelicObservabilityAppServiceInfo : IUtf8JsonSerializable, IJsonModel<NewRelicObservabilityAppServiceInfo>
     {
-        internal static NewRelicObservabilityAppServiceInfo DeserializeNewRelicObservabilityAppServiceInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicObservabilityAppServiceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<NewRelicObservabilityAppServiceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAppServiceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NewRelicObservabilityAppServiceInfo)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AzureResourceId))
+            {
+                writer.WritePropertyName("azureResourceId"u8);
+                writer.WriteStringValue(AzureResourceId);
+            }
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(AgentStatus))
+            {
+                writer.WritePropertyName("agentStatus"u8);
+                writer.WriteStringValue(AgentStatus);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        NewRelicObservabilityAppServiceInfo IJsonModel<NewRelicObservabilityAppServiceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAppServiceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NewRelicObservabilityAppServiceInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicObservabilityAppServiceInfo(document.RootElement, options);
+        }
+
+        internal static NewRelicObservabilityAppServiceInfo DeserializeNewRelicObservabilityAppServiceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> azureResourceId = default;
-            Optional<string> agentVersion = default;
-            Optional<string> agentStatus = default;
+            ResourceIdentifier azureResourceId = default;
+            string agentVersion = default;
+            string agentStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureResourceId"u8))
@@ -42,8 +106,122 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     agentStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NewRelicObservabilityAppServiceInfo(azureResourceId.Value, agentVersion.Value, agentStatus.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NewRelicObservabilityAppServiceInfo(azureResourceId, agentVersion, agentStatus, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureResourceId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  azureResourceId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AzureResourceId))
+                {
+                    builder.Append("  azureResourceId: ");
+                    builder.AppendLine($"'{AzureResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgentVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  agentVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AgentVersion))
+                {
+                    builder.Append("  agentVersion: ");
+                    if (AgentVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AgentVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AgentVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgentStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  agentStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AgentStatus))
+                {
+                    builder.Append("  agentStatus: ");
+                    if (AgentStatus.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AgentStatus}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AgentStatus}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<NewRelicObservabilityAppServiceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAppServiceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityAppServiceInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NewRelicObservabilityAppServiceInfo IPersistableModel<NewRelicObservabilityAppServiceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityAppServiceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNewRelicObservabilityAppServiceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicObservabilityAppServiceInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NewRelicObservabilityAppServiceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

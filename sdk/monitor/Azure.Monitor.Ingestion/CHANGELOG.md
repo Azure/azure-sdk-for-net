@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,26 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.2 (2024-04-03)
+
+### Bugs Fixed
+- Prevent logs from being dropped when the last entry is greater than 1 Mb.
+
+## 1.1.1 (2023-10-16)
+
+## Features Added
+- Added documentation for using sovereign cloud
+
+## 1.1.0 (2023-10-10)
+
+## Features Added
+- Added `LogsIngestionAudience` for multi-cloud support to allow users to select the Azure cloud where the resource is located.
+
+## 1.1.0-beta.1 (2023-10-10)
+
+### Bugs Fixed
+- Fix sovereign support for US Gov and China clouds
 
 ## 1.0.0 (2023-02-21)
 

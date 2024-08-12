@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Extra Parameters specific to each Service Provider. </summary>
     public partial class BotServiceProviderParameter
     {
-        /// <summary> Initializes a new instance of BotServiceProviderParameter. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BotServiceProviderParameter"/>. </summary>
         internal BotServiceProviderParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of BotServiceProviderParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="BotServiceProviderParameter"/>. </summary>
         /// <param name="name"> Name of the Service Provider. </param>
         /// <param name="serviceProviderParameterType"> Type of the Service Provider. </param>
         /// <param name="displayName"> Display Name of the Service Provider. </param>
@@ -25,7 +58,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="helpUri"> Help Url for the  Service Provider. </param>
         /// <param name="default"> Default Name for the Service Provider. </param>
         /// <param name="metadata"> Meta data for the Service Provider. </param>
-        internal BotServiceProviderParameter(string name, string serviceProviderParameterType, string displayName, string description, Uri helpUri, string @default, ServiceProviderParameterMetadata metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BotServiceProviderParameter(string name, string serviceProviderParameterType, string displayName, string description, Uri helpUri, string @default, ServiceProviderParameterMetadata metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ServiceProviderParameterType = serviceProviderParameterType;
@@ -34,6 +68,7 @@ namespace Azure.ResourceManager.BotService.Models
             HelpUri = helpUri;
             Default = @default;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the Service Provider. </summary>

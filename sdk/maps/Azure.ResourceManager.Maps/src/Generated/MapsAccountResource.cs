@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Maps.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,13 +19,16 @@ namespace Azure.ResourceManager.Maps
 {
     /// <summary>
     /// A Class representing a MapsAccount along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="MapsAccountResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetMapsAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMapsAccount method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MapsAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetMapsAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetMapsAccount method.
     /// </summary>
     public partial class MapsAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MapsAccountResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}";
@@ -38,12 +39,15 @@ namespace Azure.ResourceManager.Maps
         private readonly AccountsRestOperations _mapsAccountAccountsRestClient;
         private readonly MapsAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Maps/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="MapsAccountResource"/> class for mocking. </summary>
         protected MapsAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "MapsAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MapsAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal MapsAccountResource(ArmClient client, MapsAccountData data) : this(client, data.Id)
@@ -64,9 +68,6 @@ namespace Azure.ResourceManager.Maps
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Maps/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> An object representing collection of MapsCreatorResources and their operations over a MapsCreatorResource. </returns>
         public virtual MapsCreatorCollection GetMapsCreators()
         {
-            return GetCachedClient(Client => new MapsCreatorCollection(Client, Id));
+            return GetCachedClient(client => new MapsCreatorCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +108,20 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Creators_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsCreatorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="creatorName"> The name of the Maps Creator instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MapsCreatorResource>> GetMapsCreatorAsync(string creatorName, CancellationToken cancellationToken = default)
         {
@@ -130,12 +139,20 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Creators_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsCreatorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="creatorName"> The name of the Maps Creator instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MapsCreatorResource> GetMapsCreator(string creatorName, CancellationToken cancellationToken = default)
         {
@@ -152,6 +169,14 @@ namespace Azure.ResourceManager.Maps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -185,6 +210,14 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,6 +250,14 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,7 +269,9 @@ namespace Azure.ResourceManager.Maps
             try
             {
                 var response = await _mapsAccountAccountsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new MapsArmOperation(response);
+                var uri = _mapsAccountAccountsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MapsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -251,6 +294,14 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -262,7 +313,9 @@ namespace Azure.ResourceManager.Maps
             try
             {
                 var response = _mapsAccountAccountsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new MapsArmOperation(response);
+                var uri = _mapsAccountAccountsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MapsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -284,6 +337,14 @@ namespace Azure.ResourceManager.Maps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,6 +380,14 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The updated parameters for the Maps Account. </param>
@@ -343,6 +412,98 @@ namespace Azure.ResourceManager.Maps
         }
 
         /// <summary>
+        /// Create and list an account shared access signature token. Use this SAS token for authentication to Azure Maps REST APIs through various Azure Maps SDKs. As prerequisite to create a SAS Token.
+        ///
+        /// Prerequisites:
+        /// 1. Create or have an existing User Assigned Managed Identity in the same Azure region as the account.
+        /// 2. Create or update an Azure Map account with the same Azure region as the User Assigned Managed Identity is placed.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/listSas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListSas</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The updated parameters for the Maps Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<MapsAccountSasToken>> GetSasAsync(MapsAccountSasContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountResource.GetSas");
+            scope.Start();
+            try
+            {
+                var response = await _mapsAccountAccountsRestClient.ListSasAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create and list an account shared access signature token. Use this SAS token for authentication to Azure Maps REST APIs through various Azure Maps SDKs. As prerequisite to create a SAS Token.
+        ///
+        /// Prerequisites:
+        /// 1. Create or have an existing User Assigned Managed Identity in the same Azure region as the account.
+        /// 2. Create or update an Azure Map account with the same Azure region as the User Assigned Managed Identity is placed.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Maps/accounts/{accountName}/listSas</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Accounts_ListSas</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The updated parameters for the Maps Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<MapsAccountSasToken> GetSas(MapsAccountSasContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _mapsAccountAccountsClientDiagnostics.CreateScope("MapsAccountResource.GetSas");
+            scope.Start();
+            try
+            {
+                var response = _mapsAccountAccountsRestClient.ListSas(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Get the keys to use with the Maps APIs. A key is used to authenticate and authorize access to the Maps REST APIs. Only one key is needed at a time; two are given to provide seamless key regeneration.
         /// <list type="bullet">
         /// <item>
@@ -352,6 +513,14 @@ namespace Azure.ResourceManager.Maps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,6 +552,14 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Accounts_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -412,6 +589,14 @@ namespace Azure.ResourceManager.Maps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_RegenerateKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -447,6 +632,14 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Accounts_RegenerateKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keySpecification"> Which key to regenerate:  primary or secondary. </param>
@@ -480,6 +673,14 @@ namespace Azure.ResourceManager.Maps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -535,6 +736,14 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -589,6 +798,14 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -638,6 +855,14 @@ namespace Azure.ResourceManager.Maps
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -686,6 +911,14 @@ namespace Azure.ResourceManager.Maps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -738,6 +971,14 @@ namespace Azure.ResourceManager.Maps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MapsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

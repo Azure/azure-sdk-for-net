@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningBatchDeploymentProperties : IUtf8JsonSerializable
+    public partial class MachineLearningBatchDeploymentProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningBatchDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningBatchDeploymentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningBatchDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Compute))
             {
@@ -26,6 +36,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("compute");
+                }
+            }
+            if (Optional.IsDefined(DeploymentConfiguration))
+            {
+                if (DeploymentConfiguration != null)
+                {
+                    writer.WritePropertyName("deploymentConfiguration"u8);
+                    writer.WriteObjectValue(DeploymentConfiguration, options);
+                }
+                else
+                {
+                    writer.WriteNull("deploymentConfiguration");
                 }
             }
             if (Optional.IsDefined(ErrorThreshold))
@@ -53,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Model != null)
                 {
                     writer.WritePropertyName("model"u8);
-                    writer.WriteObjectValue(Model);
+                    writer.WriteObjectValue(Model, options);
                 }
                 else
                 {
@@ -70,12 +92,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("outputFileName"u8);
                 writer.WriteStringValue(OutputFileName);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(Resources))
             {
                 if (Resources != null)
                 {
                     writer.WritePropertyName("resources"u8);
-                    writer.WriteObjectValue(Resources);
+                    writer.WriteObjectValue(Resources, options);
                 }
                 else
                 {
@@ -87,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RetrySettings != null)
                 {
                     writer.WritePropertyName("retrySettings"u8);
-                    writer.WriteObjectValue(RetrySettings);
+                    writer.WriteObjectValue(RetrySettings, options);
                 }
                 else
                 {
@@ -99,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration);
+                    writer.WriteObjectValue(CodeConfiguration, options);
                 }
                 else
                 {
@@ -166,31 +193,63 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningBatchDeploymentProperties DeserializeMachineLearningBatchDeploymentProperties(JsonElement element)
+        MachineLearningBatchDeploymentProperties IJsonModel<MachineLearningBatchDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningBatchDeploymentProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningBatchDeploymentProperties DeserializeMachineLearningBatchDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> compute = default;
-            Optional<int> errorThreshold = default;
-            Optional<MachineLearningBatchLoggingLevel> loggingLevel = default;
-            Optional<int> maxConcurrencyPerInstance = default;
-            Optional<long> miniBatchSize = default;
-            Optional<MachineLearningAssetReferenceBase> model = default;
-            Optional<MachineLearningBatchOutputAction> outputAction = default;
-            Optional<string> outputFileName = default;
-            Optional<MachineLearningDeploymentProvisioningState> provisioningState = default;
-            Optional<MachineLearningDeploymentResourceConfiguration> resources = default;
-            Optional<MachineLearningBatchRetrySettings> retrySettings = default;
-            Optional<MachineLearningCodeConfiguration> codeConfiguration = default;
-            Optional<string> description = default;
-            Optional<string> environmentId = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<IDictionary<string, string>> properties = default;
+            string compute = default;
+            BatchDeploymentConfiguration deploymentConfiguration = default;
+            int? errorThreshold = default;
+            MachineLearningBatchLoggingLevel? loggingLevel = default;
+            int? maxConcurrencyPerInstance = default;
+            long? miniBatchSize = default;
+            MachineLearningAssetReferenceBase model = default;
+            MachineLearningBatchOutputAction? outputAction = default;
+            string outputFileName = default;
+            MachineLearningDeploymentProvisioningState? provisioningState = default;
+            MachineLearningDeploymentResourceConfiguration resources = default;
+            MachineLearningBatchRetrySettings retrySettings = default;
+            MachineLearningCodeConfiguration codeConfiguration = default;
+            string description = default;
+            string environmentId = default;
+            IDictionary<string, string> environmentVariables = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("compute"u8))
@@ -201,6 +260,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     compute = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("deploymentConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        deploymentConfiguration = null;
+                        continue;
+                    }
+                    deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errorThreshold"u8))
@@ -246,7 +315,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         model = null;
                         continue;
                     }
-                    model = MachineLearningAssetReferenceBase.DeserializeMachineLearningAssetReferenceBase(property.Value);
+                    model = MachineLearningAssetReferenceBase.DeserializeMachineLearningAssetReferenceBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("outputAction"u8))
@@ -279,7 +348,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         resources = null;
                         continue;
                     }
-                    resources = MachineLearningDeploymentResourceConfiguration.DeserializeMachineLearningDeploymentResourceConfiguration(property.Value);
+                    resources = MachineLearningDeploymentResourceConfiguration.DeserializeMachineLearningDeploymentResourceConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retrySettings"u8))
@@ -289,7 +358,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         retrySettings = null;
                         continue;
                     }
-                    retrySettings = MachineLearningBatchRetrySettings.DeserializeMachineLearningBatchRetrySettings(property.Value);
+                    retrySettings = MachineLearningBatchRetrySettings.DeserializeMachineLearningBatchRetrySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("codeConfiguration"u8))
@@ -299,7 +368,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         codeConfiguration = null;
                         continue;
                     }
-                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value);
+                    codeConfiguration = MachineLearningCodeConfiguration.DeserializeMachineLearningCodeConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -352,8 +421,62 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     properties = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningBatchDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), compute.Value, Optional.ToNullable(errorThreshold), Optional.ToNullable(loggingLevel), Optional.ToNullable(maxConcurrencyPerInstance), Optional.ToNullable(miniBatchSize), model.Value, Optional.ToNullable(outputAction), outputFileName.Value, Optional.ToNullable(provisioningState), resources.Value, retrySettings.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningBatchDeploymentProperties(
+                codeConfiguration,
+                description,
+                environmentId,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                compute,
+                deploymentConfiguration,
+                errorThreshold,
+                loggingLevel,
+                maxConcurrencyPerInstance,
+                miniBatchSize,
+                model,
+                outputAction,
+                outputFileName,
+                provisioningState,
+                resources,
+                retrySettings);
         }
+
+        BinaryData IPersistableModel<MachineLearningBatchDeploymentProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningBatchDeploymentProperties IPersistableModel<MachineLearningBatchDeploymentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningBatchDeploymentProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningBatchDeploymentProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningBatchDeploymentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

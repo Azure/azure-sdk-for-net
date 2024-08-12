@@ -7,21 +7,21 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A copy activity Azure Data Lake Storage Gen2 sink. </summary>
     public partial class AzureBlobFSSink : CopySink
     {
-        /// <summary> Initializes a new instance of AzureBlobFSSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSSink"/>. </summary>
         public AzureBlobFSSink()
         {
-            Metadata = new ChangeTrackingList<FactoryMetadataItemInfo>();
+            Metadata = new ChangeTrackingList<DataFactoryMetadataItemInfo>();
             CopySinkType = "AzureBlobFSSink";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobFSSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFSSink"/>. </summary>
         /// <param name="copySinkType"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
@@ -30,47 +30,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
+        /// <param name="copyBehavior"> The type of copy behavior for copy sink. Type: string (or Expression with resultType string). </param>
         /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
-        internal AzureBlobFSSink(string copySinkType, BinaryData writeBatchSize, BinaryData writeBatchTimeout, BinaryData sinkRetryCount, BinaryData sinkRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData copyBehavior, IList<FactoryMetadataItemInfo> metadata) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal AzureBlobFSSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> copyBehavior, IList<DataFactoryMetadataItemInfo> metadata) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             CopyBehavior = copyBehavior;
             Metadata = metadata;
             CopySinkType = copySinkType ?? "AzureBlobFSSink";
         }
 
-        /// <summary>
-        /// The type of copy behavior for copy sink.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData CopyBehavior { get; set; }
+        /// <summary> The type of copy behavior for copy sink. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> CopyBehavior { get; set; }
         /// <summary> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </summary>
-        public IList<FactoryMetadataItemInfo> Metadata { get; }
+        public IList<DataFactoryMetadataItemInfo> Metadata { get; }
     }
 }

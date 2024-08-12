@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -15,7 +16,7 @@ namespace Azure.Identity
         private string _tenantId;
 
         /// <summary>
-        /// Prevents the <see cref="InteractiveBrowserCredential"/> from automatically prompting the user. If automatic authentication is disabled a AuthenticationRequiredException will be thrown from <see cref="InteractiveBrowserCredential.GetToken"/> and <see cref="InteractiveBrowserCredential.GetTokenAsync"/> in the case that
+        /// Prevents the <see cref="InteractiveBrowserCredential"/> from automatically prompting the user. If automatic authentication is disabled a AuthenticationRequiredException will be thrown from <see cref="InteractiveBrowserCredential.GetToken(Core.TokenRequestContext, CancellationToken)"/> and <see cref="InteractiveBrowserCredential.GetTokenAsync(Core.TokenRequestContext, CancellationToken)"/> in the case that
         /// user interaction is necessary. The application is responsible for handling this exception, and calling <see cref="InteractiveBrowserCredential.Authenticate(CancellationToken)"/> or <see cref="InteractiveBrowserCredential.AuthenticateAsync(CancellationToken)"/> to authenticate the user interactively.
         /// </summary>
         public bool DisableAutomaticAuthentication { get; set; }
@@ -37,7 +38,8 @@ namespace Azure.Identity
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();
 
         /// <summary>
-        /// The client ID of the application used to authenticate the user. If not specified the user will be authenticated with an Azure development application.
+        /// The client ID of the application used to authenticate the user. It is recommended that developers register their applications and assign appropriate roles. For more information, visit <see href="https://aka.ms/azsdk/identity/AppRegistrationAndRoleAssignment"/>.
+        /// If not specified, users will authenticate to an Azure development application, which is not recommended for production scenarios.
         /// </summary>
         public string ClientId { get; set; } = Constants.DeveloperSignOnClientId;
 
@@ -64,5 +66,10 @@ namespace Azure.Identity
 
         /// <inheritdoc/>
         public bool DisableInstanceDiscovery { get; set; }
+
+        /// <summary>
+        /// The options for customizing the browser for interactive authentication.
+        /// </summary>
+        public BrowserCustomizationOptions BrowserCustomization { get; set; }
     }
 }

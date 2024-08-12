@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The access control configuration. </summary>
     public partial class FlowAccessControlConfiguration
     {
-        /// <summary> Initializes a new instance of FlowAccessControlConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfiguration"/>. </summary>
         public FlowAccessControlConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of FlowAccessControlConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlowAccessControlConfiguration"/>. </summary>
         /// <param name="triggers"> The access control configuration for invoking workflow triggers. </param>
         /// <param name="contents"> The access control configuration for accessing workflow run contents. </param>
         /// <param name="actions"> The access control configuration for workflow actions. </param>
         /// <param name="workflowManagement"> The access control configuration for workflow management. </param>
-        internal FlowAccessControlConfiguration(FlowAccessControlConfigurationPolicy triggers, FlowAccessControlConfigurationPolicy contents, FlowAccessControlConfigurationPolicy actions, FlowAccessControlConfigurationPolicy workflowManagement)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlowAccessControlConfiguration(FlowAccessControlConfigurationPolicy triggers, FlowAccessControlConfigurationPolicy contents, FlowAccessControlConfigurationPolicy actions, FlowAccessControlConfigurationPolicy workflowManagement, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Triggers = triggers;
             Contents = contents;
             Actions = actions;
             WorkflowManagement = workflowManagement;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The access control configuration for invoking workflow triggers. </summary>

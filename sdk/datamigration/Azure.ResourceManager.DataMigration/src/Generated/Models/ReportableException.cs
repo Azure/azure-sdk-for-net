@@ -5,24 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Exception object for all custom exceptions. </summary>
     public partial class ReportableException
     {
-        /// <summary> Initializes a new instance of ReportableException. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReportableException"/>. </summary>
         internal ReportableException()
         {
         }
 
-        /// <summary> Initializes a new instance of ReportableException. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReportableException"/>. </summary>
         /// <param name="message"> Error message. </param>
         /// <param name="actionableMessage"> Actionable steps for this exception. </param>
         /// <param name="filePath"> The path to the file where exception occurred. </param>
         /// <param name="lineNumber"> The line number where exception occurred. </param>
         /// <param name="hResult"> Coded numerical value that is assigned to a specific exception. </param>
         /// <param name="stackTrace"> Stack trace. </param>
-        internal ReportableException(string message, string actionableMessage, string filePath, string lineNumber, int? hResult, string stackTrace)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReportableException(string message, string actionableMessage, string filePath, string lineNumber, int? hResult, string stackTrace, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             ActionableMessage = actionableMessage;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             LineNumber = lineNumber;
             HResult = hResult;
             StackTrace = stackTrace;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Error message. </summary>

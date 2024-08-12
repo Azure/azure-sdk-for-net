@@ -4,6 +4,7 @@
 namespace BatchClientIntegrationTests.Fixtures
 {
     using System.Collections.Generic;
+    using System;
     using System.Linq;
     using IntegrationTestUtilities;
     using Microsoft.Azure.Batch;
@@ -24,6 +25,20 @@ namespace BatchClientIntegrationTests.Fixtures
                 imageInfo.ImageReference.Publisher == "openlogic" &&
                 imageInfo.ImageReference.Offer.Contains("centos") &&
                 imageInfo.ImageReference.Sku.Contains("7_9");
+
+            ImageInformation ubuntuImage = imageInformation.First(ubuntuImageScanner);
+
+            return ubuntuImage;
+        }
+
+        public static ImageInformation GetUbuntuServerImageDetails(BatchClient client)
+        {
+            List<ImageInformation> imageInformation = client.PoolOperations.ListSupportedImages().ToList();
+
+            static bool ubuntuImageScanner(ImageInformation imageInfo) =>
+                imageInfo.ImageReference.Publisher.ToLower().Contains("canonical") &&
+               imageInfo.ImageReference.Offer.Contains("ubuntu") &&
+               imageInfo.ImageReference.Sku.Contains("20");
 
             ImageInformation ubuntuImage = imageInformation.First(ubuntuImageScanner);
 

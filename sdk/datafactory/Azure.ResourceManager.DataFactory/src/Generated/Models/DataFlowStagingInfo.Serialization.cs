@@ -6,41 +6,79 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFlowStagingInfo : IUtf8JsonSerializable
+    public partial class DataFlowStagingInfo : IUtf8JsonSerializable, IJsonModel<DataFlowStagingInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFlowStagingInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataFlowStagingInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowStagingInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFlowStagingInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService);
+                JsonSerializer.Serialize(writer, LinkedService);
             }
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
+                JsonSerializer.Serialize(writer, FolderPath);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(FolderPath);
+				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FolderPath.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DataFlowStagingInfo DeserializeDataFlowStagingInfo(JsonElement element)
+        DataFlowStagingInfo IJsonModel<DataFlowStagingInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowStagingInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFlowStagingInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowStagingInfo(document.RootElement, options);
+        }
+
+        internal static DataFlowStagingInfo DeserializeDataFlowStagingInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<FactoryLinkedServiceReference> linkedService = default;
-            Optional<BinaryData> folderPath = default;
+            DataFactoryLinkedServiceReference linkedService = default;
+            DataFactoryElement<string> folderPath = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
@@ -49,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("folderPath"u8))
@@ -58,11 +96,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folderPath = BinaryData.FromString(property.Value.GetRawText());
+                    folderPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataFlowStagingInfo(linkedService.Value, folderPath.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataFlowStagingInfo(linkedService, folderPath, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataFlowStagingInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowStagingInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFlowStagingInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataFlowStagingInfo IPersistableModel<DataFlowStagingInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowStagingInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFlowStagingInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFlowStagingInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFlowStagingInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -21,9 +20,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             string code = default;
             string message = default;
-            Optional<string> target = default;
-            Optional<IReadOnlyList<Error>> details = default;
-            Optional<InnerError> innererror = default;
+            string target = default;
+            IReadOnlyList<Error> details = default;
+            InnerError innererror = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -65,7 +64,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new Error(code, message, target.Value, Optional.ToList(details), innererror.Value);
+            return new Error(code, message, target, details ?? new ChangeTrackingList<Error>(), innererror);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Error FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeError(document.RootElement);
         }
     }
 }

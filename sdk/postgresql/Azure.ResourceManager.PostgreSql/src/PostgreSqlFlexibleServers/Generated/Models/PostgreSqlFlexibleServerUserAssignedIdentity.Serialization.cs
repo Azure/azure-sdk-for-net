@@ -5,17 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerUserAssignedIdentity : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerUserAssignedIdentity : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerUserAssignedIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerUserAssignedIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PostgreSqlFlexibleServerUserAssignedIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerUserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerUserAssignedIdentity)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
@@ -30,17 +42,54 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IdentityType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlFlexibleServerUserAssignedIdentity DeserializePostgreSqlFlexibleServerUserAssignedIdentity(JsonElement element)
+        PostgreSqlFlexibleServerUserAssignedIdentity IJsonModel<PostgreSqlFlexibleServerUserAssignedIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerUserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerUserAssignedIdentity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerUserAssignedIdentity(document.RootElement, options);
+        }
+
+        internal static PostgreSqlFlexibleServerUserAssignedIdentity DeserializePostgreSqlFlexibleServerUserAssignedIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             PostgreSqlFlexibleServerIdentityType type = default;
+            Guid? tenantId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userAssignedIdentities"u8))
@@ -62,8 +111,121 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     type = new PostgreSqlFlexibleServerIdentityType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("tenantId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(Optional.ToDictionary(userAssignedIdentities), type);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), type, tenantId, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userAssignedIdentities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(UserAssignedIdentities))
+                {
+                    if (UserAssignedIdentities.Any())
+                    {
+                        builder.Append("  userAssignedIdentities: ");
+                        builder.AppendLine("{");
+                        foreach (var item in UserAssignedIdentities)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  userAssignedIdentities: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  type: ");
+                builder.AppendLine($"'{IdentityType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    builder.Append("  tenantId: ");
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerUserAssignedIdentity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerUserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerUserAssignedIdentity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PostgreSqlFlexibleServerUserAssignedIdentity IPersistableModel<PostgreSqlFlexibleServerUserAssignedIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerUserAssignedIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePostgreSqlFlexibleServerUserAssignedIdentity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerUserAssignedIdentity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PostgreSqlFlexibleServerUserAssignedIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,20 +7,26 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> The UnknownStoreReadSettings. </summary>
+    /// <summary> Unknown version of StoreReadSettings. </summary>
     internal partial class UnknownStoreReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of UnknownStoreReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownStoreReadSettings"/>. </summary>
         /// <param name="storeReadSettingsType"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownStoreReadSettings(string storeReadSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal UnknownStoreReadSettings(string storeReadSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties) : base(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             StoreReadSettingsType = storeReadSettingsType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownStoreReadSettings"/> for deserialization. </summary>
+        internal UnknownStoreReadSettings()
+        {
         }
     }
 }

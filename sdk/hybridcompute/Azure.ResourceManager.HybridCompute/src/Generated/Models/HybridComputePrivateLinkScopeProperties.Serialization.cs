@@ -5,35 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputePrivateLinkScopeProperties : IUtf8JsonSerializable
+    public partial class HybridComputePrivateLinkScopeProperties : IUtf8JsonSerializable, IJsonModel<HybridComputePrivateLinkScopeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputePrivateLinkScopeProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HybridComputePrivateLinkScopeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputePrivateLinkScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridComputePrivateLinkScopeProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkScopeId))
+            {
+                writer.WritePropertyName("privateLinkScopeId"u8);
+                writer.WriteStringValue(PrivateLinkScopeId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HybridComputePrivateLinkScopeProperties DeserializeHybridComputePrivateLinkScopeProperties(JsonElement element)
+        HybridComputePrivateLinkScopeProperties IJsonModel<HybridComputePrivateLinkScopeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputePrivateLinkScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridComputePrivateLinkScopeProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridComputePrivateLinkScopeProperties(document.RootElement, options);
+        }
+
+        internal static HybridComputePrivateLinkScopeProperties DeserializeHybridComputePrivateLinkScopeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<PublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<string> provisioningState = default;
-            Optional<string> privateLinkScopeId = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionDataModel>> privateEndpointConnections = default;
+            HybridComputePublicNetworkAccessType? publicNetworkAccess = default;
+            string provisioningState = default;
+            string privateLinkScopeId = default;
+            IReadOnlyList<PrivateEndpointConnectionDataModel> privateEndpointConnections = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicNetworkAccess"u8))
@@ -42,7 +105,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccessType(property.Value.GetString());
+                    publicNetworkAccess = new HybridComputePublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -64,13 +127,150 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<PrivateEndpointConnectionDataModel> array = new List<PrivateEndpointConnectionDataModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionDataModel.DeserializePrivateEndpointConnectionDataModel(item));
+                        array.Add(PrivateEndpointConnectionDataModel.DeserializePrivateEndpointConnectionDataModel(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HybridComputePrivateLinkScopeProperties(Optional.ToNullable(publicNetworkAccess), provisioningState.Value, privateLinkScopeId.Value, Optional.ToList(privateEndpointConnections));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HybridComputePrivateLinkScopeProperties(publicNetworkAccess, provisioningState, privateLinkScopeId, privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionDataModel>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  publicNetworkAccess: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccess))
+                {
+                    builder.Append("  publicNetworkAccess: ");
+                    builder.AppendLine($"'{PublicNetworkAccess.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    if (ProvisioningState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProvisioningState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProvisioningState}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkScopeId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateLinkScopeId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateLinkScopeId))
+                {
+                    builder.Append("  privateLinkScopeId: ");
+                    if (PrivateLinkScopeId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrivateLinkScopeId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrivateLinkScopeId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpointConnections), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  privateEndpointConnections: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+                {
+                    if (PrivateEndpointConnections.Any())
+                    {
+                        builder.Append("  privateEndpointConnections: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateEndpointConnections)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  privateEndpointConnections: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<HybridComputePrivateLinkScopeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputePrivateLinkScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkScopeProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HybridComputePrivateLinkScopeProperties IPersistableModel<HybridComputePrivateLinkScopeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputePrivateLinkScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHybridComputePrivateLinkScopeProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkScopeProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HybridComputePrivateLinkScopeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

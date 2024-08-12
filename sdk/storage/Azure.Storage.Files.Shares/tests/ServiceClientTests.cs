@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
@@ -92,10 +93,10 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareServiceClient service = InstrumentClient(
                 new ShareServiceClient(
-                    s_invalidUri,
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
-                        TestConfigDefault.AccountKey),
+                        TestConstants.InvalidAccountKey),
                     GetOptions()));
 
             // Act
@@ -112,25 +113,29 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
-            _ = properties.Value.Cors.ToArray();
-            properties.Value.Cors.Clear();
-            properties.Value.Cors.Add(
-                new ShareCorsRule
-                {
-                    MaxAgeInSeconds = 1000,
-                    AllowedHeaders = "x-ms-meta-data*,x-ms-meta-target*,x-ms-meta-abc",
-                    AllowedMethods = "PUT,GET",
-                    AllowedOrigins = "*",
-                    ExposedHeaders = "x-ms-meta-*"
-                });
 
             // Act
-            await service.SetPropertiesAsync(properties: properties);
+            await service.SetPropertiesAsync(properties: properties.Value);
 
             // Assert
-            properties = await service.GetPropertiesAsync();
-            Assert.AreEqual(1, properties.Value.Cors.Count());
-            Assert.IsTrue(properties.Value.Cors[0].MaxAgeInSeconds == 1000);
+           await service.GetPropertiesAsync();
+        }
+
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25266")]
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task GetPropertiesAsync_OAuth()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+
+            // Act
+            Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+            var accountName = new ShareUriBuilder(service.Uri).AccountName;
+            TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
         }
 
         [RecordedTest]
@@ -171,16 +176,30 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
             ShareServiceClient fakeService = InstrumentClient(
                 new ShareServiceClient(
-                    new Uri("https://error.file.core.windows.net"),
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
-                        TestConfigDefault.AccountKey),
+                        TestConstants.InvalidAccountKey),
                     GetOptions()));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fakeService.SetPropertiesAsync(properties),
                 e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [NonParallelizable]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task SetPropertiesAsync_OAuth()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+            Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
+            properties.Value.Protocol = null;
+
+            // Act
+            await service.SetPropertiesAsync(properties: properties.Value);
         }
 
         [RecordedTest]
@@ -318,10 +337,10 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareServiceClient service = InstrumentClient(
                 new ShareServiceClient(
-                    new Uri("https://error.file.core.windows.net"),
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
                     new StorageSharedKeyCredential(
                         TestConfigDefault.AccountName,
-                        TestConfigDefault.AccountKey),
+                        TestConstants.InvalidAccountKey),
                     GetOptions()));
 
             // Act
@@ -354,6 +373,62 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareItem shareItem = shares.Where(s => s.Name == share.Name).FirstOrDefault();
             Assert.AreEqual(ShareProtocols.Nfs, shareItem.Properties.Protocols);
             Assert.AreEqual(ShareRootSquash.AllSquash, shareItem.Properties.RootSquash);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_02_04)]
+        public async Task ListShares_EnableSnapshotVirtualDirectoryAccess()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            ShareCreateOptions options = new ShareCreateOptions
+            {
+                Protocols = ShareProtocols.Nfs,
+                EnableSnapshotVirtualDirectoryAccess = true,
+            };
+
+            try
+            {
+                await share.CreateAsync(options);
+
+                // Act
+                IList<ShareItem> shares = await service.GetSharesAsync().ToListAsync();
+
+                // Assert
+                ShareItem shareItem = shares.Where(s => s.Name == share.Name).FirstOrDefault();
+                Assert.AreEqual(ShareProtocols.Nfs, shareItem.Properties.Protocols);
+                Assert.IsTrue(shareItem.Properties.EnableSnapshotVirtualDirectoryAccess);
+            }
+            finally
+            {
+                await share.DeleteAsync(false);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task ListSharesSegmentAsync_OAuth()
+        {
+            // Arrange
+            ShareServiceClient service = GetServiceClient_OAuth();
+
+            // Ensure at least one share
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            var shares = new List<ShareItem>();
+            await foreach (Page<ShareItem> page in service.GetSharesAsync().AsPages())
+            {
+                shares.AddRange(page.Values);
+            }
+
+            // Assert
+            Assert.AreNotEqual(0, shares.Count);
+            Assert.AreEqual(shares.Count, shares.Select(c => c.Name).Distinct().Count());
+            Assert.IsTrue(shares.Any(c => share.Uri == service.GetShareClient(c.Name).Uri));
+            Assert.IsTrue(shares.All(c => c.Properties.Metadata == null));
         }
 
         [RecordedTest]
@@ -535,19 +610,25 @@ namespace Azure.Storage.Files.Shares.Tests
                     constants.Sas.SharedKeyCredential,
                     GetOptions()));
 
+            string clientStringToSign = null;
+            string sasBuilderStringToSign = null;
+
             // Act
             Uri sasUri = serviceClient.GenerateAccountSasUri(
                 permissions: permissions,
                 expiresOn: expiresOn,
-                resourceTypes: resourceTypes);
+                resourceTypes: resourceTypes,
+                out clientStringToSign);
 
             // Assert
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, AccountSasServices.Files, resourceTypes);
             ShareUriBuilder expectedUri = new ShareUriBuilder(serviceUri)
             {
-                Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
+                Sas = sasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential, out sasBuilderStringToSign)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(clientStringToSign);
+            Assert.IsNotNull(sasBuilderStringToSign);
         }
 
         [RecordedTest]
@@ -567,8 +648,10 @@ namespace Azure.Storage.Files.Shares.Tests
 
             AccountSasBuilder sasBuilder = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder);
+            Uri sasUri = serviceClient.GenerateAccountSasUri(sasBuilder, out stringToSign);
 
             // Assert
             AccountSasBuilder sasBuilder2 = new AccountSasBuilder(permissions, expiresOn, services, resourceTypes);
@@ -577,6 +660,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]

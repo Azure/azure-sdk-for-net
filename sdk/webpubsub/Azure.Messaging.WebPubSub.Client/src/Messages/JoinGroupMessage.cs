@@ -20,14 +20,14 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// The optional ack-id
         /// </summary>
-        public ulong? AckId { get; }
+        public long? AckId { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="JoinGroupMessage"/> class.
         /// </summary>
         /// <param name="group">The group name.</param>
         /// <param name="ackId">The optional ack-id</param>
-        public JoinGroupMessage(string group, ulong? ackId)
+        public JoinGroupMessage(string group, long? ackId)
         {
             Group = group;
             AckId = ackId;

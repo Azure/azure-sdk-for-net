@@ -17,20 +17,18 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public VirtualMachinesTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
         public VirtualMachinesTests(bool isAsync) : base(isAsync) {}
 
-        [Test]
+        [Test, MaxTime(1800000)]
+        [RecordedTest]
         public async Task VirtualMachines()
         {
-            VirtualMachineCollection collection = ResourceGroupResource.GetVirtualMachines();
-            string virtualMachineName = "virtualMachineName";
+            NetworkCloudVirtualMachineCollection collection = ResourceGroupResource.GetNetworkCloudVirtualMachines();
+            string virtualMachineName = Recording.GenerateAssetName("vm");
             string resourceGroupName = ResourceGroupResource.Id.ResourceGroupName;
-            ResourceIdentifier virtualMachineResourceId = VirtualMachineResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, resourceGroupName, virtualMachineName);
-            VirtualMachineResource virtualMachine = Client.GetVirtualMachineResource(virtualMachineResourceId);
+            ResourceIdentifier virtualMachineResourceId = NetworkCloudVirtualMachineResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, resourceGroupName, virtualMachineName);
+            NetworkCloudVirtualMachineResource virtualMachine = Client.GetNetworkCloudVirtualMachineResource(virtualMachineResourceId);
 
             // Create
-            // Uri imageRepoUri = new Uri("https://" + TestEnvironment.VMImageRepoUri);
-            string vmImageWithTag = String.Format("{0}/{1}", TestEnvironment.VMImageRepoUri, TestEnvironment.VMImage);
-            var vmImageRepoPwd = TestEnvironment.VMImageRepoPwd;
-            VirtualMachineData createData = new VirtualMachineData
+            NetworkCloudVirtualMachineData createData = new NetworkCloudVirtualMachineData
             (
                 TestEnvironment.Location,
                 new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"),
@@ -39,25 +37,23 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 (
                     TestEnvironment.CSNAttachmentId,
                     VirtualMachineIPAllocationMethod.Dynamic
-                )
-                {
-                    DefaultGateway = DefaultGateway.False,
-                    NetworkAttachmentName = TestEnvironment.CSNAttachmentName,
-                },
+                ),
                 2,
                 8,
-                new StorageProfile
+                new NetworkCloudStorageProfile
                 (
-                    new OSDisk(20)
+                    new NetworkCloudOSDisk(20)
                     {
                         CreateOption = OSDiskCreateOption.Ephemeral,
                         DeleteOption = OSDiskDeleteOption.Delete,
                     }
                 ),
-                vmImageWithTag
+                TestEnvironment.VMImage
             )
             {
-                BootMethod = VirtualMachineBootMethod.Uefi,
+                CpuCores = 2,
+                MemorySizeInGB = 1,
+                VmDeviceModel = VirtualMachineDeviceModelType.T2,
                 NetworkAttachments =
                 {
                     new NetworkAttachment
@@ -66,34 +62,34 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                         VirtualMachineIPAllocationMethod.Dynamic
                     )
                     {
-                        DefaultGateway = DefaultGateway.False,
-                        NetworkAttachmentName = TestEnvironment.L3NAttachmentName,
+                        DefaultGateway = DefaultGateway.True,
+                        NetworkAttachmentName = "l3network",
                     }
                 },
-                PlacementHints = {},
                 SshPublicKeys =
                 {
-                    new SshPublicKey("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDLYVAibDxCYQcs4xeiGLcHMw+DvwKVAhMPG0OP85JKsBmFkeMPm5+2fEzQqjmE2r46V0+Idjdq3BYHwOzxPVb0p0Ekb4o7G3eEE/aCoSkr9S+cTn2CzCgDn3S8d1Muee56XlVJU4Z3G2oIcQchXetqYdD5NNwTyYZuDIaPoxCkGy1g+mYHsj7yxs65KfBNM/ucnvKy5cphI/uGNgcYUki0tRPT2/3H2QGVQVDfIficjPKBt9Jp08psvdJGs2Lk0Z5KrkgKyzb4VCDYmgV5AYoCPIO640n97nBwZlhVXkd4hSWHksVBBN+sajoWrWlU7h4ihwwwZcO90RYIiaHrJm9YmSMO3Y4AARHIKJ1+UerpAloAR3Jp01gTVzZdQrd9T0YfNnF7/ltg7OTo9m/mDn7zh1ZKFjyJv7bPQdhSIGbhdGrewyPe04+tSDGyH7bjpjm1A99qDYj6SeoEr790N0Lw2QGdP10Lo55+uMwzzbLyyIWzodHVIH4pPfz7mg1oWAs= osh@osh")
+                    new NetworkCloudSshPublicKey("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDLYVAibDxCYQcs4xeiGLcHMw+DvwKVAhMPG0OP85JKsBmFkeMPm5+2fEzQqjmE2r46V0+Idjdq3BYHwOzxPVb0p0Ekb4o7G3eEE/aCoSkr9S+cTn2CzCgDn3S8d1Muee56XlVJU4Z3G2oIcQchXetqYdD5NNwTyYZuDIaPoxCkGy1g+mYHsj7yxs65KfBNM/ucnvKy5cphI/uGNgcYUki0tRPT2/3H2QGVQVDfIficjPKBt9Jp08psvdJGs2Lk0Z5KrkgKyzb4VCDYmgV5AYoCPIO640n97nBwZlhVXkd4hSWHksVBBN+sajoWrWlU7h4ihwwwZcO90RYIiaHrJm9YmSMO3Y4AARHIKJ1+UerpAloAR3Jp01gTVzZdQrd9T0YfNnF7/ltg7OTo9m/mDn7zh1ZKFjyJv7bPQdhSIGbhdGrewyPe04+tSDGyH7bjpjm1A99qDYj6SeoEr790N0Lw2QGdP10Lo55+uMwzzbLyyIWzodHVIH4pPfz7mg1oWAs= osh@osh")
                 },
                 VmImageRepositoryCredentials = new ImageRepositoryCredentials
                 (
-                    vmImageRepoPwd,
+                    TestEnvironment.VMImageRepoPwd,
                     TestEnvironment.VMImageRepoUri,
-                    TestEnvironment.VMImageRepoUser
-                ),
+                    TestEnvironment.VMImageRepoUser,
+                    null),
                 Tags =
                 {
                     ["key1"] = "myvalue1",
                 },
             };
-            ArmOperation<VirtualMachineResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, createData);
+            ArmOperation<NetworkCloudVirtualMachineResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineName, createData);
+            Assert.AreEqual(createResult.Value.Data.Name, virtualMachineName);
 
             // Get
-            VirtualMachineResource getResult = await virtualMachine.GetAsync();
+            NetworkCloudVirtualMachineResource getResult = await virtualMachine.GetAsync();
             Assert.AreEqual(virtualMachineName, getResult.Data.Name);
 
             // Update
-            VirtualMachinePatch patch = new VirtualMachinePatch()
+            NetworkCloudVirtualMachinePatch patch = new NetworkCloudVirtualMachinePatch()
             {
                 Tags =
                 {
@@ -101,20 +97,20 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            ArmOperation<VirtualMachineResource> updateResult = await virtualMachine.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudVirtualMachineResource> updateResult = await virtualMachine.UpdateAsync(WaitUntil.Completed, patch);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // List by Resource Group
-            var listByResourceGroup = new List<VirtualMachineResource>();
-            await foreach (VirtualMachineResource item in collection.GetAllAsync())
+            var listByResourceGroup = new List<NetworkCloudVirtualMachineResource>();
+            await foreach (NetworkCloudVirtualMachineResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
             // List by Subscription
-            var listBySubscription = new List<VirtualMachineResource>();
-            await foreach (VirtualMachineResource item in SubscriptionResource.GetVirtualMachinesAsync())
+            var listBySubscription = new List<NetworkCloudVirtualMachineResource>();
+            await foreach (NetworkCloudVirtualMachineResource item in SubscriptionResource.GetNetworkCloudVirtualMachinesAsync())
             {
                 listBySubscription.Add(item);
             }

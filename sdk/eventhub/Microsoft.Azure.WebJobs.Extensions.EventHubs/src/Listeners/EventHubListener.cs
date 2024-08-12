@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Primitives;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
@@ -27,6 +28,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         private readonly ILoggerFactory _loggerFactory;
         private readonly ILogger _logger;
         private string _details;
+        private CancellationTokenSource _listenerCancellationTokenSource;
+        private CancellationTokenSource _functionExecutionCancellationTokenSource;
+        private readonly IDrainModeManager _drainModeManager;
+        private volatile bool _disposed;
 
         public EventHubListener(
             string functionId,
@@ -36,7 +41,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             IEventHubConsumerClient consumerClient,
             BlobCheckpointStoreInternal checkpointStore,
             EventHubOptions options,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IDrainModeManager drainModeManager)
         {
             _loggerFactory = loggerFactory;
             _executor = executor;
@@ -45,6 +51,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             _checkpointStore = checkpointStore;
             _options = options;
             _logger = _loggerFactory.CreateLogger<EventHubListener>();
+            _listenerCancellationTokenSource = new CancellationTokenSource();
+            _functionExecutionCancellationTokenSource = new CancellationTokenSource();
+            _drainModeManager = drainModeManager;
 
             EventHubMetricsProvider metricsProvider = new EventHubMetricsProvider(functionId, consumerClient, checkpointStore, _loggerFactory.CreateLogger<EventHubMetricsProvider>());
 
@@ -68,20 +77,30 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         }
 
         /// <summary>
-        /// Cancel any in progress listen operation.
+        /// Cancel should be called prior to Dispose. We just validate that we are not already disposed.
+        /// This is consistent with the Service Bus listener behavior.
         /// </summary>
         void IListener.Cancel()
         {
-#pragma warning disable AZC0102
-            StopAsync(CancellationToken.None).GetAwaiter().GetResult();
-#pragma warning restore AZC0102
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(nameof(IListener));
+            }
         }
 
         void IDisposable.Dispose()
         {
+            _listenerCancellationTokenSource.Cancel();
+            _functionExecutionCancellationTokenSource.Cancel();
+
 #pragma warning disable AZC0102
             StopAsync(CancellationToken.None).GetAwaiter().GetResult();
 #pragma warning restore AZC0102
+
+            // No need to dispose the _disposingCancellationTokenSource since we don't create it as a linked token and
+            // it won't use a timer, so the Dispose method is essentially a no-op. The downside to disposing it is that
+            // any customers who are trying to use it to cancel their own operations would get an ObjectDisposedException.
+            _disposed = true;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -94,6 +113,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
+            _listenerCancellationTokenSource.Cancel();
+
+            if (!_drainModeManager.IsDrainModeEnabled)
+            {
+                _functionExecutionCancellationTokenSource.Cancel();
+            }
+
             await _eventProcessorHost.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
 
             _logger.LogDebug($"EventHub listener stopped ({_details})");
@@ -101,7 +127,13 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
         IEventProcessor IEventProcessorFactory.CreatePartitionProcessor()
         {
-            return new PartitionProcessor(_options, _executor, _loggerFactory.CreateLogger<PartitionProcessor>(), _singleDispatch);
+            return new PartitionProcessor(
+                _options,
+                _executor,
+                _loggerFactory.CreateLogger<PartitionProcessor>(),
+                _singleDispatch,
+                _listenerCancellationTokenSource.Token,
+                _functionExecutionCancellationTokenSource.Token);
         }
 
         public IScaleMonitor GetMonitor()

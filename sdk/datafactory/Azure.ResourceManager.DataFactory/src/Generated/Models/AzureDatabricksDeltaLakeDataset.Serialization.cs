@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureDatabricksDeltaLakeDataset : IUtf8JsonSerializable
+    public partial class AzureDatabricksDeltaLakeDataset : IUtf8JsonSerializable, IJsonModel<AzureDatabricksDeltaLakeDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDatabricksDeltaLakeDataset>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AzureDatabricksDeltaLakeDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeDataset)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -27,23 +37,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Structure);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Structure.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Structure);
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Schema);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            JsonSerializer.Serialize(writer, LinkedServiceName);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -51,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -69,7 +71,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -77,27 +82,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue(Folder, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Table);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Table.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Table);
             }
             if (Optional.IsDefined(Database))
             {
                 writer.WritePropertyName("database"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Database);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Database.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Database);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -106,28 +103,45 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static AzureDatabricksDeltaLakeDataset DeserializeAzureDatabricksDeltaLakeDataset(JsonElement element)
+        AzureDatabricksDeltaLakeDataset IJsonModel<AzureDatabricksDeltaLakeDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeDataset)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDatabricksDeltaLakeDataset(document.RootElement, options);
+        }
+
+        internal static AzureDatabricksDeltaLakeDataset DeserializeAzureDatabricksDeltaLakeDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<BinaryData> structure = default;
-            Optional<BinaryData> schema = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DatasetFolder> folder = default;
-            Optional<BinaryData> table = default;
-            Optional<BinaryData> database = default;
+            string description = default;
+            DataFactoryElement<IList<DatasetDataElement>> structure = default;
+            DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            DatasetFolder folder = default;
+            DataFactoryElement<string> table = default;
+            DataFactoryElement<string> database = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    structure = BinaryData.FromString(property.Value.GetRawText());
+                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schema"u8))
@@ -157,12 +171,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schema = BinaryData.FromString(property.Value.GetRawText());
+                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -174,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -206,7 +220,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
+                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))
@@ -224,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            table = BinaryData.FromString(property0.Value.GetRawText());
+                            table = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("database"u8))
@@ -233,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            database = BinaryData.FromString(property0.Value.GetRawText());
+                            database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                     }
@@ -242,7 +256,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDatabricksDeltaLakeDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, table.Value, database.Value);
+            return new AzureDatabricksDeltaLakeDataset(
+                type,
+                description,
+                structure,
+                schema,
+                linkedServiceName,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder,
+                additionalProperties,
+                table,
+                database);
         }
+
+        BinaryData IPersistableModel<AzureDatabricksDeltaLakeDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeDataset)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureDatabricksDeltaLakeDataset IPersistableModel<AzureDatabricksDeltaLakeDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDatabricksDeltaLakeDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureDatabricksDeltaLakeDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureDatabricksDeltaLakeDataset)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureDatabricksDeltaLakeDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

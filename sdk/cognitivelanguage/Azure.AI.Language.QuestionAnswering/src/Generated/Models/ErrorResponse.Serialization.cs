@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
@@ -18,7 +17,7 @@ namespace Azure.AI.Language.QuestionAnswering
             {
                 return null;
             }
-            Optional<Error> error = default;
+            Error error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -31,7 +30,15 @@ namespace Azure.AI.Language.QuestionAnswering
                     continue;
                 }
             }
-            return new ErrorResponse(error.Value);
+            return new ErrorResponse(error);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorResponse(document.RootElement);
         }
     }
 }

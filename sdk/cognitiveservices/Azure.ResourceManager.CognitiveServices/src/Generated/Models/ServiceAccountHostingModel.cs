@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         private const string WebValue = "Web";
         private const string ConnectedContainerValue = "ConnectedContainer";
         private const string DisconnectedContainerValue = "DisconnectedContainer";
+        private const string ProvisionedWebValue = "ProvisionedWeb";
 
         /// <summary> Web. </summary>
         public static ServiceAccountHostingModel Web { get; } = new ServiceAccountHostingModel(WebValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         public static ServiceAccountHostingModel ConnectedContainer { get; } = new ServiceAccountHostingModel(ConnectedContainerValue);
         /// <summary> DisconnectedContainer. </summary>
         public static ServiceAccountHostingModel DisconnectedContainer { get; } = new ServiceAccountHostingModel(DisconnectedContainerValue);
+        /// <summary> ProvisionedWeb. </summary>
+        public static ServiceAccountHostingModel ProvisionedWeb { get; } = new ServiceAccountHostingModel(ProvisionedWebValue);
         /// <summary> Determines if two <see cref="ServiceAccountHostingModel"/> values are the same. </summary>
         public static bool operator ==(ServiceAccountHostingModel left, ServiceAccountHostingModel right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceAccountHostingModel"/> values are not the same. </summary>
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

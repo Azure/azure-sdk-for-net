@@ -20,7 +20,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public class DocumentAnalysisClientLiveTests : DocumentAnalysisLiveTestBase
     {
         /// <summary>
@@ -224,10 +223,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentWithCustomModel(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync();
 
             if (useStream)
             {
@@ -271,13 +269,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeDocumentWithCustomModelWithLabelsAndSelectionMarks()
+        public async Task AnalyzeDocumentWithCustomModelWithSelectionMarks()
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.SelectionMarks);
+            await using var customModel = await BuildDisposableDocumentModelAsync(ContainerType.SelectionMarks);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormSelectionMarks);
             using (Recording.DisableRequestBodyRecording())
@@ -309,13 +306,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task AnalyzeDocumentWithCustomModelCanParseMultipageForm(bool useStream)
+        public async Task AnalyzeDocumentWithCustomModelCanParseMultipageDocument(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.MultipageFiles);
+            await using var customModel = await BuildDisposableDocumentModelAsync(ContainerType.MultipageFiles);
 
             if (useStream)
             {
@@ -365,13 +361,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [RecordedTest]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task AnalyzeDocumentWithCustomModelCanParseMultipageFormWithBlankPage(bool useStream)
+        public async Task AnalyzeDocumentWithCustomModelCanParseMultipageDocumentWithBlankPage(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync();
 
             if (useStream)
             {
@@ -414,15 +409,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeDocumentWithCustomModelCanParseDifferentTypeOfForm()
+        public async Task AnalyzeDocumentWithCustomModelCanParseDifferentTypeOfDocument()
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
             // Use Form_<id>.<ext> files for building model.
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync();
 
             // Attempt to recognize a different type of document: Invoice_1.pdf. This document does not contain all the labels
             // the newly built model expects.
@@ -444,74 +438,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeDocumentWithCustomModelWithTableDynamicRows()
-        {
-            var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
-            AnalyzeDocumentOperation operation;
-
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.TableVariableRows);
-
-            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableDynamicRows);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
-            }
-
-            AnalyzeResult result = operation.Value;
-
-            ValidateAnalyzeResult(
-                result,
-                customModel.ModelId,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1);
-        }
-
-        [RecordedTest]
-        public async Task AnalyzeDocumentWithCustomModelWithTableFixedRows()
-        {
-            var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
-            AnalyzeDocumentOperation operation;
-
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.TableFixedRows);
-
-            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableFixedRows);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
-            }
-
-            AnalyzeResult result = operation.Value;
-
-            ValidateAnalyzeResult(
-                result,
-                customModel.ModelId,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1);
-        }
-
-        [RecordedTest]
         [Ignore("Service error. Issue https://github.com/Azure/azure-sdk-for-net/issues/24995")]
         public async Task AnalyzeDocumentWithCustomModelCanParseBlankPage()
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
             AnalyzeDocumentOperation operation;
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync();
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.Blank);
             using (Recording.DisableRequestBodyRecording())
             {
-                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, modelId, stream);
+                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
             }
 
             AnalyzeResult result = operation.Value;
 
             ValidateAnalyzeResult(
                 result,
-                modelId,
+                customModel.ModelId,
                 expectedFirstPageNumber: 1,
                 expectedLastPageNumber: 1);
 
@@ -535,16 +480,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentWithCustomModelThrowsForDamagedFile()
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync();
 
             // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
 
             var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
             using var stream = new MemoryStream(damagedFile);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, modelId, stream));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentAsync(WaitUntil.Started, customModel.ModelId, stream));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -552,13 +496,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentFromUriWithCustomModelThrowsForNonExistingContent()
         {
             var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
 
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var customModel = await BuildDisposableDocumentModelAsync();
 
             var invalidUri = new Uri("https://idont.ex.ist");
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, modelId, invalidUri));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, customModel.ModelId, invalidUri));
             Assert.AreEqual("InvalidRequest", ex.ErrorCode);
         }
 
@@ -594,7 +537,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentPage page = result.Pages.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
-            // values present in the form. We are not testing the service here, but the SDK.
+            // values present in the document. We are not testing the service here, but the SDK.
 
             Assert.AreEqual(DocumentPageLengthUnit.Pixel, page.Unit);
             Assert.AreEqual(1700, page.Width);
@@ -617,7 +560,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.True(style.IsHandwritten);
 
-            Assert.AreEqual(38, result.Paragraphs.Count);
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
+            {
+                Assert.AreEqual(52, result.Paragraphs.Count);
+            }
+            else
+            {
+                Assert.AreEqual(38, result.Paragraphs.Count);
+            }
 
             DocumentParagraph sampleParagraph = result.Paragraphs[1];
 
@@ -916,11 +866,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("Contoso Headquarters", document.Fields["VendorAddressRecipient"].Value.AsString());
             Assert.AreEqual("CONTOSO LTD.", document.Fields["VendorName"].Value.AsString());
 
-            var expectedItems = new List<(double Amount, DateTimeOffset Date, string Description, string ProductCode, double Quantity, string Unit, double UnitPrice)>()
+            var expectedItems = new List<(double Amount, DateTimeOffset Date, string Description, string ProductCode, double Quantity, string Unit, double UnitPrice, string UnitPriceCode)>()
             {
-                (60f, DateTimeOffset.Parse("2021-03-04 00:00:00+00:00"), "Consulting Services", "A123", 2, "hours", 30),
-                (30f, DateTimeOffset.Parse("2021-03-05 00:00:00+00:00"), "Document Fee", "B456", 3, null, 10),
-                (10f, DateTimeOffset.Parse("2021-03-06 00:00:00+00:00"), "Printing Fee", "C789", 10, "pages", 1)
+                (60f, DateTimeOffset.Parse("2021-04-03 00:00:00+00:00"), "Consulting Services", "A123", 2, "hours", 30, "USD"),
+                (30f, DateTimeOffset.Parse("2021-05-03 00:00:00+00:00"), "Document Fee", "B456", 3, null, 10, "USD"),
+                (10f, DateTimeOffset.Parse("2021-06-03 00:00:00+00:00"), "Printing Fee", "C789", 10, "pages", 1, "USD")
             };
 
             // Include a bit of tolerance when comparing double types.
@@ -959,7 +909,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.AreEqual(expectedItem.ProductCode, productCode, $"ProductCode mismatch in item with index {itemIndex}.");
                 Assert.AreEqual(expectedItem.Unit, unit, $"Unit mismatch in item with index {itemIndex}.");
                 Assert.That(quantity, Is.EqualTo(expectedItem.Quantity).Within(0.0001), $"Quantity mismatch in item with index {itemIndex}.");
-                ValidateCurrencyValue(unitPrice, expectedItem.UnitPrice, "$", "USD", $"UnitPrice mismatch in item with index {itemIndex}.");
+                ValidateCurrencyValue(unitPrice, expectedItem.UnitPrice, "$", expectedItem.UnitPriceCode, $"UnitPrice mismatch in item with index {itemIndex}.");
             }
         }
 
@@ -1070,7 +1020,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentPage page = result.Pages.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
-            // values present in the form. We are not testing the service here, but the SDK.
+            // values present in the document. We are not testing the service here, but the SDK.
 
             Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);
             Assert.AreEqual(8.5, page.Width);
@@ -1085,7 +1035,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentTable table = result.Tables.Single();
 
-            Assert.AreEqual(3, table.RowCount);
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
+            {
+                Assert.AreEqual(2, table.RowCount);
+            }
+            else
+            {
+                Assert.AreEqual(3, table.RowCount);
+            }
+
             Assert.AreEqual(5, table.ColumnCount);
 
             var cells = table.Cells.ToList();
@@ -1105,10 +1063,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.GreaterOrEqual(cell.ColumnIndex, 0, $"Cell with content {cell.Content} should have column index greater than or equal to zero.");
                 Assert.Less(cell.ColumnIndex, table.ColumnCount, $"Cell with content {cell.Content} should have column index less than {table.ColumnCount}.");
 
-                // Row = 1 has a row span of 2.
-                var expectedRowSpan = cell.RowIndex == 1 ? 2 : 1;
+                if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
+                {
+                    Assert.AreEqual(1, cell.RowSpan, $"Cell with content {cell.Content} should have a row span of 1.");
+                }
+                else
+                {
+                    // Row = 1 has a row span of 2.
+                    var expectedRowSpan = cell.RowIndex == 1 ? 2 : 1;
 
-                Assert.AreEqual(expectedRowSpan, cell.RowSpan, $"Cell with content {cell.Content} should have a row span of {expectedRowSpan}.");
+                    Assert.AreEqual(expectedRowSpan, cell.RowSpan, $"Cell with content {cell.Content} should have a row span of {expectedRowSpan}.");
+                }
+
                 Assert.LessOrEqual(cell.RowIndex, 2, $"Cell with content {cell.Content} should have a row index less than or equal to two.");
                 Assert.AreEqual(expectedContent[cell.RowIndex, cell.ColumnIndex], cell.Content);
             }
@@ -1228,6 +1194,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentCanReadPageAndLanguage(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
+            var options = new AnalyzeDocumentOptions()
+            {
+                Features = { DocumentAnalysisFeature.Languages }
+            };
             AnalyzeDocumentOperation operation;
 
             if (useStream)
@@ -1235,13 +1205,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoicePdf);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-read", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-read", stream, options);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoicePdf);
-                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-read", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-read", uri, options);
             }
 
             Assert.IsTrue(operation.HasValue);
@@ -1257,7 +1227,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentPage page = result.Pages.Single();
 
             // The expected values are based on the values returned by the service, and not the actual
-            // values present in the form. We are not testing the service here, but the SDK.
+            // values present in the document. We are not testing the service here, but the SDK.
 
             Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);
             Assert.AreEqual(8.5, page.Width);
@@ -1432,7 +1402,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 if (documentIndex == 0)
                 {
-                    Assert.AreEqual("$14,50", sampleField.Content);
+                    Assert.AreEqual("$14.50", sampleField.Content);
                 }
                 else if (documentIndex == 1)
                 {
@@ -1474,7 +1444,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 if (pageIndex == 0 || pageIndex == 2)
                 {
-                    var expectedContent = pageIndex == 0 ? "$14,50" : "1203.39";
+                    var expectedContent = pageIndex == 0 ? "$14.50" : "1203.39";
 
                     Assert.True(page.Words.Any(w => w.Content == expectedContent));
                 }
@@ -1518,7 +1488,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("carefully.", words[5].Content);
             Assert.AreEqual("Enjoy.", words[6].Content);
 
-            line = result.Pages[0].Lines[46];
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
+            {
+                line = result.Pages[0].Lines[52];
+            }
+            else
+            {
+                line = result.Pages[0].Lines[46];
+            }
+
             words = line.GetWords();
 
             Assert.AreEqual("Jupiter Book Supply will refund you 50% per book if returned within 60 days of reading and", line.Content);
@@ -1720,18 +1698,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                         ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
                     }
                 }
-
-                if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
-                {
-                    if (kvp.CommonName != null)
-                    {
-                        Assert.IsNotEmpty(kvp.CommonName);
-                    }
-                }
-                else
-                {
-                    Assert.Null(kvp.CommonName);
-                }
             }
 
             // Check Document Pages.
@@ -1931,7 +1897,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(value.Amount, Is.EqualTo(expectedAmount).Within(0.0001), message);
             Assert.AreEqual(expectedSymbol, value.Symbol, message);
 
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
                 Assert.AreEqual(expectedCode, value.Code, message);
             }

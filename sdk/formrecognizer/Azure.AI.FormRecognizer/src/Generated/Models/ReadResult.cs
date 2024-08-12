@@ -6,14 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Text extracted from a page in the input document. </summary>
     internal partial class ReadResult
     {
-        /// <summary> Initializes a new instance of ReadResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReadResult"/>. </summary>
         /// <param name="page"> The 1-based page number in the input document. </param>
         /// <param name="angle"> The general orientation of the text in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
@@ -30,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Models
             SelectionMarks = new ChangeTrackingList<SelectionMark>();
         }
 
-        /// <summary> Initializes a new instance of ReadResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReadResult"/>. </summary>
         /// <param name="page"> The 1-based page number in the input document. </param>
         /// <param name="angle"> The general orientation of the text in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>

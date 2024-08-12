@@ -10,9 +10,16 @@ namespace Azure.Communication.Chat
     /// <summary> Request payload for typing notifications. </summary>
     internal partial class SendTypingNotificationRequest
     {
-        /// <summary> Initializes a new instance of SendTypingNotificationRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendTypingNotificationRequest"/>. </summary>
         public SendTypingNotificationRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendTypingNotificationRequest"/>. </summary>
+        /// <param name="senderDisplayName"> The display name of the typing notification sender. This property is used to populate sender name for push notifications. </param>
+        internal SendTypingNotificationRequest(string senderDisplayName)
+        {
+            SenderDisplayName = senderDisplayName;
         }
 
         /// <summary> The display name of the typing notification sender. This property is used to populate sender name for push notifications. </summary>

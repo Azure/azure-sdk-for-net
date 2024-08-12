@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> The update settings request object. </summary>
     internal partial class UpdateSettingRequest
     {
-        /// <summary> Initializes a new instance of UpdateSettingRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateSettingRequest"/>. </summary>
         /// <param name="value"> The value of the pool setting. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UpdateSettingRequest(string value)

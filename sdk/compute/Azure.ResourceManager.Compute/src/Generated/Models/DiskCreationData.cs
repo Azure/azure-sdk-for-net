@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -13,14 +14,46 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Data used when creating a disk. </summary>
     public partial class DiskCreationData
     {
-        /// <summary> Initializes a new instance of DiskCreationData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiskCreationData"/>. </summary>
         /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
         public DiskCreationData(DiskCreateOption createOption)
         {
             CreateOption = createOption;
         }
 
-        /// <summary> Initializes a new instance of DiskCreationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskCreationData"/>. </summary>
         /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
         /// <param name="storageAccountId"> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </param>
         /// <param name="imageReference"> Disk source information for PIR or user images. </param>
@@ -32,7 +65,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="logicalSectorSize"> Logical sector size in bytes for Ultra disks. Supported values are 512 ad 4096. 4096 is the default. </param>
         /// <param name="securityDataUri"> If createOption is ImportSecure, this is the URI of a blob to be imported into VM guest state. </param>
         /// <param name="isPerformancePlusEnabled"> Set this flag to true to get a boost on the performance target of the disk deployed, see here on the respective performance target. This flag can only be set on disk creation time and cannot be disabled after enabled. </param>
-        internal DiskCreationData(DiskCreateOption createOption, ResourceIdentifier storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, Uri sourceUri, ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, Uri securityDataUri, bool? isPerformancePlusEnabled)
+        /// <param name="elasticSanResourceId"> Required if createOption is CopyFromSanSnapshot. This is the ARM id of the source elastic san volume snapshot. </param>
+        /// <param name="provisionedBandwidthCopySpeed"> If this field is set on a snapshot and createOption is CopyStart, the snapshot will be copied at a quicker speed. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskCreationData(DiskCreateOption createOption, ResourceIdentifier storageAccountId, ImageDiskReference imageReference, ImageDiskReference galleryImageReference, Uri sourceUri, ResourceIdentifier sourceResourceId, string sourceUniqueId, long? uploadSizeBytes, int? logicalSectorSize, Uri securityDataUri, bool? isPerformancePlusEnabled, ResourceIdentifier elasticSanResourceId, ProvisionedBandwidthCopyOption? provisionedBandwidthCopySpeed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateOption = createOption;
             StorageAccountId = storageAccountId;
@@ -45,6 +81,14 @@ namespace Azure.ResourceManager.Compute.Models
             LogicalSectorSize = logicalSectorSize;
             SecurityDataUri = securityDataUri;
             IsPerformancePlusEnabled = isPerformancePlusEnabled;
+            ElasticSanResourceId = elasticSanResourceId;
+            ProvisionedBandwidthCopySpeed = provisionedBandwidthCopySpeed;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskCreationData"/> for deserialization. </summary>
+        internal DiskCreationData()
+        {
         }
 
         /// <summary> This enumerates the possible sources of a disk's creation. </summary>
@@ -69,5 +113,9 @@ namespace Azure.ResourceManager.Compute.Models
         public Uri SecurityDataUri { get; set; }
         /// <summary> Set this flag to true to get a boost on the performance target of the disk deployed, see here on the respective performance target. This flag can only be set on disk creation time and cannot be disabled after enabled. </summary>
         public bool? IsPerformancePlusEnabled { get; set; }
+        /// <summary> Required if createOption is CopyFromSanSnapshot. This is the ARM id of the source elastic san volume snapshot. </summary>
+        public ResourceIdentifier ElasticSanResourceId { get; set; }
+        /// <summary> If this field is set on a snapshot and createOption is CopyStart, the snapshot will be copied at a quicker speed. </summary>
+        public ProvisionedBandwidthCopyOption? ProvisionedBandwidthCopySpeed { get; set; }
     }
 }

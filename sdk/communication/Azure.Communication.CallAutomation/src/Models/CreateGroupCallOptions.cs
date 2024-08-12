@@ -18,6 +18,7 @@ namespace Azure.Communication.CallAutomation
         {
             Targets = targets;
             CallbackUri = callbackUri;
+            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -52,18 +53,18 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptions MediaStreamingOptions { get; set; }
 
         /// <summary>
-        /// The endpoint URL of the Azure Cognitive Services resource attached
+        /// Live Transcription Configuration.
         /// </summary>
-        public Uri AzureCognitiveServicesEndpointUrl { get; set; }
+        public TranscriptionOptions TranscriptionOptions { get; set; }
 
         /// <summary>
-        /// Custom Context for PSTN targets.
+        /// AI options for the call such as endpoint URI of the Azure Cognitive Services resource
         /// </summary>
-        public IDictionary<string, string> SipHeaders { get; set; }
+        public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
 
         /// <summary>
-        /// Custom Context for Voip targets.
+        /// The Custom Context which contains SIP and voip headers.
         /// </summary>
-        public IDictionary<string, string> VoipHeaders { get; set; }
+        public CustomCallingContext CustomCallingContext { get; }
     }
 }

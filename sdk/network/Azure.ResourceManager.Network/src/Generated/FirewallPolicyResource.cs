@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -21,13 +19,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a FirewallPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="FirewallPolicyResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetFirewallPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetFirewallPolicy method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FirewallPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetFirewallPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetFirewallPolicy method.
     /// </summary>
     public partial class FirewallPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FirewallPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="firewallPolicyName"> The firewallPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string firewallPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}";
@@ -40,14 +41,19 @@ namespace Azure.ResourceManager.Network
         private readonly FirewallPolicyIdpsSignaturesRestOperations _firewallPolicyIdpsSignaturesRestClient;
         private readonly ClientDiagnostics _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics;
         private readonly FirewallPolicyIdpsSignaturesFilterValuesRestOperations _firewallPolicyIdpsSignaturesFilterValuesRestClient;
+        private readonly ClientDiagnostics _firewallPolicyDeploymentsClientDiagnostics;
+        private readonly FirewallPolicyDeploymentsRestOperations _firewallPolicyDeploymentsRestClient;
         private readonly FirewallPolicyData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/firewallPolicies";
 
         /// <summary> Initializes a new instance of the <see cref="FirewallPolicyResource"/> class for mocking. </summary>
         protected FirewallPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "FirewallPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="FirewallPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal FirewallPolicyResource(ArmClient client, FirewallPolicyData data) : this(client, data.Id)
@@ -68,13 +74,12 @@ namespace Azure.ResourceManager.Network
             _firewallPolicyIdpsSignaturesRestClient = new FirewallPolicyIdpsSignaturesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _firewallPolicyIdpsSignaturesFilterValuesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _firewallPolicyIdpsSignaturesFilterValuesRestClient = new FirewallPolicyIdpsSignaturesFilterValuesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _firewallPolicyDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _firewallPolicyDeploymentsRestClient = new FirewallPolicyDeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/firewallPolicies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,7 +106,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of FirewallPolicyRuleCollectionGroupResources and their operations over a FirewallPolicyRuleCollectionGroupResource. </returns>
         public virtual FirewallPolicyRuleCollectionGroupCollection GetFirewallPolicyRuleCollectionGroups()
         {
-            return GetCachedClient(Client => new FirewallPolicyRuleCollectionGroupCollection(Client, Id));
+            return GetCachedClient(client => new FirewallPolicyRuleCollectionGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -115,12 +120,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicyRuleCollectionGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyRuleCollectionGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FirewallPolicyRuleCollectionGroupResource>> GetFirewallPolicyRuleCollectionGroupAsync(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
@@ -138,12 +151,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicyRuleCollectionGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyRuleCollectionGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleCollectionGroupName"> The name of the FirewallPolicyRuleCollectionGroup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FirewallPolicyRuleCollectionGroupResource> GetFirewallPolicyRuleCollectionGroup(string ruleCollectionGroupName, CancellationToken cancellationToken = default)
         {
@@ -151,10 +172,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Gets an object representing a PolicySignaturesOverridesForIdpsResource along with the instance operations that can be performed on it in the FirewallPolicy. </summary>
-        /// <returns> Returns a <see cref="PolicySignaturesOverridesForIdpsResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PolicySignaturesOverridesForIdpsResource"/> object. </returns>
         public virtual PolicySignaturesOverridesForIdpsResource GetPolicySignaturesOverridesForIdps()
         {
             return new PolicySignaturesOverridesForIdpsResource(Client, Id.AppendChildResource("signatureOverrides", "default"));
+        }
+
+        /// <summary> Gets an object representing a FirewallPolicyDraftResource along with the instance operations that can be performed on it in the FirewallPolicy. </summary>
+        /// <returns> Returns a <see cref="FirewallPolicyDraftResource"/> object. </returns>
+        public virtual FirewallPolicyDraftResource GetFirewallPolicyDraft()
+        {
+            return new FirewallPolicyDraftResource(Client, Id.AppendChildResource("firewallPolicyDrafts", "default"));
         }
 
         /// <summary>
@@ -167,6 +195,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,6 +237,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -233,6 +277,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,6 +320,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -301,6 +361,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,6 +404,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTagsObject"> Parameters supplied to update Azure Firewall Policy tags. </param>
@@ -360,7 +436,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Retrieves the current status of IDPS signatures for the relevant policy
+        /// Retrieves the current status of IDPS signatures for the relevant policy. Maximal amount of returned signatures is 1000.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -370,9 +446,13 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicyIdpsSignatures_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The IdpsQueryContent to use. </param>
+        /// <param name="content"> The <see cref="IdpsQueryContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<IdpsSignatureListResult>> GetFirewallPolicyIdpsSignatureAsync(IdpsQueryContent content, CancellationToken cancellationToken = default)
@@ -394,7 +474,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Retrieves the current status of IDPS signatures for the relevant policy
+        /// Retrieves the current status of IDPS signatures for the relevant policy. Maximal amount of returned signatures is 1000.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -404,9 +484,13 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicyIdpsSignatures_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The IdpsQueryContent to use. </param>
+        /// <param name="content"> The <see cref="IdpsQueryContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<IdpsSignatureListResult> GetFirewallPolicyIdpsSignature(IdpsQueryContent content, CancellationToken cancellationToken = default)
@@ -438,9 +522,13 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicyIdpsSignaturesFilterValues_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The SignatureOverridesFilterValuesQueryContent to use. </param>
+        /// <param name="content"> The <see cref="SignatureOverridesFilterValuesQueryContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<SignatureOverridesFilterValuesResult>> GetFirewallPolicyIdpsSignaturesFilterValueAsync(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
@@ -472,9 +560,13 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicyIdpsSignaturesFilterValues_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The SignatureOverridesFilterValuesQueryContent to use. </param>
+        /// <param name="content"> The <see cref="SignatureOverridesFilterValuesQueryContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<SignatureOverridesFilterValuesResult> GetFirewallPolicyIdpsSignaturesFilterValue(SignatureOverridesFilterValuesQueryContent content, CancellationToken cancellationToken = default)
@@ -496,6 +588,82 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Deploys the firewall policy draft and child rule collection group drafts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/deploy</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallPolicyDeployments_Deploy</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeployFirewallPolicyDeploymentAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _firewallPolicyDeploymentsClientDiagnostics.CreateScope("FirewallPolicyResource.DeployFirewallPolicyDeployment");
+            scope.Start();
+            try
+            {
+                var response = await _firewallPolicyDeploymentsRestClient.DeployAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation(_firewallPolicyDeploymentsClientDiagnostics, Pipeline, _firewallPolicyDeploymentsRestClient.CreateDeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deploys the firewall policy draft and child rule collection group drafts.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/deploy</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FirewallPolicyDeployments_Deploy</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation DeployFirewallPolicyDeployment(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _firewallPolicyDeploymentsClientDiagnostics.CreateScope("FirewallPolicyResource.DeployFirewallPolicyDeployment");
+            scope.Start();
+            try
+            {
+                var response = _firewallPolicyDeploymentsRestClient.Deploy(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NetworkArmOperation(_firewallPolicyDeploymentsClientDiagnostics, Pipeline, _firewallPolicyDeploymentsRestClient.CreateDeployRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -505,6 +673,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -560,6 +736,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -614,6 +798,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -663,6 +855,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -711,6 +911,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -763,6 +971,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

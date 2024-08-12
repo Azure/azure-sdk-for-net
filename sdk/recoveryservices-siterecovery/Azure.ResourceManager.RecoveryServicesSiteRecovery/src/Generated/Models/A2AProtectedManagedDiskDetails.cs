@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A protected managed disk details. </summary>
     public partial class A2AProtectedManagedDiskDetails
     {
-        /// <summary> Initializes a new instance of A2AProtectedManagedDiskDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="A2AProtectedManagedDiskDetails"/>. </summary>
         internal A2AProtectedManagedDiskDetails()
         {
             AllowedDiskLevelOperation = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of A2AProtectedManagedDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AProtectedManagedDiskDetails"/>. </summary>
         /// <param name="diskId"> The managed disk Arm id. </param>
         /// <param name="recoveryResourceGroupId"> The recovery disk resource group Arm Id. </param>
         /// <param name="recoveryTargetDiskId"> Recovery target disk Arm Id. </param>
@@ -33,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskCapacityInBytes"> The disk capacity in bytes. </param>
         /// <param name="primaryStagingAzureStorageAccountId"> The primary staging storage account. </param>
         /// <param name="diskType"> The type of disk. </param>
-        /// <param name="resyncRequired"> A value indicating whether resync is required for this disk. </param>
+        /// <param name="isResyncRequired"> A value indicating whether resync is required for this disk. </param>
         /// <param name="monitoringPercentageCompletion"> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </param>
         /// <param name="monitoringJobType"> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </param>
         /// <param name="dataPendingInStagingStorageAccountInMB"> The data pending for replication in MB at staging account. </param>
@@ -48,7 +81,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="kekKeyVaultArmId"> The KeyVault resource id for key (KEK). </param>
         /// <param name="failoverDiskName"> The failover name for the managed disk. </param>
         /// <param name="tfoDiskName"> The test failover name for the managed disk. </param>
-        internal A2AProtectedManagedDiskDetails(string diskId, string recoveryResourceGroupId, string recoveryTargetDiskId, string recoveryReplicaDiskId, string recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, string recoveryDiskEncryptionSetId, string primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, string primaryStagingAzureStorageAccountId, string diskType, bool? resyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IReadOnlyList<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, string dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, string kekKeyVaultArmId, string failoverDiskName, string tfoDiskName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal A2AProtectedManagedDiskDetails(string diskId, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryTargetDiskId, ResourceIdentifier recoveryReplicaDiskId, ResourceIdentifier recoveryOrignalTargetDiskId, string recoveryReplicaDiskAccountType, string recoveryTargetDiskAccountType, ResourceIdentifier recoveryDiskEncryptionSetId, ResourceIdentifier primaryDiskEncryptionSetId, string diskName, long? diskCapacityInBytes, ResourceIdentifier primaryStagingAzureStorageAccountId, string diskType, bool? isResyncRequired, int? monitoringPercentageCompletion, string monitoringJobType, double? dataPendingInStagingStorageAccountInMB, double? dataPendingAtSourceAgentInMB, string diskState, IReadOnlyList<string> allowedDiskLevelOperation, bool? isDiskEncrypted, string secretIdentifier, ResourceIdentifier dekKeyVaultArmId, bool? isDiskKeyEncrypted, string keyIdentifier, ResourceIdentifier kekKeyVaultArmId, string failoverDiskName, string tfoDiskName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             RecoveryResourceGroupId = recoveryResourceGroupId;
@@ -63,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskCapacityInBytes = diskCapacityInBytes;
             PrimaryStagingAzureStorageAccountId = primaryStagingAzureStorageAccountId;
             DiskType = diskType;
-            ResyncRequired = resyncRequired;
+            IsResyncRequired = isResyncRequired;
             MonitoringPercentageCompletion = monitoringPercentageCompletion;
             MonitoringJobType = monitoringJobType;
             DataPendingInStagingStorageAccountInMB = dataPendingInStagingStorageAccountInMB;
@@ -78,36 +112,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             KekKeyVaultArmId = kekKeyVaultArmId;
             FailoverDiskName = failoverDiskName;
             TfoDiskName = tfoDiskName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The managed disk Arm id. </summary>
         public string DiskId { get; }
         /// <summary> The recovery disk resource group Arm Id. </summary>
-        public string RecoveryResourceGroupId { get; }
+        public ResourceIdentifier RecoveryResourceGroupId { get; }
         /// <summary> Recovery target disk Arm Id. </summary>
-        public string RecoveryTargetDiskId { get; }
+        public ResourceIdentifier RecoveryTargetDiskId { get; }
         /// <summary> Recovery replica disk Arm Id. </summary>
-        public string RecoveryReplicaDiskId { get; }
+        public ResourceIdentifier RecoveryReplicaDiskId { get; }
         /// <summary> Recovery original target disk Arm Id. </summary>
-        public string RecoveryOrignalTargetDiskId { get; }
+        public ResourceIdentifier RecoveryOrignalTargetDiskId { get; }
         /// <summary> The replica disk type. Its an optional value and will be same as source disk type if not user provided. </summary>
         public string RecoveryReplicaDiskAccountType { get; }
         /// <summary> The target disk type after failover. Its an optional value and will be same as source disk type if not user provided. </summary>
         public string RecoveryTargetDiskAccountType { get; }
         /// <summary> The recovery disk encryption set Id. </summary>
-        public string RecoveryDiskEncryptionSetId { get; }
+        public ResourceIdentifier RecoveryDiskEncryptionSetId { get; }
         /// <summary> The primary disk encryption set Id. </summary>
-        public string PrimaryDiskEncryptionSetId { get; }
+        public ResourceIdentifier PrimaryDiskEncryptionSetId { get; }
         /// <summary> The disk name. </summary>
         public string DiskName { get; }
         /// <summary> The disk capacity in bytes. </summary>
         public long? DiskCapacityInBytes { get; }
         /// <summary> The primary staging storage account. </summary>
-        public string PrimaryStagingAzureStorageAccountId { get; }
+        public ResourceIdentifier PrimaryStagingAzureStorageAccountId { get; }
         /// <summary> The type of disk. </summary>
         public string DiskType { get; }
         /// <summary> A value indicating whether resync is required for this disk. </summary>
-        public bool? ResyncRequired { get; }
+        public bool? IsResyncRequired { get; }
         /// <summary> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </summary>
         public int? MonitoringPercentageCompletion { get; }
         /// <summary> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </summary>
@@ -125,13 +160,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The secret URL / identifier (BEK). </summary>
         public string SecretIdentifier { get; }
         /// <summary> The KeyVault resource id for secret (BEK). </summary>
-        public string DekKeyVaultArmId { get; }
+        public ResourceIdentifier DekKeyVaultArmId { get; }
         /// <summary> A value indicating whether disk key got encrypted or not. </summary>
         public bool? IsDiskKeyEncrypted { get; }
         /// <summary> The key URL / identifier (KEK). </summary>
         public string KeyIdentifier { get; }
         /// <summary> The KeyVault resource id for key (KEK). </summary>
-        public string KekKeyVaultArmId { get; }
+        public ResourceIdentifier KekKeyVaultArmId { get; }
         /// <summary> The failover name for the managed disk. </summary>
         public string FailoverDiskName { get; }
         /// <summary> The test failover name for the managed disk. </summary>

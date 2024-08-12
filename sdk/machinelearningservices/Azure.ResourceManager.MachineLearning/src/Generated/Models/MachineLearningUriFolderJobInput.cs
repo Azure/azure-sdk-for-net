@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningUriFolderJobInput. </summary>
     public partial class MachineLearningUriFolderJobInput : MachineLearningJobInput
     {
-        /// <summary> Initializes a new instance of MachineLearningUriFolderJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUriFolderJobInput"/>. </summary>
         /// <param name="uri"> [Required] Input Asset URI. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public MachineLearningUriFolderJobInput(Uri uri)
@@ -24,16 +24,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             JobInputType = JobInputType.UriFolder;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningUriFolderJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUriFolderJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="mode"> Input Asset Delivery Mode. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
-        internal MachineLearningUriFolderJobInput(string description, JobInputType jobInputType, MachineLearningInputDeliveryMode? mode, Uri uri) : base(description, jobInputType)
+        internal MachineLearningUriFolderJobInput(string description, JobInputType jobInputType, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningInputDeliveryMode? mode, Uri uri) : base(description, jobInputType, serializedAdditionalRawData)
         {
             Mode = mode;
             Uri = uri;
             JobInputType = jobInputType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningUriFolderJobInput"/> for deserialization. </summary>
+        internal MachineLearningUriFolderJobInput()
+        {
         }
 
         /// <summary> Input Asset Delivery Mode. </summary>

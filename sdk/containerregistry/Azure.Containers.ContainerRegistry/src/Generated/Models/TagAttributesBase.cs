@@ -6,31 +6,26 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Tag attribute details. </summary>
     internal partial class TagAttributesBase
     {
-        /// <summary> Initializes a new instance of TagAttributesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagAttributesBase"/>. </summary>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
         /// <param name="lastUpdatedOn"> Tag last update time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
         internal TagAttributesBase(string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(digest, nameof(digest));
-
             Name = name;
             Digest = digest;
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
         }
 
-        /// <summary> Initializes a new instance of TagAttributesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagAttributesBase"/>. </summary>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>

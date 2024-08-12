@@ -5,17 +5,59 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DataMaskingRule : IUtf8JsonSerializable
+    public partial class DataMaskingRule : IUtf8JsonSerializable, IJsonModel<DataMaskingRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMaskingRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<DataMaskingRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataMaskingRule)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AliasName))
@@ -74,32 +116,63 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStringValue(ReplacementString);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataMaskingRule DeserializeDataMaskingRule(JsonElement element)
+        DataMaskingRule IJsonModel<DataMaskingRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataMaskingRule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataMaskingRule(document.RootElement, options);
+        }
+
+        internal static DataMaskingRule DeserializeDataMaskingRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<string> kind = default;
+            AzureLocation? location = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> aliasName = default;
-            Optional<DataMaskingRuleState> ruleState = default;
-            Optional<string> schemaName = default;
-            Optional<string> tableName = default;
-            Optional<string> columnName = default;
-            Optional<DataMaskingFunction> maskingFunction = default;
-            Optional<string> numberFrom = default;
-            Optional<string> numberTo = default;
-            Optional<string> prefixSize = default;
-            Optional<string> suffixSize = default;
-            Optional<string> replacementString = default;
+            SystemData systemData = default;
+            string aliasName = default;
+            DataMaskingRuleState? ruleState = default;
+            string schemaName = default;
+            string tableName = default;
+            string columnName = default;
+            DataMaskingFunction? maskingFunction = default;
+            string numberFrom = default;
+            string numberTo = default;
+            string prefixSize = default;
+            string suffixSize = default;
+            string replacementString = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -215,8 +288,410 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataMaskingRule(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataMaskingRule(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                aliasName,
+                ruleState,
+                schemaName,
+                tableName,
+                columnName,
+                maskingFunction,
+                numberFrom,
+                numberTo,
+                prefixSize,
+                suffixSize,
+                replacementString,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Location))
+                {
+                    builder.Append("  location: ");
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AliasName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    aliasName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AliasName))
+                {
+                    builder.Append("    aliasName: ");
+                    if (AliasName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AliasName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AliasName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ruleState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RuleState))
+                {
+                    builder.Append("    ruleState: ");
+                    builder.AppendLine($"'{RuleState.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SchemaName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    schemaName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SchemaName))
+                {
+                    builder.Append("    schemaName: ");
+                    if (SchemaName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SchemaName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SchemaName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    tableName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TableName))
+                {
+                    builder.Append("    tableName: ");
+                    if (TableName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TableName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TableName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ColumnName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    columnName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ColumnName))
+                {
+                    builder.Append("    columnName: ");
+                    if (ColumnName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ColumnName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ColumnName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaskingFunction), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    maskingFunction: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaskingFunction))
+                {
+                    builder.Append("    maskingFunction: ");
+                    builder.AppendLine($"'{MaskingFunction.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberFrom), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    numberFrom: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumberFrom))
+                {
+                    builder.Append("    numberFrom: ");
+                    if (NumberFrom.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NumberFrom}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NumberFrom}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberTo), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    numberTo: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NumberTo))
+                {
+                    builder.Append("    numberTo: ");
+                    if (NumberTo.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NumberTo}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NumberTo}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrefixSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    prefixSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrefixSize))
+                {
+                    builder.Append("    prefixSize: ");
+                    if (PrefixSize.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrefixSize}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrefixSize}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuffixSize), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    suffixSize: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SuffixSize))
+                {
+                    builder.Append("    suffixSize: ");
+                    if (SuffixSize.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SuffixSize}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SuffixSize}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplacementString), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    replacementString: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ReplacementString))
+                {
+                    builder.Append("    replacementString: ");
+                    if (ReplacementString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ReplacementString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ReplacementString}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<DataMaskingRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(DataMaskingRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataMaskingRule IPersistableModel<DataMaskingRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataMaskingRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataMaskingRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataMaskingRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataMaskingRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

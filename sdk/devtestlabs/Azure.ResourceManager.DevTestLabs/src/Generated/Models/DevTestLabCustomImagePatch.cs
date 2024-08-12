@@ -5,13 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> A custom image. </summary>
     public partial class DevTestLabCustomImagePatch : DevTestLabResourcePatch
     {
-        /// <summary> Initializes a new instance of DevTestLabCustomImagePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImagePatch"/>. </summary>
         public DevTestLabCustomImagePatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImagePatch"/>. </summary>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabCustomImagePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
         {
         }
     }

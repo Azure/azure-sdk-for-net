@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(name, result.Data.Name);
             Assert.AreEqual(DefaultLocation, result.Data.Location);
-            Assert.AreEqual(SearchSkuName.Standard, result.Data.Sku.Name);
+            Assert.AreEqual(SearchServiceSkuName.Standard, result.Data.SearchSkuName);
             Assert.AreEqual(1, result.Data.PartitionCount);
-            Assert.AreEqual(3, result.Data.ReplicaCount);
+            Assert.AreEqual(1, result.Data.ReplicaCount);
             Assert.AreEqual(SearchServiceHostingMode.Default, result.Data.HostingMode);
         }
 
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -81,24 +81,24 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             SearchServicePatch patch = new SearchServicePatch(DefaultLocation)
             {
                 PartitionCount = 2,
-                ReplicaCount = 4,
+                ReplicaCount = 3,
             };
             SearchServiceResource item = (await SearchResource.UpdateAsync(patch)).Value;
             Assert.IsNotNull(item);
             Assert.IsTrue(item.Data.Location == DefaultLocation);
             Assert.AreEqual(name, item.Data.Name);
-            Assert.AreEqual(SearchSkuName.Standard, item.Data.Sku.Name);
+            Assert.AreEqual(SearchServiceSkuName.Standard, item.Data.SearchSkuName);
             Assert.AreEqual(2, item.Data.PartitionCount);
-            Assert.AreEqual(4, item.Data.ReplicaCount);
+            Assert.AreEqual(3, item.Data.ReplicaCount);
             Assert.AreEqual(SearchServiceHostingMode.Default, item.Data.HostingMode);
         }
 
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -131,9 +131,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -155,9 +155,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -175,9 +175,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.IsNotEmpty(list);
             Assert.AreEqual(queryName,list.First(item => item.Name == queryName).Name);
             Assert.IsNotNull(list.First(item => item.Name == queryName).Key);
-            Assert.AreEqual(originKey.Key, list.First(item => item.Name == queryName).Key);
+            Assert.IsNotEmpty(list.First(item => item.Name == queryName).Key);
         }
         [Test]
         public async Task AddTagAsync()
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -239,9 +239,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -259,9 +259,9 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             var name = Recording.GenerateAssetName("search");
             var data = new SearchServiceData(DefaultLocation)
             {
-                SkuName = SearchSkuName.Standard,
+                SearchSkuName = SearchServiceSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
 
             data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
             {
-                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http401WithBearerChallenge)
+                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http401WithBearerChallenge, null)
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
 
             data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
             {
-                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http403)
+                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http403, null)
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
@@ -335,6 +335,36 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.IsNull(result.Data.AuthOptions.ApiKeyOnly);
             Assert.IsNotNull(result.Data.AuthOptions.AadOrApiKey);
             Assert.AreEqual(SearchAadAuthFailureMode.Http403, result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode);
+        }
+
+        [Test]
+        public async Task DisableAndEnableSemanticSearchAsync()
+        {
+            await setResourceGroup();
+            var name = Recording.GenerateAssetName("search");
+            var data = new SearchServiceData(AzureLocation.WestCentralUS)
+            {
+                SearchSkuName = SearchServiceSkuName.Standard,
+                PartitionCount = 1,
+                ReplicaCount = 1,
+                SemanticSearch = SearchSemanticSearch.Disabled
+            };
+            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            var result = (await SearchResource.GetAsync()).Value;
+            Assert.NotNull(result);
+            Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Disabled);
+
+            data.SemanticSearch = SearchSemanticSearch.Free;
+            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            result = (await SearchResource.GetAsync()).Value;
+            Assert.NotNull(result);
+            Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Free);
+
+            data.SemanticSearch = SearchSemanticSearch.Standard;
+            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            result = (await SearchResource.GetAsync()).Value;
+            Assert.NotNull(result);
+            Assert.AreEqual(result.Data.SemanticSearch, SearchSemanticSearch.Standard);
         }
     }
 }

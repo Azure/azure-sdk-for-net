@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Azure.ResourceManager.Peering.Models
@@ -12,12 +14,44 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a BGP session. </summary>
     public partial class PeeringBgpSession
     {
-        /// <summary> Initializes a new instance of PeeringBgpSession. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PeeringBgpSession"/>. </summary>
         public PeeringBgpSession()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringBgpSession. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringBgpSession"/>. </summary>
         /// <param name="sessionPrefixV4"> The IPv4 prefix that contains both ends' IPv4 addresses. </param>
         /// <param name="sessionPrefixV6"> The IPv6 prefix that contains both ends' IPv6 addresses. </param>
         /// <param name="microsoftSessionIPv4Address"> The IPv4 session address on Microsoft's end. </param>
@@ -29,7 +63,8 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="maxPrefixesAdvertisedV4"> The maximum number of prefixes advertised over the IPv4 session. </param>
         /// <param name="maxPrefixesAdvertisedV6"> The maximum number of prefixes advertised over the IPv6 session. </param>
         /// <param name="md5AuthenticationKey"> The MD5 authentication key of the session. </param>
-        internal PeeringBgpSession(string sessionPrefixV4, string sessionPrefixV6, IPAddress microsoftSessionIPv4Address, IPAddress microsoftSessionIPv6Address, IPAddress peerSessionIPv4Address, IPAddress peerSessionIPv6Address, PeeringSessionStateV4? sessionStateV4, PeeringSessionStateV6? sessionStateV6, int? maxPrefixesAdvertisedV4, int? maxPrefixesAdvertisedV6, string md5AuthenticationKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringBgpSession(string sessionPrefixV4, string sessionPrefixV6, IPAddress microsoftSessionIPv4Address, IPAddress microsoftSessionIPv6Address, IPAddress peerSessionIPv4Address, IPAddress peerSessionIPv6Address, PeeringSessionStateV4? sessionStateV4, PeeringSessionStateV6? sessionStateV6, int? maxPrefixesAdvertisedV4, int? maxPrefixesAdvertisedV6, string md5AuthenticationKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SessionPrefixV4 = sessionPrefixV4;
             SessionPrefixV6 = sessionPrefixV6;
@@ -42,6 +77,7 @@ namespace Azure.ResourceManager.Peering.Models
             MaxPrefixesAdvertisedV4 = maxPrefixesAdvertisedV4;
             MaxPrefixesAdvertisedV6 = maxPrefixesAdvertisedV6;
             Md5AuthenticationKey = md5AuthenticationKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The IPv4 prefix that contains both ends' IPv4 addresses. </summary>

@@ -6,23 +6,33 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SapOpenHubLinkedService : IUtf8JsonSerializable
+    public partial class SapOpenHubLinkedService : IUtf8JsonSerializable, IJsonModel<SapOpenHubLinkedService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapOpenHubLinkedService>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SapOpenHubLinkedService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapOpenHubLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapOpenHubLinkedService)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue(ConnectVia, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -36,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -54,7 +64,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -64,97 +77,57 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Server);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Server.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Server);
             }
             if (Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SystemNumber);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SystemNumber.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SystemNumber);
             }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ClientId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ClientId);
             }
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Language);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Language.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Language);
             }
             if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SystemId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SystemId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SystemId);
             }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, UserName);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                JsonSerializer.Serialize(writer, Password);
             }
             if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MessageServer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MessageServer.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MessageServer);
             }
             if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MessageServerService);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MessageServerService.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MessageServerService);
             }
             if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(LogonGroup);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogonGroup.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, LogonGroup);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -163,34 +136,51 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static SapOpenHubLinkedService DeserializeSapOpenHubLinkedService(JsonElement element)
+        SapOpenHubLinkedService IJsonModel<SapOpenHubLinkedService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapOpenHubLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapOpenHubLinkedService)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapOpenHubLinkedService(document.RootElement, options);
+        }
+
+        internal static SapOpenHubLinkedService DeserializeSapOpenHubLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<BinaryData> server = default;
-            Optional<BinaryData> systemNumber = default;
-            Optional<BinaryData> clientId = default;
-            Optional<BinaryData> language = default;
-            Optional<BinaryData> systemId = default;
-            Optional<BinaryData> userName = default;
-            Optional<FactorySecretBaseDefinition> password = default;
-            Optional<BinaryData> messageServer = default;
-            Optional<BinaryData> messageServerService = default;
-            Optional<BinaryData> logonGroup = default;
-            Optional<BinaryData> encryptedCredential = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, EntityParameterSpecification> parameters = default;
+            IList<BinaryData> annotations = default;
+            DataFactoryElement<string> server = default;
+            DataFactoryElement<string> systemNumber = default;
+            DataFactoryElement<string> clientId = default;
+            DataFactoryElement<string> language = default;
+            DataFactoryElement<string> systemId = default;
+            DataFactoryElement<string> userName = default;
+            DataFactorySecret password = default;
+            DataFactoryElement<string> messageServer = default;
+            DataFactoryElement<string> messageServerService = default;
+            DataFactoryElement<string> logonGroup = default;
+            string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -223,7 +213,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -264,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            server = BinaryData.FromString(property0.Value.GetRawText());
+                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("systemNumber"u8))
@@ -273,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            systemNumber = BinaryData.FromString(property0.Value.GetRawText());
+                            systemNumber = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
@@ -282,7 +272,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientId = BinaryData.FromString(property0.Value.GetRawText());
+                            clientId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("language"u8))
@@ -291,7 +281,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            language = BinaryData.FromString(property0.Value.GetRawText());
+                            language = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("systemId"u8))
@@ -300,7 +290,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            systemId = BinaryData.FromString(property0.Value.GetRawText());
+                            systemId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("userName"u8))
@@ -309,7 +299,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            userName = BinaryData.FromString(property0.Value.GetRawText());
+                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
@@ -318,7 +308,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("messageServer"u8))
@@ -327,7 +317,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            messageServer = BinaryData.FromString(property0.Value.GetRawText());
+                            messageServer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("messageServerService"u8))
@@ -336,7 +326,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            messageServerService = BinaryData.FromString(property0.Value.GetRawText());
+                            messageServerService = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("logonGroup"u8))
@@ -345,16 +335,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            logonGroup = BinaryData.FromString(property0.Value.GetRawText());
+                            logonGroup = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -363,7 +349,55 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapOpenHubLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password.Value, messageServer.Value, messageServerService.Value, logonGroup.Value, encryptedCredential.Value);
+            return new SapOpenHubLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                server,
+                systemNumber,
+                clientId,
+                language,
+                systemId,
+                userName,
+                password,
+                messageServer,
+                messageServerService,
+                logonGroup,
+                encryptedCredential);
         }
+
+        BinaryData IPersistableModel<SapOpenHubLinkedService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapOpenHubLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SapOpenHubLinkedService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SapOpenHubLinkedService IPersistableModel<SapOpenHubLinkedService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapOpenHubLinkedService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSapOpenHubLinkedService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapOpenHubLinkedService)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapOpenHubLinkedService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

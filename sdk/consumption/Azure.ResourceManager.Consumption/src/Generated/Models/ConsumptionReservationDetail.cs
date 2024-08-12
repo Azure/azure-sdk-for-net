@@ -7,82 +7,72 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// reservation detail resource.
-    /// Serialized Name: ConsumptionReservationDetail
-    /// </summary>
+    /// <summary> reservation detail resource. </summary>
     public partial class ConsumptionReservationDetail : ResourceData
     {
-        /// <summary> Initializes a new instance of ConsumptionReservationDetail. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReservationDetail"/>. </summary>
         internal ConsumptionReservationDetail()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionReservationDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionReservationDetail"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="reservationOrderId">
-        /// The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations.
-        /// Serialized Name: ConsumptionReservationDetail.properties.reservationOrderId
-        /// </param>
-        /// <param name="instanceFlexibilityRatio">
-        /// The instance Flexibility Ratio.
-        /// Serialized Name: ConsumptionReservationDetail.properties.instanceFlexibilityRatio
-        /// </param>
-        /// <param name="instanceFlexibilityGroup">
-        /// The instance Flexibility Group.
-        /// Serialized Name: ConsumptionReservationDetail.properties.instanceFlexibilityGroup
-        /// </param>
-        /// <param name="reservationId">
-        /// The reservation ID is the identifier of a reservation within a reservation order. Each reservation is the grouping for applying the benefit scope and also specifies the number of instances to which the reservation benefit can be applied to.
-        /// Serialized Name: ConsumptionReservationDetail.properties.reservationId
-        /// </param>
-        /// <param name="skuName">
-        /// This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records.
-        /// Serialized Name: ConsumptionReservationDetail.properties.skuName
-        /// </param>
-        /// <param name="reservedHours">
-        /// This is the total hours reserved for the day. E.g. if reservation for 1 instance was made on 1 PM, this will be 11 hours for that day and 24 hours from subsequent days.
-        /// Serialized Name: ConsumptionReservationDetail.properties.reservedHours
-        /// </param>
-        /// <param name="consumptionOccurredOn">
-        /// The date on which consumption occurred.
-        /// Serialized Name: ConsumptionReservationDetail.properties.usageDate
-        /// </param>
-        /// <param name="usedHours">
-        /// This is the total hours used by the instance.
-        /// Serialized Name: ConsumptionReservationDetail.properties.usedHours
-        /// </param>
-        /// <param name="instanceId">
-        /// This identifier is the name of the resource or the fully qualified Resource ID.
-        /// Serialized Name: ConsumptionReservationDetail.properties.instanceId
-        /// </param>
-        /// <param name="totalReservedQuantity">
-        /// This is the total count of instances that are reserved for the reservationId.
-        /// Serialized Name: ConsumptionReservationDetail.properties.totalReservedQuantity
-        /// </param>
-        /// <param name="kind">
-        /// The reservation kind.
-        /// Serialized Name: ConsumptionReservationDetail.properties.kind
-        /// </param>
-        /// <param name="etag">
-        /// The etag for the resource.
-        /// Serialized Name: Resource.etag
-        /// </param>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: Resource.tags
-        /// </param>
-        internal ConsumptionReservationDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reservationOrderId, string instanceFlexibilityRatio, string instanceFlexibilityGroup, string reservationId, string skuName, decimal? reservedHours, DateTimeOffset? consumptionOccurredOn, decimal? usedHours, ResourceIdentifier instanceId, decimal? totalReservedQuantity, string kind, ETag? etag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="reservationOrderId"> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </param>
+        /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
+        /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
+        /// <param name="reservationId"> The reservation ID is the identifier of a reservation within a reservation order. Each reservation is the grouping for applying the benefit scope and also specifies the number of instances to which the reservation benefit can be applied to. </param>
+        /// <param name="skuName"> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </param>
+        /// <param name="reservedHours"> This is the total hours reserved for the day. E.g. if reservation for 1 instance was made on 1 PM, this will be 11 hours for that day and 24 hours from subsequent days. </param>
+        /// <param name="consumptionOccurredOn"> The date on which consumption occurred. </param>
+        /// <param name="usedHours"> This is the total hours used by the instance. </param>
+        /// <param name="instanceId"> This identifier is the name of the resource or the fully qualified Resource ID. </param>
+        /// <param name="totalReservedQuantity"> This is the total count of instances that are reserved for the reservationId. </param>
+        /// <param name="kind"> The reservation kind. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionReservationDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reservationOrderId, string instanceFlexibilityRatio, string instanceFlexibilityGroup, string reservationId, string skuName, decimal? reservedHours, DateTimeOffset? consumptionOccurredOn, decimal? usedHours, ResourceIdentifier instanceId, decimal? totalReservedQuantity, string kind, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ReservationOrderId = reservationOrderId;
             InstanceFlexibilityRatio = instanceFlexibilityRatio;
@@ -97,72 +87,34 @@ namespace Azure.ResourceManager.Consumption.Models
             Kind = kind;
             ETag = etag;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations.
-        /// Serialized Name: ConsumptionReservationDetail.properties.reservationOrderId
-        /// </summary>
+        /// <summary> The reservation order ID is the identifier for a reservation purchase. Each reservation order ID represents a single purchase transaction. A reservation order contains reservations. The reservation order specifies the VM size and region for the reservations. </summary>
         public string ReservationOrderId { get; }
-        /// <summary>
-        /// The instance Flexibility Ratio.
-        /// Serialized Name: ConsumptionReservationDetail.properties.instanceFlexibilityRatio
-        /// </summary>
+        /// <summary> The instance Flexibility Ratio. </summary>
         public string InstanceFlexibilityRatio { get; }
-        /// <summary>
-        /// The instance Flexibility Group.
-        /// Serialized Name: ConsumptionReservationDetail.properties.instanceFlexibilityGroup
-        /// </summary>
+        /// <summary> The instance Flexibility Group. </summary>
         public string InstanceFlexibilityGroup { get; }
-        /// <summary>
-        /// The reservation ID is the identifier of a reservation within a reservation order. Each reservation is the grouping for applying the benefit scope and also specifies the number of instances to which the reservation benefit can be applied to.
-        /// Serialized Name: ConsumptionReservationDetail.properties.reservationId
-        /// </summary>
+        /// <summary> The reservation ID is the identifier of a reservation within a reservation order. Each reservation is the grouping for applying the benefit scope and also specifies the number of instances to which the reservation benefit can be applied to. </summary>
         public string ReservationId { get; }
-        /// <summary>
-        /// This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records.
-        /// Serialized Name: ConsumptionReservationDetail.properties.skuName
-        /// </summary>
+        /// <summary> This is the ARM Sku name. It can be used to join with the serviceType field in additional info in usage records. </summary>
         public string SkuName { get; }
-        /// <summary>
-        /// This is the total hours reserved for the day. E.g. if reservation for 1 instance was made on 1 PM, this will be 11 hours for that day and 24 hours from subsequent days.
-        /// Serialized Name: ConsumptionReservationDetail.properties.reservedHours
-        /// </summary>
+        /// <summary> This is the total hours reserved for the day. E.g. if reservation for 1 instance was made on 1 PM, this will be 11 hours for that day and 24 hours from subsequent days. </summary>
         public decimal? ReservedHours { get; }
-        /// <summary>
-        /// The date on which consumption occurred.
-        /// Serialized Name: ConsumptionReservationDetail.properties.usageDate
-        /// </summary>
+        /// <summary> The date on which consumption occurred. </summary>
         public DateTimeOffset? ConsumptionOccurredOn { get; }
-        /// <summary>
-        /// This is the total hours used by the instance.
-        /// Serialized Name: ConsumptionReservationDetail.properties.usedHours
-        /// </summary>
+        /// <summary> This is the total hours used by the instance. </summary>
         public decimal? UsedHours { get; }
-        /// <summary>
-        /// This identifier is the name of the resource or the fully qualified Resource ID.
-        /// Serialized Name: ConsumptionReservationDetail.properties.instanceId
-        /// </summary>
+        /// <summary> This identifier is the name of the resource or the fully qualified Resource ID. </summary>
         public ResourceIdentifier InstanceId { get; }
-        /// <summary>
-        /// This is the total count of instances that are reserved for the reservationId.
-        /// Serialized Name: ConsumptionReservationDetail.properties.totalReservedQuantity
-        /// </summary>
+        /// <summary> This is the total count of instances that are reserved for the reservationId. </summary>
         public decimal? TotalReservedQuantity { get; }
-        /// <summary>
-        /// The reservation kind.
-        /// Serialized Name: ConsumptionReservationDetail.properties.kind
-        /// </summary>
+        /// <summary> The reservation kind. </summary>
         public string Kind { get; }
-        /// <summary>
-        /// The etag for the resource.
-        /// Serialized Name: Resource.etag
-        /// </summary>
+        /// <summary> The etag for the resource. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: Resource.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

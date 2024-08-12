@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Wait statistics gathered during query batch execution. </summary>
     public partial class WaitStatistics
     {
-        /// <summary> Initializes a new instance of WaitStatistics. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WaitStatistics"/>. </summary>
         internal WaitStatistics()
         {
         }
 
-        /// <summary> Initializes a new instance of WaitStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="WaitStatistics"/>. </summary>
         /// <param name="waitType"> Type of the Wait. </param>
         /// <param name="waitTimeMs"> Total wait time in millisecond(s). </param>
         /// <param name="waitCount"> Total no. of waits. </param>
-        internal WaitStatistics(string waitType, float? waitTimeMs, long? waitCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WaitStatistics(string waitType, float? waitTimeMs, long? waitCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WaitType = waitType;
             WaitTimeMs = waitTimeMs;
             WaitCount = waitCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of the Wait. </summary>

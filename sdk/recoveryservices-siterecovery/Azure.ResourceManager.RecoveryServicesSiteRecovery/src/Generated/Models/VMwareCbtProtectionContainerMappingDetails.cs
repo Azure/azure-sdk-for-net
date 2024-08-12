@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> VMwareCbt provider specific container mapping details. </summary>
     public partial class VMwareCbtProtectionContainerMappingDetails : ProtectionContainerMappingProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of VMwareCbtProtectionContainerMappingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtProtectionContainerMappingDetails"/>. </summary>
         internal VMwareCbtProtectionContainerMappingDetails()
         {
             RoleSizeToNicCountMap = new ChangeTrackingDictionary<string, int>();
@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "VMwareCbt";
         }
 
-        /// <summary> Initializes a new instance of VMwareCbtProtectionContainerMappingDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtProtectionContainerMappingDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keyVaultId"> The target key vault ARM Id. </param>
         /// <param name="keyVaultUri"> The target key vault URI. </param>
         /// <param name="storageAccountId"> The storage account ARM Id. </param>
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetLocation"> The target location. </param>
         /// <param name="roleSizeToNicCountMap"> The role size to NIC count map. </param>
         /// <param name="excludedSkus"> The SKUs to be excluded. </param>
-        internal VMwareCbtProtectionContainerMappingDetails(string instanceType, string keyVaultId, Uri keyVaultUri, string storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation, IReadOnlyDictionary<string, int> roleSizeToNicCountMap, IReadOnlyList<string> excludedSkus) : base(instanceType)
+        internal VMwareCbtProtectionContainerMappingDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier keyVaultId, Uri keyVaultUri, ResourceIdentifier storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation, IReadOnlyDictionary<string, int> roleSizeToNicCountMap, IReadOnlyList<string> excludedSkus) : base(instanceType, serializedAdditionalRawData)
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;
@@ -46,11 +47,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The target key vault ARM Id. </summary>
-        public string KeyVaultId { get; }
+        public ResourceIdentifier KeyVaultId { get; }
         /// <summary> The target key vault URI. </summary>
         public Uri KeyVaultUri { get; }
         /// <summary> The storage account ARM Id. </summary>
-        public string StorageAccountId { get; }
+        public ResourceIdentifier StorageAccountId { get; }
         /// <summary> The secret name of the storage account. </summary>
         public string StorageAccountSasSecretName { get; }
         /// <summary> The secret name of the service bus connection string. </summary>

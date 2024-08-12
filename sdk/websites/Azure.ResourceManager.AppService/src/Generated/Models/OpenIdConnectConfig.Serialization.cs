@@ -6,15 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class OpenIdConnectConfig : IUtf8JsonSerializable
+    public partial class OpenIdConnectConfig : IUtf8JsonSerializable, IJsonModel<OpenIdConnectConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenIdConnectConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<OpenIdConnectConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthorizationEndpoint))
             {
@@ -41,20 +52,51 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("wellKnownOpenIdConfiguration"u8);
                 writer.WriteStringValue(WellKnownOpenIdConfiguration);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OpenIdConnectConfig DeserializeOpenIdConnectConfig(JsonElement element)
+        OpenIdConnectConfig IJsonModel<OpenIdConnectConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOpenIdConnectConfig(document.RootElement, options);
+        }
+
+        internal static OpenIdConnectConfig DeserializeOpenIdConnectConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> authorizationEndpoint = default;
-            Optional<string> tokenEndpoint = default;
-            Optional<string> issuer = default;
-            Optional<Uri> certificationUri = default;
-            Optional<string> wellKnownOpenIdConfiguration = default;
+            string authorizationEndpoint = default;
+            string tokenEndpoint = default;
+            string issuer = default;
+            Uri certificationUri = default;
+            string wellKnownOpenIdConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationEndpoint"u8))
@@ -86,8 +128,174 @@ namespace Azure.ResourceManager.AppService.Models
                     wellKnownOpenIdConfiguration = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OpenIdConnectConfig(authorizationEndpoint.Value, tokenEndpoint.Value, issuer.Value, certificationUri.Value, wellKnownOpenIdConfiguration.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OpenIdConnectConfig(
+                authorizationEndpoint,
+                tokenEndpoint,
+                issuer,
+                certificationUri,
+                wellKnownOpenIdConfiguration,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorizationEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authorizationEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthorizationEndpoint))
+                {
+                    builder.Append("  authorizationEndpoint: ");
+                    if (AuthorizationEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AuthorizationEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AuthorizationEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenEndpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tokenEndpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TokenEndpoint))
+                {
+                    builder.Append("  tokenEndpoint: ");
+                    if (TokenEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TokenEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TokenEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Issuer), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  issuer: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Issuer))
+                {
+                    builder.Append("  issuer: ");
+                    if (Issuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Issuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Issuer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificationUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certificationUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertificationUri))
+                {
+                    builder.Append("  certificationUri: ");
+                    builder.AppendLine($"'{CertificationUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WellKnownOpenIdConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  wellKnownOpenIdConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WellKnownOpenIdConfiguration))
+                {
+                    builder.Append("  wellKnownOpenIdConfiguration: ");
+                    if (WellKnownOpenIdConfiguration.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WellKnownOpenIdConfiguration}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WellKnownOpenIdConfiguration}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<OpenIdConnectConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OpenIdConnectConfig IPersistableModel<OpenIdConnectConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOpenIdConnectConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OpenIdConnectConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OpenIdConnectConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

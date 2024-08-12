@@ -638,7 +638,7 @@ namespace Azure.IoT.Hub.Service.Models
         public string InputBlobName { get { throw null; } set { } }
         public string OutputBlobName { get { throw null; } set { } }
     }
-    public static partial class IotHubGatewayServiceAPIsModelFactory
+    public static partial class IoTHubServiceModelFactory
     {
         public static Azure.IoT.Hub.Service.Models.BulkRegistryOperationResponse BulkRegistryOperationResponse(bool? isSuccessful = default(bool?), System.Collections.Generic.IEnumerable<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationError> errors = null, System.Collections.Generic.IEnumerable<Azure.IoT.Hub.Service.Models.DeviceRegistryOperationWarning> warnings = null) { throw null; }
         public static Azure.IoT.Hub.Service.Models.CloudToDeviceMethodResponse CloudToDeviceMethodResponse(int? status = default(int?), object payload = null) { throw null; }

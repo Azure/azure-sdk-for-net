@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="SubmitAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call SubmitAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+UserRequestsClient client = new UserRequestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    operations = new object[]
+    {
+        new
+        {
+            type = "CreateTerm",
+            payload = new object(),
+        }
+    },
+});
+Response response = await client.SubmitAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("requestId").ToString());
+Console.WriteLine(result.GetProperty("requestor").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("payload").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call SubmitAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+UserRequestsClient client = new UserRequestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    operations = new object[]
+    {
+        new
+        {
+            type = "CreateTerm",
+            payload = new object(),
+        }
+    },
+    comment = "<comment>",
+});
+Response response = await client.SubmitAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("requestId").ToString());
+Console.WriteLine(result.GetProperty("requestor").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("payload").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("workflowRunIds")[0].ToString());
+Console.WriteLine(result.GetProperty("comment").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code></example>
+    </member>
+    <member name="Submit(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Submit and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+UserRequestsClient client = new UserRequestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    operations = new object[]
+    {
+        new
+        {
+            type = "CreateTerm",
+            payload = new object(),
+        }
+    },
+});
+Response response = client.Submit(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("requestId").ToString());
+Console.WriteLine(result.GetProperty("requestor").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("payload").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call Submit with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+UserRequestsClient client = new UserRequestsClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    operations = new object[]
+    {
+        new
+        {
+            type = "CreateTerm",
+            payload = new object(),
+        }
+    },
+    comment = "<comment>",
+});
+Response response = client.Submit(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("requestId").ToString());
+Console.WriteLine(result.GetProperty("requestor").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("payload").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].GetProperty("workflowRunIds")[0].ToString());
+Console.WriteLine(result.GetProperty("comment").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

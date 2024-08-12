@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
     /// </summary>
     public partial class DedicatedCapacityData : PowerBIDedicatedResourceData
     {
-        /// <summary> Initializes a new instance of DedicatedCapacityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacityData"/>. </summary>
         /// <param name="location"> Location of the PowerBI Dedicated resource. </param>
         /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
@@ -29,13 +29,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of DedicatedCapacityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacityData"/>. </summary>
         /// <param name="id"> An identifier that represents the PowerBI Dedicated resource. </param>
         /// <param name="name"> The name of the PowerBI Dedicated resource. </param>
         /// <param name="resourceType"> The type of the PowerBI Dedicated resource. </param>
         /// <param name="location"> Location of the PowerBI Dedicated resource. </param>
         /// <param name="tags"> Key-value pairs of additional resource provisioning properties. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
         /// <param name="administration"> A collection of Dedicated capacity administrators. </param>
         /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <param name="friendlyName"> Capacity name. </param>
         /// <param name="state"> The current state of PowerBI Dedicated resource. The state is to indicate more states outside of resource provisioning. </param>
         /// <param name="provisioningState"> The current deployment state of PowerBI Dedicated resource. The provisioningState is to indicate states for resource provisioning. </param>
-        internal DedicatedCapacityData(string id, string name, string resourceType, AzureLocation location, IDictionary<string, string> tags, SystemData systemData, CapacitySku sku, DedicatedCapacityAdministrators administration, Mode? mode, Guid? tenantId, string friendlyName, State? state, CapacityProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, systemData)
+        internal DedicatedCapacityData(string id, string name, string resourceType, AzureLocation location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, CapacitySku sku, DedicatedCapacityAdministrators administration, Mode? mode, Guid? tenantId, string friendlyName, State? state, CapacityProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, systemData, serializedAdditionalRawData)
         {
             Sku = sku;
             Administration = administration;
@@ -52,6 +53,11 @@ namespace Azure.ResourceManager.PowerBIDedicated
             FriendlyName = friendlyName;
             State = state;
             ProvisioningState = provisioningState;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DedicatedCapacityData"/> for deserialization. </summary>
+        internal DedicatedCapacityData()
+        {
         }
 
         /// <summary> The SKU of the PowerBI Dedicated capacity resource. </summary>

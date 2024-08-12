@@ -25,7 +25,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2023-01-03";
+        public const string DefaultSasVersion = "2024-11-04";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -123,6 +123,9 @@ namespace Azure.Storage
         public const string DisableRequestConditionsValidationSwitchName = "Azure.Storage.DisableRequestConditionsValidation";
         public const string DisableRequestConditionsValidationEnvVar = "AZURE_STORAGE_DISABLE_REQUEST_CONDITIONS_VALIDATION";
 
+        public const string DisableExpectContinueHeaderSwitchName = "Azure.Storage.DisableExpectContinueHeader";
+        public const string DisableExpectContinueHeaderEnvVar = "AZURE_STORAGE_DISABLE_EXPECT_CONTINUE_HEADER";
+
         public const string DefaultScope = "/.default";
 
         /// <summary>
@@ -193,6 +196,7 @@ namespace Azure.Storage
             public const string LeaseId = "x-ms-lease-id";
             public const string LastModified = "Last-Modified";
             public const string ETag = "ETag";
+            public const string CopySourceErrorCode = "x-ms-copy-source-error-code";
         }
 
         internal static class ErrorCodes
@@ -391,6 +395,8 @@ namespace Azure.Storage
             public const string GroupHeaderName = "x-ms-group";
 
             public const string PermissionsHeaderName = "x-ms-permissions";
+
+            public const string AclHeaderName = "x-ms-acl";
         }
 
         /// <summary>
@@ -416,6 +422,14 @@ namespace Azure.Storage
             public const string UriSubDomain = "queue";
 
             public const string QueueTraitsMetadata = "metadata";
+
+            internal static class Permissions
+            {
+                public const char Read = 'r';
+                public const char Add = 'a';
+                public const char Update = 'u';
+                public const char Process = 'p';
+            }
         }
 
         /// <summary>
@@ -653,6 +667,9 @@ namespace Azure.Storage
 
         internal static class ClientSideEncryption
         {
+            public const string HttpMessagePropertyKeyV1 = "Azure.Storage.StorageTelemetryPolicy.ClientSideEncryption.V1";
+            public const string HttpMessagePropertyKeyV2 = "Azure.Storage.StorageTelemetryPolicy.ClientSideEncryption.V2";
+
             public const string AgentMetadataKey = "EncryptionLibrary";
 
             public const string AesCbcPkcs5Padding = "AES/CBC/PKCS5Padding";
@@ -713,6 +730,12 @@ namespace Azure.Storage
         {
             internal const string HttpMessagePropertyKey = "Azure.Storage.StorageServerTimeoutPolicy.Timeout";
             internal const string QueryParameterKey = "timeout";
+        }
+
+        internal static class CopyHttpAuthorization
+        {
+            internal static readonly string[] Scopes = { "https://storage.azure.com/.default" };
+            internal const string BearerScheme = "Bearer";
         }
     }
 }

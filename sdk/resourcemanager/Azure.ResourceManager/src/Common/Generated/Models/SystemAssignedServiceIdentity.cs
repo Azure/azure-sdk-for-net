@@ -14,5 +14,9 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class SystemAssignedServiceIdentity
     {
+        /// <summary> Initializes a new instance of <see cref="SystemAssignedServiceIdentity"/> for deserialization. </summary>
+        internal SystemAssignedServiceIdentity()
+        {
+        }
     }
 }

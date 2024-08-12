@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Language in which the recipient will receive the notification
-    /// Serialized Name: CultureCode
-    /// </summary>
+    /// <summary> Language in which the recipient will receive the notification. </summary>
     public readonly partial struct RecipientNotificationLanguageCode : IEquatable<RecipientNotificationLanguageCode>
     {
         private readonly string _value;
@@ -47,110 +44,47 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string PortuguesePortugalValue = "pt-pt";
         private const string SwedishSwedenValue = "sv-se";
 
-        /// <summary>
-        /// en-us
-        /// Serialized Name: CultureCode.en-us
-        /// </summary>
+        /// <summary> en-us. </summary>
         public static RecipientNotificationLanguageCode EnglishUnitedStates { get; } = new RecipientNotificationLanguageCode(EnglishUnitedStatesValue);
-        /// <summary>
-        /// ja-jp
-        /// Serialized Name: CultureCode.ja-jp
-        /// </summary>
+        /// <summary> ja-jp. </summary>
         public static RecipientNotificationLanguageCode JapaneseJapan { get; } = new RecipientNotificationLanguageCode(JapaneseJapanValue);
-        /// <summary>
-        /// zh-cn
-        /// Serialized Name: CultureCode.zh-cn
-        /// </summary>
+        /// <summary> zh-cn. </summary>
         public static RecipientNotificationLanguageCode ChinesePrc { get; } = new RecipientNotificationLanguageCode(ChinesePrcValue);
-        /// <summary>
-        /// de-de
-        /// Serialized Name: CultureCode.de-de
-        /// </summary>
+        /// <summary> de-de. </summary>
         public static RecipientNotificationLanguageCode GermanGermany { get; } = new RecipientNotificationLanguageCode(GermanGermanyValue);
-        /// <summary>
-        /// es-es
-        /// Serialized Name: CultureCode.es-es
-        /// </summary>
+        /// <summary> es-es. </summary>
         public static RecipientNotificationLanguageCode SpanishSpain { get; } = new RecipientNotificationLanguageCode(SpanishSpainValue);
-        /// <summary>
-        /// fr-fr
-        /// Serialized Name: CultureCode.fr-fr
-        /// </summary>
+        /// <summary> fr-fr. </summary>
         public static RecipientNotificationLanguageCode FrenchFrance { get; } = new RecipientNotificationLanguageCode(FrenchFranceValue);
-        /// <summary>
-        /// it-it
-        /// Serialized Name: CultureCode.it-it
-        /// </summary>
+        /// <summary> it-it. </summary>
         public static RecipientNotificationLanguageCode ItalianItaly { get; } = new RecipientNotificationLanguageCode(ItalianItalyValue);
-        /// <summary>
-        /// ko-kr
-        /// Serialized Name: CultureCode.ko-kr
-        /// </summary>
+        /// <summary> ko-kr. </summary>
         public static RecipientNotificationLanguageCode KoreanKorea { get; } = new RecipientNotificationLanguageCode(KoreanKoreaValue);
-        /// <summary>
-        /// pt-br
-        /// Serialized Name: CultureCode.pt-br
-        /// </summary>
+        /// <summary> pt-br. </summary>
         public static RecipientNotificationLanguageCode PortugueseBrazil { get; } = new RecipientNotificationLanguageCode(PortugueseBrazilValue);
-        /// <summary>
-        /// ru-ru
-        /// Serialized Name: CultureCode.ru-ru
-        /// </summary>
+        /// <summary> ru-ru. </summary>
         public static RecipientNotificationLanguageCode RussianRussia { get; } = new RecipientNotificationLanguageCode(RussianRussiaValue);
-        /// <summary>
-        /// zh-tw
-        /// Serialized Name: CultureCode.zh-tw
-        /// </summary>
+        /// <summary> zh-tw. </summary>
         public static RecipientNotificationLanguageCode ChineseTaiwan { get; } = new RecipientNotificationLanguageCode(ChineseTaiwanValue);
-        /// <summary>
-        /// cs-cz
-        /// Serialized Name: CultureCode.cs-cz
-        /// </summary>
+        /// <summary> cs-cz. </summary>
         public static RecipientNotificationLanguageCode CzechCzechRepublic { get; } = new RecipientNotificationLanguageCode(CzechCzechRepublicValue);
-        /// <summary>
-        /// pl-pl
-        /// Serialized Name: CultureCode.pl-pl
-        /// </summary>
+        /// <summary> pl-pl. </summary>
         public static RecipientNotificationLanguageCode PolishPoland { get; } = new RecipientNotificationLanguageCode(PolishPolandValue);
-        /// <summary>
-        /// tr-tr
-        /// Serialized Name: CultureCode.tr-tr
-        /// </summary>
+        /// <summary> tr-tr. </summary>
         public static RecipientNotificationLanguageCode TurkishTurkey { get; } = new RecipientNotificationLanguageCode(TurkishTurkeyValue);
-        /// <summary>
-        /// da-dk
-        /// Serialized Name: CultureCode.da-dk
-        /// </summary>
+        /// <summary> da-dk. </summary>
         public static RecipientNotificationLanguageCode DanishDenmark { get; } = new RecipientNotificationLanguageCode(DanishDenmarkValue);
-        /// <summary>
-        /// en-gb
-        /// Serialized Name: CultureCode.en-gb
-        /// </summary>
+        /// <summary> en-gb. </summary>
         public static RecipientNotificationLanguageCode EnglishUnitedKingdom { get; } = new RecipientNotificationLanguageCode(EnglishUnitedKingdomValue);
-        /// <summary>
-        /// hu-hu
-        /// Serialized Name: CultureCode.hu-hu
-        /// </summary>
+        /// <summary> hu-hu. </summary>
         public static RecipientNotificationLanguageCode HungarianHungary { get; } = new RecipientNotificationLanguageCode(HungarianHungaryValue);
-        /// <summary>
-        /// nb-no
-        /// Serialized Name: CultureCode.nb-no
-        /// </summary>
+        /// <summary> nb-no. </summary>
         public static RecipientNotificationLanguageCode NorwegianNorway { get; } = new RecipientNotificationLanguageCode(NorwegianNorwayValue);
-        /// <summary>
-        /// nl-nl
-        /// Serialized Name: CultureCode.nl-nl
-        /// </summary>
+        /// <summary> nl-nl. </summary>
         public static RecipientNotificationLanguageCode DutchNetherlands { get; } = new RecipientNotificationLanguageCode(DutchNetherlandsValue);
-        /// <summary>
-        /// pt-pt
-        /// Serialized Name: CultureCode.pt-pt
-        /// </summary>
+        /// <summary> pt-pt. </summary>
         public static RecipientNotificationLanguageCode PortuguesePortugal { get; } = new RecipientNotificationLanguageCode(PortuguesePortugalValue);
-        /// <summary>
-        /// sv-se
-        /// Serialized Name: CultureCode.sv-se
-        /// </summary>
+        /// <summary> sv-se. </summary>
         public static RecipientNotificationLanguageCode SwedishSweden { get; } = new RecipientNotificationLanguageCode(SwedishSwedenValue);
         /// <summary> Determines if two <see cref="RecipientNotificationLanguageCode"/> values are the same. </summary>
         public static bool operator ==(RecipientNotificationLanguageCode left, RecipientNotificationLanguageCode right) => left.Equals(right);
@@ -167,7 +101,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

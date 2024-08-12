@@ -6,20 +6,53 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The parameters to provide for the Slack channel. </summary>
     public partial class SlackChannelProperties
     {
-        /// <summary> Initializes a new instance of SlackChannelProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SlackChannelProperties"/>. </summary>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         public SlackChannelProperties(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of SlackChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlackChannelProperties"/>. </summary>
         /// <param name="clientId"> The Slack client id. </param>
         /// <param name="clientSecret"> The Slack client secret. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="verificationToken"> The Slack verification token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
@@ -31,7 +64,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
         /// <param name="signingSecret"> The Slack signing secret. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        internal SlackChannelProperties(string clientId, string clientSecret, string verificationToken, string scopes, Uri landingPageUri, string redirectAction, string lastSubmissionId, bool? registerBeforeOAuthFlow, bool? isValidated, string signingSecret, bool isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SlackChannelProperties(string clientId, string clientSecret, string verificationToken, string scopes, Uri landingPageUri, string redirectAction, string lastSubmissionId, bool? registerBeforeOAuthFlow, bool? isValidated, string signingSecret, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
@@ -44,6 +78,12 @@ namespace Azure.ResourceManager.BotService.Models
             IsValidated = isValidated;
             SigningSecret = signingSecret;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SlackChannelProperties"/> for deserialization. </summary>
+        internal SlackChannelProperties()
+        {
         }
 
         /// <summary> The Slack client id. </summary>

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -67,7 +67,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetailsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetCascadeDeleteJobDetailsAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -102,7 +102,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetCascadeDeleteJobDetails(string,RequestContext)']/*" />
-        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context = null)
+        public virtual Response GetCascadeDeleteJobDetails(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -138,7 +138,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetHarvestDataAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetHarvestDataAsync(string partyId, string harvestDataId, RequestContext context = null)
+        public virtual async Task<Response> GetHarvestDataAsync(string partyId, string harvestDataId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
@@ -175,7 +175,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetHarvestData(string,string,RequestContext)']/*" />
-        public virtual Response GetHarvestData(string partyId, string harvestDataId, RequestContext context = null)
+        public virtual Response GetHarvestData(string partyId, string harvestDataId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
             Argument.AssertNotNullOrEmpty(harvestDataId, nameof(harvestDataId));
@@ -398,11 +398,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetAllHarvestDataAsync(double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllHarvestDataAsync(double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> harvestDataIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllHarvestDataAsync(double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> harvestDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllHarvestDataRequest(minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, harvestDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllHarvestDataNextPageRequest(nextLink, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, harvestDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "HarvestData.GetAllHarvestData", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "HarvestData.GetAllHarvestData", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -457,11 +457,11 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetAllHarvestData(double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllHarvestData(double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> harvestDataIds = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllHarvestData(double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> harvestDataIds, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllHarvestDataRequest(minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, harvestDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllHarvestDataNextPageRequest(nextLink, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, harvestDataIds, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "HarvestData.GetAllHarvestData", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "HarvestData.GetAllHarvestData", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -519,13 +519,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetAllHarvestDataByPartyIdAsync(string,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllHarvestDataByPartyIdAsync(string partyId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllHarvestDataByPartyIdAsync(string partyId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllHarvestDataByPartyIdRequest(partyId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllHarvestDataByPartyIdNextPageRequest(nextLink, partyId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "HarvestData.GetAllHarvestDataByPartyId", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "HarvestData.GetAllHarvestDataByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -583,13 +583,13 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='GetAllHarvestDataByPartyId(string,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,double?,IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,double?,double?,IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllHarvestDataByPartyId(string partyId, double? minTotalYield = null, double? maxTotalYield = null, double? minAvgYield = null, double? maxAvgYield = null, double? minTotalWetMass = null, double? maxTotalWetMass = null, double? minAvgWetMass = null, double? maxAvgWetMass = null, double? minAvgMoisture = null, double? maxAvgMoisture = null, double? minAvgSpeed = null, double? maxAvgSpeed = null, IEnumerable<string> sources = null, IEnumerable<string> associatedBoundaryIds = null, DateTimeOffset? minOperationStartDateTime = null, DateTimeOffset? maxOperationStartDateTime = null, DateTimeOffset? minOperationEndDateTime = null, DateTimeOffset? maxOperationEndDateTime = null, DateTimeOffset? minOperationModifiedDateTime = null, DateTimeOffset? maxOperationModifiedDateTime = null, double? minArea = null, double? maxArea = null, IEnumerable<string> ids = null, IEnumerable<string> names = null, IEnumerable<string> propertyFilters = null, IEnumerable<string> statuses = null, DateTimeOffset? minCreatedDateTime = null, DateTimeOffset? maxCreatedDateTime = null, DateTimeOffset? minLastModifiedDateTime = null, DateTimeOffset? maxLastModifiedDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllHarvestDataByPartyId(string partyId, double? minTotalYield, double? maxTotalYield, double? minAvgYield, double? maxAvgYield, double? minTotalWetMass, double? maxTotalWetMass, double? minAvgWetMass, double? maxAvgWetMass, double? minAvgMoisture, double? maxAvgMoisture, double? minAvgSpeed, double? maxAvgSpeed, IEnumerable<string> sources, IEnumerable<string> associatedBoundaryIds, DateTimeOffset? minOperationStartDateTime, DateTimeOffset? maxOperationStartDateTime, DateTimeOffset? minOperationEndDateTime, DateTimeOffset? maxOperationEndDateTime, DateTimeOffset? minOperationModifiedDateTime, DateTimeOffset? maxOperationModifiedDateTime, double? minArea, double? maxArea, IEnumerable<string> ids, IEnumerable<string> names, IEnumerable<string> propertyFilters, IEnumerable<string> statuses, DateTimeOffset? minCreatedDateTime, DateTimeOffset? maxCreatedDateTime, DateTimeOffset? minLastModifiedDateTime, DateTimeOffset? maxLastModifiedDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(partyId, nameof(partyId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllHarvestDataByPartyIdRequest(partyId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllHarvestDataByPartyIdNextPageRequest(nextLink, partyId, minTotalYield, maxTotalYield, minAvgYield, maxAvgYield, minTotalWetMass, maxTotalWetMass, minAvgWetMass, maxAvgWetMass, minAvgMoisture, maxAvgMoisture, minAvgSpeed, maxAvgSpeed, sources, associatedBoundaryIds, minOperationStartDateTime, maxOperationStartDateTime, minOperationEndDateTime, maxOperationEndDateTime, minOperationModifiedDateTime, maxOperationModifiedDateTime, minArea, maxArea, ids, names, propertyFilters, statuses, minCreatedDateTime, maxCreatedDateTime, minLastModifiedDateTime, maxLastModifiedDateTime, maxPageSize, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "HarvestData.GetAllHarvestDataByPartyId", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "HarvestData.GetAllHarvestDataByPartyId", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -612,7 +612,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string harvestDataId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateCascadeDeleteJobAsync(WaitUntil waitUntil, string jobId, string partyId, string harvestDataId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(partyId, nameof(partyId));
@@ -652,7 +652,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/HarvestData.xml" path="doc/members/member[@name='CreateCascadeDeleteJob(WaitUntil,string,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string harvestDataId, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateCascadeDeleteJob(WaitUntil waitUntil, string jobId, string partyId, string harvestDataId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(partyId, nameof(partyId));
@@ -728,14 +728,14 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxAvgSpeed", maxAvgSpeed.Value, true);
             }
-            if (sources != null && Optional.IsCollectionDefined(sources))
+            if (sources != null && !(sources is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in sources)
                 {
                     uri.AppendQuery("sources", param, true);
                 }
             }
-            if (associatedBoundaryIds != null && Optional.IsCollectionDefined(associatedBoundaryIds))
+            if (associatedBoundaryIds != null && !(associatedBoundaryIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in associatedBoundaryIds)
                 {
@@ -774,28 +774,28 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxArea", maxArea.Value, true);
             }
-            if (harvestDataIds != null && Optional.IsCollectionDefined(harvestDataIds))
+            if (harvestDataIds != null && !(harvestDataIds is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in harvestDataIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 foreach (var param in statuses)
                 {
@@ -922,14 +922,14 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxAvgSpeed", maxAvgSpeed.Value, true);
             }
-            if (sources != null && Optional.IsCollectionDefined(sources))
+            if (sources != null && !(sources is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in sources)
                 {
                     uri.AppendQuery("sources", param, true);
                 }
             }
-            if (associatedBoundaryIds != null && Optional.IsCollectionDefined(associatedBoundaryIds))
+            if (associatedBoundaryIds != null && !(associatedBoundaryIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in associatedBoundaryIds)
                 {
@@ -968,28 +968,28 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxArea", maxArea.Value, true);
             }
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && !(ids is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

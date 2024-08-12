@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
@@ -37,8 +36,8 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<PhoneNumberIdentifierModel> callerId = default;
-            Optional<string> displayName = default;
+            PhoneNumberIdentifierModel callerId = default;
+            string displayName = default;
             CommunicationIdentifierModel identifier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -62,7 +61,23 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new CallSourceInternal(callerId.Value, displayName.Value, identifier);
+            return new CallSourceInternal(callerId, displayName, identifier);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CallSourceInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCallSourceInternal(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

@@ -10,11 +10,14 @@ using Azure.Search.Documents.Indexes.Models;
 using NUnit.Framework;
 
 #region Snippet:Azure_Search_Tests_Samples_Readme_Namespace
-using Azure;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
 using Azure.Core.GeoJson;
 #endregion Snippet:Azure_Search_Tests_Samples_Readme_Namespace
+
+#region Snippet:Azure_Search_Readme_Identity_Namespace
+using Azure.Identity;
+#endregion
 
 namespace Azure.Search.Documents.Tests.Samples
 {
@@ -47,6 +50,28 @@ namespace Azure.Search.Documents.Tests.Samples
             AzureKeyCredential credential = new AzureKeyCredential(key);
             SearchClient client = new SearchClient(endpoint, indexName, credential);
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Authenticate
+        }
+
+        [Test]
+        [SyncOnly]
+        public async Task AuthenticateWithAAD()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this, true);
+
+            #region Snippet:Azure_Search_Readme_CreateWithDefaultAzureCredential
+            string indexName = "nycjobs";
+
+            // Get the service endpoint from the environment
+#if SNIPPET
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
+#else
+            Uri endpoint = resources.Endpoint;
+#endif
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+
+            // Create a client
+            SearchClient client = new SearchClient(endpoint, indexName, credential);
+            #endregion
         }
 
 #if EXPERIMENTAL_DYNAMIC
@@ -83,7 +108,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 SearchDocument doc = result.Document;
                 string id = (string)doc["HotelId"];
                 string name = (string)doc["HotelName"];
-                Console.WriteLine("{id}: {name}");
+                Console.WriteLine($"{id}: {name}");
             }
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dict
 
@@ -92,7 +117,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 dynamic doc = result.Document;
                 string id = doc.HotelId;
                 string name = doc.HotelName;
-                Console.WriteLine("{id}: {name}");
+                Console.WriteLine($"{id}: {name}");
             }
         }
 

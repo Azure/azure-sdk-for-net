@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
             Response<LoadTestingQuotaResource> quotaResponse = await QuotaCollection.GetAsync("maxConcurrentTestRuns");
             LoadTestingQuotaResource quotaResource = quotaResponse.Value;
 
-            LoadTestingQuotaBucketDimensions dimensions = new LoadTestingQuotaBucketDimensions("<subscription-id>", AzureLocation.WestUS2);
+            LoadTestingQuotaBucketDimensions dimensions = new LoadTestingQuotaBucketDimensions("<subscription-id>", AzureLocation.WestUS2, null);
             LoadTestingQuotaBucketContent quotaAvailabilityPayload = new LoadTestingQuotaBucketContent(
                 quotaResponse.Value.Data.Id,
                 quotaResource.Data.Name,
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.LoadTesting.Tests.Samples
                 quotaResource.Data.Usage,
                 quotaResource.Data.Limit,
                 50, // new quota value
-                dimensions);
+                dimensions, null);
 
             Response<LoadTestingQuotaAvailabilityResult> checkAvailabilityResult = await quotaResponse.Value.CheckLoadTestingQuotaAvailabilityAsync(quotaAvailabilityPayload);
             // IsAvailable property indicates whether the requested quota is available.

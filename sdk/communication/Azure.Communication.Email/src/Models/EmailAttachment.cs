@@ -37,20 +37,6 @@ namespace Azure.Communication.Email
             }
         }
 
-        internal string ContentInBase64
-        {
-            get
-            {
-                string valueToReturn = Convert.ToBase64String(Content.ToArray());
-                if (string.IsNullOrWhiteSpace(valueToReturn))
-                {
-                    throw new ArgumentException(ErrorMessages.InvalidAttachmentContent);
-                }
-
-                return valueToReturn;
-            }
-        }
-
         /// <summary>
         /// Contents of the attachment as BinaryData.
         /// </summary>

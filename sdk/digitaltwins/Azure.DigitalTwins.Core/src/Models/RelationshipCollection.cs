@@ -52,8 +52,8 @@ namespace Azure.DigitalTwins.Core
         /// <returns>A collection of relationships deserialized into type <typeparamref name="T"/>.</returns>
         internal static RelationshipCollection<T> DeserializeRelationshipCollection(JsonElement element, ObjectSerializer objectSerializer)
         {
-            Optional<IReadOnlyList<T>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<T> value = default;
+            string nextLink = default;
             foreach (JsonProperty property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -79,7 +79,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new RelationshipCollection<T>(Optional.ToList(value), nextLink.Value);
+            return new RelationshipCollection<T>(value ?? new ChangeTrackingList<T>(), nextLink);
         }
     }
 }

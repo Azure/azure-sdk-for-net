@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayUpdated event. </summary>
     public partial class ApiManagementGatewayUpdatedEventData
     {
-        /// <summary> Initializes a new instance of ApiManagementGatewayUpdatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayUpdatedEventData"/>. </summary>
         internal ApiManagementGatewayUpdatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementGatewayUpdatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayUpdatedEventData"/>. </summary>
         /// <param name="resourceUri"> The fully qualified ID of the resource that the compliance state change is for, including the resource name and resource type. Uses the format, `/subscriptions/&lt;SubscriptionID&gt;/resourceGroups/&lt;ResourceGroup&gt;/Microsoft.ApiManagement/service/&lt;ServiceName&gt;/gateways/&lt;ResourceName&gt;`. </param>
         internal ApiManagementGatewayUpdatedEventData(string resourceUri)
         {

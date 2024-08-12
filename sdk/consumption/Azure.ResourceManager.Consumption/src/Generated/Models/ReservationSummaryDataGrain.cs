@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The ReservationSummaryDataGrain.
-    /// Serialized Name: Datagrain
-    /// </summary>
+    /// <summary> The ReservationSummaryDataGrain. </summary>
     public readonly partial struct ReservationSummaryDataGrain : IEquatable<ReservationSummaryDataGrain>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string DailyGrainValue = "daily";
         private const string MonthlyGrainValue = "monthly";
 
-        /// <summary>
-        /// Daily grain of data
-        /// Serialized Name: Datagrain.daily
-        /// </summary>
+        /// <summary> Daily grain of data. </summary>
         public static ReservationSummaryDataGrain DailyGrain { get; } = new ReservationSummaryDataGrain(DailyGrainValue);
-        /// <summary>
-        /// Monthly grain of data
-        /// Serialized Name: Datagrain.monthly
-        /// </summary>
+        /// <summary> Monthly grain of data. </summary>
         public static ReservationSummaryDataGrain MonthlyGrain { get; } = new ReservationSummaryDataGrain(MonthlyGrainValue);
         /// <summary> Determines if two <see cref="ReservationSummaryDataGrain"/> values are the same. </summary>
         public static bool operator ==(ReservationSummaryDataGrain left, ReservationSummaryDataGrain right) => left.Equals(right);
@@ -53,7 +44,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

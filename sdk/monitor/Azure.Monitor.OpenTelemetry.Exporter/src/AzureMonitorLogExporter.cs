@@ -11,13 +11,20 @@ using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal class AzureMonitorLogExporter : BaseExporter<LogRecord>
+    /// <summary>
+    /// Azure Monitor Log Exporter.
+    /// </summary>
+    public sealed class AzureMonitorLogExporter : BaseExporter<LogRecord>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
         private AzureMonitorResource? _resource;
         private bool _disposed;
 
+        /// <summary>
+        /// Initializes a new instance of Azure Monitor Log Exporter.
+        /// </summary>
+        /// <param name="options">Configuration options for the exporter.</param>
         public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options))
         {
         }
@@ -43,17 +50,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
                 if (telemetryItems.Count > 0)
                 {
-                    exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
+                    exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None).EnsureCompleted();
                 }
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.FailedToExport(ex);
+                AzureMonitorExporterEventSource.Log.FailedToExport(nameof(AzureMonitorLogExporter), _instrumentationKey, ex);
             }
 
             return exportResult;
         }
 
+        /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
             if (!_disposed)

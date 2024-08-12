@@ -6,20 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
     /// <summary> Providers status. </summary>
     public partial class ProviderStatus
     {
-        /// <summary> Initializes a new instance of ProviderStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderStatus"/>. </summary>
         internal ProviderStatus()
         {
             Targets = new ChangeTrackingList<TargetStatus>();
         }
 
-        /// <summary> Initializes a new instance of ProviderStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProviderStatus"/>. </summary>
         /// <param name="id"> Provider id. </param>
         /// <param name="currentAvailability"> Provider availability. </param>
         /// <param name="targets"></param>

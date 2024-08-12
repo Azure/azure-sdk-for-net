@@ -1,0 +1,19 @@
+{
+  "@context": "dtmi:dtdl:context;3",
+  "@id": "dtmi:com:example:Boiler",
+  "@type": "Interface",
+  "displayName": "Boiler",
+  "contents": [
+    {
+      "@type": "Telemetry",
+      "name": "temp",
+      "schema": "double"
+    },
+    {
+      "@type": "Property",
+      "name": "setPointTemp",
+      "writable": true,
+      "schema": "double"
+    }
+  ]
+}

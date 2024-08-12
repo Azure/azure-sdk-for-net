@@ -159,7 +159,7 @@ namespace Azure.Security.KeyVault.Keys
     }
     public partial class KeyClientOptions : Azure.Core.ClientOptions
     {
-        public KeyClientOptions(Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion.V7_4) { }
+        public KeyClientOptions(Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion.V7_5) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -169,6 +169,7 @@ namespace Azure.Security.KeyVault.Keys
             V7_2 = 2,
             V7_3 = 3,
             V7_4 = 4,
+            V7_5 = 5,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -252,6 +253,7 @@ namespace Azure.Security.KeyVault.Keys
         public bool? Enabled { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
         public bool? Exportable { get { throw null; } set { } }
+        public string HsmPlatform { get { throw null; } }
         public System.Uri Id { get { throw null; } }
         public bool Managed { get { throw null; } }
         public string Name { get { throw null; } }
@@ -427,7 +429,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     }
     public partial class CryptographyClientOptions : Azure.Core.ClientOptions
     {
-        public CryptographyClientOptions(Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion.V7_4) { }
+        public CryptographyClientOptions(Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion.V7_5) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
@@ -437,6 +439,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             V7_2 = 2,
             V7_3 = 3,
             V7_4 = 4,
+            V7_5 = 5,
         }
     }
     public partial class DecryptParameters

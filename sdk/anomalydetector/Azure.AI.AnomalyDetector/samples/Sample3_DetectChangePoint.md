@@ -51,7 +51,7 @@ Call the client's `DetectUnivariateChangePoint` method with the `ChangePointDete
 //detect
 Console.WriteLine("Detecting the change point in the series.");
 
-UnivariateChangePointDetectionResult result = client.DetectUnivariateChangePoint(request);
+UnivariateChangePointDetectionResult result = client.GetUnivariateClient().DetectUnivariateChangePoint(request);
 
 if (result.IsChangePoint.Contains(true))
 {

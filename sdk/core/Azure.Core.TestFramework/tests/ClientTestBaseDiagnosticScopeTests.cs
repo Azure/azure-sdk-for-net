@@ -116,7 +116,8 @@ namespace Azure.Core.TestFramework.Tests
         {
             private DiagnosticScope CreateScope(string method)
             {
-                DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Core.Tests", "random", true, false);
+                // intentionally does not suppress nested activities
+                DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Core.Tests", "random", true, false, true);
                 string activityName = $"{typeof(InvalidDiagnosticScopeTestClient).Name}.{method}";
                 DiagnosticScope scope = clientDiagnostics.CreateScope(activityName);
                 return scope;
@@ -135,8 +136,8 @@ namespace Azure.Core.TestFramework.Tests
                     "Azure.Core.Http.Request",
                     new DiagnosticListener("Azure.Core"),
                     null,
-                    ActivityExtensions.CreateActivitySource("Azure.Core.Http"),
-                    DiagnosticScope.ActivityKind.Client,
+                    new ActivitySource("Azure.Core.Http"),
+                    ActivityKind.Client,
                     false);
                 coreScope.Start();
             }

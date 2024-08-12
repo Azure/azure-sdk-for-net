@@ -326,6 +326,15 @@ namespace Azure.Storage.Blobs.Specialized
             _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
         }
 
+        internal BlockBlobClient(
+            Uri blobUri,
+            BlobClientConfiguration clientConfiguration,
+            ClientSideEncryptionOptions clientSideEncryption)
+            : base(blobUri, clientConfiguration, clientSideEncryption)
+        {
+            _blockBlobRestClient = BuildBlockBlobRestClient(blobUri);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockBlobClient"/>
         /// class.
@@ -537,7 +546,7 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 expectedContentLength: default,
                 options,
-                options.ProgressHandler,
+                options?.ProgressHandler,
                 async: false,
                 cancellationToken).EnsureCompleted();
         }
@@ -594,7 +603,7 @@ namespace Azure.Storage.Blobs.Specialized
                 content,
                 expectedContentLength: default,
                 options,
-                options.ProgressHandler,
+                options?.ProgressHandler,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -876,6 +885,12 @@ namespace Azure.Storage.Blobs.Specialized
                     content = content?.WithNoDispose().WithProgress(progressHandler);
 
                     ResponseWithHeaders<BlockBlobUploadHeaders> response;
+
+                    using DisposableBucket disposableBucket = new();
+                    if (ClientSideEncryption != default)
+                    {
+                        disposableBucket.Add(Shared.StorageExtensions.CreateClientSideEncryptionScope(ClientSideEncryption.EncryptionVersion));
+                    }
 
                     if (async)
                     {
@@ -2167,6 +2182,12 @@ namespace Azure.Storage.Blobs.Specialized
                     BlockLookupList blocks = new BlockLookupList() { Latest = base64BlockIds.ToList() };
 
                     ResponseWithHeaders<BlockBlobCommitBlockListHeaders> response;
+
+                    using DisposableBucket disposableBucket = new();
+                    if (ClientSideEncryption != default)
+                    {
+                        disposableBucket.Add(Shared.StorageExtensions.CreateClientSideEncryptionScope(ClientSideEncryption.EncryptionVersion));
+                    }
 
                     if (async)
                     {

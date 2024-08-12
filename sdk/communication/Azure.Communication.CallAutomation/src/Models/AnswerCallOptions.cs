@@ -37,14 +37,19 @@ namespace Azure.Communication.CallAutomation
         public MediaStreamingOptions MediaStreamingOptions { get; set; }
 
         /// <summary>
-        /// The endpoint URL of the Azure Cognitive Services resource attached
+        /// Live Transcription Configuration.
         /// </summary>
-        public Uri AzureCognitiveServicesEndpointUrl { get; set; }
+        public TranscriptionOptions TranscriptionOptions { get; set; }
+
+        /// <summary>
+        /// AI options for the call such as endpoint URI of the Azure Cognitive Services resource
+        /// </summary>
+        public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
 
         /// <summary>
         /// The identifier of the call automation entity which answers the call.
         /// </summary>
-        public CommunicationUserIdentifier AnsweredByIdentifier { get; set; }
+        public CommunicationUserIdentifier AnsweredBy { get; set; }
 
         /// <summary>
         /// The operation context.

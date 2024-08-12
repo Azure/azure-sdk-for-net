@@ -5,23 +5,56 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Container App Ingress configuration. </summary>
     public partial class ContainerAppIngressConfiguration
     {
-        /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIngressConfiguration"/>. </summary>
         public ContainerAppIngressConfiguration()
         {
             Traffic = new ChangeTrackingList<ContainerAppRevisionTrafficWeight>();
             CustomDomains = new ChangeTrackingList<ContainerAppCustomDomain>();
             IPSecurityRestrictions = new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>();
+            AdditionalPortMappings = new ChangeTrackingList<IngressPortMapping>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIngressConfiguration"/>. </summary>
         /// <param name="fqdn"> Hostname. </param>
         /// <param name="external"> Bool indicating if app exposes an external http endpoint. </param>
         /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>
@@ -34,7 +67,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="stickySessions"> Sticky Sessions for Single Revision Mode. </param>
         /// <param name="clientCertificateMode"> Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate. </param>
         /// <param name="corsPolicy"> CORS policy for container app. </param>
-        internal ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IList<ContainerAppRevisionTrafficWeight> traffic, IList<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, IngressStickySessions stickySessions, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy)
+        /// <param name="additionalPortMappings"> Settings to expose additional ports on container app. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IList<ContainerAppRevisionTrafficWeight> traffic, IList<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, IngressStickySessions stickySessions, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy, IList<IngressPortMapping> additionalPortMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fqdn = fqdn;
             External = external;
@@ -48,6 +83,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             StickySessions = stickySessions;
             ClientCertificateMode = clientCertificateMode;
             CorsPolicy = corsPolicy;
+            AdditionalPortMappings = additionalPortMappings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Hostname. </summary>
@@ -86,5 +123,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public ContainerAppIngressClientCertificateMode? ClientCertificateMode { get; set; }
         /// <summary> CORS policy for container app. </summary>
         public ContainerAppCorsPolicy CorsPolicy { get; set; }
+        /// <summary> Settings to expose additional ports on container app. </summary>
+        public IList<IngressPortMapping> AdditionalPortMappings { get; }
     }
 }

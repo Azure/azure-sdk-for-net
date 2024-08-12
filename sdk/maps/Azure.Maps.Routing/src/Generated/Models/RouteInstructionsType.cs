@@ -32,9 +32,9 @@ namespace Azure.Maps.Routing
         public static RouteInstructionsType Text { get; } = new RouteInstructionsType(TextValue);
         /// <summary>
         /// Returns raw instruction data with tagged human-readable messages to permit formatting. A human-readable message is built up from repeatable identified elements. These are tagged to allow client applications to format them correctly. The following message components are tagged when instructionsType=tagged: street, roadNumber, signpostText, exitNumber, roundaboutExitNumber.
-        /// 
+        ///
         /// Example of tagged 'Turn left' message:​
-        /// 
+        ///
         /// ```
         /// Turn left onto &lt;roadNumber&gt;A4&lt;/roadNumber&gt;/&lt;roadNumber&gt;E19&lt;/roadNumber&gt;
         /// towards &lt;signpostText&gt;Den Haag&lt;/signpostText&gt;
@@ -56,7 +56,7 @@ namespace Azure.Maps.Routing
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

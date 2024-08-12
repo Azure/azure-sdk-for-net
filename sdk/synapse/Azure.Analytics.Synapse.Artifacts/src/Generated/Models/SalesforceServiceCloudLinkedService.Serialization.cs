@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -62,12 +62,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(EnvironmentUrl))
             {
                 writer.WritePropertyName("environmentUrl"u8);
-                writer.WriteObjectValue(EnvironmentUrl);
+                writer.WriteObjectValue<object>(EnvironmentUrl);
             }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteObjectValue(Username);
+                writer.WriteObjectValue<object>(Username);
             }
             if (Optional.IsDefined(Password))
             {
@@ -82,23 +82,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
-                writer.WriteObjectValue(ApiVersion);
+                writer.WriteObjectValue<object>(ApiVersion);
             }
             if (Optional.IsDefined(ExtendedProperties))
             {
                 writer.WritePropertyName("extendedProperties"u8);
-                writer.WriteObjectValue(ExtendedProperties);
+                writer.WriteObjectValue<object>(ExtendedProperties);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -110,17 +110,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            Optional<object> environmentUrl = default;
-            Optional<object> username = default;
-            Optional<SecretBase> password = default;
-            Optional<SecretBase> securityToken = default;
-            Optional<object> apiVersion = default;
-            Optional<object> extendedProperties = default;
-            Optional<object> encryptedCredential = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
+            object environmentUrl = default;
+            object username = default;
+            SecretBase password = default;
+            SecretBase securityToken = default;
+            object apiVersion = default;
+            object extendedProperties = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -257,7 +257,36 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SalesforceServiceCloudLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, environmentUrl.Value, username.Value, password.Value, securityToken.Value, apiVersion.Value, extendedProperties.Value, encryptedCredential.Value);
+            return new SalesforceServiceCloudLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                environmentUrl,
+                username,
+                password,
+                securityToken,
+                apiVersion,
+                extendedProperties,
+                encryptedCredential);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SalesforceServiceCloudLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSalesforceServiceCloudLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class SalesforceServiceCloudLinkedServiceConverter : JsonConverter<SalesforceServiceCloudLinkedService>
@@ -266,6 +295,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override SalesforceServiceCloudLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

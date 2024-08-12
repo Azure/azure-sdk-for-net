@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PolicySettings : IUtf8JsonSerializable
+    public partial class PolicySettings : IUtf8JsonSerializable, IJsonModel<PolicySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<PolicySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicySettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(State))
             {
@@ -30,10 +41,25 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("requestBodyCheck"u8);
                 writer.WriteBooleanValue(RequestBodyCheck.Value);
             }
+            if (Optional.IsDefined(RequestBodyInspectLimitInKB))
+            {
+                writer.WritePropertyName("requestBodyInspectLimitInKB"u8);
+                writer.WriteNumberValue(RequestBodyInspectLimitInKB.Value);
+            }
+            if (Optional.IsDefined(RequestBodyEnforcement))
+            {
+                writer.WritePropertyName("requestBodyEnforcement"u8);
+                writer.WriteBooleanValue(RequestBodyEnforcement.Value);
+            }
             if (Optional.IsDefined(MaxRequestBodySizeInKb))
             {
                 writer.WritePropertyName("maxRequestBodySizeInKb"u8);
                 writer.WriteNumberValue(MaxRequestBodySizeInKb.Value);
+            }
+            if (Optional.IsDefined(FileUploadEnforcement))
+            {
+                writer.WritePropertyName("fileUploadEnforcement"u8);
+                writer.WriteBooleanValue(FileUploadEnforcement.Value);
             }
             if (Optional.IsDefined(FileUploadLimitInMb))
             {
@@ -50,22 +76,68 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("customBlockResponseBody"u8);
                 writer.WriteStringValue(CustomBlockResponseBody);
             }
+            if (Optional.IsDefined(LogScrubbing))
+            {
+                writer.WritePropertyName("logScrubbing"u8);
+                writer.WriteObjectValue(LogScrubbing, options);
+            }
+            if (Optional.IsDefined(JsChallengeCookieExpirationInMins))
+            {
+                writer.WritePropertyName("jsChallengeCookieExpirationInMins"u8);
+                writer.WriteNumberValue(JsChallengeCookieExpirationInMins.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PolicySettings DeserializePolicySettings(JsonElement element)
+        PolicySettings IJsonModel<PolicySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicySettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicySettings(document.RootElement, options);
+        }
+
+        internal static PolicySettings DeserializePolicySettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<WebApplicationFirewallEnabledState> state = default;
-            Optional<WebApplicationFirewallMode> mode = default;
-            Optional<bool> requestBodyCheck = default;
-            Optional<int> maxRequestBodySizeInKb = default;
-            Optional<int> fileUploadLimitInMb = default;
-            Optional<int> customBlockResponseStatusCode = default;
-            Optional<string> customBlockResponseBody = default;
+            WebApplicationFirewallEnabledState? state = default;
+            WebApplicationFirewallMode? mode = default;
+            bool? requestBodyCheck = default;
+            int? requestBodyInspectLimitInKB = default;
+            bool? requestBodyEnforcement = default;
+            int? maxRequestBodySizeInKb = default;
+            bool? fileUploadEnforcement = default;
+            int? fileUploadLimitInMb = default;
+            int? customBlockResponseStatusCode = default;
+            string customBlockResponseBody = default;
+            PolicySettingsLogScrubbing logScrubbing = default;
+            int? jsChallengeCookieExpirationInMins = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -95,6 +167,24 @@ namespace Azure.ResourceManager.Network.Models
                     requestBodyCheck = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("requestBodyInspectLimitInKB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requestBodyInspectLimitInKB = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("requestBodyEnforcement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requestBodyEnforcement = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("maxRequestBodySizeInKb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -102,6 +192,15 @@ namespace Azure.ResourceManager.Network.Models
                         continue;
                     }
                     maxRequestBodySizeInKb = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("fileUploadEnforcement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileUploadEnforcement = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("fileUploadLimitInMb"u8))
@@ -127,8 +226,75 @@ namespace Azure.ResourceManager.Network.Models
                     customBlockResponseBody = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("logScrubbing"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    logScrubbing = PolicySettingsLogScrubbing.DeserializePolicySettingsLogScrubbing(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("jsChallengeCookieExpirationInMins"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jsChallengeCookieExpirationInMins = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PolicySettings(Optional.ToNullable(state), Optional.ToNullable(mode), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadLimitInMb), Optional.ToNullable(customBlockResponseStatusCode), customBlockResponseBody.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PolicySettings(
+                state,
+                mode,
+                requestBodyCheck,
+                requestBodyInspectLimitInKB,
+                requestBodyEnforcement,
+                maxRequestBodySizeInKb,
+                fileUploadEnforcement,
+                fileUploadLimitInMb,
+                customBlockResponseStatusCode,
+                customBlockResponseBody,
+                logScrubbing,
+                jsChallengeCookieExpirationInMins,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PolicySettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PolicySettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PolicySettings IPersistableModel<PolicySettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePolicySettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicySettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PolicySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

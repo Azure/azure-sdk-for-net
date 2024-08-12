@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The properties associated with a Stream Analytics cluster. </summary>
     public partial class StreamAnalyticsClusterProperties
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterProperties"/>. </summary>
         public StreamAnalyticsClusterProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsClusterProperties"/>. </summary>
         /// <param name="createdOn"> The date this cluster was created. </param>
         /// <param name="clusterId"> Unique identifier for the cluster. </param>
         /// <param name="provisioningState"> The status of the cluster provisioning. The three terminal states are: Succeeded, Failed and Canceled. </param>
         /// <param name="capacityAllocated"> Represents the number of streaming units currently being used on the cluster. </param>
         /// <param name="capacityAssigned"> Represents the sum of the SUs of all streaming jobs associated with the cluster. If all of the jobs were running, this would be the capacity allocated. </param>
-        internal StreamAnalyticsClusterProperties(DateTimeOffset? createdOn, Guid? clusterId, StreamAnalyticsClusterProvisioningState? provisioningState, int? capacityAllocated, int? capacityAssigned)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamAnalyticsClusterProperties(DateTimeOffset? createdOn, Guid? clusterId, StreamAnalyticsClusterProvisioningState? provisioningState, int? capacityAllocated, int? capacityAssigned, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedOn = createdOn;
             ClusterId = clusterId;
             ProvisioningState = provisioningState;
             CapacityAllocated = capacityAllocated;
             CapacityAssigned = capacityAssigned;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The date this cluster was created. </summary>

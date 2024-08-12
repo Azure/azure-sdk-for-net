@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ElasticSan;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Resources;
 
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ElasticSansListByResourceGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2021-11-20-preview/examples/ElasticSans_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/ElasticSans_ListByResourceGroup_MaximumSet_Gen.json
             // this example is just showing the usage of "ElasticSans_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,8 +31,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "aaaaaaaaaaaaaaaaaa";
-            string resourceGroupName = "rgelasticsan";
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -60,7 +57,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ElasticSansListByResourceGroupMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2021-11-20-preview/examples/ElasticSans_ListByResourceGroup_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/ElasticSans_ListByResourceGroup_MinimumSet_Gen.json
             // this example is just showing the usage of "ElasticSans_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,8 +67,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "aaaaaaaaaaaaaaaaaa";
-            string resourceGroupName = "rgelasticsan";
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -96,7 +93,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ElasticSansCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2021-11-20-preview/examples/ElasticSans_Create_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/ElasticSans_Create_MaximumSet_Gen.json
             // this example is just showing the usage of "ElasticSans_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,8 +103,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "aaaaaaaaaaaaaaaaaa";
-            string resourceGroupName = "rgelasticsan";
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -115,19 +112,20 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanCollection collection = resourceGroupResource.GetElasticSans();
 
             // invoke the operation
-            string elasticSanName = "ti7q-k952-1qB3J_5";
-            ElasticSanData data = new ElasticSanData(new AzureLocation("aaaaaaaaaaaaaaaaaaaaaaaaaaa"), new ElasticSanSku(ElasticSanSkuName.PremiumLrs)
+            string elasticSanName = "elasticsanname";
+            ElasticSanData data = new ElasticSanData(new AzureLocation("France Central"), new ElasticSanSku(ElasticSanSkuName.PremiumLrs)
             {
                 Tier = ElasticSanSkuTier.Premium,
-            }, 26, 7)
+            }, 5, 25)
             {
                 AvailabilityZones =
 {
-"aaaaaaaaaaaaaaaaa"
+"1"
 },
+                PublicNetworkAccess = ElasticSanPublicNetworkAccess.Enabled,
                 Tags =
 {
-["key896"] = "aaaaaaaaaaaaaaaaaa",
+["key9316"] = "ihndtieqibtob",
 },
             };
             ArmOperation<ElasticSanResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, data);
@@ -145,7 +143,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ElasticSansCreateMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2021-11-20-preview/examples/ElasticSans_Create_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/ElasticSans_Create_MinimumSet_Gen.json
             // this example is just showing the usage of "ElasticSans_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,8 +153,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "aaaaaaaaaaaaaaaaaa";
-            string resourceGroupName = "rgelasticsan";
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -164,8 +162,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanCollection collection = resourceGroupResource.GetElasticSans();
 
             // invoke the operation
-            string elasticSanName = "ti7q-k952-1qB3J_5";
-            ElasticSanData data = new ElasticSanData(new AzureLocation("placeholder"), new ElasticSanSku(ElasticSanSkuName.PremiumLrs), 26, 7);
+            string elasticSanName = "elasticsanname";
+            ElasticSanData data = new ElasticSanData(new AzureLocation("France Central"), new ElasticSanSku(ElasticSanSkuName.PremiumLrs), 15, 27);
             ArmOperation<ElasticSanResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, data);
             ElasticSanResource result = lro.Value;
 
@@ -181,7 +179,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ElasticSansGetMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2021-11-20-preview/examples/ElasticSans_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/ElasticSans_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "ElasticSans_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -191,8 +189,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "aaaaaaaaaaaaaaaaaa";
-            string resourceGroupName = "rgelasticsan";
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -200,7 +198,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanCollection collection = resourceGroupResource.GetElasticSans();
 
             // invoke the operation
-            string elasticSanName = "ti7q-k952-1qB3J_5";
+            string elasticSanName = "elasticsanname";
             ElasticSanResource result = await collection.GetAsync(elasticSanName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -215,7 +213,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ElasticSansGetMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2021-11-20-preview/examples/ElasticSans_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/ElasticSans_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "ElasticSans_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -225,8 +223,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "aaaaaaaaaaaaaaaaaa";
-            string resourceGroupName = "rgelasticsan";
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -234,10 +232,52 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanCollection collection = resourceGroupResource.GetElasticSans();
 
             // invoke the operation
-            string elasticSanName = "ti7q-k952-1qB3J_5";
+            string elasticSanName = "elasticsanname";
             bool result = await collection.ExistsAsync(elasticSanName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // ElasticSans_Get_MaximumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ElasticSansGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/ElasticSans_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "ElasticSans_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ElasticSanResource
+            ElasticSanCollection collection = resourceGroupResource.GetElasticSans();
+
+            // invoke the operation
+            string elasticSanName = "elasticsanname";
+            NullableResponse<ElasticSanResource> response = await collection.GetIfExistsAsync(elasticSanName);
+            ElasticSanResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ElasticSanData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // ElasticSans_Get_MinimumSet_Gen
@@ -245,7 +285,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ElasticSansGetMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2021-11-20-preview/examples/ElasticSans_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/ElasticSans_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "ElasticSans_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -255,8 +295,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "aaaaaaaaaaaaaaaaaa";
-            string resourceGroupName = "rgelasticsan";
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -264,7 +304,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanCollection collection = resourceGroupResource.GetElasticSans();
 
             // invoke the operation
-            string elasticSanName = "ti7q-k952-1qB3J_5";
+            string elasticSanName = "elasticsanname";
             ElasticSanResource result = await collection.GetAsync(elasticSanName);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -279,7 +319,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ElasticSansGetMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2021-11-20-preview/examples/ElasticSans_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/ElasticSans_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "ElasticSans_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -289,8 +329,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "aaaaaaaaaaaaaaaaaa";
-            string resourceGroupName = "rgelasticsan";
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -298,10 +338,52 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanCollection collection = resourceGroupResource.GetElasticSans();
 
             // invoke the operation
-            string elasticSanName = "ti7q-k952-1qB3J_5";
+            string elasticSanName = "elasticsanname";
             bool result = await collection.ExistsAsync(elasticSanName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // ElasticSans_Get_MinimumSet_Gen
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ElasticSansGetMinimumSetGen()
+        {
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/stable/2023-01-01/examples/ElasticSans_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "ElasticSans_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subscriptionid";
+            string resourceGroupName = "resourcegroupname";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ElasticSanResource
+            ElasticSanCollection collection = resourceGroupResource.GetElasticSans();
+
+            // invoke the operation
+            string elasticSanName = "elasticsanname";
+            NullableResponse<ElasticSanResource> response = await collection.GetIfExistsAsync(elasticSanName);
+            ElasticSanResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ElasticSanData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

@@ -12,20 +12,20 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Represents a metric value. </summary>
     public partial class MetricValue
     {
-        /// <summary> Initializes a new instance of MetricValue. </summary>
-        /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
+        /// <summary> Initializes a new instance of <see cref="MetricValue"/>. </summary>
+        /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
         internal MetricValue(DateTimeOffset timeStamp)
         {
             TimeStamp = timeStamp;
         }
 
-        /// <summary> Initializes a new instance of MetricValue. </summary>
-        /// <param name="timeStamp"> the timestamp for the metric value in ISO 8601 format. </param>
-        /// <param name="average"> the average value in the time range. </param>
-        /// <param name="minimum"> the least value in the time range. </param>
-        /// <param name="maximum"> the greatest value in the time range. </param>
-        /// <param name="total"> the sum of all of the values in the time range. </param>
-        /// <param name="count"> the number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
+        /// <summary> Initializes a new instance of <see cref="MetricValue"/>. </summary>
+        /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
+        /// <param name="average"> The average value in the time range. </param>
+        /// <param name="minimum"> The least value in the time range. </param>
+        /// <param name="maximum"> The greatest value in the time range. </param>
+        /// <param name="total"> The sum of all of the values in the time range. </param>
+        /// <param name="count"> The number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
         internal MetricValue(DateTimeOffset timeStamp, double? average, double? minimum, double? maximum, double? total, double? count)
         {
             TimeStamp = timeStamp;
@@ -36,17 +36,17 @@ namespace Azure.Monitor.Query.Models
             Count = count;
         }
 
-        /// <summary> the timestamp for the metric value in ISO 8601 format. </summary>
+        /// <summary> The timestamp for the metric value in ISO 8601 format. </summary>
         public DateTimeOffset TimeStamp { get; }
-        /// <summary> the average value in the time range. </summary>
+        /// <summary> The average value in the time range. </summary>
         public double? Average { get; }
-        /// <summary> the least value in the time range. </summary>
+        /// <summary> The least value in the time range. </summary>
         public double? Minimum { get; }
-        /// <summary> the greatest value in the time range. </summary>
+        /// <summary> The greatest value in the time range. </summary>
         public double? Maximum { get; }
-        /// <summary> the sum of all of the values in the time range. </summary>
+        /// <summary> The sum of all of the values in the time range. </summary>
         public double? Total { get; }
-        /// <summary> the number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </summary>
+        /// <summary> The number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </summary>
         public double? Count { get; }
     }
 }

@@ -6,27 +6,49 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_ModelInference
+    public partial class Samples_ModelInference
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetBiomassModelJob()
+        public void Example_GetBiomassModelJob_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            Response response = client.GetBiomassModelJob("<jobId>");
+            Response response = client.GetBiomassModelJob("<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("boundaryId").ToString());
+            Console.WriteLine(result.GetProperty("modelVersion").ToString());
+            Console.WriteLine(result.GetProperty("cropName").ToString());
+            Console.WriteLine(result.GetProperty("plantingStartDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+            Console.WriteLine(result.GetProperty("weatherExtensionId").ToString());
+            Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+            Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+            Console.WriteLine(result.GetProperty("imageResolution").ToString());
+            Console.WriteLine(result.GetProperty("imageFormat").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetBiomassModelJob_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
+
+            Response response = await client.GetBiomassModelJobAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -46,10 +68,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetBiomassModelJob_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            Response response = client.GetBiomassModelJob("<jobId>");
+            Response response = client.GetBiomassModelJob("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -76,40 +99,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetBiomassModelJob_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
-
-            Response response = await client.GetBiomassModelJobAsync("<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("boundaryId").ToString());
-            Console.WriteLine(result.GetProperty("modelVersion").ToString());
-            Console.WriteLine(result.GetProperty("cropName").ToString());
-            Console.WriteLine(result.GetProperty("plantingStartDateTime").ToString());
-            Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
-            Console.WriteLine(result.GetProperty("weatherExtensionId").ToString());
-            Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
-            Console.WriteLine(result.GetProperty("satelliteSource").ToString());
-            Console.WriteLine(result.GetProperty("imageResolution").ToString());
-            Console.WriteLine(result.GetProperty("imageFormat").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetBiomassModelJob_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            Response response = await client.GetBiomassModelJobAsync("<jobId>");
+            Response response = await client.GetBiomassModelJobAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -136,17 +137,40 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSensorPlacementModelJob()
+        public void Example_GetSensorPlacementModelJob_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            Response response = client.GetSensorPlacementModelJob("<jobId>");
+            Response response = client.GetSensorPlacementModelJob("<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("boundaryId").ToString());
+            Console.WriteLine(result.GetProperty("modelVersion").ToString());
+            Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+            Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+            Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+            Console.WriteLine(result.GetProperty("sensorType").ToString());
+            Console.WriteLine(result.GetProperty("isRanked").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSensorPlacementModelJob_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
+
+            Response response = await client.GetSensorPlacementModelJobAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -164,10 +188,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSensorPlacementModelJob_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            Response response = client.GetSensorPlacementModelJob("<jobId>");
+            Response response = client.GetSensorPlacementModelJob("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -192,38 +217,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSensorPlacementModelJob_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
-
-            Response response = await client.GetSensorPlacementModelJobAsync("<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("boundaryId").ToString());
-            Console.WriteLine(result.GetProperty("modelVersion").ToString());
-            Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
-            Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
-            Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
-            Console.WriteLine(result.GetProperty("satelliteSource").ToString());
-            Console.WriteLine(result.GetProperty("sensorType").ToString());
-            Console.WriteLine(result.GetProperty("isRanked").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSensorPlacementModelJob_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            Response response = await client.GetSensorPlacementModelJobAsync("<jobId>");
+            Response response = await client.GetSensorPlacementModelJobAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -248,17 +253,45 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetSoilMoistureModelJob()
+        public void Example_GetSoilMoistureModelJob_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            Response response = client.GetSoilMoistureModelJob("<jobId>");
+            Response response = client.GetSoilMoistureModelJob("<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("boundaryId").ToString());
+            Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
+            Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
+            Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+            Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+            Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+            Console.WriteLine(result.GetProperty("imageResolution").ToString());
+            Console.WriteLine(result.GetProperty("imageFormat").ToString());
+            Console.WriteLine(result.GetProperty("modelVersion").ToString());
+            Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("sensorMeasurement").ToString());
+            Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("minProperty").ToString());
+            Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("maxProperty").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetSoilMoistureModelJob_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
+
+            Response response = await client.GetSoilMoistureModelJobAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -281,10 +314,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetSoilMoistureModelJob_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            Response response = client.GetSoilMoistureModelJob("<jobId>");
+            Response response = client.GetSoilMoistureModelJob("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -314,43 +348,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetSoilMoistureModelJob_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
-
-            Response response = await client.GetSoilMoistureModelJobAsync("<jobId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("boundaryId").ToString());
-            Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
-            Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-            Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
-            Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
-            Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
-            Console.WriteLine(result.GetProperty("satelliteSource").ToString());
-            Console.WriteLine(result.GetProperty("imageResolution").ToString());
-            Console.WriteLine(result.GetProperty("imageFormat").ToString());
-            Console.WriteLine(result.GetProperty("modelVersion").ToString());
-            Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("sensorMeasurement").ToString());
-            Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("minProperty").ToString());
-            Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("maxProperty").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_GetSoilMoistureModelJob_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            Response response = await client.GetSoilMoistureModelJobAsync("<jobId>");
+            Response response = await client.GetSoilMoistureModelJobAsync("<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
@@ -380,17 +389,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateBiomassModelJob()
+        public void Example_CreateBiomassModelJob_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -401,13 +411,51 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 weatherExtensionId = "<weatherExtensionId>",
                 satelliteProvider = "Microsoft",
                 satelliteSource = "Sentinel_2_L2A",
-                imageResolution = 123.45d,
+                imageResolution = 123.45,
                 imageFormat = "TIF",
-            };
-
-            var operation = client.CreateBiomassModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = client.CreateBiomassModelJob(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("boundaryId").ToString());
+            Console.WriteLine(result.GetProperty("modelVersion").ToString());
+            Console.WriteLine(result.GetProperty("cropName").ToString());
+            Console.WriteLine(result.GetProperty("plantingStartDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+            Console.WriteLine(result.GetProperty("weatherExtensionId").ToString());
+            Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+            Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+            Console.WriteLine(result.GetProperty("imageResolution").ToString());
+            Console.WriteLine(result.GetProperty("imageFormat").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateBiomassModelJob_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                partyId = "<partyId>",
+                boundaryId = "<boundaryId>",
+                modelVersion = "<modelVersion>",
+                cropName = "Corn",
+                plantingStartDateTime = "2022-05-10T18:57:31.2311892Z",
+                inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
+                weatherExtensionId = "<weatherExtensionId>",
+                satelliteProvider = "Microsoft",
+                satelliteSource = "Sentinel_2_L2A",
+                imageResolution = 123.45,
+                imageFormat = "TIF",
+            });
+            Operation<BinaryData> operation = await client.CreateBiomassModelJobAsync(WaitUntil.Completed, "<jobId>", content);
+            BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -426,10 +474,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateBiomassModelJob_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -440,19 +489,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 weatherExtensionId = "<weatherExtensionId>",
                 satelliteProvider = "Microsoft",
                 satelliteSource = "Sentinel_2_L2A",
-                imageResolution = 123.45d,
+                imageResolution = 123.45,
                 imageFormat = "TIF",
                 name = "<name>",
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            var operation = client.CreateBiomassModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = client.CreateBiomassModelJob(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -478,56 +526,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateBiomassModelJob_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
-
-            var data = new
-            {
-                partyId = "<partyId>",
-                boundaryId = "<boundaryId>",
-                modelVersion = "<modelVersion>",
-                cropName = "Corn",
-                plantingStartDateTime = "2022-05-10T18:57:31.2311892Z",
-                inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
-                weatherExtensionId = "<weatherExtensionId>",
-                satelliteProvider = "Microsoft",
-                satelliteSource = "Sentinel_2_L2A",
-                imageResolution = 123.45d,
-                imageFormat = "TIF",
-            };
-
-            var operation = await client.CreateBiomassModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
-            BinaryData responseData = operation.Value;
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("boundaryId").ToString());
-            Console.WriteLine(result.GetProperty("modelVersion").ToString());
-            Console.WriteLine(result.GetProperty("cropName").ToString());
-            Console.WriteLine(result.GetProperty("plantingStartDateTime").ToString());
-            Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
-            Console.WriteLine(result.GetProperty("weatherExtensionId").ToString());
-            Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
-            Console.WriteLine(result.GetProperty("satelliteSource").ToString());
-            Console.WriteLine(result.GetProperty("imageResolution").ToString());
-            Console.WriteLine(result.GetProperty("imageFormat").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateBiomassModelJob_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -538,19 +548,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 weatherExtensionId = "<weatherExtensionId>",
                 satelliteProvider = "Microsoft",
                 satelliteSource = "Sentinel_2_L2A",
-                imageResolution = 123.45d,
+                imageResolution = 123.45,
                 imageFormat = "TIF",
                 name = "<name>",
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            var operation = await client.CreateBiomassModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = await client.CreateBiomassModelJobAsync(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -576,17 +585,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateSensorPlacementModelJob()
+        public void Example_CreateSensorPlacementModelJob_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -597,11 +607,45 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 satelliteSource = "Sentinel_2_L2A",
                 sensorType = "<sensorType>",
                 isRanked = true,
-            };
-
-            var operation = client.CreateSensorPlacementModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = client.CreateSensorPlacementModelJob(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("boundaryId").ToString());
+            Console.WriteLine(result.GetProperty("modelVersion").ToString());
+            Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+            Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+            Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+            Console.WriteLine(result.GetProperty("sensorType").ToString());
+            Console.WriteLine(result.GetProperty("isRanked").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateSensorPlacementModelJob_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                partyId = "<partyId>",
+                boundaryId = "<boundaryId>",
+                modelVersion = "<modelVersion>",
+                inferenceStartDateTime = "2022-05-10T18:57:31.2311892Z",
+                inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
+                satelliteProvider = "Microsoft",
+                satelliteSource = "Sentinel_2_L2A",
+                sensorType = "<sensorType>",
+                isRanked = true,
+            });
+            Operation<BinaryData> operation = await client.CreateSensorPlacementModelJobAsync(WaitUntil.Completed, "<jobId>", content);
+            BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -618,10 +662,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateSensorPlacementModelJob_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -636,13 +681,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            var operation = client.CreateSensorPlacementModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = client.CreateSensorPlacementModelJob(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -666,52 +710,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateSensorPlacementModelJob_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
-
-            var data = new
-            {
-                partyId = "<partyId>",
-                boundaryId = "<boundaryId>",
-                modelVersion = "<modelVersion>",
-                inferenceStartDateTime = "2022-05-10T18:57:31.2311892Z",
-                inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
-                satelliteProvider = "Microsoft",
-                satelliteSource = "Sentinel_2_L2A",
-                sensorType = "<sensorType>",
-                isRanked = true,
-            };
-
-            var operation = await client.CreateSensorPlacementModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
-            BinaryData responseData = operation.Value;
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("boundaryId").ToString());
-            Console.WriteLine(result.GetProperty("modelVersion").ToString());
-            Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
-            Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
-            Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
-            Console.WriteLine(result.GetProperty("satelliteSource").ToString());
-            Console.WriteLine(result.GetProperty("sensorType").ToString());
-            Console.WriteLine(result.GetProperty("isRanked").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateSensorPlacementModelJob_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -726,13 +736,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            var operation = await client.CreateSensorPlacementModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = await client.CreateSensorPlacementModelJobAsync(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -756,17 +765,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateSoilMoistureModelJob()
+        public void Example_CreateSoilMoistureModelJob_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -776,7 +786,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
                 satelliteProvider = "Microsoft",
                 satelliteSource = "Sentinel_2_L2A",
-                imageResolution = 123.45d,
+                imageResolution = 123.45,
                 imageFormat = "TIF",
                 modelVersion = "<modelVersion>",
                 sensorDefinition = new
@@ -785,11 +795,58 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                     minProperty = "<minProperty>",
                     maxProperty = "<maxProperty>",
                 },
-            };
-
-            var operation = client.CreateSoilMoistureModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = client.CreateSoilMoistureModelJob(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("partyId").ToString());
+            Console.WriteLine(result.GetProperty("boundaryId").ToString());
+            Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
+            Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
+            Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
+            Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
+            Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
+            Console.WriteLine(result.GetProperty("satelliteSource").ToString());
+            Console.WriteLine(result.GetProperty("imageResolution").ToString());
+            Console.WriteLine(result.GetProperty("imageFormat").ToString());
+            Console.WriteLine(result.GetProperty("modelVersion").ToString());
+            Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("sensorMeasurement").ToString());
+            Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("minProperty").ToString());
+            Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("maxProperty").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_CreateSoilMoistureModelJob_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                partyId = "<partyId>",
+                boundaryId = "<boundaryId>",
+                sensorDataModelId = "<sensorDataModelId>",
+                sensorPartnerId = "<sensorPartnerId>",
+                inferenceStartDateTime = "2022-05-10T18:57:31.2311892Z",
+                inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
+                satelliteProvider = "Microsoft",
+                satelliteSource = "Sentinel_2_L2A",
+                imageResolution = 123.45,
+                imageFormat = "TIF",
+                modelVersion = "<modelVersion>",
+                sensorDefinition = new
+                {
+                    sensorMeasurement = "<sensorMeasurement>",
+                    minProperty = "<minProperty>",
+                    maxProperty = "<maxProperty>",
+                },
+            });
+            Operation<BinaryData> operation = await client.CreateSoilMoistureModelJobAsync(WaitUntil.Completed, "<jobId>", content);
+            BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -811,10 +868,11 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_CreateSoilMoistureModelJob_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -824,7 +882,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
                 satelliteProvider = "Microsoft",
                 satelliteSource = "Sentinel_2_L2A",
-                imageResolution = 123.45d,
+                imageResolution = 123.45,
                 imageFormat = "TIF",
                 modelVersion = "<modelVersion>",
                 sensorDefinition = new
@@ -837,13 +895,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            var operation = client.CreateSoilMoistureModelJob(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = client.CreateSoilMoistureModelJob(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -872,65 +929,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateSoilMoistureModelJob_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
-
-            var data = new
-            {
-                partyId = "<partyId>",
-                boundaryId = "<boundaryId>",
-                sensorDataModelId = "<sensorDataModelId>",
-                sensorPartnerId = "<sensorPartnerId>",
-                inferenceStartDateTime = "2022-05-10T18:57:31.2311892Z",
-                inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
-                satelliteProvider = "Microsoft",
-                satelliteSource = "Sentinel_2_L2A",
-                imageResolution = 123.45d,
-                imageFormat = "TIF",
-                modelVersion = "<modelVersion>",
-                sensorDefinition = new
-                {
-                    sensorMeasurement = "<sensorMeasurement>",
-                    minProperty = "<minProperty>",
-                    maxProperty = "<maxProperty>",
-                },
-            };
-
-            var operation = await client.CreateSoilMoistureModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
-            BinaryData responseData = operation.Value;
-            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-            Console.WriteLine(result.GetProperty("partyId").ToString());
-            Console.WriteLine(result.GetProperty("boundaryId").ToString());
-            Console.WriteLine(result.GetProperty("sensorDataModelId").ToString());
-            Console.WriteLine(result.GetProperty("sensorPartnerId").ToString());
-            Console.WriteLine(result.GetProperty("inferenceStartDateTime").ToString());
-            Console.WriteLine(result.GetProperty("inferenceEndDateTime").ToString());
-            Console.WriteLine(result.GetProperty("satelliteProvider").ToString());
-            Console.WriteLine(result.GetProperty("satelliteSource").ToString());
-            Console.WriteLine(result.GetProperty("imageResolution").ToString());
-            Console.WriteLine(result.GetProperty("imageFormat").ToString());
-            Console.WriteLine(result.GetProperty("modelVersion").ToString());
-            Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("sensorMeasurement").ToString());
-            Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("minProperty").ToString());
-            Console.WriteLine(result.GetProperty("sensorDefinition").GetProperty("maxProperty").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Example_CreateSoilMoistureModelJob_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetModelInferenceClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            ModelInference client = new FarmBeatsClient(endpoint, credential).GetModelInferenceClient();
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -940,7 +950,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 inferenceEndDateTime = "2022-05-10T18:57:31.2311892Z",
                 satelliteProvider = "Microsoft",
                 satelliteSource = "Sentinel_2_L2A",
-                imageResolution = 123.45d,
+                imageResolution = 123.45,
                 imageFormat = "TIF",
                 modelVersion = "<modelVersion>",
                 sensorDefinition = new
@@ -953,13 +963,12 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 description = "<description>",
                 properties = new
                 {
-                    key = new { },
+                    key = new object(),
                 },
-            };
-
-            var operation = await client.CreateSoilMoistureModelJobAsync(WaitUntil.Completed, "<jobId>", RequestContent.Create(data));
-
+            });
+            Operation<BinaryData> operation = await client.CreateSoilMoistureModelJobAsync(WaitUntil.Completed, "<jobId>", content);
             BinaryData responseData = operation.Value;
+
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("partyId").ToString());
             Console.WriteLine(result.GetProperty("boundaryId").ToString());
@@ -988,7 +997,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("description").ToString());
             Console.WriteLine(result.GetProperty("createdBy").ToString());
             Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-            Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
         }
     }
 }

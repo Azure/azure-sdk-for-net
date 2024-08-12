@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The DatadogInstallMethod. </summary>
     public partial class DatadogInstallMethod
     {
-        /// <summary> Initializes a new instance of DatadogInstallMethod. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatadogInstallMethod"/>. </summary>
         internal DatadogInstallMethod()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogInstallMethod. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogInstallMethod"/>. </summary>
         /// <param name="tool"> The tool. </param>
         /// <param name="toolVersion"> The tool version. </param>
         /// <param name="installerVersion"> The installer version. </param>
-        internal DatadogInstallMethod(string tool, string toolVersion, string installerVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogInstallMethod(string tool, string toolVersion, string installerVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tool = tool;
             ToolVersion = toolVersion;
             InstallerVersion = installerVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The tool. </summary>

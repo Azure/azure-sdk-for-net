@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
     public class EventGridManagementTestBase : ManagementRecordedTestBase<EventGridManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
-        public SubscriptionResource DefaultSubscription { get; private set; }
+        public Azure.ResourceManager.Resources.SubscriptionResource DefaultSubscription { get; private set; }
         public AzureLocation DefaultLocation => AzureLocation.EastUS;
         public const string  ResourceGroupNamePrefix = "EventGridRG";
 
@@ -43,7 +43,21 @@ namespace Azure.ResourceManager.EventGrid.Tests
             return lro.Value;
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
+        protected async Task<ResourceGroupResource> GetResourceGroupAsync(Azure.ResourceManager.Resources.SubscriptionResource subscription, string rgName)
+        {
+            var lro = await subscription.GetResourceGroups().GetAsync(rgName);
+            return lro.Value;
+        }
+
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(AzureLocation location)
+        {
+            string rgName = Recording.GenerateAssetName(ResourceGroupNamePrefix);
+            ResourceGroupData input = new ResourceGroupData(location);
+            var lro = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            return lro.Value;
+        }
+
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(Azure.ResourceManager.Resources.SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
@@ -55,6 +69,15 @@ namespace Azure.ResourceManager.EventGrid.Tests
         {
             var data = new PartnerRegistrationData(new AzureLocation("Global"));
             var registration = await resourceGroup.GetPartnerRegistrations().CreateOrUpdateAsync(WaitUntil.Completed, registrationName, data);
+            return registration.Value;
+        }
+
+        protected async Task<PartnerConfigurationResource> CreatePartnerConfiguration(ResourceGroupResource resourceGroup, string registrationName)
+        {
+            var data = new PartnerConfigurationData(new AzureLocation("Global"));
+            PartnerAuthorization partnerAuthorization = new PartnerAuthorization();
+            data.PartnerAuthorization = partnerAuthorization;
+            var registration = await resourceGroup.GetPartnerConfiguration().CreateOrUpdateAsync(WaitUntil.Completed, data);
             return registration.Value;
         }
 

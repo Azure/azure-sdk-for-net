@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> and their operations.
-    /// Each <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotTriggeredWebJobResource" />.
-    /// To get a <see cref="WebSiteSlotTriggeredWebJobHistoryCollection" /> instance call the GetWebSiteSlotTriggeredWebJobHistories method from an instance of <see cref="WebSiteSlotTriggeredWebJobResource" />.
+    /// A class representing a collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource"/> and their operations.
+    /// Each <see cref="WebSiteSlotTriggeredWebJobHistoryResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotTriggeredWebJobResource"/>.
+    /// To get a <see cref="WebSiteSlotTriggeredWebJobHistoryCollection"/> instance call the GetWebSiteSlotTriggeredWebJobHistories method from an instance of <see cref="WebSiteSlotTriggeredWebJobResource"/>.
     /// </summary>
     public partial class WebSiteSlotTriggeredWebJobHistoryCollection : ArmCollection, IEnumerable<WebSiteSlotTriggeredWebJobHistoryResource>, IAsyncEnumerable<WebSiteSlotTriggeredWebJobHistoryResource>
     {
@@ -57,11 +56,19 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_GetTriggeredWebJobHistory</description>
+        /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,7 +84,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistorySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, id, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebSiteSlotTriggeredWebJobHistoryResource(Client, response.Value), response.GetRawResponse());
@@ -94,11 +101,19 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_GetTriggeredWebJobHistory</description>
+        /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,7 +129,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken);
+                var response = _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistorySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, id, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebSiteSlotTriggeredWebJobHistoryResource(Client, response.Value), response.GetRawResponse());
@@ -131,21 +146,29 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_ListTriggeredWebJobHistory</description>
+        /// <description>WebApps_ListTriggeredWebJobHistorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteSlotTriggeredWebJobHistoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotTriggeredWebJobHistoryResource(Client, TriggeredJobHistoryData.DeserializeTriggeredJobHistoryData(e)), _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, "WebSiteSlotTriggeredWebJobHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotTriggeredWebJobHistoryResource(Client, TriggeredJobHistoryData.DeserializeTriggeredJobHistoryData(e)), _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, "WebSiteSlotTriggeredWebJobHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -153,21 +176,29 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_ListTriggeredWebJobHistory</description>
+        /// <description>WebApps_ListTriggeredWebJobHistorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteSlotTriggeredWebJobHistoryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistoryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotTriggeredWebJobHistoryResource(Client, TriggeredJobHistoryData.DeserializeTriggeredJobHistoryData(e)), _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, "WebSiteSlotTriggeredWebJobHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebSiteSlotTriggeredWebJobHistoryResource(Client, TriggeredJobHistoryData.DeserializeTriggeredJobHistoryData(e)), _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics, Pipeline, "WebSiteSlotTriggeredWebJobHistoryCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,11 +206,19 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_GetTriggeredWebJobHistory</description>
+        /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,7 +234,7 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = await _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistoryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistorySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -210,11 +249,19 @@ namespace Azure.ResourceManager.AppService
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_GetTriggeredWebJobHistory</description>
+        /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,8 +277,98 @@ namespace Azure.ResourceManager.AppService
             scope.Start();
             try
             {
-                var response = _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistory(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken);
+                var response = _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistorySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> History ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public virtual async Task<NullableResponse<WebSiteSlotTriggeredWebJobHistoryResource>> GetIfExistsAsync(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using var scope = _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobHistoryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistorySlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteSlotTriggeredWebJobHistoryResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotTriggeredWebJobHistoryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/triggeredwebjobs/{webJobName}/history/{id}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="id"> History ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public virtual NullableResponse<WebSiteSlotTriggeredWebJobHistoryResource> GetIfExists(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            using var scope = _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobHistoryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.GetTriggeredWebJobHistorySlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, id, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WebSiteSlotTriggeredWebJobHistoryResource>(response.GetRawResponse());
+                return Response.FromValue(new WebSiteSlotTriggeredWebJobHistoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

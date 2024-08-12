@@ -14,6 +14,8 @@ namespace Azure.MixedReality.RemoteRendering.Tests
         public RemoteRenderingLiveTests(bool isAsync) :
             base(isAsync/*, RecordedTestMode.Record*/)
         {
+            // TODO (39914): enable after Azure.MixedReality.Authentication is released
+            TestDiagnostics = false;
         }
 
         [RecordedTest]
@@ -116,9 +118,10 @@ namespace Azure.MixedReality.RemoteRendering.Tests
             AssetConversion conversion = await conversionOperation.WaitForCompletionAsync();
             Assert.AreEqual(AssetConversionStatus.Failed, conversion.Status);
             Assert.IsNotNull(conversion.Error);
-            // Invalid input provided. Check logs in output container for details.
-            Assert.IsTrue(conversion.Error.Message.ToLower().Contains("invalid input"));
-            Assert.IsTrue(conversion.Error.Message.ToLower().Contains("logs"));
+            Assert.AreEqual(conversion.Error.Code, "InputContainerError");
+            // Message: "Could not find the asset file in the storage account. Please make sure all paths and names are correct and the file is uploaded to storage."
+            Assert.IsNotEmpty(conversion.Error.Message);
+            Assert.IsTrue(conversion.Error.Message.Contains("Could not find the asset file in the storage account"));
         }
 
         [RecordedTest]

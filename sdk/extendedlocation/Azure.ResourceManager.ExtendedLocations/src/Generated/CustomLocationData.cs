@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ExtendedLocations.Models;
@@ -18,14 +19,46 @@ namespace Azure.ResourceManager.ExtendedLocations
     /// </summary>
     public partial class CustomLocationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of CustomLocationData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CustomLocationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public CustomLocationData(AzureLocation location) : base(location)
         {
             ClusterExtensionIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of CustomLocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomLocationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -40,7 +73,8 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <param name="hostType"> Type of host the Custom Locations is referencing (Kubernetes, etc...). </param>
         /// <param name="namespace"> Kubernetes namespace that will be created on the specified cluster. </param>
         /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
-        internal CustomLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, CustomLocationAuthentication authentication, IList<ResourceIdentifier> clusterExtensionIds, string displayName, ResourceIdentifier hostResourceId, CustomLocationHostType? hostType, string @namespace, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CustomLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, CustomLocationAuthentication authentication, IList<ResourceIdentifier> clusterExtensionIds, string displayName, ResourceIdentifier hostResourceId, CustomLocationHostType? hostType, string @namespace, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Authentication = authentication;
@@ -50,6 +84,12 @@ namespace Azure.ResourceManager.ExtendedLocations
             HostType = hostType;
             Namespace = @namespace;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomLocationData"/> for deserialization. </summary>
+        internal CustomLocationData()
+        {
         }
 
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned, None. </summary>

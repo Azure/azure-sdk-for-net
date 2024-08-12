@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{DDFACA99-7500-429F-AB64-3C7173DC4D32}") = "Azure.ResourceManager.StorageSync", "src\Azure.ResourceManager.StorageSync.csproj", "{35C343F3-55C6-471C-93F1-3379438842D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.StorageSync", "src\Azure.ResourceManager.StorageSync.csproj", "{35C343F3-55C6-471C-93F1-3379438842D6}"
 EndProject
-Project("{DDFACA99-7500-429F-AB64-3C7173DC4D32}") = "Azure.ResourceManager.StorageSync.Tests", "tests\Azure.ResourceManager.StorageSync.Tests.csproj", "{2A1B2CC7-27EB-43E7-9272-4E195D506E93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.StorageSync.Tests", "tests\Azure.ResourceManager.StorageSync.Tests.csproj", "{2A1B2CC7-27EB-43E7-9272-4E195D506E93}"
 EndProject
-Project("{DDFACA99-7500-429F-AB64-3C7173DC4D32}") = "Azure.ResourceManager.StorageSync.Samples", "samples\Azure.ResourceManager.StorageSync.Samples.csproj", "{6B732188-445C-49D8-A6C8-CED748299128}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.StorageSync.Samples", "samples\Azure.ResourceManager.StorageSync.Samples.csproj", "{6B732188-445C-49D8-A6C8-CED748299128}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {C825AB38-D20E-47B8-8AFD-26F5BC81084E}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{2A1B2CC7-27EB-43E7-9272-4E195D506E93}.Release|x64.Build.0 = Release|Any CPU
 		{2A1B2CC7-27EB-43E7-9272-4E195D506E93}.Release|x86.ActiveCfg = Release|Any CPU
 		{2A1B2CC7-27EB-43E7-9272-4E195D506E93}.Release|x86.Build.0 = Release|Any CPU
+		{6B732188-445C-49D8-A6C8-CED748299128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B732188-445C-49D8-A6C8-CED748299128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B732188-445C-49D8-A6C8-CED748299128}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6B732188-445C-49D8-A6C8-CED748299128}.Debug|x64.Build.0 = Debug|Any CPU
+		{6B732188-445C-49D8-A6C8-CED748299128}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6B732188-445C-49D8-A6C8-CED748299128}.Debug|x86.Build.0 = Debug|Any CPU
+		{6B732188-445C-49D8-A6C8-CED748299128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B732188-445C-49D8-A6C8-CED748299128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B732188-445C-49D8-A6C8-CED748299128}.Release|x64.ActiveCfg = Release|Any CPU
+		{6B732188-445C-49D8-A6C8-CED748299128}.Release|x64.Build.0 = Release|Any CPU
+		{6B732188-445C-49D8-A6C8-CED748299128}.Release|x86.ActiveCfg = Release|Any CPU
+		{6B732188-445C-49D8-A6C8-CED748299128}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C825AB38-D20E-47B8-8AFD-26F5BC81084E}
 	EndGlobalSection
 EndGlobal

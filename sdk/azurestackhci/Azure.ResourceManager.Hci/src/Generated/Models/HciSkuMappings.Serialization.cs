@@ -5,16 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciSkuMappings : IUtf8JsonSerializable
+    public partial class HciSkuMappings : IUtf8JsonSerializable, IJsonModel<HciSkuMappings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciSkuMappings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HciSkuMappings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HciSkuMappings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HciSkuMappings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CatalogPlanId))
             {
@@ -36,18 +48,49 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HciSkuMappings DeserializeHciSkuMappings(JsonElement element)
+        HciSkuMappings IJsonModel<HciSkuMappings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HciSkuMappings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HciSkuMappings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHciSkuMappings(document.RootElement, options);
+        }
+
+        internal static HciSkuMappings DeserializeHciSkuMappings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> catalogPlanId = default;
-            Optional<string> marketplaceSkuId = default;
-            Optional<IList<string>> marketplaceSkuVersions = default;
+            string catalogPlanId = default;
+            string marketplaceSkuId = default;
+            IList<string> marketplaceSkuVersions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("catalogPlanId"u8))
@@ -74,8 +117,143 @@ namespace Azure.ResourceManager.Hci.Models
                     marketplaceSkuVersions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HciSkuMappings(catalogPlanId.Value, marketplaceSkuId.Value, Optional.ToList(marketplaceSkuVersions));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HciSkuMappings(catalogPlanId, marketplaceSkuId, marketplaceSkuVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CatalogPlanId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  catalogPlanId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CatalogPlanId))
+                {
+                    builder.Append("  catalogPlanId: ");
+                    if (CatalogPlanId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CatalogPlanId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CatalogPlanId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MarketplaceSkuId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  marketplaceSkuId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MarketplaceSkuId))
+                {
+                    builder.Append("  marketplaceSkuId: ");
+                    if (MarketplaceSkuId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MarketplaceSkuId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MarketplaceSkuId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MarketplaceSkuVersions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  marketplaceSkuVersions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MarketplaceSkuVersions))
+                {
+                    if (MarketplaceSkuVersions.Any())
+                    {
+                        builder.Append("  marketplaceSkuVersions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in MarketplaceSkuVersions)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<HciSkuMappings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciSkuMappings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(HciSkuMappings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HciSkuMappings IPersistableModel<HciSkuMappings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciSkuMappings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHciSkuMappings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciSkuMappings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HciSkuMappings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

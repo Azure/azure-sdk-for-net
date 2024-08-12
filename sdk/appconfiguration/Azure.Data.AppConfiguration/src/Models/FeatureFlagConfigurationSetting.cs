@@ -4,11 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -29,9 +28,26 @@ namespace Azure.Data.AppConfiguration
     /// NOTE: The Azure.Data.AppConfiguration doesn't evaluate feature flags on retrieval.
     /// It's the responsibility of the library consumer to interpret feature flags and determine whether a feature is enabled.
     /// </summary>
+    /// <seealso href="https://github.com/Azure/AppConfiguration/blob/main/docs/FeatureManagement/FeatureFlag.v1.1.0.schema.json">Feature Flag schema</seealso>
     public class FeatureFlagConfigurationSetting : ConfigurationSetting
     {
         internal const string FeatureFlagContentType = "application/vnd.microsoft.appconfig.ff+json;charset=utf-8";
+
+        private static readonly string[] s_jsonPropertyNames =
+        {
+            "id",
+            "description",
+            "display_name",
+            "enabled",
+            "conditions"
+        };
+
+        private static readonly string[] s_requiredJsonPropertyNames =
+        {
+            "id",
+            "enabled",
+            "conditions"
+        };
 
         /// <summary>
         /// The prefix used for <see cref="FeatureFlagConfigurationSetting"/> setting keys.
@@ -45,6 +61,7 @@ namespace Azure.Data.AppConfiguration
         private string _displayName;
         private bool _isEnabled;
         private IList<FeatureFlagFilter> _clientFilters;
+        private List<(string Name, JsonElement Json)> _parsedProperties = new(s_jsonPropertyNames.Length);
 
         internal FeatureFlagConfigurationSetting()
         {
@@ -58,14 +75,28 @@ namespace Azure.Data.AppConfiguration
         /// <param name="featureId">The identified of the feature flag.</param>
         /// <param name="isEnabled">The value indicating whether the feature flag is enabled.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
-        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null): this()
+        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label = null): this(featureId, isEnabled, label, default)
+        {
+        }
+
+        /// <summary>
+        /// Initializes an instance of the <see cref="FeatureFlagConfigurationSetting"/> using a provided feature id and
+        /// the enabled value.
+        /// </summary>
+        /// <param name="featureId">The identified of the feature flag.</param>
+        /// <param name="isEnabled">The value indicating whether the feature flag is enabled.</param>
+        /// <param name="label">A label used to group this configuration setting with others.</param>
+        /// <param name="etag">The ETag value for the configuration setting.</param>
+        public FeatureFlagConfigurationSetting(string featureId, bool isEnabled, string label, ETag etag) : this()
         {
             _isValidValue = true;
+
             Key = KeyPrefix + featureId;
             Label = label;
             IsEnabled = isEnabled;
             ContentType = FeatureFlagContentType;
             FeatureId = featureId;
+            ETag = etag;
         }
 
         /// <summary>
@@ -80,7 +111,7 @@ namespace Azure.Data.AppConfiguration
             }
             set
             {
-                CheckValidWrite();
+                CheckValid();
                 _featureId = value;
             }
         }
@@ -97,7 +128,7 @@ namespace Azure.Data.AppConfiguration
             }
             set
             {
-                CheckValidWrite();
+                CheckValid();
                 _description = value;
             }
         }
@@ -114,7 +145,7 @@ namespace Azure.Data.AppConfiguration
             }
             set
             {
-                CheckValidWrite();
+                CheckValid();
                 _displayName = value;
             }
         }
@@ -132,7 +163,7 @@ namespace Azure.Data.AppConfiguration
             }
             set
             {
-                CheckValidWrite();
+                CheckValid();
                 _isEnabled = value;
             }
         }
@@ -152,160 +183,173 @@ namespace Azure.Data.AppConfiguration
         internal override void SetValue(string value)
         {
             _originalValue = value;
-
             _isValidValue = TryParseValue();
         }
 
         internal override string GetValue()
         {
-            return _isValidValue ? FormatValue() : _originalValue;
-        }
+            // If the value wasn't valid, return it verbatim.
+            if (!_isValidValue)
+            {
+                return _originalValue;
+            }
 
-        private string FormatValue()
-        {
+            var knownProperties = new HashSet<string>(s_jsonPropertyNames);
+
             using var memoryStream = new MemoryStream();
             using var writer = new Utf8JsonWriter(memoryStream);
 
             writer.WriteStartObject();
-            writer.WriteString("id", _featureId);
-            if (_description != null)
-            {
-                writer.WriteString("description", _description);
-            }
-            if (_displayName != null)
-            {
-                writer.WriteString("display_name", _displayName);
-            }
-            writer.WriteBoolean("enabled", _isEnabled);
-            writer.WriteStartObject("conditions");
 
-            if (_clientFilters.Any())
+            for (var index = 0; index < _parsedProperties.Count; ++index)
             {
-                writer.WriteStartArray("client_filters");
-                foreach (var featureFlagFilter in _clientFilters)
+                var (name, jsonValue) = _parsedProperties[index];
+
+                if (TryWriteKnownProperty(name, writer, jsonValue, includeOptionalWhenNull: true))
                 {
-                    writer.WriteStartObject();
-                    writer.WriteString("name", featureFlagFilter.Name);
-                    writer.WritePropertyName("parameters");
-                    WriteParameterValue(writer, featureFlagFilter.Parameters);
-                    writer.WriteEndObject();
+                    knownProperties.Remove(name);
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WritePropertyName(name);
+                    jsonValue.WriteTo(writer);
+                }
             }
-            writer.WriteEndObject();
+
+            foreach (var name in knownProperties)
+            {
+                TryWriteKnownProperty(name, writer, default);
+            }
+
             writer.WriteEndObject();
             writer.Flush();
 
-            return Encoding.UTF8.GetString(memoryStream.ToArray());
+            _originalValue = Encoding.UTF8.GetString(memoryStream.ToArray());
+            return _originalValue;
         }
 
         private bool TryParseValue()
         {
+            _parsedProperties.Clear();
+
             try
             {
-                using var document = JsonDocument.Parse(_originalValue);
-                var root = document.RootElement;
+                var requiredProperties = new HashSet<string>(s_requiredJsonPropertyNames);
+                using var doc = JsonDocument.Parse(_originalValue);
 
-                if (!root.TryGetProperty("id", out var idProperty))
+                foreach (var item in doc.RootElement.EnumerateObject())
                 {
-                    return false;
-                }
-
-                _featureId = idProperty.GetString();
-
-                if (!root.TryGetProperty("enabled", out var enabledProperty))
-                {
-                    return false;
-                }
-
-                _isEnabled = enabledProperty.GetBoolean();
-
-                if (!root.TryGetProperty("conditions", out var conditionsProperty))
-                {
-                    return false;
-                }
-
-                if (root.TryGetProperty("description", out var descriptionProperty))
-                {
-                    _description = descriptionProperty.GetString();
-                }
-
-                if (root.TryGetProperty("display_name", out var displayNameProperty))
-                {
-                    _displayName = displayNameProperty.GetString();
-                }
-
-                var newFilters = new ObservableCollection<FeatureFlagFilter>();
-                if (conditionsProperty.TryGetProperty("client_filters", out var clientFiltersProperty) &&
-                    clientFiltersProperty.ValueKind == JsonValueKind.Array)
-                {
-                    foreach (var clientFilter in clientFiltersProperty.EnumerateArray())
+                    switch (item.Name)
                     {
-                        if (!clientFilter.TryGetProperty("name", out var filterNameProperty))
-                        {
-                            return false;
-                        }
+                        case "id":
+                            _featureId = item.Value.GetString();
+                            _parsedProperties.Add((item.Name, default));
+                            requiredProperties.Remove(item.Name);
+                            break;
 
-                        Dictionary<string, object> value = null;
-                        if (clientFilter.TryGetProperty("parameters", out var parametersProperty))
-                        {
-                            value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
-                        }
+                        case "description":
+                            _description = item.Value.GetString();
+                            _parsedProperties.Add((item.Name, default));
+                            requiredProperties.Remove(item.Name);
+                            break;
 
-                        newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, object>()));
+                        case "display_name":
+                            _displayName = item.Value.GetString();
+                            _parsedProperties.Add((item.Name, default));
+                            requiredProperties.Remove(item.Name);
+                            break;
+
+                        case "enabled":
+                            _isEnabled = item.Value.GetBoolean();
+                            _parsedProperties.Add((item.Name, default));
+                            requiredProperties.Remove(item.Name);
+                            break;
+
+                        case "conditions":
+                            _parsedProperties.Add((item.Name, item.Value.Clone()));
+
+                            if (item.Value.TryGetProperty("client_filters", out var clientFiltersProperty)
+                                && clientFiltersProperty.ValueKind == JsonValueKind.Array)
+                            {
+                                _clientFilters = ParseFilters(clientFiltersProperty);
+                            }
+
+                            if (item.Value.ValueKind == JsonValueKind.Object)
+                            {
+                                requiredProperties.Remove(item.Name);
+                            }
+                            break;
+
+                        default:
+                            _parsedProperties.Add((item.Name, item.Value.Clone()));
+                            break;
                     }
                 }
 
-                _clientFilters = newFilters;
+                return requiredProperties.Count == 0;
             }
             catch (Exception)
             {
                 return false;
             }
-
-            return true;
         }
 
-        private static object ReadParameterValue(in JsonElement element)
+        private bool TryWriteKnownProperty(string propertyName, Utf8JsonWriter writer, JsonElement sourceElement, bool includeOptionalWhenNull = false)
         {
-            switch (element.ValueKind)
+            switch (propertyName)
             {
-                case JsonValueKind.String:
-                    return element.GetString();
-                case JsonValueKind.Number:
-                    if (element.TryGetInt32(out int intValue))
+                case "description" when includeOptionalWhenNull || _description != null:
+                    writer.WriteString(propertyName, _description);
+                    break;
+
+                case "display_name" when includeOptionalWhenNull || _displayName != null:
+                    writer.WriteString(propertyName, _displayName);
+                    break;
+
+                case "id":
+                    writer.WriteString(propertyName, _featureId);
+                    break;
+
+                case "enabled":
+                    writer.WriteBoolean(propertyName, _isEnabled);
+                    break;
+
+                case "conditions":
+                    writer.WriteStartObject(propertyName);
+
+                    if (_clientFilters.Count > 0)
                     {
-                        return intValue;
+                        writer.WriteStartArray("client_filters");
+                        foreach (var featureFlagFilter in _clientFilters)
+                        {
+                            writer.WriteStartObject();
+                            writer.WriteString("name", featureFlagFilter.Name);
+                            writer.WritePropertyName("parameters");
+                            WriteParameterValue(writer, featureFlagFilter.Parameters);
+                            writer.WriteEndObject();
+                        }
+                        writer.WriteEndArray();
                     }
-                    if (element.TryGetInt64(out long longValue))
+
+                    if (sourceElement.ValueKind != JsonValueKind.Undefined)
                     {
-                        return longValue;
+                        foreach (var item in sourceElement.EnumerateObject())
+                        {
+                            if (item.Name != "client_filters")
+                            {
+                                item.WriteTo(writer);
+                            }
+                        }
                     }
-                    return element.GetDouble();
-                case JsonValueKind.True:
-                    return true;
-                case JsonValueKind.False:
-                    return false;
-                case JsonValueKind.Undefined:
-                case JsonValueKind.Null:
-                    return null;
-                case JsonValueKind.Object:
-                    var dictionary = new Dictionary<string, object>();
-                    foreach (JsonProperty jsonProperty in element.EnumerateObject())
-                    {
-                        dictionary.Add(jsonProperty.Name, ReadParameterValue(jsonProperty.Value));
-                    }
-                    return dictionary;
-                case JsonValueKind.Array:
-                    var list = new List<object>();
-                    foreach (JsonElement item in element.EnumerateArray())
-                    {
-                        list.Add(ReadParameterValue(item));
-                    }
-                    return list;
+
+                    writer.WriteEndObject();
+                    break;
+
                 default:
-                    throw new NotSupportedException("Not supported value kind " + element.ValueKind);
+                    return false;
             }
+
+            return true;
         }
 
         private static void WriteParameterValue(Utf8JsonWriter writer, object value)
@@ -356,10 +400,72 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private void CheckValidWrite()
+        private static IList<FeatureFlagFilter> ParseFilters(JsonElement filters)
         {
-            CheckValid();
-            _originalValue = null;
+            var newFilters = new ObservableCollection<FeatureFlagFilter>();
+            if (filters.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var clientFilter in filters.EnumerateArray())
+                {
+                    if (!clientFilter.TryGetProperty("name", out var filterNameProperty))
+                    {
+                        newFilters.Clear();
+                        return newFilters;
+                    }
+
+                    Dictionary<string, object> value = null;
+                    if (clientFilter.TryGetProperty("parameters", out var parametersProperty))
+                    {
+                        value = (Dictionary<string, object>)ReadParameterValue(parametersProperty);
+                    }
+
+                    newFilters.Add(new FeatureFlagFilter(filterNameProperty.GetString(), value ?? new Dictionary<string, object>()));
+                }
+            }
+
+            return newFilters;
+        }
+
+        private static object ReadParameterValue(in JsonElement element)
+        {
+            switch (element.ValueKind)
+            {
+                case JsonValueKind.String:
+                    return element.GetString();
+                case JsonValueKind.Number:
+                    if (element.TryGetInt32(out int intValue))
+                    {
+                        return intValue;
+                    }
+                    if (element.TryGetInt64(out long longValue))
+                    {
+                        return longValue;
+                    }
+                    return element.GetDouble();
+                case JsonValueKind.True:
+                    return true;
+                case JsonValueKind.False:
+                    return false;
+                case JsonValueKind.Undefined:
+                case JsonValueKind.Null:
+                    return null;
+                case JsonValueKind.Object:
+                    var dictionary = new Dictionary<string, object>();
+                    foreach (JsonProperty jsonProperty in element.EnumerateObject())
+                    {
+                        dictionary.Add(jsonProperty.Name, ReadParameterValue(jsonProperty.Value));
+                    }
+                    return dictionary;
+                case JsonValueKind.Array:
+                    var list = new List<object>();
+                    foreach (JsonElement item in element.EnumerateArray())
+                    {
+                        list.Add(ReadParameterValue(item));
+                    }
+                    return list;
+                default:
+                    throw new NotSupportedException("Not supported value kind " + element.ValueKind);
+            }
         }
 
         private void CheckValid()
@@ -368,11 +474,6 @@ namespace Azure.Data.AppConfiguration
             {
                 throw new InvalidOperationException($"The content of the {nameof(Value)} property do not represent a valid feature flag object.");
             }
-        }
-
-        private void OnFiltersCollectionChange(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            CheckValidWrite();
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Text;
 using Azure.Core;
 using Azure.Core.Amqp;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -66,7 +67,7 @@ namespace Azure.Messaging.ServiceBus
         {
             Argument.AssertNotNull(receivedMessage, nameof(receivedMessage));
 
-            AmqpMessageBody body = null;
+            AmqpMessageBody body;
             if (receivedMessage.AmqpMessage.Body.TryGetData(out IEnumerable<ReadOnlyMemory<byte>> dataBody))
             {
                 body = AmqpMessageBody.FromData(MessageBody.FromReadOnlyMemorySegments(dataBody));
@@ -115,9 +116,14 @@ namespace Azure.Messaging.ServiceBus
             // copy message annotations except for broker set ones
             foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.MessageAnnotations)
             {
-                if (kvp.Key == AmqpMessageConstants.LockedUntilName || kvp.Key == AmqpMessageConstants.SequenceNumberName ||
-                    kvp.Key == AmqpMessageConstants.DeadLetterSourceName || kvp.Key == AmqpMessageConstants.EnqueueSequenceNumberName ||
-                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName || kvp.Key == AmqpMessageConstants.MessageStateName)
+                if (kvp.Key == AmqpMessageConstants.LockedUntilName ||
+                    kvp.Key == AmqpMessageConstants.SequenceNumberName ||
+                    kvp.Key == AmqpMessageConstants.DeadLetterSourceName ||
+                    kvp.Key == AmqpMessageConstants.EnqueueSequenceNumberName ||
+                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName ||
+                    kvp.Key == AmqpMessageConstants.ScheduledEnqueueTimeUtcName ||
+                    kvp.Key == AmqpMessageConstants.MessageStateName ||
+                    kvp.Key == AmqpMessageConstants.PartitionIdName)
                 {
                     continue;
                 }
@@ -135,12 +141,23 @@ namespace Azure.Messaging.ServiceBus
             // copy application properties except for broker set ones
             foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.ApplicationProperties)
             {
-                if (kvp.Key == AmqpMessageConstants.DeadLetterReasonHeader || kvp.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader)
+                if (kvp.Key == AmqpMessageConstants.DeadLetterReasonHeader
+                    || kvp.Key == AmqpMessageConstants.DeadLetterErrorDescriptionHeader
+                    || kvp.Key == MessagingClientDiagnostics.DiagnosticIdAttribute)
                 {
                     continue;
                 }
                 AmqpMessage.ApplicationProperties.Add(kvp.Key, kvp.Value);
             }
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified <see cref="AmqpAnnotatedMessage"/> instance.
+        /// </summary>
+        /// <param name="message">The AMQP message.</param>
+        public ServiceBusMessage(AmqpAnnotatedMessage message)
+        {
+            AmqpMessage = message;
         }
 
         /// <summary>
@@ -293,7 +310,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the a correlation identifier.</summary>
+        /// <summary>Gets or sets the correlation identifier.</summary>
         /// <value>Correlation identifier.</value>
         /// <remarks>
         /// Allows an application to specify a context for the message for the purposes of correlation,
@@ -380,17 +397,13 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets or sets the date and time in UTC at which the message will be enqueued. This
-        /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.
+        /// Gets or sets the date and time, in UTC, at which the message should be made available to receivers. This property does not control when a message is sent by the
+        /// client. Sending happens immediately when `SendAsync` is called.  Service Bus will hide the message from receivers until the the requested time.
         /// </summary>
         /// <value>
-        /// The scheduled enqueue time in UTC. This value is for delayed message sending.
-        /// It is utilized to delay messages sending to a specific time in the future.
+        /// The date and time, in UTC, at which the message should be available to receivers. This time may not be exact; the actual time depends on the entity's workload and state.
         /// </value>
-        /// <remarks>
-        /// Message enqueuing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
-        /// depends on the queue's workload and its state.
-        /// </remarks>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/message-sequencing#scheduled-messages">Scheduled messages</seealso>
         public DateTimeOffset ScheduledEnqueueTime
         {
             get
@@ -411,7 +424,7 @@ namespace Azure.Messaging.ServiceBus
         internal AmqpAnnotatedMessage AmqpMessage { get; set; }
 
         /// <summary>
-        /// Gets the raw Amqp message data that will be transmitted over the wire.
+        /// Gets the raw AMQP message data that will be transmitted over the wire.
         /// This can be used to enable scenarios that require setting AMQP header, footer, property, or annotation
         /// data that is not exposed as top level properties in the <see cref="ServiceBusMessage"/>.
         /// </summary>
@@ -448,6 +461,15 @@ namespace Azure.Messaging.ServiceBus
         /// </remarks>
         /// <exception cref="System.Runtime.Serialization.SerializationException">
         ///   Occurs when the <see cref="ServiceBusMessage" /> is serialized for transport when an unsupported type is used as a property.
+        /// </exception>
+        /// <exception cref="ServiceBusException">
+        ///   <para>Occurs when the <see cref="ServiceBusMessage" /> is serialized for transport when a value of type <see cref="T:byte[]"/> or
+        ///   <see cref="T:ArraySegment{byte}"/> is used as a property.  The <see cref="ServiceBusException.Reason" /> will be set to
+        ///   <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.</para>
+        ///
+        ///   <para>This is due to a known bug in the Service Bus service, where an application property encoded as binary cannot be
+        ///   handled by the service and is incorrectly rejected for being too large.  A fix is planned, but the time line is
+        ///   currently unknown.  The recommended workaround is to encode the binary data as a Base64 string.</para>
         /// </exception>
         public IDictionary<string, object> ApplicationProperties
         {

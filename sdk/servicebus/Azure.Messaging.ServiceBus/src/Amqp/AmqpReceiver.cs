@@ -5,6 +5,7 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -129,17 +130,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         internal readonly ConcurrentExpiringSet<Guid> RequestResponseLockedMessages;
 
-        private static IReadOnlyList<ServiceBusReceivedMessage> s_backingEmptyList;
         private readonly bool _isProcessor;
 
-        private static IReadOnlyList<ServiceBusReceivedMessage> EmptyList
-        {
-            get
-            {
-                s_backingEmptyList ??= new ReadOnlyCollection<ServiceBusReceivedMessage>(new List<ServiceBusReceivedMessage>(0));
-                return s_backingEmptyList;
-            }
-        }
+        private static readonly IReadOnlyList<ServiceBusReceivedMessage> s_emptyReceivedMessageList = Array.Empty<ServiceBusReceivedMessage>();
+
+        private static readonly IReadOnlyList<AmqpMessage> s_emptyAmqpMessageList = Array.Empty<AmqpMessage>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AmqpReceiver"/> class.
@@ -370,15 +365,33 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     maxWaitTime ?? timeout,
                     cancellationToken).ConfigureAwait(false);
 
+                IReadOnlyCollection<AmqpMessage> messageList =
+                    messagesReceived as IReadOnlyCollection<AmqpMessage> ?? messagesReceived?.ToList() ?? s_emptyAmqpMessageList;
+
+                // If this is a session receiver and we didn't receive all requested messages, we need to drain the credits
+                // to ensure FIFO ordering within each session. We exclude session processors, since those will always receive a single message
+                // at a time.  If there are no messages, the session will be closed unless the processor was configured to receive from specific sessions.
+                // The session won't be closed in the case that MaxConcurrentCallsPerSession > 1, but with concurrency, it is not possible to guarantee ordering.
+                if (_isSessionReceiver && (!_isProcessor || SessionId != null) && messageList.Count < maxMessages)
+                {
+                    await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+
+                    // These workarounds are necessary in order to resume prefetching after the link has been drained
+                    // https://github.com/Azure/azure-amqp/issues/252#issuecomment-1942734342
+                    if (_prefetchCount > 0)
+                    {
+                        link.Settings.TotalLinkCredit = 0;
+                        link.SetTotalLinkCredit((uint)_prefetchCount, true, true);
+                    }
+                }
+
                 List<ServiceBusReceivedMessage> receivedMessages = null;
                 // If event messages were received, then package them for consumption and
                 // return them.
-                foreach (AmqpMessage message in messagesReceived)
+                foreach (AmqpMessage message in messageList)
                 {
                     // Getting the count of the underlying collection is good for performance/allocations to prevent the list from growing
-                    receivedMessages ??= messagesReceived is IReadOnlyCollection<AmqpMessage> readOnlyList
-                        ? new List<ServiceBusReceivedMessage>(readOnlyList.Count)
-                        : new List<ServiceBusReceivedMessage>();
+                    receivedMessages ??= new List<ServiceBusReceivedMessage>(messageList.Count);
 
                     if (_receiveMode == ServiceBusReceiveMode.ReceiveAndDelete)
                     {
@@ -389,7 +402,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     message.Dispose();
                 }
 
-                return receivedMessages ?? EmptyList;
+                return receivedMessages ?? s_emptyReceivedMessageList;
             }
             catch (OperationCanceledException)
             {
@@ -445,7 +458,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
-        /// <param name="timeout"></param>
+        /// <param name="timeout">The timeout for the operation.</param>
         private async Task CompleteInternalAsync(
             Guid lockToken,
             TimeSpan timeout)
@@ -460,7 +473,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     SessionId).ConfigureAwait(false);
                 return;
             }
-            await DisposeMessageAsync(lockToken, AmqpConstants.AcceptedOutcome, timeout).ConfigureAwait(false);
+            await DisposeMessageAsync(lockToken, AmqpConstants.AcceptedOutcome, DispositionStatus.Completed, timeout).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -468,12 +481,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
-        /// <param name="outcome"></param>
-        /// <param name="timeout"></param>
+        /// <param name="outcome">The outcome of the message - used when disposing over receive link.</param>
+        /// <param name="disposition">The disposition of the message - used when disposing over the management link.</param>
+        /// <param name="timeout">The timeout for the operation.</param>
+        /// <param name="propertiesToModify">Properties to modify when deadlettering, deferring, or abandoning.</param>
+        /// <param name="deadLetterReason">Dead letter reason. Only valid when deadlettering.</param>
+        /// <param name="deadLetterDescription">Dead letter description. Only valid when deadlettering.</param>
         private async Task DisposeMessageAsync(
             Guid lockToken,
             Outcome outcome,
-            TimeSpan timeout)
+            DispositionStatus disposition,
+            TimeSpan timeout,
+            IDictionary<string, object> propertiesToModify = null,
+            string deadLetterReason = null,
+            string deadLetterDescription = null)
         {
             byte[] bufferForLockToken = ArrayPool<byte>.Shared.Rent(SizeOfGuidInBytes);
             GuidUtilities.WriteGuidToBuffer(lockToken, bufferForLockToken.AsSpan(0, SizeOfGuidInBytes));
@@ -508,7 +529,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     if (error.Condition.Equals(AmqpErrorCode.NotFound))
                     {
-                        ThrowLockLostException();
+                        if (_isSessionReceiver)
+                        {
+                            ThrowLockLostException();
+                        }
+
+                        // The message was not found on the link which can occur as a result of a reconnect.
+                        // Attempt to settle the message over the management link.
+                        await DisposeMessageRequestResponseAsync(
+                            lockToken,
+                            timeout,
+                            disposition,
+                            propertiesToModify: propertiesToModify,
+                            deadLetterReason: deadLetterReason,
+                            deadLetterDescription: deadLetterDescription).ConfigureAwait(false);
+                        return;
                     }
 
                     throw error.ToMessagingContractException();
@@ -587,7 +622,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
         ///
         /// <param name="lockToken">The lock token of the <see cref="ServiceBusMessage" />.</param>
-        /// <param name="timeout"></param>
+        /// <param name="timeout">The timeout for the operation.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while deferring the message.</param>
         ///
         private Task DeferInternalAsync(
@@ -605,7 +640,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     SessionId,
                     propertiesToModify);
             }
-            return DisposeMessageAsync(lockToken, GetDeferOutcome(propertiesToModify), timeout);
+            return DisposeMessageAsync(
+                lockToken,
+                GetDeferOutcome(propertiesToModify),
+                DispositionStatus.Defered,
+                timeout,
+                propertiesToModify: propertiesToModify);
         }
 
         /// <summary>
@@ -645,7 +685,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
-        /// <param name="timeout"></param>
+        /// <param name="timeout">The timeout for the operation.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
         private Task AbandonInternalAsync(
             Guid lockToken,
@@ -662,7 +702,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     SessionId,
                     propertiesToModify);
             }
-            return DisposeMessageAsync(lockToken, GetAbandonOutcome(propertiesToModify), timeout);
+            return DisposeMessageAsync(
+                lockToken,
+                GetAbandonOutcome(propertiesToModify),
+                DispositionStatus.Abandoned,
+                timeout,
+                propertiesToModify: propertiesToModify);
         }
 
         /// <summary>
@@ -710,7 +755,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="lockToken">The lock token of the corresponding message to dead-letter.</param>
-        /// <param name="timeout"></param>
+        /// <param name="timeout">The timeout for the operation.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
         /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
@@ -740,7 +785,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return DisposeMessageAsync(
                 lockToken,
                 GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription),
-                timeout);
+                DispositionStatus.Suspended,
+                timeout,
+                propertiesToModify,
+                deadLetterReason,
+                deadLetterErrorDescription);
         }
 
         private static Rejected GetRejectedOutcome(
@@ -1005,13 +1054,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     LastPeekedSequenceNumber = message.SequenceNumber;
                 }
-                return messages ?? EmptyList;
+                return messages ?? s_emptyReceivedMessageList;
             }
 
             if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
                 (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
             {
-                return EmptyList;
+                return s_emptyReceivedMessageList;
             }
 
             throw amqpResponseMessage.ToMessagingContractException();
@@ -1330,7 +1379,88 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 throw; // will never be reached
             }
 
-            return messages ?? EmptyList;
+            return messages ?? s_emptyReceivedMessageList;
+        }
+
+        /// <summary>
+        /// Deletes up to <paramref name="messageCount"/> number of messages from the entity. Only messages that
+        /// were added to the queue prior to <paramref name="beforeEnqueueTimeUtc"/> will be deleted. The actual number
+        /// of deleted messages may be less if there are fewer eligible messages in the entity.
+        /// </summary>
+        /// <param name="messageCount">The desired number of messages to delete.</param>
+        /// <param name="beforeEnqueueTimeUtc">A <see cref="DateTimeOffset"/> representing the cutoff time for deletion. Only messages that were enqueued before this time will be deleted.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>The number of messages that were deleted.</returns>
+        public override async Task<int> DeleteMessagesAsync(
+            int messageCount,
+            DateTimeOffset beforeEnqueueTimeUtc,
+            CancellationToken cancellationToken = default) => await _retryPolicy.RunOperation(
+                static async (value, timeout, token) =>
+                {
+                    var (receiver, innerMessageCount, innerBeforeEnqueueTimeUtc) = value;
+                    return await receiver.DeleteMessagesInternalAsync(
+                            innerMessageCount,
+                            innerBeforeEnqueueTimeUtc,
+                            timeout,
+                            token)
+                        .ConfigureAwait(false);
+                },
+                (this, messageCount, beforeEnqueueTimeUtc),
+                _connectionScope,
+                cancellationToken).ConfigureAwait(false);
+
+        private async Task<int> DeleteMessagesInternalAsync(
+            int messageCount,
+            DateTimeOffset beforeEnqueueTimeUtc,
+            TimeSpan timeout,
+            CancellationToken cancellationToken)
+        {
+            var stopWatch = ValueStopwatch.StartNew();
+
+            AmqpRequestMessage amqpRequestMessage = AmqpRequestMessage.CreateRequest(
+                    ManagementConstants.Operations.DeleteMessagesOperation,
+                    timeout,
+                    null);
+
+            if (_receiveLink.TryGetOpenedObject(out ReceivingAmqpLink receiveLink))
+            {
+                amqpRequestMessage.AmqpMessage.ApplicationProperties.Map[ManagementConstants.Request.AssociatedLinkName] = receiveLink.Name;
+            }
+
+            amqpRequestMessage.Map[ManagementConstants.Properties.MessageCount] = messageCount;
+            amqpRequestMessage.Map[ManagementConstants.Properties.EnqueuedTimeUtc] = beforeEnqueueTimeUtc.UtcDateTime;
+
+            if (!string.IsNullOrWhiteSpace(SessionId))
+            {
+                amqpRequestMessage.Map[ManagementConstants.Properties.SessionId] = SessionId;
+            }
+
+            RequestResponseAmqpLink link = await _managementLink.GetOrCreateAsync(
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()),
+                cancellationToken)
+                .ConfigureAwait(false);
+
+            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
+            using AmqpMessage responseAmqpMessage = await link.RequestAsync(
+                amqpRequestMessage.AmqpMessage,
+                timeout.CalculateRemaining(stopWatch.GetElapsedTime()))
+                .ConfigureAwait(false);
+
+            AmqpResponseMessage amqpResponseMessage = AmqpResponseMessage.CreateResponse(responseAmqpMessage);
+
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
+            {
+                return amqpResponseMessage.GetValue<int>(ManagementConstants.Properties.MessageCount);
+            }
+
+            if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NoContent ||
+                (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.NotFound && Equals(AmqpClientConstants.MessageNotFoundError, amqpResponseMessage.GetResponseErrorCondition())))
+            {
+                return 0;
+            }
+
+            throw amqpResponseMessage.ToMessagingContractException();
         }
 
         /// <summary>

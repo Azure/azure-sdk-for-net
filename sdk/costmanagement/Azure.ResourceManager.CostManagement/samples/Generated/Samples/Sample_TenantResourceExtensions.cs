@@ -8,11 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement.Samples
@@ -150,11 +147,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
             // invoke the operation
             string billingAccountId = "8099099";
-            BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest = new BenefitUtilizationSummariesRequest(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"))
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"))
             {
                 Kind = BillingAccountBenefitKind.Reservation,
             };
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil.Completed, billingAccountId, benefitUtilizationSummariesRequest);
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(WaitUntil.Completed, billingAccountId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -180,11 +177,11 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             string billingAccountId = "00000000-0000-0000-0000-000000000000";
             string billingProfileId = "CZSFR-SDFXC-DSDF";
-            BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest = new BenefitUtilizationSummariesRequest(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"))
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"))
             {
                 Kind = BillingAccountBenefitKind.Reservation,
             };
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil.Completed, billingAccountId, billingProfileId, benefitUtilizationSummariesRequest);
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(WaitUntil.Completed, billingAccountId, billingProfileId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -209,8 +206,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
             // invoke the operation
             string reservationOrderId = "00000000-0000-0000-0000-000000000000";
-            BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest = new BenefitUtilizationSummariesRequest(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil.Completed, reservationOrderId, benefitUtilizationSummariesRequest);
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(WaitUntil.Completed, reservationOrderId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -236,8 +233,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             string reservationOrderId = "00000000-0000-0000-0000-000000000000";
             string reservationId = "00000000-0000-0000-0000-000000000000";
-            BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest = new BenefitUtilizationSummariesRequest(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil.Completed, reservationOrderId, reservationId, benefitUtilizationSummariesRequest);
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportReservationScopeAsync(WaitUntil.Completed, reservationOrderId, reservationId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -262,8 +259,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
 
             // invoke the operation
             string savingsPlanOrderId = "00000000-0000-0000-0000-000000000000";
-            BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest = new BenefitUtilizationSummariesRequest(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil.Completed, savingsPlanOrderId, benefitUtilizationSummariesRequest);
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(WaitUntil.Completed, savingsPlanOrderId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -289,8 +286,8 @@ namespace Azure.ResourceManager.CostManagement.Samples
             // invoke the operation
             string savingsPlanOrderId = "00000000-0000-0000-0000-000000000000";
             string savingsPlanId = "00000000-0000-0000-0000-000000000000";
-            BenefitUtilizationSummariesRequest benefitUtilizationSummariesRequest = new BenefitUtilizationSummariesRequest(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
-            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil.Completed, savingsPlanOrderId, savingsPlanId, benefitUtilizationSummariesRequest);
+            BenefitUtilizationSummariesContent content = new BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain.Daily, DateTimeOffset.Parse("2022-06-01T00:00:00Z"), DateTimeOffset.Parse("2022-08-31T00:00:00Z"));
+            ArmOperation<BenefitUtilizationSummariesOperationStatus> lro = await tenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(WaitUntil.Completed, savingsPlanOrderId, savingsPlanId, content);
             BenefitUtilizationSummariesOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -713,7 +710,7 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
         // ScheduledActionCheckNameAvailability
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CheckNameAvailabilityScheduledAction_ScheduledActionCheckNameAvailability()
+        public async Task CheckCostManagementNameAvailabilityByScheduledAction_ScheduledActionCheckNameAvailability()
         {
             // Generated from example definition: specification/cost-management/resource-manager/Microsoft.CostManagement/stable/2023-03-01/examples/scheduledActions/checkNameAvailability-private-scheduledAction.json
             // this example is just showing the usage of "ScheduledActions_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
@@ -728,12 +725,12 @@ Dimensions = new QueryComparisonExpression("ResourceGroup",QueryOperatorType.In,
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            CheckNameAvailabilityRequest checkNameAvailabilityRequest = new CheckNameAvailabilityRequest()
+            CostManagementNameAvailabilityContent content = new CostManagementNameAvailabilityContent()
             {
                 Name = "testName",
                 ResourceType = "Microsoft.CostManagement/ScheduledActions",
             };
-            CheckNameAvailabilityResponse result = await tenantResource.CheckNameAvailabilityScheduledActionAsync(checkNameAvailabilityRequest);
+            CostManagementNameAvailabilityResult result = await tenantResource.CheckCostManagementNameAvailabilityByScheduledActionAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

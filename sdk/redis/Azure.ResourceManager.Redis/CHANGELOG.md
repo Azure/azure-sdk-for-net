@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,63 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2024-07-11)
+
+### Features Added
+  - Adds support for Disabling Access Keys Authentication for your Azure Cache for Redis instance
+
+## 1.3.3 (2024-05-07)
+
+### Bugs Fixed
+
+- Fixed bicep serialization of flattened properties.
+
+## 1.3.2 (2024-04-29)
+
+### Features Added
+
+- Add `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+## 1.3.1 (2024-03-23)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added experimental Bicep serialization.
+
+## 1.3.0 (2024-01-23)
+
+### Other Changes
+
+- Mark prerelease Azure.ResourceManager.Redis 1.3.0-beta.1 for release
+
+## 1.3.0-beta.1 (2023-12-15)
+
+### Features Added
+  - Adds support for using Microsoft Entra token-based authentication for your Azure Cache for Redis instance
+  - Adds support to choose an update channel
+  - Adds support the flush data operation to delete or flush all data in your cache
+
+## 1.2.1 (2023-11-30)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.2.0 (2023-06-24)
+
+### Features Added
+
+- Enable Persistence(aof/rdb) on storage account in a different subscription than the cache via Managed Identity Auth Type. RedisConfiguration has a new property storage-subscription-id.
+
+### Bugs Fixed
+
+- Updated validation to ensure access to storage account while enabling persistence.
 
 ## 1.2.0-beta.1 (2023-05-31)
 

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.Storage\src\Azure.Provisioning.Storage.csproj" />
+    <ProjectReference Include="..\src\Azure.Provisioning.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.Resources\src\Azure.Provisioning.Resources.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ProvisioningTestBase.cs" />
+    <Compile Remove="ProvisioningTestEnvironment.cs" />
+    <Compile Remove="TestInfrastructure.cs" />
+  </ItemGroup>
+
+</Project>

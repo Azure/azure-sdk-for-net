@@ -22,54 +22,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AzureTableDefaultPartitionKeyValue))
             {
                 writer.WritePropertyName("azureTableDefaultPartitionKeyValue"u8);
-                writer.WriteObjectValue(AzureTableDefaultPartitionKeyValue);
+                writer.WriteObjectValue<object>(AzureTableDefaultPartitionKeyValue);
             }
             if (Optional.IsDefined(AzureTablePartitionKeyName))
             {
                 writer.WritePropertyName("azureTablePartitionKeyName"u8);
-                writer.WriteObjectValue(AzureTablePartitionKeyName);
+                writer.WriteObjectValue<object>(AzureTablePartitionKeyName);
             }
             if (Optional.IsDefined(AzureTableRowKeyName))
             {
                 writer.WritePropertyName("azureTableRowKeyName"u8);
-                writer.WriteObjectValue(AzureTableRowKeyName);
+                writer.WriteObjectValue<object>(AzureTableRowKeyName);
             }
             if (Optional.IsDefined(AzureTableInsertType))
             {
                 writer.WritePropertyName("azureTableInsertType"u8);
-                writer.WriteObjectValue(AzureTableInsertType);
+                writer.WriteObjectValue<object>(AzureTableInsertType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
-                writer.WriteObjectValue(WriteBatchSize);
+                writer.WriteObjectValue<object>(WriteBatchSize);
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
-                writer.WriteObjectValue(WriteBatchTimeout);
+                writer.WriteObjectValue<object>(WriteBatchTimeout);
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
-                writer.WriteObjectValue(SinkRetryCount);
+                writer.WriteObjectValue<object>(SinkRetryCount);
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
-                writer.WriteObjectValue(SinkRetryWait);
+                writer.WriteObjectValue<object>(SinkRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -80,16 +80,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> azureTableDefaultPartitionKeyValue = default;
-            Optional<object> azureTablePartitionKeyName = default;
-            Optional<object> azureTableRowKeyName = default;
-            Optional<object> azureTableInsertType = default;
+            object azureTableDefaultPartitionKeyValue = default;
+            object azureTablePartitionKeyName = default;
+            object azureTableRowKeyName = default;
+            object azureTableInsertType = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureTableSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, azureTableDefaultPartitionKeyValue.Value, azureTablePartitionKeyName.Value, azureTableRowKeyName.Value, azureTableInsertType.Value);
+            return new AzureTableSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                azureTableDefaultPartitionKeyValue,
+                azureTablePartitionKeyName,
+                azureTableRowKeyName,
+                azureTableInsertType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureTableSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureTableSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
 
         internal partial class AzureTableSinkConverter : JsonConverter<AzureTableSink>
@@ -192,6 +219,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue(model);
             }
+
             public override AzureTableSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -11,9 +11,13 @@ namespace: Azure.ResourceManager.LoadTesting
 require: https://github.com/Azure/azure-rest-api-specs/blob/3dae9445631a0e27d743c1355f8cb82391d1634f/specification/loadtestservice/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 irregular-plural-words:
   quota: quota
@@ -47,7 +51,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

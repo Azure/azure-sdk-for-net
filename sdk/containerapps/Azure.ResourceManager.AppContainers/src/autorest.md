@@ -7,12 +7,20 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/905a9ad794ea9a1565ebe3857497b3a24872d553/specification/app/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/07f22664203dc215a564e00329b81a8a94cc11ee/specification/app/resource-manager/readme.md
+#tag: package-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -21,7 +29,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -217,6 +225,16 @@ rename-mapping:
   Job: ContainerAppJob
   JobsCollection: ContainerAppJobsCollection
   ManagedCertificate: ContainerAppManagedCertificate
+  Mtls.enabled: IsMtlsEnabled
+  ServiceBind: ContainerAppServiceBind
+  JobScale: ContainerAppJobScale
+  JobScale.pollingInterval: PollingIntervalInSeconds
+  JobScaleRule: ContainerAppJobScaleRule
+  JobConfigurationEventTriggerConfig: EventTriggerConfiguration
+  TokenStore: ContainerAppTokenStore
+  Usage: ContainerAppUsage
+  UsageName: ContainerAppUsageName
+  UsageUnit: ContainerAppUsageUnit
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -226,12 +244,15 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}: ContainerAppManagedEnvironmentDaprComponent
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}: ContainerAppManagedEnvironmentDetector
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi: ContainerAppManagedEnvironmentDetectorResourceProperty
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}: ContainerAppJob
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectors/{detectorName}: ContainerAppJobDetector
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}: ContainerAppJobDetectorProperty
 
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckContainerAppNameAvailability
 
 # mgmt-debug:
-#   show-serialized-names: true
+#    show-serialized-names: true
 
 directive:
   - from: swagger-document
@@ -239,4 +260,8 @@ directive:
     transform: >
       if ($['type'] === 'boolean')
         $['x-ms-client-name'] = 'IsEnabled'
+  # Change type to ResourceIdentifier
+  - from: CommonDefinitions.json
+    where: $.definitions.ServiceBind.properties.serviceId
+    transform: $['x-ms-format'] = 'arm-id'
 ```

@@ -8,12 +8,20 @@ azure-arm: true
 csharp: true
 library-name: Purview
 namespace: Azure.ResourceManager.Purview
-require: https://github.com/Azure/azure-rest-api-specs/blob/e686ed79e9b0bbc10355fd8d7ba36d1a07e4ba28/specification/purview/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/86a89f22f5e18449a3fde7c00a416f18c19b70f9/specification/purview/resource-manager/readme.md
+#tag: package-2023-05-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
+use-model-reader-writer: true
 modelerfour:
   flatten-payloads: false
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 rename-mapping:
   CheckNameAvailabilityResult.nameAvailable: IsNameAvailable
@@ -37,6 +45,23 @@ rename-mapping:
   Reason: PurviewAccountNameUnavailableReason
   ScopeType: PurviewAccountScopeType
   Status: PurviewPrivateLinkServiceStatus
+  PrivateEndpointConnectionStatusUpdateResponse: PrivateEndpointConnectionStatusUpdateResult
+  BatchFeatureRequest: PurviewBatchFeatureContent
+  BatchFeatureStatus:  PurviewBatchFeatureStatus
+  EventHubType: PurviewKafkaEventHubType
+
+prepend-rp-prefix:
+  - KafkaConfiguration
+  - Credentials
+  - CredentialsType
+  - AccountProvisioningState
+  - AccountStatus
+  - EventStreamingState
+  - EventStreamingType
+  - IngestionStorage
+  - ManagedEventHubState
+  - UsageName
+  - QuotaName
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -45,7 +70,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -83,4 +108,6 @@ directive:
       $.AccountProperties.properties.endpoints['$ref'] = '#/definitions/AccountEndpoints';
       delete $.AccountProperties.properties.managedResources['allOf'];
       $.AccountProperties.properties.managedResources['$ref'] = '#/definitions/ManagedResources';
+      delete $.AccountProperties.properties.accountStatus['allOf'];
+      $.AccountProperties.properties.accountStatus['$ref'] = '#/definitions/AccountStatus';
 ```

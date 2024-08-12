@@ -5,66 +5,38 @@
 
 #nullable disable
 
-using Azure;
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Legacy charge summary.
-    /// Serialized Name: LegacyChargeSummary
-    /// </summary>
+    /// <summary> Legacy charge summary. </summary>
     public partial class ConsumptionLegacyChargeSummary : ConsumptionChargeSummary
     {
-        /// <summary> Initializes a new instance of ConsumptionLegacyChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyChargeSummary"/>. </summary>
         public ConsumptionLegacyChargeSummary()
         {
             Kind = ChargeSummaryKind.Legacy;
         }
 
-        /// <summary> Initializes a new instance of ConsumptionLegacyChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyChargeSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Specifies the kind of charge summary.
-        /// Serialized Name: ChargeSummary.kind
-        /// </param>
-        /// <param name="etag">
-        /// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
-        /// Serialized Name: ProxyResource.eTag
-        /// </param>
-        /// <param name="billingPeriodId">
-        /// The id of the billing period resource that the charge belongs to.
-        /// Serialized Name: LegacyChargeSummary.properties.billingPeriodId
-        /// </param>
-        /// <param name="usageStart">
-        /// Usage start date.
-        /// Serialized Name: LegacyChargeSummary.properties.usageStart
-        /// </param>
-        /// <param name="usageEnd">
-        /// Usage end date.
-        /// Serialized Name: LegacyChargeSummary.properties.usageEnd
-        /// </param>
-        /// <param name="azureCharges">
-        /// Azure Charges.
-        /// Serialized Name: LegacyChargeSummary.properties.azureCharges
-        /// </param>
-        /// <param name="chargesBilledSeparately">
-        /// Charges Billed separately.
-        /// Serialized Name: LegacyChargeSummary.properties.chargesBilledSeparately
-        /// </param>
-        /// <param name="marketplaceCharges">
-        /// Marketplace Charges.
-        /// Serialized Name: LegacyChargeSummary.properties.marketplaceCharges
-        /// </param>
-        /// <param name="currency">
-        /// Currency Code
-        /// Serialized Name: LegacyChargeSummary.properties.currency
-        /// </param>
-        internal ConsumptionLegacyChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, string billingPeriodId, string usageStart, string usageEnd, decimal? azureCharges, decimal? chargesBilledSeparately, decimal? marketplaceCharges, string currency) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="kind"> Specifies the kind of charge summary. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="billingPeriodId"> The id of the billing period resource that the charge belongs to. </param>
+        /// <param name="usageStart"> Usage start date. </param>
+        /// <param name="usageEnd"> Usage end date. </param>
+        /// <param name="azureCharges"> Azure Charges. </param>
+        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
+        /// <param name="marketplaceCharges"> Marketplace Charges. </param>
+        /// <param name="currency"> Currency Code. </param>
+        internal ConsumptionLegacyChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingPeriodId, string usageStart, string usageEnd, decimal? azureCharges, decimal? chargesBilledSeparately, decimal? marketplaceCharges, string currency) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             BillingPeriodId = billingPeriodId;
             UsageStart = usageStart;
@@ -76,40 +48,19 @@ namespace Azure.ResourceManager.Consumption.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The id of the billing period resource that the charge belongs to.
-        /// Serialized Name: LegacyChargeSummary.properties.billingPeriodId
-        /// </summary>
+        /// <summary> The id of the billing period resource that the charge belongs to. </summary>
         public string BillingPeriodId { get; }
-        /// <summary>
-        /// Usage start date.
-        /// Serialized Name: LegacyChargeSummary.properties.usageStart
-        /// </summary>
+        /// <summary> Usage start date. </summary>
         public string UsageStart { get; }
-        /// <summary>
-        /// Usage end date.
-        /// Serialized Name: LegacyChargeSummary.properties.usageEnd
-        /// </summary>
+        /// <summary> Usage end date. </summary>
         public string UsageEnd { get; }
-        /// <summary>
-        /// Azure Charges.
-        /// Serialized Name: LegacyChargeSummary.properties.azureCharges
-        /// </summary>
+        /// <summary> Azure Charges. </summary>
         public decimal? AzureCharges { get; }
-        /// <summary>
-        /// Charges Billed separately.
-        /// Serialized Name: LegacyChargeSummary.properties.chargesBilledSeparately
-        /// </summary>
+        /// <summary> Charges Billed separately. </summary>
         public decimal? ChargesBilledSeparately { get; }
-        /// <summary>
-        /// Marketplace Charges.
-        /// Serialized Name: LegacyChargeSummary.properties.marketplaceCharges
-        /// </summary>
+        /// <summary> Marketplace Charges. </summary>
         public decimal? MarketplaceCharges { get; }
-        /// <summary>
-        /// Currency Code
-        /// Serialized Name: LegacyChargeSummary.properties.currency
-        /// </summary>
+        /// <summary> Currency Code. </summary>
         public string Currency { get; }
     }
 }

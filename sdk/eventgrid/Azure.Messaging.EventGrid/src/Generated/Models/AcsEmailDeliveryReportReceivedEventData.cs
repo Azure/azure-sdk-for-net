@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.EmailDeliveryReportReceived event. </summary>
     public partial class AcsEmailDeliveryReportReceivedEventData
     {
-        /// <summary> Initializes a new instance of AcsEmailDeliveryReportReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportReceivedEventData"/>. </summary>
         internal AcsEmailDeliveryReportReceivedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsEmailDeliveryReportReceivedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="sender"> The Sender Email Address. </param>
         /// <param name="recipient"> The recipient Email Address. </param>
         /// <param name="messageId"> The Id of the email been sent. </param>

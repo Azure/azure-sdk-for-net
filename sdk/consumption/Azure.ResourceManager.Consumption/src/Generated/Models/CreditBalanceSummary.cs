@@ -5,53 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Summary of credit balances.
-    /// Serialized Name: CreditBalanceSummary
-    /// </summary>
+    /// <summary> Summary of credit balances. </summary>
     public partial class CreditBalanceSummary
     {
-        /// <summary> Initializes a new instance of CreditBalanceSummary. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CreditBalanceSummary"/>. </summary>
         internal CreditBalanceSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of CreditBalanceSummary. </summary>
-        /// <param name="estimatedBalance">
-        /// Estimated balance.
-        /// Serialized Name: CreditBalanceSummary.estimatedBalance
-        /// </param>
-        /// <param name="currentBalance">
-        /// Current balance.
-        /// Serialized Name: CreditBalanceSummary.currentBalance
-        /// </param>
-        /// <param name="estimatedBalanceInBillingCurrency">
-        /// Estimated balance in billing currency.
-        /// Serialized Name: CreditBalanceSummary.estimatedBalanceInBillingCurrency
-        /// </param>
-        internal CreditBalanceSummary(ConsumptionAmount estimatedBalance, ConsumptionAmount currentBalance, ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency)
+        /// <summary> Initializes a new instance of <see cref="CreditBalanceSummary"/>. </summary>
+        /// <param name="estimatedBalance"> Estimated balance. </param>
+        /// <param name="currentBalance"> Current balance. </param>
+        /// <param name="estimatedBalanceInBillingCurrency"> Estimated balance in billing currency. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreditBalanceSummary(ConsumptionAmount estimatedBalance, ConsumptionAmount currentBalance, ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EstimatedBalance = estimatedBalance;
             CurrentBalance = currentBalance;
             EstimatedBalanceInBillingCurrency = estimatedBalanceInBillingCurrency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Estimated balance.
-        /// Serialized Name: CreditBalanceSummary.estimatedBalance
-        /// </summary>
+        /// <summary> Estimated balance. </summary>
         public ConsumptionAmount EstimatedBalance { get; }
-        /// <summary>
-        /// Current balance.
-        /// Serialized Name: CreditBalanceSummary.currentBalance
-        /// </summary>
+        /// <summary> Current balance. </summary>
         public ConsumptionAmount CurrentBalance { get; }
-        /// <summary>
-        /// Estimated balance in billing currency.
-        /// Serialized Name: CreditBalanceSummary.estimatedBalanceInBillingCurrency
-        /// </summary>
+        /// <summary> Estimated balance in billing currency. </summary>
         public ConsumptionAmountWithExchangeRate EstimatedBalanceInBillingCurrency { get; }
     }
 }

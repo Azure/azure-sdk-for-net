@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Spark.Samples
             string endpoint = TestEnvironment.EndpointUrl;
 #endif
 
-            SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), sparkPoolName, new DefaultAzureCredential());
+            SparkSessionClient client = new SparkSessionClient(new Uri(endpoint), "2019-11-01-preview", sparkPoolName, new DefaultAzureCredential());
             #endregion
 
             #region Snippet:CreateSparkSession

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Json read settings. </summary>
     public partial class JsonReadSettings : FormatReadSettings
     {
-        /// <summary> Initializes a new instance of JsonReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonReadSettings"/>. </summary>
         public JsonReadSettings()
         {
             FormatReadSettingsType = "JsonReadSettings";
         }
 
-        /// <summary> Initializes a new instance of JsonReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonReadSettings"/>. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="compressionProperties">

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,64 @@
 
 ### Other Changes
 
+## 1.2.0 (2024-07-29)
+
+### Features Added
+
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+- Upgraded api-version tag from 'package-2021-02' to 'package-2023-12'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/928047803788f7377fa003a26ba2bdc2e0fcccc0/specification/web/resource-manager/readme.md.
+
+### Bugs Fixed
+
+- Fixed https://github.com/Azure/azure-sdk-for-net/issues/39126.
+- Fixed 'GetAppServiceCertificateOrdersAsync's InvalidResourceType problem for AppServiceCertificateOrderData, Issue at https://github.com/Azure/azure-sdk-for-net/issues/45177
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.31.0 to 1.41.0
+- Upgraded Azure.ResourceManager from 1.5.0 to 1.12.0
+
+## 1.1.0-beta.5 (2024-04-19)
+
+### Features Added
+
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Bugs Fixed
+
+- Added `200` to the response code of the `SyncFunctionTriggers`
+- SiteFunctionResource.GetFunctionKeysAsync /SiteSlotFunctionResource.GetFunctionKeysSlotAsync fixed: can not populated with function keys
+- Added more enum values for `TriggeredWebJobStatus`
+
+## 1.1.0-beta.4 (2023-11-30)
+
+### Features Added
+
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other ChangesGetHybridConnectionsAsync
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.1.0-beta.3 (2023-09-14)
+
+### Bugs Fixed
+
+- Due to `HealthCheckUri` not being a valid URI, added a new property `HealthCheckUriString` to replace it in order to fix the URI format issue.
+
+## 1.1.0-beta.2 (2023-09-06)
+
+### Bugs Fixed
+
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebAppBackupData`.
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebSiteInstanceStatusData`.
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `AppServiceTableStorageApplicationLogsConfig`.
+
 ## 1.1.0-beta.1 (2023-05-31)
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 - Added `AppCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
   `AppCertificateData.Thumbprint` has been hidden but is still available.
 - Added `AppServiceVirtualNetworkData.CertThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
@@ -35,7 +88,7 @@
   `SiteAuthSettings.ClientSecretCertificateThumbprint` has been hidden but is still available.
 - Added `PublicCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
   `PublicCertificateData.Thumbprint` has been hidden but is still available.
-  
+
 ### Other Changes
 
 - Upgraded dependent Azure.Core to 1.32.0.

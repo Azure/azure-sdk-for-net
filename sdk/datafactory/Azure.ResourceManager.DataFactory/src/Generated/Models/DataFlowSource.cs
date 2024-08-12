@@ -6,14 +6,15 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Transformation for data flow source. </summary>
     public partial class DataFlowSource : DataFlowTransformation
     {
-        /// <summary> Initializes a new instance of DataFlowSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowSource"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public DataFlowSource(string name) : base(name)
@@ -21,19 +22,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(name, nameof(name));
         }
 
-        /// <summary> Initializes a new instance of DataFlowSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowSource"/>. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>
         /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="flowlet"> Flowlet Reference. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="schemaLinkedService"> Schema linked service reference. </param>
-        internal DataFlowSource(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet, FactoryLinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet)
+        internal DataFlowSource(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryLinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet, serializedAdditionalRawData)
         {
             SchemaLinkedService = schemaLinkedService;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFlowSource"/> for deserialization. </summary>
+        internal DataFlowSource()
+        {
+        }
+
         /// <summary> Schema linked service reference. </summary>
-        public FactoryLinkedServiceReference SchemaLinkedService { get; set; }
+        public DataFactoryLinkedServiceReference SchemaLinkedService { get; set; }
     }
 }

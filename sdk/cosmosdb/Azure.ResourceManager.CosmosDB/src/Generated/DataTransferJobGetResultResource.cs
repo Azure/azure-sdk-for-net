@@ -9,23 +9,25 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a DataTransferJobGetResult along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataTransferJobGetResultResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataTransferJobGetResultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource" /> using the GetDataTransferJobGetResult method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataTransferJobGetResultResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataTransferJobGetResultResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBAccountResource"/> using the GetDataTransferJobGetResult method.
     /// </summary>
     public partial class DataTransferJobGetResultResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataTransferJobGetResultResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="jobName"> The jobName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string jobName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.CosmosDB
         private readonly DataTransferJobsRestOperations _dataTransferJobGetResultDataTransferJobsRestClient;
         private readonly DataTransferJobGetResultData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/dataTransferJobs";
+
         /// <summary> Initializes a new instance of the <see cref="DataTransferJobGetResultResource"/> class for mocking. </summary>
         protected DataTransferJobGetResultResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataTransferJobGetResultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataTransferJobGetResultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataTransferJobGetResultResource(ArmClient client, DataTransferJobGetResultData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.CosmosDB
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/databaseAccounts/dataTransferJobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +100,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DataTransferJobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +139,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataTransferJobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,10 +180,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DataTransferJobs_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The DataTransferJobGetResultCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="DataTransferJobGetResultCreateOrUpdateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<DataTransferJobGetResultResource>> UpdateAsync(WaitUntil waitUntil, DataTransferJobGetResultCreateOrUpdateContent content, CancellationToken cancellationToken = default)
@@ -177,7 +203,9 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = await _dataTransferJobGetResultDataTransferJobsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<DataTransferJobGetResultResource>(Response.FromValue(new DataTransferJobGetResultResource(Client, response), response.GetRawResponse()));
+                var uri = _dataTransferJobGetResultDataTransferJobsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CosmosDBArmOperation<DataTransferJobGetResultResource>(Response.FromValue(new DataTransferJobGetResultResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -200,10 +228,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DataTransferJobs_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The DataTransferJobGetResultCreateOrUpdateContent to use. </param>
+        /// <param name="content"> The <see cref="DataTransferJobGetResultCreateOrUpdateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<DataTransferJobGetResultResource> Update(WaitUntil waitUntil, DataTransferJobGetResultCreateOrUpdateContent content, CancellationToken cancellationToken = default)
@@ -215,7 +251,9 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _dataTransferJobGetResultDataTransferJobsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new CosmosDBArmOperation<DataTransferJobGetResultResource>(Response.FromValue(new DataTransferJobGetResultResource(Client, response), response.GetRawResponse()));
+                var uri = _dataTransferJobGetResultDataTransferJobsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CosmosDBArmOperation<DataTransferJobGetResultResource>(Response.FromValue(new DataTransferJobGetResultResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -237,6 +275,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataTransferJobs_Pause</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,6 +314,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DataTransferJobs_Pause</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -297,6 +351,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataTransferJobs_Resume</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,6 +390,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DataTransferJobs_Resume</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -357,6 +427,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataTransferJobs_Cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,6 +466,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DataTransferJobs_Cancel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -398,6 +484,82 @@ namespace Azure.ResourceManager.CosmosDB
             try
             {
                 var response = _dataTransferJobGetResultDataTransferJobsRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Completes a Data Transfer Online Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}/complete</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataTransferJobs_Complete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DataTransferJobGetResultResource>> CompleteAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataTransferJobGetResultDataTransferJobsClientDiagnostics.CreateScope("DataTransferJobGetResultResource.Complete");
+            scope.Start();
+            try
+            {
+                var response = await _dataTransferJobGetResultDataTransferJobsRestClient.CompleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Completes a Data Transfer Online Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/dataTransferJobs/{jobName}/complete</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataTransferJobs_Complete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataTransferJobGetResultResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DataTransferJobGetResultResource> Complete(CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataTransferJobGetResultDataTransferJobsClientDiagnostics.CreateScope("DataTransferJobGetResultResource.Complete");
+            scope.Start();
+            try
+            {
+                var response = _dataTransferJobGetResultDataTransferJobsRestClient.Complete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return Response.FromValue(new DataTransferJobGetResultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

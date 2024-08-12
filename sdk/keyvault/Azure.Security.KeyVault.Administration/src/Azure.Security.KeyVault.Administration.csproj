@@ -3,10 +3,11 @@
 <PropertyGroup>
     <Description>This is the Microsoft Azure Key Vault Administration client library</Description>
     <AssemblyTitle>Microsoft Azure.Security.KeyVault.Administration client library</AssemblyTitle>
-    <Version>4.4.0-beta.1</Version>
+    <Version>4.5.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>4.3.0</ApiCompatVersion>
+    <ApiCompatVersion>4.4.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Key Vault Administration;$(PackageCommonTags)</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021;CA1812</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
@@ -28,6 +29,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)CallerShouldAuditAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared\Core" />
   </ItemGroup>

@@ -9,23 +9,22 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
     /// <summary>
     /// A Class representing a BillingPaymentMethod along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BillingPaymentMethodResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBillingPaymentMethodResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetBillingPaymentMethod method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BillingPaymentMethodResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBillingPaymentMethodResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBillingPaymentMethod method.
     /// </summary>
     public partial class BillingPaymentMethodResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingPaymentMethodResource"/> instance. </summary>
+        /// <param name="paymentMethodName"> The paymentMethodName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string paymentMethodName)
         {
             var resourceId = $"/providers/Microsoft.Billing/paymentMethods/{paymentMethodName}";
@@ -36,12 +35,15 @@ namespace Azure.ResourceManager.Billing
         private readonly PaymentMethodsRestOperations _billingPaymentMethodPaymentMethodsRestClient;
         private readonly BillingPaymentMethodData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/paymentMethods";
+
         /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodResource"/> class for mocking. </summary>
         protected BillingPaymentMethodResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BillingPaymentMethodResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BillingPaymentMethodResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BillingPaymentMethodResource(ArmClient client, BillingPaymentMethodData data) : this(client, data.Id)
@@ -62,9 +64,6 @@ namespace Azure.ResourceManager.Billing
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/paymentMethods";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +97,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +136,14 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByUser</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,6 +177,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_DeleteByUser</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -173,7 +196,9 @@ namespace Azure.ResourceManager.Billing
             try
             {
                 var response = await _billingPaymentMethodPaymentMethodsRestClient.DeleteByUserAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation(response);
+                var uri = _billingPaymentMethodPaymentMethodsRestClient.CreateDeleteByUserRequestUri(Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BillingArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -196,6 +221,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_DeleteByUser</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingPaymentMethodResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -207,7 +240,9 @@ namespace Azure.ResourceManager.Billing
             try
             {
                 var response = _billingPaymentMethodPaymentMethodsRestClient.DeleteByUser(Id.Name, cancellationToken);
-                var operation = new BillingArmOperation(response);
+                var uri = _billingPaymentMethodPaymentMethodsRestClient.CreateDeleteByUserRequestUri(Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BillingArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

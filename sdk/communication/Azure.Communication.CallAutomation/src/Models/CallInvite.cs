@@ -15,34 +15,31 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="targetPhoneNumberIdentity"></param>
         /// <param name="callerIdNumber"></param>
-        /// /// <param name="sipHeaders"></param>
-        public CallInvite(PhoneNumberIdentifier targetPhoneNumberIdentity, PhoneNumberIdentifier callerIdNumber, IDictionary<string, string> sipHeaders = null)
+        public CallInvite(PhoneNumberIdentifier targetPhoneNumberIdentity, PhoneNumberIdentifier callerIdNumber)
         {
             Target = targetPhoneNumberIdentity;
             SourceCallerIdNumber = callerIdNumber;
-            SipHeaders= sipHeaders == null ? new Dictionary<string, string>() : sipHeaders;
+            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: null);
         }
 
         /// <summary>
         /// Creates a new CallInvite object.
         /// </summary>
         /// <param name="targetIdentity"></param>
-        /// <param name="voipHeaders"></param>
-        public CallInvite(CommunicationUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
+        public CallInvite(CommunicationUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            VoipHeaders= voipHeaders == null ? new Dictionary<string, string>() : voipHeaders;
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
         /// Creates a new CallInvite object.
         /// </summary>
         /// <param name="targetIdentity"></param>
-        /// <param name="voipHeaders"></param>
-        public CallInvite(MicrosoftTeamsUserIdentifier targetIdentity, IDictionary<string, string> voipHeaders = null)
+        public CallInvite(MicrosoftTeamsUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            VoipHeaders = voipHeaders == null ? new Dictionary<string, string>() : voipHeaders;
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -55,18 +52,17 @@ namespace Azure.Communication.CallAutomation
         /// The caller ID number to appear on target PSTN callee.
         /// </summary>
         /// <value></value>
-        public PhoneNumberIdentifier SourceCallerIdNumber { get; }
-
-        /// <summary> Dictionary of VOIP headers. </summary>
-        public IDictionary<string, string> VoipHeaders { get; }
-
-        /// <summary> Dictionary of SIP headers. </summary>
-        public IDictionary<string, string> SipHeaders { get; }
+        public PhoneNumberIdentifier SourceCallerIdNumber { get; set;  }
 
         /// <summary>
         /// The display name to appear on target callee.
         /// </summary>
         /// <value></value>
         public string SourceDisplayName { get; set; }
+
+        /// <summary>
+        /// The Custom Context which contains SIP and voip headers
+        /// </summary>
+        public CustomCallingContext CustomCallingContext { get; }
     }
 }

@@ -14,12 +14,83 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The metric alert resource for patch operations. </summary>
     public partial class MetricAlertPatch
     {
-        /// <summary> Initializes a new instance of MetricAlertPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricAlertPatch"/>. </summary>
         public MetricAlertPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             Scopes = new ChangeTrackingList<string>();
             Actions = new ChangeTrackingList<MetricAlertAction>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricAlertPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="description"> the description of the metric alert that will be included in the alert email. </param>
+        /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
+        /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
+        /// <param name="scopes"> the list of resource id's that this metric alert is scoped to. </param>
+        /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
+        /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
+        /// <param name="targetResourceType"> the resource type of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
+        /// <param name="targetResourceRegion"> the region of the target resource(s) on which the alert is created/updated. Mandatory for MultipleResourceMultipleMetricCriteria. </param>
+        /// <param name="criteria">
+        /// defines the specific alert criteria information.
+        /// Please note <see cref="MetricAlertCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/> and <see cref="WebtestLocationAvailabilityCriteria"/>.
+        /// </param>
+        /// <param name="isAutoMitigateEnabled"> the flag that indicates whether the alert should be auto resolved or not. The default is true. </param>
+        /// <param name="actions"> the array of actions that are performed when the alert rule becomes active, and when an alert condition is resolved. </param>
+        /// <param name="lastUpdatedOn"> Last time the rule was updated in ISO8601 format. </param>
+        /// <param name="isMigrated"> the value indicating whether this alert rule is migrated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricAlertPatch(IDictionary<string, string> tags, string description, int? severity, bool? isEnabled, IList<string> scopes, TimeSpan? evaluationFrequency, TimeSpan? windowSize, ResourceType? targetResourceType, AzureLocation? targetResourceRegion, MetricAlertCriteria criteria, bool? isAutoMitigateEnabled, IList<MetricAlertAction> actions, DateTimeOffset? lastUpdatedOn, bool? isMigrated, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Description = description;
+            Severity = severity;
+            IsEnabled = isEnabled;
+            Scopes = scopes;
+            EvaluationFrequency = evaluationFrequency;
+            WindowSize = windowSize;
+            TargetResourceType = targetResourceType;
+            TargetResourceRegion = targetResourceRegion;
+            Criteria = criteria;
+            IsAutoMitigateEnabled = isAutoMitigateEnabled;
+            Actions = actions;
+            LastUpdatedOn = lastUpdatedOn;
+            IsMigrated = isMigrated;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

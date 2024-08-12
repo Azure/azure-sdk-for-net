@@ -5,15 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The parameters needed to retrieve the default function definition for a JavaScript function. </summary>
     public partial class JavaScriptFunctionRetrieveDefaultDefinitionContent : FunctionRetrieveDefaultDefinitionContent
     {
-        /// <summary> Initializes a new instance of JavaScriptFunctionRetrieveDefaultDefinitionContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="JavaScriptFunctionRetrieveDefaultDefinitionContent"/>. </summary>
         public JavaScriptFunctionRetrieveDefaultDefinitionContent()
         {
             BindingType = "Microsoft.StreamAnalytics/JavascriptUdf";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JavaScriptFunctionRetrieveDefaultDefinitionContent"/>. </summary>
+        /// <param name="bindingType"> Indicates the function binding type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="script"> The JavaScript code containing a single function definition. For example: 'function (x, y) { return x + y; }'. </param>
+        /// <param name="udfType"> The function type. </param>
+        internal JavaScriptFunctionRetrieveDefaultDefinitionContent(string bindingType, IDictionary<string, BinaryData> serializedAdditionalRawData, string script, StreamingJobFunctionUdfType? udfType) : base(bindingType, serializedAdditionalRawData)
+        {
+            Script = script;
+            UdfType = udfType;
+            BindingType = bindingType ?? "Microsoft.StreamAnalytics/JavascriptUdf";
         }
 
         /// <summary> The JavaScript code containing a single function definition. For example: 'function (x, y) { return x + y; }'. </summary>

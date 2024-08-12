@@ -5,14 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.DevCenter.Models
 {
     /// <summary> The pool properties for partial update. Properties not provided in the update request will not be changed. </summary>
     public partial class DevCenterPoolPatch : DevCenterTrackedResourceUpdate
     {
-        /// <summary> Initializes a new instance of DevCenterPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevCenterPoolPatch"/>. </summary>
         public DevCenterPoolPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevCenterPoolPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="devBoxDefinitionName"> Name of a Dev Box definition in parent Project of this Pool. </param>
+        /// <param name="networkConnectionName"> Name of a Network Connection in parent Project of this Pool. </param>
+        /// <param name="licenseType"> Specifies the license type indicating the caller has already acquired licenses for the Dev Boxes that will be created. </param>
+        /// <param name="localAdministrator"> Indicates whether owners of Dev Boxes in this pool are added as local administrators on the Dev Box. </param>
+        /// <param name="stopOnDisconnect"> Stop on disconnect configuration settings for Dev Boxes created in this pool. </param>
+        internal DevCenterPoolPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, string devBoxDefinitionName, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect) : base(tags, location, serializedAdditionalRawData)
+        {
+            DevBoxDefinitionName = devBoxDefinitionName;
+            NetworkConnectionName = networkConnectionName;
+            LicenseType = licenseType;
+            LocalAdministrator = localAdministrator;
+            StopOnDisconnect = stopOnDisconnect;
         }
 
         /// <summary> Name of a Dev Box definition in parent Project of this Pool. </summary>

@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,10 +20,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> hubName = default;
-            Optional<string> connectionId = default;
-            Optional<string> userId = default;
+            DateTimeOffset? timestamp = default;
+            string hubName = default;
+            string connectionId = default;
+            string userId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -52,7 +51,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new SignalRServiceClientConnectionConnectedEventData(Optional.ToNullable(timestamp), hubName.Value, connectionId.Value, userId.Value);
+            return new SignalRServiceClientConnectionConnectedEventData(timestamp, hubName, connectionId, userId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SignalRServiceClientConnectionConnectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSignalRServiceClientConnectionConnectedEventData(document.RootElement);
         }
 
         internal partial class SignalRServiceClientConnectionConnectedEventDataConverter : JsonConverter<SignalRServiceClientConnectionConnectedEventData>
@@ -61,6 +68,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override SignalRServiceClientConnectionConnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

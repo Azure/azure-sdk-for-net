@@ -5,43 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The current amount of cost which is being tracked for a budget.
-    /// Serialized Name: CurrentSpend
-    /// </summary>
+    /// <summary> The current amount of cost which is being tracked for a budget. </summary>
     public partial class BudgetCurrentSpend
     {
-        /// <summary> Initializes a new instance of BudgetCurrentSpend. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BudgetCurrentSpend"/>. </summary>
         internal BudgetCurrentSpend()
         {
         }
 
-        /// <summary> Initializes a new instance of BudgetCurrentSpend. </summary>
-        /// <param name="amount">
-        /// The total amount of cost which is being tracked by the budget.
-        /// Serialized Name: CurrentSpend.amount
-        /// </param>
-        /// <param name="unit">
-        /// The unit of measure for the budget amount.
-        /// Serialized Name: CurrentSpend.unit
-        /// </param>
-        internal BudgetCurrentSpend(decimal? amount, string unit)
+        /// <summary> Initializes a new instance of <see cref="BudgetCurrentSpend"/>. </summary>
+        /// <param name="amount"> The total amount of cost which is being tracked by the budget. </param>
+        /// <param name="unit"> The unit of measure for the budget amount. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BudgetCurrentSpend(decimal? amount, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Amount = amount;
             Unit = unit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The total amount of cost which is being tracked by the budget.
-        /// Serialized Name: CurrentSpend.amount
-        /// </summary>
+        /// <summary> The total amount of cost which is being tracked by the budget. </summary>
         public decimal? Amount { get; }
-        /// <summary>
-        /// The unit of measure for the budget amount.
-        /// Serialized Name: CurrentSpend.unit
-        /// </summary>
+        /// <summary> The unit of measure for the budget amount. </summary>
         public string Unit { get; }
     }
 }

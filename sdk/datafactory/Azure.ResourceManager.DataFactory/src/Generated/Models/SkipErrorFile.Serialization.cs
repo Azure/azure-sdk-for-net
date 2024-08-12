@@ -6,45 +6,79 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SkipErrorFile : IUtf8JsonSerializable
+    public partial class SkipErrorFile : IUtf8JsonSerializable, IJsonModel<SkipErrorFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkipErrorFile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SkipErrorFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SkipErrorFile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SkipErrorFile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FileMissing);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileMissing.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FileMissing);
             }
             if (Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency"u8);
+                JsonSerializer.Serialize(writer, DataInconsistency);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(DataInconsistency);
+				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DataInconsistency.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SkipErrorFile DeserializeSkipErrorFile(JsonElement element)
+        SkipErrorFile IJsonModel<SkipErrorFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SkipErrorFile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SkipErrorFile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSkipErrorFile(document.RootElement, options);
+        }
+
+        internal static SkipErrorFile DeserializeSkipErrorFile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BinaryData> fileMissing = default;
-            Optional<BinaryData> dataInconsistency = default;
+            DataFactoryElement<bool> fileMissing = default;
+            DataFactoryElement<bool> dataInconsistency = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileMissing"u8))
@@ -53,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    fileMissing = BinaryData.FromString(property.Value.GetRawText());
+                    fileMissing = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("dataInconsistency"u8))
@@ -62,11 +96,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    dataInconsistency = BinaryData.FromString(property.Value.GetRawText());
+                    dataInconsistency = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SkipErrorFile(fileMissing.Value, dataInconsistency.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SkipErrorFile(fileMissing, dataInconsistency, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SkipErrorFile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkipErrorFile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SkipErrorFile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SkipErrorFile IPersistableModel<SkipErrorFile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkipErrorFile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSkipErrorFile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SkipErrorFile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SkipErrorFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -24,27 +24,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         private const string NoneValue = "None";
         private const string PrimaryValue = "Primary";
-        private const string SecondaryValue = "Secondary";
-        private const string WalReplicaValue = "WalReplica";
-        private const string SyncReplicaValue = "SyncReplica";
         private const string AsyncReplicaValue = "AsyncReplica";
-        private const string GeoSyncReplicaValue = "GeoSyncReplica";
         private const string GeoAsyncReplicaValue = "GeoAsyncReplica";
 
         /// <summary> None. </summary>
         public static PostgreSqlFlexibleServerReplicationRole None { get; } = new PostgreSqlFlexibleServerReplicationRole(NoneValue);
         /// <summary> Primary. </summary>
         public static PostgreSqlFlexibleServerReplicationRole Primary { get; } = new PostgreSqlFlexibleServerReplicationRole(PrimaryValue);
-        /// <summary> Secondary. </summary>
-        public static PostgreSqlFlexibleServerReplicationRole Secondary { get; } = new PostgreSqlFlexibleServerReplicationRole(SecondaryValue);
-        /// <summary> WalReplica. </summary>
-        public static PostgreSqlFlexibleServerReplicationRole WalReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(WalReplicaValue);
-        /// <summary> SyncReplica. </summary>
-        public static PostgreSqlFlexibleServerReplicationRole SyncReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(SyncReplicaValue);
         /// <summary> AsyncReplica. </summary>
         public static PostgreSqlFlexibleServerReplicationRole AsyncReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(AsyncReplicaValue);
-        /// <summary> GeoSyncReplica. </summary>
-        public static PostgreSqlFlexibleServerReplicationRole GeoSyncReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(GeoSyncReplicaValue);
         /// <summary> GeoAsyncReplica. </summary>
         public static PostgreSqlFlexibleServerReplicationRole GeoAsyncReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(GeoAsyncReplicaValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerReplicationRole"/> values are the same. </summary>
@@ -62,7 +50,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

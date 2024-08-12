@@ -6,31 +6,77 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Resume replication input. </summary>
     public partial class ResumeReplicationContent
     {
-        /// <summary> Initializes a new instance of ResumeReplicationContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResumeReplicationContent"/>. </summary>
         /// <param name="properties"> Resume replication input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public ResumeReplicationContent(ResumeReplicationInputProperties properties)
+        public ResumeReplicationContent(ResumeReplicationProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResumeReplicationContent"/>. </summary>
+        /// <param name="properties"> Resume replication input properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResumeReplicationContent(ResumeReplicationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResumeReplicationContent"/> for deserialization. </summary>
+        internal ResumeReplicationContent()
+        {
+        }
+
         /// <summary> Resume replication input properties. </summary>
-        internal ResumeReplicationInputProperties Properties { get; }
+        internal ResumeReplicationProperties Properties { get; }
         /// <summary>
         /// The provider specific input for resume replication.
-        /// Please note <see cref="ResumeReplicationProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VMwareCbtResumeReplicationInput"/>.
+        /// Please note <see cref="ResumeReplicationProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtResumeReplicationContent"/>.
         /// </summary>
-        public ResumeReplicationProviderSpecificInput ResumeReplicationInputProviderSpecificDetails
+        public ResumeReplicationProviderSpecificContent ResumeReplicationProviderSpecificDetails
         {
             get => Properties?.ProviderSpecificDetails;
         }

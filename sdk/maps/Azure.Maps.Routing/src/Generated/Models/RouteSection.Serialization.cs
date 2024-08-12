@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -18,15 +17,15 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<int> startPointIndex = default;
-            Optional<int> endPointIndex = default;
-            Optional<ResponseSectionType> sectionType = default;
-            Optional<ResponseTravelMode> travelMode = default;
-            Optional<TrafficIncidentCategory> simpleCategory = default;
-            Optional<int> effectiveSpeedInKmh = default;
-            Optional<int> delayInSeconds = default;
-            Optional<DelayMagnitude> magnitudeOfDelay = default;
-            Optional<RouteSectionTec> tec = default;
+            int? startPointIndex = default;
+            int? endPointIndex = default;
+            ResponseSectionType? sectionType = default;
+            ResponseTravelMode? travelMode = default;
+            TrafficIncidentCategory? simpleCategory = default;
+            int? effectiveSpeedInKmh = default;
+            int? delayInSeconds = default;
+            DelayMagnitude? magnitudeOfDelay = default;
+            RouteSectionTec tec = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startPointIndex"u8))
@@ -111,7 +110,24 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteSection(Optional.ToNullable(startPointIndex), Optional.ToNullable(endPointIndex), Optional.ToNullable(sectionType), Optional.ToNullable(travelMode), Optional.ToNullable(simpleCategory), Optional.ToNullable(effectiveSpeedInKmh), Optional.ToNullable(delayInSeconds), Optional.ToNullable(magnitudeOfDelay), tec.Value);
+            return new RouteSection(
+                startPointIndex,
+                endPointIndex,
+                sectionType,
+                travelMode,
+                simpleCategory,
+                effectiveSpeedInKmh,
+                delayInSeconds,
+                magnitudeOfDelay,
+                tec);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteSection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteSection(document.RootElement);
         }
     }
 }

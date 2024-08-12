@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         #region Account
         public static BatchAccountCreateOrUpdateContent GetBatchAccountData(ResourceIdentifier id)
         {
-            var data = new BatchAccountCreateOrUpdateContent(AzureLocation.WestUS)
+            var data = new BatchAccountCreateOrUpdateContent(AzureLocation.EastUS)
             {
                 AutoStorage = new BatchAccountAutoStorageBaseConfiguration(id)
             };
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
         {
             var sku = new StorageSku("Standard_RAGRS");
             var kind = StorageKind.StorageV2;
-            var storageAccount = new StorageAccountCreateOrUpdateContent(sku, kind, AzureLocation.WestUS2)
+            var storageAccount = new StorageAccountCreateOrUpdateContent(sku, kind, AzureLocation.EastUS)
             {
                 MinimumTlsVersion = StorageMinimumTlsVersion.Tls1_2,
                 AllowBlobPublicAccess = true,

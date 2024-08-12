@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class EventGridDomainData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of EventGridDomainData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainData"/>. </summary>
         /// <param name="location"> The location. </param>
         public EventGridDomainData(AzureLocation location) : base(location)
         {
@@ -27,18 +59,24 @@ namespace Azure.ResourceManager.EventGrid
             InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
-        /// <summary> Initializes a new instance of EventGridDomainData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="sku"> The Sku pricing tier for the Event Grid Domain resource. </param>
         /// <param name="identity"> Identity information for the Event Grid Domain resource. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the Event Grid Domain Resource. </param>
+        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this domain. </param>
         /// <param name="endpoint"> Endpoint for the Event Grid Domain Resource which is used for publishing the events. </param>
         /// <param name="inputSchema"> This determines the format that Event Grid should expect for incoming events published to the Event Grid Domain Resource. </param>
+        /// <param name="eventTypeInfo">
+        /// Event Type Information for the domain. This information is provided by the publisher and can be used by the
+        /// subscriber to view different types of events that are published.
+        /// </param>
         /// <param name="inputSchemaMapping">
         /// Information about the InputSchemaMapping which specified the info about mapping event payload.
         /// Please note <see cref="EventGridInputSchemaMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -70,13 +108,17 @@ namespace Azure.ResourceManager.EventGrid
         /// resources by the user.
         /// </param>
         /// <param name="dataResidencyBoundary"> Data Residency Boundary of the resource. </param>
-        internal EventGridDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridDomainProvisioningState? provisioningState, Uri endpoint, EventGridInputSchema? inputSchema, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, DataResidencyBoundary? dataResidencyBoundary) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, ManagedServiceIdentity identity, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridDomainProvisioningState? provisioningState, TlsVersion? minimumTlsVersionAllowed, Uri endpoint, EventGridInputSchema? inputSchema, PartnerTopicEventTypeInfo eventTypeInfo, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, bool? autoCreateTopicWithFirstSubscription, bool? autoDeleteTopicWithLastSubscription, DataResidencyBoundary? dataResidencyBoundary, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Sku = sku;
             Identity = identity;
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
+            MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
             Endpoint = endpoint;
             InputSchema = inputSchema;
+            EventTypeInfo = eventTypeInfo;
             InputSchemaMapping = inputSchemaMapping;
             MetricResourceId = metricResourceId;
             PublicNetworkAccess = publicNetworkAccess;
@@ -85,6 +127,26 @@ namespace Azure.ResourceManager.EventGrid
             AutoCreateTopicWithFirstSubscription = autoCreateTopicWithFirstSubscription;
             AutoDeleteTopicWithLastSubscription = autoDeleteTopicWithLastSubscription;
             DataResidencyBoundary = dataResidencyBoundary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventGridDomainData"/> for deserialization. </summary>
+        internal EventGridDomainData()
+        {
+        }
+
+        /// <summary> The Sku pricing tier for the Event Grid Domain resource. </summary>
+        internal ResourceSku Sku { get; set; }
+        /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>
+        public EventGridSku? SkuName
+        {
+            get => Sku is null ? default : Sku.Name;
+            set
+            {
+                if (Sku is null)
+                    Sku = new ResourceSku();
+                Sku.Name = value;
+            }
         }
 
         /// <summary> Identity information for the Event Grid Domain resource. </summary>
@@ -93,10 +155,17 @@ namespace Azure.ResourceManager.EventGrid
         public IReadOnlyList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Provisioning state of the Event Grid Domain Resource. </summary>
         public EventGridDomainProvisioningState? ProvisioningState { get; }
+        /// <summary> Minimum TLS version of the publisher allowed to publish to this domain. </summary>
+        public TlsVersion? MinimumTlsVersionAllowed { get; set; }
         /// <summary> Endpoint for the Event Grid Domain Resource which is used for publishing the events. </summary>
         public Uri Endpoint { get; }
         /// <summary> This determines the format that Event Grid should expect for incoming events published to the Event Grid Domain Resource. </summary>
         public EventGridInputSchema? InputSchema { get; set; }
+        /// <summary>
+        /// Event Type Information for the domain. This information is provided by the publisher and can be used by the
+        /// subscriber to view different types of events that are published.
+        /// </summary>
+        public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }
         /// <summary>
         /// Information about the InputSchemaMapping which specified the info about mapping event payload.
         /// Please note <see cref="EventGridInputSchemaMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

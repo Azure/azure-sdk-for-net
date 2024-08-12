@@ -10,11 +10,26 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The QueryFormat. </summary>
     internal partial class QueryFormat
     {
-        /// <summary> Initializes a new instance of QueryFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryFormat"/>. </summary>
         /// <param name="type"> The quick query format type. </param>
         public QueryFormat(QueryFormatType type)
         {
             Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryFormat"/>. </summary>
+        /// <param name="type"> The quick query format type. </param>
+        /// <param name="delimitedTextConfiguration"> Groups the settings used for interpreting the blob data if the blob is delimited text formatted. </param>
+        /// <param name="jsonTextConfiguration"> json text configuration. </param>
+        /// <param name="arrowConfiguration"> Groups the settings used for formatting the response if the response should be Arrow formatted. </param>
+        /// <param name="parquetTextConfiguration"> parquet configuration. </param>
+        internal QueryFormat(QueryFormatType type, DelimitedTextConfigurationInternal delimitedTextConfiguration, JsonTextConfigurationInternal jsonTextConfiguration, ArrowTextConfigurationInternal arrowConfiguration, object parquetTextConfiguration)
+        {
+            Type = type;
+            DelimitedTextConfiguration = delimitedTextConfiguration;
+            JsonTextConfiguration = jsonTextConfiguration;
+            ArrowConfiguration = arrowConfiguration;
+            ParquetTextConfiguration = parquetTextConfiguration;
         }
 
         /// <summary> The quick query format type. </summary>

@@ -56,7 +56,7 @@ Console.WriteLine("Detecting the anomaly status of the latest point in the serie
 
 try
 {
-    UnivariateLastDetectionResult result = client.DetectUnivariateLastPoint(request);
+    UnivariateLastDetectionResult result = client.GetUnivariateClient().DetectUnivariateLastPoint(request);
 
     if (result.IsAnomaly)
     {

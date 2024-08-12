@@ -5,22 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Azure FirstParty Managed Certificate provided by other first party resource providers to enable HTTPS. </summary>
     public partial class AzureFirstPartyManagedCertificateProperties : FrontDoorSecretProperties
     {
-        /// <summary> Initializes a new instance of AzureFirstPartyManagedCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirstPartyManagedCertificateProperties"/>. </summary>
         public AzureFirstPartyManagedCertificateProperties()
         {
+            SubjectAlternativeNames = new ChangeTrackingList<string>();
             SecretType = SecretType.AzureFirstPartyManagedCertificate;
         }
 
-        /// <summary> Initializes a new instance of AzureFirstPartyManagedCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFirstPartyManagedCertificateProperties"/>. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
-        internal AzureFirstPartyManagedCertificateProperties(SecretType secretType) : base(secretType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="secretSource"> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </param>
+        /// <param name="subject"> Subject name in the certificate. </param>
+        /// <param name="expirationDate"> Certificate expiration date. </param>
+        /// <param name="certificateAuthority"> Certificate issuing authority. </param>
+        /// <param name="subjectAlternativeNames"> The list of SANs. </param>
+        /// <param name="thumbprint"> Certificate thumbprint. </param>
+        internal AzureFirstPartyManagedCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource secretSource, string subject, string expirationDate, string certificateAuthority, IList<string> subjectAlternativeNames, string thumbprint) : base(secretType, serializedAdditionalRawData)
         {
+            SecretSource = secretSource;
+            Subject = subject;
+            ExpirationDate = expirationDate;
+            CertificateAuthority = certificateAuthority;
+            SubjectAlternativeNames = subjectAlternativeNames;
+            Thumbprint = thumbprint;
             SecretType = secretType;
         }
+
+        /// <summary> Resource reference to the Azure Key Vault certificate. Expected to be in format of /subscriptions/{​​​​​​​​​subscriptionId}​​​​​​​​​/resourceGroups/{​​​​​​​​​resourceGroupName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/providers/Microsoft.KeyVault/vaults/{vaultName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​/secrets/{certificateName}​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​. </summary>
+        internal WritableSubResource SecretSource { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SecretSourceId
+        {
+            get => SecretSource?.Id;
+        }
+
+        /// <summary> Subject name in the certificate. </summary>
+        public string Subject { get; }
+        /// <summary> Certificate expiration date. </summary>
+        public string ExpirationDate { get; }
+        /// <summary> Certificate issuing authority. </summary>
+        public string CertificateAuthority { get; }
+        /// <summary> The list of SANs. </summary>
+        public IList<string> SubjectAlternativeNames { get; }
+        /// <summary> Certificate thumbprint. </summary>
+        public string Thumbprint { get; }
     }
 }

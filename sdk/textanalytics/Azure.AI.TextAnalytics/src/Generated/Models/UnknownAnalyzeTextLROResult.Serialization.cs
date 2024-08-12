@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -38,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             AnalyzeTextLROResultsKind kind = "Unknown";
-            Optional<string> taskName = default;
+            string taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
@@ -64,7 +63,23 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new UnknownAnalyzeTextLROResult(lastUpdateDateTime, status, kind, taskName.Value);
+            return new UnknownAnalyzeTextLROResult(lastUpdateDateTime, status, kind, taskName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownAnalyzeTextLROResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownAnalyzeTextLROResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AnalyzeTextLROResult>(this);
+            return content;
         }
     }
 }

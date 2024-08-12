@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningModelVersionCollectionGetAllOptions. </summary>
     public partial class MachineLearningModelVersionCollectionGetAllOptions
     {
-        /// <summary> Initializes a new instance of MachineLearningModelVersionCollectionGetAllOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningModelVersionCollectionGetAllOptions"/>. </summary>
         public MachineLearningModelVersionCollectionGetAllOptions()
         {
         }
@@ -35,5 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string Feed { get; set; }
         /// <summary> View type for including/excluding (for example) archived entities. </summary>
         public MachineLearningListViewType? ListViewType { get; set; }
+        /// <summary> Model stage. </summary>
+        public string Stage { get; set; }
     }
 }

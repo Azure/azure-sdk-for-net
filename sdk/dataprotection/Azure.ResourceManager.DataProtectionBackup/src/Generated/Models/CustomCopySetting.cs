@@ -6,22 +6,24 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Duration based custom options to copy. </summary>
     public partial class CustomCopySetting : DataProtectionBackupCopySetting
     {
-        /// <summary> Initializes a new instance of CustomCopySetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomCopySetting"/>. </summary>
         public CustomCopySetting()
         {
             ObjectType = "CustomCopyOption";
         }
 
-        /// <summary> Initializes a new instance of CustomCopySetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomCopySetting"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="duration"> Data copied after given timespan. </param>
-        internal CustomCopySetting(string objectType, TimeSpan? duration) : base(objectType)
+        internal CustomCopySetting(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan? duration) : base(objectType, serializedAdditionalRawData)
         {
             Duration = duration;
             ObjectType = objectType ?? "CustomCopyOption";

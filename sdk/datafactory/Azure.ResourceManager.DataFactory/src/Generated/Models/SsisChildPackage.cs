@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SSIS embedded child package. </summary>
     public partial class SsisChildPackage
     {
-        /// <summary> Initializes a new instance of SsisChildPackage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SsisChildPackage"/>. </summary>
         /// <param name="packagePath"> Path for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <param name="packageContent"> Content for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="packagePath"/> or <paramref name="packageContent"/> is null. </exception>
-        public SsisChildPackage(BinaryData packagePath, BinaryData packageContent)
+        public SsisChildPackage(DataFactoryElement<string> packagePath, DataFactoryElement<string> packageContent)
         {
             Argument.AssertNotNull(packagePath, nameof(packagePath));
             Argument.AssertNotNull(packageContent, nameof(packageContent));
@@ -26,83 +59,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             PackageContent = packageContent;
         }
 
-        /// <summary> Initializes a new instance of SsisChildPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SsisChildPackage"/>. </summary>
         /// <param name="packagePath"> Path for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <param name="packageName"> Name for embedded child package. </param>
         /// <param name="packageContent"> Content for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <param name="packageLastModifiedDate"> Last modified date for embedded child package. </param>
-        internal SsisChildPackage(BinaryData packagePath, string packageName, BinaryData packageContent, string packageLastModifiedDate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SsisChildPackage(DataFactoryElement<string> packagePath, string packageName, DataFactoryElement<string> packageContent, string packageLastModifiedDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PackagePath = packagePath;
             PackageName = packageName;
             PackageContent = packageContent;
             PackageLastModifiedDate = packageLastModifiedDate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Path for embedded child package. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData PackagePath { get; set; }
+        /// <summary> Initializes a new instance of <see cref="SsisChildPackage"/> for deserialization. </summary>
+        internal SsisChildPackage()
+        {
+        }
+
+        /// <summary> Path for embedded child package. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> PackagePath { get; set; }
         /// <summary> Name for embedded child package. </summary>
         public string PackageName { get; set; }
-        /// <summary>
-        /// Content for embedded child package. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData PackageContent { get; set; }
+        /// <summary> Content for embedded child package. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> PackageContent { get; set; }
         /// <summary> Last modified date for embedded child package. </summary>
         public string PackageLastModifiedDate { get; set; }
     }

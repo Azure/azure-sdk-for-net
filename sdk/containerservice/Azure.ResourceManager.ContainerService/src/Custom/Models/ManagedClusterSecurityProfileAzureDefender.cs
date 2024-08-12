@@ -3,11 +3,13 @@
 
 #nullable disable
 
+using System.ComponentModel;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Azure Defender settings for the security profile. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class ManagedClusterSecurityProfileAzureDefender
     {
         /// <summary> Initializes a new instance of ManagedClusterSecurityProfileAzureDefender. </summary>

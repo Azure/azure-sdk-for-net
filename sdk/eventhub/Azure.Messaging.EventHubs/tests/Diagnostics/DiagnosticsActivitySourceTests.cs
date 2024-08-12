@@ -13,11 +13,14 @@ using Azure.Core.Shared;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Authorization;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -52,6 +55,27 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies diagnostics functionality is off without feature flag.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubProducerActivitySourceDisabled()
+        {
+            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            var fakeConnection = new MockConnection("SomeName", "endpoint");
+            var transportMock = new Mock<TransportProducer>();
+
+            transportMock
+                .Setup(m => m.SendAsync(It.IsAny<IReadOnlyCollection<EventData>>(), It.IsAny<SendEventOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            var producer = new EventHubProducerClient(fakeConnection, transportMock.Object);
+            await producer.SendAsync(new[] { new EventData(ReadOnlyMemory<byte>.Empty) });
+
+            Assert.IsEmpty(testListener.Activities);
+        }
+
+        /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventHubProducerClient" />
         ///   class.
         /// </summary>
@@ -60,7 +84,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubProducerCreatesDiagnosticScopeOnSend()
         {
             using var _ = SetAppConfigSwitch();
-            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var testListener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             var activity = new Activity("SomeActivity").Start();
 
@@ -82,9 +106,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Activity messageActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.EventActivityName);
             AssertCommonTags(messageActivity, eventHubName, endpoint, default, 1);
+            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".Message", messageActivity.Source.Name);
 
             Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
             AssertCommonTags(sendActivity, eventHubName, endpoint, MessagingDiagnosticOperation.Publish, 1);
+            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".EventHubProducerClient", sendActivity.Source.Name);
 
             Assert.That(eventData.Properties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.EqualTo(messageActivity.Id), "The diagnostics identifier should match.");
             // Kind attribute is not set for the OTel path as this is handled by the OTel exporter SDK
@@ -103,7 +129,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubProducerCreatesDiagnosticScopeOnBatchSend()
         {
             using var _ = SetAppConfigSwitch();
-            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var testListener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             var activity = new Activity("SomeActivity").Start();
 
@@ -270,7 +296,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var _ = SetAppConfigSwitch();
 
-            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var testListener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
             var diagnosticId1 = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
             var diagnosticId2 = "00-0af7651916cd43dd8448eb211c80319c-c9c7c989f97918e1-01";
 
@@ -311,7 +337,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubProducerLinksSendScopeToMessageScopesOnBatchSend()
         {
             using var _ = SetAppConfigSwitch();
-            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var testListener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             var diagnosticId1 = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
             var diagnosticId2 = "00-0af7651916cd43dd8448eb211c80319c-c9c7c989f97918e1-01";
@@ -368,18 +394,42 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies diagnostics functionality is off without feature flag.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventHubProcessorActivitySourceDisabled()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            var partition = new EventProcessorPartition { PartitionId = "123" };
+            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(67, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
+
+            var eventBatch = new List<EventData>
+            {
+                new EventData(new BinaryData(Array.Empty<byte>()))
+            };
+
+            await mockProcessor.Object.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
+
+            Assert.IsEmpty(testListener.Activities);
+        }
+
+        /// <summary>
         ///   Verifies diagnostics functionality of the <see cref="EventProcessor{TPartition}.ProcessEventBatchAsync" />
         ///   class.
         /// </summary>
         ///
         [Test]
-        public async Task EventProcesorCreatesScopeForEventProcessing()
+        public async Task EventProcessorCreatesScopeForEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             using var _ = SetAppConfigSwitch();
-            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             var diagnosticId1 = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
             var diagnosticId2 = "00-0af7651916cd43dd8448eb211c80319c-c9c7c989f97918e1-01";
@@ -432,7 +482,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             using var _ = SetAppConfigSwitch();
-            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             var enqueuedTime = DateTimeOffset.UtcNow;
             var diagnosticId = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
@@ -457,12 +507,13 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(processingActivity.ParentId, Is.EqualTo(diagnosticId), "The parent of the processing scope should have been equal to the diagnosticId.");
             AssertCommonTags(processingActivity, eventHubName, fullyQualifiedNamespace, MessagingDiagnosticOperation.Process, 1);
+            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".EventProcessor", processingActivity.Source.Name);
 
             var expectedTag =
-                new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute,
-                    enqueuedTime.ToUnixTimeMilliseconds().ToString());
+                new KeyValuePair<string, object>(DiagnosticProperty.EnqueuedTimeAttribute,
+                    enqueuedTime.ToUnixTimeMilliseconds());
 
-            var tags = processingActivity.Tags;
+            var tags = processingActivity.TagObjects;
             Assert.That(tags.Contains(expectedTag), Is.True, "The processing scope should have contained the enqueued time tag.");
         }
 
@@ -472,13 +523,13 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task EventProcesorAddsAttributesToLinkedActivitiesForBatchEventProcessing()
+        public async Task EventProcessorAddsAttributesToLinkedActivitiesForBatchEventProcessing()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             using var _ = SetAppConfigSwitch();
-            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             var enqueuedTime = DateTimeOffset.UtcNow;
             var diagnosticId = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
@@ -505,9 +556,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var linkedActivities = processingScope.Links.Where(a => a.Context.TraceId == ActivityContext.Parse(diagnosticId, null).TraceId).ToList();
             Assert.That(linkedActivities.Count, Is.EqualTo(2), "There should have been a two activities linked to the diagnostic identifier.");
 
-            var expectedTags = new List<KeyValuePair<string, string>>()
+            var expectedTags = new List<KeyValuePair<string, object>>()
             {
-                new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeMilliseconds().ToString())
+                new KeyValuePair<string, object>(DiagnosticProperty.EnqueuedTimeAttribute, enqueuedTime.ToUnixTimeMilliseconds())
             };
 
             var tags = linkedActivities[0].Tags.ToList();
@@ -518,22 +569,87 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventProcessor{TPartition}.ProcessEventBatchAsync" />
+        ///   class when base processor tracing is disabled.
+        /// </summary>
+        ///
+        [Test]
+        public async Task EventProcessorDisabledBatchTracing()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            using var _ = SetAppConfigSwitch();
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
+
+            var eventBatch = new[] { new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: DateTimeOffset.UtcNow) };
+            var partition = new EventProcessorPartition { PartitionId = "123" };
+            var fullyQualifiedNamespace = "namespace";
+            var eventHubName = "eventHub";
+            var mockProcessor = new MockEventProcessor(1, "consumerGroup", fullyQualifiedNamespace, eventHubName, Mock.Of<TokenCredential>(), default);
+
+            mockProcessor.EnableBatchTracing = false;
+            await mockProcessor.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
+
+            // Validate the diagnostics.
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.IsEmpty(listener.Activities);
+        }
+
+        /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task UpdateCheckpointAsyncCreatesScope(bool useOldOverload)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            var fullyQualifiedNamespace = "namespace";
+            var eventHubName = "eventHub";
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var mockProcessor = new MockCheckpointStoreProcessor(mockCheckpointStore.Object, 100, "fakeConsumer", fullyQualifiedNamespace, eventHubName, Mock.Of<TokenCredential>());
+
+            using var _ = SetAppConfigSwitch();
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
+
+            if (useOldOverload)
+            {
+                await mockProcessor.InvokeOldUpdateCheckpointAsync("65", 12345, 67890, cancellationSource.Token);
+            }
+            else
+            {
+                await mockProcessor.InvokeUpdateCheckpointAsync("65", new CheckpointPosition(12345), cancellationSource.Token);
+            }
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            var checkpointActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.EventProcessorCheckpointActivityName);
+            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, fullyQualifiedNamespace));
+            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName));
+            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
         /// Asserts that the common tags are present in the activity.
         /// </summary>
         private void AssertCommonTags(Activity activity, string eventHubName, string endpoint, MessagingDiagnosticOperation operation, int eventCount)
         {
             var tags = activity.TagObjects.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.NetPeerName, endpoint));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, endpoint));
 
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
             if (operation != default)
             {
                 CollectionAssert.Contains(tags,
                     new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString()));
-                var entityKey = operation == MessagingDiagnosticOperation.Receive || operation == MessagingDiagnosticOperation.Process
-                    ? MessagingClientDiagnostics.SourceName
-                    : MessagingClientDiagnostics.DestinationName;
-                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(entityKey, eventHubName));
+                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName));
             }
             else
             {
@@ -575,7 +691,102 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     string eventHubName,
                                                                     TimeSpan operationTimeout,
                                                                     EventHubTokenCredential credential,
-                                                                    EventHubConnectionOptions options) => Mock.Of<TransportClient>();
+                                                                    EventHubConnectionOptions options,
+                                                                    bool useTls = true) => Mock.Of<TransportClient>();
+        }
+
+        /// <summary>
+        ///   A minimal mock processor that allows toggling the batch tracing
+        ///   flag.
+        /// </summary>
+        ///
+        private class MockEventProcessor : EventProcessor<EventProcessorPartition>
+        {
+            public MockEventProcessor(int identifier,
+                                      string consumerGroup,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      TokenCredential credential,
+                                      EventProcessorOptions options) : base(identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+            }
+
+            public new bool EnableBatchTracing
+            {
+                get => base.EnableBatchTracing;
+                set => base.EnableBatchTracing = value;
+            }
+
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => throw new NotImplementedException();
+
+            protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken) => Task.CompletedTask;
+
+            protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => Task.CompletedTask;
+        }
+
+        /// <summary>
+        ///   A minimal processor implementation for testing functionality
+        ///   related  to the checkpoint store integration.
+        /// </summary>
+        ///
+        private class MockCheckpointStoreProcessor : PluggableCheckpointStoreEventProcessor<EventProcessorPartition>
+        {
+            public MockCheckpointStoreProcessor(CheckpointStore checkpointStore,
+                                                int eventBatchMaximumCount,
+                                                string consumerGroup,
+                                                string connectionString,
+                                                EventProcessorOptions options = default) : base(checkpointStore, eventBatchMaximumCount, consumerGroup, connectionString, options)
+            {
+            }
+
+            public MockCheckpointStoreProcessor(CheckpointStore checkpointStore,
+                                                int eventBatchMaximumCount,
+                                                string consumerGroup,
+                                                string connectionString,
+                                                string eventHubName,
+                                                EventProcessorOptions options = default) : base(checkpointStore, eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options)
+            {
+            }
+
+            public MockCheckpointStoreProcessor(CheckpointStore checkpointStore,
+                                                int eventBatchMaximumCount,
+                                                string consumerGroup,
+                                                string fullyQualifiedNamespace,
+                                                string eventHubName,
+                                                AzureNamedKeyCredential credential,
+                                                EventProcessorOptions options = default) : base(checkpointStore, eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+            }
+
+            public MockCheckpointStoreProcessor(CheckpointStore checkpointStore,
+                                                int eventBatchMaximumCount,
+                                                string consumerGroup,
+                                                string fullyQualifiedNamespace,
+                                                string eventHubName,
+                                                AzureSasCredential credential,
+                                                EventProcessorOptions options = default) : base(checkpointStore, eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+            }
+
+            public MockCheckpointStoreProcessor(CheckpointStore checkpointStore,
+                                                int eventBatchMaximumCount,
+                                                string consumerGroup,
+                                                string fullyQualifiedNamespace,
+                                                string eventHubName,
+                                                TokenCredential credential,
+                                                EventProcessorOptions options = default) : base(checkpointStore, eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+            }
+
+            protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken) => throw new NotImplementedException();
+            protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => throw new NotImplementedException();
+
+            public Task<EventProcessorCheckpoint> InvokeGetCheckpointAsync(string partitionId, CancellationToken cancellationToken) => GetCheckpointAsync(partitionId, cancellationToken);
+            public Task InvokeOldUpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken);
+            public Task InvokeUpdateCheckpointAsync(string partitionId, CheckpointPosition checkpointPosition, CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, checkpointPosition, cancellationToken);
+            public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeListOwnershipAsync(CancellationToken cancellationToken) => ListOwnershipAsync(cancellationToken);
+            public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => ClaimOwnershipAsync(desiredOwnership, cancellationToken);
         }
     }
 #endif

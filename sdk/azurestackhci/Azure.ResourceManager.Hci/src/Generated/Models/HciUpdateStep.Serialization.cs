@@ -6,16 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciUpdateStep : IUtf8JsonSerializable
+    public partial class HciUpdateStep : IUtf8JsonSerializable, IJsonModel<HciUpdateStep>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciUpdateStep>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<HciUpdateStep>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HciUpdateStep>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HciUpdateStep)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -37,20 +48,25 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartTimeUtc))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartTimeUtc.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTimeUtc))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndTimeUtc.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(LastUpdatedTimeUtc))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
-                writer.WriteStringValue(LastUpdatedTimeUtc.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(ExpectedExecutionTime))
+            {
+                writer.WritePropertyName("expectedExecutionTime"u8);
+                writer.WriteStringValue(ExpectedExecutionTime);
             }
             if (Optional.IsCollectionDefined(Steps))
             {
@@ -58,27 +74,59 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static HciUpdateStep DeserializeHciUpdateStep(JsonElement element)
+        HciUpdateStep IJsonModel<HciUpdateStep>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HciUpdateStep>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HciUpdateStep)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHciUpdateStep(document.RootElement, options);
+        }
+
+        internal static HciUpdateStep DeserializeHciUpdateStep(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> errorMessage = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTimeUtc = default;
-            Optional<DateTimeOffset> endTimeUtc = default;
-            Optional<DateTimeOffset> lastUpdatedTimeUtc = default;
-            Optional<IList<HciUpdateStep>> steps = default;
+            string name = default;
+            string description = default;
+            string errorMessage = default;
+            string status = default;
+            DateTimeOffset? startTimeUtc = default;
+            DateTimeOffset? endTimeUtc = default;
+            DateTimeOffset? lastUpdatedTimeUtc = default;
+            string expectedExecutionTime = default;
+            IList<HciUpdateStep> steps = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -128,6 +176,11 @@ namespace Azure.ResourceManager.Hci.Models
                     lastUpdatedTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("expectedExecutionTime"u8))
+                {
+                    expectedExecutionTime = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("steps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -137,13 +190,262 @@ namespace Azure.ResourceManager.Hci.Models
                     List<HciUpdateStep> array = new List<HciUpdateStep>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeHciUpdateStep(item));
+                        array.Add(DeserializeHciUpdateStep(item, options));
                     }
                     steps = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HciUpdateStep(name.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToList(steps));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HciUpdateStep(
+                name,
+                description,
+                errorMessage,
+                status,
+                startTimeUtc,
+                endTimeUtc,
+                lastUpdatedTimeUtc,
+                expectedExecutionTime,
+                steps ?? new ChangeTrackingList<HciUpdateStep>(),
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorMessage), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  errorMessage: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ErrorMessage))
+                {
+                    builder.Append("  errorMessage: ");
+                    if (ErrorMessage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ErrorMessage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ErrorMessage}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
+                {
+                    builder.Append("  status: ");
+                    if (Status.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Status}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Status}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startTimeUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StartOn))
+                {
+                    builder.Append("  startTimeUtc: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  endTimeUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EndOn))
+                {
+                    builder.Append("  endTimeUtc: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  lastUpdatedTimeUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastUpdatedOn))
+                {
+                    builder.Append("  lastUpdatedTimeUtc: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(LastUpdatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpectedExecutionTime), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  expectedExecutionTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpectedExecutionTime))
+                {
+                    builder.Append("  expectedExecutionTime: ");
+                    if (ExpectedExecutionTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ExpectedExecutionTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ExpectedExecutionTime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Steps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  steps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Steps))
+                {
+                    if (Steps.Any())
+                    {
+                        builder.Append("  steps: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Steps)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  steps: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<HciUpdateStep>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciUpdateStep>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(HciUpdateStep)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HciUpdateStep IPersistableModel<HciUpdateStep>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciUpdateStep>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHciUpdateStep(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciUpdateStep)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HciUpdateStep>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

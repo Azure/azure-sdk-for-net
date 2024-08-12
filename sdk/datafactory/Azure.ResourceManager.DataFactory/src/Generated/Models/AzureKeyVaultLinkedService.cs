@@ -7,17 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Key Vault linked service. </summary>
-    public partial class AzureKeyVaultLinkedService : FactoryLinkedServiceDefinition
+    public partial class AzureKeyVaultLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of AzureKeyVaultLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultLinkedService"/>. </summary>
         /// <param name="baseUri"> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="baseUri"/> is null. </exception>
-        public AzureKeyVaultLinkedService(BinaryData baseUri)
+        public AzureKeyVaultLinkedService(DataFactoryElement<string> baseUri)
         {
             Argument.AssertNotNull(baseUri, nameof(baseUri));
 
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "AzureKeyVault";
         }
 
-        /// <summary> Initializes a new instance of AzureKeyVaultLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -34,45 +34,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="baseUri"> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureKeyVaultLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData baseUri, FactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureKeyVaultLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> baseUri, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             BaseUri = baseUri;
             Credential = credential;
             LinkedServiceType = linkedServiceType ?? "AzureKeyVault";
         }
 
-        /// <summary>
-        /// The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData BaseUri { get; set; }
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultLinkedService"/> for deserialization. </summary>
+        internal AzureKeyVaultLinkedService()
+        {
+        }
+
+        /// <summary> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> BaseUri { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
-        public FactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential { get; set; }
     }
 }

@@ -3,12 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.Azure
 {
-    internal class AzureClientFactory<TClient, TOptions>: IAzureClientFactory<TClient>, IDisposable, IAsyncDisposable
+    internal class AzureClientFactory<TClient, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions>
+        : IAzureClientFactory<TClient>, IDisposable, IAsyncDisposable
     {
         private readonly Dictionary<string, ClientRegistration<TClient>> _clientRegistrations;
 

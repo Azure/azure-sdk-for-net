@@ -21,13 +21,13 @@ namespace Azure.Identity.Tests.Mock
         }
 
         public MockManagedIdentityClient(CredentialPipeline pipeline, string clientId)
-            : base(pipeline, clientId)
+            : base(new ManagedIdentityClientOptions() { Pipeline = pipeline, ClientId = clientId, Options = new TokenCredentialOptions() { IsChainedCredential = true } })
         {
         }
 
         public Func<AccessToken> TokenFactory { get; set; }
 
         public override ValueTask<AccessToken> AuthenticateCoreAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
-              => TokenFactory != null ? new ValueTask<AccessToken>(TokenFactory()) : base.AuthenticateAsync(async, context, cancellationToken);
+              => TokenFactory != null ? new ValueTask<AccessToken>(TokenFactory()) : AuthenticateAsync(async, context, cancellationToken);
     }
 }

@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.MetricsAdvisor.Administration;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -20,8 +19,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DataSourceCredentialEntity>> value = default;
+            string nextLink = default;
+            IReadOnlyList<DataSourceCredentialEntity> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@nextLink"u8))
@@ -44,7 +43,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new DataSourceCredentialList(nextLink.Value, Optional.ToList(value));
+            return new DataSourceCredentialList(nextLink, value ?? new ChangeTrackingList<DataSourceCredentialEntity>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataSourceCredentialList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataSourceCredentialList(document.RootElement);
         }
     }
 }

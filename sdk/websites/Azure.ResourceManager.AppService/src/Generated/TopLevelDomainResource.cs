@@ -9,10 +9,9 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
 
@@ -20,13 +19,15 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a TopLevelDomain along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TopLevelDomainResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTopLevelDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetTopLevelDomain method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TopLevelDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTopLevelDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetTopLevelDomain method.
     /// </summary>
     public partial class TopLevelDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TopLevelDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DomainRegistration/topLevelDomains/{name}";
@@ -37,12 +38,15 @@ namespace Azure.ResourceManager.AppService
         private readonly TopLevelDomainsRestOperations _topLevelDomainRestClient;
         private readonly TopLevelDomainData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DomainRegistration/topLevelDomains";
+
         /// <summary> Initializes a new instance of the <see cref="TopLevelDomainResource"/> class for mocking. </summary>
         protected TopLevelDomainResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TopLevelDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TopLevelDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TopLevelDomainResource(ArmClient client, TopLevelDomainData data) : this(client, data.Id)
@@ -63,9 +67,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DomainRegistration/topLevelDomains";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +100,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +139,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,19 +180,27 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_ListAgreements</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agreementOption"/> is null. </exception>
-        /// <returns> An async collection of <see cref="TldLegalAgreement" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TldLegalAgreement"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TldLegalAgreement> GetAgreementsAsync(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(agreementOption, nameof(agreementOption));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListAgreementsRequest(Id.SubscriptionId, Id.Name, agreementOption);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListAgreementsNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, agreementOption);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TldLegalAgreement.DeserializeTldLegalAgreement, _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TldLegalAgreement.DeserializeTldLegalAgreement(e), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -189,19 +214,27 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_ListAgreements</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="agreementOption"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agreementOption"/> is null. </exception>
-        /// <returns> A collection of <see cref="TldLegalAgreement" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TldLegalAgreement"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TldLegalAgreement> GetAgreements(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(agreementOption, nameof(agreementOption));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topLevelDomainRestClient.CreateListAgreementsRequest(Id.SubscriptionId, Id.Name, agreementOption);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _topLevelDomainRestClient.CreateListAgreementsNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, agreementOption);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TldLegalAgreement.DeserializeTldLegalAgreement, _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TldLegalAgreement.DeserializeTldLegalAgreement(e), _topLevelDomainClientDiagnostics, Pipeline, "TopLevelDomainResource.GetAgreements", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -39,6 +38,14 @@ namespace Azure.AI.FormRecognizer.Training
                 }
             }
             return new CustomFormModelField(fieldName, accuracy);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CustomFormModelField FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomFormModelField(document.RootElement);
         }
     }
 }

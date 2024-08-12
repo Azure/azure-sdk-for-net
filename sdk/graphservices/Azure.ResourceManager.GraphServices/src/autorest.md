@@ -7,13 +7,16 @@ azure-arm: true
 csharp: true
 library-name: GraphServices
 namespace: Azure.ResourceManager.GraphServices
-require: https://github.com/Azure/azure-rest-api-specs/blob/844b06b77ca841a151a6aa2a459f126e277f3c77/specification/graphservicesprod/resource-manager/readme.md
-# tag: package-2022-09-22-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/fe056966cf070be84e92dd2dc1b566bae35002cf/specification/graphservicesprod/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -22,7 +25,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -45,13 +48,18 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+rename_mapping:
+  AccountResourceProperties.appId: -|uuid
+  AccountResourceProperties.billingPlanId: -|uuid
+
 prepend-rp-prefix:
     - ProvisioningState
     - AccountResource
     - AccountResourceList
     - AccountPatchResource
     - AccountResourceProperties
-    
+    - TagUpdate
+
 directive:
     - remove-operation: 'Operation_List'
 

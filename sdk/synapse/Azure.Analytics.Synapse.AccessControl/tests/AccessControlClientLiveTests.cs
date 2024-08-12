@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
 
             public static async ValueTask<Response> CreateResource(RoleAssignmentsClient assignmentsClient, RoleDefinitionsClient definitionsClient, SynapseTestEnvironment testEnvironment)
             {
-                Response listResponse = await definitionsClient.GetRoleDefinitionsAsync(true);
+                Response listResponse = await definitionsClient.GetRoleDefinitionsAsync(true, null, new());
                 var listContent = listResponse.Content;
                 using var roleDefinitionsJson = JsonDocument.Parse(listContent.ToMemory());
 
@@ -136,7 +136,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
 
             // TODO: This will change to pageable with next (Data Plane) client generator update
-            Response listReponse = await definitionsClient.GetRoleDefinitionsAsync(true);
+            Response listReponse = await definitionsClient.GetRoleDefinitionsAsync(true, null, new());
             var listContent = listReponse.Content;
             using var roleDefinitionsJson = JsonDocument.Parse(listContent.ToMemory());
 
@@ -164,7 +164,7 @@ namespace Azure.Analytics.Synapse.AccessControl.Tests
             await using DisposableClientRole role = await DisposableClientRole.Create(assignmentsClient, definitionsClient, TestEnvironment);
 
             // TODO: This will change to pageable with https://github.com/azure/azure-sdk-for-net/issues/24680
-            Response listReponse = await assignmentsClient.GetRoleAssignmentsAsync();
+            Response listReponse = await assignmentsClient.GetRoleAssignmentsAsync(null, null, null, null, new());
             var listContent = listReponse.Content;
             using var outerJson = JsonDocument.Parse(listContent.ToMemory());
             var roleAssignmentsJson = outerJson.RootElement.GetProperty("value");

@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -25,10 +24,10 @@ namespace Azure.Containers.ContainerRegistry
             DateTimeOffset lastUpdateTime = default;
             int manifestCount = default;
             int tagCount = default;
-            Optional<bool> deleteEnabled = default;
-            Optional<bool> writeEnabled = default;
-            Optional<bool> listEnabled = default;
-            Optional<bool> readEnabled = default;
+            bool? deleteEnabled = default;
+            bool? writeEnabled = default;
+            bool? listEnabled = default;
+            bool? readEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registry"u8))
@@ -110,7 +109,25 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new ContainerRepositoryProperties(registry, imageName, createdTime, lastUpdateTime, manifestCount, tagCount, Optional.ToNullable(deleteEnabled), Optional.ToNullable(writeEnabled), Optional.ToNullable(listEnabled), Optional.ToNullable(readEnabled));
+            return new ContainerRepositoryProperties(
+                registry,
+                imageName,
+                createdTime,
+                lastUpdateTime,
+                manifestCount,
+                tagCount,
+                deleteEnabled,
+                writeEnabled,
+                listEnabled,
+                readEnabled);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ContainerRepositoryProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeContainerRepositoryProperties(document.RootElement);
         }
     }
 }

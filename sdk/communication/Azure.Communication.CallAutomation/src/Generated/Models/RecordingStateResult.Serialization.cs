@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,8 +17,9 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> recordingId = default;
-            Optional<RecordingState> recordingState = default;
+            string recordingId = default;
+            RecordingState? recordingState = default;
+            RecordingKind? recordingKind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingId"u8))
@@ -36,8 +36,25 @@ namespace Azure.Communication.CallAutomation
                     recordingState = new RecordingState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("recordingKind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingKind = new RecordingKind(property.Value.GetString());
+                    continue;
+                }
             }
-            return new RecordingStateResult(recordingId.Value, Optional.ToNullable(recordingState));
+            return new RecordingStateResult(recordingId, recordingState, recordingKind);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RecordingStateResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRecordingStateResult(document.RootElement);
         }
     }
 }

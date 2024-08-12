@@ -24,7 +24,7 @@ namespace Azure.Communication.Rooms.Tests.samples
         [Test]
         public async Task AcsRoomRequestSample()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2024_04_15);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
@@ -45,6 +45,19 @@ namespace Azure.Communication.Rooms.Tests.samples
             Response<CommunicationRoom> createRoomResponse = await roomsClient.CreateRoomAsync(validFrom, validUntil, invitedParticipants);
             CommunicationRoom createCommunicationRoom = createRoomResponse.Value;
 
+            // Starting in 1.1.0-beta.1 release,CreateRoom function also takes roomCreateOptions as parameter
+            bool pstnDialOutEnabled = true;
+            CreateRoomOptions roomCreateOptions = new CreateRoomOptions()
+            {
+                ValidFrom = validFrom,
+                ValidUntil = validUntil,
+                PstnDialOutEnabled = pstnDialOutEnabled,
+                Participants = invitedParticipants
+            };
+
+            createRoomResponse = await roomsClient.CreateRoomAsync(roomCreateOptions);
+            createCommunicationRoom = createRoomResponse.Value;
+
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_CreateRoomAsync
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(createCommunicationRoom.Id));
@@ -55,6 +68,18 @@ namespace Azure.Communication.Rooms.Tests.samples
             validUntil = validFrom.AddDays(30);
             Response<CommunicationRoom> updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, validFrom, validUntil);
             CommunicationRoom updateCommunicationRoom = updateRoomResponse.Value;
+
+            // Starting in 1.1.0 release,UpdateRoom function also takes roomCreateOptions as parameter
+            UpdateRoomOptions roomUpdateOptions = new UpdateRoomOptions()
+            {
+                ValidFrom = validFrom,
+                ValidUntil = validUntil,
+                PstnDialOutEnabled = pstnDialOutEnabled,
+            };
+
+            updateRoomResponse = await roomsClient.UpdateRoomAsync(createdRoomId, roomUpdateOptions);
+            updateCommunicationRoom = updateRoomResponse.Value;
+
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_UpdateRoomAsync
 
             Assert.IsFalse(string.IsNullOrWhiteSpace(updateCommunicationRoom.Id));
@@ -67,10 +92,23 @@ namespace Azure.Communication.Rooms.Tests.samples
             Assert.IsFalse(string.IsNullOrWhiteSpace(getCommunicationRoom.Id));
 
             #region Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomsAsync
+
+            // Retrieve the first 2 pages of active rooms
+            const int PageSize = 30;
+            const int PageCount = 2;
+            int maxRoomCount = PageCount * PageSize;
+            int counter = 1;
+
             AsyncPageable<CommunicationRoom> allRooms = roomsClient.GetRoomsAsync();
             await foreach (CommunicationRoom room in allRooms)
             {
                 Console.WriteLine($"Room with id {room.Id} is valid from {room.ValidFrom} to {room.ValidUntil}.");
+                counter++;
+
+                if (counter == maxRoomCount)
+                {
+                    break;
+                }
             }
             #endregion Snippet:Azure_Communication_Rooms_Tests_Samples_GetRoomsAsync
 
@@ -84,7 +122,7 @@ namespace Azure.Communication.Rooms.Tests.samples
         [Test]
         public async Task AddUpdateAndRemoveParticipantsExample()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2024_04_15);
             CommunicationIdentityClient communicationIdentityClient = CreateInstrumentedCommunicationIdentityClient();
             Response<CommunicationUserIdentifier> communicationUser1 = await communicationIdentityClient.CreateUserAsync();
             Response<CommunicationUserIdentifier> communicationUser2 = await communicationIdentityClient.CreateUserAsync();
@@ -141,7 +179,7 @@ namespace Azure.Communication.Rooms.Tests.samples
         [Test]
         public async Task RoomRequestsTroubleShooting()
         {
-            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2024_04_15);
             #region Snippet:Azure_Communication_RoomsClient_Tests_Troubleshooting
             try
             {

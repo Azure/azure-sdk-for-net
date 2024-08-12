@@ -5,28 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> The language extension object. </summary>
     public partial class KustoLanguageExtension
     {
-        /// <summary> Initializes a new instance of KustoLanguageExtension. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoLanguageExtension"/>. </summary>
         public KustoLanguageExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of KustoLanguageExtension. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoLanguageExtension"/>. </summary>
         /// <param name="languageExtensionName"> The language extension name. </param>
         /// <param name="languageExtensionImageName"> The language extension image name. </param>
-        internal KustoLanguageExtension(KustoLanguageExtensionName? languageExtensionName, KustoLanguageExtensionImageName? languageExtensionImageName)
+        /// <param name="languageExtensionCustomImageName"> The language extension custom image name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoLanguageExtension(KustoLanguageExtensionName? languageExtensionName, KustoLanguageExtensionImageName? languageExtensionImageName, string languageExtensionCustomImageName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LanguageExtensionName = languageExtensionName;
             LanguageExtensionImageName = languageExtensionImageName;
+            LanguageExtensionCustomImageName = languageExtensionCustomImageName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The language extension name. </summary>
         public KustoLanguageExtensionName? LanguageExtensionName { get; set; }
         /// <summary> The language extension image name. </summary>
         public KustoLanguageExtensionImageName? LanguageExtensionImageName { get; set; }
+        /// <summary> The language extension custom image name. </summary>
+        public string LanguageExtensionCustomImageName { get; set; }
     }
 }

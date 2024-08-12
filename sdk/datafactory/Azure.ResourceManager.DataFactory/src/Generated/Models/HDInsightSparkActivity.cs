@@ -7,19 +7,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> HDInsight Spark activity. </summary>
     public partial class HDInsightSparkActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of HDInsightSparkActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightSparkActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="rootPath"> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </param>
         /// <param name="entryFilePath"> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="rootPath"/> or <paramref name="entryFilePath"/> is null. </exception>
-        public HDInsightSparkActivity(string name, BinaryData rootPath, BinaryData entryFilePath) : base(name)
+        public HDInsightSparkActivity(string name, DataFactoryElement<string> rootPath, DataFactoryElement<string> entryFilePath) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(rootPath, nameof(rootPath));
@@ -32,10 +32,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "HDInsightSpark";
         }
 
-        /// <summary> Initializes a new instance of HDInsightSparkActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightSparkActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -49,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="className"> The application's Java/Spark main class. </param>
         /// <param name="proxyUser"> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
-        internal HDInsightSparkActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, BinaryData rootPath, BinaryData entryFilePath, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, FactoryLinkedServiceReference sparkJobLinkedService, string className, BinaryData proxyUser, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightSparkActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> rootPath, DataFactoryElement<string> entryFilePath, IList<BinaryData> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryLinkedServiceReference sparkJobLinkedService, string className, DataFactoryElement<string> proxyUser, IDictionary<string, BinaryData> sparkConfig) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             RootPath = rootPath;
             EntryFilePath = entryFilePath;
@@ -62,75 +64,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightSpark";
         }
 
-        /// <summary>
-        /// The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData RootPath { get; set; }
-        /// <summary>
-        /// The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EntryFilePath { get; set; }
+        /// <summary> Initializes a new instance of <see cref="HDInsightSparkActivity"/> for deserialization. </summary>
+        internal HDInsightSparkActivity()
+        {
+        }
+
+        /// <summary> The root path in 'sparkJobLinkedService' for all the job’s files. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> RootPath { get; set; }
+        /// <summary> The relative path to the root folder of the code/package to be executed. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> EntryFilePath { get; set; }
         /// <summary>
         /// The user-specified arguments to HDInsightSparkActivity.
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -158,47 +107,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary> The storage linked service for uploading the entry file and dependencies, and for receiving logs. </summary>
-        public FactoryLinkedServiceReference SparkJobLinkedService { get; set; }
+        public DataFactoryLinkedServiceReference SparkJobLinkedService { get; set; }
         /// <summary> The application's Java/Spark main class. </summary>
         public string ClassName { get; set; }
-        /// <summary>
-        /// The user to impersonate that will execute the job. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ProxyUser { get; set; }
+        /// <summary> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> ProxyUser { get; set; }
         /// <summary>
         /// Spark configuration property.
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

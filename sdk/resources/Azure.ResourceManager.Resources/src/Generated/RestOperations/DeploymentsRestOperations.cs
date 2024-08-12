@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Resources.Models;
@@ -33,8 +32,20 @@ namespace Azure.ResourceManager.Resources
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateDeleteAtScopeRequestUri(string scope, string deploymentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal Core.HttpMessage CreateDeleteAtScopeRequest(string scope, string deploymentName)
@@ -101,6 +112,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateCheckExistenceAtScopeRequestUri(string scope, string deploymentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateCheckExistenceAtScopeRequest(string scope, string deploymentName)
         {
             var message = _pipeline.CreateMessage();
@@ -165,6 +188,18 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateAtScopeRequestUri(string scope, string deploymentName, ArmDeploymentContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateCreateOrUpdateAtScopeRequest(string scope, string deploymentName, ArmDeploymentContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -181,7 +216,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -235,6 +270,18 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetAtScopeRequestUri(string scope, string deploymentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal Core.HttpMessage CreateGetAtScopeRequest(string scope, string deploymentName)
@@ -313,6 +360,19 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateCancelAtScopeRequestUri(string scope, string deploymentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateCancelAtScopeRequest(string scope, string deploymentName)
         {
             var message = _pipeline.CreateMessage();
@@ -376,6 +436,19 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateValidateAtScopeRequestUri(string scope, string deploymentName, ArmDeploymentContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateValidateAtScopeRequest(string scope, string deploymentName, ArmDeploymentContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -393,7 +466,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -449,6 +522,19 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExportTemplateAtScopeRequestUri(string scope, string deploymentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/exportTemplate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal Core.HttpMessage CreateExportTemplateAtScopeRequest(string scope, string deploymentName)
@@ -522,6 +608,25 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAtScopeRequestUri(string scope, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal Core.HttpMessage CreateListAtScopeRequest(string scope, string filter, int? top)
@@ -601,6 +706,17 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateWhatIfAtTenantScopeRequestUri(string deploymentName, ArmDeploymentWhatIfContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/whatIf", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateWhatIfAtTenantScopeRequest(string deploymentName, ArmDeploymentWhatIfContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -616,7 +732,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -668,6 +784,19 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateWhatIfAtManagementGroupScopeRequestUri(string groupId, string deploymentName, ArmDeploymentWhatIfContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(groupId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/whatIf", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateWhatIfAtManagementGroupScopeRequest(string groupId, string deploymentName, ArmDeploymentWhatIfContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -685,7 +814,7 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -741,6 +870,19 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateWhatIfAtSubscriptionScopeRequestUri(string subscriptionId, string deploymentName, ArmDeploymentWhatIfContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/whatIf", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateWhatIfAtSubscriptionScopeRequest(string subscriptionId, string deploymentName, ArmDeploymentWhatIfContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -758,14 +900,14 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Returns changes that will be made by the deployment if executed at the scope of the subscription. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="content"> Parameters to What If. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -790,7 +932,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Returns changes that will be made by the deployment if executed at the scope of the subscription. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="content"> Parameters to What If. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -814,6 +956,21 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateWhatIfRequestUri(string subscriptionId, string resourceGroupName, string deploymentName, ArmDeploymentWhatIfContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Resources/deployments/", false);
+            uri.AppendPath(deploymentName, true);
+            uri.AppendPath("/whatIf", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateWhatIfRequest(string subscriptionId, string resourceGroupName, string deploymentName, ArmDeploymentWhatIfContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -833,14 +990,14 @@ namespace Azure.ResourceManager.Resources
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Returns changes that will be made by the deployment if executed at the scope of the resource group. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group the template will be deployed to. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="content"> Parameters to validate. </param>
@@ -867,7 +1024,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Returns changes that will be made by the deployment if executed at the scope of the resource group. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group the template will be deployed to. The name is case insensitive. </param>
         /// <param name="deploymentName"> The name of the deployment. </param>
         /// <param name="content"> Parameters to validate. </param>
@@ -893,6 +1050,15 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
+        internal RequestUriBuilder CreateCalculateTemplateHashRequestUri(BinaryData template)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Resources/calculateTemplateHash", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal Core.HttpMessage CreateCalculateTemplateHashRequest(BinaryData template)
         {
             var message = _pipeline.CreateMessage();
@@ -909,7 +1075,10 @@ namespace Azure.ResourceManager.Resources
 #if NET6_0_OR_GREATER
 				content.JsonWriter.WriteRawValue(template);
 #else
-            JsonSerializer.Serialize(content.JsonWriter, JsonDocument.Parse(template.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(template))
+            {
+                JsonSerializer.Serialize(content.JsonWriter, document.RootElement);
+            }
 #endif
             request.Content = content;
             _userAgent.Apply(message);
@@ -962,6 +1131,14 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListAtScopeNextPageRequestUri(string nextLink, string scope, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal Core.HttpMessage CreateListAtScopeNextPageRequest(string nextLink, string scope, string filter, int? top)

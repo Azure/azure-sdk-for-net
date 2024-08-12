@@ -1,15 +1,46 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
+## 12.9.1 (Unreleased)
+
+### Bugs Fixed
+- Fixed an issue that prevented use of stored access policy based SaS Uris by adding a constructor to `TableSasBuilder` that accepts a stored access policy identifier without needing to specify the policy's permissions.
+
+## 12.9.0 (2024-07-22)
 
 ### Features Added
+- Overload the `DeleteEntity` method to allow an `ITableEntity` object as parameter.
 
-### Breaking Changes
+### Bugs Fixed
+- Fixed an issue where custom models decorated with the `DataMemberAttribute` that didn't explicitly set a name caused the query filter to be malformed.
+
+### Other Changes
+- Reduce List allocations when uploading batches to table storage
+
+## 12.8.3 (2024-02-06)
+
+### Bugs Fixed
+- `TableEntity` string properties will correctly handle type coercion from `DateTime` and `DateTimeOffset` types. ([#40775](https://github.com/Azure/azure-sdk-for-net/issues/40775))
+- Fixed an error handling bug that could result in an `ArgumentNullException` when calling `CreateIfNotExistsAsync`. ([#41463](https://github.com/Azure/azure-sdk-for-net/issues/41463))
+
+## 12.8.2 (2023-11-13)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make Azure Tables better with their contributions to this release:
+
+- metjuperry _([GitHub](https://github.com/metjuperry))_
+
+### Bugs Fixed
+
+- Fixed an issue where custom models decorated with the `DataMemberAttribute` were not properly considered in query filters (A community contribution, courtesy of _[metjuperry]_ ([#38884](https://github.com/Azure/azure-sdk-for-net/issues/38884))
+
+### Other Changes
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 12.8.1 (2023-08-15)
 
 ### Bugs Fixed
 - Fixed the URL returned by `TableClient.Uri` when connecting to Azurite
-
-### Other Changes
 
 ## 12.8.0 (2023-02-08)
 

@@ -5,52 +5,89 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
     public partial class MachineLearningWorkspaceNotebookAccessTokenResult
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
         internal MachineLearningWorkspaceNotebookAccessTokenResult()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceNotebookAccessTokenResult. </summary>
-        /// <param name="notebookResourceId"></param>
-        /// <param name="hostName"></param>
-        /// <param name="publicDns"></param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceNotebookAccessTokenResult"/>. </summary>
         /// <param name="accessToken"></param>
-        /// <param name="tokenType"></param>
         /// <param name="expiresIn"></param>
+        /// <param name="hostName"></param>
+        /// <param name="notebookResourceId"></param>
+        /// <param name="publicDns"></param>
         /// <param name="refreshToken"></param>
         /// <param name="scope"></param>
-        internal MachineLearningWorkspaceNotebookAccessTokenResult(string notebookResourceId, string hostName, string publicDns, string accessToken, string tokenType, int? expiresIn, string refreshToken, string scope)
+        /// <param name="tokenType"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceNotebookAccessTokenResult(string accessToken, int? expiresIn, string hostName, string notebookResourceId, string publicDns, string refreshToken, string scope, string tokenType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NotebookResourceId = notebookResourceId;
-            HostName = hostName;
-            PublicDns = publicDns;
             AccessToken = accessToken;
-            TokenType = tokenType;
             ExpiresIn = expiresIn;
+            HostName = hostName;
+            NotebookResourceId = notebookResourceId;
+            PublicDns = publicDns;
             RefreshToken = refreshToken;
             Scope = scope;
+            TokenType = tokenType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the notebook resource id. </summary>
-        public string NotebookResourceId { get; }
-        /// <summary> Gets the host name. </summary>
-        public string HostName { get; }
-        /// <summary> Gets the public dns. </summary>
-        public string PublicDns { get; }
         /// <summary> Gets the access token. </summary>
         public string AccessToken { get; }
-        /// <summary> Gets the token type. </summary>
-        public string TokenType { get; }
         /// <summary> Gets the expires in. </summary>
         public int? ExpiresIn { get; }
+        /// <summary> Gets the host name. </summary>
+        public string HostName { get; }
+        /// <summary> Gets the notebook resource id. </summary>
+        public string NotebookResourceId { get; }
+        /// <summary> Gets the public dns. </summary>
+        public string PublicDns { get; }
         /// <summary> Gets the refresh token. </summary>
         public string RefreshToken { get; }
         /// <summary> Gets the scope. </summary>
         public string Scope { get; }
+        /// <summary> Gets the token type. </summary>
+        public string TokenType { get; }
     }
 }

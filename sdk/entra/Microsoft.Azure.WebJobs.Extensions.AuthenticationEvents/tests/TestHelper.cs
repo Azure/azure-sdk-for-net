@@ -1,9 +1,6 @@
-﻿//using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
-using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Extensions.Logging;
-using Moq;
-using Newtonsoft.Json.Linq;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.using System;
+
 using System;
 using System.IO;
 using System.Linq;
@@ -12,6 +9,11 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
+using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Extensions.Logging;
+using Moq;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
@@ -32,16 +34,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             /// The get
             /// </summary>
             Get
-        }
-
-        /// <summary>The validating JSON schema type.</summary>
-        public enum TestSchemaType
-        {
-            /// <summary>Request Schema</summary>
-            Request,
-
-            /// <summary>Response Schema</summary>
-            Response
         }
 
         /// <summary>
@@ -82,20 +74,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             return requestMessage;
         }
 
-        /// <summary>Sets up the boilerplate code for running end to end system tests.<br /><br />Sets the HTTP methods as post and a default function URL called OnTokenIssuanceStart</summary>
-        /// <param name="action">Action to emulate the external function call.</param>
-        /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
-        public static async Task<HttpResponseMessage> BaseTest(Action<ActionParameters> action)
-        {
-            return await BaseTest(HttpMethods.Post, "http://test/mock?function=onTokenissuancestart", action);
-        }
-
         /// <summary>
         /// Sets up the boilerplate code for running end to end system tests. Returning a valid EventResponseHandler in the action<br /><br />Sets the HTTP methods as post and a default function URL called OnTokenIssuanceStart
         /// </summary>
         /// <param name="action">Action to emulate the external function call.</param>
         /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
-        public static async Task<HttpResponseMessage> EventResponseBaseTest(Action<AuthenticationEventResponseHandler> action)
+        public static async Task<HttpResponseMessage> EventResponseBaseTest(Action<WebJobsAuthenticationEventResponseHandler> action)
         {
             return await EventResponseBaseTest(HttpMethods.Post, "http://test/mock?function=onTokenissuancestart", action);
         }
@@ -107,20 +91,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <param name="url">The URL to use to create an inactive mock end point</param>
         /// <param name="action">Action to emulate the external function call.</param>
         /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
-        public static async Task<HttpResponseMessage> EventResponseBaseTest(HttpMethods httpMethods, string url, Action<AuthenticationEventResponseHandler> action)
+        public static async Task<HttpResponseMessage> EventResponseBaseTest(HttpMethods httpMethods, string url, Action<WebJobsAuthenticationEventResponseHandler> action)
         {
             return await (BaseTest(httpMethods, url, t =>
             {
                 if (t.FunctionData.TriggerValue is HttpRequestMessage mockedRequest)
                 {
 
-                    AuthenticationEventResponseHandler eventsResponseHandler = GetAuthenticationEventResponseHandler(mockedRequest);
+                    WebJobsAuthenticationEventResponseHandler eventsResponseHandler = GetAuthenticationEventResponseHandler(mockedRequest);
 
-                    eventsResponseHandler.Request = new TokenIssuanceStartRequest(t.RequestMessage)
+                    eventsResponseHandler.Request = new WebJobsTokenIssuanceStartRequest(t.RequestMessage)
                     {
 
                         Response = CreateTokenIssuanceStartResponse(),
-                        RequestStatus = RequestStatusType.Successful
+                        RequestStatus = WebJobsAuthenticationEventsRequestStatusType.Successful
                     };
 
                     action(eventsResponseHandler);
@@ -128,13 +112,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             }));
         }
 
-        internal static AuthenticationEventResponseHandler GetAuthenticationEventResponseHandler(HttpRequestMessage mockedRequest)
+        internal static WebJobsAuthenticationEventResponseHandler GetAuthenticationEventResponseHandler(HttpRequestMessage mockedRequest)
         {
-            AuthenticationEventResponseHandler eventsResponseHandler = null;
+            WebJobsAuthenticationEventResponseHandler eventsResponseHandler = null;
 #if NETFRAMEWORK
-            eventsResponseHandler = (AuthenticationEventResponseHandler)mockedRequest.Properties[AuthenticationEventResponseHandler.EventResponseProperty];
+            eventsResponseHandler = (WebJobsAuthenticationEventResponseHandler)mockedRequest.Properties[WebJobsAuthenticationEventResponseHandler.EventResponseProperty];
 #else
-            HttpRequestOptionsKey<AuthenticationEventResponseHandler> optionsKey = new(AuthenticationEventResponseHandler.EventResponseProperty);
+            HttpRequestOptionsKey<WebJobsAuthenticationEventResponseHandler> optionsKey = new(WebJobsAuthenticationEventResponseHandler.EventResponseProperty);
 
             mockedRequest.Options.TryGetValue(
                 optionsKey,
@@ -154,7 +138,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             HttpRequestMessage requestMessage = CreateHttpRequestMessage(httpMethods == HttpMethods.Post ? HttpMethod.Post : HttpMethod.Get, url);
 
-            AuthenticationEventsTriggerAttribute attr = CreateAuthenticationEventTriggerAttribute("Tenant", "App");
+            WebJobsAuthenticationEventsTriggerAttribute attr = CreateAuthenticationEventTriggerAttribute(
+                testAuthorizedPartyAppId: "testAuthorizedPartyAppId",
+                testAudienceAppId: "testAudienceAppId",
+                testAuthorityUrl: "testAuthorityUrl");
 
             Mock<ITriggeredFunctionExecutor> mockObject = new Mock<ITriggeredFunctionExecutor>();
 
@@ -189,27 +176,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <summary>
         /// This function creates AuthenticationEventTriggerAttribute using the incoming params
         /// </summary>
-        /// <param name="versions">Available version</param>
-        /// <param name="eventTypes">Available Event type</param>
+        /// <param name="testAuthorizedPartyAppId"></param>
+        /// <param name="testAudienceAppId"></param>
         /// <returns>A newly create AuthenticationEventTriggerAttribute</returns>
-        internal static AuthenticationEventsTriggerAttribute CreateAuthenticationEventTriggerAttribute(EventDefinition versions, EventType eventTypes)
+        public static WebJobsAuthenticationEventsTriggerAttribute CreateAuthenticationEventTriggerAttribute(
+            string testAuthorizedPartyAppId,
+            string testAudienceAppId,
+            string testAuthorityUrl)
         {
-            return CreateAuthenticationEventTriggerAttribute(string.Empty, string.Empty);
-        }
-
-        /// <summary>
-        /// This function creates AuthenticationEventTriggerAttribute using the incoming params
-        /// </summary>
-        /// <param name="tenantId"></param>
-        /// <param name="audienceAppId"></param>
-        /// <returns>A newly create AuthenticationEventTriggerAttribute</returns>
-        public static AuthenticationEventsTriggerAttribute CreateAuthenticationEventTriggerAttribute(string tenantId, string audienceAppId)
-        {
-
-            return new AuthenticationEventsTriggerAttribute()
+            return new WebJobsAuthenticationEventsTriggerAttribute()
             {
-                TenantId = tenantId,
-                AudienceAppId = audienceAppId
+                AuthorizedPartyAppId = testAuthorizedPartyAppId,
+                AudienceAppId = testAudienceAppId,
+                AuthorityUrl = testAuthorityUrl
             };
         }
 
@@ -248,31 +227,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             }
         }
 
-        /// <summary>Gets an attribute from an enumerator field</summary>
-        /// <typeparam name="TAttribute">The Type of the attribute on the enumerator field.</typeparam>
-        /// <param name="value">The enum that the field is on</param>
-        /// <returns>The Attribute if found.</returns>
-        public static TAttribute GetAttribute<TAttribute>(this Enum value) where TAttribute : Attribute
-        {
-            var type = value.GetType();
-            var name = Enum.GetName(type, value);
-
-            return type.GetField(name)
-                .GetCustomAttributes(false)
-                .OfType<TAttribute>()
-                .SingleOrDefault();
-        }
-
         /// <summary>Creates the issuance start Legacy response.</summary>
-        /// <returns>A newly created TokenIssuanceStartResponse for version preview_10_01_2021</returns>
-        public static TokenIssuanceStartResponse CreateTokenIssuanceStartResponse()
+        /// <returns>A newly created WebJobsTokenIssuanceStartResponse for version preview_10_01_2021</returns>
+        public static WebJobsTokenIssuanceStartResponse CreateTokenIssuanceStartResponse()
         {
-
             JObject jBody = JObject.Parse(ReadResource(MainAssembly, String.Join(".", DefaultNamespace, "Templates", "CloudEventActionableTemplate.json")));
             (jBody["data"]["@odata.type"] as JValue).Value = "microsoft.graph.onTokenIssuanceStartResponseData";
 
 
-            return new TokenIssuanceStartResponse()
+            return new WebJobsTokenIssuanceStartResponse()
             {
                 Body = jBody.ToString()
             };
@@ -320,6 +283,71 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             input = input.Trim();
             return (input.StartsWith("{", StringComparison.OrdinalIgnoreCase) && input.EndsWith("}", StringComparison.OrdinalIgnoreCase))
                 || (input.StartsWith("[", StringComparison.OrdinalIgnoreCase) && input.EndsWith("]", StringComparison.OrdinalIgnoreCase));
+        }
+
+        public enum ActionTestTypes
+        {
+            NullClaims,
+            EmptyClaims,
+            NullClaimId,
+            EmptyClaimsId,
+            EmptyValueString,
+            NullValue,
+            EmptyValueArray,
+            EmptyValueStringArray,
+            EmptyMixedArray,
+            NullActionItems
+        }
+
+        public static (WebJobsTokenIssuanceAction action, HttpStatusCode expectReturnCode, string expectedResponse) GetActionTestExepected(ActionTestTypes actionTestTypes)
+        {
+            switch (actionTestTypes)
+            {
+                case ActionTestTypes.NullClaims:
+                    return (new WebJobsProvideClaimsForToken(null),
+                        HttpStatusCode.InternalServerError,
+                        "{\"errors\":[\"WebJobsTokenIssuanceStartResponse: WebJobsProvideClaimsForToken: The Claims field is required.\"]}");
+                case ActionTestTypes.EmptyClaims:
+                    return (new WebJobsProvideClaimsForToken(),
+                        HttpStatusCode.OK,
+                        "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{}}]}}");
+                case ActionTestTypes.NullClaimId:
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim(null, string.Empty) }),
+                        HttpStatusCode.InternalServerError,
+                        "{\"errors\":[\"WebJobsTokenIssuanceStartResponse: WebJobsProvideClaimsForToken: WebJobsAuthenticationEventsTokenClaim: The Id field is required.\"]}");
+                case ActionTestTypes.EmptyClaimsId:
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim(String.Empty, string.Empty) }),
+                        HttpStatusCode.InternalServerError,
+                        "{\"errors\":[\"WebJobsTokenIssuanceStartResponse: WebJobsProvideClaimsForToken: WebJobsAuthenticationEventsTokenClaim: The Id field is required.\"]}");
+                case ActionTestTypes.EmptyValueString:
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim("key", string.Empty) }),
+                        HttpStatusCode.OK,
+                        "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":\"\"}}]}}");
+                case ActionTestTypes.NullValue:
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim("key", null) }),
+                        HttpStatusCode.OK,
+                        "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":null}}]}}");
+                case ActionTestTypes.EmptyValueArray:
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim("key", new string[] { }) }),
+                        HttpStatusCode.OK,
+                        "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[]}}]}}");
+                case ActionTestTypes.EmptyValueStringArray:
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim("key", new string[] { String.Empty, String.Empty }) }),
+                        HttpStatusCode.OK,
+                        "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[\"\",\"\"]}}]}}");
+                case ActionTestTypes.EmptyMixedArray:
+                    return (new WebJobsProvideClaimsForToken(new WebJobsAuthenticationEventsTokenClaim[] { new WebJobsAuthenticationEventsTokenClaim("key", new string[] { String.Empty, null, " " }) }),
+                        HttpStatusCode.OK,
+                        "{\"data\":{\"@odata.type\":\"microsoft.graph.onTokenIssuanceStartResponseData\",\"actions\":[{\"@odata.type\":\"microsoft.graph.tokenIssuanceStart.provideClaimsForToken\",\"claims\":{\"key\":[\"\",null,\" \"]}}]}}");
+                case ActionTestTypes.NullActionItems:
+                    return (null,
+                        HttpStatusCode.InternalServerError,
+                        "{\"errors\":[\"WebJobsTokenIssuanceStartResponse: Actions can not contain null items.\"]}");
+                default:
+                    return (null,
+                    HttpStatusCode.InternalServerError,
+                    null);
+            }
         }
     }
 }

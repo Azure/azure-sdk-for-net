@@ -17,7 +17,9 @@ namespace Azure
     }
     public static partial class AzureCoreExtensions
     {
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
@@ -119,7 +121,7 @@ namespace Azure
     {
         protected NullableResponse() { }
         public abstract bool HasValue { get; }
-        public abstract T Value { get; }
+        public abstract T? Value { get; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -137,6 +139,11 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public abstract Azure.Response GetRawResponse();
+        public virtual Azure.Core.RehydrationToken? GetRehydrationToken() { throw null; }
+        public static Azure.Operation Rehydrate(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Operation> RehydrateAsync(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Operation<T>> RehydrateAsync<T>(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
+        public static Azure.Operation<T> Rehydrate<T>(Azure.Core.Pipeline.HttpPipeline pipeline, Azure.Core.RehydrationToken rehydrationToken, Azure.Core.ClientOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
         public abstract Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -267,6 +274,7 @@ namespace Azure
         protected Response() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool HasValue { get { throw null; } }
+        public override T Value { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -293,7 +301,9 @@ namespace Azure.Core
         private object _dummy;
         private int _dummyPrimitive;
         public AccessToken(string accessToken, System.DateTimeOffset expiresOn) { throw null; }
+        public AccessToken(string accessToken, System.DateTimeOffset expiresOn, System.DateTimeOffset? refreshOn) { throw null; }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public System.DateTimeOffset? RefreshOn { get { throw null; } }
         public string Token { get { throw null; } }
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -317,8 +327,10 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation CentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaEast { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaEast2 { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaEast3 { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaNorth { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaNorth2 { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaNorth3 { get { throw null; } }
         public string? DisplayName { get { throw null; } }
         public static Azure.Core.AzureLocation EastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation EastUS { get { throw null; } }
@@ -329,6 +341,8 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation GermanyNorth { get { throw null; } }
         public static Azure.Core.AzureLocation GermanyNorthEast { get { throw null; } }
         public static Azure.Core.AzureLocation GermanyWestCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation IsraelCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation ItalyNorth { get { throw null; } }
         public static Azure.Core.AzureLocation JapanEast { get { throw null; } }
         public static Azure.Core.AzureLocation JapanWest { get { throw null; } }
         public static Azure.Core.AzureLocation KoreaCentral { get { throw null; } }
@@ -338,6 +352,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation NorthEurope { get { throw null; } }
         public static Azure.Core.AzureLocation NorwayEast { get { throw null; } }
         public static Azure.Core.AzureLocation NorwayWest { get { throw null; } }
+        public static Azure.Core.AzureLocation PolandCentral { get { throw null; } }
         public static Azure.Core.AzureLocation QatarCentral { get { throw null; } }
         public static Azure.Core.AzureLocation SouthAfricaNorth { get { throw null; } }
         public static Azure.Core.AzureLocation SouthAfricaWest { get { throw null; } }
@@ -345,6 +360,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation SoutheastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation SouthIndia { get { throw null; } }
         public static Azure.Core.AzureLocation SwedenCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation SwedenSouth { get { throw null; } }
         public static Azure.Core.AzureLocation SwitzerlandNorth { get { throw null; } }
         public static Azure.Core.AzureLocation SwitzerlandWest { get { throw null; } }
         public static Azure.Core.AzureLocation UAECentral { get { throw null; } }
@@ -517,6 +533,23 @@ namespace Azure.Core
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RehydrationToken : System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>, System.ClientModel.Primitives.IJsonModel<object>, System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>, System.ClientModel.Primitives.IPersistableModel<object>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public string Id { get { throw null; } }
+        Azure.Core.RehydrationToken System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        object System.ClientModel.Primitives.IJsonModel<object>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<object>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Core.RehydrationToken System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        object System.ClientModel.Primitives.IPersistableModel<object>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<object>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<object>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class Request : System.IDisposable
     {
         protected Request() { }
@@ -543,8 +576,11 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes, int index, int length) { throw null; }
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
@@ -650,7 +686,7 @@ namespace Azure.Core
         public static bool operator <=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
         public static Azure.Core.ResourceIdentifier Parse(string input) { throw null; }
         public override string ToString() { throw null; }
-        public static bool TryParse(string input, out Azure.Core.ResourceIdentifier? result) { throw null; }
+        public static bool TryParse(string? input, out Azure.Core.ResourceIdentifier? result) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceType : System.IEquatable<Azure.Core.ResourceType>
@@ -744,8 +780,10 @@ namespace Azure.Core
         private readonly int _dummyPrimitive;
         public TokenRequestContext(string[] scopes, string? parentRequestId) { throw null; }
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims) { throw null; }
-        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null, bool isCaeEnabled = false) { throw null; }
         public string? Claims { get { throw null; } }
+        public bool IsCaeEnabled { get { throw null; } }
         public string? ParentRequestId { get { throw null; } }
         public string[] Scopes { get { throw null; } }
         public string? TenantId { get { throw null; } }
@@ -791,6 +829,7 @@ namespace Azure.Core.Extensions
     }
     public partial interface IAzureClientFactoryBuilderWithConfiguration<in TConfiguration> : Azure.Core.Extensions.IAzureClientFactoryBuilder
     {
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(TConfiguration configuration) where TOptions : class;
     }
     public partial interface IAzureClientFactoryBuilderWithCredential
@@ -1021,6 +1060,7 @@ namespace Azure.Core.Pipeline
         protected static void ProcessNext(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         protected static System.Threading.Tasks.ValueTask ProcessNextAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicMethods)]
     public abstract partial class HttpPipelineSynchronousPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
         protected HttpPipelineSynchronousPolicy() { }
@@ -1072,6 +1112,7 @@ namespace Azure.Core.Pipeline
 }
 namespace Azure.Core.Serialization
 {
+    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -1106,6 +1147,7 @@ namespace Azure.Core.Serialization
     {
         string? ConvertMemberName(System.Reflection.MemberInfo member);
     }
+    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This class uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
     public partial class JsonObjectSerializer : Azure.Core.Serialization.ObjectSerializer, Azure.Core.Serialization.IMemberNameConverter
     {
         public JsonObjectSerializer() { }

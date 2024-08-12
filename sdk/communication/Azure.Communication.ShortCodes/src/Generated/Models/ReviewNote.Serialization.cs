@@ -35,8 +35,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<DateTimeOffset> date = default;
+            string message = default;
+            DateTimeOffset? date = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -54,7 +54,23 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new ReviewNote(message.Value, Optional.ToNullable(date));
+            return new ReviewNote(message, date);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ReviewNote FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeReviewNote(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

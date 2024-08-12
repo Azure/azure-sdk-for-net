@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Defines the SAP Message Server properties. </summary>
     public partial class MessageServerProperties
     {
-        /// <summary> Initializes a new instance of MessageServerProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MessageServerProperties"/>. </summary>
         public MessageServerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MessageServerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageServerProperties"/>. </summary>
         /// <param name="msPort"> Message Server port. </param>
         /// <param name="internalMsPort"> Message Server internal MS port. </param>
         /// <param name="httpPort"> Message Server HTTP Port. </param>
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="hostname"> Message Server SAP Hostname. </param>
         /// <param name="ipAddress"> Message server IP Address. </param>
         /// <param name="health"> Defines the health of SAP Instances. </param>
-        internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, string ipAddress, SapHealthState? health)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MessageServerProperties(long? msPort, long? internalMsPort, long? httpPort, long? httpsPort, string hostname, string ipAddress, SapHealthState? health, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MsPort = msPort;
             InternalMsPort = internalMsPort;
@@ -32,6 +68,7 @@ namespace Azure.ResourceManager.Workloads.Models
             Hostname = hostname;
             IPAddress = ipAddress;
             Health = health;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Message Server port. </summary>

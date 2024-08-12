@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventGrid.Models;
@@ -33,8 +32,136 @@ namespace Azure.ResourceManager.EventGrid
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-15";
+            _apiVersion = apiVersion ?? "2024-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetDeliveryAttributesRequestUri(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(topicName, true);
+            uri.AppendPath("/eventSubscriptions/", false);
+            uri.AppendPath(eventSubscriptionName, true);
+            uri.AppendPath("/getDeliveryAttributes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetDeliveryAttributesRequest(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(topicName, true);
+            uri.AppendPath("/eventSubscriptions/", false);
+            uri.AppendPath(eventSubscriptionName, true);
+            uri.AppendPath("/getDeliveryAttributes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Get all delivery attributes for an event subscription for domain topic. </summary>
+        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
+        /// <param name="domainName"> Name of the top level domain. </param>
+        /// <param name="topicName"> Name of the domain topic. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DeliveryAttributeListResult>> GetDeliveryAttributesAsync(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+
+            using var message = CreateGetDeliveryAttributesRequest(subscriptionId, resourceGroupName, domainName, topicName, eventSubscriptionName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeliveryAttributeListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DeliveryAttributeListResult.DeserializeDeliveryAttributeListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get all delivery attributes for an event subscription for domain topic. </summary>
+        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
+        /// <param name="domainName"> Name of the top level domain. </param>
+        /// <param name="topicName"> Name of the domain topic. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DeliveryAttributeListResult> GetDeliveryAttributes(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+
+            using var message = CreateGetDeliveryAttributesRequest(subscriptionId, resourceGroupName, domainName, topicName, eventSubscriptionName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DeliveryAttributeListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DeliveryAttributeListResult.DeserializeDeliveryAttributeListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(topicName, true);
+            uri.AppendPath("/eventSubscriptions/", false);
+            uri.AppendPath(eventSubscriptionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName)
@@ -66,7 +193,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="domainName"> Name of the top level domain. </param>
         /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -101,7 +228,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="domainName"> Name of the top level domain. </param>
         /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be found. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -131,6 +258,24 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName, EventGridSubscriptionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(topicName, true);
+            uri.AppendPath("/eventSubscriptions/", false);
+            uri.AppendPath(eventSubscriptionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName, EventGridSubscriptionData data)
         {
             var message = _pipeline.CreateMessage();
@@ -153,7 +298,7 @@ namespace Azure.ResourceManager.EventGrid
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -164,7 +309,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="domainName"> Name of the top level domain. </param>
         /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 64 characters in length and use alphanumeric letters only. </param>
         /// <param name="data"> Event subscription properties containing the destination and filter information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
@@ -195,7 +340,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="domainName"> Name of the top level domain. </param>
         /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 64 characters in length and use alphanumeric letters only. </param>
         /// <param name="data"> Event subscription properties containing the destination and filter information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="data"/> is null. </exception>
@@ -219,6 +364,24 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(topicName, true);
+            uri.AppendPath("/eventSubscriptions/", false);
+            uri.AppendPath(eventSubscriptionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName)
@@ -249,7 +412,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="domainName"> Name of the top level domain. </param>
         /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription to be deleted. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -279,7 +442,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="domainName"> Name of the top level domain. </param>
         /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription to be deleted. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be deleted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -304,6 +467,24 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName, EventGridSubscriptionPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(topicName, true);
+            uri.AppendPath("/eventSubscriptions/", false);
+            uri.AppendPath(eventSubscriptionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName, EventGridSubscriptionPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -326,7 +507,7 @@ namespace Azure.ResourceManager.EventGrid
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -390,6 +571,25 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetFullUriRequestUri(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(topicName, true);
+            uri.AppendPath("/eventSubscriptions/", false);
+            uri.AppendPath(eventSubscriptionName, true);
+            uri.AppendPath("/getFullUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetFullUriRequest(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName)
@@ -481,6 +681,31 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string domainName, string topicName, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
+            uri.AppendPath(domainName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(topicName, true);
+            uri.AppendPath("/eventSubscriptions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string domainName, string topicName, string filter, int? top)
@@ -580,95 +805,12 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        internal HttpMessage CreateGetDeliveryAttributesRequest(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string domainName, string topicName, string filter, int? top)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.EventGrid/domains/", false);
-            uri.AppendPath(domainName, true);
-            uri.AppendPath("/topics/", false);
-            uri.AppendPath(topicName, true);
-            uri.AppendPath("/eventSubscriptions/", false);
-            uri.AppendPath(eventSubscriptionName, true);
-            uri.AppendPath("/getDeliveryAttributes", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get all delivery attributes for an event subscription for domain topic. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
-        /// <param name="domainName"> Name of the top level domain. </param>
-        /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeliveryAttributeListResult>> GetDeliveryAttributesAsync(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-
-            using var message = CreateGetDeliveryAttributesRequest(subscriptionId, resourceGroupName, domainName, topicName, eventSubscriptionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeliveryAttributeListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeliveryAttributeListResult.DeserializeDeliveryAttributeListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get all delivery attributes for an event subscription for domain topic. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
-        /// <param name="domainName"> Name of the top level domain. </param>
-        /// <param name="topicName"> Name of the domain topic. </param>
-        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="domainName"/>, <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeliveryAttributeListResult> GetDeliveryAttributes(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(domainName, nameof(domainName));
-            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
-            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
-
-            using var message = CreateGetDeliveryAttributesRequest(subscriptionId, resourceGroupName, domainName, topicName, eventSubscriptionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        DeliveryAttributeListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeliveryAttributeListResult.DeserializeDeliveryAttributeListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string domainName, string topicName, string filter, int? top)

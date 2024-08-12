@@ -10,9 +10,20 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The SmartDetectionConditionPatch. </summary>
     internal partial class SmartDetectionConditionPatch
     {
-        /// <summary> Initializes a new instance of SmartDetectionConditionPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartDetectionConditionPatch"/>. </summary>
         public SmartDetectionConditionPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SmartDetectionConditionPatch"/>. </summary>
+        /// <param name="sensitivity"> sensitivity, value range : (0, 100]. </param>
+        /// <param name="anomalyDetectorDirection"> detection direction. </param>
+        /// <param name="suppressCondition"></param>
+        internal SmartDetectionConditionPatch(double? sensitivity, AnomalyDetectorDirection? anomalyDetectorDirection, SuppressConditionPatch suppressCondition)
+        {
+            Sensitivity = sensitivity;
+            AnomalyDetectorDirection = anomalyDetectorDirection;
+            SuppressCondition = suppressCondition;
         }
 
         /// <summary> sensitivity, value range : (0, 100]. </summary>

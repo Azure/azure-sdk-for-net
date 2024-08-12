@@ -11,8 +11,8 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary>
-    /// Optional tier of this particular SKU. 'Standard' or 'Free'. 
-    /// 
+    /// Optional tier of this particular SKU. 'Standard' or 'Free'.
+    ///
     /// `Basic` is deprecated, use `Standard` instead.
     /// </summary>
     public readonly partial struct SignalRSkuTier : IEquatable<SignalRSkuTier>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

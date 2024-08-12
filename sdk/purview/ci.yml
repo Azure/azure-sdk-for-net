@@ -34,13 +34,13 @@ extends:
       safeName: AzureAnalyticsPurviewSharing
     - name: Azure.Analytics.Purview.Workflows
       safeName: AzureAnalyticsPurviewWorkflows
-    - name: Azure.Analytics.Purview.Share
-      safeName: AzureAnalyticsPurviewShare
     - name: Azure.Analytics.Purview.Account
       safeName: AzureAnalyticsPurviewAccount
     - name: Azure.Analytics.Purview.Administration
       safeName: AzureAnalyticsPurviewAdministration
     - name: Azure.Analytics.Purview.Catalog
       safeName: AzureAnalyticsPurviewCatalog
+    - name: Azure.Analytics.Purview.DataMap
+      safeName: AzureAnalyticsPurviewDataMap
     - name: Azure.Analytics.Purview.Scanning
       safeName: AzureAnalyticsPurviewScanning

@@ -9,8 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.Resources;
 
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckNetAppNameAvailability_CheckNameAvailability()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/CheckNameAvailability.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/CheckNameAvailability.json
             // this example is just showing the usage of "NetAppResource_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -39,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
-            NetAppNameAvailabilityContent content = new NetAppNameAvailabilityContent("accName", new NetAppNameAvailabilityResourceType("netAppAccount"), "myRG");
+            NetAppNameAvailabilityContent content = new NetAppNameAvailabilityContent("accName", NetAppNameAvailabilityResourceType.MicrosoftNetAppNetAppAccounts, "myRG");
             NetAppCheckAvailabilityResult result = await subscriptionResource.CheckNetAppNameAvailabilityAsync(location, content);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -50,7 +48,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckNetAppFilePathAvailability_CheckFilePathAvailability()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/CheckFilePathAvailability.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/CheckFilePathAvailability.json
             // this example is just showing the usage of "NetAppResource_CheckFilePathAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckNetAppQuotaAvailability_CheckQuotaAvailability()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/CheckQuotaAvailability.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/CheckQuotaAvailability.json
             // this example is just showing the usage of "NetAppResource_CheckQuotaAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,7 +102,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task QueryRegionInfoNetAppResource_RegionInfoQuery()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/RegionInfo.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/RegionInfo.json
             // this example is just showing the usage of "NetAppResource_QueryRegionInfo" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,12 +123,67 @@ namespace Azure.ResourceManager.NetApp.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // NetworkSiblingSet_Query
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task QueryNetworkSiblingSetNetAppResource_NetworkSiblingSetQuery()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/NetworkSiblingSet_Query.json
+            // this example is just showing the usage of "NetAppResource_QueryNetworkSiblingSet" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation location = new AzureLocation("eastus");
+            QueryNetworkSiblingSetContent content = new QueryNetworkSiblingSetContent("9760acf5-4638-11e7-9bdb-020073ca3333", new ResourceIdentifier("/subscriptions/9760acf5-4638-11e7-9bdb-020073ca7778/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/testSubnet"));
+            NetworkSiblingSet result = await subscriptionResource.QueryNetworkSiblingSetNetAppResourceAsync(location, content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // NetworkFeatures_Update
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task UpdateNetworkSiblingSetNetAppResource_NetworkFeaturesUpdate()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/NetworkSiblingSet_Update.json
+            // this example is just showing the usage of "NetAppResource_UpdateNetworkSiblingSet" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            AzureLocation location = new AzureLocation("eastus");
+            UpdateNetworkSiblingSetContent content = new UpdateNetworkSiblingSetContent("9760acf5-4638-11e7-9bdb-020073ca3333", new ResourceIdentifier("/subscriptions/9760acf5-4638-11e7-9bdb-020073ca7778/resourceGroups/myRP/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/testSubnet"), "12345_44420.8001578125", NetAppNetworkFeature.Standard);
+            ArmOperation<NetworkSiblingSet> lro = await subscriptionResource.UpdateNetworkSiblingSetNetAppResourceAsync(WaitUntil.Completed, location, content);
+            NetworkSiblingSet result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // QuotaLimits
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetAppQuotaLimits_QuotaLimits()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/QuotaLimits_List.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/QuotaLimits_List.json
             // this example is just showing the usage of "NetAppResourceQuotaLimits_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,7 +212,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetAppQuotaLimit_QuotaLimits()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2022-09-01/examples/QuotaLimits_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2023-11-01/examples/QuotaLimits_Get.json
             // this example is just showing the usage of "NetAppResourceQuotaLimits_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

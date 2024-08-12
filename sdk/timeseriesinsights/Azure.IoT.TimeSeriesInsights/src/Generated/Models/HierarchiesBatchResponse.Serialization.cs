@@ -5,13 +5,18 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     internal partial class HierarchiesBatchResponse
     {
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HierarchiesBatchResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHierarchiesBatchResponse(document.RootElement);
+        }
     }
 }

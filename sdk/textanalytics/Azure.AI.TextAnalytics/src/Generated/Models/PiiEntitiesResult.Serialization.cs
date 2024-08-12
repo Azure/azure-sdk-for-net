@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics
             }
             IList<PiiResultDocumentsItem> documents = default;
             IList<DocumentError> errors = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
+            TextDocumentBatchStatistics statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,7 +88,23 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new PiiEntitiesResult(errors, statistics.Value, modelVersion, documents);
+            return new PiiEntitiesResult(errors, statistics, modelVersion, documents);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PiiEntitiesResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePiiEntitiesResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

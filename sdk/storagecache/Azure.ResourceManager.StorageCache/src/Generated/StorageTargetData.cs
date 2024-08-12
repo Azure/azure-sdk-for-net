@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,18 +19,50 @@ namespace Azure.ResourceManager.StorageCache
     /// </summary>
     public partial class StorageTargetData : ResourceData
     {
-        /// <summary> Initializes a new instance of StorageTargetData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageTargetData"/>. </summary>
         public StorageTargetData()
         {
             Junctions = new ChangeTrackingList<NamespaceJunction>();
         }
 
-        /// <summary> Initializes a new instance of StorageTargetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageTargetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="junctions"> List of Cache namespace junctions to target for namespace associations. </param>
+        /// <param name="junctions"> List of cache namespace junctions to target for namespace associations. </param>
         /// <param name="targetType"> Type of the Storage Target. </param>
         /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
         /// <param name="state"> Storage target operational state. </param>
@@ -39,7 +72,8 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="blobNfs"> Properties when targetType is blobNfs. </param>
         /// <param name="allocationPercentage"> The percentage of cache space allocated for this storage target. </param>
         /// <param name="location"> Region name string. </param>
-        internal StorageTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<NamespaceJunction> junctions, StorageTargetType? targetType, StorageCacheProvisioningStateType? provisioningState, StorageTargetOperationalStateType? state, Nfs3Target nfs3, ClfsTarget clfs, UnknownTarget unknown, BlobNfsTarget blobNfs, int? allocationPercentage, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<NamespaceJunction> junctions, StorageTargetType? targetType, StorageCacheProvisioningStateType? provisioningState, StorageTargetOperationalStateType? state, Nfs3Target nfs3, ClfsTarget clfs, UnknownTarget unknown, BlobNfsTarget blobNfs, int? allocationPercentage, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Junctions = junctions;
             TargetType = targetType;
@@ -51,9 +85,10 @@ namespace Azure.ResourceManager.StorageCache
             BlobNfs = blobNfs;
             AllocationPercentage = allocationPercentage;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of Cache namespace junctions to target for namespace associations. </summary>
+        /// <summary> List of cache namespace junctions to target for namespace associations. </summary>
         public IList<NamespaceJunction> Junctions { get; }
         /// <summary> Type of the Storage Target. </summary>
         public StorageTargetType? TargetType { get; set; }

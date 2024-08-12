@@ -30,6 +30,8 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                     out string traceparent,
                     out string tracestate))
             {
+                // link is required, parent is optional, but results in better experience
+                scope.AddLink(traceparent, tracestate);
                 scope.SetTraceContext(traceparent, tracestate);
             }
         }
@@ -71,7 +73,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                     AddLinkedDiagnostics(scope, message.ApplicationProperties);
                 }
 
-                if (messages.Count > 1 && ActivityExtensions.SupportsActivitySource())
+                if (messages.Count > 1 && ActivityExtensions.SupportsActivitySource)
                 {
                     scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
                 }
@@ -87,7 +89,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                     AddLinkedDiagnostics(scope, message.ApplicationProperties.Map);
                 }
 
-                if (messages.Count > 1 && ActivityExtensions.SupportsActivitySource())
+                if (messages.Count > 1 && ActivityExtensions.SupportsActivitySource)
                 {
                     scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
                 }
@@ -111,7 +113,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                     AddLinkedDiagnostics(scope, message.ApplicationProperties);
                 }
 
-                if (messages.Count > 1 && ActivityExtensions.SupportsActivitySource())
+                if (messages.Count > 1 && ActivityExtensions.SupportsActivitySource)
                 {
                     scope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, messages.Count);
                 }

@@ -7,15 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The RecognizeOptions. </summary>
     internal partial class RecognizeOptionsInternal
     {
-        /// <summary> Initializes a new instance of RecognizeOptionsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeOptionsInternal"/>. </summary>
         /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public RecognizeOptionsInternal(CommunicationIdentifierModel targetParticipant)
@@ -23,7 +21,28 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
-            Choices = new ChangeTrackingList<RecognizeChoice>();
+            Choices = new ChangeTrackingList<RecognitionChoice>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecognizeOptionsInternal"/>. </summary>
+        /// <param name="interruptPrompt"> Determines if we interrupt the prompt and start recognizing. </param>
+        /// <param name="initialSilenceTimeoutInSeconds"> Time to wait for first input after prompt (if any). </param>
+        /// <param name="targetParticipant"> Target participant of DTMF tone recognition. </param>
+        /// <param name="speechLanguage"> Speech language to be recognized, If not set default is en-US. </param>
+        /// <param name="speechRecognitionModelEndpointId"> Endpoint where the custom model was deployed. </param>
+        /// <param name="dtmfOptions"> Defines configurations for DTMF. </param>
+        /// <param name="choices"> Defines Ivr choices for recognize. </param>
+        /// <param name="speechOptions"> Defines continuous speech recognition option. </param>
+        internal RecognizeOptionsInternal(bool? interruptPrompt, int? initialSilenceTimeoutInSeconds, CommunicationIdentifierModel targetParticipant, string speechLanguage, string speechRecognitionModelEndpointId, DtmfOptionsInternal dtmfOptions, IList<RecognitionChoice> choices, SpeechOptionsInternal speechOptions)
+        {
+            InterruptPrompt = interruptPrompt;
+            InitialSilenceTimeoutInSeconds = initialSilenceTimeoutInSeconds;
+            TargetParticipant = targetParticipant;
+            SpeechLanguage = speechLanguage;
+            SpeechRecognitionModelEndpointId = speechRecognitionModelEndpointId;
+            DtmfOptions = dtmfOptions;
+            Choices = choices;
+            SpeechOptions = speechOptions;
         }
 
         /// <summary> Determines if we interrupt the prompt and start recognizing. </summary>
@@ -34,10 +53,12 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Speech language to be recognized, If not set default is en-US. </summary>
         public string SpeechLanguage { get; set; }
+        /// <summary> Endpoint where the custom model was deployed. </summary>
+        public string SpeechRecognitionModelEndpointId { get; set; }
         /// <summary> Defines configurations for DTMF. </summary>
         public DtmfOptionsInternal DtmfOptions { get; set; }
         /// <summary> Defines Ivr choices for recognize. </summary>
-        public IList<RecognizeChoice> Choices { get; }
+        public IList<RecognitionChoice> Choices { get; }
         /// <summary> Defines continuous speech recognition option. </summary>
         public SpeechOptionsInternal SpeechOptions { get; set; }
     }

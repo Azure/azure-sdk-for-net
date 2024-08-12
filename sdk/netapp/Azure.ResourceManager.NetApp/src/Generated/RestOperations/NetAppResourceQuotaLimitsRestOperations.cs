@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetApp.Models;
@@ -33,8 +32,21 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/quotaLimits", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location)
@@ -57,8 +69,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get the default and current limits for quotas. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -83,8 +95,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get the default and current limits for quotas. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -108,6 +120,20 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string quotaLimitName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/quotaLimits/", false);
+            uri.AppendPath(quotaLimitName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string quotaLimitName)
         {
             var message = _pipeline.CreateMessage();
@@ -129,8 +155,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get the default and current subscription quota limit. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="quotaLimitName"/> is null. </exception>
@@ -157,8 +183,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get the default and current subscription quota limit. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="quotaLimitName"/> is null. </exception>

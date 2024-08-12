@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -76,7 +75,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionsAsync(bool?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRoleDefinitionsAsync(bool? isBuiltIn = null, string scope = null, RequestContext context = null)
+        public virtual async Task<Response> GetRoleDefinitionsAsync(bool? isBuiltIn, string scope, RequestContext context)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
             scope0.Start();
@@ -108,7 +107,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitions(bool?,string,RequestContext)']/*" />
-        public virtual Response GetRoleDefinitions(bool? isBuiltIn = null, string scope = null, RequestContext context = null)
+        public virtual Response GetRoleDefinitions(bool? isBuiltIn, string scope, RequestContext context)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
             scope0.Start();
@@ -141,7 +140,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionByIdAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestContext context = null)
+        public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
 
@@ -176,7 +175,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionById(string,RequestContext)']/*" />
-        public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestContext context = null)
+        public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
 
@@ -208,7 +207,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetScopesAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetScopesAsync(RequestContext context = null)
+        public virtual async Task<Response> GetScopesAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
             scope.Start();
@@ -238,7 +237,7 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetScopes(RequestContext)']/*" />
-        public virtual Response GetScopes(RequestContext context = null)
+        public virtual Response GetScopes(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
             scope.Start();

@@ -7,18 +7,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The CosmosDB (MongoDB API) database dataset. </summary>
-    public partial class CosmosDBMongoDBApiCollectionDataset : FactoryDatasetDefinition
+    public partial class CosmosDBMongoDBApiCollectionDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of CosmosDBMongoDBApiCollectionDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiCollectionDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="collection"> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="collection"/> is null. </exception>
-        public CosmosDBMongoDBApiCollectionDataset(FactoryLinkedServiceReference linkedServiceName, BinaryData collection) : base(linkedServiceName)
+        public CosmosDBMongoDBApiCollectionDataset(DataFactoryLinkedServiceReference linkedServiceName, DataFactoryElement<string> collection) : base(linkedServiceName)
         {
             Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
             Argument.AssertNotNull(collection, nameof(collection));
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "CosmosDbMongoDbApiCollection";
         }
 
-        /// <summary> Initializes a new instance of CosmosDBMongoDBApiCollectionDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiCollectionDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -38,42 +38,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="collection"> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </param>
-        internal CosmosDBMongoDBApiCollectionDataset(string datasetType, string description, BinaryData structure, BinaryData schema, FactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, BinaryData collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal CosmosDBMongoDBApiCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> collection) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             Collection = collection;
             DatasetType = datasetType ?? "CosmosDbMongoDbApiCollection";
         }
 
-        /// <summary>
-        /// The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Collection { get; set; }
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiCollectionDataset"/> for deserialization. </summary>
+        internal CosmosDBMongoDBApiCollectionDataset()
+        {
+        }
+
+        /// <summary> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Collection { get; set; }
     }
 }

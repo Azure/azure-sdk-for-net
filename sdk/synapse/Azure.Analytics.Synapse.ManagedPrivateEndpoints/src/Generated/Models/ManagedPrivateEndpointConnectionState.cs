@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
     /// <summary> The connection state of a managed private endpoint. </summary>
     public partial class ManagedPrivateEndpointConnectionState
     {
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointConnectionState"/>. </summary>
         public ManagedPrivateEndpointConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedPrivateEndpointConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedPrivateEndpointConnectionState"/>. </summary>
         /// <param name="status"> The approval status. </param>
         /// <param name="description"> The managed private endpoint description. </param>
         /// <param name="actionsRequired"> The actions required on the managed private endpoint. </param>

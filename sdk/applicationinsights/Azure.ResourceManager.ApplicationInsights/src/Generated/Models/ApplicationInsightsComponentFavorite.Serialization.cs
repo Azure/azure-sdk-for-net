@@ -5,16 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentFavorite : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentFavorite : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentFavorite>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentFavorite>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ApplicationInsightsComponentFavorite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFavorite>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFavorite)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -31,6 +43,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("Version"u8);
                 writer.WriteStringValue(Version);
             }
+            if (options.Format != "W" && Optional.IsDefined(FavoriteId))
+            {
+                writer.WritePropertyName("FavoriteId"u8);
+                writer.WriteStringValue(FavoriteId);
+            }
             if (Optional.IsDefined(FavoriteType))
             {
                 writer.WritePropertyName("FavoriteType"u8);
@@ -40,6 +57,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 writer.WritePropertyName("SourceType"u8);
                 writer.WriteStringValue(SourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            {
+                writer.WritePropertyName("TimeModified"u8);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -61,26 +83,62 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("IsGeneratedFromTemplate"u8);
                 writer.WriteBooleanValue(IsGeneratedFromTemplate.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(UserId))
+            {
+                writer.WritePropertyName("UserId"u8);
+                writer.WriteStringValue(UserId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationInsightsComponentFavorite DeserializeApplicationInsightsComponentFavorite(JsonElement element)
+        ApplicationInsightsComponentFavorite IJsonModel<ApplicationInsightsComponentFavorite>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFavorite>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentFavorite)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentFavorite(document.RootElement, options);
+        }
+
+        internal static ApplicationInsightsComponentFavorite DeserializeApplicationInsightsComponentFavorite(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> config = default;
-            Optional<string> version = default;
-            Optional<string> favoriteId = default;
-            Optional<FavoriteType> favoriteType = default;
-            Optional<string> sourceType = default;
-            Optional<string> timeModified = default;
-            Optional<IList<string>> tags = default;
-            Optional<string> category = default;
-            Optional<bool> isGeneratedFromTemplate = default;
-            Optional<string> userId = default;
+            string name = default;
+            string config = default;
+            string version = default;
+            string favoriteId = default;
+            ComponentFavoriteType? favoriteType = default;
+            string sourceType = default;
+            DateTimeOffset? timeModified = default;
+            IList<string> tags = default;
+            string category = default;
+            bool? isGeneratedFromTemplate = default;
+            string userId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Name"u8))
@@ -109,7 +167,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    favoriteType = property.Value.GetString().ToFavoriteType();
+                    favoriteType = property.Value.GetString().ToComponentFavoriteType();
                     continue;
                 }
                 if (property.NameEquals("SourceType"u8))
@@ -119,7 +177,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 if (property.NameEquals("TimeModified"u8))
                 {
-                    timeModified = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("Tags"u8))
@@ -155,8 +217,317 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     userId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationInsightsComponentFavorite(name.Value, config.Value, version.Value, favoriteId.Value, Optional.ToNullable(favoriteType), sourceType.Value, timeModified.Value, Optional.ToList(tags), category.Value, Optional.ToNullable(isGeneratedFromTemplate), userId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationInsightsComponentFavorite(
+                name,
+                config,
+                version,
+                favoriteId,
+                favoriteType,
+                sourceType,
+                timeModified,
+                tags ?? new ChangeTrackingList<string>(),
+                category,
+                isGeneratedFromTemplate,
+                userId,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  Name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  Name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Config), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  Config: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Config))
+                {
+                    builder.Append("  Config: ");
+                    if (Config.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Config}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Config}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  Version: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
+                {
+                    builder.Append("  Version: ");
+                    if (Version.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Version}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Version}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FavoriteId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  FavoriteId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FavoriteId))
+                {
+                    builder.Append("  FavoriteId: ");
+                    if (FavoriteId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FavoriteId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FavoriteId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FavoriteType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  FavoriteType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FavoriteType))
+                {
+                    builder.Append("  FavoriteType: ");
+                    builder.AppendLine($"'{FavoriteType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  SourceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SourceType))
+                {
+                    builder.Append("  SourceType: ");
+                    if (SourceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  TimeModified: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ModifiedOn))
+                {
+                    builder.Append("  TimeModified: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ModifiedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  Tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
+                {
+                    if (Tags.Any())
+                    {
+                        builder.Append("  Tags: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Tags)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  Category: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Category))
+                {
+                    builder.Append("  Category: ");
+                    if (Category.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Category}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Category}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGeneratedFromTemplate), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  IsGeneratedFromTemplate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsGeneratedFromTemplate))
+                {
+                    builder.Append("  IsGeneratedFromTemplate: ");
+                    var boolValue = IsGeneratedFromTemplate.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  UserId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UserId))
+                {
+                    builder.Append("  UserId: ");
+                    if (UserId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UserId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UserId}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ApplicationInsightsComponentFavorite>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFavorite>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFavorite)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplicationInsightsComponentFavorite IPersistableModel<ApplicationInsightsComponentFavorite>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentFavorite>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationInsightsComponentFavorite(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentFavorite)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationInsightsComponentFavorite>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

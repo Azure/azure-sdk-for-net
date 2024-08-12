@@ -6,36 +6,38 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class StagingSettings : IUtf8JsonSerializable
+    public partial class StagingSettings : IUtf8JsonSerializable, IJsonModel<StagingSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StagingSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<StagingSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StagingSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StagingSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            JsonSerializer.Serialize(writer, LinkedServiceName);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Path);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Path.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Path);
             }
             if (Optional.IsDefined(EnableCompression))
             {
                 writer.WritePropertyName("enableCompression"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EnableCompression);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EnableCompression.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, EnableCompression);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -43,28 +45,45 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static StagingSettings DeserializeStagingSettings(JsonElement element)
+        StagingSettings IJsonModel<StagingSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StagingSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StagingSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStagingSettings(document.RootElement, options);
+        }
+
+        internal static StagingSettings DeserializeStagingSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            FactoryLinkedServiceReference linkedServiceName = default;
-            Optional<BinaryData> path = default;
-            Optional<BinaryData> enableCompression = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            DataFactoryElement<string> path = default;
+            DataFactoryElement<bool> enableCompression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("path"u8))
@@ -73,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    path = BinaryData.FromString(property.Value.GetRawText());
+                    path = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("enableCompression"u8))
@@ -82,13 +101,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    enableCompression = BinaryData.FromString(property.Value.GetRawText());
+                    enableCompression = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new StagingSettings(linkedServiceName, path.Value, enableCompression.Value, additionalProperties);
+            return new StagingSettings(linkedServiceName, path, enableCompression, additionalProperties);
         }
+
+        BinaryData IPersistableModel<StagingSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StagingSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StagingSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StagingSettings IPersistableModel<StagingSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StagingSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStagingSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StagingSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StagingSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

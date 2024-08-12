@@ -14,6 +14,8 @@
     <PackageReference Include="Moq" />
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+    <PackageReference Include="Microsoft.Azure.KeyVault" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
   </ItemGroup>
 
   <ItemGroup>

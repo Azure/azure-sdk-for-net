@@ -5,82 +5,42 @@
 
 #nullable disable
 
-using Azure;
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Modern charge summary.
-    /// Serialized Name: ModernChargeSummary
-    /// </summary>
+    /// <summary> Modern charge summary. </summary>
     public partial class ConsumptionModernChargeSummary : ConsumptionChargeSummary
     {
-        /// <summary> Initializes a new instance of ConsumptionModernChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernChargeSummary"/>. </summary>
         public ConsumptionModernChargeSummary()
         {
             Kind = ChargeSummaryKind.Modern;
         }
 
-        /// <summary> Initializes a new instance of ConsumptionModernChargeSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionModernChargeSummary"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Specifies the kind of charge summary.
-        /// Serialized Name: ChargeSummary.kind
-        /// </param>
-        /// <param name="etag">
-        /// eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not.
-        /// Serialized Name: ProxyResource.eTag
-        /// </param>
-        /// <param name="billingPeriodId">
-        /// The id of the billing period resource that the charge belongs to.
-        /// Serialized Name: ModernChargeSummary.properties.billingPeriodId
-        /// </param>
-        /// <param name="usageStart">
-        /// Usage start date.
-        /// Serialized Name: ModernChargeSummary.properties.usageStart
-        /// </param>
-        /// <param name="usageEnd">
-        /// Usage end date.
-        /// Serialized Name: ModernChargeSummary.properties.usageEnd
-        /// </param>
-        /// <param name="azureCharges">
-        /// Azure Charges.
-        /// Serialized Name: ModernChargeSummary.properties.azureCharges
-        /// </param>
-        /// <param name="chargesBilledSeparately">
-        /// Charges Billed separately.
-        /// Serialized Name: ModernChargeSummary.properties.chargesBilledSeparately
-        /// </param>
-        /// <param name="marketplaceCharges">
-        /// Marketplace Charges.
-        /// Serialized Name: ModernChargeSummary.properties.marketplaceCharges
-        /// </param>
-        /// <param name="billingAccountId">
-        /// Billing Account Id
-        /// Serialized Name: ModernChargeSummary.properties.billingAccountId
-        /// </param>
-        /// <param name="billingProfileId">
-        /// Billing Profile Id
-        /// Serialized Name: ModernChargeSummary.properties.billingProfileId
-        /// </param>
-        /// <param name="invoiceSectionId">
-        /// Invoice Section Id
-        /// Serialized Name: ModernChargeSummary.properties.invoiceSectionId
-        /// </param>
-        /// <param name="customerId">
-        /// Customer Id
-        /// Serialized Name: ModernChargeSummary.properties.customerId
-        /// </param>
-        /// <param name="isInvoiced">
-        /// Is charge Invoiced
-        /// Serialized Name: ModernChargeSummary.properties.isInvoiced
-        /// </param>
-        internal ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, string billingPeriodId, string usageStart, string usageEnd, ConsumptionAmount azureCharges, ConsumptionAmount chargesBilledSeparately, ConsumptionAmount marketplaceCharges, string billingAccountId, string billingProfileId, string invoiceSectionId, string customerId, bool? isInvoiced) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="kind"> Specifies the kind of charge summary. </param>
+        /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="billingPeriodId"> The id of the billing period resource that the charge belongs to. </param>
+        /// <param name="usageStart"> Usage start date. </param>
+        /// <param name="usageEnd"> Usage end date. </param>
+        /// <param name="azureCharges"> Azure Charges. </param>
+        /// <param name="chargesBilledSeparately"> Charges Billed separately. </param>
+        /// <param name="marketplaceCharges"> Marketplace Charges. </param>
+        /// <param name="billingAccountId"> Billing Account Id. </param>
+        /// <param name="billingProfileId"> Billing Profile Id. </param>
+        /// <param name="invoiceSectionId"> Invoice Section Id. </param>
+        /// <param name="customerId"> Customer Id. </param>
+        /// <param name="isInvoiced"> Is charge Invoiced. </param>
+        internal ConsumptionModernChargeSummary(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ChargeSummaryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingPeriodId, string usageStart, string usageEnd, ConsumptionAmount azureCharges, ConsumptionAmount chargesBilledSeparately, ConsumptionAmount marketplaceCharges, string billingAccountId, string billingProfileId, string invoiceSectionId, string customerId, bool? isInvoiced) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             BillingPeriodId = billingPeriodId;
             UsageStart = usageStart;
@@ -96,60 +56,27 @@ namespace Azure.ResourceManager.Consumption.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The id of the billing period resource that the charge belongs to.
-        /// Serialized Name: ModernChargeSummary.properties.billingPeriodId
-        /// </summary>
+        /// <summary> The id of the billing period resource that the charge belongs to. </summary>
         public string BillingPeriodId { get; }
-        /// <summary>
-        /// Usage start date.
-        /// Serialized Name: ModernChargeSummary.properties.usageStart
-        /// </summary>
+        /// <summary> Usage start date. </summary>
         public string UsageStart { get; }
-        /// <summary>
-        /// Usage end date.
-        /// Serialized Name: ModernChargeSummary.properties.usageEnd
-        /// </summary>
+        /// <summary> Usage end date. </summary>
         public string UsageEnd { get; }
-        /// <summary>
-        /// Azure Charges.
-        /// Serialized Name: ModernChargeSummary.properties.azureCharges
-        /// </summary>
+        /// <summary> Azure Charges. </summary>
         public ConsumptionAmount AzureCharges { get; }
-        /// <summary>
-        /// Charges Billed separately.
-        /// Serialized Name: ModernChargeSummary.properties.chargesBilledSeparately
-        /// </summary>
+        /// <summary> Charges Billed separately. </summary>
         public ConsumptionAmount ChargesBilledSeparately { get; }
-        /// <summary>
-        /// Marketplace Charges.
-        /// Serialized Name: ModernChargeSummary.properties.marketplaceCharges
-        /// </summary>
+        /// <summary> Marketplace Charges. </summary>
         public ConsumptionAmount MarketplaceCharges { get; }
-        /// <summary>
-        /// Billing Account Id
-        /// Serialized Name: ModernChargeSummary.properties.billingAccountId
-        /// </summary>
+        /// <summary> Billing Account Id. </summary>
         public string BillingAccountId { get; }
-        /// <summary>
-        /// Billing Profile Id
-        /// Serialized Name: ModernChargeSummary.properties.billingProfileId
-        /// </summary>
+        /// <summary> Billing Profile Id. </summary>
         public string BillingProfileId { get; }
-        /// <summary>
-        /// Invoice Section Id
-        /// Serialized Name: ModernChargeSummary.properties.invoiceSectionId
-        /// </summary>
+        /// <summary> Invoice Section Id. </summary>
         public string InvoiceSectionId { get; }
-        /// <summary>
-        /// Customer Id
-        /// Serialized Name: ModernChargeSummary.properties.customerId
-        /// </summary>
+        /// <summary> Customer Id. </summary>
         public string CustomerId { get; }
-        /// <summary>
-        /// Is charge Invoiced
-        /// Serialized Name: ModernChargeSummary.properties.isInvoiced
-        /// </summary>
+        /// <summary> Is charge Invoiced. </summary>
         public bool? IsInvoiced { get; }
     }
 }

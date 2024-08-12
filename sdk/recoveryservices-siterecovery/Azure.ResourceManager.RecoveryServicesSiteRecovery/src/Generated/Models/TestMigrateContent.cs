@@ -6,31 +6,77 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Input for test migrate. </summary>
     public partial class TestMigrateContent
     {
-        /// <summary> Initializes a new instance of TestMigrateContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TestMigrateContent"/>. </summary>
         /// <param name="properties"> Test migrate input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public TestMigrateContent(TestMigrateInputProperties properties)
+        public TestMigrateContent(TestMigrateProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TestMigrateContent"/>. </summary>
+        /// <param name="properties"> Test migrate input properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TestMigrateContent(TestMigrateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TestMigrateContent"/> for deserialization. </summary>
+        internal TestMigrateContent()
+        {
+        }
+
         /// <summary> Test migrate input properties. </summary>
-        internal TestMigrateInputProperties Properties { get; }
+        internal TestMigrateProperties Properties { get; }
         /// <summary>
         /// The provider specific details.
-        /// Please note <see cref="TestMigrateProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VMwareCbtTestMigrateInput"/>.
+        /// Please note <see cref="TestMigrateProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtTestMigrateContent"/>.
         /// </summary>
-        public TestMigrateProviderSpecificInput TestMigrateInputProviderSpecificDetails
+        public TestMigrateProviderSpecificContent TestMigrateProviderSpecificDetails
         {
             get => Properties?.ProviderSpecificDetails;
         }

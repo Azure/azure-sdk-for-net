@@ -6,28 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The governance rule metadata. </summary>
     public partial class GovernanceRuleMetadata
     {
-        /// <summary> Initializes a new instance of GovernanceRuleMetadata. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleMetadata"/>. </summary>
         public GovernanceRuleMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of GovernanceRuleMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="GovernanceRuleMetadata"/>. </summary>
         /// <param name="createdBy"> Governance rule Created by object id (GUID). </param>
         /// <param name="createdOn"> Governance rule creation date. </param>
         /// <param name="updatedBy"> Governance rule last updated by object id (GUID). </param>
         /// <param name="updatedOn"> Governance rule last update date. </param>
-        internal GovernanceRuleMetadata(string createdBy, DateTimeOffset? createdOn, string updatedBy, DateTimeOffset? updatedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GovernanceRuleMetadata(string createdBy, DateTimeOffset? createdOn, string updatedBy, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedBy = createdBy;
             CreatedOn = createdOn;
             UpdatedBy = updatedBy;
             UpdatedOn = updatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Governance rule Created by object id (GUID). </summary>

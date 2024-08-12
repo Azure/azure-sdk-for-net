@@ -9,16 +9,22 @@ azure-arm: true
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/c1bf995dbab472761ba4da53ed33c7b621ff8bd9/specification/cosmos-db/resource-manager/readme.md
-tag: package-preview-2022-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/86b70ce378f0005c26b58ba0bcf96907bfa3a966/specification/cosmos-db/resource-manager/readme.md
+#tag: package-preview-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
+use-model-reader-writer: true
+enable-bicep-serialization: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default: CassandraKeyspaceThroughputSetting
@@ -88,7 +94,7 @@ format-by-name-rules:
   'partitionId': 'uuid'
   'instanceId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -120,6 +126,7 @@ override-operation-name:
   RestorableMongodbCollections_List: GetRestorableMongoDBCollections
   RestorableMongodbResources_List: GetAllRestorableMongoDBResourceData
   RestorableSqlResources_List: GetAllRestorableSqlResourceData
+  MongoClusters_CheckNameAvailability: CheckMongoClusterNameAailability
 
 rename-mapping:
   MongoRoleDefinitionGetResults: MongoDBRoleDefinition
@@ -129,13 +136,10 @@ rename-mapping:
   Role: MongoDBRole
   Role.db: DBName
   MongoRoleDefinitionGetResults.properties.type: RoleDefinitionType
-  PrivilegeResourceInfo: PrivilegeResourceInfoResource
   MongoRoleDefinitionListResult: MongoDBRoleDefinitionListResult
   MongoUserDefinitionListResult: MongoDBUserDefinitionListResult
-  SqlRoleDefinitionResource: CosmosDBSqlRoleDefinitionResourceInfo
   CassandraKeyspacePropertiesOptions: CassandraKeyspacePropertiesConfig
   CassandraTablePropertiesOptions: CassandraTablePropertiesConfig
-  CosmosTablePropertiesOptions: CosmosDBTablePropertiesConfig
   CreateUpdateOptions: CosmosDBCreateUpdateConfig
   GremlinDatabasePropertiesOptions: GremlinDatabasePropertiesConfig
   GremlinGraphPropertiesOptions: GremlinGraphPropertiesConfig
@@ -149,7 +153,6 @@ rename-mapping:
   CassandraKeyspaceResource: CassandraKeyspaceResourceInfo
   CassandraTablePropertiesResource: ExtendedCassandraTableResourceInfo
   CassandraTableResource: CassandraTableResourceInfo
-  CosmosTablePropertiesResource: ExtendedCosmosTableResourceInfo
   ClientEncryptionKeyGetPropertiesResource: CosmosDBSqlClientEncryptionKeyProperties
   ClientEncryptionKeyResource: CosmosDBSqlClientEncryptionKeyResourceInfo
   ClientEncryptionPolicy: CosmosDBClientEncryptionPolicy
@@ -177,11 +180,9 @@ rename-mapping:
   CosmosDBSqlContainerPropertiesResource: ExtendedCosmosDBSqlContainerResourceInfo
   SqlContainerResource: CosmosDBSqlContainerResourceInfo
   SqlDatabaseResource: CosmosDBSqlDatabaseResourceInfo
-  SqlStoredProcedurePropertiesResource: ExtendedCosmosDBSqlStoredProcedureResourceInfo
   SqlStoredProcedureResource: CosmosDBSqlStoredProcedureResourceInfo
   SqlTriggerResource: CosmosDBSqlTriggerResourceInfo
   CosmosDBSqlTriggerPropertiesResource: ExtendedCosmosDBSqlTriggerResourceInfo
-  SqlUserDefinedFunctionPropertiesResource: ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo
   SqlUserDefinedFunctionResource: CosmosDBSqlUserDefinedFunctionResourceInfo
   TableResource: CosmosDBTableResourceInfo
   ThroughputPolicyResource: ThroughputPolicyResourceInfo
@@ -201,6 +202,7 @@ rename-mapping:
   ClusterResource: CassandraCluster
   ClusterKey: CassandraClusterKey
   ClusterResourceProperties: CassandraClusterProperties
+  ClusterType: CassandraClusterType
   DataCenterResource: CassandraDataCenter
   DataCenterResourceProperties: CassandraDataCenterProperties
   ListDataCenters: CassandraDataCenterListResult
@@ -231,7 +233,8 @@ rename-mapping:
   ClusterResourceProperties.cassandraAuditLoggingEnabled: IsCassandraAuditLoggingEnabled
   ClusterResourceProperties.deallocated : IsDeallocated
   ClusterResourceProperties.repairEnabled: IsRepairEnabled
-  CommandPostBody.readwrite: AllowWrite
+  ClusterResourceProperties.privateLinkResourceId: -|arm-id
+  CommandPostBody.readWrite: AllowWrite
   IndexingPolicy.automatic: IsAutomatic
   ManagedCassandraReaperStatus.healthy: IsHealthy
   MongoIndexOptions.unique: IsUnique
@@ -300,7 +303,23 @@ rename-mapping:
   PrivilegeResource: MongoDBPrivilegeResourceInfo
   PrivilegeResource.db: DBName
   MinimalTlsVersion: CosmosDBMinimalTlsVersion
-  BackupResource: CassandraClusterBackupResource
+  BackupResource: CassandraClusterBackupResourceInfo
+  BackupSchedule: CassandraClusterBackupSchedule
+  BackupState: CassandraClusterBackupState
+  CheckNameAvailabilityRequest: CheckCosmosDBNameAvailabilityContent
+  CheckNameAvailabilityResponse: CheckCosmosDBNameAvailabilityResponse
+  CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
+  NodeGroupProperties.diskSizeGB: DiskSizeInGB
+  IpAddressOrRange: CosmosDBIPAddressOrRange
+  CommandPublicResource: CassandraClusterCommand
+  CommandStatus: CassandraClusterCommandStatus
+  ThroughputPoolAccountResource: CosmosDBThroughputPoolAccount
+  ThroughputPoolAccountResource.properties.accountLocation: -|azure-location
+  ThroughputPoolAccountResource.properties.accountResourceIdentifier: -|arm-id
+  ThroughputPoolResource: CosmosDBThroughputPool
+  AutoReplicate: CassandraAutoReplicateForm
+  AzureConnectionType: ServiceConnectionType
+  RestoreParametersBase.restoreWithTtlDisabled: IsRestoreWithTtlDisabled
 
 prepend-rp-prefix:
 - UniqueKey
@@ -315,7 +334,6 @@ prepend-rp-prefix:
 - MetricAvailability
 - LocationProperties
 - LocationListResult
-- IPAddressOrRange
 - DataType
 - IndexingPolicy
 - ExcludedPath
@@ -328,16 +346,23 @@ prepend-rp-prefix:
 - FailoverPolicies
 - FailoverPolicy
 - BackupInformation
-- ContainerPartitionKey
 - CompositePath
 - PartitionKind
 - PercentileMetric
 - PublicNetworkAccess
 - SpatialType
 - ContainerPartitionKey
+- FirewallRule
+- Status
+- ProvisioningState
+- Type
+- ConnectionString
 
 models-to-treat-empty-string-as-null:
   - CosmosDBAccountData
+
+suppress-abstract-base-class:
+- CosmosDBServiceProperties
 
 directive:
 # The notebook is offline due to security issues
@@ -377,6 +402,7 @@ directive:
     $.MetricDefinition.properties.resourceUri['x-ms-client-name'] = 'ResourceId';
     $.MetricDefinition.properties.resourceUri['x-ms-format'] = 'arm-id';
     $.VirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
+    $.DatabaseAccountConnectionString.properties.type['x-ms-client-name'] = 'KeyType';
 # add a missing response code for long running operation. an issue was filed on swagger: https://github.com/Azure/azure-rest-api-specs/issues/16508
 - from: swagger-document
   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}'].put
@@ -410,6 +436,29 @@ directive:
   transform: >
     $.restoreLocationParameter['x-ms-format'] = 'azure-location';
     $.instanceIdParameter['format'] = 'uuid';
+- from: cosmos-db.json
+  where: $.definitions
+  transform: >
+    $.ErrorResponse['x-ms-client-name'] = 'CosmosDBErrorResult';
+# Managed Cassandra
+- from: managedCassandra.json
+  where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommandAsync']
+  transform: >
+    for (var path in $)
+    {
+        delete $[path];
+    }
+- from: managedCassandra.json
+  where: $.definitions.CommandPostBody
+  transform: >
+    $.properties.arguments['additionalProperties'] = {
+        'type':'string'
+    };
+- from: managedCassandra.json
+  where: $.definitions
+  transform: >
+    $.CommandPublicResource.properties.cassandraStopStart["x-ms-client-name"] = "shouldStopCassandraBeforeStart";
+    $.CommandPublicResource.properties.readWrite["x-ms-client-name"] = "isReadWrite";
 # Below is a workaround for ADO 6196
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys

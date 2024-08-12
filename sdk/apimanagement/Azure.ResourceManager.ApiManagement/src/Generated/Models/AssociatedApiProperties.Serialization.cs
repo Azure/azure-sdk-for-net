@@ -6,40 +6,193 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class AssociatedApiProperties
+    public partial class AssociatedApiProperties : IUtf8JsonSerializable, IJsonModel<AssociatedApiProperties>
     {
-        internal static AssociatedApiProperties DeserializeAssociatedApiProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssociatedApiProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<AssociatedApiProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AssociatedApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssociatedApiProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ServiceUri))
+            {
+                writer.WritePropertyName("serviceUrl"u8);
+                writer.WriteStringValue(ServiceUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(Path))
+            {
+                writer.WritePropertyName("path"u8);
+                writer.WriteStringValue(Path);
+            }
+            if (Optional.IsCollectionDefined(Protocols))
+            {
+                writer.WritePropertyName("protocols"u8);
+                writer.WriteStartArray();
+                foreach (var item in Protocols)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(AuthenticationSettings))
+            {
+                writer.WritePropertyName("authenticationSettings"u8);
+                writer.WriteObjectValue(AuthenticationSettings, options);
+            }
+            if (Optional.IsDefined(SubscriptionKeyParameterNames))
+            {
+                writer.WritePropertyName("subscriptionKeyParameterNames"u8);
+                writer.WriteObjectValue(SubscriptionKeyParameterNames, options);
+            }
+            if (Optional.IsDefined(ApiType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ApiType.Value.ToString());
+            }
+            if (Optional.IsDefined(ApiRevision))
+            {
+                writer.WritePropertyName("apiRevision"u8);
+                writer.WriteStringValue(ApiRevision);
+            }
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ApiVersion);
+            }
+            if (Optional.IsDefined(IsCurrent))
+            {
+                writer.WritePropertyName("isCurrent"u8);
+                writer.WriteBooleanValue(IsCurrent.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsOnline))
+            {
+                writer.WritePropertyName("isOnline"u8);
+                writer.WriteBooleanValue(IsOnline.Value);
+            }
+            if (Optional.IsDefined(ApiRevisionDescription))
+            {
+                writer.WritePropertyName("apiRevisionDescription"u8);
+                writer.WriteStringValue(ApiRevisionDescription);
+            }
+            if (Optional.IsDefined(ApiVersionDescription))
+            {
+                writer.WritePropertyName("apiVersionDescription"u8);
+                writer.WriteStringValue(ApiVersionDescription);
+            }
+            if (Optional.IsDefined(ApiVersionSetId))
+            {
+                writer.WritePropertyName("apiVersionSetId"u8);
+                writer.WriteStringValue(ApiVersionSetId);
+            }
+            if (Optional.IsDefined(IsSubscriptionRequired))
+            {
+                writer.WritePropertyName("subscriptionRequired"u8);
+                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
+            }
+            if (Optional.IsDefined(TermsOfServiceLink))
+            {
+                writer.WritePropertyName("termsOfServiceUrl"u8);
+                writer.WriteStringValue(TermsOfServiceLink);
+            }
+            if (Optional.IsDefined(Contact))
+            {
+                writer.WritePropertyName("contact"u8);
+                writer.WriteObjectValue(Contact, options);
+            }
+            if (Optional.IsDefined(License))
+            {
+                writer.WritePropertyName("license"u8);
+                writer.WriteObjectValue(License, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AssociatedApiProperties IJsonModel<AssociatedApiProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssociatedApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssociatedApiProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssociatedApiProperties(document.RootElement, options);
+        }
+
+        internal static AssociatedApiProperties DeserializeAssociatedApiProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<Uri> serviceUri = default;
-            Optional<string> path = default;
-            Optional<IReadOnlyList<ApiOperationInvokableProtocol>> protocols = default;
-            Optional<string> description = default;
-            Optional<AuthenticationSettingsContract> authenticationSettings = default;
-            Optional<SubscriptionKeyParameterNamesContract> subscriptionKeyParameterNames = default;
-            Optional<ApiType> type = default;
-            Optional<string> apiRevision = default;
-            Optional<string> apiVersion = default;
-            Optional<bool> isCurrent = default;
-            Optional<bool> isOnline = default;
-            Optional<string> apiRevisionDescription = default;
-            Optional<string> apiVersionDescription = default;
-            Optional<ResourceIdentifier> apiVersionSetId = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<Uri> termsOfServiceUri = default;
-            Optional<ApiContactInformation> contact = default;
-            Optional<ApiLicenseInformation> license = default;
+            string id = default;
+            string name = default;
+            Uri serviceUri = default;
+            string path = default;
+            IReadOnlyList<ApiOperationInvokableProtocol> protocols = default;
+            string description = default;
+            AuthenticationSettingsContract authenticationSettings = default;
+            SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default;
+            ApiType? type = default;
+            string apiRevision = default;
+            string apiVersion = default;
+            bool? isCurrent = default;
+            bool? isOnline = default;
+            string apiRevisionDescription = default;
+            string apiVersionDescription = default;
+            ResourceIdentifier apiVersionSetId = default;
+            bool? subscriptionRequired = default;
+            string termsOfServiceUri = default;
+            ApiContactInformation contact = default;
+            ApiLicenseInformation license = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -91,7 +244,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property.Value);
+                    authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subscriptionKeyParameterNames"u8))
@@ -100,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property.Value);
+                    subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -170,11 +323,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("termsOfServiceUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    termsOfServiceUri = new Uri(property.Value.GetString());
+                    termsOfServiceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("contact"u8))
@@ -183,7 +332,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    contact = ApiContactInformation.DeserializeApiContactInformation(property.Value);
+                    contact = ApiContactInformation.DeserializeApiContactInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("license"u8))
@@ -192,11 +341,453 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    license = ApiLicenseInformation.DeserializeApiLicenseInformation(property.Value);
+                    license = ApiLicenseInformation.DeserializeApiLicenseInformation(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AssociatedApiProperties(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, id.Value, name.Value, serviceUri.Value, path.Value, Optional.ToList(protocols));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AssociatedApiProperties(
+                description,
+                authenticationSettings,
+                subscriptionKeyParameterNames,
+                type,
+                apiRevision,
+                apiVersion,
+                isCurrent,
+                isOnline,
+                apiRevisionDescription,
+                apiVersionDescription,
+                apiVersionSetId,
+                subscriptionRequired,
+                termsOfServiceUri,
+                contact,
+                license,
+                serializedAdditionalRawData,
+                id,
+                name,
+                serviceUri,
+                path,
+                protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>());
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  serviceUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceUri))
+                {
+                    builder.Append("  serviceUrl: ");
+                    builder.AppendLine($"'{ServiceUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  path: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Path))
+                {
+                    builder.Append("  path: ");
+                    if (Path.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Path}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Path}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocols), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  protocols: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Protocols))
+                {
+                    if (Protocols.Any())
+                    {
+                        builder.Append("  protocols: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Protocols)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  description: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Description))
+                {
+                    builder.Append("  description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authenticationSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthenticationSettings))
+                {
+                    builder.Append("  authenticationSettings: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AuthenticationSettings, options, 2, false, "  authenticationSettings: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionKeyParameterNames), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subscriptionKeyParameterNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SubscriptionKeyParameterNames))
+                {
+                    builder.Append("  subscriptionKeyParameterNames: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SubscriptionKeyParameterNames, options, 2, false, "  subscriptionKeyParameterNames: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiRevision), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiRevision: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiRevision))
+                {
+                    builder.Append("  apiRevision: ");
+                    if (ApiRevision.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiRevision}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiRevision}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiVersion))
+                {
+                    builder.Append("  apiVersion: ");
+                    if (ApiVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsCurrent), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isCurrent: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsCurrent))
+                {
+                    builder.Append("  isCurrent: ");
+                    var boolValue = IsCurrent.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsOnline), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isOnline: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsOnline))
+                {
+                    builder.Append("  isOnline: ");
+                    var boolValue = IsOnline.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiRevisionDescription), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiRevisionDescription: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiRevisionDescription))
+                {
+                    builder.Append("  apiRevisionDescription: ");
+                    if (ApiRevisionDescription.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiRevisionDescription}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiRevisionDescription}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersionDescription), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiVersionDescription: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiVersionDescription))
+                {
+                    builder.Append("  apiVersionDescription: ");
+                    if (ApiVersionDescription.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiVersionDescription}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiVersionDescription}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersionSetId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiVersionSetId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiVersionSetId))
+                {
+                    builder.Append("  apiVersionSetId: ");
+                    builder.AppendLine($"'{ApiVersionSetId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSubscriptionRequired), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  subscriptionRequired: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsSubscriptionRequired))
+                {
+                    builder.Append("  subscriptionRequired: ");
+                    var boolValue = IsSubscriptionRequired.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TermsOfServiceLink), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  termsOfServiceUrl: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TermsOfServiceLink))
+                {
+                    builder.Append("  termsOfServiceUrl: ");
+                    if (TermsOfServiceLink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TermsOfServiceLink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TermsOfServiceLink}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Contact), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  contact: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Contact))
+                {
+                    builder.Append("  contact: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Contact, options, 2, false, "  contact: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(License), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  license: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(License))
+                {
+                    builder.Append("  license: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, License, options, 2, false, "  license: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AssociatedApiProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssociatedApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AssociatedApiProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AssociatedApiProperties IPersistableModel<AssociatedApiProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssociatedApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAssociatedApiProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AssociatedApiProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AssociatedApiProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
-    /// Name of the format. Valid values are: 
+    /// Name of the format. Valid values are:
     /// FileZilla3
     /// WebDeploy -- default
     /// Ftp
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

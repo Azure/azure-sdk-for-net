@@ -861,14 +861,14 @@ namespace Azure.Storage.Files.Shares.Specialized
                         if (async)
                         {
                             response = await FileClient.FileRestClient.BreakLeaseAsync(
-                                leaseAccessConditions: null,
+                                shareFileRequestConditions: null,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         }
                         else
                         {
                             response = FileClient.FileRestClient.BreakLease(
-                                leaseAccessConditions: null,
+                                shareFileRequestConditions: null,
                                 cancellationToken: cancellationToken);
                         }
 
@@ -884,7 +884,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         {
                             response = await ShareClient.ShareRestClient.BreakLeaseAsync(
                                 breakPeriod: null,
-                                leaseAccessConditions: null,
+                                shareFileRequestConditions: null,
                                 cancellationToken: cancellationToken)
                                 .ConfigureAwait(false);
                         }
@@ -892,7 +892,7 @@ namespace Azure.Storage.Files.Shares.Specialized
                         {
                             response = ShareClient.ShareRestClient.BreakLease(
                                 breakPeriod: null,
-                                leaseAccessConditions: null,
+                                shareFileRequestConditions: null,
                                 cancellationToken: cancellationToken);
                         }
 

@@ -6,21 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateSqlServerSqlDBSyncTaskOutputTableLevel. </summary>
     public partial class MigrateSqlServerSqlDBSyncTaskOutputTableLevel : MigrateSqlServerSqlDBSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/>. </summary>
         internal MigrateSqlServerSqlDBSyncTaskOutputTableLevel()
         {
             ResultType = "TableLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSqlServerSqlDBSyncTaskOutputTableLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tableName"> Name of the table. </param>
         /// <param name="databaseName"> Name of the database. </param>
         /// <param name="cdcInsertCounter"> Number of applied inserts. </param>
@@ -34,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalChangesApplied"> Total number of applied changes. </param>
         /// <param name="dataErrorsCounter"> Number of data errors occurred. </param>
         /// <param name="lastModifiedOn"> Last modified time on target. </param>
-        internal MigrateSqlServerSqlDBSyncTaskOutputTableLevel(string id, string resultType, string tableName, string databaseName, long? cdcInsertCounter, long? cdcUpdateCounter, long? cdcDeleteCounter, DateTimeOffset? fullLoadEstFinishOn, DateTimeOffset? fullLoadStartedOn, DateTimeOffset? fullLoadEndedOn, long? fullLoadTotalRows, SyncTableMigrationState? state, long? totalChangesApplied, long? dataErrorsCounter, DateTimeOffset? lastModifiedOn) : base(id, resultType)
+        internal MigrateSqlServerSqlDBSyncTaskOutputTableLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string tableName, string databaseName, long? cdcInsertCounter, long? cdcUpdateCounter, long? cdcDeleteCounter, DateTimeOffset? fullLoadEstFinishOn, DateTimeOffset? fullLoadStartedOn, DateTimeOffset? fullLoadEndedOn, long? fullLoadTotalRows, SyncTableMigrationState? state, long? totalChangesApplied, long? dataErrorsCounter, DateTimeOffset? lastModifiedOn) : base(id, resultType, serializedAdditionalRawData)
         {
             TableName = tableName;
             DatabaseName = databaseName;

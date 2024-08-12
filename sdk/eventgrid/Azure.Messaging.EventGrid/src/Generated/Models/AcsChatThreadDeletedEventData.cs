@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadDeleted event. </summary>
     public partial class AcsChatThreadDeletedEventData : AcsChatThreadEventInThreadBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatThreadDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatThreadDeletedEventData"/>. </summary>
         internal AcsChatThreadDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsChatThreadDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatThreadDeletedEventData"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>

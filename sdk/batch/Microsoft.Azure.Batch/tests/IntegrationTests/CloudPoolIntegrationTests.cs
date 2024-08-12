@@ -938,6 +938,226 @@ namespace BatchClientIntegrationTests
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
 
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreatedTrustedLaunch()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         {
+                             SecurityProfile = new SecurityProfile()
+                             {
+                                 SecurityType = SecurityTypes.TrustedLaunch,
+                                 EncryptionAtHost = true,
+                                 UefiSettings = new UefiSettings()
+                                 {
+                                     SecureBootEnabled = true,
+                                     VTpmEnabled = true
+                                 }
+                             }
+                         }
+
+                         );
+
+
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.VirtualMachineConfiguration.SecurityProfile);
+                    Assert.Equal(SecurityTypes.TrustedLaunch, pool.VirtualMachineConfiguration.SecurityProfile.SecurityType);
+                    Assert.True(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost);
+                    Assert.True(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled);
+                    Assert.True(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreatedOsDisk()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         {
+                             OSDisk = new OSDisk()
+                             {
+                                 Caching = CachingType.ReadOnly,
+                                 ManagedDisk = new ManagedDisk()
+                                 {
+                                     StorageAccountType = StorageAccountType.PremiumLrs
+                                 },
+                                 DiskSizeGB = 10
+                             }
+                         }
+                         );
+
+
+
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.VirtualMachineConfiguration.OSDisk);
+                    Assert.Equal(CachingType.ReadOnly, pool.VirtualMachineConfiguration.OSDisk.Caching);
+                    Assert.Equal(10, pool.VirtualMachineConfiguration.OSDisk.DiskSizeGB);
+                    Assert.Equal(StorageAccountType.PremiumLrs, pool.VirtualMachineConfiguration.OSDisk.ManagedDisk.StorageAccountType);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreatedUpgradePolicy()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         {
+                             NodePlacementConfiguration = new NodePlacementConfiguration(NodePlacementPolicyType.Zonal)
+                         }
+                         );
+                   
+                    pool.UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
+                    {
+                        AutomaticOSUpgradePolicy = new AutomaticOSUpgradePolicy()
+                        {
+                            DisableAutomaticRollback = true,
+                            EnableAutomaticOSUpgrade = true,
+                            UseRollingUpgradePolicy = true,
+                            OsRollingUpgradeDeferral = true
+                        },
+                        RollingUpgradePolicy = new RollingUpgradePolicy()
+                        {
+                            EnableCrossZoneUpgrade = true,
+                            MaxBatchInstancePercent = 20,
+                            MaxUnhealthyInstancePercent = 20,
+                            MaxUnhealthyUpgradedInstancePercent = 20,
+                            PauseTimeBetweenBatches = TimeSpan.FromSeconds(5),
+                            PrioritizeUnhealthyInstances = false,
+                            RollbackFailedInstancesOnPolicyBreach = false
+                        }
+                    };
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.UpgradePolicy);
+                    Assert.Equal(UpgradeMode.Automatic, pool.UpgradePolicy.Mode);
+                    Assert.NotNull(pool.UpgradePolicy.AutomaticOSUpgradePolicy);
+                    Assert.Equal(true, pool.UpgradePolicy.AutomaticOSUpgradePolicy.DisableAutomaticRollback);
+                    Assert.Equal(true, pool.UpgradePolicy.AutomaticOSUpgradePolicy.EnableAutomaticOSUpgrade);
+                    Assert.NotNull(pool.UpgradePolicy.RollingUpgradePolicy);
+                    Assert.Equal(true, pool.UpgradePolicy.RollingUpgradePolicy.EnableCrossZoneUpgrade);
+                    Assert.Equal(20, pool.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyUpgradedInstancePercent);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreateResourceTags()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientServicePrincipal().ConfigureAwait(false);
+
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         );
+                    pool.ResourceTags = new Dictionary<string, string>()
+                    {
+                        {"TagName1","TagValue1"},
+                        {"TagName2","TagValue2"},
+                    };
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.ResourceTags);
+                    Assert.Equal("TagValue1", pool.ResourceTags["TagName1"]);
+                    Assert.Equal("TagValue2", pool.ResourceTags["TagName2"]);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
         [Theory]
         [LiveTest]
         [InlineData(1, 0)]
@@ -1292,7 +1512,7 @@ namespace BatchClientIntegrationTests
                         testOutputHelper.WriteLine($"Extentions size is {extensions.Count()}...");
                         var keyvalutExtension = extensions.Single(extension => extension.VmExtension.Publisher.Contains("KeyVault"));
                         Assert.True(keyvalutExtension.VmExtension.EnableAutomaticUpgrade);
-                    }              
+                    }
                 }
                 finally
                 {
@@ -1318,10 +1538,10 @@ namespace BatchClientIntegrationTests
             private Task<AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListUsageMetricsHeaders>> NewFunc(CancellationToken token)
             {
                 var response = new AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListUsageMetricsHeaders>()
-                    {
+                {
 
-                        Body = new FakePage<Protocol.Models.PoolUsageMetrics>(_poolUsageMetricsList)
-                    };
+                    Body = new FakePage<Protocol.Models.PoolUsageMetrics>(_poolUsageMetricsList)
+                };
 
                 return Task.FromResult(response);
             }

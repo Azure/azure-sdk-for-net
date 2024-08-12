@@ -7,19 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Delimited text read settings. </summary>
     public partial class DelimitedTextReadSettings : FormatReadSettings
     {
-        /// <summary> Initializes a new instance of DelimitedTextReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextReadSettings"/>. </summary>
         public DelimitedTextReadSettings()
         {
             FormatReadSettingsType = "DelimitedTextReadSettings";
         }
 
-        /// <summary> Initializes a new instance of DelimitedTextReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextReadSettings"/>. </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="skipLineCount"> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </param>
@@ -28,44 +29,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TarGzipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
         /// </param>
-        internal DelimitedTextReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, BinaryData skipLineCount, CompressionReadSettings compressionProperties) : base(formatReadSettingsType, additionalProperties)
+        internal DelimitedTextReadSettings(string formatReadSettingsType, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<int> skipLineCount, CompressionReadSettings compressionProperties) : base(formatReadSettingsType, additionalProperties)
         {
             SkipLineCount = skipLineCount;
             CompressionProperties = compressionProperties;
             FormatReadSettingsType = formatReadSettingsType ?? "DelimitedTextReadSettings";
         }
 
-        /// <summary>
-        /// Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData SkipLineCount { get; set; }
+        /// <summary> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </summary>
+        public DataFactoryElement<int> SkipLineCount { get; set; }
         /// <summary>
         /// Compression settings.
         /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

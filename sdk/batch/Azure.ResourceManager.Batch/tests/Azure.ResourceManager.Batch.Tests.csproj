@@ -2,8 +2,11 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Batch.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.Storage"/>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
   </ItemGroup>
 </Project>

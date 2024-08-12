@@ -6,15 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SearchAadAuthDataPlaneAuthOptions : IUtf8JsonSerializable
+    public partial class SearchAadAuthDataPlaneAuthOptions : IUtf8JsonSerializable, IJsonModel<SearchAadAuthDataPlaneAuthOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchAadAuthDataPlaneAuthOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SearchAadAuthDataPlaneAuthOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchAadAuthDataPlaneAuthOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchAadAuthDataPlaneAuthOptions)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ApiKeyOnly))
             {
@@ -22,25 +33,59 @@ namespace Azure.ResourceManager.Search.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ApiKeyOnly);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ApiKeyOnly.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ApiKeyOnly))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(AadOrApiKey))
             {
                 writer.WritePropertyName("aadOrApiKey"u8);
-                writer.WriteObjectValue(AadOrApiKey);
+                writer.WriteObjectValue(AadOrApiKey, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SearchAadAuthDataPlaneAuthOptions DeserializeSearchAadAuthDataPlaneAuthOptions(JsonElement element)
+        SearchAadAuthDataPlaneAuthOptions IJsonModel<SearchAadAuthDataPlaneAuthOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchAadAuthDataPlaneAuthOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SearchAadAuthDataPlaneAuthOptions)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSearchAadAuthDataPlaneAuthOptions(document.RootElement, options);
+        }
+
+        internal static SearchAadAuthDataPlaneAuthOptions DeserializeSearchAadAuthDataPlaneAuthOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BinaryData> apiKeyOnly = default;
-            Optional<DataPlaneAadOrApiKeyAuthOption> aadOrApiKey = default;
+            BinaryData apiKeyOnly = default;
+            DataPlaneAadOrApiKeyAuthOption aadOrApiKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("apiKeyOnly"u8))
@@ -58,11 +103,97 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    aadOrApiKey = DataPlaneAadOrApiKeyAuthOption.DeserializeDataPlaneAadOrApiKeyAuthOption(property.Value);
+                    aadOrApiKey = DataPlaneAadOrApiKeyAuthOption.DeserializeDataPlaneAadOrApiKeyAuthOption(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SearchAadAuthDataPlaneAuthOptions(apiKeyOnly.Value, aadOrApiKey.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SearchAadAuthDataPlaneAuthOptions(apiKeyOnly, aadOrApiKey, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiKeyOnly), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiKeyOnly: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiKeyOnly))
+                {
+                    builder.Append("  apiKeyOnly: ");
+                    builder.AppendLine($"'{ApiKeyOnly.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AadAuthFailureMode", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aadOrApiKey: ");
+                builder.AppendLine("{");
+                builder.Append("    aadAuthFailureMode: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AadOrApiKey))
+                {
+                    builder.Append("  aadOrApiKey: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AadOrApiKey, options, 2, false, "  aadOrApiKey: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SearchAadAuthDataPlaneAuthOptions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchAadAuthDataPlaneAuthOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SearchAadAuthDataPlaneAuthOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SearchAadAuthDataPlaneAuthOptions IPersistableModel<SearchAadAuthDataPlaneAuthOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SearchAadAuthDataPlaneAuthOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSearchAadAuthDataPlaneAuthOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SearchAadAuthDataPlaneAuthOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SearchAadAuthDataPlaneAuthOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,35 +6,73 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class SapHanaPartitionSettings : IUtf8JsonSerializable
+    internal partial class SapHanaPartitionSettings : IUtf8JsonSerializable, IJsonModel<SapHanaPartitionSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapHanaPartitionSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<SapHanaPartitionSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapHanaPartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapHanaPartitionSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
+                JsonSerializer.Serialize(writer, PartitionColumnName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionColumnName);
+				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionColumnName.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SapHanaPartitionSettings DeserializeSapHanaPartitionSettings(JsonElement element)
+        SapHanaPartitionSettings IJsonModel<SapHanaPartitionSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapHanaPartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapHanaPartitionSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapHanaPartitionSettings(document.RootElement, options);
+        }
+
+        internal static SapHanaPartitionSettings DeserializeSapHanaPartitionSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BinaryData> partitionColumnName = default;
+            DataFactoryElement<string> partitionColumnName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))
@@ -43,11 +81,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    partitionColumnName = BinaryData.FromString(property.Value.GetRawText());
+                    partitionColumnName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SapHanaPartitionSettings(partitionColumnName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SapHanaPartitionSettings(partitionColumnName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SapHanaPartitionSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapHanaPartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SapHanaPartitionSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SapHanaPartitionSettings IPersistableModel<SapHanaPartitionSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapHanaPartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSapHanaPartitionSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapHanaPartitionSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapHanaPartitionSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

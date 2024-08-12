@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement.Samples
@@ -48,7 +45,7 @@ namespace Azure.ResourceManager.CostManagement.Samples
             }, "Cost anomaly detected in the resource"),
                 Schedule = new ScheduleProperties(ScheduleFrequency.Daily, DateTimeOffset.Parse("2020-06-19T22:21:51.1287144Z"), DateTimeOffset.Parse("2021-06-19T22:21:51.1287144Z")),
                 Status = ScheduledActionStatus.Enabled,
-                ViewId = "/providers/Microsoft.CostManagement/views/swaggerExample",
+                ViewId = new ResourceIdentifier("/providers/Microsoft.CostManagement/views/swaggerExample"),
                 Kind = ScheduledActionKind.InsightAlert,
             };
             string ifMatch = "";
@@ -107,7 +104,7 @@ ScheduledActionWeeksOfMonth.First,ScheduledActionWeeksOfMonth.Third
 },
                 },
                 Status = ScheduledActionStatus.Enabled,
-                ViewId = "/providers/Microsoft.CostManagement/views/swaggerExample",
+                ViewId = new ResourceIdentifier("/providers/Microsoft.CostManagement/views/swaggerExample"),
                 Kind = ScheduledActionKind.Email,
             };
             string ifMatch = "";

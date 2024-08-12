@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of common properties of all chat events. </summary>
     public partial class AcsChatEventBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatEventBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatEventBaseProperties"/>. </summary>
         internal AcsChatEventBaseProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsChatEventBaseProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatEventBaseProperties"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>

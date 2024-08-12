@@ -15,7 +15,7 @@ namespace Azure.Core.Serialization
         public override bool CanConvert(Type objectType) => objectType == typeof(ETag) || objectType == typeof(ETag?);
 
         /// <inheritdoc/>
-        public override object? ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             var value = (string?)reader.Value;
             if (value == null)
@@ -31,9 +31,9 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc/>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            var eTag = (ETag) value;
+            var eTag = (ETag) value!;
             if (eTag == default)
             {
                 writer.WriteNull();

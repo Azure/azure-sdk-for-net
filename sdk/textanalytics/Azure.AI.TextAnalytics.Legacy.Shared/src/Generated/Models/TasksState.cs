@@ -7,14 +7,13 @@
 
 using System;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The TasksState. </summary>
     internal partial class TasksState
     {
-        /// <summary> Initializes a new instance of TasksState. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksState"/>. </summary>
         /// <param name="tasks"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="tasks"/> is null. </exception>
         internal TasksState(TasksStateTasks tasks)

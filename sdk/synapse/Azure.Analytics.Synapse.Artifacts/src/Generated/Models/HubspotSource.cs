@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A copy activity Hubspot Service source. </summary>
     public partial class HubspotSource : TabularSource
     {
-        /// <summary> Initializes a new instance of HubspotSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubspotSource"/>. </summary>
         public HubspotSource()
         {
             Type = "HubspotSource";
         }
 
-        /// <summary> Initializes a new instance of HubspotSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="HubspotSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

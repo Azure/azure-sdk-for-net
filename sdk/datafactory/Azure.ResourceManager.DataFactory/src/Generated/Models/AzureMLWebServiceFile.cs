@@ -6,33 +6,21 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure ML WebService Input/Output file. </summary>
     public partial class AzureMLWebServiceFile
     {
-        /// <summary> Initializes a new instance of AzureMLWebServiceFile. </summary>
-        /// <param name="filePath"> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </param>
-        /// <param name="linkedServiceName"> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> or <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureMLWebServiceFile(BinaryData filePath, FactoryLinkedServiceReference linkedServiceName)
-        {
-            Argument.AssertNotNull(filePath, nameof(filePath));
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            FilePath = filePath;
-            LinkedServiceName = linkedServiceName;
-        }
-
         /// <summary>
-        /// The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string).
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -56,8 +44,40 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData FilePath { get; set; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLWebServiceFile"/>. </summary>
+        /// <param name="filePath"> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName"> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> or <paramref name="linkedServiceName"/> is null. </exception>
+        public AzureMLWebServiceFile(DataFactoryElement<string> filePath, DataFactoryLinkedServiceReference linkedServiceName)
+        {
+            Argument.AssertNotNull(filePath, nameof(filePath));
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+            FilePath = filePath;
+            LinkedServiceName = linkedServiceName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLWebServiceFile"/>. </summary>
+        /// <param name="filePath"> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </param>
+        /// <param name="linkedServiceName"> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureMLWebServiceFile(DataFactoryElement<string> filePath, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FilePath = filePath;
+            LinkedServiceName = linkedServiceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureMLWebServiceFile"/> for deserialization. </summary>
+        internal AzureMLWebServiceFile()
+        {
+        }
+
+        /// <summary> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> FilePath { get; set; }
         /// <summary> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </summary>
-        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
+        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
     }
 }

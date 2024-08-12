@@ -9,23 +9,25 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing an EventGridPartnerNamespacePrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventGridPartnerNamespacePrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PartnerNamespaceResource" /> using the GetEventGridPartnerNamespacePrivateEndpointConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventGridPartnerNamespacePrivateEndpointConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PartnerNamespaceResource"/> using the GetEventGridPartnerNamespacePrivateEndpointConnection method.
     /// </summary>
     public partial class EventGridPartnerNamespacePrivateEndpointConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="parentName"> The parentName. </param>
+        /// <param name="privateEndpointConnectionName"> The privateEndpointConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string parentName, string privateEndpointConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly PrivateEndpointConnectionsRestOperations _eventGridPartnerNamespacePrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly EventGridPrivateEndpointConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/> class for mocking. </summary>
         protected EventGridPartnerNamespacePrivateEndpointConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventGridPartnerNamespacePrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventGridPartnerNamespacePrivateEndpointConnectionResource(ArmClient client, EventGridPrivateEndpointConnectionData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/partnerNamespaces/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// Get a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// Get a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -129,6 +139,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,7 +170,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// Delete a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Delete a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -161,6 +179,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,7 +212,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// Delete a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Delete a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -195,6 +221,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,6 +263,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,6 +309,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

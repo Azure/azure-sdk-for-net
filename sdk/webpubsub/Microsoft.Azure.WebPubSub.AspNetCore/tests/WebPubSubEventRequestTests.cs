@@ -255,11 +255,28 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             Assert.False(result);
         }
 
+        [TestCase("sha256=something,sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]
+        [TestCase("sha256=something, sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]
+        [TestCase("sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561, sha256=something")]
+        [TestCase("sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561,sha256=something")]
+        public void TestSignatureCheck_MultiSignatureSuccess(string signatures)
+        {
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                signature: signatures,
+                origin: TestUri.Host);
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};Version=1.0;") }));
+            var result = validator.IsValidSignature(connectionContext);
+            Assert.True(result);
+        }
+
         [TestCase("OPTIONS", true)]
         [TestCase("DELETE", false)]
-        public void TestAbuseProtection(string httpMethod, bool valid)
+        [TestCase("OPTIONS", true, true)]
+        public void TestAbuseProtection(string httpMethod, bool valid, bool multiDomains = false)
         {
-            var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectEvent, httpMethod: httpMethod);
+            var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectEvent, httpMethod: httpMethod, multiDomains: multiDomains);
 
             var result = context.Request.IsPreflightRequest(out var requestHosts);
 
@@ -269,6 +286,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             {
                 Assert.NotNull(requestHosts);
                 Assert.AreEqual(TestUri.Host, requestHosts[0]);
+                if (multiDomains)
+                {
+                    Assert.AreEqual(2, requestHosts.Count);
+                }
+                else
+                {
+                    Assert.AreEqual(1, requestHosts.Count);
+                }
             }
         }
 
@@ -293,7 +318,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             string httpMethod = "POST",
             string userId = "testuser",
             string body = null,
-            string contentType = Constants.ContentTypes.PlainTextContentType)
+            string contentType = Constants.ContentTypes.PlainTextContentType,
+            bool multiDomains = false)
         {
             var context = new DefaultHttpContext();
             var services = new ServiceCollection();
@@ -321,7 +347,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             if (!string.IsNullOrEmpty(uri.Host))
             {
                 headers.Add("Host", uri.Host);
-                headers.Add(Constants.Headers.WebHookRequestOrigin, uri.Host);
+                var origins = uri.Host;
+                if (multiDomains)
+                {
+                    origins += ", custom.domain.com";
+                }
+                headers.Add(Constants.Headers.WebHookRequestOrigin, origins);
             }
 
             if (userId != null)

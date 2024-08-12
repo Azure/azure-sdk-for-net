@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,64 @@
 
 ### Other Changes
 
+## 1.2.0 (2026-06-25)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-12-preview' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/5539bbe1f023b10ffa3b61c9106cb8d34a27038e/specification/servicefabricmanagedclusters/resource-manager/readme.md.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.37.0 to 1.40.0
+- Upgraded Azure.ResourceManager from 1.10.1 to 1.12.0
+
+## 1.1.0-beta.4 (2024-02-01)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-03-preview' to 'package-2023-12-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2ce7ebed8b2fbcce991d2839ba0ba712f9a0d12b/specification/servicefabricmanagedclusters/resource-manager/readme.md
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.37.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.1
+
+## 1.1.0-beta.3 (2023-11-30)
+
+### Features Added
+
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.1.0-beta.2 (2023-06-21)
+
+### Features Added
+
+Cluster features
+- NatGatewayId
+- PublicIpPrefix
+
+NodeType features
+- VmSharedGalleryImageId
+- SecurityType
+- SecureBootEnabled
+- EnableNodePublicIP
+- VmImagePlan
+
+### Other Changes
+
+- Upgraded API version to 2023-03-01-preview.
+
 ## 1.1.0-beta.1 (2023-05-31)
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

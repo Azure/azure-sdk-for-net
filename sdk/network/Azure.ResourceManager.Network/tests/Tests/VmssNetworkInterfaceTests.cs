@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-#if false
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,9 +13,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
-    public class VmssNetworkInterfaceTests : NetworkTestsManagementClientBase
+    public class VmssNetworkInterfaceTests : NetworkServiceClientTestBase
     {
-        public VmssNetworkInterfaceTests(bool isAsync) : base(isAsync)
+        public VmssNetworkInterfaceTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -41,21 +41,21 @@ namespace Azure.ResourceManager.Network.Tests
         [Test]
         public async Task VmssNetworkInterfaceApiTest()
         {
+            var subscription = await ArmClient.GetDefaultSubscriptionAsync();
             string resourceGroupName = Recording.GenerateAssetName("azsmnet");
-
             string location = TestEnvironment.Location;
             string deploymentName = Recording.GenerateAssetName("vmss");
-            var resourceGroup = CreateResourceGroup(resourceGroupName, location);
+            var resourceGroup = CreateResourceGroup(resourceGroupName, location).Result;
 
-            await CreateVmss(ResourceManagementClient, resourceGroupName, deploymentName);
+            await CreateVmss(resourceGroup, deploymentName);
 
             string virtualMachineScaleSetName = "vmssip";
-            AsyncPageable<PublicIPAddressResource> vmssListAllPageResultAP = NetworkManagementClient.PublicIPAddresses.GetVirtualMachineScaleSetPublicIPAddressesAsync(resourceGroupName, virtualMachineScaleSetName);
-            List<PublicIPAddressResource> vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
-            List<PublicIPAddressResource> vmssListAllResult = vmssListAllPageResult.ToList();
-            PublicIPAddressResource firstResult = vmssListAllResult.First();
+            var vmssId = VirtualMachineScaleSetNetworkResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, resourceGroupName, virtualMachineScaleSetName);
+            var vmssListAllPageResultAP = ArmClient.GetVirtualMachineScaleSetNetworkResource(vmssId).GetAllPublicIPAddressDataAsync();
+            var vmssListAllPageResult = await vmssListAllPageResultAP.ToEnumerableAsync();
+            var firstResult = vmssListAllPageResult.First();
 
-            Assert.NotNull(vmssListAllResult);
+            Assert.NotNull(vmssListAllPageResult);
             Assert.AreEqual("Succeeded", firstResult.ProvisioningState.ToString());
             Assert.NotNull(firstResult.ResourceGuid);
 
@@ -64,42 +64,42 @@ namespace Azure.ResourceManager.Network.Tests
             string nicName = GetNameById(idItem, "networkInterfaces");
 
             // Verify that NICs contain refernce to publicip, nsg and dns settings
-            AsyncPageable<NetworkInterfaceResource> listNicPerVmssAP = NetworkManagementClient.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName);
-            List<NetworkInterfaceResource> listNicPerVmss = await listNicPerVmssAP.ToEnumerableAsync();
+            var listNicPerVmssAP = ArmClient.GetVirtualMachineScaleSetNetworkResource(vmssId).GetAllNetworkInterfaceDataAsync();
+            var listNicPerVmss = await listNicPerVmssAP.ToEnumerableAsync();
             Assert.NotNull(listNicPerVmss);
 
-            foreach (NetworkInterfaceResource nic in listNicPerVmss)
+            foreach (var nic in listNicPerVmss)
             {
                 VerifyVmssNicProperties(nic);
             }
 
             // Verify nics on a vm level
-            AsyncPageable<NetworkInterfaceResource> listNicPerVmAP = NetworkManagementClient.NetworkInterfaces.GetVirtualMachineScaleSetVMNetworkInterfacesAsync(resourceGroupName, virtualMachineScaleSetName, vmIndex);
-            List<NetworkInterfaceResource> listNicPerVm = await listNicPerVmAP.ToEnumerableAsync();
+            var vmssVmId = VirtualMachineScaleSetVmNetworkResource.CreateResourceIdentifier(subscription.Id.SubscriptionId, resourceGroupName, virtualMachineScaleSetName, vmIndex);
+            var listNicPerVmAP = ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetAllNetworkInterfaceDataAsync();
+            var listNicPerVm = await listNicPerVmAP.ToEnumerableAsync();
             Assert.NotNull(listNicPerVm);
             Has.One.EqualTo(listNicPerVm);
 
-            foreach (NetworkInterfaceResource nic in listNicPerVm)
+            foreach (var nic in listNicPerVm)
             {
                 VerifyVmssNicProperties(nic);
             }
 
             // Verify getting individual nic
-            Response<NetworkInterfaceResource> getNic = await NetworkManagementClient.NetworkInterfaces.GetVirtualMachineScaleSetNetworkInterfaceAsync(resourceGroupName, virtualMachineScaleSetName, vmIndex, nicName);
+            var getNic = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetNetworkInterfaceDataAsync(nicName);
             Assert.NotNull(getNic);
             VerifyVmssNicProperties(getNic);
         }
 
-        private void VerifyVmssNicProperties(NetworkInterfaceResource nic)
+        private void VerifyVmssNicProperties(NetworkInterfaceData nic)
         {
             Assert.NotNull(nic.NetworkSecurityGroup);
             Assert.False(string.IsNullOrEmpty(nic.NetworkSecurityGroup.Id));
             Assert.NotNull(nic.DnsSettings);
             Assert.NotNull(nic.DnsSettings.DnsServers);
             Assert.AreEqual(1, nic.DnsSettings.DnsServers.Count);
-            Assert.NotNull(nic.IpConfigurations[0].PublicIPAddress);
-            Assert.False(string.IsNullOrEmpty(nic.IpConfigurations[0].PublicIPAddress.Id));
+            Assert.NotNull(nic.IPConfigurations[0].PublicIPAddress);
+            Assert.False(string.IsNullOrEmpty(nic.IPConfigurations[0].PublicIPAddress.Id));
         }
     }
 }
-#endif

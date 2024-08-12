@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.EventGrid;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PartnerTopicsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/PartnerTopics_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopics_Get.json
             // this example is just showing the usage of "PartnerTopics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,7 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerTopicResource created on azure
             // for more information of creating PartnerTopicResource, please refer to the document of PartnerTopicResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string partnerTopicName = "examplePartnerTopicName1";
             ResourceIdentifier partnerTopicResourceId = PartnerTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, partnerTopicName);
@@ -55,7 +52,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_PartnerTopicsDelete()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/PartnerTopics_Delete.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopics_Delete.json
             // this example is just showing the usage of "PartnerTopics_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerTopicResource created on azure
             // for more information of creating PartnerTopicResource, please refer to the document of PartnerTopicResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string partnerTopicName = "examplePartnerTopicName1";
             ResourceIdentifier partnerTopicResourceId = PartnerTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, partnerTopicName);
@@ -82,7 +79,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PartnerTopicsUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/PartnerTopics_Update.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopics_Update.json
             // this example is just showing the usage of "PartnerTopics_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerTopicResource created on azure
             // for more information of creating PartnerTopicResource, please refer to the document of PartnerTopicResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string partnerTopicName = "examplePartnerTopicName1";
             ResourceIdentifier partnerTopicResourceId = PartnerTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, partnerTopicName);
@@ -121,7 +118,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPartnerTopics_PartnerTopicsListBySubscription()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/PartnerTopics_ListBySubscription.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopics_ListBySubscription.json
             // this example is just showing the usage of "PartnerTopics_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +128,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -153,7 +150,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Activate_PartnerTopicsActivate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/PartnerTopics_Activate.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopics_Activate.json
             // this example is just showing the usage of "PartnerTopics_Activate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +160,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerTopicResource created on azure
             // for more information of creating PartnerTopicResource, please refer to the document of PartnerTopicResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string partnerTopicName = "examplePartnerTopic1";
             ResourceIdentifier partnerTopicResourceId = PartnerTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, partnerTopicName);
@@ -184,7 +181,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Deactivate_PartnerTopicsDeactivate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/stable/2022-06-15/examples/PartnerTopics_Deactivate.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopics_Deactivate.json
             // this example is just showing the usage of "PartnerTopics_Deactivate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -194,7 +191,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
             // this example assumes you already have this PartnerTopicResource created on azure
             // for more information of creating PartnerTopicResource, please refer to the document of PartnerTopicResource
-            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
             string resourceGroupName = "examplerg";
             string partnerTopicName = "examplePartnerTopic1";
             ResourceIdentifier partnerTopicResourceId = PartnerTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, partnerTopicName);

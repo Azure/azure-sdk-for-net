@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers
-    /// Serialized Name: TimeGrainType
-    /// </summary>
+    /// <summary> The time covered by a budget. Tracking of the amount will be reset based on the time grain. BillingMonth, BillingQuarter, and BillingAnnual are only supported by WD customers. </summary>
     public readonly partial struct BudgetTimeGrainType : IEquatable<BudgetTimeGrainType>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.Consumption.Models
         private const string BillingQuarterValue = "BillingQuarter";
         private const string BillingAnnualValue = "BillingAnnual";
 
-        /// <summary>
-        /// Monthly
-        /// Serialized Name: TimeGrainType.Monthly
-        /// </summary>
+        /// <summary> Monthly. </summary>
         public static BudgetTimeGrainType Monthly { get; } = new BudgetTimeGrainType(MonthlyValue);
-        /// <summary>
-        /// Quarterly
-        /// Serialized Name: TimeGrainType.Quarterly
-        /// </summary>
+        /// <summary> Quarterly. </summary>
         public static BudgetTimeGrainType Quarterly { get; } = new BudgetTimeGrainType(QuarterlyValue);
-        /// <summary>
-        /// Annually
-        /// Serialized Name: TimeGrainType.Annually
-        /// </summary>
+        /// <summary> Annually. </summary>
         public static BudgetTimeGrainType Annually { get; } = new BudgetTimeGrainType(AnnuallyValue);
-        /// <summary>
-        /// BillingMonth
-        /// Serialized Name: TimeGrainType.BillingMonth
-        /// </summary>
+        /// <summary> BillingMonth. </summary>
         public static BudgetTimeGrainType BillingMonth { get; } = new BudgetTimeGrainType(BillingMonthValue);
-        /// <summary>
-        /// BillingQuarter
-        /// Serialized Name: TimeGrainType.BillingQuarter
-        /// </summary>
+        /// <summary> BillingQuarter. </summary>
         public static BudgetTimeGrainType BillingQuarter { get; } = new BudgetTimeGrainType(BillingQuarterValue);
-        /// <summary>
-        /// BillingAnnual
-        /// Serialized Name: TimeGrainType.BillingAnnual
-        /// </summary>
+        /// <summary> BillingAnnual. </summary>
         public static BudgetTimeGrainType BillingAnnual { get; } = new BudgetTimeGrainType(BillingAnnualValue);
         /// <summary> Determines if two <see cref="BudgetTimeGrainType"/> values are the same. </summary>
         public static bool operator ==(BudgetTimeGrainType left, BudgetTimeGrainType right) => left.Equals(right);
@@ -77,7 +56,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

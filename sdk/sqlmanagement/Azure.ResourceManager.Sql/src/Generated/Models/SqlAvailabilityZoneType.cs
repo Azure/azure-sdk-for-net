@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Specifies the availability zone the database is pinned to. </summary>
+    /// <summary> Specifies the availability zone the pool's primary replica is pinned to. </summary>
     public readonly partial struct SqlAvailabilityZoneType : IEquatable<SqlAvailabilityZoneType>
     {
         private readonly string _value;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

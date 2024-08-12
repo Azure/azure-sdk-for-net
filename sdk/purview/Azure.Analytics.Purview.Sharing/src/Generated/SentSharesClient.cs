@@ -7,7 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSentShareAsync(string sentShareId, RequestContext context = null)
+        public virtual async Task<Response> GetSentShareAsync(string sentShareId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShare(string,RequestContext)']/*" />
-        public virtual Response GetSentShare(string sentShareId, RequestContext context = null)
+        public virtual Response GetSentShare(string sentShareId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
@@ -148,7 +148,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareInvitationAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        public virtual async Task<Response> GetSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
@@ -185,7 +185,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetSentShareInvitation(string,string,RequestContext)']/*" />
-        public virtual Response GetSentShareInvitation(string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        public virtual Response GetSentShareInvitation(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
@@ -294,14 +294,13 @@ namespace Azure.Analytics.Purview.Sharing
         /// </summary>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="sentShareInvitationId"> Id of the sent share invitation. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserSentShareInvitationAsync(string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> NotifyUserSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserSentShareInvitationAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> NotifyUserSentShareInvitationAsync(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
@@ -310,7 +309,7 @@ namespace Azure.Analytics.Purview.Sharing
             scope.Start();
             try
             {
-                using HttpMessage message = CreateNotifyUserSentShareInvitationRequest(sentShareId, sentShareInvitationId, repeatabilityRequestId, context);
+                using HttpMessage message = CreateNotifyUserSentShareInvitationRequest(sentShareId, sentShareInvitationId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -332,14 +331,13 @@ namespace Azure.Analytics.Purview.Sharing
         /// </summary>
         /// <param name="sentShareId"> Id of the sent share. </param>
         /// <param name="sentShareInvitationId"> Id of the sent share invitation. </param>
-        /// <param name="repeatabilityRequestId"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated, globally unique for all time, identifier for the request. It is recommended to use version 4 (random) UUIDs. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sentShareId"/> or <paramref name="sentShareInvitationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserSentShareInvitation(string,string,string,RequestContext)']/*" />
-        public virtual Response NotifyUserSentShareInvitation(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId = null, RequestContext context = null)
+        /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='NotifyUserSentShareInvitation(string,string,RequestContext)']/*" />
+        public virtual Response NotifyUserSentShareInvitation(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
@@ -348,7 +346,7 @@ namespace Azure.Analytics.Purview.Sharing
             scope.Start();
             try
             {
-                using HttpMessage message = CreateNotifyUserSentShareInvitationRequest(sentShareId, sentShareInvitationId, repeatabilityRequestId, context);
+                using HttpMessage message = CreateNotifyUserSentShareInvitationRequest(sentShareId, sentShareInvitationId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -376,13 +374,13 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentSharesAsync(string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllSentSharesAsync(string referenceName, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllSentSharesAsync(string referenceName, string filter, string orderby, RequestContext context)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentSharesRequest(referenceName, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentSharesNextPageRequest(nextLink, referenceName, filter, orderby, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShares", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShares", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -403,13 +401,13 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentShares(string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllSentShares(string referenceName, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllSentShares(string referenceName, string filter, string orderby, RequestContext context)
         {
             Argument.AssertNotNull(referenceName, nameof(referenceName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentSharesRequest(referenceName, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentSharesNextPageRequest(nextLink, referenceName, filter, orderby, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShares", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShares", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -431,13 +429,13 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentShareInvitationsAsync(string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetAllSentShareInvitationsAsync(string sentShareId, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetAllSentShareInvitationsAsync(string sentShareId, string filter, string orderby, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentShareInvitationsRequest(sentShareId, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentShareInvitationsNextPageRequest(nextLink, sentShareId, filter, orderby, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShareInvitations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShareInvitations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -459,13 +457,13 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='GetAllSentShareInvitations(string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetAllSentShareInvitations(string sentShareId, string filter = null, string orderby = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetAllSentShareInvitations(string sentShareId, string filter, string orderby, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllSentShareInvitationsRequest(sentShareId, filter, orderby, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllSentShareInvitationsNextPageRequest(nextLink, sentShareId, filter, orderby, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShareInvitations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "SentSharesClient.GetAllSentShareInvitations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -562,7 +560,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareAsync(WaitUntil,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> DeleteSentShareAsync(WaitUntil waitUntil, string sentShareId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteSentShareAsync(WaitUntil waitUntil, string sentShareId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
@@ -598,7 +596,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShare(WaitUntil,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> DeleteSentShare(WaitUntil waitUntil, string sentShareId, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteSentShare(WaitUntil waitUntil, string sentShareId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
 
@@ -635,7 +633,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareInvitationAsync(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> DeleteSentShareInvitationAsync(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> DeleteSentShareInvitationAsync(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
@@ -673,7 +671,7 @@ namespace Azure.Analytics.Purview.Sharing
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/SentSharesClient.xml" path="doc/members/member[@name='DeleteSentShareInvitation(WaitUntil,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> DeleteSentShareInvitation(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context = null)
+        public virtual Operation<BinaryData> DeleteSentShareInvitation(WaitUntil waitUntil, string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sentShareId, nameof(sentShareId));
             Argument.AssertNotNullOrEmpty(sentShareInvitationId, nameof(sentShareInvitationId));
@@ -839,7 +837,7 @@ namespace Azure.Analytics.Purview.Sharing
             return message;
         }
 
-        internal HttpMessage CreateNotifyUserSentShareInvitationRequest(string sentShareId, string sentShareInvitationId, string repeatabilityRequestId, RequestContext context)
+        internal HttpMessage CreateNotifyUserSentShareInvitationRequest(string sentShareId, string sentShareInvitationId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -853,11 +851,8 @@ namespace Azure.Analytics.Purview.Sharing
             uri.AppendPath(":notify", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestId != null)
-            {
-                request.Headers.Add("repeatability-request-id", repeatabilityRequestId);
-            }
             request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("repeatability-request-id", Guid.NewGuid());
             return message;
         }
 

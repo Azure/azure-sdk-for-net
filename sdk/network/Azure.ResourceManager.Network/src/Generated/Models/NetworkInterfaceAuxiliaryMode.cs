@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string NoneValue = "None";
         private const string MaxConnectionsValue = "MaxConnections";
         private const string FloatingValue = "Floating";
+        private const string AcceleratedConnectionsValue = "AcceleratedConnections";
 
         /// <summary> None. </summary>
         public static NetworkInterfaceAuxiliaryMode None { get; } = new NetworkInterfaceAuxiliaryMode(NoneValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkInterfaceAuxiliaryMode MaxConnections { get; } = new NetworkInterfaceAuxiliaryMode(MaxConnectionsValue);
         /// <summary> Floating. </summary>
         public static NetworkInterfaceAuxiliaryMode Floating { get; } = new NetworkInterfaceAuxiliaryMode(FloatingValue);
+        /// <summary> AcceleratedConnections. </summary>
+        public static NetworkInterfaceAuxiliaryMode AcceleratedConnections { get; } = new NetworkInterfaceAuxiliaryMode(AcceleratedConnectionsValue);
         /// <summary> Determines if two <see cref="NetworkInterfaceAuxiliaryMode"/> values are the same. </summary>
         public static bool operator ==(NetworkInterfaceAuxiliaryMode left, NetworkInterfaceAuxiliaryMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkInterfaceAuxiliaryMode"/> values are not the same. </summary>
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

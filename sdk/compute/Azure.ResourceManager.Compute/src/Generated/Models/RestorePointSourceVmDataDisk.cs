@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a data disk. </summary>
     public partial class RestorePointSourceVmDataDisk
     {
-        /// <summary> Initializes a new instance of RestorePointSourceVmDataDisk. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmDataDisk"/>. </summary>
         public RestorePointSourceVmDataDisk()
         {
         }
 
-        /// <summary> Initializes a new instance of RestorePointSourceVmDataDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmDataDisk"/>. </summary>
         /// <param name="lun"> Gets the logical unit number. </param>
         /// <param name="name"> Gets the disk name. </param>
         /// <param name="caching"> Gets the caching type. </param>
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="managedDisk"> Contains the managed disk details. </param>
         /// <param name="diskRestorePoint"> Contains Disk Restore Point properties. </param>
         /// <param name="writeAcceleratorEnabled"> Shows true if the disk is write-accelerator enabled. </param>
-        internal RestorePointSourceVmDataDisk(int? lun, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePointSourceVmDataDisk(int? lun, string name, CachingType? caching, int? diskSizeGB, VirtualMachineManagedDisk managedDisk, DiskRestorePointAttributes diskRestorePoint, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Lun = lun;
             Name = name;
@@ -32,6 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
             ManagedDisk = managedDisk;
             DiskRestorePoint = diskRestorePoint;
             WriteAcceleratorEnabled = writeAcceleratorEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the logical unit number. </summary>

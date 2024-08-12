@@ -9,22 +9,24 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A Class representing an AutomanageHciClusterConfigurationProfileAssignment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageHciClusterConfigurationProfileAssignmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetAutomanageHciClusterConfigurationProfileAssignment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomanageHciClusterConfigurationProfileAssignmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetAutomanageHciClusterConfigurationProfileAssignment method.
     /// </summary>
     public partial class AutomanageHciClusterConfigurationProfileAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="configurationProfileAssignmentName"> The configurationProfileAssignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string configurationProfileAssignmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Automanage
         private readonly ConfigurationProfileHCIAssignmentsRestOperations _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient;
         private readonly AutomanageConfigurationProfileAssignmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments";
+
         /// <summary> Initializes a new instance of the <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> class for mocking. </summary>
         protected AutomanageHciClusterConfigurationProfileAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomanageHciClusterConfigurationProfileAssignmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomanageHciClusterConfigurationProfileAssignmentResource(ArmClient client, AutomanageConfigurationProfileAssignmentData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Automanage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +92,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageHciClusterConfigurationProfileAssignmentReportResources and their operations over a AutomanageHciClusterConfigurationProfileAssignmentReportResource. </returns>
         public virtual AutomanageHciClusterConfigurationProfileAssignmentReportCollection GetAutomanageHciClusterConfigurationProfileAssignmentReports()
         {
-            return GetCachedClient(Client => new AutomanageHciClusterConfigurationProfileAssignmentReportCollection(Client, Id));
+            return GetCachedClient(client => new AutomanageHciClusterConfigurationProfileAssignmentReportCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +106,20 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>HCIReports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> The report name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomanageHciClusterConfigurationProfileAssignmentReportResource>> GetAutomanageHciClusterConfigurationProfileAssignmentReportAsync(string reportName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +137,20 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>HCIReports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> The report name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomanageHciClusterConfigurationProfileAssignmentReportResource> GetAutomanageHciClusterConfigurationProfileAssignmentReport(string reportName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +167,14 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCIAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +208,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCIAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -214,6 +248,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCIAssignments_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -225,7 +267,9 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = await _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation(response);
+                var uri = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -248,6 +292,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCIAssignments_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -259,7 +311,9 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AutomanageArmOperation(response);
+                var uri = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -282,6 +336,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCIAssignments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -297,7 +359,9 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = await _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomanageArmOperation<AutomanageHciClusterConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation<AutomanageHciClusterConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -320,6 +384,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCIAssignments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -335,7 +407,9 @@ namespace Azure.ResourceManager.Automanage
             try
             {
                 var response = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AutomanageArmOperation<AutomanageHciClusterConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _automanageHciClusterConfigurationProfileAssignmentConfigurationProfileHCIAssignmentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomanageArmOperation<AutomanageHciClusterConfigurationProfileAssignmentResource>(Response.FromValue(new AutomanageHciClusterConfigurationProfileAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

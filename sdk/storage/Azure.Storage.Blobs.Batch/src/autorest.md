@@ -90,7 +90,6 @@ directive:
   where: $.parameters
   transform: >
     delete $.Snapshot["x-ms-parameter-location"];
-    delete $.VersionId["x-ms-parameter-location"];
 ```
 
 ### Make Blob a constructor parameter

@@ -1,6 +1,6 @@
 # Release History
 
-## 5.2.0-beta.1 (Unreleased)
+## 5.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.3.1 (2024-07-17)
+
+### Bugs Fixed
+- Rely on PeekMessagesAsync when calculating message queue length
+- Fixing target base scale instance concurrency for queues
+- When grabbing Queue Metrics for amount of messages, will now use the QueueTriggerMetrics.QueueLength instead of the ApproximateMessagesCount for less stale metrics.
+
+## 5.3.0 (2024-04-18)
+- Includes all features from 5.3.0-beta.1.
+- Bumped Azure.Identity dependency to 1.11.1 to resolve secruity vulnerability.
+
+## 5.3.0-beta.1 (2024-04-15)
+- When binding to a CancellationToken, the token will no longer be signaled when in Drain Mode. To detect if the function app is in Drain Mode, use dependency injection to inject the IDrainModeManager, and check the IsDrainModeEnabled property.
+
+## 5.2.1 (2023-12-12)
+- This release contains bug fixes to improve quality.
+
+## 5.2.0 (2023-09-25)
+- This release contains bug fixes to improve quality.
+
+## 5.1.3 (2023-06-26)
+- Trigger binding support for ParameterBindingData reference type
 
 ## 5.1.2 (2023-04-27)
 - Bumped Azure.Storage.Queue depedency to 12.14.0

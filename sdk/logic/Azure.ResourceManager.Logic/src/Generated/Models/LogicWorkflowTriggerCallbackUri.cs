@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,20 +14,53 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The workflow trigger callback URL. </summary>
     public partial class LogicWorkflowTriggerCallbackUri
     {
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerCallbackUri. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerCallbackUri"/>. </summary>
         internal LogicWorkflowTriggerCallbackUri()
         {
             RelativePathParameters = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of LogicWorkflowTriggerCallbackUri. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicWorkflowTriggerCallbackUri"/>. </summary>
         /// <param name="value"> Gets the workflow trigger callback URL. </param>
         /// <param name="method"> Gets the workflow trigger callback URL HTTP method. </param>
         /// <param name="basePath"> Gets the workflow trigger callback URL base path. </param>
         /// <param name="relativePath"> Gets the workflow trigger callback URL relative path. </param>
         /// <param name="relativePathParameters"> Gets the workflow trigger callback URL relative path parameters. </param>
         /// <param name="queries"> Gets the workflow trigger callback URL query parameters. </param>
-        internal LogicWorkflowTriggerCallbackUri(string value, RequestMethod? method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, LogicWorkflowTriggerCallbackQueryParameterInfo queries)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogicWorkflowTriggerCallbackUri(string value, RequestMethod? method, string basePath, string relativePath, IReadOnlyList<string> relativePathParameters, LogicWorkflowTriggerCallbackQueryParameterInfo queries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Method = method;
@@ -34,6 +68,7 @@ namespace Azure.ResourceManager.Logic.Models
             RelativePath = relativePath;
             RelativePathParameters = relativePathParameters;
             Queries = queries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the workflow trigger callback URL. </summary>

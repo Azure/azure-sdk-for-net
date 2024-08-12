@@ -73,7 +73,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -114,8 +114,8 @@ blob.Upload(filePath);
 // Get a temporary path on disk where we can download the file
 string downloadPath = "hello.jpg";
 
-// Download the public blob at https://aka.ms/bloburl
-new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadTo(downloadPath);
+// Download the public MacBeth copy at https://www.gutenberg.org/cache/epub/1533/pg1533.txt
+new BlobClient(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.txt")).DownloadTo(downloadPath);
 ```
 
 ### Enumerating blobs
@@ -149,8 +149,8 @@ We fully support both synchronous and asynchronous APIs.
 // Get a temporary path on disk where we can download the file
 string downloadPath = "hello.jpg";
 
-// Download the public blob at https://aka.ms/bloburl
-await new BlobClient(new Uri("https://aka.ms/bloburl")).DownloadToAsync(downloadPath);
+// Download the public MacBeth copy at https://www.gutenberg.org/cache/epub/1533/pg1533.txt
+await new BlobClient(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.txt")).DownloadToAsync(downloadPath);
 ```
 
 ## Troubleshooting

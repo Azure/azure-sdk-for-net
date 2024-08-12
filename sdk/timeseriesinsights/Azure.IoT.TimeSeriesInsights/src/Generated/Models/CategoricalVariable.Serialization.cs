@@ -52,11 +52,11 @@ namespace Azure.IoT.TimeSeriesInsights
                 return null;
             }
             TimeSeriesExpression value = default;
-            Optional<TimeSeriesInterpolation> interpolation = default;
-            Optional<IList<TimeSeriesAggregateCategory>> categories = default;
+            TimeSeriesInterpolation interpolation = default;
+            IList<TimeSeriesAggregateCategory> categories = default;
             TimeSeriesDefaultCategory defaultCategory = default;
             string kind = default;
-            Optional<TimeSeriesExpression> filter = default;
+            TimeSeriesExpression filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -107,7 +107,29 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new CategoricalVariable(kind, filter.Value, value, interpolation.Value, Optional.ToList(categories), defaultCategory);
+            return new CategoricalVariable(
+                kind,
+                filter,
+                value,
+                interpolation,
+                categories ?? new ChangeTrackingList<TimeSeriesAggregateCategory>(),
+                defaultCategory);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CategoricalVariable FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCategoricalVariable(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

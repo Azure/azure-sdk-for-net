@@ -6,16 +6,62 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningUriFileJobOutput : IUtf8JsonSerializable
+    public partial class MachineLearningUriFileJobOutput : IUtf8JsonSerializable, IJsonModel<MachineLearningUriFileJobOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningUriFileJobOutput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MachineLearningUriFileJobOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningUriFileJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningUriFileJobOutput)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (Optional.IsDefined(AssetName))
+            {
+                if (AssetName != null)
+                {
+                    writer.WritePropertyName("assetName"u8);
+                    writer.WriteStringValue(AssetName);
+                }
+                else
+                {
+                    writer.WriteNull("assetName");
+                }
+            }
+            if (Optional.IsDefined(AssetVersion))
+            {
+                if (AssetVersion != null)
+                {
+                    writer.WritePropertyName("assetVersion"u8);
+                    writer.WriteStringValue(AssetVersion);
+                }
+                else
+                {
+                    writer.WriteNull("assetVersion");
+                }
+            }
+            if (Optional.IsDefined(AutoDeleteSetting))
+            {
+                if (AutoDeleteSetting != null)
+                {
+                    writer.WritePropertyName("autoDeleteSetting"u8);
+                    writer.WriteObjectValue(AutoDeleteSetting, options);
+                }
+                else
+                {
+                    writer.WriteNull("autoDeleteSetting");
+                }
+            }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -47,21 +93,85 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobOutputType"u8);
             writer.WriteStringValue(JobOutputType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningUriFileJobOutput DeserializeMachineLearningUriFileJobOutput(JsonElement element)
+        MachineLearningUriFileJobOutput IJsonModel<MachineLearningUriFileJobOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningUriFileJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningUriFileJobOutput)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningUriFileJobOutput(document.RootElement, options);
+        }
+
+        internal static MachineLearningUriFileJobOutput DeserializeMachineLearningUriFileJobOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MachineLearningOutputDeliveryMode> mode = default;
-            Optional<Uri> uri = default;
-            Optional<string> description = default;
+            string assetName = default;
+            string assetVersion = default;
+            AutoDeleteSetting autoDeleteSetting = default;
+            MachineLearningOutputDeliveryMode? mode = default;
+            Uri uri = default;
+            string description = default;
             JobOutputType jobOutputType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("assetName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        assetName = null;
+                        continue;
+                    }
+                    assetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("assetVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        assetVersion = null;
+                        continue;
+                    }
+                    assetVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("autoDeleteSetting"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        autoDeleteSetting = null;
+                        continue;
+                    }
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -96,8 +206,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     jobOutputType = new JobOutputType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningUriFileJobOutput(description.Value, jobOutputType, Optional.ToNullable(mode), uri.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningUriFileJobOutput(
+                description,
+                jobOutputType,
+                serializedAdditionalRawData,
+                assetName,
+                assetVersion,
+                autoDeleteSetting,
+                mode,
+                uri);
         }
+
+        BinaryData IPersistableModel<MachineLearningUriFileJobOutput>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningUriFileJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningUriFileJobOutput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningUriFileJobOutput IPersistableModel<MachineLearningUriFileJobOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningUriFileJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningUriFileJobOutput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningUriFileJobOutput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningUriFileJobOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

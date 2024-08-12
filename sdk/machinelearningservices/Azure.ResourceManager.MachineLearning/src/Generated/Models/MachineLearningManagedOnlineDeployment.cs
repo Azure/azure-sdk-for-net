@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,19 +13,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Properties specific to a ManagedOnlineDeployment. </summary>
     public partial class MachineLearningManagedOnlineDeployment : MachineLearningOnlineDeploymentProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningManagedOnlineDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningManagedOnlineDeployment"/>. </summary>
         public MachineLearningManagedOnlineDeployment()
         {
             EndpointComputeType = MachineLearningEndpointComputeType.Managed;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningManagedOnlineDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningManagedOnlineDeployment"/>. </summary>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
         /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
+        /// <param name="environmentId"> ARM resource ID of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="appInsightsEnabled"> If true, enables Application Insights logging. </param>
+        /// <param name="dataCollector"> The mdc configuration, we disable mdc when it's null. </param>
         /// <param name="egressPublicNetworkAccess"> If Enabled, allow egress public network access. If Disabled, this will create secure egress. Default: Enabled. </param>
         /// <param name="endpointComputeType"> [Required] The compute type of the endpoint. </param>
         /// <param name="instanceType"> Compute instance type. </param>
@@ -42,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MachineLearningOnlineScaleSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
         /// </param>
-        internal MachineLearningManagedOnlineDeployment(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, bool? appInsightsEnabled, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess, MachineLearningEndpointComputeType endpointComputeType, string instanceType, MachineLearningProbeSettings livenessProbe, string model, string modelMountPath, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningProbeSettings readinessProbe, MachineLearningOnlineRequestSettings requestSettings, MachineLearningOnlineScaleSettings scaleSettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties, appInsightsEnabled, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings)
+        internal MachineLearningManagedOnlineDeployment(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? appInsightsEnabled, DataCollector dataCollector, MachineLearningEgressPublicNetworkAccessType? egressPublicNetworkAccess, MachineLearningEndpointComputeType endpointComputeType, string instanceType, MachineLearningProbeSettings livenessProbe, string model, string modelMountPath, MachineLearningDeploymentProvisioningState? provisioningState, MachineLearningProbeSettings readinessProbe, MachineLearningOnlineRequestSettings requestSettings, MachineLearningOnlineScaleSettings scaleSettings) : base(codeConfiguration, description, environmentId, environmentVariables, properties, serializedAdditionalRawData, appInsightsEnabled, dataCollector, egressPublicNetworkAccess, endpointComputeType, instanceType, livenessProbe, model, modelMountPath, provisioningState, readinessProbe, requestSettings, scaleSettings)
         {
             EndpointComputeType = endpointComputeType;
         }

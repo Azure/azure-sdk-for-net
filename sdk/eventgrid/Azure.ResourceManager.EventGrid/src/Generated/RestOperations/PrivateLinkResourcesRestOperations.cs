@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventGrid.Models;
@@ -33,8 +32,26 @@ namespace Azure.ResourceManager.EventGrid
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-15";
+            _apiVersion = apiVersion ?? "2024-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, ParentType parentType, string parentName, string privateLinkResourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/", false);
+            uri.AppendPath(parentType.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(parentName, true);
+            uri.AppendPath("/privateLinkResources/", false);
+            uri.AppendPath(privateLinkResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, ParentType parentType, string parentName, string privateLinkResourceName)
@@ -64,9 +81,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Get properties of a private link resource. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
-        /// <param name="parentType"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\'. </param>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
-        /// <param name="privateLinkResourceName"> The name of private link resource. </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -98,9 +115,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Get properties of a private link resource. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
-        /// <param name="parentType"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\'. </param>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
-        /// <param name="privateLinkResourceName"> The name of private link resource. </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name or namespace name). </param>
+        /// <param name="privateLinkResourceName"> The name of private link resource will be either topic, domain, partnerNamespace or namespace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -127,6 +144,31 @@ namespace Azure.ResourceManager.EventGrid
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceRequestUri(string subscriptionId, string resourceGroupName, ParentType parentType, string parentName, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.EventGrid/", false);
+            uri.AppendPath(parentType.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(parentName, true);
+            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceRequest(string subscriptionId, string resourceGroupName, ParentType parentType, string parentName, string filter, int? top)
@@ -160,11 +202,11 @@ namespace Azure.ResourceManager.EventGrid
             return message;
         }
 
-        /// <summary> List all the private link resources under a topic, domain, or partner namespace. </summary>
+        /// <summary> List all the private link resources under a topic, domain, or partner namespace or namespace. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
-        /// <param name="parentType"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\'. </param>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace or namespace name). </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -192,11 +234,11 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        /// <summary> List all the private link resources under a topic, domain, or partner namespace. </summary>
+        /// <summary> List all the private link resources under a topic, domain, or partner namespace or namespace. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
-        /// <param name="parentType"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\'. </param>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace or namespace name). </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -224,6 +266,14 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        internal RequestUriBuilder CreateListByResourceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, ParentType parentType, string parentName, string filter, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, ParentType parentType, string parentName, string filter, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -238,12 +288,12 @@ namespace Azure.ResourceManager.EventGrid
             return message;
         }
 
-        /// <summary> List all the private link resources under a topic, domain, or partner namespace. </summary>
+        /// <summary> List all the private link resources under a topic, domain, or partner namespace or namespace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
-        /// <param name="parentType"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\'. </param>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace or namespace name). </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -272,12 +322,12 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
-        /// <summary> List all the private link resources under a topic, domain, or partner namespace. </summary>
+        /// <summary> List all the private link resources under a topic, domain, or partner namespace or namespace. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
-        /// <param name="parentType"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\'. </param>
-        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace name). </param>
+        /// <param name="parentType"> The type of the parent resource. This can be either \'topics\', \'domains\', or \'partnerNamespaces\' or \'namespaces\'. </param>
+        /// <param name="parentName"> The name of the parent resource (namely, either, the topic name, domain name, or partner namespace or namespace name). </param>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

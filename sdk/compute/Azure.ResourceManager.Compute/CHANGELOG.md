@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,78 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2024-05-10)
+
+### Features Added
+
+- Updated the CRP api-version from 'package-2023-09-01' to the newer 'package-2024-03-01'. This is for the latest Compute RP release (VM, VMSS, etc).
+
+## 1.5.0-beta.1 (2024-04-25)
+
+### Features Added
+
+- Support long-running operation rehydration.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.11.1.
+
+## 1.4.0 (2024-02-21)
+
+### Features Added
+
+- Added a new property 'virtualMachineId' to the 'GalleryArtifactVersionFullSource'.
+- Updated the api-version tag from 'package-2023-10-02' to the newer 'package-2023-07-03'. This is for the latest Gallery RP release (Galleries, CommunityGalleries, etc).
+
+## 1.4.0-beta.1 (2024-01-26)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-09-01' to 'package-2023-10-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ce47f9b775ec53750f37def0402ecacf3f1d661b/specification/compute/resource-manager/readme.md.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.0.
+
+## 1.3.0 (2023-12-29)
+
+### Features Added
+
+- Compute RP to `2023-09-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
+
+## 1.2.1 (2023-11-21)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.2.0 (2023-09-15)
+
+### Features Added
+
+- Compute RP to `2023-03-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
+  - Added new parameter `DomainNameLabelScope` to VM and VMSS Public IP Dns Settings.
+  - Added new parameter `TimeCreated` to VMSS VM properties.
+  - Added new parameters `AuxiliaryMode` and `AuxiliarySku` to VM and VMSS Network Configuration Properties.
+
+## 1.2.0-beta.3 (2023-08-14)
+
+### Features Added
+
+- Make `ComputeArmClientMockingExtension`, `ComputeResourceGroupMockingExtension`, `ComputeSubscriptionMockingExtension` public for mocking the extension methods.
+
+## 1.2.0-beta.2 (2023-07-28)
+
+### Features Added
+
+- Disk RP to `2023-01-02`
+    - Added new property class `DiskImageFileFormat` to `GrantAccessData` class
 
 ## 1.2.0-beta.1 (2023-06-01)
 

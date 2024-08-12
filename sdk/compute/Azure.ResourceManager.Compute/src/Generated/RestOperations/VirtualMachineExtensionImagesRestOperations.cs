@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -33,8 +32,26 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01";
+            _apiVersion = apiVersion ?? "2024-03-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string publisherName, string type, string version)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmextension/types/", false);
+            uri.AppendPath(type, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string publisherName, string type, string version)
@@ -64,9 +81,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a virtual machine extension image. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> The String to use. </param>
-        /// <param name="type"> The String to use. </param>
-        /// <param name="version"> The String to use. </param>
+        /// <param name="publisherName"> The <see cref="string"/> to use. </param>
+        /// <param name="type"> The <see cref="string"/> to use. </param>
+        /// <param name="version"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
@@ -98,9 +115,9 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a virtual machine extension image. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> The String to use. </param>
-        /// <param name="type"> The String to use. </param>
-        /// <param name="version"> The String to use. </param>
+        /// <param name="publisherName"> The <see cref="string"/> to use. </param>
+        /// <param name="type"> The <see cref="string"/> to use. </param>
+        /// <param name="version"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/>, <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
@@ -129,6 +146,21 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateListTypesRequestUri(string subscriptionId, AzureLocation location, string publisherName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmextension/types", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListTypesRequest(string subscriptionId, AzureLocation location, string publisherName)
         {
             var message = _pipeline.CreateMessage();
@@ -153,7 +185,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of virtual machine extension image types. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> The String to use. </param>
+        /// <param name="publisherName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -186,7 +218,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of virtual machine extension image types. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> The String to use. </param>
+        /// <param name="publisherName"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="publisherName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -214,6 +246,35 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListVersionsRequestUri(string subscriptionId, AzureLocation location, string publisherName, string type, string filter, int? top, string orderby)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/publishers/", false);
+            uri.AppendPath(publisherName, true);
+            uri.AppendPath("/artifacttypes/vmextension/types/", false);
+            uri.AppendPath(type, true);
+            uri.AppendPath("/versions", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListVersionsRequest(string subscriptionId, AzureLocation location, string publisherName, string type, string filter, int? top, string orderby)
@@ -254,11 +315,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of virtual machine extension image versions. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> The String to use. </param>
-        /// <param name="type"> The String to use. </param>
+        /// <param name="publisherName"> The <see cref="string"/> to use. </param>
+        /// <param name="type"> The <see cref="string"/> to use. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="top"> The Integer to use. </param>
-        /// <param name="orderby"> The String to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
+        /// <param name="orderby"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/> or <paramref name="type"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/> or <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
@@ -292,11 +353,11 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets a list of virtual machine extension image versions. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The name of a supported Azure region. </param>
-        /// <param name="publisherName"> The String to use. </param>
-        /// <param name="type"> The String to use. </param>
+        /// <param name="publisherName"> The <see cref="string"/> to use. </param>
+        /// <param name="type"> The <see cref="string"/> to use. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="top"> The Integer to use. </param>
-        /// <param name="orderby"> The String to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
+        /// <param name="orderby"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/> or <paramref name="type"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisherName"/> or <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>

@@ -32,7 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.1"/>
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />

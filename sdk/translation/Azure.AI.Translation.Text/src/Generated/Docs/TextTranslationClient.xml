@@ -1,53 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetLanguagesAsync(string,string,string,string,CancellationToken)">
+    <member name="GetSupportedLanguagesAsync(string,string,string,ETag?,CancellationToken)">
+      <example>
+This sample shows how to call GetSupportedLanguagesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync();
+]]></code>
+This sample shows how to call GetSupportedLanguagesAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response<GetSupportedLanguagesResult> response = await client.GetSupportedLanguagesAsync(clientTraceId: "<clientTraceId>", scope: "<scope>", acceptLanguage: "<acceptLanguage>", ifNoneMatch: new ETag("<ifNoneMatch>"));
+]]></code></example>
     </member>
-    <member name="GetLanguages(string,string,string,string,CancellationToken)">
+    <member name="GetSupportedLanguages(string,string,string,ETag?,CancellationToken)">
+      <example>
+This sample shows how to call GetSupportedLanguages.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages();
+]]></code>
+This sample shows how to call GetSupportedLanguages with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages(clientTraceId: "<clientTraceId>", scope: "<scope>", acceptLanguage: "<acceptLanguage>", ifNoneMatch: new ETag("<ifNoneMatch>"));
+]]></code></example>
     </member>
-    <member name="GetLanguagesAsync(string,string,string,ETag?,RequestContext)">
+    <member name="GetSupportedLanguagesAsync(string,string,string,ETag?,RequestContext)">
+      <example>
+This sample shows how to call GetSupportedLanguagesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response response = await client.GetSupportedLanguagesAsync(null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSupportedLanguagesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response response = await client.GetSupportedLanguagesAsync("<clientTraceId>", "<scope>", "<acceptLanguage>", new ETag("<ifNoneMatch>"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("translation").GetProperty("<key>").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("translation").GetProperty("<key>").GetProperty("nativeName").ToString());
+Console.WriteLine(result.GetProperty("translation").GetProperty("<key>").GetProperty("dir").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("nativeName").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("nativeName").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("dir").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("nativeName").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("dir").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("nativeName").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("dir").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("nativeName").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("dir").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("code").ToString());
+]]></code></example>
     </member>
-    <member name="GetLanguages(string,string,string,ETag?,RequestContext)">
-    </member>
-    <member name="TranslateAsync(IEnumerable{string},object,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,CancellationToken)">
-    </member>
-    <member name="Translate(IEnumerable{string},object,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,CancellationToken)">
-    </member>
-    <member name="TranslateAsync(IEnumerable{string},RequestContent,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,RequestContext)">
-    </member>
-    <member name="Translate(IEnumerable{string},RequestContent,string,string,string,string,string,string,bool?,bool?,string,string,string,bool?,RequestContext)">
-    </member>
-    <member name="TransliterateAsync(string,string,string,object,string,CancellationToken)">
-    </member>
-    <member name="Transliterate(string,string,string,object,string,CancellationToken)">
-    </member>
-    <member name="TransliterateAsync(string,string,string,RequestContent,string,RequestContext)">
-    </member>
-    <member name="Transliterate(string,string,string,RequestContent,string,RequestContext)">
-    </member>
-    <member name="FindSentenceBoundariesAsync(object,string,string,string,CancellationToken)">
-    </member>
-    <member name="FindSentenceBoundaries(object,string,string,string,CancellationToken)">
-    </member>
-    <member name="FindSentenceBoundariesAsync(RequestContent,string,string,string,RequestContext)">
-    </member>
-    <member name="FindSentenceBoundaries(RequestContent,string,string,string,RequestContext)">
-    </member>
-    <member name="LookupDictionaryEntriesAsync(string,string,object,string,CancellationToken)">
-    </member>
-    <member name="LookupDictionaryEntries(string,string,object,string,CancellationToken)">
-    </member>
-    <member name="LookupDictionaryEntriesAsync(string,string,RequestContent,string,RequestContext)">
-    </member>
-    <member name="LookupDictionaryEntries(string,string,RequestContent,string,RequestContext)">
-    </member>
-    <member name="LookupDictionaryExamplesAsync(string,string,object,string,CancellationToken)">
-    </member>
-    <member name="LookupDictionaryExamples(string,string,object,string,CancellationToken)">
-    </member>
-    <member name="LookupDictionaryExamplesAsync(string,string,RequestContent,string,RequestContext)">
-    </member>
-    <member name="LookupDictionaryExamples(string,string,RequestContent,string,RequestContext)">
+    <member name="GetSupportedLanguages(string,string,string,ETag?,RequestContext)">
+      <example>
+This sample shows how to call GetSupportedLanguages and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response response = client.GetSupportedLanguages(null, null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSupportedLanguages with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response response = client.GetSupportedLanguages("<clientTraceId>", "<scope>", "<acceptLanguage>", new ETag("<ifNoneMatch>"), null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("translation").GetProperty("<key>").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("translation").GetProperty("<key>").GetProperty("nativeName").ToString());
+Console.WriteLine(result.GetProperty("translation").GetProperty("<key>").GetProperty("dir").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("nativeName").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("nativeName").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("toScripts")[0].GetProperty("dir").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("nativeName").ToString());
+Console.WriteLine(result.GetProperty("transliteration").GetProperty("<key>").GetProperty("scripts")[0].GetProperty("dir").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("nativeName").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("dir").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("nativeName").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("dir").ToString());
+Console.WriteLine(result.GetProperty("dictionary").GetProperty("<key>").GetProperty("translations")[0].GetProperty("code").ToString());
+]]></code></example>
     </member>
   </members>
 </doc>

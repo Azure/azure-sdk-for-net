@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -36,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics.Value);
+                writer.WriteObjectValue(Statistics);
             }
             writer.WriteEndObject();
         }
@@ -50,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<Entity> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entities"u8))
@@ -88,7 +87,23 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntitiesDocumentResult(id, warnings, Optional.ToNullable(statistics), entities);
+            return new EntitiesDocumentResult(id, warnings, statistics, entities);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new EntitiesDocumentResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEntitiesDocumentResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

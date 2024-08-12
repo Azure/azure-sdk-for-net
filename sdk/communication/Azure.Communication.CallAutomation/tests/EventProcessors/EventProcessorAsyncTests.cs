@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 && ev.GetType() == typeof(CallConnected));
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(null, CallConnectionId, ServerCallId, CorelationId));
 
             CallAutomationEventBase returnedBaseEvent = await baseEventTask;
 
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
 
             // Create and send event to event processor first
-            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(null, CallConnectionId, ServerCallId, CorelationId));
 
             // Wait for Event after
             CallAutomationEventBase returnedBaseEvent = await  handler.WaitForEventProcessorAsync(ev
@@ -79,7 +79,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             };
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
+            SendAndProcessEvent(handler, new CallConnected(null, CallConnectionId, ServerCallId, CorelationId));
 
             try
             {
@@ -108,7 +108,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 var task = handler.WaitForEventProcessorAsync(ev
                     => ev.CallConnectionId == CallConnectionId
                     && ev.GetType() == typeof(CallConnected));
-                SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
+                SendAndProcessEvent(handler, new CallConnected(null, CallConnectionId, ServerCallId, CorelationId));
 
                 // assert
                 CallAutomationEventBase returnedBaseEvent = await task;
@@ -133,7 +133,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Create and send multiple events to event processor AT ONCE
             for (int i = 0; i < eventsSent; i++)
             {
-                SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
+                SendAndProcessEvent(handler, new CallConnected(null, CallConnectionId, ServerCallId, CorelationId));
             }
 
             // Wait for event in sequence

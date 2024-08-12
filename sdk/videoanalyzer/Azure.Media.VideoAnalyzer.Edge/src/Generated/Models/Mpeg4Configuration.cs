@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Class representing the MPEG4 Configuration. </summary>
     public partial class Mpeg4Configuration
     {
-        /// <summary> Initializes a new instance of Mpeg4Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Mpeg4Configuration"/>. </summary>
         public Mpeg4Configuration()
         {
         }
 
-        /// <summary> Initializes a new instance of Mpeg4Configuration. </summary>
+        /// <summary> Initializes a new instance of <see cref="Mpeg4Configuration"/>. </summary>
         /// <param name="govLength"> Group of Video frames length. </param>
         /// <param name="profile"> The MPEG4 Profile. </param>
         internal Mpeg4Configuration(float? govLength, Mpeg4Profile? profile)

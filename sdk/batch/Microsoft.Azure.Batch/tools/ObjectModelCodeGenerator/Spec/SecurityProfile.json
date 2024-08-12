@@ -1,0 +1,46 @@
+{
+  "Name": "SecurityProfile",
+  "ProtocolName": "Models.SecurityProfile",
+  "SummaryComment": "Specifies the security profile settings for the virtual machine or virtual machine scale set.",
+  "Properties": [
+    {
+      "Key": {
+        "Type": "Common.SecurityTypes?",
+        "Name": "SecurityType",
+        "SummaryComment": "SpecifSpecifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "Models.SecurityTypes?",
+        "Name": "SecurityType"
+      }
+    },
+    {
+      "Key": {
+        "Type": "bool?",
+        "Name": "EncryptionAtHost",
+        "SummaryComment": "This property can be used by user in the request to enable or disable the Host Encryption for the virtual machine or virtual machine scale set. This will enable the encryption for all the disks including Resource/Temp disk at host itself.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "UefiSettings",
+        "Name": "UefiSettings",
+        "SummaryComment": "Specifies the security settings like secure boot and vTPM used while creating the virtual machine.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "Models.UefiSettings",
+        "Name": "UefiSettings"
+      }
+    }
+  ]
+}

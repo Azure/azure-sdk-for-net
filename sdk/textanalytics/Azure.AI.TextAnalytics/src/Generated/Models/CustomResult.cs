@@ -8,15 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The CustomResult. </summary>
     internal partial class CustomResult
     {
-        /// <summary> Initializes a new instance of CustomResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
@@ -32,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Models
             DeploymentName = deploymentName;
         }
 
-        /// <summary> Initializes a new instance of CustomResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="projectName"> This field indicates the project name for the model. </param>

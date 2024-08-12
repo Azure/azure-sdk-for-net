@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> A single automation scope. </summary>
     public partial class SecurityAutomationScope
     {
-        /// <summary> Initializes a new instance of SecurityAutomationScope. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationScope"/>. </summary>
         public SecurityAutomationScope()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityAutomationScope. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityAutomationScope"/>. </summary>
         /// <param name="description"> The resources scope description. </param>
         /// <param name="scopePath"> The resources scope path. Can be the subscription on which the automation is defined on or a resource group under that subscription (fully qualified Azure resource IDs). </param>
-        internal SecurityAutomationScope(string description, string scopePath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAutomationScope(string description, string scopePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             ScopePath = scopePath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resources scope description. </summary>

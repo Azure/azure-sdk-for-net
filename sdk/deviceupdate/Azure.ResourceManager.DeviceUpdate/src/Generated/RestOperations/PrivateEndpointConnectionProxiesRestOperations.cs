@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DeviceUpdate.Models;
@@ -33,8 +32,23 @@ namespace Azure.ResourceManager.DeviceUpdate
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01";
+            _apiVersion = apiVersion ?? "2023-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByAccountRequestUri(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DeviceUpdate/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/privateEndpointConnectionProxies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByAccountRequest(string subscriptionId, string resourceGroupName, string accountName)
@@ -116,7 +130,24 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, PrivateEndpointConnectionProxyData data)
+        internal RequestUriBuilder CreateValidateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointConnectionProxyData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DeviceUpdate/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/privateEndpointConnectionProxies/", false);
+            uri.AppendPath(privateEndpointConnectionProxyId, true);
+            uri.AppendPath("/validate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateValidateRequest(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointConnectionProxyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -137,7 +168,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -152,7 +183,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="privateEndpointConnectionProxyId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateAsync(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, PrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateAsync(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -180,7 +211,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="privateEndpointConnectionProxyId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Validate(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, PrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
+        public Response Validate(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -199,7 +230,24 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        internal HttpMessage CreateUpdatePrivateEndpointPropertiesRequest(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, PrivateEndpointUpdate privateEndpointUpdate)
+        internal RequestUriBuilder CreateUpdatePrivateEndpointPropertiesRequestUri(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointUpdate privateEndpointUpdate)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DeviceUpdate/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/privateEndpointConnectionProxies/", false);
+            uri.AppendPath(privateEndpointConnectionProxyId, true);
+            uri.AppendPath("/updatePrivateEndpointProperties", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateUpdatePrivateEndpointPropertiesRequest(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointUpdate privateEndpointUpdate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -220,7 +268,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(privateEndpointUpdate);
+            content.JsonWriter.WriteObjectValue(privateEndpointUpdate, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -235,7 +283,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="privateEndpointConnectionProxyId"/> or <paramref name="privateEndpointUpdate"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdatePrivateEndpointPropertiesAsync(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, PrivateEndpointUpdate privateEndpointUpdate, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdatePrivateEndpointPropertiesAsync(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointUpdate privateEndpointUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -263,7 +311,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="privateEndpointConnectionProxyId"/> or <paramref name="privateEndpointUpdate"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdatePrivateEndpointProperties(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, PrivateEndpointUpdate privateEndpointUpdate, CancellationToken cancellationToken = default)
+        public Response UpdatePrivateEndpointProperties(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointUpdate privateEndpointUpdate, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -280,6 +328,22 @@ namespace Azure.ResourceManager.DeviceUpdate
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DeviceUpdate/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/privateEndpointConnectionProxies/", false);
+            uri.AppendPath(privateEndpointConnectionProxyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId)
@@ -312,7 +376,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateEndpointConnectionProxyData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
+        public async Task<Response<DeviceUpdatePrivateEndpointConnectionProxyData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -325,13 +389,13 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionProxyData value = default;
+                        DeviceUpdatePrivateEndpointConnectionProxyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(document.RootElement);
+                        value = DeviceUpdatePrivateEndpointConnectionProxyData.DeserializeDeviceUpdatePrivateEndpointConnectionProxyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateEndpointConnectionProxyData)null, message.Response);
+                    return Response.FromValue((DeviceUpdatePrivateEndpointConnectionProxyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -345,7 +409,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="privateEndpointConnectionProxyId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateEndpointConnectionProxyData> Get(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
+        public Response<DeviceUpdatePrivateEndpointConnectionProxyData> Get(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -358,19 +422,35 @@ namespace Azure.ResourceManager.DeviceUpdate
             {
                 case 200:
                     {
-                        PrivateEndpointConnectionProxyData value = default;
+                        DeviceUpdatePrivateEndpointConnectionProxyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PrivateEndpointConnectionProxyData.DeserializePrivateEndpointConnectionProxyData(document.RootElement);
+                        value = DeviceUpdatePrivateEndpointConnectionProxyData.DeserializeDeviceUpdatePrivateEndpointConnectionProxyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PrivateEndpointConnectionProxyData)null, message.Response);
+                    return Response.FromValue((DeviceUpdatePrivateEndpointConnectionProxyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, PrivateEndpointConnectionProxyData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointConnectionProxyData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DeviceUpdate/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/privateEndpointConnectionProxies/", false);
+            uri.AppendPath(privateEndpointConnectionProxyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointConnectionProxyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -390,7 +470,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -405,7 +485,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="privateEndpointConnectionProxyId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, PrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -433,7 +513,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="privateEndpointConnectionProxyId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="privateEndpointConnectionProxyId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, PrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId, DeviceUpdatePrivateEndpointConnectionProxyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -450,6 +530,22 @@ namespace Azure.ResourceManager.DeviceUpdate
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DeviceUpdate/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/privateEndpointConnectionProxies/", false);
+            uri.AppendPath(privateEndpointConnectionProxyId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string privateEndpointConnectionProxyId)

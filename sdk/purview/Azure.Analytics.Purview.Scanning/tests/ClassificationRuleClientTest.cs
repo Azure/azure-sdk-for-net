@@ -41,7 +41,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                 },
                 ruleStatus = "Enabled"
             };
-            Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+            Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data), new());
             Assert.AreEqual(201, createResponse.Status);
             //Update (version 2 will be generated)
             data = new
@@ -61,7 +61,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                 },
                 ruleStatus = "Enabled"
             };
-            Response updateResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+            Response updateResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data), new());
             Assert.AreEqual(200, updateResponse.Status);
             //Get
             Response getResponse = await client.GetPropertiesAsync(new());
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             Response TagVersionResponse = await client.TagVersionAsync(2, "Keep", new());
             Assert.AreEqual(202, TagVersionResponse.Status);
             //Delete
-            Response deleteresponse = await client.DeleteAsync();
+            Response deleteresponse = await client.DeleteAsync(new());
             Assert.AreEqual(200, deleteresponse.Status);
         }
         private static BinaryData GetContentFromResponse(Response r)

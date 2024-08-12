@@ -46,7 +46,8 @@
             "name": "Repeatability-First-Sent",
             "in": "header",
             "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
-            "type": "string"
+            "type": "string",
+            "format": "date-time-rfc1123"
           }
         ],
         "responses": {
@@ -96,7 +97,8 @@
             "name": "Repeatability-First-Sent",
             "in": "header",
             "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
-            "type": "string"
+            "type": "string",
+            "format": "date-time-rfc1123"
           }
         ],
         "responses": {
@@ -146,7 +148,8 @@
             "name": "Repeatability-First-Sent",
             "in": "header",
             "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
-            "type": "string"
+            "type": "string",
+            "format": "date-time-rfc1123"
           }
         ],
         "responses": {
@@ -193,7 +196,8 @@
             "name": "Repeatability-First-Sent",
             "in": "header",
             "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
-            "type": "string"
+            "type": "string",
+            "format": "date-time-rfc1123"
           }
         ],
         "responses": {
@@ -302,7 +306,8 @@
             "name": "Repeatability-First-Sent",
             "in": "header",
             "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
-            "type": "string"
+            "type": "string",
+            "format": "date-time-rfc1123"
           }
         ],
         "responses": {
@@ -356,7 +361,8 @@
             "name": "Repeatability-First-Sent",
             "in": "header",
             "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
-            "type": "string"
+            "type": "string",
+            "format": "date-time-rfc1123"
           }
         ],
         "responses": {
@@ -562,7 +568,8 @@
             "name": "Repeatability-First-Sent",
             "in": "header",
             "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
-            "type": "string"
+            "type": "string",
+            "format": "date-time-rfc1123"
           }
         ],
         "responses": {
@@ -619,7 +626,8 @@
             "name": "Repeatability-First-Sent",
             "in": "header",
             "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
-            "type": "string"
+            "type": "string",
+            "format": "date-time-rfc1123"
           }
         ],
         "responses": {
@@ -710,7 +718,8 @@
             "name": "Repeatability-First-Sent",
             "in": "header",
             "description": "If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.",
-            "type": "string"
+            "type": "string",
+            "format": "date-time-rfc1123"
           }
         ],
         "responses": {
@@ -894,7 +903,8 @@
         "unknown",
         "communicationUser",
         "phoneNumber",
-        "microsoftTeamsUser"
+        "microsoftTeamsUser",
+        "microsoftTeamsApp"
       ],
       "type": "string",
       "x-ms-enum": {
@@ -923,6 +933,10 @@
         "microsoftTeamsUser": {
           "$ref": "#/definitions/MicrosoftTeamsUserIdentifierModel",
           "description": "The Microsoft Teams user."
+        },
+        "microsoftTeamsApp": {
+          "$ref": "#/definitions/MicrosoftTeamsAppIdentifierModel",
+          "description": "The Microsoft Teams application."
         }
       }
     },
@@ -1052,6 +1066,23 @@
         },
         "cloud": {
           "$ref": "#/definitions/CommunicationCloudEnvironmentModel"
+        }
+      }
+    },
+    "MicrosoftTeamsAppIdentifierModel": {
+      "description": "A Microsoft Teams application.",
+      "type": "object",
+      "required": [
+        "appId"
+      ],
+      "properties": {
+        "appId": {
+          "type": "string",
+          "description": "The Id of the Microsoft Teams application."
+        },
+        "cloud": {
+          "$ref": "#/definitions/CommunicationCloudEnvironmentModel",
+          "description": "The cloud that the Microsoft Teams application belongs to. By default 'public' if missing."
         }
       }
     },

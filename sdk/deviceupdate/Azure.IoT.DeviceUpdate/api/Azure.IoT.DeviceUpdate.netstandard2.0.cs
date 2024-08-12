@@ -125,7 +125,7 @@ namespace Azure.IoT.DeviceUpdate
 }
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class DeviceUpdateClientBuilderExtensions
+    public static partial class IoTDeviceUpdateClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.IoT.DeviceUpdate.DeviceManagementClient, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions> AddDeviceManagementClient<TBuilder>(this TBuilder builder, System.Uri endpoint, string instanceId) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.IoT.DeviceUpdate.DeviceManagementClient, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions> AddDeviceManagementClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }

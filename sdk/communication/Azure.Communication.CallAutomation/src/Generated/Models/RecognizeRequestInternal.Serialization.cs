@@ -22,6 +22,16 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("playPrompt"u8);
                 writer.WriteObjectValue(PlayPrompt);
             }
+            if (Optional.IsCollectionDefined(PlayPrompts))
+            {
+                writer.WritePropertyName("playPrompts"u8);
+                writer.WriteStartArray();
+                foreach (var item in PlayPrompts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(InterruptCallMediaOperation))
             {
                 writer.WritePropertyName("interruptCallMediaOperation"u8);
@@ -34,7 +44,20 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
+            if (Optional.IsDefined(OperationCallbackUri))
+            {
+                writer.WritePropertyName("operationCallbackUri"u8);
+                writer.WriteStringValue(OperationCallbackUri);
+            }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

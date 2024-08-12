@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,12 +17,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelSettings
     {
-        /// <summary> Initializes a new instance of ImageModelSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImageModelSettings"/>. </summary>
         public ImageModelSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageModelSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelSettings"/>. </summary>
         /// <param name="advancedSettings"> Settings for advanced scenarios. </param>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
@@ -71,7 +106,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="warmupCosineLRCycles"> Value of cosine cycle when learning rate scheduler is 'warmup_cosine'. Must be a float in the range [0, 1]. </param>
         /// <param name="warmupCosineLRWarmupEpochs"> Value of warmup epochs when learning rate scheduler is 'warmup_cosine'. Must be a positive integer. </param>
         /// <param name="weightDecay"> Value of weight decay when optimizer is 'sgd', 'adam', or 'adamw'. Must be a float in the range[0, 1]. </param>
-        internal ImageModelSettings(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MachineLearningFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageModelSettings(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MachineLearningFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdvancedSettings = advancedSettings;
             AmsGradient = amsGradient;
@@ -105,6 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             WarmupCosineLRCycles = warmupCosineLRCycles;
             WarmupCosineLRWarmupEpochs = warmupCosineLRWarmupEpochs;
             WeightDecay = weightDecay;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Settings for advanced scenarios. </summary>

@@ -30,13 +30,18 @@ namespace Azure.Identity.Tests
 
             var options = new AuthorizationCodeCredentialOptions
             {
-                Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
-                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                RedirectUri = config.RedirectUri,
             };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(
-           new AuthorizationCodeCredential(config.TenantId, ClientId, clientSecret, authCode, options, null, pipeline));
+           new AuthorizationCodeCredential(config.TenantId, ClientId, clientSecret, authCode, options, config.MockConfidentialMsalClient, pipeline));
         }
 
         [SetUp]
@@ -73,7 +78,7 @@ namespace Azure.Identity.Tests
         public async Task AuthenticateWithAuthCodeHonorsTenantId([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
 
             var options = new AuthorizationCodeCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
             AuthorizationCodeCredential cred = InstrumentClient(

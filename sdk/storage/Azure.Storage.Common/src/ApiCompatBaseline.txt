@@ -1,0 +1,2 @@
+# The attribute is in shared source which is included and compiled into the binary, so there is no compatibility concern on it.
+CannotRemoveAttribute : Attribute 'Azure.Core.CallerShouldAuditAttribute' exists on 'Azure.Storage.Sas.AccountSasBuilder.ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential)' in the contract but not the implementation.

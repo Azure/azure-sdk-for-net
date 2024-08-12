@@ -17,8 +17,11 @@ namespace Azure.Core.TestFramework.Models
             writer.WriteStartObject();
             writer.WritePropertyName("regex"u8);
             writer.WriteStringValue(Regex);
-            writer.WritePropertyName("value"u8);
-            writer.WriteStringValue(Value);
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
             if (Optional.IsDefined(GroupForReplace))
             {
                 writer.WritePropertyName("groupForReplace"u8);

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,44 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class ApiManagementPortalRevisionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiManagementPortalRevisionData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPortalRevisionData"/>. </summary>
         public ApiManagementPortalRevisionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiManagementPortalRevisionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPortalRevisionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +67,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="isCurrent"> Indicates if the portal's revision is public. </param>
         /// <param name="createdOn"> Portal's revision creation date and time. </param>
         /// <param name="updatedOn"> Last updated date and time. </param>
-        internal ApiManagementPortalRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string statusDetails, PortalRevisionStatus? status, bool? isCurrent, DateTimeOffset? createdOn, DateTimeOffset? updatedOn) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementPortalRevisionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string statusDetails, PortalRevisionStatus? status, bool? isCurrent, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Description = description;
             StatusDetails = statusDetails;
@@ -42,19 +76,26 @@ namespace Azure.ResourceManager.ApiManagement
             IsCurrent = isCurrent;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Portal revision description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Portal revision publishing status details. </summary>
+        [WirePath("properties.statusDetails")]
         public string StatusDetails { get; }
         /// <summary> Status of the portal's revision. </summary>
+        [WirePath("properties.status")]
         public PortalRevisionStatus? Status { get; }
         /// <summary> Indicates if the portal's revision is public. </summary>
+        [WirePath("properties.isCurrent")]
         public bool? IsCurrent { get; set; }
         /// <summary> Portal's revision creation date and time. </summary>
+        [WirePath("properties.createdDateTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Last updated date and time. </summary>
+        [WirePath("properties.updatedDateTime")]
         public DateTimeOffset? UpdatedOn { get; }
     }
 }

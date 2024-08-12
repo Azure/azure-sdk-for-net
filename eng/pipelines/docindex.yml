@@ -1,12 +1,19 @@
 trigger: none
 
+variables:
+  - template: /eng/pipelines/templates/variables/globals.yml
+  - template: /eng/pipelines/templates/variables/image.yml
+
+  # Globals sets skipComponentGovernanceDetection by default
+  - name: skipComponentGovernanceDetection
+    value: false
+
 jobs:
   - template: /eng/common/pipelines/templates/jobs/docindex.yml
 
   - job: UpdateDocsMsBuildConfig
     pool:
-      name: azsdk-pool-mms-ubuntu-2004-general
-      vmImage: Ubuntu20.04
+      name: $(LINUXPOOL)
     variables:
       DocRepoLocation: $(Pipeline.Workspace)/docs
       DocRepoOwner: Azure
@@ -31,12 +38,22 @@ jobs:
           Repositories:
             - Name: $(DocRepoOwner)/$(DocRepoName)
               WorkingDirectory: $(DocRepoLocation)
+
       # Install the tool for toc step to use
       - task: NuGetToolInstaller@1
         inputs:
           versionSpec: 6.3.1
-      # Call update docs ci script to onboard packages
+
       - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Update-DocsMsPackageMonikers.ps1
+          arguments: -DocRepoLocation $(DocRepoLocation)
+        displayName: Move deprecated packages to legacy moniker
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
+
       - task: Powershell@2
         inputs:
           pwsh: true
@@ -50,9 +67,6 @@ jobs:
           filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
           arguments: >-
             -DocRepoLocation $(DocRepoLocation)
-            -TenantId '$(opensource-aad-tenant-id)'
-            -ClientId '$(opensource-aad-app-id)'
-            -ClientSecret '$(opensource-aad-secret)'
             -ReadmeFolderRoot 'api/overview/azure'
         displayName: Generate Service Level Readme for main branch
         condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
@@ -105,6 +119,14 @@ jobs:
       - task: Powershell@2
         inputs:
           pwsh: true
+          filePath: eng/common/scripts/Update-DocsMsPackageMonikers.ps1
+          arguments: -DocRepoLocation $(DocRepoLocation)
+        displayName: Move deprecated packages to legacy moniker
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
+
+      - task: Powershell@2
+        inputs:
+          pwsh: true
           filePath: eng/common/scripts/Update-DocsMsPackages.ps1
           # Use the dotnet public daily package preview feed as the source for
           # updated packages.
@@ -118,9 +140,6 @@ jobs:
           filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
           arguments: >-
             -DocRepoLocation $(DocRepoLocation)
-            -TenantId '$(opensource-aad-tenant-id)'
-            -ClientId '$(opensource-aad-app-id)'
-            -ClientSecret '$(opensource-aad-secret)'
             -ReadmeFolderRoot 'api/overview/azure'
         displayName: Generate Service Level Readme for Daily docs
       - task: Powershell@2
@@ -153,14 +172,18 @@ jobs:
           ScriptDirectory: $(Build.SourcesDirectory)/eng/common/scripts
           PushArgs: -f
 
-      - task: PowerShell@2
+      - task: AzureCLI@2
         displayName: Queue Docs CI build
         inputs:
-          pwsh: true
-          filePath: eng/common/scripts/Queue-Pipeline.ps1
-          arguments: >
-            -Organization "apidrop"
-            -Project "Content%20CI"
-            -DefinitionId 397
-            -AuthToken "$(azuresdk-apidrop-devops-queue-build-pat)"
-            -BuildParametersJson (@{ params = (Get-Content ./eng/dailydocsconfig.json -Raw) -replace '%%DailyDocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)
+          azureSubscription: msdocs-apidrop-connection
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: |
+            $accessToken = az account get-access-token --resource "499b84ac-1321-427f-aa17-267ca6975798" --query "accessToken" --output tsv
+            $buildParamJson = (@{ params = (Get-Content ./eng/dailydocsconfig.json -Raw) -replace '%%DailyDocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)
+            eng/common/scripts/Queue-Pipeline.ps1 `
+              -Organization "apidrop" `
+              -Project "Content%20CI" `
+              -DefinitionId 397 `
+              -BuildParametersJson $buildParamJson `
+              -BearerToken $accessToken

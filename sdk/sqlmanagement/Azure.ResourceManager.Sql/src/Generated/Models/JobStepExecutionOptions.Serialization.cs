@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobStepExecutionOptions : IUtf8JsonSerializable
+    public partial class JobStepExecutionOptions : IUtf8JsonSerializable, IJsonModel<JobStepExecutionOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobStepExecutionOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<JobStepExecutionOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JobStepExecutionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeoutSeconds))
             {
@@ -40,20 +52,51 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("retryIntervalBackoffMultiplier"u8);
                 writer.WriteNumberValue(RetryIntervalBackoffMultiplier.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobStepExecutionOptions DeserializeJobStepExecutionOptions(JsonElement element)
+        JobStepExecutionOptions IJsonModel<JobStepExecutionOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JobStepExecutionOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobStepExecutionOptions(document.RootElement, options);
+        }
+
+        internal static JobStepExecutionOptions DeserializeJobStepExecutionOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> timeoutSeconds = default;
-            Optional<int> retryAttempts = default;
-            Optional<int> initialRetryIntervalSeconds = default;
-            Optional<int> maximumRetryIntervalSeconds = default;
-            Optional<float> retryIntervalBackoffMultiplier = default;
+            int? timeoutSeconds = default;
+            int? retryAttempts = default;
+            int? initialRetryIntervalSeconds = default;
+            int? maximumRetryIntervalSeconds = default;
+            float? retryIntervalBackoffMultiplier = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeoutSeconds"u8))
@@ -101,8 +144,142 @@ namespace Azure.ResourceManager.Sql.Models
                     retryIntervalBackoffMultiplier = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JobStepExecutionOptions(Optional.ToNullable(timeoutSeconds), Optional.ToNullable(retryAttempts), Optional.ToNullable(initialRetryIntervalSeconds), Optional.ToNullable(maximumRetryIntervalSeconds), Optional.ToNullable(retryIntervalBackoffMultiplier));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new JobStepExecutionOptions(
+                timeoutSeconds,
+                retryAttempts,
+                initialRetryIntervalSeconds,
+                maximumRetryIntervalSeconds,
+                retryIntervalBackoffMultiplier,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeoutSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  timeoutSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TimeoutSeconds))
+                {
+                    builder.Append("  timeoutSeconds: ");
+                    builder.AppendLine($"{TimeoutSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryAttempts), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  retryAttempts: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetryAttempts))
+                {
+                    builder.Append("  retryAttempts: ");
+                    builder.AppendLine($"{RetryAttempts.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InitialRetryIntervalSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  initialRetryIntervalSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InitialRetryIntervalSeconds))
+                {
+                    builder.Append("  initialRetryIntervalSeconds: ");
+                    builder.AppendLine($"{InitialRetryIntervalSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumRetryIntervalSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximumRetryIntervalSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumRetryIntervalSeconds))
+                {
+                    builder.Append("  maximumRetryIntervalSeconds: ");
+                    builder.AppendLine($"{MaximumRetryIntervalSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryIntervalBackoffMultiplier), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  retryIntervalBackoffMultiplier: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetryIntervalBackoffMultiplier))
+                {
+                    builder.Append("  retryIntervalBackoffMultiplier: ");
+                    builder.AppendLine($"'{RetryIntervalBackoffMultiplier.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<JobStepExecutionOptions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JobStepExecutionOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        JobStepExecutionOptions IPersistableModel<JobStepExecutionOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JobStepExecutionOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeJobStepExecutionOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<JobStepExecutionOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

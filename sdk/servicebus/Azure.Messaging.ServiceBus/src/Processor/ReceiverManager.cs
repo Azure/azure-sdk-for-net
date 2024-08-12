@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -28,7 +29,8 @@ namespace Azure.Messaging.ServiceBus
         protected readonly ServiceBusProcessorOptions ProcessorOptions;
         private readonly MessagingClientDiagnostics _clientDiagnostics;
 
-        protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
+        protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero ||
+                                        ProcessorOptions.MaxAutoLockRenewalDuration == Timeout.InfiniteTimeSpan;
 
         public ReceiverManager(
             ServiceBusProcessor processor,
@@ -138,7 +140,7 @@ namespace Azure.Messaging.ServiceBus
 
         protected async Task ProcessOneMessageWithinScopeAsync(ServiceBusReceivedMessage message, string activityName, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(activityName, DiagnosticScope.ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(activityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
             scope.SetMessageAsParent(message);
             scope.Start();
 
@@ -276,16 +278,22 @@ namespace Azure.Messaging.ServiceBus
             Processor.Identifier,
             cancellationToken);
 
-        protected virtual async Task OnMessageHandler(EventArgs args) =>
-            await Processor.OnProcessMessageAsync((ProcessMessageEventArgs) args).ConfigureAwait(false);
+        protected virtual async Task OnMessageHandler(EventArgs args)
+        {
+            var processMessageArgs = (ProcessMessageEventArgs)args;
+            using var registration = processMessageArgs.RegisterMessageLockLostHandler();
+            await Processor.OnProcessMessageAsync((ProcessMessageEventArgs)args).ConfigureAwait(false);
+        }
 
         internal async Task RenewMessageLockAsync(
+            ProcessMessageEventArgs args,
             ServiceBusReceivedMessage message,
-            CancellationTokenSource cancellationTokenSource,
-            CancellationTokenSource messageLockCancellationTokenSource)
+            CancellationTokenSource cancellationTokenSource)
         {
             cancellationTokenSource.CancelAfter(ProcessorOptions.MaxAutoLockRenewalDuration);
             CancellationToken cancellationToken = cancellationTokenSource.Token;
+            bool isTriggerMessage = args.Message == message;
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 try
@@ -308,7 +316,13 @@ namespace Azure.Messaging.ServiceBus
                     }
 
                     await Receiver.RenewMessageLockAsync(message, cancellationToken).ConfigureAwait(false);
-                    messageLockCancellationTokenSource.CancelAfterLockExpired(message);
+
+                    // Currently only the trigger message supports cancellation token for LockedUntil.
+                    if (isTriggerMessage)
+                    {
+                        args.MessageLockLostCancellationSource.CancelAfterLockExpired(message);
+                    }
+
                     ServiceBusEventSource.Log.ProcessorRenewMessageLockComplete(Processor.Identifier, message.LockTokenGuid);
                 }
                 catch (Exception ex) when (!(ex is TaskCanceledException))
@@ -318,7 +332,13 @@ namespace Azure.Messaging.ServiceBus
                     // If the message has already been settled there is no need to raise the lock lost exception to user error handler.
                     if (!message.IsSettled)
                     {
-                        messageLockCancellationTokenSource?.Cancel();
+                        // Currently only the trigger message supports cancellation token for LockedUntil.
+                        if (isTriggerMessage)
+                        {
+                            args.LockLostException = ex;
+                            args.MessageLockLostCancellationSource?.Cancel();
+                        }
+
                         await HandleRenewLockException(ex, cancellationToken).ConfigureAwait(false);
                     }
 

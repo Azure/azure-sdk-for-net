@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -20,13 +19,13 @@ namespace Azure.Security.KeyVault.Storage.Models
             {
                 return null;
             }
-            Optional<string> recoveryId = default;
-            Optional<DateTimeOffset> scheduledPurgeDate = default;
-            Optional<DateTimeOffset> deletedDate = default;
-            Optional<string> id = default;
-            Optional<string> sid = default;
-            Optional<SasDefinitionAttributes> attributes = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            string recoveryId = default;
+            DateTimeOffset? scheduledPurgeDate = default;
+            DateTimeOffset? deletedDate = default;
+            string id = default;
+            string sid = default;
+            SasDefinitionAttributes attributes = default;
+            IReadOnlyDictionary<string, string> tags = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryId"u8))
@@ -40,7 +39,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     {
                         continue;
                     }
-                    scheduledPurgeDate = property.Value.GetDateTimeOffset("U");
+                    scheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("deletedDate"u8))
@@ -49,7 +48,7 @@ namespace Azure.Security.KeyVault.Storage.Models
                     {
                         continue;
                     }
-                    deletedDate = property.Value.GetDateTimeOffset("U");
+                    deletedDate = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -86,7 +85,22 @@ namespace Azure.Security.KeyVault.Storage.Models
                     continue;
                 }
             }
-            return new DeletedSasDefinitionItem(id.Value, sid.Value, attributes.Value, Optional.ToDictionary(tags), recoveryId.Value, Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(deletedDate));
+            return new DeletedSasDefinitionItem(
+                id,
+                sid,
+                attributes,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                recoveryId,
+                scheduledPurgeDate,
+                deletedDate);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DeletedSasDefinitionItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeletedSasDefinitionItem(document.RootElement);
         }
     }
 }

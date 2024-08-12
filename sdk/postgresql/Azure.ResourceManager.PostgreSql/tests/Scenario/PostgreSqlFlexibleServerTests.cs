@@ -103,6 +103,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
         }
 
         [TestCase]
+        [RecordedTest]
         public async Task Restore()
         {
             var sourcePublicServerName = Recording.GenerateAssetName("pgflexserver");
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                StorageSizeInGB = 128,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
             });
             var sourcePublicServer = sourcePublicServerOperation.Value;
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                StorageSizeInGB = 128,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 Network = new PostgreSqlFlexibleServerNetwork()
                 {
                     DelegatedSubnetResourceId = subnetID,
@@ -228,6 +229,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
         }
 
         [TestCase]
+        [RecordedTest]
         public async Task GeoRestore()
         {
             var sourcePublicServerName = Recording.GenerateAssetName("pgflexserver");
@@ -250,7 +252,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                StorageSizeInGB = 128,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
@@ -289,7 +291,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }
@@ -311,7 +313,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                StorageSizeInGB = 128,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 Backup = new PostgreSqlFlexibleServerBackupProperties()
                 {
                     GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
@@ -366,7 +368,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                     }
                     else
                     {
-                        throw ex;
+                        throw;
                     }
                 }
             }
@@ -468,7 +470,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                StorageSizeInGB = 128,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
             };
             if (vnetEnabled)
@@ -608,7 +610,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = sourceVersion,
-                StorageSizeInGB = 128,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
             });
             var server = serverOperation.Value;
@@ -639,7 +641,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                StorageSizeInGB = 128,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
             });
             var server = serverOperation.Value;
@@ -692,7 +694,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                StorageSizeInGB = 128,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities = { { identity.Id, new UserAssignedIdentity() } },
@@ -815,7 +817,7 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = PostgreSqlFlexibleServerVersion.Ver14,
-                StorageSizeInGB = 128,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
                 AuthConfig = new PostgreSqlFlexibleServerAuthConfig()
                 {
@@ -862,6 +864,447 @@ namespace Azure.ResourceManager.PostgreSql.Tests
                 Assert.AreEqual(servicePrincipal.DisplayName, admin.Data.PrincipalName);
                 Assert.AreEqual(servicePrincipal.Id, admin.Data.ObjectId.ToString());
             }
+        }
+
+        /// <summary>
+        /// - Create resource groups for source server and target server in geo-paired locations
+        /// - Create key and identities in source as well as target resource groups
+        /// - Create a source server in source resource group with public access, geo-backup enabled, data encryption enabled and active directory auth only enabled.
+        /// Since this is geo-backup enabled server, we need to pass both primary as well as geo identity and key pairs.
+        /// - Add a replica server to this source server and explicitly enable data encryption using same key and identity as source server.
+        /// Since replicas are not geo backup enabled, we need to pass only the primary identity and key pairs for data encryption.
+        /// - Add a second replica server to this source server but in geo location and explicitly enable data encryption using geo key and identity as source server.
+        /// Since replicas are not geo backup enabled, we need to pass only the primary identity and key pairs for data encryption.
+        /// - Validate both replicas and source server are AAD enabled and have AAD admins set
+        /// - Geo-restore CMK and AAD enabled server and validate that geo-restored server is AAD and Data encryption enabled
+        /// </summary>
+        /// <returns></returns>
+        [TestCase]
+        [LiveOnly(alwaysRunLocally: false)]
+        public async Task GeoCMKWithAAD()
+        {
+            #region Initialize
+            var sourcePublicServerName = Recording.GenerateAssetName("pgflexserver");
+            var targetPublicServerName = Recording.GenerateAssetName("pgflexserver");
+            var replicaName = new string[2] { Recording.GenerateAssetName("pgflexserver"), Recording.GenerateAssetName("pgflexserver") };
+            var keyVaultName = Recording.GenerateAssetName("vault");
+            var keyName = Recording.GenerateAssetName("key");
+            var geoKeyVaultName = Recording.GenerateAssetName("vault");
+            var geoKeyName = Recording.GenerateAssetName("key");
+            var identityName = Recording.GenerateAssetName("identity");
+            var geoIdentityName = Recording.GenerateAssetName("identity");
+            var targetLocation = AzureLocation.WestUS;
+
+            var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
+            var geoRg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.WestUS);
+            var serverCollection = rg.GetPostgreSqlFlexibleServers();
+
+            // Create key and identity
+            var (key, identity) = await CreateKeyAndIdentity(keyVaultName, keyName, identityName, rg.Data.Name);
+            var (geoKey, geoIdentity) = await CreateKeyAndIdentity(geoKeyVaultName, geoKeyName, geoIdentityName, geoRg.Data.Name);
+
+            // Get current client info
+            var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
+            var tenant = tenants.FirstOrDefault();
+            var tenantId = tenant.Data.TenantId.Value;
+
+            var graphClient = new GraphServiceClient(TestEnvironment.Credential);
+            var servicePrincipals = await graphClient.ServicePrincipals
+                .Request()
+                .Filter($"servicePrincipalNames/any(c:c eq '{TestEnvironment.ClientId}')")
+                .Top(1)
+                .GetAsync();
+            var servicePrincipal = servicePrincipals.FirstOrDefault();
+            #endregion
+
+            #region Create main server with Data encryption, active directory auth only enabled and GeoBackup enabled
+            // Create main server
+            var sourcePublicServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, sourcePublicServerName, new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                Version = PostgreSqlFlexibleServerVersion.Ver14,
+                Storage = new PostgreSqlFlexibleServerStorage(128, StorageAutoGrow.Disabled, null, null, null),
+                Backup = new PostgreSqlFlexibleServerBackupProperties()
+                {
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
+                },
+                Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
+                {
+                    UserAssignedIdentities = { { identity.Id, new UserAssignedIdentity() }, { geoIdentity.Id, new UserAssignedIdentity() } },
+                },
+                DataEncryption = new PostgreSqlFlexibleServerDataEncryption()
+                {
+                    PrimaryKeyUri = key.Id,
+                    PrimaryUserAssignedIdentityId = identity.Id,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
+                    GeoBackupKeyUri = geoKey.Id,
+                    GeoBackupUserAssignedIdentityId = geoIdentity.Id,
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
+                AuthConfig = new PostgreSqlFlexibleServerAuthConfig()
+                {
+                    ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
+                    PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Disabled,
+                }
+            });
+            var sourcePublicServer = sourcePublicServerOperation.Value;
+
+            Assert.AreEqual(sourcePublicServerName, sourcePublicServer.Data.Name);
+            Assert.AreEqual(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled, sourcePublicServer.Data.Backup.GeoRedundantBackup);
+            Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled, sourcePublicServer.Data.Network.PublicNetworkAccess);
+
+            Assert.AreEqual(key.Id, sourcePublicServer.Data.DataEncryption.PrimaryKeyUri);
+            Assert.AreEqual(identity.Id, sourcePublicServer.Data.DataEncryption.PrimaryUserAssignedIdentityId);
+            Assert.IsTrue(sourcePublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id));
+            Assert.AreEqual(geoKey.Id, sourcePublicServer.Data.DataEncryption.GeoBackupKeyUri);
+            Assert.AreEqual(geoIdentity.Id, sourcePublicServer.Data.DataEncryption.GeoBackupUserAssignedIdentityId);
+            Assert.IsTrue(sourcePublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(geoIdentity.Id));
+
+            Assert.AreEqual(PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled, sourcePublicServer.Data.AuthConfig.ActiveDirectoryAuth);
+            Assert.AreEqual(PostgreSqlFlexibleServerPasswordAuthEnum.Disabled, sourcePublicServer.Data.AuthConfig.PasswordAuth);
+            #endregion
+
+            #region Create first replica server with Data Encryption enabled, using same primary key and identity.
+            // Wait for few minutes before replica creation
+            await Task.Delay(TimeSpan.FromMinutes(3));
+
+            // Create first replica server
+            // Since replica is not Geo-backup enabled, we do not need Geo key or identity for replica server to enable data encryption
+            var replicaOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, replicaName[0], new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                SourceServerResourceId = sourcePublicServer.Id,
+                Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
+                {
+                    UserAssignedIdentities = { { identity.Id, new UserAssignedIdentity() } },
+                },
+                DataEncryption = new PostgreSqlFlexibleServerDataEncryption()
+                {
+                    PrimaryKeyUri = key.Id,
+                    PrimaryUserAssignedIdentityId = identity.Id,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Replica,
+            });
+            var firstReplica = replicaOperation.Value;
+
+            Assert.AreEqual(key.Id, firstReplica.Data.DataEncryption.PrimaryKeyUri);
+            Assert.AreEqual(identity.Id, firstReplica.Data.DataEncryption.PrimaryUserAssignedIdentityId);
+            Assert.IsTrue(firstReplica.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id));
+            #endregion
+
+            //Add AAD admin to main server
+            await sourcePublicServer.GetPostgreSqlFlexibleServerActiveDirectoryAdministrators().CreateOrUpdateAsync(WaitUntil.Completed, servicePrincipal.Id, new PostgreSqlFlexibleServerActiveDirectoryAdministratorCreateOrUpdateContent()
+            {
+                PrincipalName = servicePrincipal.DisplayName,
+                TenantId = tenantId,
+                PrincipalType = PostgreSqlFlexibleServerPrincipalType.ServicePrincipal,
+            });
+
+            #region Crete second replica server without Data encryption
+            // Create second replica server in cross-region without enabling CMK
+            replicaOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, replicaName[1], new PostgreSqlFlexibleServerData(geoRg.Data.Location)
+            {
+                SourceServerResourceId = sourcePublicServer.Id,
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Replica,
+            });
+            var secondReplica = replicaOperation.Value;
+
+            // Since CMK is not explicitly enabled, identity will be null for this replica server.
+            Assert.IsNull(secondReplica.Data.Identity);
+            Assert.AreEqual(secondReplica.Data.Location.Name, AzureLocation.WestUS.Name);
+            #endregion
+
+            // Main server and both replicas should have AAD
+            foreach (var s in new PostgreSqlFlexibleServerResource[] { sourcePublicServer, firstReplica, secondReplica })
+            {
+                var admin = (await s.GetPostgreSqlFlexibleServerActiveDirectoryAdministratorAsync(servicePrincipal.Id)).Value;
+                Assert.AreEqual(PostgreSqlFlexibleServerPrincipalType.ServicePrincipal, admin.Data.PrincipalType);
+                Assert.AreEqual(servicePrincipal.DisplayName, admin.Data.PrincipalName);
+                Assert.AreEqual(servicePrincipal.Id, admin.Data.ObjectId.ToString());
+            }
+
+            #region Geo-restore geo-backup enabled, data encryption and AAD enabled server
+            // Geo-restore public server to paired region
+            PostgreSqlFlexibleServerResource targetPublicServer = null;
+            for (var i = 0; i < 20; i++)
+            {
+                try
+                {
+                    var targetPublicServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, targetPublicServerName, new PostgreSqlFlexibleServerData(targetLocation)
+                    {
+                        SourceServerResourceId = sourcePublicServer.Id,
+                        PointInTimeUtc = DateTime.Now,
+                        CreateMode = PostgreSqlFlexibleServerCreateMode.GeoRestore,
+                        Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
+                        {
+                            UserAssignedIdentities = { { identity.Id, new UserAssignedIdentity() }, { geoIdentity.Id, new UserAssignedIdentity() } },
+                        },
+                        DataEncryption = new PostgreSqlFlexibleServerDataEncryption()
+                        {
+                            PrimaryKeyUri = geoKey.Id,
+                            PrimaryUserAssignedIdentityId = geoIdentity.Id,
+                            GeoBackupKeyUri = key.Id,
+                            GeoBackupUserAssignedIdentityId = identity.Id,
+                            KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
+                        },
+                        AuthConfig = new PostgreSqlFlexibleServerAuthConfig()
+                        {
+                            ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
+                            PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Disabled,
+                        },
+                        Backup = new PostgreSqlFlexibleServerBackupProperties
+                        {
+                            GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
+                        },
+                        Location = targetLocation
+                    });
+                    targetPublicServer = targetPublicServerOperation.Value;
+                    break;
+                }
+                catch (RequestFailedException ex)
+                {
+                    if (ex.ErrorCode.Equals("GeoBackupsNotAvailable", StringComparison.OrdinalIgnoreCase) ||
+                        ex.ErrorCode.Equals("CMKNotSupportedForGeoRedundantBackupEnabledServer", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (Recording.Mode != RecordedTestMode.Playback)
+                        {
+                            await Task.Delay(TimeSpan.FromMinutes(6));
+                        }
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            Assert.IsNotNull(targetPublicServer, $"GeoBackups not available for server {sourcePublicServerName} after 2 hours.");
+
+            Assert.AreEqual(targetPublicServerName, targetPublicServer.Data.Name);
+            Assert.AreEqual(targetLocation, targetPublicServer.Data.Location);
+            Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled, targetPublicServer.Data.Network.PublicNetworkAccess);
+
+            Assert.AreEqual(key.Id, targetPublicServer.Data.DataEncryption.GeoBackupKeyUri);
+            Assert.AreEqual(identity.Id, targetPublicServer.Data.DataEncryption.GeoBackupUserAssignedIdentityId);
+            Assert.IsTrue(targetPublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(identity.Id));
+            Assert.AreEqual(geoKey.Id, targetPublicServer.Data.DataEncryption.PrimaryKeyUri);
+            Assert.AreEqual(geoIdentity.Id, targetPublicServer.Data.DataEncryption.PrimaryUserAssignedIdentityId);
+            Assert.IsTrue(targetPublicServer.Data.Identity.UserAssignedIdentities.ContainsKey(geoIdentity.Id));
+            Assert.AreEqual(targetPublicServer.Data.DataEncryption.PrimaryEncryptionKeyStatus.Value, PostgreSqlKeyStatus.Valid);
+            Assert.AreEqual(targetPublicServer.Data.DataEncryption.GeoBackupEncryptionKeyStatus.Value, PostgreSqlKeyStatus.Valid);
+
+            Assert.AreEqual(PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled, sourcePublicServer.Data.AuthConfig.ActiveDirectoryAuth);
+            Assert.AreEqual(PostgreSqlFlexibleServerPasswordAuthEnum.Disabled, sourcePublicServer.Data.AuthConfig.PasswordAuth);
+
+            var geoServerAdmin = (await targetPublicServer.GetPostgreSqlFlexibleServerActiveDirectoryAdministratorAsync(servicePrincipal.Id)).Value;
+            Assert.AreEqual(PostgreSqlFlexibleServerPrincipalType.ServicePrincipal, geoServerAdmin.Data.PrincipalType);
+            Assert.AreEqual(servicePrincipal.DisplayName, geoServerAdmin.Data.PrincipalName);
+            Assert.AreEqual(servicePrincipal.Id, geoServerAdmin.Data.ObjectId.ToString());
+            #endregion
+
+            #region Cleanup
+            // Delete first replica
+            await firstReplica.DeleteAsync(WaitUntil.Completed);
+            // Delete second replica
+            await secondReplica.DeleteAsync(WaitUntil.Completed);
+            // Delete source server with public access
+            await sourcePublicServer.DeleteAsync(WaitUntil.Completed);
+            // Delete targhet geo-restored server
+            await targetPublicServer.DeleteAsync(WaitUntil.Completed);
+            #endregion
+        }
+
+        /// <summary>
+        /// - Create resource groups for source server and target server in geo-paired locations
+        /// - Create a source server in source resource group with public access, geo-backup enabled.
+        /// - Create a vnet enabled server in source resource group with private access.
+        /// - Drop public access server
+        /// - Drop private access server
+        /// - Add a replica server to this source server and explicitly enable data encryption using same key and identity as source server.
+        /// Since replicas are not geo backup enabled, we need to pass only the primary identity and key pairs for data encryption.
+        /// - Add a second replica server to this source server but in geo location and explicitly enable data encryption using geo key and identity as source server.
+        /// Since replicas are not geo backup enabled, we need to pass only the primary identity and key pairs for data encryption.
+        /// </summary>
+        /// <returns></returns>
+        [TestCase]
+        [LiveOnly(alwaysRunLocally: false)]
+        public async Task ReviveDropped()
+        {
+            #region Initialize
+            var sourcePublicServerName = Recording.GenerateAssetName("pgflexserver");
+            var targetPublicServerName = Recording.GenerateAssetName("pgflexserver");
+            var sourcePrivateServerName = Recording.GenerateAssetName("pgflexserver");
+            var targetPrivateServerName = Recording.GenerateAssetName("pgflexserver");
+            var sourceVnetName = Recording.GenerateAssetName("vnet");
+            var targetVnetName = Recording.GenerateAssetName("vnet");
+            var sourceSubnetName = Recording.GenerateAssetName("subnet");
+            var targetSubnetName = Recording.GenerateAssetName("subnet");
+            var targetLocation = AzureLocation.WestUS;
+
+            var rg = await CreateResourceGroupAsync(Subscription, "pgflexrg", AzureLocation.EastUS);
+            var serverCollection = rg.GetPostgreSqlFlexibleServers();
+            #endregion
+
+            #region Create public server
+            var sourcePublicServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, sourcePublicServerName, new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D2ds_v4", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                AdministratorLogin = "testUser",
+                AdministratorLoginPassword = "testPassword1!",
+                Version = PostgreSqlFlexibleServerVersion.Ver14,
+                Storage = new PostgreSqlFlexibleServerStorage(128, StorageAutoGrow.Disabled, null, null, null),
+                Backup = new PostgreSqlFlexibleServerBackupProperties()
+                {
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
+            });
+            var sourcePublicServer = sourcePublicServerOperation.Value;
+
+            Assert.AreEqual(sourcePublicServerName, sourcePublicServer.Data.Name);
+            Assert.AreEqual(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled, sourcePublicServer.Data.Backup.GeoRedundantBackup);
+            Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled, sourcePublicServer.Data.Network.PublicNetworkAccess);
+            #endregion
+
+            #region Create private access server
+            // Create source vnet and subnet
+            var (sourceVnetID, sourceSubnetID) = await CreateVirtualNetwork(sourceVnetName, sourceSubnetName, rg.Data.Name, rg.Data.Location);
+
+            // Create source private DNS zone and virtual link
+            var sourcePrivateDnsZone = await CreatePrivateDnsZone(sourcePrivateServerName, sourceVnetID, rg.Data.Name);
+            // Create private server
+            var sourcePrivateServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, sourcePrivateServerName, new PostgreSqlFlexibleServerData(rg.Data.Location)
+            {
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D2s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                AdministratorLogin = "testUser",
+                AdministratorLoginPassword = "testPassword1!",
+                Version = PostgreSqlFlexibleServerVersion.Ver14,
+                Storage = new PostgreSqlFlexibleServerStorage(128, null, null, null, null),
+                Backup = new PostgreSqlFlexibleServerBackupProperties()
+                {
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled,
+                },
+                Network = new PostgreSqlFlexibleServerNetwork()
+                {
+                    DelegatedSubnetResourceId = sourceSubnetID,
+                    PrivateDnsZoneArmResourceId = sourcePrivateDnsZone.Id,
+                },
+                CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
+            });
+            var sourcePrivateServer = sourcePrivateServerOperation.Value;
+
+            Assert.AreEqual(sourcePrivateServerName, sourcePrivateServer.Data.Name);
+            Assert.AreEqual(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled, sourcePrivateServer.Data.Backup.GeoRedundantBackup);
+            Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled, sourcePrivateServer.Data.Network.PublicNetworkAccess);
+            #endregion
+
+            #region Delete public access server
+            await sourcePublicServer.DeleteAsync(WaitUntil.Completed);
+            #endregion
+
+            #region Delete private access server
+            // Wait until snapshot of the private access enabled server is created, before deleting the actual server
+            await Task.Delay(TimeSpan.FromMinutes(4));
+
+            await sourcePrivateServer.DeleteAsync(WaitUntil.Completed);
+            #endregion
+
+            #region Revive-dropped public server to source region
+            PostgreSqlFlexibleServerResource targetPublicServer = null;
+            for (var i = 0; i < 6; i++)
+            {
+                try
+                {
+                    var targetPublicServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, targetPublicServerName, new PostgreSqlFlexibleServerData(AzureLocation.EastUS)
+                    {
+                        SourceServerResourceId = sourcePublicServer.Id,
+                        PointInTimeUtc = DateTime.Now,
+                        CreateMode = PostgreSqlFlexibleServerCreateMode.ReviveDropped,
+                    });
+                    targetPublicServer = targetPublicServerOperation.Value;
+                    break;
+                }
+                catch (RequestFailedException ex)
+                {
+                    if (ex.ErrorCode.Equals("ResourceNotFound", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (Recording.Mode != RecordedTestMode.Playback)
+                        {
+                            await Task.Delay(TimeSpan.FromMinutes(5));
+                        }
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            Assert.IsNotNull(targetPublicServer, $"Revive Dropped server {sourcePublicServerName} not available after 30 min.");
+
+            Assert.AreEqual(targetPublicServerName, targetPublicServer.Data.Name);
+            Assert.AreEqual(AzureLocation.EastUS.Name, targetPublicServer.Data.Location.Name);
+            Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Enabled, targetPublicServer.Data.Network.PublicNetworkAccess);
+            // By default for Revive dropped, Geo backup is not enabled. Need to explicitly set Geo-backup as Enabled if you want revive dropped server to have Geo-backup as Enabled
+            Assert.AreEqual(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled, targetPublicServer.Data.Backup.GeoRedundantBackup);
+            #endregion
+
+            #region Revive-dropped private access server
+            // Create target vnet and subnet in paired region
+            var (targetVnetID, targetSubnetID) = await CreateVirtualNetwork(targetVnetName, targetSubnetName, rg.Data.Name, AzureLocation.EastUS);
+
+            // Create target private DNS zone and virtual link
+            var targetPrivateDnsZone = await CreatePrivateDnsZone(targetPrivateServerName, targetVnetID, rg.Data.Name);
+
+            // Revive-dropped private server to source region
+            PostgreSqlFlexibleServerResource targetPrivateServer = null;
+            for (var i = 0; i < 6; i++)
+            {
+                try
+                {
+                    var targetPrivateServerOperation = await serverCollection.CreateOrUpdateAsync(WaitUntil.Completed, targetPrivateServerName, new PostgreSqlFlexibleServerData(AzureLocation.EastUS)
+                    {
+                        Network = new PostgreSqlFlexibleServerNetwork()
+                        {
+                            DelegatedSubnetResourceId = targetSubnetID,
+                            PrivateDnsZoneArmResourceId = targetPrivateDnsZone.Id,
+                        },
+                        SourceServerResourceId = sourcePrivateServer.Id,
+                        PointInTimeUtc = DateTime.Now.AddMinutes(5),
+                        CreateMode = PostgreSqlFlexibleServerCreateMode.ReviveDropped,
+                    });
+                    targetPrivateServer = targetPrivateServerOperation.Value;
+                    break;
+                }
+                catch (RequestFailedException ex)
+                {
+                    if (ex.ErrorCode.Equals("ResourceNotFound", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (Recording.Mode != RecordedTestMode.Playback)
+                        {
+                            await Task.Delay(TimeSpan.FromMinutes(5));
+                        }
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            Assert.IsNotNull(targetPrivateServer, $"Revive-dropped not available for server {sourcePrivateServerName} after 30 min. Failed to create server {targetPrivateServerName}");
+
+            Assert.AreEqual(targetPrivateServerName, targetPrivateServer.Data.Name);
+            Assert.AreEqual(AzureLocation.EastUS.Name, targetPrivateServer.Data.Location.Name);
+            Assert.AreEqual(targetSubnetID, targetPrivateServer.Data.Network.DelegatedSubnetResourceId);
+            Assert.AreEqual(targetPrivateDnsZone.Id, targetPrivateServer.Data.Network.PrivateDnsZoneArmResourceId);
+            Assert.AreEqual(PostgreSqlFlexibleServerPublicNetworkAccessState.Disabled, targetPrivateServer.Data.Network.PublicNetworkAccess);
+            Assert.AreEqual(PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled, targetPrivateServer.Data.Backup.GeoRedundantBackup);
+            #endregion
+
+            #region Cleanup
+            // Clean up revive-dropped public access server
+            await targetPublicServer.DeleteAsync(WaitUntil.Completed);
+            // Clean up revive-dropped private access server
+            await targetPrivateServer.DeleteAsync(WaitUntil.Completed);
+            #endregion
         }
     }
 }

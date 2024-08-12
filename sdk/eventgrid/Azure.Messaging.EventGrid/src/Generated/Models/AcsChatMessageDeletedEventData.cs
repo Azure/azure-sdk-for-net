@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatMessageDeleted event. </summary>
     public partial class AcsChatMessageDeletedEventData : AcsChatMessageEventBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatMessageDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatMessageDeletedEventData"/>. </summary>
         internal AcsChatMessageDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsChatMessageDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatMessageDeletedEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>

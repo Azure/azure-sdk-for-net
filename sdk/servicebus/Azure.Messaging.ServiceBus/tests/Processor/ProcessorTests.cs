@@ -178,6 +178,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             options.PrefetchCount = 0;
             options.MaxReceiveWaitTime = TimeSpan.FromSeconds(1);
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(0);
+            options.MaxAutoLockRenewalDuration = Timeout.InfiniteTimeSpan;
         }
 
         [Test]
@@ -375,22 +376,31 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var mockReceiver = new Mock<ServiceBusReceiver>();
             mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
             mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
-
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1");
             var processArgs = new ProcessMessageEventArgs(
-                ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1", lockedUntil: DateTimeOffset.UtcNow.AddSeconds(-5)),
+                message,
                 mockReceiver.Object,
                 CancellationToken.None);
 
+            bool lockLostEventRaised = false;
             mockProcessor.ProcessMessageAsync += args =>
             {
+                args.MessageLockLostAsync += (lockLostArgs) =>
+                {
+                    lockLostEventRaised = true;
+                    Assert.IsNull(lockLostArgs.Exception);
+                    return Task.CompletedTask;
+                };
                 processMessageCalled = true;
-                Assert.IsTrue(args.MessageLockCancellationToken.IsCancellationRequested);
                 return Task.CompletedTask;
             };
 
             mockProcessor.ProcessErrorAsync += _ => Task.CompletedTask;
 
             await mockProcessor.OnProcessMessageAsync(processArgs);
+            Assert.IsFalse(lockLostEventRaised);
+            await processArgs.OnMessageLockLostAsync(new MessageLockLostEventArgs(message, null));
+            Assert.IsTrue(lockLostEventRaised);
 
             Assert.IsTrue(processMessageCalled);
         }
@@ -432,7 +442,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             mockConnection
                 .Setup(connection => connection.CreateTransportClient(
                     It.IsAny<ServiceBusTokenCredential>(),
-                    It.IsAny<ServiceBusClientOptions>()))
+                    It.IsAny<ServiceBusClientOptions>(),
+                    It.IsAny<bool>()))
                 .Returns(mockTransportClient.Object);
 
             var processor = new ServiceBusProcessor(
@@ -450,6 +461,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
 
             await processor.DisposeAsync();
+        }
+
+        [Test]
+        public void CanUpdateConcurrencyOnMockProcessor()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor> { CallBase = true };
+            mockProcessor.Object.UpdateConcurrency(5);
+            Assert.AreEqual(5, mockProcessor.Object.MaxConcurrentCalls);
+        }
+
+        [Test]
+        public void CanUpdatePrefetchOnMockProcessor()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor>() { CallBase = true };
+            mockProcessor.Object.UpdatePrefetchCount(10);
+            Assert.AreEqual(10, mockProcessor.Object.PrefetchCount);
         }
 
         [Test]

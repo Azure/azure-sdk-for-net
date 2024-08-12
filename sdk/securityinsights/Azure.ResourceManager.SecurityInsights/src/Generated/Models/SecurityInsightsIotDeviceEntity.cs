@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents an IoT device entity. </summary>
     public partial class SecurityInsightsIotDeviceEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIotDeviceEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIotDeviceEntity"/>. </summary>
         public SecurityInsightsIotDeviceEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -24,12 +24,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.IotDevice;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIotDeviceEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIotDeviceEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="deviceId"> The ID of the IoT Device in the IoT Hub. </param>
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="ipAddressEntityId"> The IP entity if of this device. </param>
         /// <param name="threatIntelligence"> A list of TI contexts attached to the IoTDevice entity. </param>
         /// <param name="protocols"> A list of protocols of the IoTDevice entity. </param>
-        internal SecurityInsightsIotDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence, IReadOnlyList<string> protocols) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsIotDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence, IReadOnlyList<string> protocols) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

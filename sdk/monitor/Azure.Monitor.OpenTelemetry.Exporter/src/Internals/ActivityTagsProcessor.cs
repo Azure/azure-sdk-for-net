@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeDbSystem,
             SemanticConventions.AttributeDbName,
 
-            // required
+            // required - HTTP
             SemanticConventions.AttributeHttpMethod,
             SemanticConventions.AttributeHttpUrl,
             SemanticConventions.AttributeHttpStatusCode,
@@ -23,10 +23,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeHttpHostPort,
             SemanticConventions.AttributeHttpTarget,
             SemanticConventions.AttributeHttpUserAgent,
-            SemanticConventions.AttributeHttpClientIP,
             SemanticConventions.AttributeHttpRoute,
 
-            // required
+            // required - HTTP V2
+            SemanticConventions.AttributeHttpRequestMethod,
+            SemanticConventions.AttributeHttpResponseStatusCode,
+            SemanticConventions.AttributeNetworkProtocolVersion,
+            SemanticConventions.AttributeServerAddress,
+            SemanticConventions.AttributeServerPort,
+            SemanticConventions.AttributeUrlFull,
+            SemanticConventions.AttributeUrlPath,
+            SemanticConventions.AttributeUrlScheme,
+            SemanticConventions.AttributeUrlQuery,
+            SemanticConventions.AttributeUserAgentOriginal,
+            SemanticConventions.AttributeClientAddress,
+
+            // required - Azure
             SemanticConventions.AttributeAzureNameSpace,
 
             SemanticConventions.AttributePeerService,
@@ -39,42 +51,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeNetHostName,
             SemanticConventions.AttributeComponent,
             "otel.status_code",
-            "sampleRate",
 
-            SemanticConventions.AttributeRpcService,
-            // required
-            SemanticConventions.AttributeRpcSystem,
-            SemanticConventions.AttributeRpcStatus,
+            // required - RPC
+            // SemanticConventions.AttributeRpcService,
+            // SemanticConventions.AttributeRpcSystem,
+            // SemanticConventions.AttributeRpcStatus,
+            // SemanticConventions.AttributeEndpointAddress,
 
-            // required
-            SemanticConventions.AttributeFaasTrigger,
-            SemanticConventions.AttributeFaasExecution,
-            SemanticConventions.AttributeFaasColdStart,
-            SemanticConventions.AttributeFaasDocumentCollection,
-            SemanticConventions.AttributeFaasDocumentOperation,
-            SemanticConventions.AttributeFaasDocumentTime,
-            SemanticConventions.AttributeFaasDocumentName,
-            SemanticConventions.AttributeFaasCron,
-            SemanticConventions.AttributeFaasTime,
-
-            SemanticConventions.AttributeEndpointAddress,
-            // required
+            // required - Messaging
             SemanticConventions.AttributeMessagingSystem,
-            SemanticConventions.AttributeMessagingDestination,
-            SemanticConventions.AttributeMessagingDestinationKind,
-            SemanticConventions.AttributeMessagingTempDestination,
-            SemanticConventions.AttributeMessagingUrl,
+            SemanticConventions.AttributeMessagingDestinationName,
+            SemanticConventions.AttributeNetworkProtocolName,
 
             // Others
             SemanticConventions.AttributeEnduserId
         };
 
-        private static readonly HashSet<string> s_semanticsSet = new(s_semantics);
+        internal static readonly HashSet<string> s_semanticsSet = new(s_semantics);
 
         public AzMonList MappedTags;
         public AzMonList UnMappedTags;
 
-        public OperationType activityType { get; private set; }
+        public OperationType activityType { get; set; }
 
         public string? AzureNamespace { get; private set; } = null;
 
@@ -101,6 +99,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         case SemanticConventions.AttributeHttpMethod:
                             activityType = OperationType.Http;
+                            break;
+                        case SemanticConventions.AttributeHttpRequestMethod:
+                            activityType = OperationType.Http | OperationType.V2;
                             break;
                         case SemanticConventions.AttributeDbSystem:
                             activityType = OperationType.Db;

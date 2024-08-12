@@ -182,13 +182,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 var hub = request.Headers.GetValues(Constants.Headers.CloudEvents.Hub).SingleOrDefault();
                 var eventType = Utilities.GetEventType(request.Headers.GetValues(Constants.Headers.CloudEvents.Type).SingleOrDefault());
                 var eventName = request.Headers.GetValues(Constants.Headers.CloudEvents.EventName).SingleOrDefault();
-                var origin = request.Headers.GetValues(Constants.Headers.WebHookRequestOrigin).SingleOrDefault();
+                var origin = string.Join(",", request.Headers.GetValues(Constants.Headers.WebHookRequestOrigin));
                 var headers = request.Headers.ToDictionary(x => x.Key, v => v.Value.ToArray(), StringComparer.OrdinalIgnoreCase);
                 string signature = null;
                 // Signature is optional and binding with validation parameter.
                 if (request.Headers.TryGetValues(Constants.Headers.CloudEvents.Signature, out var val))
                 {
-                    signature = val.SingleOrDefault();
+                    signature = string.Join(",", val);
                 }
                 string userId = null;
                 // UserId is optional, e.g. connect

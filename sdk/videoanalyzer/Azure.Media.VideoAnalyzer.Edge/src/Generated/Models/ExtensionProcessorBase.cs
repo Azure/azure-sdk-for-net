@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public partial class ExtensionProcessorBase : ProcessorNodeBase
     {
-        /// <summary> Initializes a new instance of ExtensionProcessorBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionProcessorBase"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="endpoint">
@@ -40,7 +39,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.ExtensionProcessorBase";
         }
 
-        /// <summary> Initializes a new instance of ExtensionProcessorBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionProcessorBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

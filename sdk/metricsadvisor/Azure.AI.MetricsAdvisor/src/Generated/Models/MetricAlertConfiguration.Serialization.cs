@@ -27,27 +27,27 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(DimensionAnomalyScope))
             {
                 writer.WritePropertyName("dimensionAnomalyScope"u8);
-                writer.WriteObjectValue(DimensionAnomalyScope);
+                writer.WriteObjectValue<DimensionKey>(DimensionAnomalyScope);
             }
             if (Optional.IsDefined(TopNAnomalyScope))
             {
                 writer.WritePropertyName("topNAnomalyScope"u8);
-                writer.WriteObjectValue(TopNAnomalyScope);
+                writer.WriteObjectValue<TopNGroupScope>(TopNAnomalyScope);
             }
             if (Optional.IsDefined(SeverityFilter))
             {
                 writer.WritePropertyName("severityFilter"u8);
-                writer.WriteObjectValue(SeverityFilter);
+                writer.WriteObjectValue<SeverityCondition>(SeverityFilter);
             }
             if (Optional.IsDefined(AlertSnoozeCondition))
             {
                 writer.WritePropertyName("snoozeFilter"u8);
-                writer.WriteObjectValue(AlertSnoozeCondition);
+                writer.WriteObjectValue<MetricAnomalyAlertSnoozeCondition>(AlertSnoozeCondition);
             }
             if (Optional.IsDefined(ValueFilter))
             {
                 writer.WritePropertyName("valueFilter"u8);
-                writer.WriteObjectValue(ValueFilter);
+                writer.WriteObjectValue<MetricBoundaryCondition>(ValueFilter);
             }
             writer.WriteEndObject();
         }
@@ -60,12 +60,12 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             string anomalyDetectionConfigurationId = default;
             MetricAnomalyAlertScopeType anomalyScopeType = default;
-            Optional<bool> negationOperation = default;
-            Optional<DimensionKey> dimensionAnomalyScope = default;
-            Optional<TopNGroupScope> topNAnomalyScope = default;
-            Optional<SeverityCondition> severityFilter = default;
-            Optional<MetricAnomalyAlertSnoozeCondition> snoozeFilter = default;
-            Optional<MetricBoundaryCondition> valueFilter = default;
+            bool? negationOperation = default;
+            DimensionKey dimensionAnomalyScope = default;
+            TopNGroupScope topNAnomalyScope = default;
+            SeverityCondition severityFilter = default;
+            MetricAnomalyAlertSnoozeCondition snoozeFilter = default;
+            MetricBoundaryCondition valueFilter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalyDetectionConfigurationId"u8))
@@ -133,7 +133,31 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricAlertConfiguration(anomalyDetectionConfigurationId, anomalyScopeType, Optional.ToNullable(negationOperation), dimensionAnomalyScope.Value, topNAnomalyScope.Value, severityFilter.Value, snoozeFilter.Value, valueFilter.Value);
+            return new MetricAlertConfiguration(
+                anomalyDetectionConfigurationId,
+                anomalyScopeType,
+                negationOperation,
+                dimensionAnomalyScope,
+                topNAnomalyScope,
+                severityFilter,
+                snoozeFilter,
+                valueFilter);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricAlertConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricAlertConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

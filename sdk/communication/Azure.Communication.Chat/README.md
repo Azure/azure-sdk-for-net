@@ -11,8 +11,8 @@ This package contains a C# SDK for Azure Communication Services for chat.
 Install the Azure Communication Chat client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Communication.Chat 
-``` 
+dotnet add package Azure.Communication.Chat
+```
 
 ### Prerequisites
 You need an [Azure subscription][azure_sub] and a [Communication Service Resource][communication_resource_docs] to use this package.
@@ -143,7 +143,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -229,7 +229,7 @@ await chatThreadClient.UpdateTopicAsync(topic: "new topic !");
 Use `SendMessage` to send a message to a thread.
 
 - Use `content` to provide the content for the message, it is required.
-- Use `type` for the content type of the message such as 'Text' or 'Html'. If not speficied, 'Text' will be set.
+- Use `type` for the content type of the message such as 'Text' or 'Html'. If not specified, 'Text' will be set.
 - Use `senderDisplayName` to specify the display name of the sender. If not specified, empty string will be set.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage

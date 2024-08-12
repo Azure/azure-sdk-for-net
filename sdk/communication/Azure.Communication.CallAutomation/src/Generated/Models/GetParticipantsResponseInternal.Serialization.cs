@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -19,22 +18,18 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<IReadOnlyList<CallParticipantInternal>> values = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CallParticipantInternal> value = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("values"u8))
+                if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<CallParticipantInternal> array = new List<CallParticipantInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(CallParticipantInternal.DeserializeCallParticipantInternal(item));
                     }
-                    values = array;
+                    value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"u8))
@@ -43,7 +38,15 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new GetParticipantsResponseInternal(Optional.ToList(values), nextLink.Value);
+            return new GetParticipantsResponseInternal(value, nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GetParticipantsResponseInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGetParticipantsResponseInternal(document.RootElement);
         }
     }
 }

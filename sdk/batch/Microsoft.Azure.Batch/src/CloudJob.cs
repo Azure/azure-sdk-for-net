@@ -579,7 +579,8 @@
         }
 
         /// <summary>
-        /// Gets the task counts for the job.
+        /// Gets the Task counts for the specified Job.  Task counts provide a count of the Tasks by active, running or completed Task state, and a count of Tasks which succeeded
+        /// or failed.Tasks in the preparing state are counted as running.Note that the numbers returned may not always be up to date. If you need exact task counts, use a list query.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
@@ -597,7 +598,8 @@
         }
 
         /// <summary>
-        /// Gets the task counts for the job.
+        /// Gets the Task counts for the specified Job.  Task counts provide a count of the Tasks by active, running or completed Task state, and a count of Tasks which succeeded
+        /// or failed.Tasks in the preparing state are counted as running.Note that the numbers returned may not always be up to date. If you need exact task counts, use a list query.
         /// </summary>
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <returns>A <see cref="TaskCounts"/> object containing the task counts for the job</returns>

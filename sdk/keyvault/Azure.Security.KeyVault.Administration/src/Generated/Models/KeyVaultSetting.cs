@@ -6,14 +6,12 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The Setting. </summary>
     public partial class KeyVaultSetting
     {
-
         /// <summary> The account setting to be updated. </summary>
         public string Name { get; }
     }

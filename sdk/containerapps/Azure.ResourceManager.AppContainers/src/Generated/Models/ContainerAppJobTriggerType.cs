@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ScheduledValue = "Scheduled";
+        private const string ScheduleValue = "Schedule";
         private const string EventValue = "Event";
         private const string ManualValue = "Manual";
 
-        /// <summary> Scheduled. </summary>
-        public static ContainerAppJobTriggerType Scheduled { get; } = new ContainerAppJobTriggerType(ScheduledValue);
+        /// <summary> Schedule. </summary>
+        public static ContainerAppJobTriggerType Schedule { get; } = new ContainerAppJobTriggerType(ScheduleValue);
         /// <summary> Event. </summary>
         public static ContainerAppJobTriggerType Event { get; } = new ContainerAppJobTriggerType(EventValue);
         /// <summary> Manual. </summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -8,14 +8,20 @@ azure-arm: true
 csharp: true
 library-name: Maintenance
 namespace: Azure.ResourceManager.Maintenance
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/7d5d1db0c45d6fe0934c97b6a6f9bb34112d42d1/specification/maintenance/resource-manager/readme.md
-tag: package-2021-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/741b0c8c71d90525a92bc4f2e45cb189c3affccd/specification/maintenance/resource-manager/readme.md
+#package-preview-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -25,10 +31,12 @@ format-by-name-rules:
   '*Uris': 'Uri'
 
 rename-mapping:
-  ApplyUpdate: MaintenanceApplyUpdate
-  Update: MaintenanceUpdate
-  ImpactType: MaintenanceImpactType
   ConfigurationAssignment: MaintenanceConfigurationAssignmentData
+  ConfigurationAssignmentFilterProperties: MaintenanceConfigurationAssignmentFilter
+  ConfigurationAssignmentFilterProperties.resourceTypes: -|resource-type
+  ConfigurationAssignmentFilterProperties.locations: -|azure-location
+  TagOperators: VmTagOperator
+  TagSettingsProperties: VmTagSettings
   ApplyUpdate.properties.resourceId: -|arm-id
   ConfigurationAssignment.properties.resourceId: -|arm-id
   Update.properties.resourceId: -|arm-id
@@ -39,21 +47,46 @@ rename-mapping:
   ListUpdatesResult: MaintenanceUpdateListResult
   ListMaintenanceConfigurationsResult: MaintenanceConfigurationListResult
   ListConfigurationAssignmentsResult: MaintenanceConfigurationAssignmentListResult
-  UpdateStatus: MaintenanceUpdateStatus
   Visibility: MaintenanceConfigurationVisibility
   ApplyUpdate.properties.lastUpdateTime: LastUpdatedOn
+  InputPatchConfiguration: MaintenancePatchConfiguration
+  InputWindowsParameters: MaintenanceWindowsPatchSettings
+  InputWindowsParameters.excludeKbsRequiringReboot: IsExcludeKbsRebootRequired
+  InputLinuxParameters: MaintenanceLinuxPatchSettings
+  ScheduledEventApproveResponse: ScheduledEventApproveResult
+
+prepend-rp-prefix:
+  - ApplyUpdate
+  - ImpactType
+  - RebootOptions
+  - Update
+  - UpdateStatus
 
 override-operation-name:
   ApplyUpdates_GetParent: GetApplyUpdatesByParent
   ApplyUpdates_CreateOrUpdateParent: CreateOrUpdateApplyUpdateByParent
   ConfigurationAssignments_CreateOrUpdateParent: CreateOrUpdateConfigurationAssignmentByParent
+  ConfigurationAssignmentsForResourceGroup_CreateOrUpdate: CreateOrUpdateConfigurationAssignmentByResourceGroup
+  ConfigurationAssignmentsForSubscriptions_CreateOrUpdate: CreateOrUpdateConfigurationAssignmentBySubscription
   ConfigurationAssignments_DeleteParent: DeleteConfigurationAssignmentByParent
+  ConfigurationAssignmentsForResourceGroup_Delete: DeleteConfigurationAssignmentByResourceGroup
+  ConfigurationAssignmentsForSubscriptions_Delete: DeleteConfigurationAssignmentBySubscription
+  ConfigurationAssignments_GetParent: GetConfigurationAssignmentByParent
+  ConfigurationAssignmentsForResourceGroup_Get: GetConfigurationAssignmentByResourceGroup
+  ConfigurationAssignmentsForSubscriptions_Get: GetConfigurationAssignmentBySubscription
   ConfigurationAssignments_ListParent:  GetConfigurationAssignmentsByParent
+  ConfigurationAssignmentsWithinSubscription_List: GetConfigurationAssignmentsBySubscription
+  ConfigurationAssignmentsForResourceGroup_Update: UpdateConfigurationAssignmentByResourceGroup
+  ConfigurationAssignmentsForSubscriptions_Update: UpdateConfigurationAssignmentBySubscription
   Updates_ListParent: GetUpdatesByParent
   MaintenanceConfigurations_Delete: DeleteEx
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}
+  - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}
+  - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}
+  - /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}
+  - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}: MaintenancePublicConfiguration
@@ -62,7 +95,7 @@ request-path-to-resource-name:
 list-exception:
   - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -93,7 +126,7 @@ directive:
     transform: >
       $.MaintenanceWindow.properties.duration['x-ms-format'] = 'duration-constant';
 
-  # Sevice doesn't return the the `MaintenanceConfiguration` for the delete operation, use `directive` to fix the swagger and custom code to keep backward compatibility as this lib has already GAed. 
+  # Sevice doesn't return the the `MaintenanceConfiguration` for the delete operation, use `directive` to fix the swagger and custom code to keep backward compatibility as this lib has already GAed.
   - from: Maintenance.json
     where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}']
     transform: >

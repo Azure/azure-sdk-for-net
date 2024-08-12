@@ -32,14 +32,6 @@ GitHub repository ID of the SDK. Typically of the form: 'Azure/azure-sdk-for-js'
 The docker image id in format of '$containerRegistry/$imageName:$tag'
 e.g. azuresdkimages.azurecr.io/jsrefautocr:latest
 
-.PARAMETER TenantId
-The aad tenant id/object id.
-
-.PARAMETER ClientId
-The add client id/application id.
-
-.PARAMETER ClientSecret
-The client secret of add app.
 #>
 
 param(
@@ -59,16 +51,7 @@ param(
   [string]$DocValidationImageId,
 
   [Parameter(Mandatory = $false)]
-  [string]$PackageSourceOverride,
-
-  [Parameter(Mandatory = $false)]
-  [string]$TenantId,
-
-  [Parameter(Mandatory = $false)]
-  [string]$ClientId,
-
-  [Parameter(Mandatory = $false)]
-  [string]$ClientSecret
+  [string]$PackageSourceOverride
 )
 Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
@@ -105,28 +88,10 @@ function GetAdjustedReadmeContent($ReadmeContent, $PackageInfo, $PackageMetadata
     $ReadmeContent = $ReadmeContent -replace $releaseReplaceRegex, $replacementPattern
   }
 
-  # Get the first code owners of the package.
-  Write-Host "Retrieve the code owner from $($PackageInfo.DirectoryPath)."
-  $author = GetPrimaryCodeOwner -TargetDirectory $PackageInfo.DirectoryPath
-  if (!$author) {
-    $author = "ramya-rao-a"
-    $msauthor = "ramyar"
-  }
-  else {
-    $msauthor = GetMsAliasFromGithub -TenantId $TenantId -ClientId $ClientId -ClientSecret $ClientSecret -GithubUser $author
-  }
-  # Default value
-  if (!$msauthor) {
-    $msauthor = $author
-  }
-  Write-Host "The author of package: $author"
-  Write-Host "The ms author of package: $msauthor"
   $header = @"
 ---
 title: $foundTitle
 keywords: Azure, $Language, SDK, API, $($PackageInfo.Name), $service
-author: $author
-ms.author: $msauthor
 ms.date: $date
 ms.topic: reference
 ms.devlang: $Language
@@ -146,24 +111,18 @@ function GetPackageInfoJson ($packageInfoJsonLocation) {
 
   $packageInfoJson = Get-Content $packageInfoJsonLocation -Raw
   $packageInfo = ConvertFrom-Json $packageInfoJson
+  if ($GetDocsMsDevLanguageSpecificPackageInfoFn -and (Test-Path "Function:$GetDocsMsDevLanguageSpecificPackageInfoFn")) {
+    $packageInfo = &$GetDocsMsDevLanguageSpecificPackageInfoFn $packageInfo $PackageSourceOverride
+  }
+  # Default: use the dev version from package info as the version for
+  # downstream processes
   if ($packageInfo.DevVersion) {
-    # If the package is of a dev version there may be language-specific needs to
-    # specify the appropriate version. For example, in the case of JS, the dev
-    # version is always 'dev' when interacting with NPM.
-    if ($GetDocsMsDevLanguageSpecificPackageInfoFn -and (Test-Path "Function:$GetDocsMsDevLanguageSpecificPackageInfoFn")) {
-      $packageInfo = &$GetDocsMsDevLanguageSpecificPackageInfoFn $packageInfo
-    }
-    else {
-      # Default: use the dev version from package info as the version for
-      # downstream processes
-      $packageInfo.Version = $packageInfo.DevVersion
-    }
+    $packageInfo.Version = $packageInfo.DevVersion
   }
   return $packageInfo
 }
 
-function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
-  $packageInfo = GetPackageInfoJson $packageInfoJsonLocation
+function UpdateDocsMsMetadataForPackage($packageInfo, $packageMetadataName) {
 
   $originalVersion = [AzureEngSemanticVersion]::ParseVersionString($packageInfo.Version)
   $packageMetadataArray = (Get-CSVMetadata).Where({ $_.Package -eq $packageInfo.Name -and $_.Hide -ne 'true' -and $_.New -eq 'true' })
@@ -190,7 +149,6 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
     $metadataMoniker = 'preview'
     $readMePath = $docsMsMetadata.PreviewReadMeLocation
   }
-  $packageMetadataName = Split-Path $packageInfoJsonLocation -Leaf
   $packageInfoLocation = Join-Path $DocRepoLocation "metadata/$metadataMoniker"
   if (Test-Path "$packageInfoLocation/$packageMetadataName") {
     Write-Host "The docs metadata json $packageMetadataName exists, updating..."
@@ -205,7 +163,7 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
     Write-Host "The docs metadata json $packageMetadataName does not exist, creating a new one to docs repo..."
     New-Item -ItemType Directory -Path $packageInfoLocation -Force
   }
-  $packageInfoJson = ConvertTo-Json $packageInfo
+  $packageInfoJson = ConvertTo-Json $packageInfo -Depth 100
   Set-Content `
     -Path $packageInfoLocation/$packageMetadataName `
     -Value $packageInfoJson
@@ -230,17 +188,41 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
   Set-Content -Path $readmeLocation -Value $outputReadmeContent
 }
 
-# For daily update and release, validate DocsMS publishing using the language-specific validation function
-if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
-  Write-Host "Validating the packages..."
+$allSucceeded = $true
+foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
 
-  $packageInfos = @($PackageInfoJsonLocations | ForEach-Object { GetPackageInfoJson $_ })
+  $packageInfo =  GetPackageInfoJson $packageInfoLocation
 
-  &$ValidateDocsMsPackagesFn -PackageInfos $packageInfos -PackageSourceOverride $PackageSourceOverride -DocValidationImageId $DocValidationImageId -DocRepoLocation $DocRepoLocation
+  if ($ValidateDocsMsPackagesFn -and (Test-Path "Function:$ValidateDocsMsPackagesFn")) {
+    Write-Host "Validating the packages..."
+    # This calls a function named "Validate-${Language}-DocMsPackages"
+    # declared in common.ps1, implemented in Language-Settings.ps1
+    $isValid = &$ValidateDocsMsPackagesFn `
+      -PackageInfos $packageInfo `
+      -PackageSourceOverride $PackageSourceOverride `
+      -DocValidationImageId $DocValidationImageId `
+      -DocRepoLocation $DocRepoLocation
+
+    if (!$isValid) {
+      Write-Host "Package validation failed for package: $packageInfoLocation"
+      $allSucceeded = $false
+
+      # Skip the later call to UpdateDocsMsMetadataForPackage because this
+      # package has not passed validation
+      continue
+    }
+  }
+
+  Write-Host "Updating metadata for package: $packageInfoLocation"
+  $packageMetadataName = Split-Path $packageInfoLocation -Leaf
+  # Convert package metadata json file to metadata json property.
+  UpdateDocsMsMetadataForPackage $packageInfo $packageMetadataName
 }
 
-foreach ($packageInfoLocation in $PackageInfoJsonLocations) {
-  Write-Host "Updating metadata for package: $packageInfoLocation"
-  # Convert package metadata json file to metadata json property.
-  UpdateDocsMsMetadataForPackage $packageInfoLocation
+# Set a variable which will be used by the pipeline later to fail the build if
+# any packages failed validation
+if ($allSucceeded) {
+  Write-Host "##vso[task.setvariable variable=DocsMsPackagesAllValid;]$true"
+} else {
+  Write-Host "##vso[task.setvariable variable=DocsMsPackagesAllValid;]$false"
 }

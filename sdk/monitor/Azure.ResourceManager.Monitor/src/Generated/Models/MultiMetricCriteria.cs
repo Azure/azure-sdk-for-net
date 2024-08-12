@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class MultiMetricCriteria
     {
-        /// <summary> Initializes a new instance of MultiMetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/>. </summary>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeAggregation"> the criteria time aggregation types. </param>
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of MultiMetricCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/>. </summary>
         /// <param name="criterionType"> Specifies the type of threshold criteria. </param>
         /// <param name="name"> Name of the criteria. </param>
         /// <param name="metricName"> Name of the metric. </param>
@@ -54,6 +53,11 @@ namespace Azure.ResourceManager.Monitor.Models
             Dimensions = dimensions;
             SkipMetricValidation = skipMetricValidation;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/> for deserialization. </summary>
+        internal MultiMetricCriteria()
+        {
         }
 
         /// <summary> Specifies the type of threshold criteria. </summary>
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

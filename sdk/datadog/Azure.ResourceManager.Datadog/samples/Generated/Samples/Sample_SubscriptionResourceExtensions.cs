@@ -9,8 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Datadog;
 using Azure.ResourceManager.Datadog.Models;
 using Azure.ResourceManager.Resources;
 
@@ -38,7 +36,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (DatadogAgreementResource item in subscriptionResource.GetMarketplaceAgreementsAsync())
+            await foreach (DatadogAgreementResourceProperties item in subscriptionResource.GetMarketplaceAgreementsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            DatadogAgreementResource result = await subscriptionResource.CreateOrUpdateMarketplaceAgreementAsync();
+            DatadogAgreementResourceProperties result = await subscriptionResource.CreateOrUpdateMarketplaceAgreementAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

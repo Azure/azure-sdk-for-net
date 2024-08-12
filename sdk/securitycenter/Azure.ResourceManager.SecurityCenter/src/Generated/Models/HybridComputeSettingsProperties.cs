@@ -5,26 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Settings for hybrid compute management. </summary>
     public partial class HybridComputeSettingsProperties
     {
-        /// <summary> Initializes a new instance of HybridComputeSettingsProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HybridComputeSettingsProperties"/>. </summary>
         /// <param name="autoProvision"> Whether or not to automatically install Azure Arc (hybrid compute) agents on machines. </param>
         public HybridComputeSettingsProperties(AutoProvisionState autoProvision)
         {
             AutoProvision = autoProvision;
         }
 
-        /// <summary> Initializes a new instance of HybridComputeSettingsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputeSettingsProperties"/>. </summary>
         /// <param name="hybridComputeProvisioningState"> State of the service principal and its secret. </param>
         /// <param name="autoProvision"> Whether or not to automatically install Azure Arc (hybrid compute) agents on machines. </param>
         /// <param name="resourceGroupName"> The name of the resource group where Arc (Hybrid Compute) connectors are connected. </param>
         /// <param name="region"> The location where the metadata of machines will be stored. </param>
         /// <param name="proxyServer"> For a non-Azure machine that is not connected directly to the internet, specify a proxy server that the non-Azure machine can use. </param>
         /// <param name="servicePrincipal"> An object to access resources that are secured by an Azure AD tenant. </param>
-        internal HybridComputeSettingsProperties(HybridComputeProvisioningState? hybridComputeProvisioningState, AutoProvisionState autoProvision, string resourceGroupName, string region, ProxyServerProperties proxyServer, ServicePrincipalProperties servicePrincipal)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeSettingsProperties(HybridComputeProvisioningState? hybridComputeProvisioningState, AutoProvisionState autoProvision, string resourceGroupName, string region, ProxyServerProperties proxyServer, ServicePrincipalProperties servicePrincipal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HybridComputeProvisioningState = hybridComputeProvisioningState;
             AutoProvision = autoProvision;
@@ -32,6 +68,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Region = region;
             ProxyServer = proxyServer;
             ServicePrincipal = servicePrincipal;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridComputeSettingsProperties"/> for deserialization. </summary>
+        internal HybridComputeSettingsProperties()
+        {
         }
 
         /// <summary> State of the service principal and its secret. </summary>

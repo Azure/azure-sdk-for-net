@@ -6,35 +6,12 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonFeatureData : IUtf8JsonSerializable
+    public partial class GeoJsonFeatureData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue(Geometry);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(FeatureType))
-            {
-                writer.WritePropertyName("featureType"u8);
-                writer.WriteStringValue(FeatureType);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonFeatureData DeserializeGeoJsonFeatureData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -42,9 +19,9 @@ namespace Azure.Maps.Search.Models
                 return null;
             }
             GeoJsonGeometry geometry = default;
-            Optional<object> properties = default;
-            Optional<string> id = default;
-            Optional<string> featureType = default;
+            object properties = default;
+            string id = default;
+            string featureType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("geometry"u8))
@@ -72,7 +49,15 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new GeoJsonFeatureData(geometry, properties.Value, id.Value, featureType.Value);
+            return new GeoJsonFeatureData(geometry, properties, id, featureType);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GeoJsonFeatureData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGeoJsonFeatureData(document.RootElement);
         }
     }
 }

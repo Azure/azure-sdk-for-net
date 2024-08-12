@@ -15,6 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Kusto.Tests
 {
+    [LiveOnly(Reason = "Kusto tests rely on PrincipalId which can't be stored in recordings.")]
     public class KustoManagementTestBase : ManagementRecordedTestBase<KustoManagementTestEnvironment>
     {
         protected KustoManagementTestEnvironment TE => TestEnvironment;
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.Kusto.Tests
         private SubscriptionResource Subscription { get; set; }
         protected ResourceGroupResource ResourceGroup { get; private set; }
         protected KustoClusterResource Cluster { get; private set; }
+        protected KustoClusterResource FollowingCluster { get; private set; }
         protected KustoDatabaseResource Database { get; private set; }
 
         protected KustoManagementTestBase(bool isAsync, RecordedTestMode mode)
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.Kusto.Tests
             JsonPathSanitizers.Add("$..scriptUrlSasToken");
         }
 
-        protected async Task BaseSetUp(bool cluster = false, bool database = false)
+        protected async Task BaseSetUp()
         {
             Location = new AzureLocation(TE.Location);
 
@@ -45,15 +47,9 @@ namespace Azure.ResourceManager.Kusto.Tests
 
             ResourceGroup = (await Subscription.GetResourceGroupAsync(TE.ResourceGroup)).Value;
 
-            if (cluster || database)
-            {
-                Cluster = (await ResourceGroup.GetKustoClusterAsync(TE.ClusterName)).Value;
-            }
-
-            if (database)
-            {
-                Database = (await Cluster.GetKustoDatabaseAsync(TE.DatabaseName)).Value;
-            }
+            Cluster = (await ResourceGroup.GetKustoClusterAsync(TE.ClusterName)).Value;
+            FollowingCluster = (await ResourceGroup.GetKustoClusterAsync(TE.FollowingClusterName)).Value;
+            Database = (await Cluster.GetKustoDatabaseAsync(TE.DatabaseName)).Value;
         }
 
         // Testing Methods
@@ -97,6 +93,7 @@ namespace Azure.ResourceManager.Kusto.Tests
             {
                 resourceData = resourceDataCreate;
                 resource = (await createOrUpdateAsync(expectedResourceName, resourceData)).Value;
+                Assert.IsNotNull(resource);
                 validate(
                     expectedFullResourceName, resourceData, (TS)GetResourceData(resource)
                 );
@@ -106,17 +103,20 @@ namespace Azure.ResourceManager.Kusto.Tests
             {
                 resourceData = resourceDataUpdate;
                 resource = (await createOrUpdateAsync(expectedResourceName, resourceData)).Value;
+                Assert.IsNotNull(resource);
                 validate(
                     expectedFullResourceName, resourceData, (TS)GetResourceData(resource)
                 );
             }
 
             resource = (await getAsync(expectedResourceName)).Value;
+            Assert.IsNotNull(resource);
             validate(
                 expectedFullResourceName, resourceData, (TS)GetResourceData(resource)
             );
 
             resource = await getAllAsync().FirstOrDefaultAsync(r => expectedFullResourceName == GetResourceName(r));
+            Assert.IsNotNull(resource);
             validate(
                 expectedFullResourceName, resourceData, (TS)GetResourceData(resource)
             );
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Kusto.Tests
         // Utility Methods
         private static object GetResourceData(object resource)
         {
-            return resource.GetType().GetProperty("Data")?.GetValue(resource, null);
+            return resource.GetType().GetProperty("Data").GetValue(resource, null);
         }
 
         private static string GetResourceName(object resource)

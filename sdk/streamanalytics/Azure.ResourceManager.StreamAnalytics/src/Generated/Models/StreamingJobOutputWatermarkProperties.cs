@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Settings which determine whether to send watermarks to downstream. </summary>
     public partial class StreamingJobOutputWatermarkProperties
     {
-        /// <summary> Initializes a new instance of StreamingJobOutputWatermarkProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputWatermarkProperties"/>. </summary>
         public StreamingJobOutputWatermarkProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobOutputWatermarkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobOutputWatermarkProperties"/>. </summary>
         /// <param name="watermarkMode"> The output watermark mode. </param>
         /// <param name="maxWatermarkDifferenceAcrossPartitions"> Describes the maximal delta between the fastest and slowest partitions, so the out of order window that catches all necessary events in downstream jobs is well defined. </param>
-        internal StreamingJobOutputWatermarkProperties(StreamingJobOutputWatermarkMode? watermarkMode, string maxWatermarkDifferenceAcrossPartitions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobOutputWatermarkProperties(StreamingJobOutputWatermarkMode? watermarkMode, string maxWatermarkDifferenceAcrossPartitions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WatermarkMode = watermarkMode;
             MaxWatermarkDifferenceAcrossPartitions = maxWatermarkDifferenceAcrossPartitions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The output watermark mode. </summary>

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,66 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2024-06-17)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Upgraded api-version tag from 'package-2023-11' to 'package-2024-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a6ba164815464151a4adb687ea12a7a7090ed7fe/specification/dataprotection/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.40.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
+- Obsoleted method 'ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)' in type Azure.ResourceManager.DataProtectionBackup.DataProtectionBackupInstanceResource
+
+## 1.4.0 (2023-12-27)
+
+### Features Added
+
+- Stable version release for API version 2023-11-01.
+
+## 1.4.0-beta.1 (2023-12-13)
+
+### Features Added
+
+- Update API version to 2023-11-01
+- Add property `string JobIdentifier` to class `DataProtectionOperationJobExtendedInfo`, and now since the "jobId" returned by service is not always a resource identifier, `JobResourceId` will be null when `JobIdentifier` is not parsable to a resource identifier.
+
+## 1.3.0 (2023-11-27)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.3.0-beta.1 (2023-09-26)
+
+### Features Added
+
+- Added support for AKS workload.
+- Added support for secure score
+
+### Other Changes
+
+- Add property `identityDetails` to class `DataProtectionBackupInstanceProperties`.
+- Add property `RehydrationPriority ` to class `DataProtectionBackupJobProperties`.
+- Add property `FeatureSettings ` to class `DataProtectionBackupVaultPatchProperties`, replace the `CrossSubscriptionRestoreState`.
+- Add property `IdentityDetails  ` to class `DeletedDataProtectionBackupInstanceProperties`.
+
+## 1.2.0 (2023-07-20)
+
+### Features Added
+
+- Added new resourceGuardProxy Api's.
+
+### Breaking Changes
+
+- Add property `JobResourceId` to class `DataProtectionOperationJobExtendedInfo`, replace the `JobId`.
 
 ## 1.2.0-beta.1 (2023-05-29)
 

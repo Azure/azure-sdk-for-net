@@ -8,7 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetAccountPropertiesAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetAccountPropertiesAsync(RequestContext context = null)
+        public virtual async Task<Response> GetAccountPropertiesAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
@@ -105,7 +105,7 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetAccountProperties(RequestContext)']/*" />
-        public virtual Response GetAccountProperties(RequestContext context = null)
+        public virtual Response GetAccountProperties(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.GetAccountProperties");
             scope.Start();
@@ -203,7 +203,7 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetAccessKeysAsync(RequestContext)']/*" />
-        public virtual async Task<Response> GetAccessKeysAsync(RequestContext context = null)
+        public virtual async Task<Response> GetAccessKeysAsync(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
@@ -233,7 +233,7 @@ namespace Azure.Analytics.Purview.Account
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetAccessKeys(RequestContext)']/*" />
-        public virtual Response GetAccessKeys(RequestContext context = null)
+        public virtual Response GetAccessKeys(RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewAccountClient.GetAccessKeys");
             scope.Start();
@@ -327,16 +327,16 @@ namespace Azure.Analytics.Purview.Account
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetCollectionsAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetCollectionsAsync(string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetCollectionsAsync(string skipToken, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCollectionsRequest(skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCollectionsNextPageRequest(nextLink, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewAccountClient.GetCollections", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewAccountClient.GetCollections", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -349,16 +349,16 @@ namespace Azure.Analytics.Purview.Account
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetCollections(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetCollections(string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetCollections(string skipToken, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCollectionsRequest(skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCollectionsNextPageRequest(nextLink, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewAccountClient.GetCollections", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewAccountClient.GetCollections", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -371,16 +371,16 @@ namespace Azure.Analytics.Purview.Account
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetResourceSetRulesAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetResourceSetRulesAsync(string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetResourceSetRulesAsync(string skipToken, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetResourceSetRulesRequest(skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetResourceSetRulesNextPageRequest(nextLink, skipToken, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewAccountClient.GetResourceSetRules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewAccountClient.GetResourceSetRules", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -393,22 +393,22 @@ namespace Azure.Analytics.Purview.Account
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skipToken"> The String to use. </param>
+        /// <param name="skipToken"> The <see cref="string"/> to use. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewAccountClient.xml" path="doc/members/member[@name='GetResourceSetRules(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetResourceSetRules(string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetResourceSetRules(string skipToken, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetResourceSetRulesRequest(skipToken, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetResourceSetRulesNextPageRequest(nextLink, skipToken, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewAccountClient.GetResourceSetRules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewAccountClient.GetResourceSetRules", "value", "nextLink", context);
         }
 
         private PurviewResourceSetRule _cachedPurviewResourceSetRule;
 
         /// <summary> Initializes a new instance of PurviewCollection. </summary>
-        /// <param name="collectionName"> The String to use. </param>
+        /// <param name="collectionName"> The <see cref="string"/> to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual PurviewCollection GetPurviewCollectionClient(string collectionName)

@@ -6,16 +6,57 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Aggregate maximum bit rate. </summary>
+    /// <summary>
+    /// Aggregate maximum bit rate.
+    /// Serialized Name: Ambr
+    /// </summary>
     public partial class Ambr
     {
-        /// <summary> Initializes a new instance of Ambr. </summary>
-        /// <param name="uplink"> Uplink bit rate. </param>
-        /// <param name="downlink"> Downlink bit rate. </param>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="Ambr"/>. </summary>
+        /// <param name="uplink">
+        /// Uplink bit rate.
+        /// Serialized Name: Ambr.uplink
+        /// </param>
+        /// <param name="downlink">
+        /// Downlink bit rate.
+        /// Serialized Name: Ambr.downlink
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uplink"/> or <paramref name="downlink"/> is null. </exception>
         public Ambr(string uplink, string downlink)
         {
@@ -26,9 +67,39 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Downlink = downlink;
         }
 
-        /// <summary> Uplink bit rate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ambr"/>. </summary>
+        /// <param name="uplink">
+        /// Uplink bit rate.
+        /// Serialized Name: Ambr.uplink
+        /// </param>
+        /// <param name="downlink">
+        /// Downlink bit rate.
+        /// Serialized Name: Ambr.downlink
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Ambr(string uplink, string downlink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Uplink = uplink;
+            Downlink = downlink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Ambr"/> for deserialization. </summary>
+        internal Ambr()
+        {
+        }
+
+        /// <summary>
+        /// Uplink bit rate.
+        /// Serialized Name: Ambr.uplink
+        /// </summary>
+        [WirePath("uplink")]
         public string Uplink { get; set; }
-        /// <summary> Downlink bit rate. </summary>
+        /// <summary>
+        /// Downlink bit rate.
+        /// Serialized Name: Ambr.downlink
+        /// </summary>
+        [WirePath("downlink")]
         public string Downlink { get; set; }
     }
 }

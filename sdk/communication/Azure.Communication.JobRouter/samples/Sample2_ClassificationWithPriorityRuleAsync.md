@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -28,7 +27,7 @@ string classificationPolicyId = "static-priority";
 Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
     {
-        PrioritizationRule = new StaticRule(new LabelValue(10))
+        PrioritizationRule = new StaticRouterRule(new RouterValue(10))
     });
 
 Console.WriteLine($"Classification policy successfully created with id: {classificationPolicy.Value.Id} and priority rule of type: {classificationPolicy.Value.PrioritizationRule.Kind}");
@@ -47,7 +46,7 @@ Console.WriteLine($"Distribution policy successfully created with id: {distribut
 
 // Create queue
 string jobQueueId = "my-default-queue";
-Response<Models.RouterQueue> jobQueue =
+Response<RouterQueue> jobQueue =
     await routerAdministration.CreateQueueAsync(new CreateQueueOptions(queueId: jobQueueId, distributionPolicyId: distributionPolicyId));
 
 Console.WriteLine($"Queue has been successfully created with id: {jobQueue.Value.Id}");
@@ -77,7 +76,7 @@ Console.WriteLine($"Job has been assigned a priority value: {queriedJob.Value.Pr
 
 ## Assign priority value to job using ExpressionRule
 
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyExpressionRule
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyExpressionRouterRule
 // In this scenario we are going to create a classification policy which assigns a priority value by evaluating a simple PowerFx expression
 // The classification policy will be setup to add only the priority value to a job
 // Hence, when the job will be created it will have a queueId assigned to it
@@ -87,7 +86,7 @@ string classificationPolicyId = "expression-priority";
 Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
     {
-        PrioritizationRule = new ExpressionRule("If(job.Escalated = true, 10, 1)") // this will check whether the job has a label "Escalated" set to "true"
+        PrioritizationRule = new ExpressionRouterRule("If(job.Escalated = true, 10, 1)") // this will check whether the job has a label "Escalated" set to "true"
     });
 
 Console.WriteLine($"Classification policy successfully created with id: {classificationPolicy.Value.Id} and priority rule of type: {classificationPolicy.Value.PrioritizationRule.Kind}");
@@ -106,7 +105,7 @@ Console.WriteLine($"Distribution policy successfully created with id: {distribut
 
 // Create queue
 string jobQueueId = "my-default-queue";
-Response<Models.RouterQueue> jobQueue =
+Response<RouterQueue> jobQueue =
     await routerAdministration.CreateQueueAsync(new CreateQueueOptions(queueId: jobQueueId, distributionPolicyId: distributionPolicyId));
 
 Console.WriteLine($"Queue has been successfully created with id: {jobQueue.Value.Id}");
@@ -122,7 +121,7 @@ Response<RouterJob> job1 = await routerClient.CreateJobWithClassificationPolicyA
         QueueId = jobQueueId,
         Labels =
         {
-            ["Escalated"] = new LabelValue(false)
+            ["Escalated"] = new RouterValue(false)
         }
     });
 
@@ -137,7 +136,7 @@ Response<RouterJob> job2 = await routerClient.CreateJobWithClassificationPolicyA
         QueueId = jobQueueId,
         Labels =
         {
-            ["Escalated"] = new LabelValue(true)
+            ["Escalated"] = new RouterValue(true)
         }
     });
 
@@ -189,7 +188,7 @@ module.exports = async function (context, req) {
 
 Setting up using the Router SDK:
 
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyAzureFunctionRule
+```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PrioritybyAzureFunctionRouterRule
 // In this scenario we are going to create a classification policy which assigns a priority value by evaluating a simple AzureFunction
 // The classification policy will be setup to add only the priority value to a job
 // Hence, when the job will be created it will have a queueId assigned to it
@@ -199,7 +198,7 @@ string classificationPolicyId = "expression-priority";
 Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
     {
-        PrioritizationRule = new FunctionRule(new Uri("<insert azure function rule URI>")) // this will check whether the job has a label "Escalated" set to "true"
+        PrioritizationRule = new FunctionRouterRule(new Uri("<insert azure function rule URI>")) // this will check whether the job has a label "Escalated" set to "true"
     });
 
 Console.WriteLine($"Classification policy successfully created with id: {classificationPolicy.Value.Id} and priority rule of type: {classificationPolicy.Value.PrioritizationRule.Kind}");
@@ -218,7 +217,7 @@ Console.WriteLine($"Distribution policy successfully created with id: {distribut
 
 // Create queue
 string jobQueueId = "my-default-queue";
-Response<Models.RouterQueue> jobQueue =
+Response<RouterQueue> jobQueue =
     await routerAdministration.CreateQueueAsync(new CreateQueueOptions(queueId: jobQueueId, distributionPolicyId: distributionPolicyId));
 
 Console.WriteLine($"Queue has been successfully created with id: {jobQueue.Value.Id}");
@@ -234,7 +233,7 @@ Response<RouterJob> job1 = await routerClient.CreateJobWithClassificationPolicyA
         QueueId = jobQueueId,
         Labels =
         {
-            ["Escalated"] = new LabelValue(false)
+            ["Escalated"] = new RouterValue(false)
         }
     });
 
@@ -249,7 +248,7 @@ Response<RouterJob> job2 = await routerClient.CreateJobWithClassificationPolicyA
         QueueId = jobQueueId,
         Labels =
         {
-            ["Escalated"] = new LabelValue(true)
+            ["Escalated"] = new RouterValue(true)
         }
     });
 

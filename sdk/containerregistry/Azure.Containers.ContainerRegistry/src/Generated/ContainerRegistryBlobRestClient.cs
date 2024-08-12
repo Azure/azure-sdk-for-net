@@ -9,7 +9,6 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -69,6 +68,7 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             using var message = CreateGetBlobRequest(name, digest);
+            RedirectPolicy.SetAllowAutoRedirect(message, true);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerRegistryBlobGetBlobHeaders(message.Response);
             switch (message.Response.Status)
@@ -102,6 +102,7 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             using var message = CreateGetBlobRequest(name, digest);
+            RedirectPolicy.SetAllowAutoRedirect(message, true);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerRegistryBlobGetBlobHeaders(message.Response);
             switch (message.Response.Status)
@@ -151,6 +152,7 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             using var message = CreateCheckBlobExistsRequest(name, digest);
+            RedirectPolicy.SetAllowAutoRedirect(message, true);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerRegistryBlobCheckBlobExistsHeaders(message.Response);
             switch (message.Response.Status)
@@ -180,6 +182,7 @@ namespace Azure.Containers.ContainerRegistry
             }
 
             using var message = CreateCheckBlobExistsRequest(name, digest);
+            RedirectPolicy.SetAllowAutoRedirect(message, true);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerRegistryBlobCheckBlobExistsHeaders(message.Response);
             switch (message.Response.Status)

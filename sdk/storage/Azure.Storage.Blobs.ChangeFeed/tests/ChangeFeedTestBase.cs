@@ -25,6 +25,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
         BlobClientOptions.ServiceVersion.V2021_12_02,
         BlobClientOptions.ServiceVersion.V2022_11_02,
         BlobClientOptions.ServiceVersion.V2023_01_03,
+        BlobClientOptions.ServiceVersion.V2023_05_03,
+        BlobClientOptions.ServiceVersion.V2023_08_03,
+        BlobClientOptions.ServiceVersion.V2023_11_03,
+        BlobClientOptions.ServiceVersion.V2024_02_04,
+        BlobClientOptions.ServiceVersion.V2024_05_04,
+        BlobClientOptions.ServiceVersion.V2024_08_04,
+        BlobClientOptions.ServiceVersion.V2024_11_04,
         StorageVersionExtensions.LatestVersion,
         StorageVersionExtensions.MaxVersion,
     RecordingServiceVersion = StorageVersionExtensions.MaxVersion,
@@ -84,7 +91,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (publicAccessType == default)
             {
-                publicAccessType = premium ? PublicAccessType.None : PublicAccessType.BlobContainer;
+                publicAccessType = PublicAccessType.None;
             }
 
             BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(containerName));

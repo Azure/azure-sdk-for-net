@@ -119,7 +119,42 @@ namespace Azure.Storage.Queues
             /// <summary>
             /// The 2023-01-03 service version.
             /// </summary>
-            V2023_01_03 = 17
+            V2023_01_03 = 17,
+
+            /// <summary>
+            /// The 2023-05-03 service version.
+            /// </summary>
+            V2023_05_03 = 18,
+
+            /// <summary>
+            /// The 2023-08-03 service version.
+            /// </summary>
+            V2023_08_03 = 19,
+
+            /// <summary>
+            /// The 2023-11-03 service version.
+            /// </summary>
+            V2023_11_03 = 20,
+
+            /// <summary>
+            /// The 2024-02-04 service version.
+            /// </summary>
+            V2024_02_04 = 21,
+
+            /// <summary>
+            /// The 2024-05-04 service version.
+            /// </summary>
+            V2024_05_04 = 22,
+
+            /// <summary>
+            /// The 2024-08-04 service version.
+            /// </summary>
+            V2024_08_04 = 23,
+
+            /// <summary>
+            /// The 2024-11-04 service version.
+            /// </summary>
+            V2024_11_04 = 24
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -293,5 +328,11 @@ namespace Azure.Storage.Queues
         {
             return this.Build(credentials, GeoRedundantSecondaryUri);
         }
+
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="QueueAudience.PublicAudience" /> will be assumed.</value>
+        public QueueAudience? Audience { get; set; }
     }
 }

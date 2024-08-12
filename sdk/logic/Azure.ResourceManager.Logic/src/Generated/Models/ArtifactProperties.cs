@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The artifact properties definition. </summary>
     public partial class ArtifactProperties
     {
-        /// <summary> Initializes a new instance of ArtifactProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArtifactProperties"/>. </summary>
         public ArtifactProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactProperties"/>. </summary>
         /// <param name="createdOn"> The artifact creation time. </param>
         /// <param name="changedOn"> The artifact changed time. </param>
         /// <param name="metadata"> Anything. </param>
-        internal ArtifactProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArtifactProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreatedOn = createdOn;
             ChangedOn = changedOn;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The artifact creation time. </summary>
@@ -38,7 +73,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

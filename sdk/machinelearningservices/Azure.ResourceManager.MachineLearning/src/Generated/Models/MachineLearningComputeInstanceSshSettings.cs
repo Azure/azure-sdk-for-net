@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Specifies policy and settings for SSH access. </summary>
     public partial class MachineLearningComputeInstanceSshSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceSshSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceSshSettings"/>. </summary>
         public MachineLearningComputeInstanceSshSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningComputeInstanceSshSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceSshSettings"/>. </summary>
         /// <param name="sshPublicAccess"> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </param>
         /// <param name="adminUserName"> Describes the admin user name. </param>
         /// <param name="sshPort"> Describes the port for connecting through SSH. </param>
         /// <param name="adminPublicKey"> Specifies the SSH rsa public key file as a string. Use "ssh-keygen -t rsa -b 2048" to generate your SSH key pairs. </param>
-        internal MachineLearningComputeInstanceSshSettings(MachineLearningSshPublicAccess? sshPublicAccess, string adminUserName, int? sshPort, string adminPublicKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeInstanceSshSettings(MachineLearningSshPublicAccess? sshPublicAccess, string adminUserName, int? sshPort, string adminPublicKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SshPublicAccess = sshPublicAccess;
             AdminUserName = adminUserName;
             SshPort = sshPort;
             AdminPublicKey = adminPublicKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> State of the public SSH port. Possible values are: Disabled - Indicates that the public ssh port is closed on this instance. Enabled - Indicates that the public ssh port is open and accessible according to the VNet/subnet policy if applicable. </summary>

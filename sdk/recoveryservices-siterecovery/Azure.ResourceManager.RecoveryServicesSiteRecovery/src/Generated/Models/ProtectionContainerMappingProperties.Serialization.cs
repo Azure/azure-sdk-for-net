@@ -5,36 +5,147 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ProtectionContainerMappingProperties
+    public partial class ProtectionContainerMappingProperties : IUtf8JsonSerializable, IJsonModel<ProtectionContainerMappingProperties>
     {
-        internal static ProtectionContainerMappingProperties DeserializeProtectionContainerMappingProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProtectionContainerMappingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<ProtectionContainerMappingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProtectionContainerMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TargetProtectionContainerId))
+            {
+                writer.WritePropertyName("targetProtectionContainerId"u8);
+                writer.WriteStringValue(TargetProtectionContainerId);
+            }
+            if (Optional.IsDefined(TargetProtectionContainerFriendlyName))
+            {
+                writer.WritePropertyName("targetProtectionContainerFriendlyName"u8);
+                writer.WriteStringValue(TargetProtectionContainerFriendlyName);
+            }
+            if (Optional.IsDefined(ProviderSpecificDetails))
+            {
+                writer.WritePropertyName("providerSpecificDetails"u8);
+                writer.WriteObjectValue(ProviderSpecificDetails, options);
+            }
+            if (Optional.IsDefined(Health))
+            {
+                writer.WritePropertyName("health"u8);
+                writer.WriteStringValue(Health);
+            }
+            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            {
+                writer.WritePropertyName("healthErrorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in HealthErrorDetails)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PolicyId))
+            {
+                writer.WritePropertyName("policyId"u8);
+                writer.WriteStringValue(PolicyId);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State);
+            }
+            if (Optional.IsDefined(SourceProtectionContainerFriendlyName))
+            {
+                writer.WritePropertyName("sourceProtectionContainerFriendlyName"u8);
+                writer.WriteStringValue(SourceProtectionContainerFriendlyName);
+            }
+            if (Optional.IsDefined(SourceFabricFriendlyName))
+            {
+                writer.WritePropertyName("sourceFabricFriendlyName"u8);
+                writer.WriteStringValue(SourceFabricFriendlyName);
+            }
+            if (Optional.IsDefined(TargetFabricFriendlyName))
+            {
+                writer.WritePropertyName("targetFabricFriendlyName"u8);
+                writer.WriteStringValue(TargetFabricFriendlyName);
+            }
+            if (Optional.IsDefined(PolicyFriendlyName))
+            {
+                writer.WritePropertyName("policyFriendlyName"u8);
+                writer.WriteStringValue(PolicyFriendlyName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ProtectionContainerMappingProperties IJsonModel<ProtectionContainerMappingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProtectionContainerMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProtectionContainerMappingProperties(document.RootElement, options);
+        }
+
+        internal static ProtectionContainerMappingProperties DeserializeProtectionContainerMappingProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> targetProtectionContainerId = default;
-            Optional<string> targetProtectionContainerFriendlyName = default;
-            Optional<ProtectionContainerMappingProviderSpecificDetails> providerSpecificDetails = default;
-            Optional<string> health = default;
-            Optional<IReadOnlyList<HealthError>> healthErrorDetails = default;
-            Optional<string> policyId = default;
-            Optional<string> state = default;
-            Optional<string> sourceProtectionContainerFriendlyName = default;
-            Optional<string> sourceFabricFriendlyName = default;
-            Optional<string> targetFabricFriendlyName = default;
-            Optional<string> policyFriendlyName = default;
+            ResourceIdentifier targetProtectionContainerId = default;
+            string targetProtectionContainerFriendlyName = default;
+            ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails = default;
+            string health = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails = default;
+            ResourceIdentifier policyId = default;
+            string state = default;
+            string sourceProtectionContainerFriendlyName = default;
+            string sourceFabricFriendlyName = default;
+            string targetFabricFriendlyName = default;
+            string policyFriendlyName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetProtectionContainerId"u8))
                 {
-                    targetProtectionContainerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetProtectionContainerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetProtectionContainerFriendlyName"u8))
@@ -48,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ProtectionContainerMappingProviderSpecificDetails.DeserializeProtectionContainerMappingProviderSpecificDetails(property.Value);
+                    providerSpecificDetails = ProtectionContainerMappingProviderSpecificDetails.DeserializeProtectionContainerMappingProviderSpecificDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("health"u8))
@@ -62,17 +173,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrorDetails = array;
                     continue;
                 }
                 if (property.NameEquals("policyId"u8))
                 {
-                    policyId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -100,8 +215,56 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     policyFriendlyName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProtectionContainerMappingProperties(targetProtectionContainerId.Value, targetProtectionContainerFriendlyName.Value, providerSpecificDetails.Value, health.Value, Optional.ToList(healthErrorDetails), policyId.Value, state.Value, sourceProtectionContainerFriendlyName.Value, sourceFabricFriendlyName.Value, targetFabricFriendlyName.Value, policyFriendlyName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ProtectionContainerMappingProperties(
+                targetProtectionContainerId,
+                targetProtectionContainerFriendlyName,
+                providerSpecificDetails,
+                health,
+                healthErrorDetails ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                policyId,
+                state,
+                sourceProtectionContainerFriendlyName,
+                sourceFabricFriendlyName,
+                targetFabricFriendlyName,
+                policyFriendlyName,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProtectionContainerMappingProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProtectionContainerMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ProtectionContainerMappingProperties IPersistableModel<ProtectionContainerMappingProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProtectionContainerMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProtectionContainerMappingProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProtectionContainerMappingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

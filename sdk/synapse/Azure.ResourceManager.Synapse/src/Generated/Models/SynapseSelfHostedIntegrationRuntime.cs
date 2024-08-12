@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Self-hosted integration runtime. </summary>
     public partial class SynapseSelfHostedIntegrationRuntime : SynapseIntegrationRuntimeProperties
     {
-        /// <summary> Initializes a new instance of SynapseSelfHostedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSelfHostedIntegrationRuntime"/>. </summary>
         public SynapseSelfHostedIntegrationRuntime()
         {
             IntegrationRuntimeType = IntegrationRuntimeType.SelfHosted;
         }
 
-        /// <summary> Initializes a new instance of SynapseSelfHostedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSelfHostedIntegrationRuntime"/>. </summary>
         /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

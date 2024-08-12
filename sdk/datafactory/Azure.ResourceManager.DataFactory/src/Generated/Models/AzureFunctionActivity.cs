@@ -7,32 +7,35 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Function activity. </summary>
     public partial class AzureFunctionActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of AzureFunctionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="functionName"> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
-        public AzureFunctionActivity(string name, AzureFunctionActivityMethod method, BinaryData functionName) : base(name)
+        public AzureFunctionActivity(string name, AzureFunctionActivityMethod method, DataFactoryElement<string> functionName) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(functionName, nameof(functionName));
 
             Method = method;
             FunctionName = functionName;
+            RequestHeaders = new ChangeTrackingDictionary<string, BinaryData>();
             ActivityType = "AzureFunctionActivity";
         }
 
-        /// <summary> Initializes a new instance of AzureFunctionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -40,88 +43,33 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="policy"> Activity policy. </param>
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="functionName"> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </param>
-        /// <param name="headers"> Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string). </param>
+        /// <param name="requestHeaders"> Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string). </param>
         /// <param name="body"> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </param>
-        internal AzureFunctionActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, FactoryLinkedServiceReference linkedServiceName, ActivityPolicy policy, AzureFunctionActivityMethod method, BinaryData functionName, BinaryData headers, BinaryData body) : base(name, activityType, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal AzureFunctionActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, AzureFunctionActivityMethod method, DataFactoryElement<string> functionName, IDictionary<string, BinaryData> requestHeaders, DataFactoryElement<string> body) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Method = method;
             FunctionName = functionName;
-            Headers = headers;
+            RequestHeaders = requestHeaders;
             Body = body;
             ActivityType = activityType ?? "AzureFunctionActivity";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureFunctionActivity"/> for deserialization. </summary>
+        internal AzureFunctionActivity()
+        {
+        }
+
         /// <summary> Rest API method for target endpoint. </summary>
         public AzureFunctionActivityMethod Method { get; set; }
-        /// <summary>
-        /// Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string)
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData FunctionName { get; set; }
+        /// <summary> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> FunctionName { get; set; }
         /// <summary>
         /// Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string).
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Headers { get; set; }
-        /// <summary>
-        /// Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -145,6 +93,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Body { get; set; }
+        public IDictionary<string, BinaryData> RequestHeaders { get; }
+        /// <summary> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Body { get; set; }
     }
 }

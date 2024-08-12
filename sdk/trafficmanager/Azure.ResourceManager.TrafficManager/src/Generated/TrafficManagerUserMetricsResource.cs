@@ -9,33 +9,33 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.TrafficManager
 {
     /// <summary>
     /// A Class representing a TrafficManagerUserMetrics along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="TrafficManagerUserMetricsResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetTrafficManagerUserMetricsResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetTrafficManagerUserMetrics method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="TrafficManagerUserMetricsResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetTrafficManagerUserMetricsResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetTrafficManagerUserMetrics method.
     /// </summary>
     public partial class TrafficManagerUserMetricsResource : ArmResource
     {
-
         private readonly ClientDiagnostics _trafficManagerUserMetricsTrafficManagerUserMetricsKeysClientDiagnostics;
         private readonly TrafficManagerUserMetricsKeysRestOperations _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient;
         private readonly TrafficManagerUserMetricData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficManagerUserMetricsKeys";
 
         /// <summary> Initializes a new instance of the <see cref="TrafficManagerUserMetricsResource"/> class for mocking. </summary>
         protected TrafficManagerUserMetricsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "TrafficManagerUserMetricsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="TrafficManagerUserMetricsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal TrafficManagerUserMetricsResource(ArmClient client, TrafficManagerUserMetricData data) : this(client, data.Id)
@@ -56,9 +56,6 @@ namespace Azure.ResourceManager.TrafficManager
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficManagerUserMetricsKeys";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -92,6 +89,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>TrafficManagerUserMetricsKeys_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerUserMetricsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -103,7 +108,9 @@ namespace Azure.ResourceManager.TrafficManager
             try
             {
                 var response = await _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.DeleteAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                var operation = new TrafficManagerArmOperation(response);
+                var uri = _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.CreateDeleteRequestUri(Id.SubscriptionId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new TrafficManagerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -126,6 +133,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>TrafficManagerUserMetricsKeys_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerUserMetricsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -137,7 +152,9 @@ namespace Azure.ResourceManager.TrafficManager
             try
             {
                 var response = _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.Delete(Id.SubscriptionId, cancellationToken);
-                var operation = new TrafficManagerArmOperation(response);
+                var uri = _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.CreateDeleteRequestUri(Id.SubscriptionId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new TrafficManagerArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -160,6 +177,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>TrafficManagerUserMetricsKeys_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerUserMetricsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -171,7 +196,9 @@ namespace Azure.ResourceManager.TrafficManager
             try
             {
                 var response = await _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
-                var operation = new TrafficManagerArmOperation<TrafficManagerUserMetricsResource>(Response.FromValue(new TrafficManagerUserMetricsResource(Client, response), response.GetRawResponse()));
+                var uri = _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new TrafficManagerArmOperation<TrafficManagerUserMetricsResource>(Response.FromValue(new TrafficManagerUserMetricsResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -194,6 +221,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>TrafficManagerUserMetricsKeys_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerUserMetricsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -205,7 +240,9 @@ namespace Azure.ResourceManager.TrafficManager
             try
             {
                 var response = _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.CreateOrUpdate(Id.SubscriptionId, cancellationToken);
-                var operation = new TrafficManagerArmOperation<TrafficManagerUserMetricsResource>(Response.FromValue(new TrafficManagerUserMetricsResource(Client, response), response.GetRawResponse()));
+                var uri = _trafficManagerUserMetricsTrafficManagerUserMetricsKeysRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new TrafficManagerArmOperation<TrafficManagerUserMetricsResource>(Response.FromValue(new TrafficManagerUserMetricsResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

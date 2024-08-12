@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -12,12 +13,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The specification of destinations. </summary>
     public partial class DataCollectionRuleDestinations : DestinationsSpec
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleDestinations. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleDestinations"/>. </summary>
         public DataCollectionRuleDestinations()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleDestinations. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleDestinations"/>. </summary>
         /// <param name="logAnalytics"> List of Log Analytics destinations. </param>
         /// <param name="monitoringAccounts"> List of monitoring account destinations. </param>
         /// <param name="azureMonitorMetrics"> Azure Monitor Metrics destination. </param>
@@ -26,7 +27,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="storageBlobsDirect"> List of Storage Blob Direct destinations. To be used only for sending data directly to store from the agent. </param>
         /// <param name="storageTablesDirect"> List of Storage Table Direct destinations. </param>
         /// <param name="storageAccounts"> List of storage accounts destinations. </param>
-        internal DataCollectionRuleDestinations(IList<LogAnalyticsDestination> logAnalytics, IList<MonitoringAccountDestination> monitoringAccounts, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics, IList<DataCollectionRuleEventHubDestination> eventHubs, IList<DataCollectionRuleEventHubDirectDestination> eventHubsDirect, IList<DataCollectionRuleStorageBlobDestination> storageBlobsDirect, IList<DataCollectionRuleStorageTableDestination> storageTablesDirect, IList<DataCollectionRuleStorageBlobDestination> storageAccounts) : base(logAnalytics, monitoringAccounts, azureMonitorMetrics, eventHubs, eventHubsDirect, storageBlobsDirect, storageTablesDirect, storageAccounts)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleDestinations(IList<LogAnalyticsDestination> logAnalytics, IList<MonitoringAccountDestination> monitoringAccounts, DestinationsSpecAzureMonitorMetrics azureMonitorMetrics, IList<DataCollectionRuleEventHubDestination> eventHubs, IList<DataCollectionRuleEventHubDirectDestination> eventHubsDirect, IList<DataCollectionRuleStorageBlobDestination> storageBlobsDirect, IList<DataCollectionRuleStorageTableDestination> storageTablesDirect, IList<DataCollectionRuleStorageBlobDestination> storageAccounts, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(logAnalytics, monitoringAccounts, azureMonitorMetrics, eventHubs, eventHubsDirect, storageBlobsDirect, storageTablesDirect, storageAccounts, serializedAdditionalRawData)
         {
         }
     }

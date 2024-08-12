@@ -9,9 +9,14 @@ library-name: dnsresolver
 namespace: Azure.ResourceManager.DnsResolver
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  sample: false #true
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 partial-resources:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}: VirtualNetwork
@@ -29,7 +34,7 @@ format-by-name-rules:
   '*IPAddress': 'ip-address'
   'ResourceGuid': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
