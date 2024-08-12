@@ -950,10 +950,10 @@
 # ServiceOwners:                                                   @banggaurav
 
 # PRLabel: %Azure Stack Hci
-/sdk/azurestackhci/Azure.ResourceManager.Hci/                      @NikitaSingh-ms @priyjain358
+/sdk/azurestackhci/Azure.ResourceManager.Hci/                      @priyjain358
 
 # ServiceLabel: %Azure Stack Hci %Mgmt
-# ServiceOwners:                                                   @NikitaSingh-ms @priyjain358
+# ServiceOwners:                                                   @priyjain358
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
