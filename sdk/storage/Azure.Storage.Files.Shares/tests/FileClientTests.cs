@@ -2949,6 +2949,7 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/45377")]
         [RecordedTest]
         public async Task DownloadAsync_WithUnreliableConnection_ConcurrentModification()
         {

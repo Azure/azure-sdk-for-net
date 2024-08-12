@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Text
             IReadOnlyList<DocumentError> errors = default;
             RequestStatistics statistics = default;
             string modelVersion = default;
-            IReadOnlyList<SentimentDocumentResultWithDetectedLanguage> documents = default;
+            IReadOnlyList<SentimentActionResult> documents = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,10 +119,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("documents"u8))
                 {
-                    List<SentimentDocumentResultWithDetectedLanguage> array = new List<SentimentDocumentResultWithDetectedLanguage>();
+                    List<SentimentActionResult> array = new List<SentimentActionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentimentDocumentResultWithDetectedLanguage.DeserializeSentimentDocumentResultWithDetectedLanguage(item, options));
+                        array.Add(SentimentActionResult.DeserializeSentimentActionResult(item, options));
                     }
                     documents = array;
                     continue;
