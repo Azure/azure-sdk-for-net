@@ -137,7 +137,7 @@
             "sku": {
                 "name": "S1"
             },
-            "kind": "TextTranslation",            
+            "kind": "TextTranslation",
             "properties": {
                 "customSubDomainName": "[variables('txtUniqueSubDomainName')]"
             }
