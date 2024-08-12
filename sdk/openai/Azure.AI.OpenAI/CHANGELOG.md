@@ -14,7 +14,7 @@
 - Addressed issues with automatic retry behavior, including for HTTP 429 rate limit errors:
   - Authorization headers are now appropriately reapplied to retried requests
   - Automatic retry behavior will now honor header-based intervals from `Retry-After` and related response headers
-- The client will now originate an `x-ms-client-request-id` to match prior library behavior and facilitate troubleshooting
+- The client will now originate an `x-ms-client-request-id` header to match prior library behavior and facilitate troubleshooting
 
 ### Other Changes
 
