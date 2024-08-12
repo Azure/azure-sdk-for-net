@@ -93,7 +93,7 @@ RadiologyInsightsModelConfiguration radiologyInsightsModelConfiguration = new()
     IncludeEvidence = true,
     InferenceOptions = radiologyInsightsInferenceOptions
 };
-radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.AgeMismatch);
+radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.RadiologyProcedure);
 ```
 
 ## Adding Inference Options to ModelConfiguration for Radiology Insights

@@ -146,7 +146,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 IncludeEvidence = true,
                 InferenceOptions = radiologyInsightsInferenceOptions
             };
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.AgeMismatch);
+            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.RadiologyProcedure);
             #endregion
             return radiologyInsightsModelConfiguration;
         }
