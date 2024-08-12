@@ -26,18 +26,18 @@ internal class Location
 
 internal class MPTError
 {
-    internal string? message { get; set; }
+    public string? message { get; set; }
 }
 internal class RawTestResult
 {
     [JsonPropertyName("steps")]
     public List<RawTestStep> Steps { get; set; } = new List<RawTestStep>();
     [JsonPropertyName("errors")]
-    public string? errors { get; set; }
+    public string errors { get; set; } = "[]";
     [JsonPropertyName("stdErr")]
-    public string? stdErr { get; set; }
+    public string stdErr { get; set; } = "[]";
     [JsonPropertyName("stdOut")]
-    public string? stdOut { get; set; }
+    public string stdOut { get; set; } = "[]";
 }
 
 internal class TokenDetails

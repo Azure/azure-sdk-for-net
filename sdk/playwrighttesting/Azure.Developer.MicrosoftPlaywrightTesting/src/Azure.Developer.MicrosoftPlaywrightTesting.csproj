@@ -14,7 +14,8 @@
 		<IsClientLibrary>true</IsClientLibrary>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 		<Nullable>enable</Nullable>
-	</PropertyGroup>
+    	<IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
 	<ItemGroup>
     	<PackageReference Include="Azure.Core" />
 		<PackageReference Include="Azure.Identity" />
