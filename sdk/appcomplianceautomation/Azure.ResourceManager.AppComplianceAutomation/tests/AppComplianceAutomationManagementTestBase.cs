@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests
         }
 
         public AppComplianceAutomationManagementTestBase(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
             SanitizedHeaders.Add(UserTokenPolicy.UserTokenHeader);
         }
