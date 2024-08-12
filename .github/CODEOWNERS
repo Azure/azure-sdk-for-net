@@ -347,12 +347,6 @@
 # ServiceLabel: %Compute - VMSS
 # ServiceOwners:                                                   @TravisCragg-MSFT @hilaryw29
 
-# PRLabel: %Compute Fleet
-/sdk/computefleet/                                                 @sahilarora92 @ykh015 @aleclawlor
-
-# ServiceLabel: %Compute Fleet
-# ServiceOwners:                                                   @sahilarora92 @ykh015 @aleclawlor
-
 # PRLabel: %Confidential Ledger
 /sdk/confidentialledger/                                           @christothes @PallabPaul
 
@@ -1024,6 +1018,12 @@
 
 # ServiceLabel: %Spring App Discovery %Mgmt
 # ServiceOwners:                                                   @sunkun99
+
+# PRLabel: %Compute - Fleet
+/sdk/computefleet/                                                 @sahilarora92 @ykh015 @aleclawlor
+
+# ServiceLabel: %Compute - Fleet
+# ServiceOwners:                                                   @sahilarora92 @ykh015 @aleclawlor
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
