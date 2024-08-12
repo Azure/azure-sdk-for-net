@@ -4,7 +4,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Azure.AI.OpenAI.Chat;
 using Azure.AI.OpenAI.Internal;
-using OpenAI.Chat;
 
 namespace Azure.AI.OpenAI;
 
@@ -13,6 +12,8 @@ public static partial class AzureChatCompletionOptionsExtensions
     [Experimental("AOAI001")]
     public static void AddDataSource(this ChatCompletionOptions options, AzureChatDataSource dataSource)
     {
+        options.SerializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+
         IList<AzureChatDataSource> existingSources
             = AdditionalPropertyHelpers.GetAdditionalListProperty<AzureChatDataSource>(
                 options.SerializedAdditionalRawData,

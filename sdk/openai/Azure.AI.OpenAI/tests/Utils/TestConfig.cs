@@ -57,8 +57,8 @@ internal class TestConfig
                 {
                     AssetsJson,
                     Path.Combine(AssetsSubFolder, AssetsJson),
-                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Azure", AssetsSubFolder, AssetsJson),
-                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".Azure", AssetsSubFolder, AssetsJson),
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".azure", AssetsSubFolder, AssetsJson),
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".azure", AssetsSubFolder, AssetsJson),
                 }
                 .Select(f => ReadJsonConfig(f))
                 .FirstOrDefault(c => c != null)

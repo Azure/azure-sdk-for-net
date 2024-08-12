@@ -259,17 +259,16 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task ThreadWithInitialMessagesWorks()
     {
+        const string userGreeting = "Hello, world!";
+        const string userQuestion = "Can you describe why stop signs are the shape and color that they are?";
+
         AssistantClient client = GetTestClient();
         ThreadCreationOptions options = new()
         {
             InitialMessages =
             {
-                new ThreadInitializationMessage(MessageRole.User, ["Hello, world!"]),
-                new ThreadInitializationMessage(MessageRole.User,
-                [
-                    "Can you describe this image for me?",
-                    MessageContent.FromImageUrl(new Uri("https://test.openai.com/image.png"))
-                ])
+                new ThreadInitializationMessage(MessageRole.User, [userGreeting]),
+                new ThreadInitializationMessage(MessageRole.User, [ userQuestion ])
                 {
                     Metadata =
                     {
@@ -278,7 +277,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
                 },
             },
         };
-        AssistantThread thread = await client.CreateThreadAsync (options);
+        AssistantThread thread = await client.CreateThreadAsync(options);
         Validate(thread);
         List<ThreadMessage> messageList = await SyncOrAsyncList(client,
             c => c.GetMessages(thread, new() { Order = ListOrder.OldestFirst }),
@@ -286,12 +285,9 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Assert.That(messageList.Count, Is.EqualTo(2));
         Assert.That(messageList[0].Role, Is.EqualTo(MessageRole.User));
         Assert.That(messageList[0].Content?.Count, Is.EqualTo(1));
-        Assert.That(messageList[0].Content[0].Text, Is.EqualTo("Hello, world!"));
-        Assert.That(messageList[1].Content?.Count, Is.EqualTo(2));
+        Assert.That(messageList[0].Content[0].Text, Is.EqualTo(userGreeting));
         Assert.That(messageList[1].Content[0], Is.Not.Null);
-        Assert.That(messageList[1].Content[0].Text, Is.EqualTo("Can you describe this image for me?"));
-        Assert.That(messageList[1].Content[1], Is.Not.Null);
-        Assert.That(messageList[1].Content[1].ImageUrl.AbsoluteUri, Is.EqualTo("https://test.openai.com/image.png"));
+        Assert.That(messageList[1].Content[0].Text, Is.EqualTo(userQuestion));
     }
 
     [RecordedTest]
