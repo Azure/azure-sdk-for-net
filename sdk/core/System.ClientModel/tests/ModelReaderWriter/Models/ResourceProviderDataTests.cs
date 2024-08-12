@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
-using System.IO;
+using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
-using System.ClientModel.Primitives;
+using System.IO;
 using System.Text.Json;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
@@ -51,6 +51,37 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             CompareModels(modelFromStj!, modelFromMrw!, "J");
             var stjResult = JsonSerializer.Serialize(modelFromStj, stjOptions);
             Assert.AreEqual(WirePayload, stjResult);
+        }
+
+        [Test]
+        public void ValidatePrettyPrintWithStj()
+        {
+            var stjOptions = new JsonSerializerOptions
+            {
+                Converters = { new JsonModelConverter() },
+                WriteIndented = true,
+            };
+
+            var modelFromStj = JsonSerializer.Deserialize<ResourceProviderData>(WirePayload, stjOptions);
+            var stjResult = JsonSerializer.Serialize(modelFromStj, stjOptions);
+            Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-TwoSpaces.json")).TrimEnd(), stjResult);
+        }
+
+        [Test]
+        public void ValidateCapitalizationIsIgnored()
+        {
+#if NET8_0_OR_GREATER
+            var stjOptions = new JsonSerializerOptions
+            {
+                Converters = { new JsonModelConverter() },
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.KebabCaseUpper,
+            };
+
+            var modelFromStj = JsonSerializer.Deserialize<ResourceProviderData>(WirePayload, stjOptions);
+            var stjResult = JsonSerializer.Serialize(modelFromStj, stjOptions);
+            Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-TwoSpaces.json")).TrimEnd(), stjResult);
+#endif
         }
     }
 }
