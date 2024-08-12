@@ -516,6 +516,7 @@ namespace Azure.Storage.Blobs.Models
         public long BlobSequenceNumber { get { throw null; } }
         public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } }
         public string CacheControl { get { throw null; } }
+        public byte[] ContentCrc { get { throw null; } }
         public string ContentDisposition { get { throw null; } }
         public string ContentEncoding { get { throw null; } }
         public byte[] ContentHash { get { throw null; } }

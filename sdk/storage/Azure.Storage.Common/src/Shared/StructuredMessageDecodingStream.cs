@@ -431,20 +431,11 @@ internal class StructuredMessageDecodingStream : Stream
             out ulong reportedCrc);
         if (_decodedData.Flags.Value.HasFlag(StructuredMessage.Flags.StorageCrc64))
         {
-            _decodedData.TotalCrc = reportedCrc;
             if (_validateChecksums)
             {
-                using (ArrayPool<byte>.Shared.RentDisposable(StructuredMessage.Crc64Length * 2, out byte[] buf))
-                {
-                    Span<byte> calculated = new(buf, 0, StructuredMessage.Crc64Length);
-                    _totalContentCrc.GetCurrentHash(calculated);
-                    if (BinaryPrimitives.ReadUInt64LittleEndian(calculated) != reportedCrc)
-                    {
-                        Span<byte> reportedAsBytes = new(buf, calculated.Length, StructuredMessage.Crc64Length);
-                        throw Errors.ChecksumMismatch(calculated, reportedAsBytes);
-                    }
-                }
+                ValidateCrc64(_totalContentCrc, reportedCrc);
             }
+            _decodedData.TotalCrc = reportedCrc;
         }
 
         if (_innerStreamConsumed != _decodedData.InnerStreamLength)
@@ -487,22 +478,26 @@ internal class StructuredMessageDecodingStream : Stream
         {
             if (_validateChecksums)
             {
-                using (ArrayPool<byte>.Shared.RentDisposable(StructuredMessage.Crc64Length * 2, out byte[] buf))
-                {
-                    Span<byte> calculated = new(buf, 0, StructuredMessage.Crc64Length);
-                    _segmentCrc.GetCurrentHash(calculated);
-                    _segmentCrc = StorageCrc64HashAlgorithm.Create();
-                    if (BinaryPrimitives.ReadUInt64LittleEndian(calculated) != reportedCrc)
-                    {
-                        Span<byte> reportedAsBytes = new(buf, calculated.Length, StructuredMessage.Crc64Length);
-                        throw Errors.ChecksumMismatch(calculated, reportedAsBytes);
-                    }
-                }
+                ValidateCrc64(_segmentCrc, reportedCrc);
+                _segmentCrc = StorageCrc64HashAlgorithm.Create();
             }
             _decodedData.SegmentCrcs.Add((reportedCrc, _currentSegmentContentLength));
         }
         _currentRegion = _currentSegmentNum == _decodedData.TotalSegments ? SMRegion.StreamFooter : SMRegion.SegmentHeader;
         return footerLen;
+    }
+
+    private static void ValidateCrc64(StorageCrc64HashAlgorithm calculation, ulong reported)
+    {
+        using IDisposable _ = ArrayPool<byte>.Shared.RentDisposable(StructuredMessage.Crc64Length * 2, out byte[] buf);
+        Span<byte> calculatedBytes = new(buf, 0, StructuredMessage.Crc64Length);
+        Span<byte> reportedBytes = new(buf, calculatedBytes.Length, StructuredMessage.Crc64Length);
+        calculation.GetCurrentHash(calculatedBytes);
+        reported.WriteCrc64(reportedBytes);
+        if (!calculatedBytes.SequenceEqual(reportedBytes))
+        {
+            throw Errors.ChecksumMismatch(calculatedBytes, reportedBytes);
+        }
     }
     #endregion
 

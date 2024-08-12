@@ -124,6 +124,68 @@ namespace Azure.Storage.Blobs.Tests
                 })).Value.Content.CopyToAsync(Stream.Null);
             Assert.That(operation, Throws.TypeOf<RequestFailedException>());
         }
+
+        [Test]
+        public async Task StructuredMessagePopulatesCrcDownloadStreaming()
+        {
+            await using DisposingContainer disposingContainer = await ClientBuilder.GetTestContainerAsync(
+                publicAccessType: PublicAccessType.None);
+
+            const int dataLength = Constants.KB;
+            byte[] data = GetRandomBuffer(dataLength);
+            byte[] dataCrc = new byte[8];
+            StorageCrc64Calculator.ComputeSlicedSafe(data, 0L).WriteCrc64(dataCrc);
+
+            var blob = disposingContainer.Container.GetBlobClient(GetNewResourceName());
+            await blob.UploadAsync(BinaryData.FromBytes(data));
+
+            Response<BlobDownloadStreamingResult> response = await blob.DownloadStreamingAsync(new()
+            {
+                TransferValidation = new DownloadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64
+                }
+            });
+
+            // crc is not present until response stream is consumed
+            Assert.That(response.Value.Details.ContentCrc, Is.Null);
+
+            byte[] downloadedData;
+            using (MemoryStream ms = new())
+            {
+                await response.Value.Content.CopyToAsync(ms);
+                downloadedData = ms.ToArray();
+            }
+
+            Assert.That(response.Value.Details.ContentCrc, Is.EqualTo(dataCrc));
+            Assert.That(downloadedData, Is.EqualTo(data));
+        }
+
+        [Test]
+        public async Task StructuredMessagePopulatesCrcDownloadContent()
+        {
+            await using DisposingContainer disposingContainer = await ClientBuilder.GetTestContainerAsync(
+                publicAccessType: PublicAccessType.None);
+
+            const int dataLength = Constants.KB;
+            byte[] data = GetRandomBuffer(dataLength);
+            byte[] dataCrc = new byte[8];
+            StorageCrc64Calculator.ComputeSlicedSafe(data, 0L).WriteCrc64(dataCrc);
+
+            var blob = disposingContainer.Container.GetBlobClient(GetNewResourceName());
+            await blob.UploadAsync(BinaryData.FromBytes(data));
+
+            Response<BlobDownloadResult> response = await blob.DownloadContentAsync(new BlobDownloadOptions()
+            {
+                TransferValidation = new DownloadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.StorageCrc64
+                }
+            });
+
+            Assert.That(response.Value.Details.ContentCrc, Is.EqualTo(dataCrc));
+            Assert.That(response.Value.Content.ToArray(), Is.EqualTo(data));
+        }
         #endregion
     }
 }
