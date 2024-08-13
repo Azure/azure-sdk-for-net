@@ -74,9 +74,6 @@ Once you have the connection strings, see [Creating an Event Processor Client](#
 
 For more concepts and deeper discussion, see: [Event Hubs Features](https://learn.microsoft.com/azure/event-hubs/event-hubs-features).
 
-### RBAC permissions
-v
-
 ### Client lifetime
 
 The `EventProcessorClient` is safe to cache and use as a singleton for the lifetime of the application, which is best practice when events are being read regularly. The clients are responsible for efficient management of network, CPU, and memory use, working to keep usage low during periods of inactivity.  Calling `StopProcessingAsync` or `StopProcessing` on the processor is required to ensure that network resources and other unmanaged objects are properly cleaned up.
