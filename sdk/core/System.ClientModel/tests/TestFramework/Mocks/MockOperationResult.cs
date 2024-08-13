@@ -25,8 +25,6 @@ public class MockOperationResult : OperationResult
 
     public Func<PipelineResponse> GetNextResponse { get; set; }
 
-    public override bool IsCompleted { get; protected set; }
-
     public override ContinuationToken? RehydrationToken { get; protected set; }
 
     public override ValueTask<ClientResult> UpdateStatusAsync(RequestOptions? options = null)
@@ -42,7 +40,7 @@ public class MockOperationResult : OperationResult
 
         if (_updateCount >= _completeAfterCount)
         {
-            IsCompleted = true;
+            HasCompleted = true;
         }
 
         PipelineResponse response = GetNextResponse();

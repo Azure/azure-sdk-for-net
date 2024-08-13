@@ -40,7 +40,7 @@ public class OperationResultTests : SyncAsyncTestBase
         }
 
         Assert.AreEqual(updateCount, completeAfterCount);
-        Assert.IsTrue(operation.IsCompleted);
+        Assert.IsTrue(operation.HasCompleted);
         Assert.AreNotEqual(operation.GetRawResponse(), initialResponse);
     }
 
@@ -54,7 +54,7 @@ public class OperationResultTests : SyncAsyncTestBase
         MockOperationResult operation = new(initialResponse, completeAfterCount);
         operation.OnUpdate = () => updateCount++;
 
-        while (!operation.IsCompleted)
+        while (!operation.HasCompleted)
         {
             PipelineResponse priorResponse = operation.GetRawResponse();
 
@@ -68,7 +68,7 @@ public class OperationResultTests : SyncAsyncTestBase
         }
 
         Assert.AreEqual(updateCount, completeAfterCount);
-        Assert.IsTrue(operation.IsCompleted);
+        Assert.IsTrue(operation.HasCompleted);
     }
 
     [Test]
@@ -99,8 +99,9 @@ public class OperationResultTests : SyncAsyncTestBase
         }
 
         Assert.IsTrue(source.IsCancellationRequested);
+
         Assert.AreEqual(updateCount, 0);
-        Assert.IsFalse(operation.IsCompleted);
+        Assert.IsFalse(operation.HasCompleted);
     }
 
     [Test]
@@ -136,7 +137,7 @@ public class OperationResultTests : SyncAsyncTestBase
         stopwatch.Stop();
 
         Assert.AreEqual(updateCount, completeAfterCount);
-        Assert.IsTrue(operation.IsCompleted);
+        Assert.IsTrue(operation.HasCompleted);
 
         Assert.Greater(stopwatch.Elapsed, TimeSpan.FromSeconds(completeAfterCount * defaultWaitSeconds));
     }

@@ -118,7 +118,8 @@ public abstract class OperationResult : ClientResult
 
             await pollingInterval.WaitAsync(response, cancellationToken).ConfigureAwait(false);
 
-            ClientResult result = await UpdateStatusAsync(cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            RequestOptions? options = RequestOptions.FromCancellationToken(cancellationToken);
+            ClientResult result = await UpdateStatusAsync(options).ConfigureAwait(false);
 
             SetRawResponse(result.GetRawResponse());
         }
@@ -152,7 +153,8 @@ public abstract class OperationResult : ClientResult
 
             pollingInterval.Wait(response, cancellationToken);
 
-            ClientResult result = UpdateStatus(cancellationToken.ToRequestOptions());
+            RequestOptions? options = RequestOptions.FromCancellationToken(cancellationToken);
+            ClientResult result = UpdateStatus(options);
 
             SetRawResponse(result.GetRawResponse());
         }
