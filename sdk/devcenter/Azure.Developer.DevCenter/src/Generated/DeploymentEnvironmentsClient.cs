@@ -69,6 +69,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get environment. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DevCenterEnvironment>> GetEnvironmentAsync(string projectName, string userId, string environmentName, CancellationToken cancellationToken = default)
         {
@@ -88,6 +89,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="environmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get environment. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironment(string,string,string,CancellationToken)']/*" />
         public virtual Response<DevCenterEnvironment> GetEnvironment(string projectName, string userId, string environmentName, CancellationToken cancellationToken = default)
         {
@@ -194,6 +196,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get catalog. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DevCenterCatalog>> GetCatalogAsync(string projectName, string catalogName, CancellationToken cancellationToken = default)
         {
@@ -211,6 +214,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get catalog. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetCatalog(string,string,CancellationToken)']/*" />
         public virtual Response<DevCenterCatalog> GetCatalog(string projectName, string catalogName, CancellationToken cancellationToken = default)
         {
@@ -313,6 +317,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get environment definition. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentDefinitionAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<EnvironmentDefinition>> GetEnvironmentDefinitionAsync(string projectName, string catalogName, string definitionName, CancellationToken cancellationToken = default)
         {
@@ -332,6 +337,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="catalogName"/> or <paramref name="definitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get environment definition. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentDefinition(string,string,string,CancellationToken)']/*" />
         public virtual Response<EnvironmentDefinition> GetEnvironmentDefinition(string projectName, string catalogName, string definitionName, CancellationToken cancellationToken = default)
         {
@@ -437,6 +443,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List all environments. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetAllEnvironmentsAsync(string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevCenterEnvironment> GetAllEnvironmentsAsync(string projectName, CancellationToken cancellationToken = default)
         {
@@ -453,6 +460,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List all environments. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetAllEnvironments(string,CancellationToken)']/*" />
         public virtual Pageable<DevCenterEnvironment> GetAllEnvironments(string projectName, CancellationToken cancellationToken = default)
         {
@@ -532,6 +540,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List environments. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentsAsync(string,string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevCenterEnvironment> GetEnvironmentsAsync(string projectName, string userId, CancellationToken cancellationToken = default)
         {
@@ -550,6 +559,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List environments. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironments(string,string,CancellationToken)']/*" />
         public virtual Pageable<DevCenterEnvironment> GetEnvironments(string projectName, string userId, CancellationToken cancellationToken = default)
         {
@@ -633,6 +643,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List catalogs. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogsAsync(string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevCenterCatalog> GetCatalogsAsync(string projectName, CancellationToken cancellationToken = default)
         {
@@ -649,6 +660,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List catalogs. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetCatalogs(string,CancellationToken)']/*" />
         public virtual Pageable<DevCenterCatalog> GetCatalogs(string projectName, CancellationToken cancellationToken = default)
         {
@@ -727,6 +739,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List environment definitions. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentDefinitionsAsync(string,CancellationToken)']/*" />
         public virtual AsyncPageable<EnvironmentDefinition> GetEnvironmentDefinitionsAsync(string projectName, CancellationToken cancellationToken = default)
         {
@@ -743,6 +756,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List environment definitions. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentDefinitions(string,CancellationToken)']/*" />
         public virtual Pageable<EnvironmentDefinition> GetEnvironmentDefinitions(string projectName, CancellationToken cancellationToken = default)
         {
@@ -822,6 +836,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List environment definitions by catalog. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentDefinitionsByCatalogAsync(string,string,CancellationToken)']/*" />
         public virtual AsyncPageable<EnvironmentDefinition> GetEnvironmentDefinitionsByCatalogAsync(string projectName, string catalogName, CancellationToken cancellationToken = default)
         {
@@ -840,6 +855,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List environment definitions by catalog. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentDefinitionsByCatalog(string,string,CancellationToken)']/*" />
         public virtual Pageable<EnvironmentDefinition> GetEnvironmentDefinitionsByCatalog(string projectName, string catalogName, CancellationToken cancellationToken = default)
         {
@@ -923,6 +939,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List environment types. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypesAsync(string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevCenterEnvironmentType> GetEnvironmentTypesAsync(string projectName, CancellationToken cancellationToken = default)
         {
@@ -939,6 +956,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List environment types. </remarks>
         /// <include file="Docs/DeploymentEnvironmentsClient.xml" path="doc/members/member[@name='GetEnvironmentTypes(string,CancellationToken)']/*" />
         public virtual Pageable<DevCenterEnvironmentType> GetEnvironmentTypes(string projectName, CancellationToken cancellationToken = default)
         {

@@ -68,6 +68,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get pool. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DevBoxPool>> GetPoolAsync(string projectName, string poolName, CancellationToken cancellationToken = default)
         {
@@ -85,6 +86,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get pool. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPool(string,string,CancellationToken)']/*" />
         public virtual Response<DevBoxPool> GetPool(string projectName, string poolName, CancellationToken cancellationToken = default)
         {
@@ -187,6 +189,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get schedule. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetScheduleAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DevBoxSchedule>> GetScheduleAsync(string projectName, string poolName, string scheduleName, CancellationToken cancellationToken = default)
         {
@@ -206,6 +209,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="poolName"/> or <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get schedule. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedule(string,string,string,CancellationToken)']/*" />
         public virtual Response<DevBoxSchedule> GetSchedule(string projectName, string poolName, string scheduleName, CancellationToken cancellationToken = default)
         {
@@ -313,6 +317,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get dev box. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DevBox>> GetDevBoxAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
@@ -332,6 +337,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get dev box. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBox(string,string,string,CancellationToken)']/*" />
         public virtual Response<DevBox> GetDevBox(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
@@ -439,6 +445,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get remote connection. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnectionAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<RemoteConnection>> GetRemoteConnectionAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
@@ -458,6 +465,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get remote connection. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetRemoteConnection(string,string,string,CancellationToken)']/*" />
         public virtual Response<RemoteConnection> GetRemoteConnection(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
@@ -566,6 +574,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get dev box action. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxActionAsync(string,string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DevBoxAction>> GetDevBoxActionAsync(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
         {
@@ -587,6 +596,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get dev box action. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxAction(string,string,string,string,CancellationToken)']/*" />
         public virtual Response<DevBoxAction> GetDevBoxAction(string projectName, string userId, string devBoxName, string actionName, CancellationToken cancellationToken = default)
         {
@@ -785,6 +795,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Delay action. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayActionAsync(string,string,string,string,DateTimeOffset,CancellationToken)']/*" />
         public virtual async Task<Response<DevBoxAction>> DelayActionAsync(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
         {
@@ -807,6 +818,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Delay action. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayAction(string,string,string,string,DateTimeOffset,CancellationToken)']/*" />
         public virtual Response<DevBoxAction> DelayAction(string projectName, string userId, string devBoxName, string actionName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
         {
@@ -919,6 +931,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List pools. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPoolsAsync(string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevBoxPool> GetPoolsAsync(string projectName, CancellationToken cancellationToken = default)
         {
@@ -935,6 +948,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List pools. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetPools(string,CancellationToken)']/*" />
         public virtual Pageable<DevBoxPool> GetPools(string projectName, CancellationToken cancellationToken = default)
         {
@@ -1014,6 +1028,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List schedules. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedulesAsync(string,string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevBoxSchedule> GetSchedulesAsync(string projectName, string poolName, CancellationToken cancellationToken = default)
         {
@@ -1032,6 +1047,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List schedules. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetSchedules(string,string,CancellationToken)']/*" />
         public virtual Pageable<DevBoxSchedule> GetSchedules(string projectName, string poolName, CancellationToken cancellationToken = default)
         {
@@ -1112,6 +1128,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all dev boxes. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxesAsync(CancellationToken)']/*" />
         public virtual AsyncPageable<DevBox> GetAllDevBoxesAsync(CancellationToken cancellationToken = default)
         {
@@ -1123,6 +1140,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all dev boxes. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxes(CancellationToken)']/*" />
         public virtual Pageable<DevBox> GetAllDevBoxes(CancellationToken cancellationToken = default)
         {
@@ -1189,6 +1207,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List all dev boxes by user. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUserAsync(string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevBox> GetAllDevBoxesByUserAsync(string userId, CancellationToken cancellationToken = default)
         {
@@ -1205,6 +1224,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List all dev boxes by user. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetAllDevBoxesByUser(string,CancellationToken)']/*" />
         public virtual Pageable<DevBox> GetAllDevBoxesByUser(string userId, CancellationToken cancellationToken = default)
         {
@@ -1284,6 +1304,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List dev boxes. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxesAsync(string,string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevBox> GetDevBoxesAsync(string projectName, string userId, CancellationToken cancellationToken = default)
         {
@@ -1302,6 +1323,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List dev boxes. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxes(string,string,CancellationToken)']/*" />
         public virtual Pageable<DevBox> GetDevBoxes(string projectName, string userId, CancellationToken cancellationToken = default)
         {
@@ -1387,6 +1409,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List dev box actions. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxActionsAsync(string,string,string,CancellationToken)']/*" />
         public virtual AsyncPageable<DevBoxAction> GetDevBoxActionsAsync(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
@@ -1407,6 +1430,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> List dev box actions. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='GetDevBoxActions(string,string,string,CancellationToken)']/*" />
         public virtual Pageable<DevBoxAction> GetDevBoxActions(string projectName, string userId, string devBoxName, CancellationToken cancellationToken = default)
         {
@@ -1498,6 +1522,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Delay all actions. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayAllActionsAsync(string,string,string,DateTimeOffset,CancellationToken)']/*" />
         public virtual AsyncPageable<DevBoxActionDelayResult> DelayAllActionsAsync(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
         {
@@ -1519,6 +1544,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Delay all actions. </remarks>
         /// <include file="Docs/DevBoxesClient.xml" path="doc/members/member[@name='DelayAllActions(string,string,string,DateTimeOffset,CancellationToken)']/*" />
         public virtual Pageable<DevBoxActionDelayResult> DelayAllActions(string projectName, string userId, string devBoxName, DateTimeOffset delayUntil, CancellationToken cancellationToken = default)
         {

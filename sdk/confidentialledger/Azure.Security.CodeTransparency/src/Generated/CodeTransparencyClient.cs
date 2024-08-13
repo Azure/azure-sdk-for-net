@@ -49,6 +49,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get entry status. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatusAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<GetOperationResult>> GetEntryStatusAsync(string operationId, CancellationToken cancellationToken = default)
         {
@@ -64,6 +65,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get entry status. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatus(string,CancellationToken)']/*" />
         public virtual Response<GetOperationResult> GetEntryStatus(string operationId, CancellationToken cancellationToken = default)
         {
@@ -156,6 +158,7 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get the status of all entries operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List entry statuses. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatusesAsync(CancellationToken)']/*" />
         public virtual async Task<Response<ListOperationResult>> GetEntryStatusesAsync(CancellationToken cancellationToken = default)
         {
@@ -166,6 +169,7 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get the status of all entries operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List entry statuses. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryStatuses(CancellationToken)']/*" />
         public virtual Response<ListOperationResult> GetEntryStatuses(CancellationToken cancellationToken = default)
         {
@@ -250,6 +254,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get entry. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryAsync(string,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetEntryAsync(string entryId, bool? embedReceipt = null, CancellationToken cancellationToken = default)
         {
@@ -266,6 +271,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get entry. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntry(string,bool?,CancellationToken)']/*" />
         public virtual Response<BinaryData> GetEntry(string entryId, bool? embedReceipt = null, CancellationToken cancellationToken = default)
         {
@@ -363,6 +369,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get entry receipt. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryReceiptAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetEntryReceiptAsync(string entryId, CancellationToken cancellationToken = default)
         {
@@ -378,6 +385,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get entry receipt. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryReceipt(string,CancellationToken)']/*" />
         public virtual Response<BinaryData> GetEntryReceipt(string entryId, CancellationToken cancellationToken = default)
         {
@@ -470,6 +478,7 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get service parameters. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get parameters. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetParametersAsync(CancellationToken)']/*" />
         public virtual async Task<Response<ParametersResult>> GetParametersAsync(CancellationToken cancellationToken = default)
         {
@@ -480,6 +489,7 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get service parameters. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get parameters. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetParameters(CancellationToken)']/*" />
         public virtual Response<ParametersResult> GetParameters(CancellationToken cancellationToken = default)
         {
@@ -560,6 +570,7 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get the DID configuration file. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get did config. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetDidConfigAsync(CancellationToken)']/*" />
         public virtual async Task<Response<DidDocument>> GetDidConfigAsync(CancellationToken cancellationToken = default)
         {
@@ -570,6 +581,7 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get the DID configuration file. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get did config. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetDidConfig(CancellationToken)']/*" />
         public virtual Response<DidDocument> GetDidConfig(CancellationToken cancellationToken = default)
         {
@@ -650,6 +662,7 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get CodeTransparency configuration information. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get code transparency config. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetCodeTransparencyConfigAsync(CancellationToken)']/*" />
         public virtual async Task<Response<CodeTransparencyConfiguration>> GetCodeTransparencyConfigAsync(CancellationToken cancellationToken = default)
         {
@@ -660,6 +673,7 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get CodeTransparency configuration information. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get code transparency config. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetCodeTransparencyConfig(CancellationToken)']/*" />
         public virtual Response<CodeTransparencyConfiguration> GetCodeTransparencyConfig(CancellationToken cancellationToken = default)
         {
@@ -740,6 +754,7 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get CodeTransparency version information. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get code transparency version. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetCodeTransparencyVersionAsync(CancellationToken)']/*" />
         public virtual async Task<Response<VersionResult>> GetCodeTransparencyVersionAsync(CancellationToken cancellationToken = default)
         {
@@ -750,6 +765,7 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get CodeTransparency version information. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get code transparency version. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetCodeTransparencyVersion(CancellationToken)']/*" />
         public virtual Response<VersionResult> GetCodeTransparencyVersion(CancellationToken cancellationToken = default)
         {
@@ -832,6 +848,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="from"> Starting Transaction Id. </param>
         /// <param name="to"> Ending Transaction Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List entry ids. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryIdsAsync(long?,long?,CancellationToken)']/*" />
         public virtual AsyncPageable<string> GetEntryIdsAsync(long? @from = null, long? to = null, CancellationToken cancellationToken = default)
         {
@@ -845,6 +862,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="from"> Starting Transaction Id. </param>
         /// <param name="to"> Ending Transaction Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List entry ids. </remarks>
         /// <include file="Docs/CodeTransparencyClient.xml" path="doc/members/member[@name='GetEntryIds(long?,long?,CancellationToken)']/*" />
         public virtual Pageable<string> GetEntryIds(long? @from = null, long? to = null, CancellationToken cancellationToken = default)
         {

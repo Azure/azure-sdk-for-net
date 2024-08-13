@@ -49,6 +49,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get project. </remarks>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DevCenterProject>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
@@ -64,6 +65,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get project. </remarks>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProject(string,CancellationToken)']/*" />
         public virtual Response<DevCenterProject> GetProject(string projectName, CancellationToken cancellationToken = default)
         {
@@ -156,6 +158,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Lists all projects. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List projects. </remarks>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(CancellationToken)']/*" />
         public virtual AsyncPageable<DevCenterProject> GetProjectsAsync(CancellationToken cancellationToken = default)
         {
@@ -167,6 +170,7 @@ namespace Azure.Developer.DevCenter
 
         /// <summary> Lists all projects. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List projects. </remarks>
         /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(CancellationToken)']/*" />
         public virtual Pageable<DevCenterProject> GetProjects(CancellationToken cancellationToken = default)
         {
