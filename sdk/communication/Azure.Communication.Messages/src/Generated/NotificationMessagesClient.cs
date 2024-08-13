@@ -69,6 +69,7 @@ namespace Azure.Communication.Messages
         /// <param name="notificationContent"> Details of the message to send. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
+        /// <remarks> Send. </remarks>
         /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendAsync(NotificationContent,CancellationToken)']/*" />
         public virtual async Task<Response<SendMessageResult>> SendAsync(NotificationContent notificationContent, CancellationToken cancellationToken = default)
         {
@@ -84,6 +85,7 @@ namespace Azure.Communication.Messages
         /// <param name="notificationContent"> Details of the message to send. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="notificationContent"/> is null. </exception>
+        /// <remarks> Send. </remarks>
         /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='Send(NotificationContent,CancellationToken)']/*" />
         public virtual Response<SendMessageResult> Send(NotificationContent notificationContent, CancellationToken cancellationToken = default)
         {
@@ -178,6 +180,7 @@ namespace Azure.Communication.Messages
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Download media internal. </remarks>
         internal virtual async Task<Response<BinaryData>> DownloadMediaInternalAsync(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
@@ -192,6 +195,7 @@ namespace Azure.Communication.Messages
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Download media internal. </remarks>
         internal virtual Response<BinaryData> DownloadMediaInternal(string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));

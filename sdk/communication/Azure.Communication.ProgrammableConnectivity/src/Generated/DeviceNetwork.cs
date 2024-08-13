@@ -54,6 +54,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Retrieve. </remarks>
         /// <include file="Docs/DeviceNetwork.xml" path="doc/members/member[@name='RetrieveAsync(string,NetworkIdentifier,CancellationToken)']/*" />
         public virtual async Task<Response<NetworkRetrievalResult>> RetrieveAsync(string apcGatewayId, NetworkIdentifier body, CancellationToken cancellationToken = default)
         {
@@ -71,6 +72,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Retrieve. </remarks>
         /// <include file="Docs/DeviceNetwork.xml" path="doc/members/member[@name='Retrieve(string,NetworkIdentifier,CancellationToken)']/*" />
         public virtual Response<NetworkRetrievalResult> Retrieve(string apcGatewayId, NetworkIdentifier body, CancellationToken cancellationToken = default)
         {

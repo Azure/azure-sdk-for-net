@@ -65,6 +65,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Verify with code. </remarks>
         /// <include file="Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithCodeAsync(string,NumberVerificationWithCodeContent,CancellationToken)']/*" />
         public virtual async Task<Response<NumberVerificationResult>> VerifyWithCodeAsync(string apcGatewayId, NumberVerificationWithCodeContent body, CancellationToken cancellationToken = default)
         {
@@ -82,6 +83,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Verify with code. </remarks>
         /// <include file="Docs/NumberVerification.xml" path="doc/members/member[@name='VerifyWithCode(string,NumberVerificationWithCodeContent,CancellationToken)']/*" />
         public virtual Response<NumberVerificationResult> VerifyWithCode(string apcGatewayId, NumberVerificationWithCodeContent body, CancellationToken cancellationToken = default)
         {

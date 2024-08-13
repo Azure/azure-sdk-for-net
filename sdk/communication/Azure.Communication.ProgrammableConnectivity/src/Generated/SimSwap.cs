@@ -54,6 +54,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Retrieve. </remarks>
         /// <include file="Docs/SimSwap.xml" path="doc/members/member[@name='RetrieveAsync(string,SimSwapRetrievalContent,CancellationToken)']/*" />
         public virtual async Task<Response<SimSwapRetrievalResult>> RetrieveAsync(string apcGatewayId, SimSwapRetrievalContent body, CancellationToken cancellationToken = default)
         {
@@ -71,6 +72,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Retrieve. </remarks>
         /// <include file="Docs/SimSwap.xml" path="doc/members/member[@name='Retrieve(string,SimSwapRetrievalContent,CancellationToken)']/*" />
         public virtual Response<SimSwapRetrievalResult> Retrieve(string apcGatewayId, SimSwapRetrievalContent body, CancellationToken cancellationToken = default)
         {
@@ -170,6 +172,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Verify. </remarks>
         /// <include file="Docs/SimSwap.xml" path="doc/members/member[@name='VerifyAsync(string,SimSwapVerificationContent,CancellationToken)']/*" />
         public virtual async Task<Response<SimSwapVerificationResult>> VerifyAsync(string apcGatewayId, SimSwapVerificationContent body, CancellationToken cancellationToken = default)
         {
@@ -187,6 +190,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Verify. </remarks>
         /// <include file="Docs/SimSwap.xml" path="doc/members/member[@name='Verify(string,SimSwapVerificationContent,CancellationToken)']/*" />
         public virtual Response<SimSwapVerificationResult> Verify(string apcGatewayId, SimSwapVerificationContent body, CancellationToken cancellationToken = default)
         {

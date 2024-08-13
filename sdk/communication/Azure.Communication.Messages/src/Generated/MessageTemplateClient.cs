@@ -69,6 +69,7 @@ namespace Azure.Communication.Messages
         /// <param name="channelId"> The registration ID of the channel. </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get templates. </remarks>
         /// <include file="Docs/MessageTemplateClient.xml" path="doc/members/member[@name='GetTemplatesAsync(Guid,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<MessageTemplateItem> GetTemplatesAsync(Guid channelId, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
@@ -82,6 +83,7 @@ namespace Azure.Communication.Messages
         /// <param name="channelId"> The registration ID of the channel. </param>
         /// <param name="maxpagesize"> Number of objects to return per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get templates. </remarks>
         /// <include file="Docs/MessageTemplateClient.xml" path="doc/members/member[@name='GetTemplates(Guid,int?,CancellationToken)']/*" />
         public virtual Pageable<MessageTemplateItem> GetTemplates(Guid channelId, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {

@@ -54,6 +54,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Verify. </remarks>
         /// <include file="Docs/DeviceLocation.xml" path="doc/members/member[@name='VerifyAsync(string,DeviceLocationVerificationContent,CancellationToken)']/*" />
         public virtual async Task<Response<DeviceLocationVerificationResult>> VerifyAsync(string apcGatewayId, DeviceLocationVerificationContent body, CancellationToken cancellationToken = default)
         {
@@ -71,6 +72,7 @@ namespace Azure.Communication.ProgrammableConnectivity
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Verify. </remarks>
         /// <include file="Docs/DeviceLocation.xml" path="doc/members/member[@name='Verify(string,DeviceLocationVerificationContent,CancellationToken)']/*" />
         public virtual Response<DeviceLocationVerificationResult> Verify(string apcGatewayId, DeviceLocationVerificationContent body, CancellationToken cancellationToken = default)
         {
