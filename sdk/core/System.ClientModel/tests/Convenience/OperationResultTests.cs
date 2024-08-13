@@ -108,7 +108,8 @@ public class OperationResultTests : SyncAsyncTestBase
     {
         int updateCount = 0;
         int completeAfterCount = 2;
-        int retryAfterSeconds = 3;
+        int retryAfterSeconds = 2;
+        int defaultWaitSeconds = 1;
 
         static PipelineResponse GetResponse(int retryAfterSeconds)
         {
@@ -137,6 +138,6 @@ public class OperationResultTests : SyncAsyncTestBase
         Assert.AreEqual(updateCount, completeAfterCount);
         Assert.IsTrue(operation.IsCompleted);
 
-        Assert.Greater(stopwatch.Elapsed, TimeSpan.FromSeconds(updateCount * retryAfterSeconds));
+        Assert.Greater(stopwatch.Elapsed, TimeSpan.FromSeconds(completeAfterCount * defaultWaitSeconds));
     }
 }
