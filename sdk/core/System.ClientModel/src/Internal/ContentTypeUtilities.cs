@@ -5,9 +5,6 @@ using System.Text;
 
 namespace System.ClientModel.Internal;
 
-/// <summary>
-/// TODO.
-/// </summary>
 internal class ContentTypeUtilities
 {
     public static bool TryGetTextEncoding(string contentType, out Encoding? encoding)

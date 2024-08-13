@@ -110,7 +110,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         LoggerEvent log = _logger.SingleEventById(RequestEvent);
         Assert.AreEqual(LogLevel.Information, log.LogLevel);
         Assert.AreEqual(null, log.Exception);
-        Assert.AreEqual(RequestEvent, log.EventId.Id);
         Assert.AreEqual("Request", log.EventId.Name);
 
         Guid requestId = Guid.Parse(log.GetValueFromArguments<string>("requestId"));
@@ -123,7 +122,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
 
         log = _logger.SingleEventById(ResponseEvent);
         Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual(ResponseEvent, log.EventId.Id);
         Assert.AreEqual("Response", log.EventId.Name);
         Assert.AreEqual(null, log.Exception);
         Guid responseId = Guid.Parse(log.GetValueFromArguments<string>("requestId"));

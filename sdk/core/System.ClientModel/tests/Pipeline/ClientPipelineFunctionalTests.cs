@@ -352,7 +352,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task DoesntRetryClientCancellation()
+    public async Task DoesNotRetryClientCancellation()
     {
         var testDoneTcs = new CancellationTokenSource();
         int i = 0;

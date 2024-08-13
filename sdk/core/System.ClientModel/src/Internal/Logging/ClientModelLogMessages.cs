@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace System.ClientModel.Internal;
 
+// The methods in this class should only ever be called from LoggingHandler
 internal static partial class ClientModelLogMessages
 {
     private const int RequestEvent = 1;
