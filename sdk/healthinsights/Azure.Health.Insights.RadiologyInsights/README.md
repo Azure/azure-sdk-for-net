@@ -77,7 +77,9 @@ Radiology Insights currently supports one document from one patient. Please take
 
 ## Examples
 
-- Working samples available in the [samples folder][sample_folder].
+For each inference samples are available showing how to retrieve the extracted information either synchronously or asynchronously. Examples on how to create a client, a request and retrieve the results are avaible in the samples folder.
+
+- Working samples: [samples folder][sample_folder].
 
 ## Troubleshooting
 
