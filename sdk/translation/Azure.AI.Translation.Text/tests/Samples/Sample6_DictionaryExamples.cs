@@ -22,7 +22,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetGrammaticalStructure()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetGrammaticalStructure
             try
