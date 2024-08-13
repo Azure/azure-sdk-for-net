@@ -74,6 +74,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="analyzeConversationInput"> The input for the analyze conversations operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzeConversationInput"/> is null. </exception>
+        /// <remarks> Analyze conversation. </remarks>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationAsync(AnalyzeConversationInput,CancellationToken)']/*" />
         public virtual async Task<Response<AnalyzeConversationActionResult>> AnalyzeConversationAsync(AnalyzeConversationInput analyzeConversationInput, CancellationToken cancellationToken = default)
         {
@@ -89,6 +90,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="analyzeConversationInput"> The input for the analyze conversations operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzeConversationInput"/> is null. </exception>
+        /// <remarks> Analyze conversation. </remarks>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversation(AnalyzeConversationInput,CancellationToken)']/*" />
         public virtual Response<AnalyzeConversationActionResult> AnalyzeConversation(AnalyzeConversationInput analyzeConversationInput, CancellationToken cancellationToken = default)
         {
@@ -283,6 +285,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="analyzeConversationOperationInput"> The input for the analyze conversations operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzeConversationOperationInput"/> is null. </exception>
+        /// <remarks> Analyze conversation submit operation. </remarks>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationSubmitOperationAsync(WaitUntil,AnalyzeConversationOperationInput,CancellationToken)']/*" />
         public virtual async Task<Operation> AnalyzeConversationSubmitOperationAsync(WaitUntil waitUntil, AnalyzeConversationOperationInput analyzeConversationOperationInput, CancellationToken cancellationToken = default)
         {
@@ -298,6 +301,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="analyzeConversationOperationInput"> The input for the analyze conversations operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzeConversationOperationInput"/> is null. </exception>
+        /// <remarks> Analyze conversation submit operation. </remarks>
         /// <include file="Docs/ConversationAnalysisClient.xml" path="doc/members/member[@name='AnalyzeConversationSubmitOperation(WaitUntil,AnalyzeConversationOperationInput,CancellationToken)']/*" />
         public virtual Operation AnalyzeConversationSubmitOperation(WaitUntil waitUntil, AnalyzeConversationOperationInput analyzeConversationOperationInput, CancellationToken cancellationToken = default)
         {

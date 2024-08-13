@@ -452,6 +452,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get pool. </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response<BatchPool>> GetPoolAsync(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
@@ -476,6 +477,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get pool. </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPool(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
         public virtual Response<BatchPool> GetPool(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
@@ -2930,6 +2932,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get job schedule. </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobScheduleAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response<BatchJobSchedule>> GetJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
@@ -2954,6 +2957,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get job schedule. </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetJobSchedule(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
         public virtual Response<BatchJobSchedule> GetJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
@@ -4300,6 +4304,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="task"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Replace task. </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceTaskAsync(string,string,BatchTask,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response> ReplaceTaskAsync(string jobId, string taskId, BatchTask task, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
@@ -4327,6 +4332,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="task"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Replace task. </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='ReplaceTask(string,string,BatchTask,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual Response ReplaceTask(string jobId, string taskId, BatchTask task, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
@@ -4746,6 +4752,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get task file. </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetTaskFileAsync(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
@@ -4776,6 +4783,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get task file. </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetTaskFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
         public virtual Response<BinaryData> GetTaskFile(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
@@ -6602,6 +6610,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get node file. </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetNodeFileAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
@@ -6632,6 +6641,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get node file. </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetNodeFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
         public virtual Response<BinaryData> GetNodeFile(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
@@ -7492,6 +7502,7 @@ namespace Azure.Compute.Batch
         /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List pool node counts. </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCountsAsync(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
         public virtual AsyncPageable<BatchPoolNodeCounts> GetPoolNodeCountsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
@@ -7521,6 +7532,7 @@ namespace Azure.Compute.Batch
         /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List pool node counts. </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCounts(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
         public virtual Pageable<BatchPoolNodeCounts> GetPoolNodeCounts(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {

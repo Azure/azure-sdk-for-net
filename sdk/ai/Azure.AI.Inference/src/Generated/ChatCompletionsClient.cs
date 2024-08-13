@@ -179,6 +179,7 @@ namespace Azure.AI.Inference
         /// The method makes a REST API call to the `/info` route on the given endpoint.
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get model info. </remarks>
         /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfoAsync(CancellationToken)']/*" />
         public virtual async Task<Response<ModelInfo>> GetModelInfoAsync(CancellationToken cancellationToken = default)
         {
@@ -192,6 +193,7 @@ namespace Azure.AI.Inference
         /// The method makes a REST API call to the `/info` route on the given endpoint.
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get model info. </remarks>
         /// <include file="Docs/ChatCompletionsClient.xml" path="doc/members/member[@name='GetModelInfo(CancellationToken)']/*" />
         public virtual Response<ModelInfo> GetModelInfo(CancellationToken cancellationToken = default)
         {
