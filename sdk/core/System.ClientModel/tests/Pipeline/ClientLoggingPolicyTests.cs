@@ -34,7 +34,7 @@ public class ClientLoggingPolicyTests : SyncAsyncTestBase
 
     public ClientLoggingPolicyTests(bool isAsync) : base(isAsync)
     {
-        _loggerFactory = new TestLoggingFactory();
+        _loggerFactory = new TestLoggingFactory(new TestLogger(LogLevel.Debug));
     }
 
     [Test]

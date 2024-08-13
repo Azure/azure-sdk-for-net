@@ -103,7 +103,10 @@ public class ClientPipelineOptions
     }
 
     /// <summary>
-    /// TODO
+    /// The options to be used to create a <see cref="ClientLoggingPolicy"/>
+    /// if a custom <see cref="LoggingPolicy"/> is not provided. If
+    /// <see cref="LoggingPolicy"/> is not <c>null</c>, this property will
+    /// not be used.
     /// </summary>
     public LoggingOptions LoggingOptions
     {

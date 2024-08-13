@@ -16,6 +16,10 @@ using NUnit.Framework;
 namespace System.ClientModel.Tests.Internal;
 
 // Avoid running these tests in parallel with anything else that's sharing the event source
+/// <summary>
+/// Tests that the format of events written to the Event Source is as expected, and tests
+/// that the logging options are respected.
+/// </summary>
 [NonParallelizable]
 public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
 {
@@ -33,6 +37,10 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
     private const int ErrorResponseContentTextEvent = 14;
     private const int ErrorResponseContentTextBlockEvent = 16;
     private const int ExceptionResponseEvent = 18;
+
+    // TODO
+    private const int ResponseDelayEvent = 7;
+    private const int RequestRetryingEvent = 10;
 
     private TestClientEventListener _listener;
 

@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Tests.Internal.Internal
+namespace System.ClientModel.Tests.Internal.Internal.Logging
 {
-    internal class ClientModelLoggerTests
+    internal class LoggingHandlerTests
     {
     }
 }

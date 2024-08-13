@@ -5,6 +5,7 @@ using Azure.Core.TestFramework;
 using ClientModel.Tests;
 using ClientModel.Tests.Mocks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
@@ -444,7 +445,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         {
             LoggingOptions = new LoggingOptions
             {
-                LoggerFactory = new TestLoggingFactory()
+                LoggerFactory = new TestLoggingFactory(new TestLogger(LogLevel.Debug))
             }
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -489,7 +490,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         {
             LoggingOptions = new LoggingOptions
             {
-                LoggerFactory = new TestLoggingFactory()
+                LoggerFactory = new TestLoggingFactory(new TestLogger(LogLevel.Debug))
             }
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -534,7 +535,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         {
             LoggingOptions = new LoggingOptions
             {
-                LoggerFactory = new TestLoggingFactory()
+                LoggerFactory = new TestLoggingFactory(new TestLogger(LogLevel.Debug))
             }
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);

@@ -24,7 +24,6 @@ public class ClientLoggingPolicy : PipelinePolicy
     private readonly bool _logContent;
     private readonly int _maxLength;
     private readonly PipelineMessageSanitizer _sanitizer;
-    private readonly ILogger _logger;
     private readonly string? _correlationIdHeaderName;
     private readonly string _clientAssembly = "System-ClientModel";
     private readonly bool _alwaysLog = false;
@@ -45,6 +44,8 @@ public class ClientLoggingPolicy : PipelinePolicy
         _alwaysLog = alwaysLog;
     }
 
+    internal readonly ILogger Logger;
+
     /// <summary>
     /// Creates a new instance of the <see cref="ClientLoggingPolicy"/> class.
     /// </summary>
@@ -55,7 +56,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         _logContent = loggingOptions.IsLoggingContentEnabled;
         _maxLength = loggingOptions.LoggedContentSizeLimit;
         _sanitizer = new PipelineMessageSanitizer(loggingOptions.AllowedQueryParameters.ToArray(), loggingOptions.AllowedHeaderNames.ToArray());
-        _logger = loggingOptions.LoggerFactory.CreateLogger("System-ClientModel");
+        Logger = loggingOptions.LoggerFactory.CreateLogger("System-ClientModel");
         _correlationIdHeaderName = loggingOptions.CorrelationIdHeaderName;
     }
 
@@ -69,7 +70,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        if (!(_alwaysLog || ClientModelEventSource.Log.IsEnabled() || _logger.IsEnabled(LogLevel.Warning))) // The highest LogLevel we log with is LogLevel.Warning
+        if (!(_alwaysLog || ClientModelEventSource.Log.IsEnabled() || Logger.IsEnabled(LogLevel.Warning))) // The highest LogLevel we log with is LogLevel.Warning
         {
             if (async)
             {
@@ -88,7 +89,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         string requestId = GetCorrelationIdFromHeaders(request.Headers) ?? Guid.NewGuid().ToString();
         message.LoggingCorrelationId = requestId;
 
-        LoggingHandler.LogRequest(_logger, request, requestId, _clientAssembly, _sanitizer);
+        LoggingHandler.LogRequest(Logger, request, requestId, _clientAssembly, _sanitizer);
 
         byte[]? bytes = null;
         Encoding? requestTextEncoding = null;
@@ -115,7 +116,7 @@ public class ClientLoggingPolicy : PipelinePolicy
                 ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
             }
 
-            LoggingHandler.LogRequestContent(_logger, requestId, bytes, requestTextEncoding);
+            LoggingHandler.LogRequestContent(Logger, requestId, bytes, requestTextEncoding);
         }
 
         if (async)
@@ -142,7 +143,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         }
         catch (Exception ex)
         {
-            LoggingHandler.LogExceptionResponse(_logger, requestId, ex);
+            LoggingHandler.LogExceptionResponse(Logger, requestId, ex);
 
             throw;
         }
@@ -159,11 +160,11 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         if (response.IsError)
         {
-            LoggingHandler.LogErrorResponse(_logger, responseId, response, elapsed, _sanitizer);
+            LoggingHandler.LogErrorResponse(Logger, responseId, response, elapsed, _sanitizer);
         }
         else
         {
-            LoggingHandler.LogResponse(_logger, responseId, response, elapsed, _sanitizer);
+            LoggingHandler.LogResponse(Logger, responseId, response, elapsed, _sanitizer);
         }
 
         if (async)
@@ -203,11 +204,11 @@ public class ClientLoggingPolicy : PipelinePolicy
 
                 if (response.IsError)
                 {
-                    LoggingHandler.LogErrorResponseContent(_logger, responseId, responseBytes, responseTextEncoding);
+                    LoggingHandler.LogErrorResponseContent(Logger, responseId, responseBytes, responseTextEncoding);
                 }
                 else
                 {
-                    LoggingHandler.LogResponseContent(_logger, responseId, responseBytes, responseTextEncoding);
+                    LoggingHandler.LogResponseContent(Logger, responseId, responseBytes, responseTextEncoding);
                 }
 
                 if (async)
@@ -221,13 +222,13 @@ public class ClientLoggingPolicy : PipelinePolicy
             }
             else
             {
-                response.ContentStream = new LoggingStream(this, _logger, responseId, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding, message);
+                response.ContentStream = new LoggingStream(this, Logger, responseId, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding, message);
             }
         }
 
         if (elapsed > RequestTooLongSeconds)
         {
-            LoggingHandler.LogResponseDelay(_logger, responseId, elapsed);
+            LoggingHandler.LogResponseDelay(Logger, responseId, elapsed);
         }
     }
 
