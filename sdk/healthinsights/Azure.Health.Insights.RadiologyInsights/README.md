@@ -61,6 +61,18 @@ RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, cred);
 
 ## Key concepts
 
+Once you've initialized a `RadiologyInsightsClient`, you can use it to analyse document text by displaying inferences found within the text.
+* Age Mismatch
+* Laterality Discrepancy
+* Sex Mismatch
+* Complete Order Discrepancy
+* Limited Order Discrepancy
+* Finding
+* Critical Result
+* Follow-up Recommendation
+* Communication
+* Radiology Procedure
+
 Radiology Insights currently supports one document from one patient. Please take a look [here] for more detailed information about the inferences this service produces.
 
 ## Examples
