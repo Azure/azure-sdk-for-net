@@ -93,6 +93,7 @@ trigger:
     - sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
+    - sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
@@ -290,6 +291,7 @@ pr:
     - sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
+    - sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity

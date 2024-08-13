@@ -1,14 +1,10 @@
 # Release History
 
-## 2.0.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 2.0.0-beta.2 (2024-08-13)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix NPE issue during client creation
 
 ## 2.0.0-beta.1 (2024-08-06)
 

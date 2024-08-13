@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `JsonModelConverter` to allow integration with System.Text.Json.
+
 ### Breaking Changes
 
 ### Bugs Fixed
