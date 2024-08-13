@@ -3,23 +3,24 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Collections.Generic;
 
-namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
+namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.BaseActions
 {
     /// <summary>
-    /// Operation to remove socket from a room.
+    /// Operation to add connectionId to a group.
     /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-    public class RemoveSocketFromRoomAction : SocketIOAction
+    internal class AddConnectionsToGroupsAction : WebPubSubAction
     {
         /// <summary>
-        /// Target socketId.
+        /// Target groups
         /// </summary>
-        public string SocketId { get; set; }
+        public IList<string> Groups { get; set; }
 
         /// <summary>
-        /// Target room name.
+        /// The filter
         /// </summary>
-        public string Room { get; set; }
+        public string Filter { get; set; }
     }
 }
