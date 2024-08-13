@@ -158,12 +158,6 @@ Note that documents written to a target container must have unique names. So you
 
 If "Allow Storage Account Key Access" is disabled on the storage account , Managed Identity is enabled on the Translator resource and it is assigned the role "Storage Blob Data Contributor" on the storage account, then you can use the container URLs directly and no SAS URIs will be needed.
 
-```C# Snippet:DocumentTranslationSingleInput
-Uri sourceUri = new Uri("https://<storageAccount>.blob.core.windows.net/<sourceContainer>/<sourceFile>");
-Uri frenchTargetUri = new Uri("https://<storageAccount>.blob.core.windows.net/<targetContainer>");
-var input = new DocumentTranslationInput(sourceSasUri, frenchTargetSasUri, "fr");
-```
-
 ### Long-Running Operations
 
 Document Translation is implemented as a [**long-running operation**][dotnet_lro].  Long-running operations consist of an initial request sent to the service to start an operation, followed by polling the service at intervals to determine whether the operation has completed successfully or failed.
