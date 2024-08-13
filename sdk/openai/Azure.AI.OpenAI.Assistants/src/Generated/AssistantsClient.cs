@@ -42,6 +42,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create assistant. </remarks>
         public virtual async Task<Response<Assistant>> CreateAssistantAsync(AssistantCreationOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -56,6 +57,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create assistant. </remarks>
         public virtual Response<Assistant> CreateAssistant(AssistantCreationOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -138,6 +140,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Internal get assistants. </remarks>
         internal virtual async Task<Response<InternalOpenAIPageableListOfAssistant>> InternalGetAssistantsAsync(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -151,6 +154,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Internal get assistants. </remarks>
         internal virtual Response<InternalOpenAIPageableListOfAssistant> InternalGetAssistants(int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -239,6 +243,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get assistant. </remarks>
         public virtual async Task<Response<Assistant>> GetAssistantAsync(string assistantId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -253,6 +258,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get assistant. </remarks>
         public virtual Response<Assistant> GetAssistant(string assistantId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -336,6 +342,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update assistant. </remarks>
         public virtual async Task<Response<Assistant>> UpdateAssistantAsync(string assistantId, UpdateAssistantOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -353,6 +360,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update assistant. </remarks>
         public virtual Response<Assistant> UpdateAssistant(string assistantId, UpdateAssistantOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -441,6 +449,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal delete assistant. </remarks>
         internal virtual async Task<Response<InternalAssistantDeletionStatus>> InternalDeleteAssistantAsync(string assistantId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -455,6 +464,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal delete assistant. </remarks>
         internal virtual Response<InternalAssistantDeletionStatus> InternalDeleteAssistant(string assistantId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -548,6 +558,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Link assistant file. </remarks>
         public virtual async Task<Response<AssistantFile>> LinkAssistantFileAsync(string assistantId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -565,6 +576,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Link assistant file. </remarks>
         public virtual Response<AssistantFile> LinkAssistantFile(string assistantId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -657,6 +669,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal get assistant files. </remarks>
         internal virtual async Task<Response<InternalOpenAIPageableListOfAssistantFile>> InternalGetAssistantFilesAsync(string assistantId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -675,6 +688,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal get assistant files. </remarks>
         internal virtual Response<InternalOpenAIPageableListOfAssistantFile> InternalGetAssistantFiles(string assistantId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -776,6 +790,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get assistant file. </remarks>
         public virtual async Task<Response<AssistantFile>> GetAssistantFileAsync(string assistantId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -792,6 +807,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get assistant file. </remarks>
         public virtual Response<AssistantFile> GetAssistantFile(string assistantId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -883,6 +899,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal unlink assistant file. </remarks>
         internal virtual async Task<Response<InternalAssistantFileDeletionStatus>> InternalUnlinkAssistantFileAsync(string assistantId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -902,6 +919,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal unlink assistant file. </remarks>
         internal virtual Response<InternalAssistantFileDeletionStatus> InternalUnlinkAssistantFile(string assistantId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
@@ -1000,6 +1018,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create thread. </remarks>
         public virtual async Task<Response<AssistantThread>> CreateThreadAsync(AssistantThreadCreationOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -1014,6 +1033,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create thread. </remarks>
         public virtual Response<AssistantThread> CreateThread(AssistantThreadCreationOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -1095,6 +1115,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get thread. </remarks>
         public virtual async Task<Response<AssistantThread>> GetThreadAsync(string threadId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1109,6 +1130,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get thread. </remarks>
         public virtual Response<AssistantThread> GetThread(string threadId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1192,6 +1214,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update thread. </remarks>
         public virtual async Task<Response<AssistantThread>> UpdateThreadAsync(string threadId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1208,6 +1231,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update thread. </remarks>
         public virtual Response<AssistantThread> UpdateThread(string threadId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1295,6 +1319,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal delete thread. </remarks>
         internal virtual async Task<Response<ThreadDeletionStatus>> InternalDeleteThreadAsync(string threadId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1309,6 +1334,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal delete thread. </remarks>
         internal virtual Response<ThreadDeletionStatus> InternalDeleteThread(string threadId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1405,6 +1431,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create message. </remarks>
         public virtual async Task<Response<ThreadMessage>> CreateMessageAsync(string threadId, MessageRole role, string content, IEnumerable<string> fileIds = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1425,6 +1452,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create message. </remarks>
         public virtual Response<ThreadMessage> CreateMessage(string threadId, MessageRole role, string content, IEnumerable<string> fileIds = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1517,6 +1545,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal get messages. </remarks>
         internal virtual async Task<Response<InternalOpenAIPageableListOfThreadMessage>> InternalGetMessagesAsync(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1535,6 +1564,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal get messages. </remarks>
         internal virtual Response<InternalOpenAIPageableListOfThreadMessage> InternalGetMessages(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1636,6 +1666,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get message. </remarks>
         public virtual async Task<Response<ThreadMessage>> GetMessageAsync(string threadId, string messageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1652,6 +1683,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get message. </remarks>
         public virtual Response<ThreadMessage> GetMessage(string threadId, string messageId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1741,6 +1773,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update message. </remarks>
         public virtual async Task<Response<ThreadMessage>> UpdateMessageAsync(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1759,6 +1792,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update message. </remarks>
         public virtual Response<ThreadMessage> UpdateMessage(string threadId, string messageId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1856,6 +1890,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal get message files. </remarks>
         internal virtual async Task<Response<InternalOpenAIPageableListOfMessageFile>> InternalGetMessageFilesAsync(string threadId, string messageId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1876,6 +1911,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal get message files. </remarks>
         internal virtual Response<InternalOpenAIPageableListOfMessageFile> InternalGetMessageFiles(string threadId, string messageId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -1983,6 +2019,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get message file. </remarks>
         public virtual async Task<Response<MessageFile>> GetMessageFileAsync(string threadId, string messageId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2001,6 +2038,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="messageId"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get message file. </remarks>
         public virtual Response<MessageFile> GetMessageFile(string threadId, string messageId, string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2094,6 +2132,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="createRunOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create run. </remarks>
         public virtual async Task<Response<ThreadRun>> CreateRunAsync(string threadId, CreateRunOptions createRunOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2111,6 +2150,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="createRunOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create run. </remarks>
         public virtual Response<ThreadRun> CreateRun(string threadId, CreateRunOptions createRunOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2203,6 +2243,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal get runs. </remarks>
         internal virtual async Task<Response<InternalOpenAIPageableListOfThreadRun>> InternalGetRunsAsync(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2221,6 +2262,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal get runs. </remarks>
         internal virtual Response<InternalOpenAIPageableListOfThreadRun> InternalGetRuns(string threadId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2322,6 +2364,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get run. </remarks>
         public virtual async Task<Response<ThreadRun>> GetRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2338,6 +2381,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get run. </remarks>
         public virtual Response<ThreadRun> GetRun(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2427,6 +2471,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update run. </remarks>
         public virtual async Task<Response<ThreadRun>> UpdateRunAsync(string threadId, string runId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2445,6 +2490,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update run. </remarks>
         public virtual Response<ThreadRun> UpdateRun(string threadId, string runId, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2539,6 +2585,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Submit tool outputs to run. </remarks>
         public virtual async Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2558,6 +2605,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Submit tool outputs to run. </remarks>
         public virtual Response<ThreadRun> SubmitToolOutputsToRun(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2652,6 +2700,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Cancel run. </remarks>
         public virtual async Task<Response<ThreadRun>> CancelRunAsync(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2668,6 +2717,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Cancel run. </remarks>
         public virtual Response<ThreadRun> CancelRun(string threadId, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2754,6 +2804,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create thread and run. </remarks>
         public virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(CreateAndRunThreadOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -2768,6 +2819,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create thread and run. </remarks>
         public virtual Response<ThreadRun> CreateThreadAndRun(CreateAndRunThreadOptions body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -2851,6 +2903,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get run step. </remarks>
         public virtual async Task<Response<RunStep>> GetRunStepAsync(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2869,6 +2922,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="stepId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get run step. </remarks>
         public virtual Response<RunStep> GetRunStep(string threadId, string runId, string stepId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2966,6 +3020,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal get run steps. </remarks>
         internal virtual async Task<Response<InternalOpenAIPageableListOfRunStep>> InternalGetRunStepsAsync(string threadId, string runId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -2986,6 +3041,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal get run steps. </remarks>
         internal virtual Response<InternalOpenAIPageableListOfRunStep> InternalGetRunSteps(string threadId, string runId, int? limit = null, ListSortOrder? order = null, string after = null, string before = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
@@ -3089,6 +3145,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Gets a list of previously uploaded files. </summary>
         /// <param name="purpose"> A value that, when provided, limits list results to files matching the corresponding purpose. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Internal list files. </remarks>
         internal virtual async Task<Response<InternalFileListResponse>> InternalListFilesAsync(OpenAIFilePurpose? purpose = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -3099,6 +3156,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Gets a list of previously uploaded files. </summary>
         /// <param name="purpose"> A value that, when provided, limits list results to files matching the corresponding purpose. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Internal list files. </remarks>
         internal virtual Response<InternalFileListResponse> InternalListFiles(OpenAIFilePurpose? purpose = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -3182,6 +3240,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="filename"> A filename to associate with the uploaded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Upload file. </remarks>
         public virtual async Task<Response<OpenAIFile>> UploadFileAsync(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -3199,6 +3258,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="filename"> A filename to associate with the uploaded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        /// <remarks> Upload file. </remarks>
         public virtual Response<OpenAIFile> UploadFile(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -3283,6 +3343,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal delete file. </remarks>
         internal virtual async Task<Response<InternalFileDeletionStatus>> InternalDeleteFileAsync(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3297,6 +3358,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Internal delete file. </remarks>
         internal virtual Response<InternalFileDeletionStatus> InternalDeleteFile(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3389,6 +3451,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get file. </remarks>
         public virtual async Task<Response<OpenAIFile>> GetFileAsync(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3403,6 +3466,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get file. </remarks>
         public virtual Response<OpenAIFile> GetFile(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3485,6 +3549,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get file content. </remarks>
         public virtual async Task<Response<BinaryData>> GetFileContentAsync(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
@@ -3499,6 +3564,7 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get file content. </remarks>
         public virtual Response<BinaryData> GetFileContent(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
