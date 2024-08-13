@@ -7,7 +7,7 @@ using System.Text;
 using Azure.Core;
 using Azure.ResourceManager.SecurityInsights.Models;
 
-namespace Azure.ResourceManager.SecurityInsights
+namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// A class representing the SecurityInsightsEntity data model.

@@ -9,9 +9,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityInsights.Models;
 
-namespace Azure.ResourceManager.SecurityInsights
+namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class SecurityInsightsEntity : IUtf8JsonSerializable, IJsonModel<SecurityInsightsEntity>
     {

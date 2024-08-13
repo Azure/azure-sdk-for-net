@@ -216,6 +216,7 @@ rename-mapping:
   PullRequest: PullRequestInfo
   ReevaluateResponse: ReevaluateResult
   CustomizableConnectorDefinition: CustomizableConnectorDefinitionData
+  TiTaxiiDataConnectorDataTypesTaxiiClient: TiTaxiiDataConnectorDataTypes
   # Added property renaming due to api compat check with property breaking chang to dictionary type in 2024-01-01-preview version
   WatchlistItem.properties.itemsKeyValue: ItemsKeyValueDictionary
   WatchlistItem.properties.entityMapping: EntityMappingDictionary

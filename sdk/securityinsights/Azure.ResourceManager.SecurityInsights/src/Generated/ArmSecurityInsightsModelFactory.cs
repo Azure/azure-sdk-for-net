@@ -43,6 +43,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> Etag of the action. </param>
+        /// <param name="logicAppResourceId"> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </param>
+        /// <param name="workflowId"> The name of the logic app's workflow. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleActionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsAlertRuleActionData SecurityInsightsAlertRuleActionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ResourceIdentifier logicAppResourceId = null, string workflowId = null)
+        {
+            return new SecurityInsightsAlertRuleActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                logicAppResourceId,
+                workflowId,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsAlertRuleActionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="logicAppResourceId"> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </param>
         /// <param name="workflowId"> The name of the logic app's workflow. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
@@ -295,7 +318,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="Models.BookmarkExpandResponseValue"/>. </summary>
         /// <param name="entities">
         /// Array of the expansion result entities.
-        /// Please note <see cref="SecurityInsights.SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.SecurityInsightsAccountEntity"/>, <see cref="Models.SecurityInsightsAzureResourceEntity"/>, <see cref="Models.SecurityInsightsHuntingBookmark"/>, <see cref="Models.SecurityInsightsCloudApplicationEntity"/>, <see cref="Models.SecurityInsightsDnsEntity"/>, <see cref="Models.SecurityInsightsFileEntity"/>, <see cref="Models.SecurityInsightsFileHashEntity"/>, <see cref="Models.SecurityInsightsHostEntity"/>, <see cref="Models.SecurityInsightsIotDeviceEntity"/>, <see cref="Models.SecurityInsightsIPEntity"/>, <see cref="Models.SecurityInsightsMailboxEntity"/>, <see cref="Models.SecurityInsightsMailClusterEntity"/>, <see cref="Models.SecurityInsightsMailMessageEntity"/>, <see cref="Models.SecurityInsightsMalwareEntity"/>, <see cref="Models.NicEntity"/>, <see cref="Models.SecurityInsightsProcessEntity"/>, <see cref="Models.SecurityInsightsRegistryKeyEntity"/>, <see cref="Models.SecurityInsightsRegistryValueEntity"/>, <see cref="Models.SecurityInsightsAlert"/>, <see cref="Models.SecurityInsightsGroupEntity"/>, <see cref="Models.SecurityInsightsSubmissionMailEntity"/> and <see cref="Models.SecurityInsightsUriEntity"/>.
         /// </param>
         /// <param name="edges"> Array of expansion result connected entities. </param>
@@ -308,13 +331,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new BookmarkExpandResponseValue(entities?.ToList(), edges?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsEntity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
-        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsEntity"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SecurityInsightsEntity"/> instance for mocking. </returns>
         public static SecurityInsightsEntity SecurityInsightsEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
             return new SecurityInsightsEntity(
@@ -958,7 +981,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="Models.EntityExpandResponseValue"/>. </summary>
         /// <param name="entities">
         /// Array of the expansion result entities.
-        /// Please note <see cref="SecurityInsights.SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.SecurityInsightsAccountEntity"/>, <see cref="Models.SecurityInsightsAzureResourceEntity"/>, <see cref="Models.SecurityInsightsHuntingBookmark"/>, <see cref="Models.SecurityInsightsCloudApplicationEntity"/>, <see cref="Models.SecurityInsightsDnsEntity"/>, <see cref="Models.SecurityInsightsFileEntity"/>, <see cref="Models.SecurityInsightsFileHashEntity"/>, <see cref="Models.SecurityInsightsHostEntity"/>, <see cref="Models.SecurityInsightsIotDeviceEntity"/>, <see cref="Models.SecurityInsightsIPEntity"/>, <see cref="Models.SecurityInsightsMailboxEntity"/>, <see cref="Models.SecurityInsightsMailClusterEntity"/>, <see cref="Models.SecurityInsightsMailMessageEntity"/>, <see cref="Models.SecurityInsightsMalwareEntity"/>, <see cref="Models.NicEntity"/>, <see cref="Models.SecurityInsightsProcessEntity"/>, <see cref="Models.SecurityInsightsRegistryKeyEntity"/>, <see cref="Models.SecurityInsightsRegistryValueEntity"/>, <see cref="Models.SecurityInsightsAlert"/>, <see cref="Models.SecurityInsightsGroupEntity"/>, <see cref="Models.SecurityInsightsSubmissionMailEntity"/> and <see cref="Models.SecurityInsightsUriEntity"/>.
         /// </param>
         /// <param name="edges"> Array of edges that connects the entity to the list of entities. </param>
@@ -1534,6 +1557,45 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 incidentInfo);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsClientInfo"/>. </summary>
+        /// <param name="email"> The email of the client. </param>
+        /// <param name="name"> The name of the client. </param>
+        /// <param name="objectId"> The object id of the client. </param>
+        /// <param name="userPrincipalName"> The user principal name of the client. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsClientInfo"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsClientInfo SecurityInsightsClientInfo(string email = null, string name = null, Guid? objectId = null, string userPrincipalName = null)
+        {
+            return new SecurityInsightsClientInfo(email, name, objectId, userPrincipalName, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsIncidentCommentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="createdOn"> The time the comment was created. </param>
+        /// <param name="lastModifiedOn"> The time the comment was updated. </param>
+        /// <param name="message"> The comment message. </param>
+        /// <param name="author"> Describes the client that created the comment. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsIncidentCommentData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsIncidentCommentData SecurityInsightsIncidentCommentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, string message = null, SecurityInsightsClientInfo author = null, ETag? etag = null)
+        {
+            return new SecurityInsightsIncidentCommentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                message,
+                createdOn,
+                lastModifiedOn,
+                author,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsIncidentCommentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1563,7 +1625,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIncidentEntitiesResult"/>. </summary>
         /// <param name="entities">
         /// Array of the incident related entities.
-        /// Please note <see cref="SecurityInsights.SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.SecurityInsightsAccountEntity"/>, <see cref="Models.SecurityInsightsAzureResourceEntity"/>, <see cref="Models.SecurityInsightsHuntingBookmark"/>, <see cref="Models.SecurityInsightsCloudApplicationEntity"/>, <see cref="Models.SecurityInsightsDnsEntity"/>, <see cref="Models.SecurityInsightsFileEntity"/>, <see cref="Models.SecurityInsightsFileHashEntity"/>, <see cref="Models.SecurityInsightsHostEntity"/>, <see cref="Models.SecurityInsightsIotDeviceEntity"/>, <see cref="Models.SecurityInsightsIPEntity"/>, <see cref="Models.SecurityInsightsMailboxEntity"/>, <see cref="Models.SecurityInsightsMailClusterEntity"/>, <see cref="Models.SecurityInsightsMailMessageEntity"/>, <see cref="Models.SecurityInsightsMalwareEntity"/>, <see cref="Models.NicEntity"/>, <see cref="Models.SecurityInsightsProcessEntity"/>, <see cref="Models.SecurityInsightsRegistryKeyEntity"/>, <see cref="Models.SecurityInsightsRegistryValueEntity"/>, <see cref="Models.SecurityInsightsAlert"/>, <see cref="Models.SecurityInsightsGroupEntity"/>, <see cref="Models.SecurityInsightsSubmissionMailEntity"/> and <see cref="Models.SecurityInsightsUriEntity"/>.
         /// </param>
         /// <param name="metaData"> The metadata from the incident related entities results. </param>
@@ -1574,6 +1636,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             metaData ??= new List<SecurityInsightsIncidentEntitiesMetadata>();
 
             return new SecurityInsightsIncidentEntitiesResult(entities?.ToList(), metaData?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIncidentEntitiesMetadata"/>. </summary>
+        /// <param name="count"> Total number of aggregations of the given kind in the incident related entities result. </param>
+        /// <param name="entityKind"> The kind of the aggregated entity. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsIncidentEntitiesMetadata"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsIncidentEntitiesMetadata SecurityInsightsIncidentEntitiesMetadata(int count = default, SecurityInsightsEntityKind entityKind = default)
+        {
+            return new SecurityInsightsIncidentEntitiesMetadata(entityKind, count, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecurityInsightsIncidentEntitiesMetadata"/>. </summary>
@@ -2330,6 +2402,72 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="watchlistId"> The id (a Guid) of the watchlist. </param>
         /// <param name="displayName"> The display name of the watchlist. </param>
         /// <param name="provider"> The provider of the watchlist. </param>
+        /// <param name="source"> The source of the watchlist. </param>
+        /// <param name="createdOn"> The time the watchlist was created. </param>
+        /// <param name="updatedOn"> The last time the watchlist was updated. </param>
+        /// <param name="createdBy"> Describes a user that created the watchlist. </param>
+        /// <param name="updatedBy"> Describes a user that updated the watchlist. </param>
+        /// <param name="description"> A description of the watchlist. </param>
+        /// <param name="watchlistType"> The type of the watchlist. </param>
+        /// <param name="watchlistAlias"> The alias of the watchlist. </param>
+        /// <param name="isDeleted"> A flag that indicates if the watchlist is deleted or not. </param>
+        /// <param name="labels"> List of labels relevant to this watchlist. </param>
+        /// <param name="defaultDuration"> The default duration of a watchlist (in ISO 8601 duration format). </param>
+        /// <param name="tenantId"> The tenantId where the watchlist belongs to. </param>
+        /// <param name="numberOfLinesToSkip"> The number of lines in a csv content to skip before the header. </param>
+        /// <param name="rawContent">
+        /// The raw content that represents to watchlist items to create. Example : This line will be skipped
+        /// header1,header2
+        /// value1,value2
+        /// </param>
+        /// <param name="itemsSearchKey"> The search key is used to optimize query performance when using watchlists for joins with other data. For example, enable a column with IP addresses to be the designated SearchKey field, then use this field as the key field when joining to other event data by IP address. </param>
+        /// <param name="contentType"> The content type of the raw content. For now, only text/csv is valid. </param>
+        /// <param name="uploadStatus"> The status of the Watchlist upload : New, InProgress or Complete. **Note** : When a Watchlist upload status is InProgress, the Watchlist cannot be deleted. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsWatchlistData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsWatchlistData SecurityInsightsWatchlistData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? watchlistId = null, string displayName = null, string provider = null, Source? source = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, string description = null, string watchlistType = null, string watchlistAlias = null, bool? isDeleted = null, IEnumerable<string> labels = null, TimeSpan? defaultDuration = null, Guid? tenantId = null, int? numberOfLinesToSkip = null, string rawContent = null, string itemsSearchKey = null, string contentType = null, string uploadStatus = null, ETag? etag = null)
+        {
+            labels ??= new List<string>();
+
+            return new SecurityInsightsWatchlistData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                watchlistId,
+                displayName,
+                provider,
+                null,
+                null,
+                createdOn,
+                updatedOn,
+                createdBy,
+                updatedBy,
+                description,
+                watchlistType,
+                watchlistAlias,
+                isDeleted,
+                labels?.ToList(),
+                defaultDuration,
+                tenantId,
+                numberOfLinesToSkip,
+                rawContent,
+                itemsSearchKey,
+                contentType,
+                uploadStatus,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsWatchlistData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="watchlistId"> The id (a Guid) of the watchlist. </param>
+        /// <param name="displayName"> The display name of the watchlist. </param>
+        /// <param name="provider"> The provider of the watchlist. </param>
         /// <param name="sourceString"> The filename of the watchlist, called 'source'. </param>
         /// <param name="sourceType"> The sourceType of the watchlist. </param>
         /// <param name="createdOn"> The time the watchlist was created. </param>
@@ -2380,6 +2518,45 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 itemsSearchKey,
                 contentType,
                 uploadStatus,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsWatchlistItemData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="watchlistItemType"> The type of the watchlist item. </param>
+        /// <param name="watchlistItemId"> The id (a Guid) of the watchlist item. </param>
+        /// <param name="tenantId"> The tenantId to which the watchlist item belongs to. </param>
+        /// <param name="isDeleted"> A flag that indicates if the watchlist item is deleted or not. </param>
+        /// <param name="createdOn"> The time the watchlist item was created. </param>
+        /// <param name="updatedOn"> The last time the watchlist item was updated. </param>
+        /// <param name="createdBy"> Describes a user that created the watchlist item. </param>
+        /// <param name="updatedBy"> Describes a user that updated the watchlist item. </param>
+        /// <param name="itemsKeyValue"> key-value pairs for a watchlist item. </param>
+        /// <param name="entityMapping"> key-value pairs for a watchlist item entity mapping. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsWatchlistItemData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SecurityInsightsWatchlistItemData SecurityInsightsWatchlistItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string watchlistItemType = null, string watchlistItemId = null, Guid? tenantId = null, bool? isDeleted = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, SecurityInsightsUserInfo createdBy = null, SecurityInsightsUserInfo updatedBy = null, BinaryData itemsKeyValue = null, BinaryData entityMapping = null, ETag? etag = null)
+        {
+            return new SecurityInsightsWatchlistItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                watchlistItemType,
+                watchlistItemId,
+                tenantId,
+                isDeleted,
+                createdOn,
+                updatedOn,
+                createdBy,
+                updatedBy,
+                null,
+                null,
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -4567,7 +4744,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 password,
                 taxiiLookbackPeriod,
                 pollingFrequency,
-                taxiiClientState.HasValue ? new TiTaxiiDataConnectorDataTypesTaxiiClient(taxiiClientState.Value, serializedAdditionalRawData: null) : null);
+                taxiiClientState.HasValue ? new TiTaxiiDataConnectorDataTypes(taxiiClientState.Value, serializedAdditionalRawData: null) : null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IotDataConnector"/>. </summary>

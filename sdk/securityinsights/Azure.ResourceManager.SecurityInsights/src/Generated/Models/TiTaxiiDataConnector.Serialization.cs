@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string password = default;
             DateTimeOffset? taxiiLookbackPeriod = default;
             PollingFrequency? pollingFrequency = default;
-            TiTaxiiDataConnectorDataTypesTaxiiClient taxiiClient = default;
+            TiTaxiiDataConnectorDataTypes taxiiClient = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                                     {
                                         continue;
                                     }
-                                    taxiiClient = TiTaxiiDataConnectorDataTypesTaxiiClient.DeserializeTiTaxiiDataConnectorDataTypesTaxiiClient(property1.Value, options);
+                                    taxiiClient = TiTaxiiDataConnectorDataTypes.DeserializeTiTaxiiDataConnectorDataTypes(property1.Value, options);
                                     continue;
                                 }
                             }

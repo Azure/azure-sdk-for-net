@@ -9,9 +9,8 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights.Models;
 
-namespace Azure.ResourceManager.SecurityInsights
+namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// A class representing the SecurityInsightsEntity data model.
