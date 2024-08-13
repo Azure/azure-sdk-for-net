@@ -51,7 +51,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 },
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
             };
-            ChatCompletionsFunctionToolDefinition functionToolDef = new ChatCompletionsFunctionToolDefinition(futureTemperatureFunction);
+            ChatCompletionsToolDefinition functionToolDef = new ChatCompletionsToolDefinition(futureTemperatureFunction);
 
             var requestOptions = new ChatCompletionsOptions()
             {
@@ -67,7 +67,7 @@ namespace Azure.AI.Inference.Tests.Samples
             System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 
             ChatResponseMessage responseMessage = response.Value.Choices[0].Message;
-            ChatCompletionsFunctionToolCall functionToolCall = responseMessage.ToolCalls[0] as ChatCompletionsFunctionToolCall;
+            ChatCompletionsToolCall functionToolCall = responseMessage.ToolCalls[0] as ChatCompletionsToolCall;
 #if !SNIPPET
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
@@ -160,7 +160,7 @@ namespace Azure.AI.Inference.Tests.Samples
                 },
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
             };
-            ChatCompletionsFunctionToolDefinition functionToolDef = new ChatCompletionsFunctionToolDefinition(futureTemperatureFunction);
+            ChatCompletionsToolDefinition functionToolDef = new ChatCompletionsToolDefinition(futureTemperatureFunction);
 
             var requestOptions = new ChatCompletionsOptions()
             {
@@ -176,7 +176,7 @@ namespace Azure.AI.Inference.Tests.Samples
             System.Console.WriteLine(response.Value.Choices[0].Message.Content);
 
             ChatResponseMessage responseMessage = response.Value.Choices[0].Message;
-            ChatCompletionsFunctionToolCall functionToolCall = responseMessage.ToolCalls[0] as ChatCompletionsFunctionToolCall;
+            ChatCompletionsToolCall functionToolCall = responseMessage.ToolCalls[0] as ChatCompletionsToolCall;
 #if !SNIPPET
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());

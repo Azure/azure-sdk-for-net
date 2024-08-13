@@ -302,7 +302,7 @@ namespace Azure.AI.Inference.Tests
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
             };
 
-            ChatCompletionsFunctionToolDefinition functionToolDef = new ChatCompletionsFunctionToolDefinition(futureTemperatureFunction);
+            ChatCompletionsToolDefinition functionToolDef = new ChatCompletionsToolDefinition(futureTemperatureFunction);
 
             var endpoint = targetModel switch
             {
@@ -399,7 +399,7 @@ namespace Azure.AI.Inference.Tests
             Assert.That(message.Content, Is.Null.Or.Empty);
             Assert.That(message.ToolCalls, Is.Not.Null.Or.Empty);
             Assert.That(message.ToolCalls.Count, Is.EqualTo(1));
-            ChatCompletionsFunctionToolCall functionToolCall = message.ToolCalls[0] as ChatCompletionsFunctionToolCall;
+            ChatCompletionsToolCall functionToolCall = message.ToolCalls[0] as ChatCompletionsToolCall;
             Assert.That(functionToolCall, Is.Not.Null);
             Assert.That(functionToolCall.Name, Is.EqualTo(futureTemperatureFunction.Name));
             Assert.That(functionToolCall.Arguments, Is.Not.Null.Or.Empty);
