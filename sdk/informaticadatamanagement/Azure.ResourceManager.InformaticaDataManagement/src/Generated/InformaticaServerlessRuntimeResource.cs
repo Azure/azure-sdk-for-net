@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Get a InformaticaServerlessRuntimeResource
+        /// Get.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Get a InformaticaServerlessRuntimeResource
+        /// Get.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Delete a InformaticaServerlessRuntimeResource
+        /// Delete.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Delete a InformaticaServerlessRuntimeResource
+        /// Delete.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Update a InformaticaServerlessRuntimeResource
+        /// Update.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Update a InformaticaServerlessRuntimeResource
+        /// Update.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Checks all dependencies for a serverless runtime resource
+        /// Check dependencies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Checks all dependencies for a serverless runtime resource
+        /// Check dependencies.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Starts a failed runtime resource
+        /// Start failed serverless runtime.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Starts a failed runtime resource
+        /// Start failed serverless runtime.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Returns a serverless runtime resource by ID
+        /// Get serverless resource by id.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Returns a serverless runtime resource by ID
+        /// Get serverless resource by id.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

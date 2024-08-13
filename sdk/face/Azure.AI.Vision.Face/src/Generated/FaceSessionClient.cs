@@ -311,6 +311,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get liveness session result. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessionResultAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<LivenessSession>> GetLivenessSessionResultAsync(string sessionId, CancellationToken cancellationToken = default)
         {
@@ -326,6 +327,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get liveness session result. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessionResult(string,CancellationToken)']/*" />
         public virtual Response<LivenessSession> GetLivenessSessionResult(string sessionId, CancellationToken cancellationToken = default)
         {
@@ -547,6 +549,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get liveness session audit entries. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessionAuditEntriesAsync(string,string,int?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<LivenessSessionAuditEntry>>> GetLivenessSessionAuditEntriesAsync(string sessionId, string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -572,6 +575,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get liveness session audit entries. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessionAuditEntries(string,string,int?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<LivenessSessionAuditEntry>> GetLivenessSessionAuditEntries(string sessionId, string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -1037,6 +1041,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get liveness with verify session result. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessionResultAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<LivenessWithVerifySession>> GetLivenessWithVerifySessionResultAsync(string sessionId, CancellationToken cancellationToken = default)
         {
@@ -1052,6 +1057,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get liveness with verify session result. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessionResult(string,CancellationToken)']/*" />
         public virtual Response<LivenessWithVerifySession> GetLivenessWithVerifySessionResult(string sessionId, CancellationToken cancellationToken = default)
         {
@@ -1273,6 +1279,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get liveness with verify session audit entries. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessionAuditEntriesAsync(string,string,int?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<LivenessSessionAuditEntry>>> GetLivenessWithVerifySessionAuditEntriesAsync(string sessionId, string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -1298,6 +1305,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sessionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get liveness with verify session audit entries. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessionAuditEntries(string,string,int?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<LivenessSessionAuditEntry>> GetLivenessWithVerifySessionAuditEntries(string sessionId, string start = null, int? top = null, CancellationToken cancellationToken = default)
         {

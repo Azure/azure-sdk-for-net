@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         }
 
         /// <summary>
-        /// List InformaticaOrganizationResource resources by subscription ID
+        /// List by subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         }
 
         /// <summary>
-        /// List InformaticaOrganizationResource resources by subscription ID
+        /// List by subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

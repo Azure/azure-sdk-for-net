@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Get a InformaticaServerlessRuntimeResource
+        /// Get.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Get a InformaticaServerlessRuntimeResource
+        /// Get.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Get a InformaticaOrganizationResource
+        /// Get.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Get a InformaticaOrganizationResource
+        /// Get.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Delete a InformaticaOrganizationResource
+        /// Delete.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Delete a InformaticaOrganizationResource
+        /// Delete.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Update a InformaticaOrganizationResource
+        /// Update.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Update a InformaticaOrganizationResource
+        /// Update.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Gets Metadata of the serverless runtime environment.
+        /// Get serverless metadata.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Gets Metadata of the serverless runtime environment.
+        /// Get serverless metadata.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Gets all serverless runtime resources in a given informatica organization resource.
+        /// Get all serverless runtimes.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Gets all serverless runtime resources in a given informatica organization resource.
+        /// Get all serverless runtimes.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

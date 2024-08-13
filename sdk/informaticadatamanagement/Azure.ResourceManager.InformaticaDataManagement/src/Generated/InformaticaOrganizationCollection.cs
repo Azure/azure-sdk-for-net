@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Create a InformaticaOrganizationResource
+        /// Create or update.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Create a InformaticaOrganizationResource
+        /// Create or update.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Get a InformaticaOrganizationResource
+        /// Get.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Get a InformaticaOrganizationResource
+        /// Get.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// List InformaticaOrganizationResource resources by resource group
+        /// List by resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// List InformaticaOrganizationResource resources by resource group
+        /// List by resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        /// <summary> Get a InformaticaServerlessRuntimeResource. </summary>
+        /// <summary> Get. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Get a InformaticaServerlessRuntimeResource. </summary>
+        /// <summary> Get. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        /// <summary> Create a InformaticaServerlessRuntimeResource. </summary>
+        /// <summary> Create or update. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Create a InformaticaServerlessRuntimeResource. </summary>
+        /// <summary> Create or update. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        /// <summary> Delete a InformaticaServerlessRuntimeResource. </summary>
+        /// <summary> Delete. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Delete a InformaticaServerlessRuntimeResource. </summary>
+        /// <summary> Delete. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        /// <summary> List InformaticaServerlessRuntimeResource resources by InformaticaOrganizationResource. </summary>
+        /// <summary> List by informatica organization resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> List InformaticaServerlessRuntimeResource resources by InformaticaOrganizationResource. </summary>
+        /// <summary> List by informatica organization resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        /// <summary> Update a InformaticaServerlessRuntimeResource. </summary>
+        /// <summary> Update. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Update a InformaticaServerlessRuntimeResource. </summary>
+        /// <summary> Update. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        /// <summary> Checks all dependencies for a serverless runtime resource. </summary>
+        /// <summary> Check dependencies. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Checks all dependencies for a serverless runtime resource. </summary>
+        /// <summary> Check dependencies. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        /// <summary> Starts a failed runtime resource. </summary>
+        /// <summary> Start failed serverless runtime. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Starts a failed runtime resource. </summary>
+        /// <summary> Start failed serverless runtime. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        /// <summary> Returns a serverless runtime resource by ID. </summary>
+        /// <summary> Get serverless resource by id. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> Returns a serverless runtime resource by ID. </summary>
+        /// <summary> Get serverless resource by id. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="organizationName"> Name of the Organizations resource. </param>
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return message;
         }
 
-        /// <summary> List InformaticaServerlessRuntimeResource resources by InformaticaOrganizationResource. </summary>
+        /// <summary> List by informatica organization resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> List InformaticaServerlessRuntimeResource resources by InformaticaOrganizationResource. </summary>
+        /// <summary> List by informatica organization resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
