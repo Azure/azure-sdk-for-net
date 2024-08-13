@@ -80,12 +80,16 @@ $ghPRViewCalls = 0
 $ghBranchDeleteCalls = 0
 
 try {
+  # Output the core rate limit at the start of processing. There's no real need
+  # to output this at the end because the GH call counts are being output
+  $coreRateLimit = Get-RateLimit ([RateLimitTypes]::core)
+  Write-RateLimit $coreRateLimit
   # Output the GraphQL rate limit before and after the call
   $graphqlRateLimit = Get-RateLimit ([RateLimitTypes]::graphql)
-  Write-RateLimit $graphqlRateLimit
+  Write-RateLimit $graphqlRateLimit "Before GraphQL Call"
   $branches = Get-AllBranchesAndPullRequestInfo $owner $repo
   $graphqlRateLimit = Get-RateLimit ([RateLimitTypes]::graphql)
-  Write-RateLimit $graphqlRateLimit
+  Write-RateLimit $graphqlRateLimit "After GraphQL Call"
 
   if ($branches) {
     $totalBranchesFromQuery = $branches.Count

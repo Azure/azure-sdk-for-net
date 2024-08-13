@@ -234,10 +234,19 @@ function Get-MinutesUntilRateLimitReset($RateLimit) {
 }
 
 # Output the rate limit
-function Write-RateLimit($RateLimit) {
+function Write-RateLimit {
+  param (
+    $RateLimit,
+    [string]$PreMsg = $null
+  )
+
+  if ($PreMsg) {
+    Write-Host $PreMsg
+  }
   Write-Host "Limit Type=$($RateLimit.type)"
   Write-Host "    limit=$($RateLimit.limit)"
   Write-Host "    used=$($RateLimit.used)"
   Write-Host "    remaining=$($RateLimit.remaining)"
   Write-Host "    reset=$($RateLimit.reset)"
+  Write-Host ""
 }
