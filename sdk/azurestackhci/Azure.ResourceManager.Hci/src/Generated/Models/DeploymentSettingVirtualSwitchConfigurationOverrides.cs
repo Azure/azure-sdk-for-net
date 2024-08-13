@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The network profile of a device. </summary>
-    public partial class HciNetworkProfile
+    /// <summary> The VirtualSwitchConfigurationOverrides of a cluster. </summary>
+    public partial class DeploymentSettingVirtualSwitchConfigurationOverrides
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,27 @@ namespace Azure.ResourceManager.Hci.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HciNetworkProfile"/>. </summary>
-        internal HciNetworkProfile()
+        /// <summary> Initializes a new instance of <see cref="DeploymentSettingVirtualSwitchConfigurationOverrides"/>. </summary>
+        public DeploymentSettingVirtualSwitchConfigurationOverrides()
         {
-            NicDetails = new ChangeTrackingList<HciNicDetail>();
-            SwitchDetails = new ChangeTrackingList<HciEdgeDeviceSwitchDetail>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciNetworkProfile"/>. </summary>
-        /// <param name="nicDetails"> List of NIC Details of device. </param>
-        /// <param name="switchDetails"> List of switch details for edge device. </param>
-        /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="DeploymentSettingVirtualSwitchConfigurationOverrides"/>. </summary>
+        /// <param name="enableIov"> Enable IoV for Virtual Switch. </param>
+        /// <param name="loadBalancingAlgorithm"> Load Balancing Algorithm for Virtual Switch. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciNetworkProfile(IReadOnlyList<HciNicDetail> nicDetails, IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails, HciEdgeDeviceHostNetwork hostNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentSettingVirtualSwitchConfigurationOverrides(string enableIov, string loadBalancingAlgorithm, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NicDetails = nicDetails;
-            SwitchDetails = switchDetails;
-            HostNetwork = hostNetwork;
+            EnableIov = enableIov;
+            LoadBalancingAlgorithm = loadBalancingAlgorithm;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of NIC Details of device. </summary>
-        [WirePath("nicDetails")]
-        public IReadOnlyList<HciNicDetail> NicDetails { get; }
-        /// <summary> List of switch details for edge device. </summary>
-        [WirePath("switchDetails")]
-        public IReadOnlyList<HciEdgeDeviceSwitchDetail> SwitchDetails { get; }
-        /// <summary> HostNetwork config to deploy AzureStackHCI Cluster. </summary>
-        [WirePath("hostNetwork")]
-        public HciEdgeDeviceHostNetwork HostNetwork { get; }
+        /// <summary> Enable IoV for Virtual Switch. </summary>
+        [WirePath("enableIov")]
+        public string EnableIov { get; set; }
+        /// <summary> Load Balancing Algorithm for Virtual Switch. </summary>
+        [WirePath("loadBalancingAlgorithm")]
+        public string LoadBalancingAlgorithm { get; set; }
     }
 }

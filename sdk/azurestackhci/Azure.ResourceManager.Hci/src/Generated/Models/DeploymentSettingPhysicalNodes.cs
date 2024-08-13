@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The network profile of a device. </summary>
-    public partial class HciNetworkProfile
+    /// <summary> The PhysicalNodes of a cluster. </summary>
+    public partial class DeploymentSettingPhysicalNodes
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,27 @@ namespace Azure.ResourceManager.Hci.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HciNetworkProfile"/>. </summary>
-        internal HciNetworkProfile()
+        /// <summary> Initializes a new instance of <see cref="DeploymentSettingPhysicalNodes"/>. </summary>
+        public DeploymentSettingPhysicalNodes()
         {
-            NicDetails = new ChangeTrackingList<HciNicDetail>();
-            SwitchDetails = new ChangeTrackingList<HciEdgeDeviceSwitchDetail>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciNetworkProfile"/>. </summary>
-        /// <param name="nicDetails"> List of NIC Details of device. </param>
-        /// <param name="switchDetails"> List of switch details for edge device. </param>
-        /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="DeploymentSettingPhysicalNodes"/>. </summary>
+        /// <param name="name"> NETBIOS name of each physical server on your Azure Stack HCI cluster. </param>
+        /// <param name="ipv4Address"> The IPv4 address assigned to each physical server on your Azure Stack HCI cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciNetworkProfile(IReadOnlyList<HciNicDetail> nicDetails, IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails, HciEdgeDeviceHostNetwork hostNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentSettingPhysicalNodes(string name, string ipv4Address, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NicDetails = nicDetails;
-            SwitchDetails = switchDetails;
-            HostNetwork = hostNetwork;
+            Name = name;
+            IPv4Address = ipv4Address;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of NIC Details of device. </summary>
-        [WirePath("nicDetails")]
-        public IReadOnlyList<HciNicDetail> NicDetails { get; }
-        /// <summary> List of switch details for edge device. </summary>
-        [WirePath("switchDetails")]
-        public IReadOnlyList<HciEdgeDeviceSwitchDetail> SwitchDetails { get; }
-        /// <summary> HostNetwork config to deploy AzureStackHCI Cluster. </summary>
-        [WirePath("hostNetwork")]
-        public HciEdgeDeviceHostNetwork HostNetwork { get; }
+        /// <summary> NETBIOS name of each physical server on your Azure Stack HCI cluster. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
+        /// <summary> The IPv4 address assigned to each physical server on your Azure Stack HCI cluster. </summary>
+        [WirePath("ipv4Address")]
+        public string IPv4Address { get; set; }
     }
 }
