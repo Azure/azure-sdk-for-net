@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.BaseActions
 {
     /// <summary>
-    /// Operation to add connectionId to a group.
+    /// Remove filtered connections from multiple groups.
     /// </summary>
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
     internal class RemoveConnectionsFromGroupsAction : WebPubSubAction
