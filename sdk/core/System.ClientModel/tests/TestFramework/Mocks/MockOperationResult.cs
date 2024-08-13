@@ -18,9 +18,12 @@ public class MockOperationResult : OperationResult
     internal MockOperationResult(PipelineResponse response, int completeAfterCount = 2) : base(response)
     {
         _completeAfterCount = completeAfterCount;
+        GetNextResponse = () => new MockPipelineResponse(200);
     }
 
     public Action? OnUpdate { get; set; }
+
+    public Func<PipelineResponse> GetNextResponse { get; set; }
 
     public override bool IsCompleted { get; protected set; }
 
@@ -42,7 +45,7 @@ public class MockOperationResult : OperationResult
             IsCompleted = true;
         }
 
-        MockPipelineResponse response = new MockPipelineResponse(200);
+        PipelineResponse response = GetNextResponse();
 
         SetRawResponse(response);
 

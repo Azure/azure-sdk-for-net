@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using ClientModel.Tests;
@@ -100,5 +101,42 @@ public class OperationResultTests : SyncAsyncTestBase
         Assert.IsTrue(source.IsCancellationRequested);
         Assert.AreEqual(updateCount, 0);
         Assert.IsFalse(operation.IsCompleted);
+    }
+
+    [Test]
+    public async Task WaitForCompletionResponseRetryAfterHeader()
+    {
+        int updateCount = 0;
+        int completeAfterCount = 2;
+        int retryAfterSeconds = 3;
+
+        static PipelineResponse GetResponse(int retryAfterSeconds)
+        {
+            MockPipelineResponse response = new(200);
+            response.SetHeader("Retry-After", retryAfterSeconds.ToString());
+            return response;
+        }
+
+        MockOperationResult operation = new(GetResponse(retryAfterSeconds), completeAfterCount);
+        operation.OnUpdate = () => updateCount++;
+        operation.GetNextResponse = () => GetResponse(retryAfterSeconds);
+
+        Stopwatch stopwatch = Stopwatch.StartNew();
+
+        if (IsAsync)
+        {
+            await operation.WaitForCompletionAsync();
+        }
+        else
+        {
+            operation.WaitForCompletion();
+        }
+
+        stopwatch.Stop();
+
+        Assert.AreEqual(updateCount, completeAfterCount);
+        Assert.IsTrue(operation.IsCompleted);
+
+        Assert.Greater(stopwatch.Elapsed, TimeSpan.FromSeconds(updateCount * retryAfterSeconds));
     }
 }
