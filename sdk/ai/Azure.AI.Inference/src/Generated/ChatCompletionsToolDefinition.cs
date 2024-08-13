@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Inference
 {
-    /// <summary>
-    /// An abstract representation of a tool that can be used by the model to improve a chat completions response.
-    /// Please note <see cref="ChatCompletionsToolDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ChatCompletionsFunctionToolDefinition"/>.
-    /// </summary>
-    public abstract partial class ChatCompletionsToolDefinition
+    /// <summary> The definition of a chat completions tool that can call a function. </summary>
+    public partial class ChatCompletionsToolDefinition
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,38 @@ namespace Azure.AI.Inference
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsToolDefinition"/>. </summary>
-        protected ChatCompletionsToolDefinition()
+        /// <param name="function"> The function definition details for the function tool. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="function"/> is null. </exception>
+        public ChatCompletionsToolDefinition(FunctionDefinition function)
         {
+            Argument.AssertNotNull(function, nameof(function));
+
+            Function = function;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsToolDefinition"/>. </summary>
-        /// <param name="type"> The object type. </param>
+        /// <param name="type"> The type of the tool. Currently, only `function` is supported. </param>
+        /// <param name="function"> The function definition details for the function tool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionsToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatCompletionsToolDefinition(ChatCompletionsToolDefinitionType type, FunctionDefinition function, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
+            Function = function;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The object type. </summary>
-        internal string Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsToolDefinition"/> for deserialization. </summary>
+        internal ChatCompletionsToolDefinition()
+        {
+        }
+
+        /// <summary> The type of the tool. Currently, only `function` is supported. </summary>
+        public ChatCompletionsToolDefinitionType Type { get; } = ChatCompletionsToolDefinitionType.Function;
+
+        /// <summary> The function definition details for the function tool. </summary>
+        public FunctionDefinition Function { get; }
     }
 }

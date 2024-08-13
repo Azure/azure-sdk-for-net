@@ -21,7 +21,7 @@ namespace Azure.AI.Inference
     ///     determine if, and which, tools should be called instead of generating a message.
     /// </item>
     /// <item>
-    ///     Providing a <see cref="FunctionDefinition"/> or <see cref="ChatCompletionsFunctionToolDefinition"/> will
+    ///     Providing a <see cref="FunctionDefinition"/> or <see cref="ChatCompletionsToolDefinition"/> will
     ///     request that the model constrains its response to only calling the specified function tool.
     /// </item>
     /// </list>
@@ -44,8 +44,7 @@ namespace Azure.AI.Inference
             return new(functionDefinition);
         }
 
-        public static implicit operator ChatCompletionsToolChoice(
-            ChatCompletionsFunctionToolDefinition functionToolDefinition)
+        public static implicit operator ChatCompletionsToolChoice(ChatCompletionsToolDefinition functionToolDefinition)
         {
             return new(functionToolDefinition);
         }
@@ -74,13 +73,13 @@ namespace Azure.AI.Inference
         /// <see cref="FunctionDefinition"/>.
         /// </summary>
         /// <param name="functionToolDefinition">
-        ///     A <see cref="ChatCompletionsFunctionToolDefinition"/> with a name that matches the function tool to which
+        ///     A <see cref="ChatCompletionsToolDefinition"/> with a name that matches the function tool to which
         ///     model responses should be constrained.
         /// </param>
         /// <exception cref="ArgumentNullException">
         ///     <paramref name="functionToolDefinition"/> is null.
         /// </exception>
-        public ChatCompletionsToolChoice(ChatCompletionsFunctionToolDefinition functionToolDefinition)
+        public ChatCompletionsToolChoice(ChatCompletionsToolDefinition functionToolDefinition)
         {
             Argument.AssertNotNull(functionToolDefinition, nameof(functionToolDefinition));
             Function = functionToolDefinition.Function;

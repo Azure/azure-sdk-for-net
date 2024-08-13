@@ -30,6 +30,16 @@ namespace Azure.AI.Inference
             return new ChatMessageTextContentItem("text", serializedAdditionalRawData: null, text);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. </param>
+        /// <param name="type"> The type of tool call. Currently, only `function` is supported. </param>
+        /// <param name="function"> The details of the function call requested by the AI model. </param>
+        /// <returns> A new <see cref="Inference.ChatCompletionsToolCall"/> instance for mocking. </returns>
+        public static ChatCompletionsToolCall ChatCompletionsToolCall(string id = null, ChatCompletionsToolCallType type = default, FunctionCall function = null)
+        {
+            return new ChatCompletionsToolCall(id, type, function, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Inference.ChatRequestToolMessage"/>. </summary>
         /// <param name="content"> The content of the message. </param>
         /// <param name="toolCallId"> The ID of the tool call resolved by the provided content. </param>
@@ -39,20 +49,22 @@ namespace Azure.AI.Inference
             return new ChatRequestToolMessage(ChatRole.Tool, serializedAdditionalRawData: null, content, toolCallId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsFunctionToolDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsToolDefinition"/>. </summary>
+        /// <param name="type"> The type of the tool. Currently, only `function` is supported. </param>
         /// <param name="function"> The function definition details for the function tool. </param>
-        /// <returns> A new <see cref="Inference.ChatCompletionsFunctionToolDefinition"/> instance for mocking. </returns>
-        public static ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(FunctionDefinition function = null)
+        /// <returns> A new <see cref="Inference.ChatCompletionsToolDefinition"/> instance for mocking. </returns>
+        public static ChatCompletionsToolDefinition ChatCompletionsToolDefinition(ChatCompletionsToolDefinitionType type = default, FunctionDefinition function = null)
         {
-            return new ChatCompletionsFunctionToolDefinition("function", serializedAdditionalRawData: null, function);
+            return new ChatCompletionsToolDefinition(type, function, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsNamedFunctionToolSelection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsNamedToolSelection"/>. </summary>
+        /// <param name="type"> The type of the tool. Currently, only `function` is supported. </param>
         /// <param name="function"> The function that should be called. </param>
-        /// <returns> A new <see cref="Inference.ChatCompletionsNamedFunctionToolSelection"/> instance for mocking. </returns>
-        public static ChatCompletionsNamedFunctionToolSelection ChatCompletionsNamedFunctionToolSelection(ChatCompletionsFunctionToolSelection function = null)
+        /// <returns> A new <see cref="Inference.ChatCompletionsNamedToolSelection"/> instance for mocking. </returns>
+        public static ChatCompletionsNamedToolSelection ChatCompletionsNamedToolSelection(ChatCompletionsNamedToolSelectionType type = default, ChatCompletionsFunctionToolSelection function = null)
         {
-            return new ChatCompletionsNamedFunctionToolSelection("function", serializedAdditionalRawData: null, function);
+            return new ChatCompletionsNamedToolSelection(type, function, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletions"/>. </summary>
@@ -108,8 +120,6 @@ namespace Azure.AI.Inference
         /// <param name="toolCalls">
         /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
         /// completions request to resolve as configured.
-        /// Please note <see cref="ChatCompletionsToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatCompletionsFunctionToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Inference.ChatResponseMessage"/> instance for mocking. </returns>
         public static ChatResponseMessage ChatResponseMessage(ChatRole role = default, string content = null, IEnumerable<ChatCompletionsToolCall> toolCalls = null)

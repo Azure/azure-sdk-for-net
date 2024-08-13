@@ -27,8 +27,6 @@ namespace Azure.AI.Inference
         /// <param name="toolCalls">
         /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
         /// completions request to resolve as configured.
-        /// Please note <see cref="ChatCompletionsToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatCompletionsFunctionToolCall"/>.
         /// </param>
         internal ChatRequestAssistantMessage(ChatRole role, IDictionary<string, BinaryData> serializedAdditionalRawData, string content, IList<ChatCompletionsToolCall> toolCalls) : base(role, serializedAdditionalRawData)
         {
@@ -41,8 +39,6 @@ namespace Azure.AI.Inference
         /// <summary>
         /// The tool calls that must be resolved and have their outputs appended to subsequent input messages for the chat
         /// completions request to resolve as configured.
-        /// Please note <see cref="ChatCompletionsToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatCompletionsFunctionToolCall"/>.
         /// </summary>
         public IList<ChatCompletionsToolCall> ToolCalls { get; }
     }

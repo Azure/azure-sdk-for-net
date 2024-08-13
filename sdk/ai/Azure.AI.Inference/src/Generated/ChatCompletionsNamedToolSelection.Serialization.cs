@@ -7,12 +7,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.Inference
 {
-    [PersistableModelProxy(typeof(UnknownChatCompletionsNamedToolSelection))]
     public partial class ChatCompletionsNamedToolSelection : IUtf8JsonSerializable, IJsonModel<ChatCompletionsNamedToolSelection>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletionsNamedToolSelection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -27,7 +27,9 @@ namespace Azure.AI.Inference
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("function"u8);
+            writer.WriteObjectValue(Function, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -66,14 +68,29 @@ namespace Azure.AI.Inference
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            ChatCompletionsNamedToolSelectionType type = default;
+            ChatCompletionsFunctionToolSelection function = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("type"u8))
                 {
-                    case "function": return ChatCompletionsNamedFunctionToolSelection.DeserializeChatCompletionsNamedFunctionToolSelection(element, options);
+                    type = new ChatCompletionsNamedToolSelectionType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("function"u8))
+                {
+                    function = ChatCompletionsFunctionToolSelection.DeserializeChatCompletionsFunctionToolSelection(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return UnknownChatCompletionsNamedToolSelection.DeserializeUnknownChatCompletionsNamedToolSelection(element, options);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ChatCompletionsNamedToolSelection(type, function, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatCompletionsNamedToolSelection>.Write(ModelReaderWriterOptions options)
