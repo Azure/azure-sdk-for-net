@@ -4,7 +4,7 @@
 
 [Radiology Insights][radiology_insights_docs] is a model that aims to provide quality checks as feedback on errors and inconsistencies (mismatches) and ensures critical findings are identified and communicated using the full context of the report. Follow-up recommendations and clinical findings with measurements (sizes) documented by the radiologist are also identified.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Health.Insights.RadiologyInsights/) | [API reference documentation](https://learn.microsoft.com/en-in/rest/api/cognitiveservices/healthinsights/radiology-insights) | [Product documentation](https://learn.microsoft.com/azure/azure-health-insights/radiology-insights/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Health.Insights.RadiologyInsights/) | [API reference documentation](https://learn.microsoft.com/en-in/rest/api/cognitiveservices/healthinsights/radiology-insights) | [Product documentation](https://learn.microsoft.com/azure/azure-health-insights/radiology-insights/) | [Samples][sample_folder]
 ## Getting started
 
 ### Prerequisites
