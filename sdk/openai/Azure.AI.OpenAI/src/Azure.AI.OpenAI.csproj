@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Description>
@@ -16,15 +16,14 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(UseExternalLib)' == 'true'">
-    <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" VersionOverride="1.1.0-beta.5" />
-    <Reference Include="OpenAI">
-      <HintPath>..\..\external\lib\netstandard2.0\OpenAI.dll</HintPath>
-    </Reference>
+  <ItemGroup Condition="'$(ExternalOpenAILibrary)' != ''">
+    <PackageReference Include="Azure.Core" Condition="'$(ExternalAzureCoreLibrary)' == ''"/>
+    <Reference Include="Azure.Core.Slim" HintPath="$(ExternalAzureCoreLibrary)" Condition="'$(ExternalAzureCoreLibrary)' != ''" />
+    <Reference Include="OpenAI" HintPath="$(ExternalOpenAILibrary)" />
+    <PackageReference Include="System.ClientModel" VersionOverride="$(SystemClientModelVersion)" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(UseExternalLib)' != 'true'">
+  <ItemGroup Condition="'$(ExternalOpenAILibrary)' == ''">
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="OpenAI" />
   </ItemGroup>

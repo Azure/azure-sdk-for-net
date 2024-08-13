@@ -23,10 +23,9 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(UseExternalLib)' == 'true'">
-    <Reference Include="OpenAI">
-      <HintPath>..\..\external\lib\netstandard2.0\OpenAI.dll</HintPath>
-    </Reference>
+  <ItemGroup Condition="'$(ExternalOpenAILibrary)' != ''">
+    <Reference Include="Azure.Core.Slim" HintPath="$(ExternalAzureCoreLibrary)" Condition="'$(ExternalAzureCoreLibrary)' != ''" />
+    <Reference Include="OpenAI" HintPath="$(ExternalOpenAILibrary)" />
   </ItemGroup>
 
   <ItemGroup>
