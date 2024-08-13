@@ -62,6 +62,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Batch get. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='BatchGetAsync(int?,int?,string,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasGlossary>>> BatchGetAsync(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
@@ -89,6 +90,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="sort"> The sort order, ASC (default) or DESC. </param>
         /// <param name="ignoreTermsAndCategories"> Whether ignore terms and categories. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Batch get. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='BatchGet(int?,int?,string,bool?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasGlossary>> BatchGet(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
@@ -193,6 +195,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateAsync(AtlasGlossary,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossary>> CreateAsync(AtlasGlossary body, CancellationToken cancellationToken = default)
         {
@@ -208,6 +211,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Create(AtlasGlossary,CancellationToken)']/*" />
         public virtual Response<AtlasGlossary> Create(AtlasGlossary body, CancellationToken cancellationToken = default)
         {
@@ -301,6 +305,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> An array of glossary category definitions to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create categories. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoriesAsync(IEnumerable{AtlasGlossaryCategory},CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasGlossaryCategory>>> CreateCategoriesAsync(IEnumerable<AtlasGlossaryCategory> body, CancellationToken cancellationToken = default)
         {
@@ -324,6 +329,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> An array of glossary category definitions to be created. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create categories. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategories(IEnumerable{AtlasGlossaryCategory},CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasGlossaryCategory>> CreateCategories(IEnumerable<AtlasGlossaryCategory> body, CancellationToken cancellationToken = default)
         {
@@ -425,6 +431,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create category. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategoryAsync(AtlasGlossaryCategory,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryCategory>> CreateCategoryAsync(AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
@@ -440,6 +447,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create category. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateCategory(AtlasGlossaryCategory,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryCategory> CreateCategory(AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
@@ -534,6 +542,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get category. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryCategory>> GetCategoryAsync(string categoryId, CancellationToken cancellationToken = default)
         {
@@ -549,6 +558,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get category. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategory(string,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryCategory> GetCategory(string categoryId, CancellationToken cancellationToken = default)
         {
@@ -645,6 +655,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update category. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategoryAsync(string,AtlasGlossaryCategory,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryCategory>> UpdateCategoryAsync(string categoryId, AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
@@ -663,6 +674,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update category. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateCategory(string,AtlasGlossaryCategory,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryCategory> UpdateCategory(string categoryId, AtlasGlossaryCategory body, CancellationToken cancellationToken = default)
         {
@@ -843,6 +855,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Partial update category. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateCategoryAsync(string,IDictionary{string,string},CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryCategory>> PartialUpdateCategoryAsync(string categoryId, IDictionary<string, string> body, CancellationToken cancellationToken = default)
         {
@@ -867,6 +880,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Partial update category. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateCategory(string,IDictionary{string,string},CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryCategory> PartialUpdateCategory(string categoryId, IDictionary<string, string> body, CancellationToken cancellationToken = default)
         {
@@ -976,6 +990,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get related categories. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedCategoriesAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>>> GetRelatedCategoriesAsync(string categoryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -1017,6 +1032,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get related categories. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedCategories(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyDictionary<string, IList<AtlasRelatedCategoryHeader>>> GetRelatedCategories(string categoryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -1143,6 +1159,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get category terms. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryTermsAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasRelatedTermHeader>>> GetCategoryTermsAsync(string categoryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -1169,6 +1186,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="categoryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="categoryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get category terms. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoryTerms(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasRelatedTermHeader>> GetCategoryTerms(string categoryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -1278,6 +1296,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create term. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermAsync(AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryTerm>> CreateTermAsync(AtlasGlossaryTerm body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
@@ -1294,6 +1313,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create term. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerm(AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryTerm> CreateTerm(AtlasGlossaryTerm body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
@@ -1390,6 +1410,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get term. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryTerm>> GetTermAsync(string termId, CancellationToken cancellationToken = default)
         {
@@ -1405,6 +1426,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get term. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTerm(string,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryTerm> GetTerm(string termId, CancellationToken cancellationToken = default)
         {
@@ -1502,6 +1524,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update term. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTermAsync(string,AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryTerm>> UpdateTermAsync(string termId, AtlasGlossaryTerm body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
@@ -1521,6 +1544,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update term. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateTerm(string,AtlasGlossaryTerm,bool?,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryTerm> UpdateTerm(string termId, AtlasGlossaryTerm body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
@@ -1704,6 +1728,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Partial update term. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateTermAsync(string,IDictionary{string,string},bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryTerm>> PartialUpdateTermAsync(string termId, IDictionary<string, string> body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
@@ -1729,6 +1754,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Partial update term. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateTerm(string,IDictionary{string,string},bool?,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryTerm> PartialUpdateTerm(string termId, IDictionary<string, string> body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
@@ -1834,6 +1860,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create terms. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTermsAsync(IEnumerable{AtlasGlossaryTerm},bool?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasGlossaryTerm>>> CreateTermsAsync(IEnumerable<AtlasGlossaryTerm> body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
@@ -1858,6 +1885,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="includeTermHierarchy"> Whether include term hierarchy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create terms. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='CreateTerms(IEnumerable{AtlasGlossaryTerm},bool?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasGlossaryTerm>> CreateTerms(IEnumerable<AtlasGlossaryTerm> body, bool? includeTermHierarchy = null, CancellationToken cancellationToken = default)
         {
@@ -1968,6 +1996,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get entities assigned with term. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTermAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasRelatedObjectId>>> GetEntitiesAssignedWithTermAsync(string termId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -1997,6 +2026,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get entities assigned with term. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetEntitiesAssignedWithTerm(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasRelatedObjectId>> GetEntitiesAssignedWithTerm(string termId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -2116,6 +2146,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Assign term to entities. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='AssignTermToEntitiesAsync(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)']/*" />
         public virtual async Task<Response> AssignTermToEntitiesAsync(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
@@ -2141,6 +2172,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Assign term to entities. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='AssignTermToEntities(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)']/*" />
         public virtual Response AssignTermToEntities(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
@@ -2253,6 +2285,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Delete term assignment from entities. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntitiesAsync(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)']/*" />
         public virtual async Task<Response> DeleteTermAssignmentFromEntitiesAsync(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
@@ -2271,6 +2304,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Delete term assignment from entities. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='DeleteTermAssignmentFromEntities(string,IEnumerable{AtlasRelatedObjectId},CancellationToken)']/*" />
         public virtual Response DeleteTermAssignmentFromEntities(string termId, IEnumerable<AtlasRelatedObjectId> body, CancellationToken cancellationToken = default)
         {
@@ -2378,6 +2412,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get related terms. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedTermsAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>>> GetRelatedTermsAsync(string termId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -2419,6 +2454,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="termId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="termId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get related terms. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetRelatedTerms(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyDictionary<string, IList<AtlasRelatedTermHeader>>> GetRelatedTerms(string termId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -2542,6 +2578,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetGlossaryAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossary>> GetGlossaryAsync(string glossaryId, CancellationToken cancellationToken = default)
         {
@@ -2557,6 +2594,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetGlossary(string,CancellationToken)']/*" />
         public virtual Response<AtlasGlossary> GetGlossary(string glossaryId, CancellationToken cancellationToken = default)
         {
@@ -2654,6 +2692,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='UpdateAsync(string,AtlasGlossary,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossary>> UpdateAsync(string glossaryId, AtlasGlossary body, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
@@ -2673,6 +2712,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Update. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='Update(string,AtlasGlossary,bool?,CancellationToken)']/*" />
         public virtual Response<AtlasGlossary> Update(string glossaryId, AtlasGlossary body, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
@@ -2856,6 +2896,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get categories. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasGlossaryCategory>>> GetCategoriesAsync(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -2885,6 +2926,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get categories. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategories(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasGlossaryCategory>> GetCategories(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -3002,6 +3044,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get categories headers. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesHeadersAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasRelatedCategoryHeader>>> GetCategoriesHeadersAsync(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -3031,6 +3074,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get categories headers. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetCategoriesHeaders(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasRelatedCategoryHeader>> GetCategoriesHeaders(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -3151,6 +3195,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get detailed. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetDetailedAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossaryExtInfo>> GetDetailedAsync(string glossaryId, CancellationToken cancellationToken = default)
         {
@@ -3175,6 +3220,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get detailed. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetDetailed(string,CancellationToken)']/*" />
         public virtual Response<AtlasGlossaryExtInfo> GetDetailed(string glossaryId, CancellationToken cancellationToken = default)
         {
@@ -3298,6 +3344,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Partial update. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdateAsync(string,IDictionary{string,string},bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasGlossary>> PartialUpdateAsync(string glossaryId, IDictionary<string, string> body, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
@@ -3329,6 +3376,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Partial update. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='PartialUpdate(string,IDictionary{string,string},bool?,CancellationToken)']/*" />
         public virtual Response<AtlasGlossary> PartialUpdate(string glossaryId, IDictionary<string, string> body, bool? ignoreTermsAndCategories = null, CancellationToken cancellationToken = default)
         {
@@ -3452,6 +3500,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get terms. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermsAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasGlossaryTerm>>> GetTermsAsync(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -3481,6 +3530,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get terms. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTerms(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasGlossaryTerm>> GetTerms(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -3598,6 +3648,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get term headers. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermHeadersAsync(string,int?,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasRelatedTermHeader>>> GetTermHeadersAsync(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {
@@ -3627,6 +3678,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="glossaryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="glossaryId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get term headers. </remarks>
         /// <include file="Docs/Glossary.xml" path="doc/members/member[@name='GetTermHeaders(string,int?,int?,string,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasRelatedTermHeader>> GetTermHeaders(string glossaryId, int? limit = null, int? offset = null, string sort = null, CancellationToken cancellationToken = default)
         {

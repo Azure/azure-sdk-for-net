@@ -56,6 +56,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get business metadata by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasBusinessMetadataDef>> GetBusinessMetadataByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
@@ -71,6 +72,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get business metadata by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataById(string,CancellationToken)']/*" />
         public virtual Response<AtlasBusinessMetadataDef> GetBusinessMetadataById(string guid, CancellationToken cancellationToken = default)
         {
@@ -166,6 +168,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get business metadata by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasBusinessMetadataDef>> GetBusinessMetadataByNameAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -181,6 +184,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get business metadata by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetBusinessMetadataByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasBusinessMetadataDef> GetBusinessMetadataByName(string name, CancellationToken cancellationToken = default)
         {
@@ -276,6 +280,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get classification by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasClassificationDef>> GetClassificationByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
@@ -291,6 +296,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get classification by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationById(string,CancellationToken)']/*" />
         public virtual Response<AtlasClassificationDef> GetClassificationById(string guid, CancellationToken cancellationToken = default)
         {
@@ -386,6 +392,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get classification by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasClassificationDef>> GetClassificationByNameAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -401,6 +408,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get classification by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetClassificationByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasClassificationDef> GetClassificationByName(string name, CancellationToken cancellationToken = default)
         {
@@ -496,6 +504,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get entity by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEntityDef>> GetEntityByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
@@ -511,6 +520,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get entity by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityById(string,CancellationToken)']/*" />
         public virtual Response<AtlasEntityDef> GetEntityById(string guid, CancellationToken cancellationToken = default)
         {
@@ -606,6 +616,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get entity by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEntityDef>> GetEntityByNameAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -621,6 +632,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get entity by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEntityByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasEntityDef> GetEntityByName(string name, CancellationToken cancellationToken = default)
         {
@@ -716,6 +728,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get enum by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEnumDef>> GetEnumByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
@@ -731,6 +744,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get enum by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumById(string,CancellationToken)']/*" />
         public virtual Response<AtlasEnumDef> GetEnumById(string guid, CancellationToken cancellationToken = default)
         {
@@ -826,6 +840,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get enum by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasEnumDef>> GetEnumByNameAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -841,6 +856,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get enum by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetEnumByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasEnumDef> GetEnumByName(string name, CancellationToken cancellationToken = default)
         {
@@ -936,6 +952,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get relationship by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasRelationshipDef>> GetRelationshipByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
@@ -951,6 +968,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get relationship by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipById(string,CancellationToken)']/*" />
         public virtual Response<AtlasRelationshipDef> GetRelationshipById(string guid, CancellationToken cancellationToken = default)
         {
@@ -1046,6 +1064,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get relationship by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasRelationshipDef>> GetRelationshipByNameAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -1061,6 +1080,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get relationship by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetRelationshipByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasRelationshipDef> GetRelationshipByName(string name, CancellationToken cancellationToken = default)
         {
@@ -1156,6 +1176,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get struct by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasStructDef>> GetStructByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
@@ -1171,6 +1192,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get struct by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructById(string,CancellationToken)']/*" />
         public virtual Response<AtlasStructDef> GetStructById(string guid, CancellationToken cancellationToken = default)
         {
@@ -1266,6 +1288,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get struct by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasStructDef>> GetStructByNameAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -1281,6 +1304,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get struct by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetStructByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasStructDef> GetStructByName(string name, CancellationToken cancellationToken = default)
         {
@@ -1376,6 +1400,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasTypeDef>> GetByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
@@ -1391,6 +1416,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetById(string,CancellationToken)']/*" />
         public virtual Response<AtlasTypeDef> GetById(string guid, CancellationToken cancellationToken = default)
         {
@@ -1486,6 +1512,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasTypeDef>> GetByNameAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -1501,6 +1528,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetByName(string,CancellationToken)']/*" />
         public virtual Response<AtlasTypeDef> GetByName(string name, CancellationToken cancellationToken = default)
         {
@@ -1671,6 +1699,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTypeDefinitionAsync(bool?,TypeCategory?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasTypesDef>> GetTypeDefinitionAsync(bool? includeTermTemplate = null, TypeCategory? type = null, CancellationToken cancellationToken = default)
         {
@@ -1687,6 +1716,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTypeDefinition(bool?,TypeCategory?,CancellationToken)']/*" />
         public virtual Response<AtlasTypesDef> GetTypeDefinition(bool? includeTermTemplate = null, TypeCategory? type = null, CancellationToken cancellationToken = default)
         {
@@ -1781,6 +1811,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Batch create. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreateAsync(AtlasTypesDef,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasTypesDef>> BatchCreateAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
@@ -1796,6 +1827,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Batch create. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreate(AtlasTypesDef,CancellationToken)']/*" />
         public virtual Response<AtlasTypesDef> BatchCreate(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
@@ -1892,6 +1924,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Batch update. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdateAsync(AtlasTypesDef,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasTypesDef>> BatchUpdateAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
@@ -1910,6 +1943,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Batch update. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdate(AtlasTypesDef,CancellationToken)']/*" />
         public virtual Response<AtlasTypesDef> BatchUpdate(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
@@ -2005,6 +2039,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Batch delete. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDeleteAsync(AtlasTypesDef,CancellationToken)']/*" />
         public virtual async Task<Response> BatchDeleteAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
@@ -2020,6 +2055,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Batch delete. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDelete(AtlasTypesDef,CancellationToken)']/*" />
         public virtual Response BatchDelete(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
@@ -2117,6 +2153,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get headers. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetHeadersAsync(bool?,TypeCategory?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<AtlasTypeDefHeader>>> GetHeadersAsync(bool? includeTermTemplate = null, TypeCategory? type = null, CancellationToken cancellationToken = default)
         {
@@ -2141,6 +2178,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="type"> Typedef name as search filter when get typedefs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get headers. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetHeaders(bool?,TypeCategory?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<AtlasTypeDefHeader>> GetHeaders(bool? includeTermTemplate = null, TypeCategory? type = null, CancellationToken cancellationToken = default)
         {
@@ -2244,6 +2282,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get term template by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByIdAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<TermTemplateDef>> GetTermTemplateByIdAsync(string guid, CancellationToken cancellationToken = default)
         {
@@ -2259,6 +2298,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get term template by id. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateById(string,CancellationToken)']/*" />
         public virtual Response<TermTemplateDef> GetTermTemplateById(string guid, CancellationToken cancellationToken = default)
         {
@@ -2354,6 +2394,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get term template by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByNameAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<TermTemplateDef>> GetTermTemplateByNameAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -2369,6 +2410,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get term template by name. </remarks>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='GetTermTemplateByName(string,CancellationToken)']/*" />
         public virtual Response<TermTemplateDef> GetTermTemplateByName(string name, CancellationToken cancellationToken = default)
         {

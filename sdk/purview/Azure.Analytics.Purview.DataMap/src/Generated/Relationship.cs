@@ -50,6 +50,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create. </remarks>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='CreateAsync(AtlasRelationship,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasRelationship>> CreateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
@@ -65,6 +66,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Create. </remarks>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Create(AtlasRelationship,CancellationToken)']/*" />
         public virtual Response<AtlasRelationship> Create(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
@@ -158,6 +160,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Update. </remarks>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='UpdateAsync(AtlasRelationship,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasRelationship>> UpdateAsync(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
@@ -173,6 +176,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Update. </remarks>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='Update(AtlasRelationship,CancellationToken)']/*" />
         public virtual Response<AtlasRelationship> Update(AtlasRelationship body, CancellationToken cancellationToken = default)
         {
@@ -268,6 +272,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get. </remarks>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='GetRelationshipAsync(string,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasRelationshipWithExtInfo>> GetRelationshipAsync(string guid, bool? extendedInfo = null, CancellationToken cancellationToken = default)
         {
@@ -284,6 +289,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get. </remarks>
         /// <include file="Docs/Relationship.xml" path="doc/members/member[@name='GetRelationship(string,bool?,CancellationToken)']/*" />
         public virtual Response<AtlasRelationshipWithExtInfo> GetRelationship(string guid, bool? extendedInfo = null, CancellationToken cancellationToken = default)
         {

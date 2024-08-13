@@ -53,6 +53,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query. </remarks>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='QueryAsync(QueryConfig,CancellationToken)']/*" />
         public virtual async Task<Response<QueryResult>> QueryAsync(QueryConfig body, CancellationToken cancellationToken = default)
         {
@@ -68,6 +69,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Query. </remarks>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Query(QueryConfig,CancellationToken)']/*" />
         public virtual Response<QueryResult> Query(QueryConfig body, CancellationToken cancellationToken = default)
         {
@@ -161,6 +163,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Suggest. </remarks>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='SuggestAsync(SuggestConfig,CancellationToken)']/*" />
         public virtual async Task<Response<SuggestResult>> SuggestAsync(SuggestConfig body, CancellationToken cancellationToken = default)
         {
@@ -176,6 +179,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Suggest. </remarks>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='Suggest(SuggestConfig,CancellationToken)']/*" />
         public virtual Response<SuggestResult> Suggest(SuggestConfig body, CancellationToken cancellationToken = default)
         {
@@ -269,6 +273,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Auto complete. </remarks>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoCompleteAsync(AutoCompleteConfig,CancellationToken)']/*" />
         public virtual async Task<Response<AutoCompleteResult>> AutoCompleteAsync(AutoCompleteConfig body, CancellationToken cancellationToken = default)
         {
@@ -284,6 +289,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Auto complete. </remarks>
         /// <include file="Docs/Discovery.xml" path="doc/members/member[@name='AutoComplete(AutoCompleteConfig,CancellationToken)']/*" />
         public virtual Response<AutoCompleteResult> AutoComplete(AutoCompleteConfig body, CancellationToken cancellationToken = default)
         {

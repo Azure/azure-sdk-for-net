@@ -56,6 +56,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get. </remarks>
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetLineageAsync(string,LineageDirection,int?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasLineageInfo>> GetLineageAsync(string guid, LineageDirection direction, int? depth = null, CancellationToken cancellationToken = default)
         {
@@ -73,6 +74,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get. </remarks>
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetLineage(string,LineageDirection,int?,CancellationToken)']/*" />
         public virtual Response<AtlasLineageInfo> GetLineage(string guid, LineageDirection direction, int? depth = null, CancellationToken cancellationToken = default)
         {
@@ -177,6 +179,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get next page. </remarks>
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetNextPageAsync(string,LineageDirection,int?,int?,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasLineageInfo>> GetNextPageAsync(string guid, LineageDirection direction, int? offset = null, int? limit = null, CancellationToken cancellationToken = default)
         {
@@ -195,6 +198,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get next page. </remarks>
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetNextPage(string,LineageDirection,int?,int?,CancellationToken)']/*" />
         public virtual Response<AtlasLineageInfo> GetNextPage(string guid, LineageDirection direction, int? offset = null, int? limit = null, CancellationToken cancellationToken = default)
         {
@@ -321,6 +325,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get by unique attribute. </remarks>
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetByUniqueAttributeAsync(string,LineageDirection,int?,string,CancellationToken)']/*" />
         public virtual async Task<Response<AtlasLineageInfo>> GetByUniqueAttributeAsync(string typeName, LineageDirection direction, int? depth = null, string attribute = null, CancellationToken cancellationToken = default)
         {
@@ -359,6 +364,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="typeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="typeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get by unique attribute. </remarks>
         /// <include file="Docs/Lineage.xml" path="doc/members/member[@name='GetByUniqueAttribute(string,LineageDirection,int?,string,CancellationToken)']/*" />
         public virtual Response<AtlasLineageInfo> GetByUniqueAttribute(string typeName, LineageDirection direction, int? depth = null, string attribute = null, CancellationToken cancellationToken = default)
         {
