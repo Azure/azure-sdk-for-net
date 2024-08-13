@@ -27,33 +27,29 @@ internal static partial class ClientModelLogMessages
     private const int ErrorResponseContentTextBlockEvent = 16;
     private const int RequestContentTextEvent = 17;
     private const int ExceptionResponseEvent = 18;
-    private const int PipelineTransportOptionsNotAppliedEvent = 23; // TODO
 
     [LoggerMessage(RequestEvent, LogLevel.Information, "Request [{requestId}] {method} {uri}\r\n{headers}client assembly: {assemblyName}", EventName = "Request")]
     public static partial void Request(ILogger logger, string requestId, string method, string uri, string headers, string? assemblyName);
 
-    // TODO - these are verbose logs in EventSource, should they be trace logs here?
-    [LoggerMessage(RequestContentEvent, LogLevel.Information, "Request [{requestId}] content: {content}", EventName = "RequestContent")]
+    [LoggerMessage(RequestContentEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", EventName = "RequestContent")]
     public static partial void RequestContent(ILogger logger, string requestId, byte[] content);
 
-    // same as above
-    [LoggerMessage(RequestContentTextEvent, LogLevel.Information, "Request [{requestId}] content: {content}", EventName = "RequestContentText")]
+    [LoggerMessage(RequestContentTextEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", EventName = "RequestContentText")]
     public static partial void RequestContentText(ILogger logger, string requestId, string content);
 
     [LoggerMessage(ResponseEvent, LogLevel.Information, "Response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "Response")]
     public static partial void Response(ILogger logger, string requestId, int status, string reasonPhrase, string headers, double seconds);
 
-    // same
-    [LoggerMessage(ResponseContentEvent, LogLevel.Information, "Response [{requestId}] content: {content}", EventName = "ResponseContent")]
+    [LoggerMessage(ResponseContentEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", EventName = "ResponseContent")]
     public static partial void ResponseContent(ILogger logger, string requestId, byte[] content);
 
-    [LoggerMessage(ResponseContentTextEvent, LogLevel.Information, "Response [{requestId}] content: {content}", EventName = "ResponseContentText")]
+    [LoggerMessage(ResponseContentTextEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", EventName = "ResponseContentText")]
     public static partial void ResponseContentText(ILogger logger, string requestId, string content);
 
-    [LoggerMessage(ResponseContentBlockEvent, LogLevel.Information, "Response [{requestId}] content block {blockNumber}: {content}", EventName = "ResponseContentBlock")]
+    [LoggerMessage(ResponseContentBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", EventName = "ResponseContentBlock")]
     public static partial void ResponseContentBlock(ILogger logger, string requestId, int blockNumber, byte[] content);
 
-    [LoggerMessage(ResponseContentTextBlockEvent, LogLevel.Information, "Response [{requestId}] content block {blockNumber}: {content}", EventName = "ResponseContentTextBlock")]
+    [LoggerMessage(ResponseContentTextBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", EventName = "ResponseContentTextBlock")]
     public static partial void ResponseContentTextBlock(ILogger logger, string requestId, int blockNumber, string content);
 
     [LoggerMessage(ErrorResponseEvent, LogLevel.Warning, "Error response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "ErrorResponse")]
