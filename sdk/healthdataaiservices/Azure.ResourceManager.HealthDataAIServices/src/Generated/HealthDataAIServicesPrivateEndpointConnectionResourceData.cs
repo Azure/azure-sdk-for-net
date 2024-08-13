@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.HealthDataAIServices.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.Health.Insights.RadiologyInsights
+namespace Azure.ResourceManager.HealthDataAIServices
 {
-    /// <summary> Document author. </summary>
-    public partial class DocumentAuthor
+    /// <summary>
+    /// A class representing the HealthDataAIServicesPrivateEndpointConnectionResource data model.
+    /// Holder for private endpoint connections
+    /// </summary>
+    public partial class HealthDataAIServicesPrivateEndpointConnectionResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +51,25 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentAuthor"/>. </summary>
-        public DocumentAuthor()
+        /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceData"/>. </summary>
+        public HealthDataAIServicesPrivateEndpointConnectionResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentAuthor"/>. </summary>
-        /// <param name="id"> author id. </param>
-        /// <param name="fullName"> Text representation of the full name. </param>
+        /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesPrivateEndpointConnectionResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentAuthor(string id, string fullName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HealthDataAIServicesPrivateEndpointConnectionResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            FullName = fullName;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> author id. </summary>
-        public string Id { get; set; }
-        /// <summary> Text representation of the full name. </summary>
-        public string FullName { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public PrivateEndpointConnectionProperties Properties { get; set; }
     }
 }
