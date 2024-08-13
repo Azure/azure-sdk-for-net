@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace System.ClientModel.Internal;
 
-internal class PollingInterval
+internal sealed class PollingInterval
 {
-    private const string RetryAfterHeaderName = "Retry-After";
-    private static readonly TimeSpan DefaultDelay = TimeSpan.FromSeconds(0.8);
+    private static readonly TimeSpan DefaultDelay = TimeSpan.FromSeconds(1.0);
 
     private readonly TimeSpan _interval;
 
@@ -43,28 +42,6 @@ internal class PollingInterval
     }
 
     private TimeSpan GetDelay(PipelineResponse response)
-        => TryGetRetryAfter(response, out TimeSpan retryAfter) && retryAfter > _interval ?
-            retryAfter : _interval;
-
-    private static bool TryGetRetryAfter(PipelineResponse response, out TimeSpan value)
-    {
-        // See: https://www.rfc-editor.org/rfc/rfc7231#section-7.1.3
-        if (response.Headers.TryGetValue(RetryAfterHeaderName, out string? retryAfter))
-        {
-            if (int.TryParse(retryAfter, out var delaySeconds))
-            {
-                value = TimeSpan.FromSeconds(delaySeconds);
-                return true;
-            }
-
-            if (DateTimeOffset.TryParse(retryAfter, out DateTimeOffset retryAfterDate))
-            {
-                value = retryAfterDate - DateTimeOffset.Now;
-                return true;
-            }
-        }
-
-        value = default;
-        return false;
-    }
+        => PipelineResponseHeaders.TryGetRetryAfter(response, out TimeSpan retryAfter)
+            && retryAfter > _interval ? retryAfter : _interval;
 }

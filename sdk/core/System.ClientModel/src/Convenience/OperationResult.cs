@@ -49,27 +49,54 @@ public abstract class OperationResult : ClientResult
     public abstract ContinuationToken? RehydrationToken { get; protected set; }
 
     /// <summary>
-    /// TBD.
+    /// Sends a request to the service to get the current status of the
+    /// operation and updates <see cref="IsCompleted"/> and other relevant
+    /// properties.
     /// </summary>
-    /// <param name="options"></param>
-    /// <returns></returns>
+    /// <param name="options">The <see cref="RequestOptions"/> to be used when
+    /// sending the request to the service.</param>
+    /// <returns>The <see cref="ClientResult"/> returned from the service call.
+    /// </returns>
+    /// <remarks>This method updates the value returned from
+    /// <see cref="ClientResult.GetRawResponse"/> and will update
+    /// <see cref="IsCompleted"/> to <c>true</c> once the operation has finished
+    /// running on the service.  It will also update <c>Value</c> or
+    /// <c>Status</c> properties if present on the <see cref="OperationResult"/>
+    /// derived type.</remarks>
     public abstract Task<ClientResult> UpdateStatusAsync(RequestOptions? options = default);
 
     /// <summary>
-    /// TBD.
+    /// Sends a request to the service to get the current status of the
+    /// operation and updates <see cref="IsCompleted"/> and other relevant
+    /// properties.
     /// </summary>
-    /// <param name="options"></param>
+    /// <param name="options">The <see cref="RequestOptions"/> to be used when
+    /// sending the request to the service.</param>
+    /// <returns>The <see cref="ClientResult"/> returned from the service call.
+    /// </returns>
+    /// <remarks>This method updates the value returned from
+    /// <see cref="ClientResult.GetRawResponse"/> and will update
+    /// <see cref="IsCompleted"/> to <c>true</c> once the operation has finished
+    /// running on the service.  It will also update <c>Value</c> or
+    /// <c>Status</c> properties if present on the <see cref="OperationResult"/>
+    /// derived type.</remarks>
     public abstract ClientResult UpdateStatus(RequestOptions? options = default);
 
     /// <summary>
     /// Waits for the operation to complete processing on the service.
     /// </summary>
-    /// <remarks>Derived types may implement <see cref="WaitForCompletionAsync"/>
-    /// using different mechanisms to obtain updates from the service regarding
-    /// the progress of the operation.  If the derived type polls for status
-    /// updates, it provides overloads of <see cref="WaitForCompletionAsync"/>
+    /// <remarks>Derived types may override <see cref="WaitForCompletionAsync"/>
+    /// to implement different mechanisms for obtaining updates from the service
+    /// regarding the progress of the operation. For example, if the derived
+    /// type polls for status updates, it may provides overloads of
+    /// <see cref="WaitForCompletionAsync"/>
     /// that allow the caller to specify the polling interval or delay strategy
-    /// used to wait between sending request for updates.
+    /// used to wait between sending request for updates.  By default,
+    /// <see cref="WaitForCompletionAsync"/> waits a default interval between
+    /// calling <see cref="UpdateStatusAsync"/> to obtain a status updates, so
+    /// if updates are delivered via streaming or another mechanism where a wait
+    /// time is not required, derived types can override this method to update
+    /// the status more frequently.
     /// </remarks>
     /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/>
     /// was cancelled.</exception>
@@ -92,12 +119,18 @@ public abstract class OperationResult : ClientResult
     /// <summary>
     /// Waits for the operation to complete processing on the service.
     /// </summary>
-    /// <remarks>Derived types may implement <see cref="WaitForCompletion"/>
-    /// using different mechanisms to obtain updates from the service regarding
-    /// the progress of the operation.  If the derived type polls for status
-    /// updates, it provides overloads of <see cref="WaitForCompletion"/>
+    /// <remarks>Derived types may override <see cref="WaitForCompletion"/>
+    /// to implement different mechanisms for obtaining updates from the service
+    /// regarding the progress of the operation. For example, if the derived
+    /// type polls for status updates, it may provides overloads of
+    /// <see cref="WaitForCompletion"/>
     /// that allow the caller to specify the polling interval or delay strategy
-    /// used to wait between sending request for updates.
+    /// used to wait between sending request for updates.  By default,
+    /// <see cref="WaitForCompletion"/> waits a default interval between
+    /// calling <see cref="UpdateStatus"/> to obtain a status updates, so
+    /// if updates are delivered via streaming or another mechanism where a wait
+    /// time is not required, derived types can override this method to update
+    /// the status more frequently.
     /// </remarks>
     /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/>
     /// was cancelled.</exception>
