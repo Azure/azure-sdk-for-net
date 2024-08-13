@@ -63,7 +63,7 @@ public abstract class OperationResult : ClientResult
     /// running on the service.  It will also update <c>Value</c> or
     /// <c>Status</c> properties if present on the <see cref="OperationResult"/>
     /// derived type.</remarks>
-    public abstract Task<ClientResult> UpdateStatusAsync(RequestOptions? options = default);
+    public abstract ValueTask<ClientResult> UpdateStatusAsync(RequestOptions? options = default);
 
     /// <summary>
     /// Sends a request to the service to get the current status of the
@@ -100,7 +100,7 @@ public abstract class OperationResult : ClientResult
     /// </remarks>
     /// <exception cref="OperationCanceledException">The <paramref name="cancellationToken"/>
     /// was cancelled.</exception>
-    public virtual async Task WaitForCompletionAsync(CancellationToken cancellationToken = default)
+    public virtual async ValueTask WaitForCompletionAsync(CancellationToken cancellationToken = default)
     {
         PollingInterval pollingInterval = new();
 
