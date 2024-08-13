@@ -35,10 +35,18 @@ public abstract class OperationResult : ClientResult
     /// Gets a value that indicates whether the operation has completed.
     /// </summary>
     /// <value><c>true</c> if the operation has reached a terminal state
-    /// (that is, is has finished successfully, ended due to an error condition,
+    /// (that is, it has finished successfully, ended due to an error condition,
     /// or has been cancelled by a user); otherwise, <c>false</c>.
     /// </value>
-    public abstract bool IsCompleted { get; protected set; }
+    /// <remarks><see cref="HasCompleted"/> is updated by the
+    /// <see cref="UpdateStatus"/> method, based on the response received from
+    /// the service regarding the operation's status.  Users must call
+    /// <see cref="WaitForCompletion"/>, <see cref="UpdateStatus"/>, or other
+    /// method provided by the derived type to ensure that the value of the
+    /// <see cref="HasCompleted"/> property reflects the current status of the
+    /// operation running on the service.
+    /// </remarks>
+    public bool HasCompleted { get; protected set; }
 
     /// <summary>
     /// Gets a token that can be used to rehydrate the operation.
@@ -50,7 +58,7 @@ public abstract class OperationResult : ClientResult
 
     /// <summary>
     /// Sends a request to the service to get the current status of the
-    /// operation and updates <see cref="IsCompleted"/> and other relevant
+    /// operation and updates <see cref="HasCompleted"/> and other relevant
     /// properties.
     /// </summary>
     /// <param name="options">The <see cref="RequestOptions"/> to be used when
@@ -59,7 +67,7 @@ public abstract class OperationResult : ClientResult
     /// </returns>
     /// <remarks>This method updates the value returned from
     /// <see cref="ClientResult.GetRawResponse"/> and will update
-    /// <see cref="IsCompleted"/> to <c>true</c> once the operation has finished
+    /// <see cref="HasCompleted"/> to <c>true</c> once the operation has finished
     /// running on the service.  It will also update <c>Value</c> or
     /// <c>Status</c> properties if present on the <see cref="OperationResult"/>
     /// derived type.</remarks>
@@ -67,7 +75,7 @@ public abstract class OperationResult : ClientResult
 
     /// <summary>
     /// Sends a request to the service to get the current status of the
-    /// operation and updates <see cref="IsCompleted"/> and other relevant
+    /// operation and updates <see cref="HasCompleted"/> and other relevant
     /// properties.
     /// </summary>
     /// <param name="options">The <see cref="RequestOptions"/> to be used when
@@ -76,7 +84,7 @@ public abstract class OperationResult : ClientResult
     /// </returns>
     /// <remarks>This method updates the value returned from
     /// <see cref="ClientResult.GetRawResponse"/> and will update
-    /// <see cref="IsCompleted"/> to <c>true</c> once the operation has finished
+    /// <see cref="HasCompleted"/> to <c>true</c> once the operation has finished
     /// running on the service.  It will also update <c>Value</c> or
     /// <c>Status</c> properties if present on the <see cref="OperationResult"/>
     /// derived type.</remarks>
@@ -104,7 +112,7 @@ public abstract class OperationResult : ClientResult
     {
         PollingInterval pollingInterval = new();
 
-        while (!IsCompleted)
+        while (!HasCompleted)
         {
             PipelineResponse response = GetRawResponse();
 
@@ -138,7 +146,7 @@ public abstract class OperationResult : ClientResult
     {
         PollingInterval pollingInterval = new();
 
-        while (!IsCompleted)
+        while (!HasCompleted)
         {
             PipelineResponse response = GetRawResponse();
 
