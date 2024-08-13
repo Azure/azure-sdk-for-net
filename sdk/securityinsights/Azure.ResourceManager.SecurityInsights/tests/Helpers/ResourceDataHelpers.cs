@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
         {
             return new SecurityInsightsWatchlistItemData()
             {
-                ItemsKeyValue = BinaryData.FromString("{\"ipaddress\":\"1.1.1.2\"}")
+                ItemsKeyValueDictionary = { { "ipaddress", BinaryData.FromString("\"1.1.1.2\"")} }
             };
         }
         #endregion
