@@ -66,6 +66,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Update assets. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssetsAsync(string,AssetUpdatePayload,CancellationToken)']/*" />
         public virtual async Task<Response<TaskResource>> UpdateAssetsAsync(string filter, AssetUpdatePayload body, CancellationToken cancellationToken = default)
         {
@@ -83,6 +84,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="body"/> is null. </exception>
+        /// <remarks> Update assets. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='UpdateAssets(string,AssetUpdatePayload,CancellationToken)']/*" />
         public virtual Response<TaskResource> UpdateAssets(string filter, AssetUpdatePayload body, CancellationToken cancellationToken = default)
         {
@@ -182,6 +184,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get asset resource. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResourceAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<AssetResource>> GetAssetResourceAsync(string assetId, CancellationToken cancellationToken = default)
         {
@@ -197,6 +200,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get asset resource. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResource(string,CancellationToken)']/*" />
         public virtual Response<AssetResource> GetAssetResource(string assetId, CancellationToken cancellationToken = default)
         {
@@ -291,6 +295,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Validate data connection. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnectionAsync(DataConnectionPayload,CancellationToken)']/*" />
         public virtual async Task<Response<ValidateResult>> ValidateDataConnectionAsync(DataConnectionPayload body, CancellationToken cancellationToken = default)
         {
@@ -306,6 +311,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Validate data connection. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDataConnection(DataConnectionPayload,CancellationToken)']/*" />
         public virtual Response<ValidateResult> ValidateDataConnection(DataConnectionPayload body, CancellationToken cancellationToken = default)
         {
@@ -400,6 +406,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get data connection. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnectionAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DataConnection>> GetDataConnectionAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
@@ -415,6 +422,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get data connection. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnection(string,CancellationToken)']/*" />
         public virtual Response<DataConnection> GetDataConnection(string dataConnectionName, CancellationToken cancellationToken = default)
         {
@@ -511,6 +519,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create or replace data connection. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnectionAsync(string,DataConnectionPayload,CancellationToken)']/*" />
         public virtual async Task<Response<DataConnection>> CreateOrReplaceDataConnectionAsync(string dataConnectionName, DataConnectionPayload body, CancellationToken cancellationToken = default)
         {
@@ -529,6 +538,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create or replace data connection. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDataConnection(string,DataConnectionPayload,CancellationToken)']/*" />
         public virtual Response<DataConnection> CreateOrReplaceDataConnection(string dataConnectionName, DataConnectionPayload body, CancellationToken cancellationToken = default)
         {
@@ -701,6 +711,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Validate discovery group. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoveryGroupAsync(DiscoveryGroupPayload,CancellationToken)']/*" />
         public virtual async Task<Response<ValidateResult>> ValidateDiscoveryGroupAsync(DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
         {
@@ -716,6 +727,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Validate discovery group. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='ValidateDiscoveryGroup(DiscoveryGroupPayload,CancellationToken)']/*" />
         public virtual Response<ValidateResult> ValidateDiscoveryGroup(DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
         {
@@ -810,6 +822,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get discovery group. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroupAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DiscoveryGroup>> GetDiscoveryGroupAsync(string groupName, CancellationToken cancellationToken = default)
         {
@@ -825,6 +838,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get discovery group. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroup(string,CancellationToken)']/*" />
         public virtual Response<DiscoveryGroup> GetDiscoveryGroup(string groupName, CancellationToken cancellationToken = default)
         {
@@ -921,6 +935,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create or replace discovery group. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoveryGroupAsync(string,DiscoveryGroupPayload,CancellationToken)']/*" />
         public virtual async Task<Response<DiscoveryGroup>> CreateOrReplaceDiscoveryGroupAsync(string groupName, DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
         {
@@ -939,6 +954,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create or replace discovery group. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceDiscoveryGroup(string,DiscoveryGroupPayload,CancellationToken)']/*" />
         public virtual Response<DiscoveryGroup> CreateOrReplaceDiscoveryGroup(string groupName, DiscoveryGroupPayload body, CancellationToken cancellationToken = default)
         {
@@ -1112,6 +1128,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get discovery template. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryTemplateAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DiscoveryTemplate>> GetDiscoveryTemplateAsync(string templateId, CancellationToken cancellationToken = default)
         {
@@ -1127,6 +1144,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get discovery template. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryTemplate(string,CancellationToken)']/*" />
         public virtual Response<DiscoveryTemplate> GetDiscoveryTemplate(string templateId, CancellationToken cancellationToken = default)
         {
@@ -1219,6 +1237,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Get billable assets summary for the workspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get billable. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetBillableAsync(CancellationToken)']/*" />
         public virtual async Task<Response<ReportBillableAssetSummaryResult>> GetBillableAsync(CancellationToken cancellationToken = default)
         {
@@ -1229,6 +1248,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Get billable assets summary for the workspace. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get billable. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetBillable(CancellationToken)']/*" />
         public virtual Response<ReportBillableAssetSummaryResult> GetBillable(CancellationToken cancellationToken = default)
         {
@@ -1311,6 +1331,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Get snapshot. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshotAsync(ReportAssetSnapshotPayload,CancellationToken)']/*" />
         public virtual async Task<Response<ReportAssetSnapshotResult>> GetSnapshotAsync(ReportAssetSnapshotPayload body, CancellationToken cancellationToken = default)
         {
@@ -1326,6 +1347,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Get snapshot. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSnapshot(ReportAssetSnapshotPayload,CancellationToken)']/*" />
         public virtual Response<ReportAssetSnapshotResult> GetSnapshot(ReportAssetSnapshotPayload body, CancellationToken cancellationToken = default)
         {
@@ -1419,6 +1441,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Get summary. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummaryAsync(ReportAssetSummaryPayload,CancellationToken)']/*" />
         public virtual async Task<Response<ReportAssetSummaryResult>> GetSummaryAsync(ReportAssetSummaryPayload body, CancellationToken cancellationToken = default)
         {
@@ -1434,6 +1457,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <remarks> Get summary. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSummary(ReportAssetSummaryPayload,CancellationToken)']/*" />
         public virtual Response<ReportAssetSummaryResult> GetSummary(ReportAssetSummaryPayload body, CancellationToken cancellationToken = default)
         {
@@ -1528,6 +1552,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get saved filter. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilterAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<SavedFilter>> GetSavedFilterAsync(string filterName, CancellationToken cancellationToken = default)
         {
@@ -1543,6 +1568,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get saved filter. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilter(string,CancellationToken)']/*" />
         public virtual Response<SavedFilter> GetSavedFilter(string filterName, CancellationToken cancellationToken = default)
         {
@@ -1639,6 +1665,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create or replace saved filter. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilterAsync(string,SavedFilterPayload,CancellationToken)']/*" />
         public virtual async Task<Response<SavedFilter>> CreateOrReplaceSavedFilterAsync(string filterName, SavedFilterPayload body, CancellationToken cancellationToken = default)
         {
@@ -1657,6 +1684,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Create or replace saved filter. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CreateOrReplaceSavedFilter(string,SavedFilterPayload,CancellationToken)']/*" />
         public virtual Response<SavedFilter> CreateOrReplaceSavedFilter(string filterName, SavedFilterPayload body, CancellationToken cancellationToken = default)
         {
@@ -1830,6 +1858,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get task. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTaskAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<TaskResource>> GetTaskAsync(string taskId, CancellationToken cancellationToken = default)
         {
@@ -1845,6 +1874,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get task. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTask(string,CancellationToken)']/*" />
         public virtual Response<TaskResource> GetTask(string taskId, CancellationToken cancellationToken = default)
         {
@@ -1940,6 +1970,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Cancel task. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CancelTaskAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<TaskResource>> CancelTaskAsync(string taskId, CancellationToken cancellationToken = default)
         {
@@ -1955,6 +1986,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Cancel task. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='CancelTask(string,CancellationToken)']/*" />
         public virtual Response<TaskResource> CancelTask(string taskId, CancellationToken cancellationToken = default)
         {
@@ -2052,6 +2084,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="mark"> Specify this value instead of 'skip' to use cursor-based searching. Initial value is '*' and subsequent values are returned in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List asset resource. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResourcesAsync(string,string,int?,int?,string,CancellationToken)']/*" />
         public virtual AsyncPageable<AssetResource> GetAssetResourcesAsync(string filter = null, string orderby = null, int? skip = null, int? maxpagesize = null, string mark = null, CancellationToken cancellationToken = default)
         {
@@ -2068,6 +2101,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="mark"> Specify this value instead of 'skip' to use cursor-based searching. Initial value is '*' and subsequent values are returned in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List asset resource. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetAssetResources(string,string,int?,int?,string,CancellationToken)']/*" />
         public virtual Pageable<AssetResource> GetAssetResources(string filter = null, string orderby = null, int? skip = null, int? maxpagesize = null, string mark = null, CancellationToken cancellationToken = default)
         {
@@ -2143,6 +2177,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List data connection. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnectionsAsync(int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<DataConnection> GetDataConnectionsAsync(int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
@@ -2156,6 +2191,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List data connection. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDataConnections(int?,int?,CancellationToken)']/*" />
         public virtual Pageable<DataConnection> GetDataConnections(int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
@@ -2226,6 +2262,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get discovery groups. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroupsAsync(string,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<DiscoveryGroup> GetDiscoveryGroupsAsync(string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
@@ -2240,6 +2277,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get discovery groups. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroups(string,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<DiscoveryGroup> GetDiscoveryGroups(string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
@@ -2315,6 +2353,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get discovery group runs. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroupRunsAsync(string,string,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<DiscoveryRunResult> GetDiscoveryGroupRunsAsync(string groupName, string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
@@ -2334,6 +2373,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get discovery group runs. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryGroupRuns(string,string,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<DiscoveryRunResult> GetDiscoveryGroupRuns(string groupName, string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
@@ -2418,6 +2458,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get discovery templates. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryTemplatesAsync(string,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<DiscoveryTemplate> GetDiscoveryTemplatesAsync(string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
@@ -2432,6 +2473,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get discovery templates. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetDiscoveryTemplates(string,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<DiscoveryTemplate> GetDiscoveryTemplates(string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
@@ -2504,6 +2546,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List saved filter. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFiltersAsync(string,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<SavedFilter> GetSavedFiltersAsync(string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
@@ -2518,6 +2561,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List saved filter. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetSavedFilters(string,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<SavedFilter> GetSavedFilters(string filter = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
@@ -2591,6 +2635,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List task. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTasksAsync(string,string,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<TaskResource> GetTasksAsync(string filter = null, string orderby = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
@@ -2606,6 +2651,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List task. </remarks>
         /// <include file="Docs/EasmClient.xml" path="doc/members/member[@name='GetTasks(string,string,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<TaskResource> GetTasks(string filter = null, string orderby = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {

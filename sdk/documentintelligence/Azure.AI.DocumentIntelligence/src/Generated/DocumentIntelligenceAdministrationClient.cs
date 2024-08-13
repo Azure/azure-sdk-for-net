@@ -97,6 +97,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="authorizeCopyRequest"> Authorize copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizeCopyRequest"/> is null. </exception>
+        /// <remarks> Authorize model copy. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeModelCopyAsync(AuthorizeCopyContent,CancellationToken)']/*" />
         public virtual async Task<Response<CopyAuthorization>> AuthorizeModelCopyAsync(AuthorizeCopyContent authorizeCopyRequest, CancellationToken cancellationToken = default)
         {
@@ -115,6 +116,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="authorizeCopyRequest"> Authorize copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizeCopyRequest"/> is null. </exception>
+        /// <remarks> Authorize model copy. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeModelCopy(AuthorizeCopyContent,CancellationToken)']/*" />
         public virtual Response<CopyAuthorization> AuthorizeModelCopy(AuthorizeCopyContent authorizeCopyRequest, CancellationToken cancellationToken = default)
         {
@@ -211,6 +213,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get model. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModelAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DocumentModelDetails>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
@@ -226,6 +229,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get model. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModel(string,CancellationToken)']/*" />
         public virtual Response<DocumentModelDetails> GetModel(string modelId, CancellationToken cancellationToken = default)
         {
@@ -390,6 +394,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Return information about the current resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get resource info. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetResourceInfoAsync(CancellationToken)']/*" />
         public virtual async Task<Response<ResourceDetails>> GetResourceInfoAsync(CancellationToken cancellationToken = default)
         {
@@ -400,6 +405,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Return information about the current resource. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Get resource info. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetResourceInfo(CancellationToken)']/*" />
         public virtual Response<ResourceDetails> GetResourceInfo(CancellationToken cancellationToken = default)
         {
@@ -483,6 +489,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get operation. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperationAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<OperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
@@ -498,6 +505,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get operation. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperation(string,CancellationToken)']/*" />
         public virtual Response<OperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
         {
@@ -595,6 +603,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="authorizeCopyRequest"> Authorize copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizeCopyRequest"/> is null. </exception>
+        /// <remarks> Authorize classifier copy. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeClassifierCopyAsync(AuthorizeClassifierCopyContent,CancellationToken)']/*" />
         public virtual async Task<Response<ClassifierCopyAuthorization>> AuthorizeClassifierCopyAsync(AuthorizeClassifierCopyContent authorizeCopyRequest, CancellationToken cancellationToken = default)
         {
@@ -613,6 +622,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="authorizeCopyRequest"> Authorize copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizeCopyRequest"/> is null. </exception>
+        /// <remarks> Authorize classifier copy. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeClassifierCopy(AuthorizeClassifierCopyContent,CancellationToken)']/*" />
         public virtual Response<ClassifierCopyAuthorization> AuthorizeClassifierCopy(AuthorizeClassifierCopyContent authorizeCopyRequest, CancellationToken cancellationToken = default)
         {
@@ -709,6 +719,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get classifier. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifierAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<DocumentClassifierDetails>> GetClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
         {
@@ -724,6 +735,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get classifier. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifier(string,CancellationToken)']/*" />
         public virtual Response<DocumentClassifierDetails> GetClassifier(string classifierId, CancellationToken cancellationToken = default)
         {
@@ -888,6 +900,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> List all document models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List models. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModelsAsync(CancellationToken)']/*" />
         public virtual AsyncPageable<DocumentModelDetails> GetModelsAsync(CancellationToken cancellationToken = default)
         {
@@ -899,6 +912,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> List all document models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List models. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetModels(CancellationToken)']/*" />
         public virtual Pageable<DocumentModelDetails> GetModels(CancellationToken cancellationToken = default)
         {
@@ -962,6 +976,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Lists all operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List operations. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperationsAsync(CancellationToken)']/*" />
         public virtual AsyncPageable<OperationDetails> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
@@ -973,6 +988,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> Lists all operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List operations. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperations(CancellationToken)']/*" />
         public virtual Pageable<OperationDetails> GetOperations(CancellationToken cancellationToken = default)
         {
@@ -1036,6 +1052,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> List all document classifiers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List classifiers. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifiersAsync(CancellationToken)']/*" />
         public virtual AsyncPageable<DocumentClassifierDetails> GetClassifiersAsync(CancellationToken cancellationToken = default)
         {
@@ -1047,6 +1064,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <summary> List all document classifiers. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List classifiers. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetClassifiers(CancellationToken)']/*" />
         public virtual Pageable<DocumentClassifierDetails> GetClassifiers(CancellationToken cancellationToken = default)
         {
@@ -1113,6 +1131,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildRequest"> Build request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
+        /// <remarks> Build document model. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModelAsync(WaitUntil,BuildDocumentModelContent,CancellationToken)']/*" />
         public virtual async Task<Operation<DocumentModelDetails>> BuildDocumentModelAsync(WaitUntil waitUntil, BuildDocumentModelContent buildRequest, CancellationToken cancellationToken = default)
         {
@@ -1129,6 +1148,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildRequest"> Build request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
+        /// <remarks> Build document model. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModel(WaitUntil,BuildDocumentModelContent,CancellationToken)']/*" />
         public virtual Operation<DocumentModelDetails> BuildDocumentModel(WaitUntil waitUntil, BuildDocumentModelContent buildRequest, CancellationToken cancellationToken = default)
         {
@@ -1145,6 +1165,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
+        /// <remarks> Compose model. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='ComposeModelAsync(WaitUntil,ComposeDocumentModelContent,CancellationToken)']/*" />
         public virtual async Task<Operation<DocumentModelDetails>> ComposeModelAsync(WaitUntil waitUntil, ComposeDocumentModelContent composeRequest, CancellationToken cancellationToken = default)
         {
@@ -1161,6 +1182,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
+        /// <remarks> Compose model. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='ComposeModel(WaitUntil,ComposeDocumentModelContent,CancellationToken)']/*" />
         public virtual Operation<DocumentModelDetails> ComposeModel(WaitUntil waitUntil, ComposeDocumentModelContent composeRequest, CancellationToken cancellationToken = default)
         {
@@ -1179,6 +1201,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Copy model to. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyModelToAsync(WaitUntil,string,CopyAuthorization,CancellationToken)']/*" />
         public virtual async Task<Operation<DocumentModelDetails>> CopyModelToAsync(WaitUntil waitUntil, string modelId, CopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
         {
@@ -1198,6 +1221,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Copy model to. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyModelTo(WaitUntil,string,CopyAuthorization,CancellationToken)']/*" />
         public virtual Operation<DocumentModelDetails> CopyModelTo(WaitUntil waitUntil, string modelId, CopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
         {
@@ -1215,6 +1239,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildRequest"> Build request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
+        /// <remarks> Build classifier. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildClassifierAsync(WaitUntil,BuildDocumentClassifierContent,CancellationToken)']/*" />
         public virtual async Task<Operation<DocumentClassifierDetails>> BuildClassifierAsync(WaitUntil waitUntil, BuildDocumentClassifierContent buildRequest, CancellationToken cancellationToken = default)
         {
@@ -1231,6 +1256,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="buildRequest"> Build request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
+        /// <remarks> Build classifier. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildClassifier(WaitUntil,BuildDocumentClassifierContent,CancellationToken)']/*" />
         public virtual Operation<DocumentClassifierDetails> BuildClassifier(WaitUntil waitUntil, BuildDocumentClassifierContent buildRequest, CancellationToken cancellationToken = default)
         {
@@ -1249,6 +1275,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="copyToRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Copy classifier to. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyClassifierToAsync(WaitUntil,string,ClassifierCopyAuthorization,CancellationToken)']/*" />
         public virtual async Task<Operation<DocumentClassifierDetails>> CopyClassifierToAsync(WaitUntil waitUntil, string classifierId, ClassifierCopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
         {
@@ -1268,6 +1295,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="copyToRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Copy classifier to. </remarks>
         /// <include file="Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyClassifierTo(WaitUntil,string,ClassifierCopyAuthorization,CancellationToken)']/*" />
         public virtual Operation<DocumentClassifierDetails> CopyClassifierTo(WaitUntil waitUntil, string classifierId, ClassifierCopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
         {

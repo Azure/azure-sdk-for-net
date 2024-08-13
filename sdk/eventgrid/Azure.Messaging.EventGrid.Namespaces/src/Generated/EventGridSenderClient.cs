@@ -44,6 +44,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="event"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Send. </remarks>
         internal virtual async Task<Response<PublishResult>> SendAsync(string topicName, CloudEventInternal @event, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -61,6 +62,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="event"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Send. </remarks>
         internal virtual Response<PublishResult> Send(string topicName, CloudEventInternal @event, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -160,6 +162,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="events"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Send events. </remarks>
         internal virtual async Task<Response<PublishResult>> SendEventsAsync(string topicName, IEnumerable<CloudEventInternal> events, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -177,6 +180,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="events"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Send events. </remarks>
         internal virtual Response<PublishResult> SendEvents(string topicName, IEnumerable<CloudEventInternal> events, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));

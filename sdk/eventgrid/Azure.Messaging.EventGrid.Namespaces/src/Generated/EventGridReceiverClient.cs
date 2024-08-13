@@ -47,6 +47,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Receive. </remarks>
         internal virtual async Task<Response<ReceiveResult>> ReceiveAsync(string topicName, string eventSubscriptionName, int? maxEvents = null, TimeSpan? maxWaitTime = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -65,6 +66,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Receive. </remarks>
         internal virtual Response<ReceiveResult> Receive(string topicName, string eventSubscriptionName, int? maxEvents = null, TimeSpan? maxWaitTime = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -168,6 +170,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Acknowledge. </remarks>
         internal virtual async Task<Response<AcknowledgeResult>> AcknowledgeAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -187,6 +190,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Acknowledge. </remarks>
         internal virtual Response<AcknowledgeResult> Acknowledge(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -293,6 +297,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Release. </remarks>
         internal virtual async Task<Response<ReleaseResult>> ReleaseAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -313,6 +318,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Release. </remarks>
         internal virtual Response<ReleaseResult> Release(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -420,6 +426,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Reject. </remarks>
         internal virtual async Task<Response<RejectResult>> RejectAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -439,6 +446,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Reject. </remarks>
         internal virtual Response<RejectResult> Reject(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -544,6 +552,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Renew locks. </remarks>
         internal virtual async Task<Response<RenewLocksResult>> RenewLocksAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
@@ -563,6 +572,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/>, <paramref name="eventSubscriptionName"/> or <paramref name="lockTokens"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> or <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Renew locks. </remarks>
         internal virtual Response<RenewLocksResult> RenewLocks(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));

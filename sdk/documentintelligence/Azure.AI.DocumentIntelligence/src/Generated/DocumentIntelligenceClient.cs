@@ -96,6 +96,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get analyze result pdf. </remarks>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeResultPdfAsync(string,Guid,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetAnalyzeResultPdfAsync(string modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
@@ -112,6 +113,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get analyze result pdf. </remarks>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeResultPdf(string,Guid,CancellationToken)']/*" />
         public virtual Response<BinaryData> GetAnalyzeResultPdf(string modelId, Guid resultId, CancellationToken cancellationToken = default)
         {
@@ -211,6 +213,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="figureId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> or <paramref name="figureId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get analyze result figure. </remarks>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeResultFigureAsync(string,Guid,string,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetAnalyzeResultFigureAsync(string modelId, Guid resultId, string figureId, CancellationToken cancellationToken = default)
         {
@@ -229,6 +232,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="figureId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> or <paramref name="figureId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Get analyze result figure. </remarks>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeResultFigure(string,Guid,string,CancellationToken)']/*" />
         public virtual Response<BinaryData> GetAnalyzeResultFigure(string modelId, Guid resultId, string figureId, CancellationToken cancellationToken = default)
         {
@@ -343,6 +347,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Analyze document. </remarks>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
         public virtual async Task<Operation<AnalyzeResult>> AnalyzeDocumentAsync(WaitUntil waitUntil, string modelId, AnalyzeDocumentContent analyzeRequest = null, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, ContentFormat? outputContentFormat = null, IEnumerable<AnalyzeOutputOption> output = null, CancellationToken cancellationToken = default)
         {
@@ -371,6 +376,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Analyze document. </remarks>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocument(WaitUntil,string,AnalyzeDocumentContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
         public virtual Operation<AnalyzeResult> AnalyzeDocument(WaitUntil waitUntil, string modelId, AnalyzeDocumentContent analyzeRequest = null, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, ContentFormat? outputContentFormat = null, IEnumerable<AnalyzeOutputOption> output = null, CancellationToken cancellationToken = default)
         {
@@ -503,6 +509,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Analyze batch documents. </remarks>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeBatchDocumentsAsync(WaitUntil,string,AnalyzeBatchDocumentsContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
         public virtual async Task<Operation<AnalyzeBatchResult>> AnalyzeBatchDocumentsAsync(WaitUntil waitUntil, string modelId, AnalyzeBatchDocumentsContent analyzeBatchRequest = null, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, ContentFormat? outputContentFormat = null, IEnumerable<AnalyzeOutputOption> output = null, CancellationToken cancellationToken = default)
         {
@@ -531,6 +538,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Analyze batch documents. </remarks>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeBatchDocuments(WaitUntil,string,AnalyzeBatchDocumentsContent,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},ContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
         public virtual Operation<AnalyzeBatchResult> AnalyzeBatchDocuments(WaitUntil waitUntil, string modelId, AnalyzeBatchDocumentsContent analyzeBatchRequest = null, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, ContentFormat? outputContentFormat = null, IEnumerable<AnalyzeOutputOption> output = null, CancellationToken cancellationToken = default)
         {
@@ -656,6 +664,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="classifyRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Classify document. </remarks>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocumentAsync(WaitUntil,string,ClassifyDocumentContent,StringIndexType?,SplitMode?,string,CancellationToken)']/*" />
         public virtual async Task<Operation<AnalyzeResult>> ClassifyDocumentAsync(WaitUntil waitUntil, string classifierId, ClassifyDocumentContent classifyRequest, StringIndexType? stringIndexType = null, SplitMode? split = null, string pages = null, CancellationToken cancellationToken = default)
         {
@@ -678,6 +687,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="classifyRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Classify document. </remarks>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocument(WaitUntil,string,ClassifyDocumentContent,StringIndexType?,SplitMode?,string,CancellationToken)']/*" />
         public virtual Operation<AnalyzeResult> ClassifyDocument(WaitUntil waitUntil, string classifierId, ClassifyDocumentContent classifyRequest, StringIndexType? stringIndexType = null, SplitMode? split = null, string pages = null, CancellationToken cancellationToken = default)
         {
