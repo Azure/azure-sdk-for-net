@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.7 (Unreleased)
+## 1.1.0-beta.7 (2024-08-14)
 
 ### Features Added
 
 - Added `JsonModelConverter` to allow integration with System.Text.Json.
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 
