@@ -275,7 +275,8 @@ namespace Azure.Communication.Email.Tests.Samples
             var content = new BinaryData("This is image file content.");
             var contentId = "myInlineAttachmentContentId";
 #endif
-            var emailAttachment = new EmailAttachment(attachmentName, contentType, content, contentId);
+            var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
+            emailAttachment.ContentId = contentId;
 
             emailMessage.Attachments.Add(emailAttachment);
 

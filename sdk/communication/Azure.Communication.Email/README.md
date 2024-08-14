@@ -265,7 +265,8 @@ var contentType = MediaTypeNames.Text.Plain;
 var contentId = "myInlineAttachmentContentId";
 
 var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
-var emailAttachment = new EmailAttachment(attachmentName, contentType, content, contentId);
+var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
+emailAttachment.ContentId = contentId;
 
 emailMessage.Attachments.Add(emailAttachment);
 

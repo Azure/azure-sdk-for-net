@@ -6,7 +6,7 @@ To get started you'll need a Communication Service Resource.  See [README][READM
 
 ## Creating an `EmailClient`
 
-Email clients can be authenticated using the connection string acquired from an Azure Communication Resource in the Azure Portal. Alternatively, SMS clients can also be authenticated using a valid token credential.
+Email clients can be authenticated using the connection string acquired from an Azure Communication Resource in the Azure Portal. Alternatively, Email clients can also be authenticated using a valid token credential.
 
 ```C# Snippet:Azure_Communication_Email_CreateEmailClient
 var connectionString = "<connection_string>"; // Find your Communication Services resource in the Azure portal
@@ -36,7 +36,8 @@ var contentType = MediaTypeNames.Text.Plain;
 var contentId = "myInlineAttachmentContentId";
 
 var content = new BinaryData(System.IO.File.ReadAllBytes(filePath));
-var emailAttachment = new EmailAttachment(attachmentName, contentType, content, contentId);
+var emailAttachment = new EmailAttachment(attachmentName, contentType, content);
+emailAttachment.ContentId = contentId;
 
 emailMessage.Attachments.Add(emailAttachment);
 

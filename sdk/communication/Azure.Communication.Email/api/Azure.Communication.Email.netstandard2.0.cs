@@ -13,7 +13,6 @@ namespace Azure.Communication.Email
     public partial class EmailAttachment
     {
         public EmailAttachment(string name, string contentType, System.BinaryData content) { }
-        public EmailAttachment(string name, string contentType, System.BinaryData content, string contentId) { }
         public System.BinaryData Content { get { throw null; } }
         public string ContentId { get { throw null; } set { } }
         public string ContentType { get { throw null; } }
