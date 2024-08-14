@@ -108,7 +108,7 @@ public class TestRecordingOptions
     /// </summary>
     /// <param name="sanitizedValue">The value to replace matches with.</param>
     /// <param name="keys">The keys to sanitize.</param>
-    public virtual void SanitizeHeaders(string sanitizedValue, params string[] keys)
+    public virtual void SanitizeHeaders(string sanitizedValue, IEnumerable<string> keys)
     {
         if (keys == null)
         {
@@ -136,7 +136,7 @@ public class TestRecordingOptions
     /// </summary>
     /// <param name="sanitizedValue">The value to replace matches with.</param>
     /// <param name="jsonPaths">The JSON paths to sanitize.</param>
-    public virtual void SanitizeJsonBody(string sanitizedValue, params string[] jsonPaths)
+    public virtual void SanitizeJsonBody(string sanitizedValue, IEnumerable<string> jsonPaths)
     {
         if (jsonPaths == null)
         {

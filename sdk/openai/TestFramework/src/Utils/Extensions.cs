@@ -354,16 +354,16 @@ public static class TypeExtensions
     [DebuggerStepThrough]
     public static bool IsClosedGenericOf(this Type type, Type openGeneric, out Type[] closedTypeArguments)
     {
-        Type? closedType;
+        Type? closedType = null;
 
         if (openGeneric.IsInterface)
         {
             closedType = type.GetInterfaces()
                 .FirstOrDefault(iType => IsAssignableToOpen(iType, openGeneric));
         }
-        else
+
+        if (closedType == null)
         {
-            closedType = null;
             for (Type? current = type; current != null && closedType == null; current = current.BaseType)
             {
                 if (IsAssignableToOpen(current, openGeneric))

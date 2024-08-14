@@ -194,6 +194,10 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return typeof(CollectionResult<>).MakeGenericType(genericTypes);
         }
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(IAsyncEnumerable<>), out genericTypes))
+        {
+            return typeof(IEnumerable<>).MakeGenericType(genericTypes);
+        }
         else
         {
             throw new NotSupportedException("Don't know how to create the sync to async wrapper for " + asyncReturnType.FullName);
@@ -239,6 +243,12 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return Activator.CreateInstance(
                 typeof(SyncToAsyncCollectionResult<>).MakeGenericType(genericTypes),
+                result);
+        }
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(IAsyncEnumerable<>), out genericTypes))
+        {
+            return Activator.CreateInstance(
+                typeof(SyncToAsyncEnumerable<>).MakeGenericType(genericTypes),
                 result);
         }
         else
@@ -289,6 +299,12 @@ public class AsyncToSyncInterceptor : IInterceptor
         {
             return Activator.CreateInstance(
                 typeof(SyncToAsyncCollectionResult<>).MakeGenericType(genericTypes),
+                ex);
+        }
+        else if (Ext.IsClosedGenericOf(asyncReturnType, typeof(IAsyncEnumerable<>), out genericTypes))
+        {
+            return Activator.CreateInstance(
+                typeof(SyncToAsyncEnumerable<>).MakeGenericType(genericTypes),
                 ex);
         }
         else

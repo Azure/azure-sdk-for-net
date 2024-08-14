@@ -15,7 +15,6 @@ public class SyncToAsyncPageCollection<T> : AsyncPageCollection<T>
 {
     private PageCollection<T>? _syncCollection;
     private Exception? _ex;
-    private PageResult<T>? _currentPage;
 
     /// <summary>
     /// Creates a new instance.
@@ -40,13 +39,20 @@ public class SyncToAsyncPageCollection<T> : AsyncPageCollection<T>
 
     /// <inheritdoc />
     protected override Task<PageResult<T>> GetCurrentPageAsyncCore()
-        => Task.FromResult(_currentPage ?? throw new InvalidOperationException("Please call MoveNextAsync first."));
+    {
+        if (_ex != null)
+        {
+            return Task.FromException<PageResult<T>>(_ex);
+        }
+        else
+        {
+            return Task.FromResult(_syncCollection!.GetCurrentPage());
+        }
+    }
 
     /// <inheritdoc />
     protected override async IAsyncEnumerator<PageResult<T>> GetAsyncEnumeratorCore(CancellationToken cancellationToken = default)
     {
-        await Task.Delay(0).ConfigureAwait(false);
-
         if (_ex != null)
         {
             ExceptionDispatchInfo.Capture(_ex).Throw();
@@ -54,7 +60,7 @@ public class SyncToAsyncPageCollection<T> : AsyncPageCollection<T>
 
         foreach (PageResult<T> page in _syncCollection!)
         {
-            _currentPage = page;
+            await Task.Delay(0).ConfigureAwait(false);
             yield return page;
         }
     }

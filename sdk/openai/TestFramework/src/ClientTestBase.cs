@@ -159,7 +159,7 @@ public abstract class ClientTestBase
         allInterceptors.Add(ThisLeakInterceptor);
         allInterceptors.Add(IsAsync ? UseAsyncMethodInterceptor : UseSyncMethodInterceptor);
 
-        ProxyGenerationOptions options = new();
+        ProxyGenerationOptions options = new(new TestProxyGenerationHook());
         options.AddMixinInstance(new AutoSyncAsyncMixIn(client, context));
 
         object proxy = ProxyGenerator.CreateClassProxyWithTarget(
