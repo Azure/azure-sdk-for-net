@@ -896,6 +896,16 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceAdapterPropertyOverrides"/>. </summary>
+        /// <param name="jumboPacket"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="networkDirect"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="networkDirectTechnology"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. Expected values are 'iWARP', 'RoCEv2', 'RoCE'. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceAdapterPropertyOverrides"/> instance for mocking. </returns>
+        public static HciEdgeDeviceAdapterPropertyOverrides HciEdgeDeviceAdapterPropertyOverrides(string jumboPacket = null, string networkDirect = null, string networkDirectTechnology = null)
+        {
+            return new HciEdgeDeviceAdapterPropertyOverrides(jumboPacket, networkDirect, networkDirectTechnology, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceProperties"/>. </summary>
         /// <param name="deviceConfiguration"> Device Configuration. </param>
         /// <param name="provisioningState"> Provisioning state of edgeDevice resource. </param>
@@ -989,7 +999,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="switchDetails"> List of switch details for edge device. </param>
         /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
         /// <returns> A new <see cref="Models.HciNetworkProfile"/> instance for mocking. </returns>
-        public static HciNetworkProfile HciNetworkProfile(IEnumerable<HciNicDetail> nicDetails = null, IEnumerable<HciEdgeDeviceSwitchDetail> switchDetails = null, HciClusterHostNetwork hostNetwork = null)
+        public static HciNetworkProfile HciNetworkProfile(IEnumerable<HciNicDetail> nicDetails = null, IEnumerable<HciEdgeDeviceSwitchDetail> switchDetails = null, HciEdgeDeviceHostNetwork hostNetwork = null)
         {
             nicDetails ??= new List<HciNicDetail>();
             switchDetails ??= new List<HciEdgeDeviceSwitchDetail>();
@@ -1057,6 +1067,96 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciEdgeSwitchExtension HciEdgeSwitchExtension(string switchId = null, string extensionName = null, bool? isExtensionEnabled = null)
         {
             return new HciEdgeSwitchExtension(switchId, extensionName, isExtensionEnabled, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceHostNetwork"/>. </summary>
+        /// <param name="intents"> The network intents assigned to the network reference pattern used for the deployment. Each intent will define its own name, traffic type, adapter names, and overrides as recommended by your OEM. </param>
+        /// <param name="storageNetworks"> List of StorageNetworks config to deploy AzureStackHCI Cluster. </param>
+        /// <param name="storageConnectivitySwitchless"> Defines how the storage adapters between nodes are connected either switch or switch less. </param>
+        /// <param name="enableStorageAutoIP"> Optional parameter required only for 3 Nodes Switchless deployments. This allows users to specify IPs and Mask for Storage NICs when Network ATC is not assigning the IPs for storage automatically. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceHostNetwork"/> instance for mocking. </returns>
+        public static HciEdgeDeviceHostNetwork HciEdgeDeviceHostNetwork(IEnumerable<HciEdgeDeviceIntents> intents = null, IEnumerable<HciEdgeDeviceStorageNetworks> storageNetworks = null, bool? storageConnectivitySwitchless = null, bool? enableStorageAutoIP = null)
+        {
+            intents ??= new List<HciEdgeDeviceIntents>();
+            storageNetworks ??= new List<HciEdgeDeviceStorageNetworks>();
+
+            return new HciEdgeDeviceHostNetwork(intents?.ToList(), storageNetworks?.ToList(), storageConnectivitySwitchless, enableStorageAutoIP, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceIntents"/>. </summary>
+        /// <param name="scope"> Scope for host network intent. </param>
+        /// <param name="intentType"> IntentType for host network intent. </param>
+        /// <param name="isComputeIntentSet"> IsComputeIntentSet for host network intent. </param>
+        /// <param name="isStorageIntentSet"> IsStorageIntentSet for host network intent. </param>
+        /// <param name="isOnlyStorage"> IntentType for host network intent. </param>
+        /// <param name="isManagementIntentSet"> IsManagementIntentSet for host network intent. </param>
+        /// <param name="isStretchIntentSet"> IsStretchIntentSet for host network intent. </param>
+        /// <param name="isOnlyStretch"> IsOnlyStretch for host network intent. </param>
+        /// <param name="isNetworkIntentType"> IsNetworkIntentType for host network intent. </param>
+        /// <param name="intentName"> Name of the network intent you wish to create. </param>
+        /// <param name="intentAdapters"> Array of adapters used for the network intent. </param>
+        /// <param name="overrideVirtualSwitchConfiguration"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="virtualSwitchConfigurationOverrides"> Set virtualSwitch ConfigurationOverrides for cluster. </param>
+        /// <param name="overrideQosPolicy"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="qosPolicyOverrides"> Set QoS PolicyOverrides for cluster. </param>
+        /// <param name="overrideAdapterProperty"> This parameter should only be modified based on your OEM guidance. Do not modify this parameter without OEM validation. </param>
+        /// <param name="adapterPropertyOverrides"> Set Adapter PropertyOverrides for cluster. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceIntents"/> instance for mocking. </returns>
+        public static HciEdgeDeviceIntents HciEdgeDeviceIntents(long? scope = null, long? intentType = null, bool? isComputeIntentSet = null, bool? isStorageIntentSet = null, bool? isOnlyStorage = null, bool? isManagementIntentSet = null, bool? isStretchIntentSet = null, bool? isOnlyStretch = null, bool? isNetworkIntentType = null, string intentName = null, IEnumerable<string> intentAdapters = null, bool? overrideVirtualSwitchConfiguration = null, HciEdgeDeviceVirtualSwitchConfigurationOverrides virtualSwitchConfigurationOverrides = null, bool? overrideQosPolicy = null, DeploymentSettingQosPolicyOverrides qosPolicyOverrides = null, bool? overrideAdapterProperty = null, HciEdgeDeviceAdapterPropertyOverrides adapterPropertyOverrides = null)
+        {
+            intentAdapters ??= new List<string>();
+
+            return new HciEdgeDeviceIntents(
+                scope,
+                intentType,
+                isComputeIntentSet,
+                isStorageIntentSet,
+                isOnlyStorage,
+                isManagementIntentSet,
+                isStretchIntentSet,
+                isOnlyStretch,
+                isNetworkIntentType,
+                intentName,
+                intentAdapters?.ToList(),
+                overrideVirtualSwitchConfiguration,
+                virtualSwitchConfigurationOverrides,
+                overrideQosPolicy,
+                qosPolicyOverrides,
+                overrideAdapterProperty,
+                adapterPropertyOverrides,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceVirtualSwitchConfigurationOverrides"/>. </summary>
+        /// <param name="enableIov"> Enable IoV for Virtual Switch. </param>
+        /// <param name="loadBalancingAlgorithm"> Load Balancing Algorithm for Virtual Switch. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceVirtualSwitchConfigurationOverrides"/> instance for mocking. </returns>
+        public static HciEdgeDeviceVirtualSwitchConfigurationOverrides HciEdgeDeviceVirtualSwitchConfigurationOverrides(string enableIov = null, string loadBalancingAlgorithm = null)
+        {
+            return new HciEdgeDeviceVirtualSwitchConfigurationOverrides(enableIov, loadBalancingAlgorithm, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceStorageNetworks"/>. </summary>
+        /// <param name="name"> Name of the storage network. </param>
+        /// <param name="networkAdapterName"> Name of the storage network adapter. </param>
+        /// <param name="storageVlanId"> ID specified for the VLAN storage network. This setting is applied to the network interfaces that route the storage and VM migration traffic. </param>
+        /// <param name="storageAdapterIPInfo"> List of Storage adapter physical nodes config to deploy AzureStackHCI Cluster. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceStorageNetworks"/> instance for mocking. </returns>
+        public static HciEdgeDeviceStorageNetworks HciEdgeDeviceStorageNetworks(string name = null, string networkAdapterName = null, string storageVlanId = null, IEnumerable<HciEdgeDeviceStorageAdapterIPInfo> storageAdapterIPInfo = null)
+        {
+            storageAdapterIPInfo ??= new List<HciEdgeDeviceStorageAdapterIPInfo>();
+
+            return new HciEdgeDeviceStorageNetworks(name, networkAdapterName, storageVlanId, storageAdapterIPInfo?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HciEdgeDeviceStorageAdapterIPInfo"/>. </summary>
+        /// <param name="physicalNode"> storage adapter physical node name. </param>
+        /// <param name="ipv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <param name="subnetMask"> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <returns> A new <see cref="Models.HciEdgeDeviceStorageAdapterIPInfo"/> instance for mocking. </returns>
+        public static HciEdgeDeviceStorageAdapterIPInfo HciEdgeDeviceStorageAdapterIPInfo(string physicalNode = null, string ipv4Address = null, string subnetMask = null)
+        {
+            return new HciEdgeDeviceStorageAdapterIPInfo(physicalNode, ipv4Address, subnetMask, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HciOSProfile"/>. </summary>

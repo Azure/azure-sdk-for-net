@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The network profile of a device. </summary>
-    public partial class HciNetworkProfile
+    /// <summary> The StorageAdapter physical nodes of a cluster. </summary>
+    public partial class HciEdgeDeviceStorageAdapterIPInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,32 @@ namespace Azure.ResourceManager.Hci.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HciNetworkProfile"/>. </summary>
-        internal HciNetworkProfile()
+        /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceStorageAdapterIPInfo"/>. </summary>
+        internal HciEdgeDeviceStorageAdapterIPInfo()
         {
-            NicDetails = new ChangeTrackingList<HciNicDetail>();
-            SwitchDetails = new ChangeTrackingList<HciEdgeDeviceSwitchDetail>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciNetworkProfile"/>. </summary>
-        /// <param name="nicDetails"> List of NIC Details of device. </param>
-        /// <param name="switchDetails"> List of switch details for edge device. </param>
-        /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceStorageAdapterIPInfo"/>. </summary>
+        /// <param name="physicalNode"> storage adapter physical node name. </param>
+        /// <param name="ipv4Address"> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
+        /// <param name="subnetMask"> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciNetworkProfile(IReadOnlyList<HciNicDetail> nicDetails, IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails, HciEdgeDeviceHostNetwork hostNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciEdgeDeviceStorageAdapterIPInfo(string physicalNode, string ipv4Address, string subnetMask, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NicDetails = nicDetails;
-            SwitchDetails = switchDetails;
-            HostNetwork = hostNetwork;
+            PhysicalNode = physicalNode;
+            IPv4Address = ipv4Address;
+            SubnetMask = subnetMask;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of NIC Details of device. </summary>
-        [WirePath("nicDetails")]
-        public IReadOnlyList<HciNicDetail> NicDetails { get; }
-        /// <summary> List of switch details for edge device. </summary>
-        [WirePath("switchDetails")]
-        public IReadOnlyList<HciEdgeDeviceSwitchDetail> SwitchDetails { get; }
-        /// <summary> HostNetwork config to deploy AzureStackHCI Cluster. </summary>
-        [WirePath("hostNetwork")]
-        public HciEdgeDeviceHostNetwork HostNetwork { get; }
+        /// <summary> storage adapter physical node name. </summary>
+        [WirePath("physicalNode")]
+        public string PhysicalNode { get; }
+        /// <summary> The IPv4 address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </summary>
+        [WirePath("ipv4Address")]
+        public string IPv4Address { get; }
+        /// <summary> The SubnetMask address assigned to each storage adapter physical node on your Azure Stack HCI cluster. </summary>
+        [WirePath("subnetMask")]
+        public string SubnetMask { get; }
     }
 }

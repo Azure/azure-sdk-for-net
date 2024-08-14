@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The network profile of a device. </summary>
-    public partial class HciNetworkProfile
+    /// <summary> Scale units will contains list of deployment data. </summary>
+    public partial class DeploymentSettingScaleUnits
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,37 @@ namespace Azure.ResourceManager.Hci.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HciNetworkProfile"/>. </summary>
-        internal HciNetworkProfile()
+        /// <summary> Initializes a new instance of <see cref="DeploymentSettingScaleUnits"/>. </summary>
+        /// <param name="deploymentData"> Deployment Data to deploy AzureStackHCI Cluster. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentData"/> is null. </exception>
+        public DeploymentSettingScaleUnits(HciClusterDeploymentInfo deploymentData)
         {
-            NicDetails = new ChangeTrackingList<HciNicDetail>();
-            SwitchDetails = new ChangeTrackingList<HciEdgeDeviceSwitchDetail>();
+            Argument.AssertNotNull(deploymentData, nameof(deploymentData));
+
+            DeploymentData = deploymentData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciNetworkProfile"/>. </summary>
-        /// <param name="nicDetails"> List of NIC Details of device. </param>
-        /// <param name="switchDetails"> List of switch details for edge device. </param>
-        /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="DeploymentSettingScaleUnits"/>. </summary>
+        /// <param name="deploymentData"> Deployment Data to deploy AzureStackHCI Cluster. </param>
+        /// <param name="sbePartnerInfo"> Solution builder extension (SBE) partner properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciNetworkProfile(IReadOnlyList<HciNicDetail> nicDetails, IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails, HciEdgeDeviceHostNetwork hostNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentSettingScaleUnits(HciClusterDeploymentInfo deploymentData, SbePartnerInfo sbePartnerInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NicDetails = nicDetails;
-            SwitchDetails = switchDetails;
-            HostNetwork = hostNetwork;
+            DeploymentData = deploymentData;
+            SbePartnerInfo = sbePartnerInfo;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of NIC Details of device. </summary>
-        [WirePath("nicDetails")]
-        public IReadOnlyList<HciNicDetail> NicDetails { get; }
-        /// <summary> List of switch details for edge device. </summary>
-        [WirePath("switchDetails")]
-        public IReadOnlyList<HciEdgeDeviceSwitchDetail> SwitchDetails { get; }
-        /// <summary> HostNetwork config to deploy AzureStackHCI Cluster. </summary>
-        [WirePath("hostNetwork")]
-        public HciEdgeDeviceHostNetwork HostNetwork { get; }
+        /// <summary> Initializes a new instance of <see cref="DeploymentSettingScaleUnits"/> for deserialization. </summary>
+        internal DeploymentSettingScaleUnits()
+        {
+        }
+
+        /// <summary> Deployment Data to deploy AzureStackHCI Cluster. </summary>
+        [WirePath("deploymentData")]
+        public HciClusterDeploymentInfo DeploymentData { get; set; }
+        /// <summary> Solution builder extension (SBE) partner properties. </summary>
+        [WirePath("sbePartnerInfo")]
+        public SbePartnerInfo SbePartnerInfo { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The network profile of a device. </summary>
-    public partial class HciNetworkProfile
+    /// <summary> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </summary>
+    public partial class DeploymentSettingNetworkController
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,32 @@ namespace Azure.ResourceManager.Hci.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HciNetworkProfile"/>. </summary>
-        internal HciNetworkProfile()
+        /// <summary> Initializes a new instance of <see cref="DeploymentSettingNetworkController"/>. </summary>
+        public DeploymentSettingNetworkController()
         {
-            NicDetails = new ChangeTrackingList<HciNicDetail>();
-            SwitchDetails = new ChangeTrackingList<HciEdgeDeviceSwitchDetail>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HciNetworkProfile"/>. </summary>
-        /// <param name="nicDetails"> List of NIC Details of device. </param>
-        /// <param name="switchDetails"> List of switch details for edge device. </param>
-        /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="DeploymentSettingNetworkController"/>. </summary>
+        /// <param name="macAddressPoolStart"> macAddressPoolStart of network controller used for SDN Integration. </param>
+        /// <param name="macAddressPoolStop"> macAddressPoolStop of network controller used for SDN Integration. </param>
+        /// <param name="networkVirtualizationEnabled"> NetworkVirtualizationEnabled of network controller used for SDN Integration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciNetworkProfile(IReadOnlyList<HciNicDetail> nicDetails, IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails, HciEdgeDeviceHostNetwork hostNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentSettingNetworkController(string macAddressPoolStart, string macAddressPoolStop, bool? networkVirtualizationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NicDetails = nicDetails;
-            SwitchDetails = switchDetails;
-            HostNetwork = hostNetwork;
+            MacAddressPoolStart = macAddressPoolStart;
+            MacAddressPoolStop = macAddressPoolStop;
+            NetworkVirtualizationEnabled = networkVirtualizationEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of NIC Details of device. </summary>
-        [WirePath("nicDetails")]
-        public IReadOnlyList<HciNicDetail> NicDetails { get; }
-        /// <summary> List of switch details for edge device. </summary>
-        [WirePath("switchDetails")]
-        public IReadOnlyList<HciEdgeDeviceSwitchDetail> SwitchDetails { get; }
-        /// <summary> HostNetwork config to deploy AzureStackHCI Cluster. </summary>
-        [WirePath("hostNetwork")]
-        public HciEdgeDeviceHostNetwork HostNetwork { get; }
+        /// <summary> macAddressPoolStart of network controller used for SDN Integration. </summary>
+        [WirePath("macAddressPoolStart")]
+        public string MacAddressPoolStart { get; set; }
+        /// <summary> macAddressPoolStop of network controller used for SDN Integration. </summary>
+        [WirePath("macAddressPoolStop")]
+        public string MacAddressPoolStop { get; set; }
+        /// <summary> NetworkVirtualizationEnabled of network controller used for SDN Integration. </summary>
+        [WirePath("networkVirtualizationEnabled")]
+        public bool? NetworkVirtualizationEnabled { get; set; }
     }
 }
