@@ -88,7 +88,7 @@ public class EntraLifecycleTests
     [Test]
     public void Constructor_WhenAccessTokenEnvironmentIsSetAndValid_InitializeEntraToken()
     {
-        var expiry = DateTime.UtcNow.AddMinutes(10);
+        DateTime expiry = DateTime.UtcNow.AddMinutes(10);
         var token = GetToken(new Dictionary<string, object>(), expiry);
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_ACCESS_TOKEN_ENVIRONMENT_VARIABLE, token);
         EntraLifecycle entraLifecycle = new();
@@ -119,7 +119,7 @@ public class EntraLifecycleTests
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var token = "valid_token";
-        var expiry = DateTimeOffset.UtcNow.AddMinutes(10);
+        DateTimeOffset expiry = DateTimeOffset.UtcNow.AddMinutes(10);
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, expiry));
@@ -136,7 +136,7 @@ public class EntraLifecycleTests
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var token = "valid_token";
-        var expiry = DateTimeOffset.UtcNow.AddMinutes(10);
+        DateTimeOffset expiry = DateTimeOffset.UtcNow.AddMinutes(10);
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, expiry));

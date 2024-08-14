@@ -102,7 +102,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
 
     internal void TestRunStartHandler(object? sender, TestRunStartEventArgs e)
     {
-        InitializePlaywrightReporter(e.TestRunCriteria.TestRunSettings);
+        InitializePlaywrightReporter(e.TestRunCriteria.TestRunSettings!);
         LogMessage("Test Run start Handler");
         if (!IsInitialized || _reportingTestResultsClient == null || _reportingTestRunsClient == null)
         {

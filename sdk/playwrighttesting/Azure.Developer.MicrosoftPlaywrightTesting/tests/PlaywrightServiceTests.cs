@@ -379,7 +379,7 @@ public class PlaywrightServiceTests
     {
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_URL_ENVIRONMENT_VARIABLE, null);
         PlaywrightService service = new(entraLifecycle: null);
-        var ex = Assert.ThrowsAsync<Exception>(() => service.GetConnectOptionsAsync<BrowserConnectOptions>());
+        Exception? ex = Assert.ThrowsAsync<Exception>(() => service.GetConnectOptionsAsync<BrowserConnectOptions>());
         Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_service_endpoint_error_message));
     }
 
@@ -387,7 +387,7 @@ public class PlaywrightServiceTests
     public void GetConnectOptionsAsync_WhenUseCloudHostedBrowsersEnvironmentIsFalse_ThrowsException()
     {
         PlaywrightService service = new(entraLifecycle: null, useCloudHostedBrowsers: false);
-        var ex = Assert.ThrowsAsync<Exception>(() => service.GetConnectOptionsAsync<BrowserConnectOptions>());
+        Exception? ex = Assert.ThrowsAsync<Exception>(() => service.GetConnectOptionsAsync<BrowserConnectOptions>());
         Assert.Multiple(() =>
         {
             Assert.That(service.UseCloudHostedBrowsers, Is.False);
@@ -407,7 +407,7 @@ public class PlaywrightServiceTests
         var runId = "run-id";
 
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
-        var connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>(runId: runId);
+        ConnectOptions<BrowserConnectOptions> connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>(runId: runId);
         var authorizationHeader = connectOptions.Options!.Headers!.Where(x => x.Key == "Authorization").FirstOrDefault().Value!;
         Assert.Multiple(() =>
         {
@@ -467,7 +467,7 @@ public class PlaywrightServiceTests
         var runId = "run-id";
 
         var service = new PlaywrightService(entraLifecycle: entraLifecycleMock.Object);
-        var connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>(runId: runId, os: ServiceOs.WINDOWS, exposeNetwork: "localhost");
+        ConnectOptions<BrowserConnectOptions> connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>(runId: runId, os: ServiceOs.WINDOWS, exposeNetwork: "localhost");
 
         Assert.Multiple(() =>
         {
@@ -490,7 +490,7 @@ public class PlaywrightServiceTests
         var runId = "run-id";
 
         var service = new PlaywrightService(entraLifecycle: entraLifecycleMock.Object);
-        var connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>(runId: runId);
+        ConnectOptions<BrowserConnectOptions> connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>(runId: runId);
 
         Assert.Multiple(() =>
         {
@@ -517,7 +517,7 @@ public class PlaywrightServiceTests
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_EXPOSE_NETWORK_ENVIRONMENT_VARIABLE, "localhost");
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_RUN_ID_ENVIRONMENT_VARIABLE, runId);
 
-        var connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>();
+        ConnectOptions<BrowserConnectOptions> connectOptions = await service.GetConnectOptionsAsync<BrowserConnectOptions>();
         Assert.Multiple(() =>
         {
             Assert.That(connectOptions.WsEndpoint, Is.EqualTo($"https://playwright.microsoft.com?os={ServiceOs.WINDOWS}&runId={runId}&api-version={Constants.s_api_version}"));
@@ -535,7 +535,7 @@ public class PlaywrightServiceTests
 
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_ACCESS_TOKEN_ENVIRONMENT_VARIABLE, null);
 
-        var ex = Assert.ThrowsAsync<Exception>(() => service.GetConnectOptionsAsync<BrowserConnectOptions>());
+        Exception? ex = Assert.ThrowsAsync<Exception>(() => service.GetConnectOptionsAsync<BrowserConnectOptions>());
         Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
     }
 
@@ -603,7 +603,7 @@ public class PlaywrightServiceTests
             }
         };
 
-        foreach (var testRubric in testRubricCombinations)
+        foreach (Dictionary<string, string> testRubric in testRubricCombinations)
         {
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_URL_ENVIRONMENT_VARIABLE, $"{testRubric["url"]}");
             var service = new PlaywrightService(entraLifecycle: null);

@@ -55,7 +55,7 @@ public class PlaywrightServiceSettingsTest
     public void Validate_ShouldThrowExceptionForInvalidOs()
     {
         var invalidOs = "InvalidOS";
-        var ex = Assert.Throws<Exception>(() => new PlaywrightServiceSettings(os: invalidOs));
+        Exception? ex = Assert.Throws<Exception>(() => new PlaywrightServiceSettings(os: invalidOs));
         Assert.That(ex!.Message, Does.Contain("Invalid value for Os"));
     }
 
@@ -63,7 +63,7 @@ public class PlaywrightServiceSettingsTest
     public void Validate_ShouldThrowExceptionForInvalidDefaultAuth()
     {
         var invalidAuth = "InvalidAuth";
-        var ex = Assert.Throws<Exception>(() => new PlaywrightServiceSettings(defaultAuth: invalidAuth));
+        Exception? ex = Assert.Throws<Exception>(() => new PlaywrightServiceSettings(defaultAuth: invalidAuth));
         Assert.That(ex!.Message, Does.Contain("Invalid value for DefaultAuth"));
     }
 
