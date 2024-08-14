@@ -399,7 +399,6 @@ namespace Azure.ResourceManager.Dns
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsAaaaRecordInfo> DnsAaaaRecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsARecordInfo> DnsARecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo> DnsCaaRecords { get { throw null; } }
-        public Azure.ResourceManager.Dns.Models.DnsCnameRecordInfo DnsCnameRecordInfo { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo> DnsDSRecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsMXRecordInfo> DnsMXRecords { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dns.Models.DnsNaptrRecordInfo> DnsNaptrRecords { get { throw null; } }
@@ -802,16 +801,6 @@ namespace Azure.ResourceManager.Dns.Models
         Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsCaaRecordInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DnsCnameRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsCnameRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsCnameRecordInfo>
-    {
-        public DnsCnameRecordInfo() { }
-        public string Cname { get { throw null; } set { } }
-        Azure.ResourceManager.Dns.Models.DnsCnameRecordInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsCnameRecordInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsCnameRecordInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Dns.Models.DnsCnameRecordInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsCnameRecordInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsCnameRecordInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsCnameRecordInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DnsDSRecordInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dns.Models.DnsDSRecordInfo>
     {

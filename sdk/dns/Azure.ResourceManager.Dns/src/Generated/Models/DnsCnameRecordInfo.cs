@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> A CNAME record. </summary>
-    public partial class DnsCnameRecordInfo
+    internal partial class DnsCnameRecordInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

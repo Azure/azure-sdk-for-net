@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Dns
         /// <summary> The list of TXT records in the record set. </summary>
         public IList<DnsTxtRecordInfo> DnsTxtRecords { get; }
         /// <summary> The CNAME record in the  record set. </summary>
-        public DnsCnameRecordInfo DnsCnameRecordInfo { get; set; }
+        internal DnsCnameRecordInfo DnsCnameRecordInfo { get; set; }
         /// <summary> The canonical name for this CNAME record. </summary>
         public string Cname
         {
