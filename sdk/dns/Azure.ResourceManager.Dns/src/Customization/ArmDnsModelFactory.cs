@@ -378,14 +378,14 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
         /// <param name="srvRecords"> The list of SRV records in the record set. </param>
         /// <param name="txtRecords"> The list of TXT records in the record set. </param>
-        /// <param name="cnameRecordInfo"> The CNAME record in the  record set. </param>
+        /// <param name="cname"> The canonical name for this CNAME record. </param>
         /// <param name="soaRecordInfo"> The SOA record in the record set. </param>
         /// <param name="caaRecords"> The list of CAA records in the record set. </param>
         /// <param name="dsRecords"> The list of DS records in the record set. </param>
         /// <param name="tlsaRecords"> The list of TLSA records in the record set. </param>
         /// <param name="naptrRecords"> The list of NAPTR records in the record set. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        public static DnsRecordData DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, WritableSubResource trafficManagementProfile, IList<DnsARecordInfo> aRecords, IList<DnsAaaaRecordInfo> aaaaRecords, IList<DnsMXRecordInfo> mxRecords, IList<DnsNSRecordInfo> nsRecords, IList<DnsPtrRecordInfo> ptrRecords, IList<DnsSrvRecordInfo> srvRecords, IList<DnsTxtRecordInfo> txtRecords, DnsCnameRecordInfo cnameRecordInfo, DnsSoaRecordInfo soaRecordInfo, IList<DnsCaaRecordInfo> caaRecords, IList<DnsDSRecordInfo> dsRecords, IList<DnsTlsaRecordInfo> tlsaRecords, IList<DnsNaptrRecordInfo> naptrRecords, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        public static DnsRecordData DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, WritableSubResource trafficManagementProfile, IList<DnsARecordInfo> aRecords, IList<DnsAaaaRecordInfo> aaaaRecords, IList<DnsMXRecordInfo> mxRecords, IList<DnsNSRecordInfo> nsRecords, IList<DnsPtrRecordInfo> ptrRecords, IList<DnsSrvRecordInfo> srvRecords, IList<DnsTxtRecordInfo> txtRecords, string cname, DnsSoaRecordInfo soaRecordInfo, IList<DnsCaaRecordInfo> caaRecords, IList<DnsDSRecordInfo> dsRecords, IList<DnsTlsaRecordInfo> tlsaRecords, IList<DnsNaptrRecordInfo> naptrRecords, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             metadata ??= new Dictionary<string, string>();
             aRecords ??= new List<DnsARecordInfo>();
@@ -420,13 +420,13 @@ namespace Azure.ResourceManager.Dns.Models
                 ptrRecords: ptrRecords,
                 srvRecords: srvRecords,
                 txtRecords: txtRecords,
-                cnameRecordInfo: cnameRecordInfo,
+                cnameRecordInfo: null,
                 soaRecordInfo: soaRecordInfo,
                 caaRecords: caaRecords,
                 dsRecords: dsRecords,
                 tlsaRecords: tlsaRecords,
                 naptrRecords: naptrRecords,
-                serializedAdditionalRawData: serializedAdditionalRawData);
+                serializedAdditionalRawData: serializedAdditionalRawData){Cname=cname};
         }
     }
 }
