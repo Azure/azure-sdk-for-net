@@ -1031,6 +1031,7 @@ namespace Azure.Storage.Blobs.Specialized
                     ContentHash = blobDownloadDetails.ContentHash,
                     ContentLength = blobDownloadDetails.ContentLength,
                     ContentType = blobDownloadDetails.ContentType,
+                    ExpectTrailingDetails = blobDownloadStreamingResult.ExpectTrailingDetails,
                 }, response.GetRawResponse());
         }
         #endregion
@@ -1675,8 +1676,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobDownloadInfo}"/> describing the
-        /// downloaded blob.  <see cref="BlobDownloadInfo.Content"/> contains
+        /// A <see cref="Response{BlobDownloadStreamingResult}"/> describing the
+        /// downloaded blob.  <see cref="BlobDownloadStreamingResult.Content"/> contains
         /// the blob's data.
         /// </returns>
         /// <remarks>
@@ -1772,9 +1773,11 @@ namespace Azure.Storage.Blobs.Specialized
             long length = response.IsUnavailable() ? 0 : response.Headers.ContentLength ?? 0;
             ClientConfiguration.Pipeline.LogTrace($"Response: {response.GetRawResponse().Status}, ContentLength: {length}");
 
-            return Response.FromValue(
+            Response<BlobDownloadStreamingResult> result = Response.FromValue(
                 response.ToBlobDownloadStreamingResult(),
                 response.GetRawResponse());
+                result.Value.ExpectTrailingDetails = structuredBodyType != null;
+            return result;
         }
         #endregion
 
