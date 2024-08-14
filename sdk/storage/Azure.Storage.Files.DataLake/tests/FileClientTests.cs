@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -3452,6 +3453,71 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             var actual = new MemoryStream();
             await response.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [RecordedTest]
+        public async Task ReadStreamingAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(Constants.KB);
+            DataLakeFileClient fileClient = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            using (MemoryStream stream = new MemoryStream(data))
+            {
+                await fileClient.AppendAsync(stream, 0);
+            }
+
+            await fileClient.FlushAsync(Constants.KB);
+
+            // Act
+            Response<DataLakeFileReadStreamingResult> response = await fileClient.ReadStreamingAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.Details.LastModified);
+            Assert.IsNotNull(response.Value.Details.AcceptRanges);
+            Assert.IsNotNull(response.Value.Details.ETag);
+            Assert.IsNotNull(response.Value.Details.LeaseStatus);
+            Assert.IsNotNull(response.Value.Details.LeaseState);
+            Assert.IsNotNull(response.Value.Details.IsServerEncrypted);
+            Assert.IsNotNull(response.Value.Details.CreatedOn);
+            Assert.IsNotNull(response.Value.Details.Metadata);
+
+            MemoryStream actual = new MemoryStream();
+            await response.Value.Content.CopyToAsync(actual);
+            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+        }
+
+        [RecordedTest]
+        public async Task ReadContentAsync()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            byte[] data = GetRandomBuffer(Constants.KB);
+            DataLakeFileClient fileClient = await test.FileSystem.CreateFileAsync(GetNewFileName());
+            using (MemoryStream stream = new MemoryStream(data))
+            {
+                await fileClient.AppendAsync(stream, 0);
+            }
+
+            await fileClient.FlushAsync(Constants.KB);
+
+            // Act
+            Response<DataLakeFileReadResult> response = await fileClient.ReadContentAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.Details.LastModified);
+            Assert.IsNotNull(response.Value.Details.AcceptRanges);
+            Assert.IsNotNull(response.Value.Details.ETag);
+            Assert.IsNotNull(response.Value.Details.LeaseStatus);
+            Assert.IsNotNull(response.Value.Details.LeaseState);
+            Assert.IsNotNull(response.Value.Details.IsServerEncrypted);
+            Assert.IsNotNull(response.Value.Details.CreatedOn);
+            Assert.IsNotNull(response.Value.Details.Metadata);
+
+            BinaryData actual = new BinaryData(response.Value.Content);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
         }
 
