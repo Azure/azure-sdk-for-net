@@ -1547,19 +1547,18 @@ namespace Azure.Storage.Blobs.Specialized
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    ValueTask<Response<BlobDownloadStreamingResult>> Factory(long offset, bool forceStructuredMessage, bool async, CancellationToken cancellationToken)
+                    ValueTask<Response<BlobDownloadStreamingResult>> Factory(long offset, bool async, CancellationToken cancellationToken)
                         => StartDownloadAsync(
                             range,
                             conditionsWithEtag,
                             validationOptions,
                             offset,
-                            forceStructuredMessage,
                             async,
                             cancellationToken);
                     async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)> StructuredMessageFactory(
                         long offset, bool async, CancellationToken cancellationToken)
                     {
-                        Response<BlobDownloadStreamingResult> result = await Factory(offset, forceStructuredMessage: true, async, cancellationToken).ConfigureAwait(false);
+                        Response<BlobDownloadStreamingResult> result = await Factory(offset, async, cancellationToken).ConfigureAwait(false);
                         return StructuredMessageDecodingStream.WrapStream(result.Value.Content, result.Value.Details.ContentLength);
                     }
                     Stream stream;
@@ -1587,9 +1586,9 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         stream = RetriableStream.Create(
                             response.Value.Content,
-                            startOffset => Factory(startOffset, forceStructuredMessage: false, async: false, cancellationToken)
+                            startOffset => Factory(startOffset, async: false, cancellationToken)
                                 .EnsureCompleted().Value.Content,
-                            async startOffset => (await Factory(startOffset, forceStructuredMessage: false, async: true, cancellationToken)
+                            async startOffset => (await Factory(startOffset, async: true, cancellationToken)
                                 .ConfigureAwait(false)).Value.Content,
                             ClientConfiguration.Pipeline.ResponseClassifier,
                             Constants.MaxReliabilityRetries);
@@ -1668,9 +1667,6 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="startOffset">
         /// Starting offset to request - in the event of a retry.
         /// </param>
-        /// <param name="forceStructuredMessage">
-        /// When using transactional CRC, force the request to use structured message.
-        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1692,7 +1688,6 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions validationOptions,
             long startOffset = 0,
-            bool forceStructuredMessage = false, // TODO all CRC will force structured message in future
             bool async = true,
             CancellationToken cancellationToken = default)
         {
