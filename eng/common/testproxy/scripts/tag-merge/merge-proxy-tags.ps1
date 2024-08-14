@@ -172,7 +172,7 @@ function Finish-Message($AssetsJson, $TargetTags, $AssetsRepoLocation, $MountDir
 
     $suffix = if ($len -gt 1) { "s" } else { "" }
 
-    Write-Host "`nSuccessfully combined $len tag$suffix. Invoke `"test-proxy push " -NoNewLine
+    Write-Host "`nSuccessfully combined $len tag$suffix. Invoke `"test-proxy push -a " -NoNewLine
     Write-Host $AssetsJson -ForegroundColor Green -NoNewLine
     Write-Host "`" to push the results as a new tag."
 }
