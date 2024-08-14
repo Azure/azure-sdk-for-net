@@ -18,6 +18,206 @@ namespace Azure.AI.DocumentIntelligence.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = client.GetAnalyzeResultPdf("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = await client.GetAnalyzeResultPdfAsync("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response<BinaryData> response = client.GetAnalyzeResultPdf("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response<BinaryData> response = await client.GetAnalyzeResultPdfAsync("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = client.GetAnalyzeResultPdf("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = await client.GetAnalyzeResultPdfAsync("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response<BinaryData> response = client.GetAnalyzeResultPdf("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response<BinaryData> response = await client.GetAnalyzeResultPdfAsync("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = client.GetAnalyzeResultFigure("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<figureId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = await client.GetAnalyzeResultFigureAsync("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<figureId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response<BinaryData> response = client.GetAnalyzeResultFigure("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<figureId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response<BinaryData> response = await client.GetAnalyzeResultFigureAsync("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<figureId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = client.GetAnalyzeResultFigure("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<figureId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response response = await client.GetAnalyzeResultFigureAsync("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<figureId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response<BinaryData> response = client.GetAnalyzeResultFigure("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<figureId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Response<BinaryData> response = await client.GetAnalyzeResultFigureAsync("<modelId>", Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), "<figureId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_DocumentIntelligenceClient_AnalyzeDocument_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -97,7 +297,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 urlSource = "http://localhost:3000",
                 base64Source = new object(),
             });
-            Operation<BinaryData> operation = client.AnalyzeDocument(WaitUntil.Completed, "<modelId>", content, pages: "<pages>", locale: "<locale>", stringIndexType: "textElements", features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: "text");
+            Operation<BinaryData> operation = client.AnalyzeDocument(WaitUntil.Completed, "<modelId>", content, pages: "<pages>", locale: "<locale>", stringIndexType: "textElements", features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: "text", output: new AnalyzeOutputOption[] { AnalyzeOutputOption.Pdf });
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -191,15 +391,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
             Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("elements")[0].ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("length").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("level").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("content").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("length").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("elements")[0].ToString());
+            Console.WriteLine(result.GetProperty("figures")[0].GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
             Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("sections")[0].GetProperty("elements")[0].ToString());
@@ -252,6 +444,41 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionMark").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSignature").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueString").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueDate").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueTime").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valuePhoneNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueInteger").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionMark").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSignature").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("poBox").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("road").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("postalCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("suburb").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionGroup")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("content").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("confidence").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("amount").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
@@ -277,6 +504,76 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueString").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueDate").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueTime").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valuePhoneNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueInteger").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionMark").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSignature").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueString").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueDate").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueTime").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valuePhoneNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueInteger").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionMark").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSignature").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("amount").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("poBox").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("road").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("postalCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("suburb").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("house").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("level").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionGroup")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("content").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("poBox").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("road").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("postalCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("suburb").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionGroup")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("content").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("confidence").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
@@ -303,6 +600,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("confidence").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
         }
 
         [Test]
@@ -318,7 +618,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 urlSource = "http://localhost:3000",
                 base64Source = new object(),
             });
-            Operation<BinaryData> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "<modelId>", content, pages: "<pages>", locale: "<locale>", stringIndexType: "textElements", features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: "text");
+            Operation<BinaryData> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "<modelId>", content, pages: "<pages>", locale: "<locale>", stringIndexType: "textElements", features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: "text", output: new AnalyzeOutputOption[] { AnalyzeOutputOption.Pdf });
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -412,15 +712,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
             Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("elements")[0].ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("length").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("level").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("content").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("length").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("elements")[0].ToString());
+            Console.WriteLine(result.GetProperty("figures")[0].GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
             Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("sections")[0].GetProperty("elements")[0].ToString());
@@ -473,6 +765,41 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionMark").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSignature").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueString").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueDate").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueTime").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valuePhoneNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueInteger").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionMark").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSignature").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("poBox").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("road").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("postalCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("suburb").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionGroup")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("content").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("confidence").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("amount").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
@@ -498,6 +825,76 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueString").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueDate").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueTime").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valuePhoneNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueInteger").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionMark").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSignature").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueString").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueDate").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueTime").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valuePhoneNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueInteger").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionMark").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSignature").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("amount").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("poBox").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("road").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("postalCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("suburb").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("house").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("level").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionGroup")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("content").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("poBox").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("road").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("postalCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("suburb").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionGroup")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("content").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("confidence").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
@@ -524,6 +921,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("confidence").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
         }
 
         [Test]
@@ -539,7 +939,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 UrlSource = new Uri("http://localhost:3000"),
                 Base64Source = BinaryData.FromObjectAsJson(new object()),
             };
-            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "<modelId>", analyzeRequest: analyzeRequest, pages: "<pages>", locale: "<locale>", stringIndexType: StringIndexType.TextElements, features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: ContentFormat.Text);
+            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "<modelId>", analyzeRequest: analyzeRequest, pages: "<pages>", locale: "<locale>", stringIndexType: StringIndexType.TextElements, features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: ContentFormat.Text, output: new AnalyzeOutputOption[] { AnalyzeOutputOption.Pdf });
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -556,8 +956,198 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 UrlSource = new Uri("http://localhost:3000"),
                 Base64Source = BinaryData.FromObjectAsJson(new object()),
             };
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "<modelId>", analyzeRequest: analyzeRequest, pages: "<pages>", locale: "<locale>", stringIndexType: StringIndexType.TextElements, features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: ContentFormat.Text);
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "<modelId>", analyzeRequest: analyzeRequest, pages: "<pages>", locale: "<locale>", stringIndexType: StringIndexType.TextElements, features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: ContentFormat.Text, output: new AnalyzeOutputOption[] { AnalyzeOutputOption.Pdf });
             AnalyzeResult responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_AnalyzeBatchDocuments_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            using RequestContent content = null;
+            Operation<BinaryData> operation = client.AnalyzeBatchDocuments(WaitUntil.Completed, "<modelId>", content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("succeededCount").ToString());
+            Console.WriteLine(result.GetProperty("failedCount").ToString());
+            Console.WriteLine(result.GetProperty("skippedCount").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("sourceUrl").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_AnalyzeBatchDocuments_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            using RequestContent content = null;
+            Operation<BinaryData> operation = await client.AnalyzeBatchDocumentsAsync(WaitUntil.Completed, "<modelId>", content);
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("succeededCount").ToString());
+            Console.WriteLine(result.GetProperty("failedCount").ToString());
+            Console.WriteLine(result.GetProperty("skippedCount").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("sourceUrl").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_AnalyzeBatchDocuments_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Operation<AnalyzeBatchResult> operation = client.AnalyzeBatchDocuments(WaitUntil.Completed, "<modelId>");
+            AnalyzeBatchResult responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_AnalyzeBatchDocuments_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            Operation<AnalyzeBatchResult> operation = await client.AnalyzeBatchDocumentsAsync(WaitUntil.Completed, "<modelId>");
+            AnalyzeBatchResult responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_AnalyzeBatchDocuments_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                azureBlobSource = new
+                {
+                    containerUrl = "http://localhost:3000",
+                    prefix = "<prefix>",
+                },
+                azureBlobFileListSource = new
+                {
+                    containerUrl = "http://localhost:3000",
+                    fileList = "<fileList>",
+                },
+                resultContainerUrl = "http://localhost:3000",
+                resultPrefix = "<resultPrefix>",
+                overwriteExisting = true,
+            });
+            Operation<BinaryData> operation = client.AnalyzeBatchDocuments(WaitUntil.Completed, "<modelId>", content, pages: "<pages>", locale: "<locale>", stringIndexType: "textElements", features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: "text", output: new AnalyzeOutputOption[] { AnalyzeOutputOption.Pdf });
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("succeededCount").ToString());
+            Console.WriteLine(result.GetProperty("failedCount").ToString());
+            Console.WriteLine(result.GetProperty("skippedCount").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("sourceUrl").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("resultUrl").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_AnalyzeBatchDocuments_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                azureBlobSource = new
+                {
+                    containerUrl = "http://localhost:3000",
+                    prefix = "<prefix>",
+                },
+                azureBlobFileListSource = new
+                {
+                    containerUrl = "http://localhost:3000",
+                    fileList = "<fileList>",
+                },
+                resultContainerUrl = "http://localhost:3000",
+                resultPrefix = "<resultPrefix>",
+                overwriteExisting = true,
+            });
+            Operation<BinaryData> operation = await client.AnalyzeBatchDocumentsAsync(WaitUntil.Completed, "<modelId>", content, pages: "<pages>", locale: "<locale>", stringIndexType: "textElements", features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: "text", output: new AnalyzeOutputOption[] { AnalyzeOutputOption.Pdf });
+            BinaryData responseData = operation.Value;
+
+            JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+            Console.WriteLine(result.GetProperty("succeededCount").ToString());
+            Console.WriteLine(result.GetProperty("failedCount").ToString());
+            Console.WriteLine(result.GetProperty("skippedCount").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("sourceUrl").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("resultUrl").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("error").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("error").GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("details")[0].GetProperty("error").GetProperty("innererror").GetProperty("message").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentIntelligenceClient_AnalyzeBatchDocuments_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            AnalyzeBatchDocumentsContent analyzeBatchRequest = new AnalyzeBatchDocumentsContent(new Uri("http://localhost:3000"))
+            {
+                AzureBlobSource = new AzureBlobContentSource(new Uri("http://localhost:3000"))
+                {
+                    Prefix = "<prefix>",
+                },
+                AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("http://localhost:3000"), "<fileList>"),
+                ResultPrefix = "<resultPrefix>",
+                OverwriteExisting = true,
+            };
+            Operation<AnalyzeBatchResult> operation = client.AnalyzeBatchDocuments(WaitUntil.Completed, "<modelId>", analyzeBatchRequest: analyzeBatchRequest, pages: "<pages>", locale: "<locale>", stringIndexType: StringIndexType.TextElements, features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: ContentFormat.Text, output: new AnalyzeOutputOption[] { AnalyzeOutputOption.Pdf });
+            AnalyzeBatchResult responseData = operation.Value;
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentIntelligenceClient_AnalyzeBatchDocuments_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
+
+            AnalyzeBatchDocumentsContent analyzeBatchRequest = new AnalyzeBatchDocumentsContent(new Uri("http://localhost:3000"))
+            {
+                AzureBlobSource = new AzureBlobContentSource(new Uri("http://localhost:3000"))
+                {
+                    Prefix = "<prefix>",
+                },
+                AzureBlobFileListSource = new AzureBlobFileListContentSource(new Uri("http://localhost:3000"), "<fileList>"),
+                ResultPrefix = "<resultPrefix>",
+                OverwriteExisting = true,
+            };
+            Operation<AnalyzeBatchResult> operation = await client.AnalyzeBatchDocumentsAsync(WaitUntil.Completed, "<modelId>", analyzeBatchRequest: analyzeBatchRequest, pages: "<pages>", locale: "<locale>", stringIndexType: StringIndexType.TextElements, features: new DocumentAnalysisFeature[] { DocumentAnalysisFeature.OcrHighResolution }, queryFields: new string[] { "<queryFields>" }, outputContentFormat: ContentFormat.Text, output: new AnalyzeOutputOption[] { AnalyzeOutputOption.Pdf });
+            AnalyzeBatchResult responseData = operation.Value;
         }
 
         [Test]
@@ -643,7 +1233,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 urlSource = "http://localhost:3000",
                 base64Source = new object(),
             });
-            Operation<BinaryData> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", content, stringIndexType: "textElements", split: "auto");
+            Operation<BinaryData> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", content, stringIndexType: "textElements", split: "auto", pages: "<pages>");
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -737,15 +1327,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
             Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("elements")[0].ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("length").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("level").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("content").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("length").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("elements")[0].ToString());
+            Console.WriteLine(result.GetProperty("figures")[0].GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
             Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("sections")[0].GetProperty("elements")[0].ToString());
@@ -798,6 +1380,41 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionMark").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSignature").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueString").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueDate").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueTime").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valuePhoneNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueInteger").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionMark").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSignature").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("poBox").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("road").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("postalCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("suburb").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionGroup")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("content").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("confidence").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("amount").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
@@ -823,6 +1440,76 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueString").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueDate").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueTime").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valuePhoneNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueInteger").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionMark").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSignature").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueString").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueDate").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueTime").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valuePhoneNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueInteger").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionMark").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSignature").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("amount").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("poBox").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("road").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("postalCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("suburb").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("house").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("level").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionGroup")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("content").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("poBox").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("road").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("postalCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("suburb").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionGroup")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("content").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("confidence").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
@@ -849,6 +1536,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("confidence").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
         }
 
         [Test]
@@ -864,7 +1554,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 urlSource = "http://localhost:3000",
                 base64Source = new object(),
             });
-            Operation<BinaryData> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", content, stringIndexType: "textElements", split: "auto");
+            Operation<BinaryData> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", content, stringIndexType: "textElements", split: "auto", pages: "<pages>");
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -958,15 +1648,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
             Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("figures")[0].GetProperty("footnotes")[0].GetProperty("elements")[0].ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("spans")[0].GetProperty("length").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("level").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("content").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("spans")[0].GetProperty("length").ToString());
-            Console.WriteLine(result.GetProperty("lists")[0].GetProperty("items")[0].GetProperty("elements")[0].ToString());
+            Console.WriteLine(result.GetProperty("figures")[0].GetProperty("id").ToString());
             Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
             Console.WriteLine(result.GetProperty("sections")[0].GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("sections")[0].GetProperty("elements")[0].ToString());
@@ -1019,6 +1701,41 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionMark").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSignature").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueString").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueDate").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueTime").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valuePhoneNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueInteger").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionMark").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSignature").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("poBox").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("road").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("postalCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("suburb").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionGroup")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("content").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueObject").GetProperty("<key>").GetProperty("confidence").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("amount").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
@@ -1044,6 +1761,76 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueString").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueDate").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueTime").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valuePhoneNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueInteger").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionMark").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSignature").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueString").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueDate").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueTime").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valuePhoneNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueInteger").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionMark").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSignature").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCountryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("amount").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("poBox").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("road").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("postalCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("suburb").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("house").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueAddress").GetProperty("level").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("valueSelectionGroup")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("content").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("spans")[0].GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueArray")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("houseNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("poBox").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("road").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("city").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("state").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("postalCode").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("countryRegion").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("streetAddress").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("unit").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("cityDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("stateDistrict").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("suburb").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("house").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueAddress").GetProperty("level").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueBoolean").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("valueSelectionGroup")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("content").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("pageNumber").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("boundingRegions")[0].GetProperty("polygon")[0].ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("offset").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
+            Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueObject").GetProperty("<key>").GetProperty("confidence").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("amount").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencySymbol").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("valueCurrency").GetProperty("currencyCode").ToString());
@@ -1070,6 +1857,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("spans")[0].GetProperty("length").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("fields").GetProperty("<key>").GetProperty("confidence").ToString());
             Console.WriteLine(result.GetProperty("documents")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
         }
 
         [Test]
@@ -1085,7 +1875,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 UrlSource = new Uri("http://localhost:3000"),
                 Base64Source = BinaryData.FromObjectAsJson(new object()),
             };
-            Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", classifyRequest, stringIndexType: StringIndexType.TextElements, split: SplitMode.Auto);
+            Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, "<classifierId>", classifyRequest, stringIndexType: StringIndexType.TextElements, split: SplitMode.Auto, pages: "<pages>");
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -1102,7 +1892,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
                 UrlSource = new Uri("http://localhost:3000"),
                 Base64Source = BinaryData.FromObjectAsJson(new object()),
             };
-            Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", classifyRequest, stringIndexType: StringIndexType.TextElements, split: SplitMode.Auto);
+            Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "<classifierId>", classifyRequest, stringIndexType: StringIndexType.TextElements, split: SplitMode.Auto, pages: "<pages>");
             AnalyzeResult responseData = operation.Value;
         }
     }
