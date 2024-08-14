@@ -23,7 +23,7 @@ internal partial class AzureBatchClient : BatchClient
         string deploymentName,
         Uri endpoint,
         AzureOpenAIClientOptions options)
-            : base(pipeline, endpoint, options)
+            : base(pipeline, endpoint, null)
     {
         options ??= new();
         Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
