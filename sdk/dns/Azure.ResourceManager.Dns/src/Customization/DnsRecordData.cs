@@ -155,11 +155,7 @@ namespace Azure.ResourceManager.Dns
             get
             {
                 var resourceTypeString = base.ResourceType.Type.Split('/').Where(part => !string.IsNullOrEmpty(part)).LastOrDefault();
-                resourceTypeString = resourceTypeString == "AAAA" ? "Aaaa" : resourceTypeString;
-                resourceTypeString = resourceTypeString == "CNAME" ? "Cname" : resourceTypeString;
-                resourceTypeString = resourceTypeString == "TLSA" ? "Tlsa" : resourceTypeString;
-                resourceTypeString = resourceTypeString == "NAPTR" ? "Naptr" : resourceTypeString;
-                DnsRecordType recordType = (DnsRecordType)Enum.Parse(typeof(DnsRecordType), resourceTypeString);
+                DnsRecordType recordType = DnsRecordTypeExtensions.ToDnsRecordType(resourceTypeString);
                 return recordType;
             }
         }
