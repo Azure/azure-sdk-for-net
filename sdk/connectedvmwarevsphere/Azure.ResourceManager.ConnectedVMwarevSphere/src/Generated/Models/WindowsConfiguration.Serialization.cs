@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("productId"u8);
                 writer.WriteStringValue(ProductId);
             }
-            if (Optional.IsDefined(AutoLogon))
+            if (Optional.IsDefined(IsAutoLogon))
             {
                 writer.WritePropertyName("autoLogon"u8);
-                writer.WriteBooleanValue(AutoLogon.Value);
+                writer.WriteBooleanValue(IsAutoLogon.Value);
             }
             if (Optional.IsDefined(AutoLogonCount))
             {

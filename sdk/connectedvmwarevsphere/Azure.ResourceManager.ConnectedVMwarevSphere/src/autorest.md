@@ -92,4 +92,5 @@ rename-mapping:
   VirtualMachineTemplatesList: VMwareVmTemplateListResult
   VirtualNetwork: VMwareVirtualNetwork
   VirtualNetworksList: VMwareVirtualNetworkListResult
+  WindowsConfiguration.autoLogon: isAutoLogon
 ```

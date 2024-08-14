@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="domainUserPassword"> Sets domain user password. </param>
         /// <param name="workGroupName"> Sets work group name that vm should join. </param>
         /// <param name="productId"> Sets product id of the vm. </param>
-        /// <param name="autoLogon"> Sets a value indicating whether auto logon is enabled. </param>
+        /// <param name="isAutoLogon"> Sets a value indicating whether auto logon is enabled. </param>
         /// <param name="autoLogonCount"> Sets auto logon count. </param>
         /// <param name="timeZone"> Specifies the time zone of the virtual machine. e.g. "Pacific Standard Time". Time zone name correspond to time zones listed at Microsoft Time Zone name values(https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms912391(v=winembedded.11)). </param>
         /// <param name="firstLogonCommands"> Sets first logon commands. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsConfiguration(string fullName, string orgName, string domainName, string domainUsername, string domainUserPassword, string workGroupName, string productId, bool? autoLogon, int? autoLogonCount, string timeZone, IList<string> firstLogonCommands, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WindowsConfiguration(string fullName, string orgName, string domainName, string domainUsername, string domainUserPassword, string workGroupName, string productId, bool? isAutoLogon, int? autoLogonCount, string timeZone, IList<string> firstLogonCommands, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FullName = fullName;
             OrgName = orgName;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             DomainUserPassword = domainUserPassword;
             WorkGroupName = workGroupName;
             ProductId = productId;
-            AutoLogon = autoLogon;
+            IsAutoLogon = isAutoLogon;
             AutoLogonCount = autoLogonCount;
             TimeZone = timeZone;
             FirstLogonCommands = firstLogonCommands;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Sets product id of the vm. </summary>
         public string ProductId { get; set; }
         /// <summary> Sets a value indicating whether auto logon is enabled. </summary>
-        public bool? AutoLogon { get; set; }
+        public bool? IsAutoLogon { get; set; }
         /// <summary> Sets auto logon count. </summary>
         public int? AutoLogonCount { get; set; }
         /// <summary> Specifies the time zone of the virtual machine. e.g. "Pacific Standard Time". Time zone name correspond to time zones listed at Microsoft Time Zone name values(https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms912391(v=winembedded.11)). </summary>

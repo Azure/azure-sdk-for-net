@@ -6,6 +6,10 @@
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
+### Other Changes
+
+- Change the name of attribute `Autologon` to `IsAutologon`
+
 ## 1.0.0 (2023-11-15)
 
 This release is the first stable release of the Microsoft Azure Arc-enabled VMware vSphere Management library.
@@ -19,6 +23,7 @@ This release is the first stable release of the Microsoft Azure Arc-enabled VMwa
 
 - Upgraded dependent `Azure.Core` to `1.35.0`.
 - Upgraded dependent Azure.ResourceManager to 1.7.0.
+
 
 ## 1.0.0-beta.7 (2023-05-29)
 
