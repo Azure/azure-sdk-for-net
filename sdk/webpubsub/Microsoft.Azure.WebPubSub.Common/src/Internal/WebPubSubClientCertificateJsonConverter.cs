@@ -15,13 +15,14 @@ namespace Microsoft.Azure.WebPubSub.Common
             var element = jsonDocument.RootElement;
 
             return new WebPubSubClientCertificate(
-                element.ReadString(WebPubSubClientCertificate.ThumbprintProperty));
+                element.ReadString(WebPubSubClientCertificate.ThumbprintProperty), element.ReadString(WebPubSubClientCertificate.ContentProperty));
         }
 
         public override void Write(Utf8JsonWriter writer, WebPubSubClientCertificate value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
             writer.WritePropertyName(WebPubSubClientCertificate.ThumbprintProperty);
+            writer.WritePropertyName(WebPubSubClientCertificate.ContentProperty);
             JsonSerializer.Serialize(writer, value.Thumbprint, options);
             writer.WriteEndObject();
         }

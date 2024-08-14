@@ -127,7 +127,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             var payload = await req.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                             data = BinaryData.FromBytes(payload);
                             eventRequest = new UserEventRequest(context, data, dataType);
-                            dataType = ((UserEventRequest)eventRequest).DataType;
                             break;
                         }
                     case RequestType.Connected:

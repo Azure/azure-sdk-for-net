@@ -61,19 +61,19 @@ internal static class WebPubSubErrorCodeExtensions
             MqttV500ConnectReasonCode.Banned => WebPubSubErrorCode.UserError,
             MqttV500ConnectReasonCode.ConnectionRateExceeded => WebPubSubErrorCode.UserError,
             MqttV500ConnectReasonCode.ImplementationSpecificError => WebPubSubErrorCode.UserError,
+            MqttV500ConnectReasonCode.PacketTooLarge => WebPubSubErrorCode.UserError,
+            MqttV500ConnectReasonCode.QuotaExceeded => WebPubSubErrorCode.UserError,
+            MqttV500ConnectReasonCode.RetainNotSupported => WebPubSubErrorCode.UserError,
+            MqttV500ConnectReasonCode.QosNotSupported => WebPubSubErrorCode.UserError,
+            MqttV500ConnectReasonCode.UseAnotherServer => WebPubSubErrorCode.UserError,
 
             // Map to ServerError
+            MqttV500ConnectReasonCode.ServerMoved => WebPubSubErrorCode.ServerError,
             MqttV500ConnectReasonCode.ServerUnavailable => WebPubSubErrorCode.ServerError,
             MqttV500ConnectReasonCode.ServerBusy => WebPubSubErrorCode.ServerError,
-            MqttV500ConnectReasonCode.PacketTooLarge => WebPubSubErrorCode.ServerError,
-            MqttV500ConnectReasonCode.QuotaExceeded => WebPubSubErrorCode.ServerError,
-            MqttV500ConnectReasonCode.RetainNotSupported => WebPubSubErrorCode.ServerError,
-            MqttV500ConnectReasonCode.QosNotSupported => WebPubSubErrorCode.ServerError,
-            MqttV500ConnectReasonCode.UseAnotherServer => WebPubSubErrorCode.ServerError,
-            MqttV500ConnectReasonCode.ServerMoved => WebPubSubErrorCode.ServerError,
+            MqttV500ConnectReasonCode.UnspecifiedError => WebPubSubErrorCode.ServerError,
 
             // These don't directly map and will throw an exception.
-            MqttV500ConnectReasonCode.UnspecifiedError => throw new ArgumentOutOfRangeException(nameof(code), code, "Unspecified Error"),
             //MqttV50ConnectReasonCode.Success => throw new ArgumentOutOfRangeException(nameof(code), code, "Success is not an error"),
             MqttV500ConnectReasonCode.ProtocolError => throw new ArgumentOutOfRangeException(nameof(code), code, "Protocol Error"),
 

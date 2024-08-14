@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Samples
         #endregion
 
         #region: Snippet:MqttDisconnectedEventTriggerFunction
-        [FunctionName("mqttConnect")]
+        [FunctionName("mqttDisconnected")]
         public static void Run(
         [WebPubSubTrigger("hub", WebPubSubEventType.System, "disconnected", ClientProtocol = WebPubSubTriggerClientProtocol.Mqtt)] MqttDisconnectedEventRequest request,
         ILogger log)

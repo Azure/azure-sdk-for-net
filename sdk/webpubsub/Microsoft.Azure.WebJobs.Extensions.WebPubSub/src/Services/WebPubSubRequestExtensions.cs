@@ -242,7 +242,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     if (physicalConnectionId.Count != 0)
                     {
                         var sessionId = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.MqttSessionId);
-                        var hasSessionId = sessionId != null;
                         connectionContext = new MqttConnectionContext(eventType, eventName, hub, connectionId, physicalConnectionId.First(), sessionId, userId, signature, origin, states, headers);
                         return true;
                     }

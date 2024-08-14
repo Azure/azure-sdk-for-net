@@ -1,17 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common;
 
 internal class MqttDisconnectedEventRequestDeserializationHelper
 {
-    public MqttDisconnectedEventRequestDeserializationHelper(string reason, MqttDisconnectedEventRequestProperties mqtt)
-    {
-        Reason = reason;
-        Mqtt = mqtt;
-    }
+    [JsonPropertyName("reason")]
+    public string Reason { get; set; }
 
-    public string Reason { get; }
-
-    public MqttDisconnectedEventRequestProperties Mqtt { get; }
+    [JsonPropertyName("mqtt")]
+    public MqttDisconnectedEventRequestProperties Mqtt { get; set; }
 }
