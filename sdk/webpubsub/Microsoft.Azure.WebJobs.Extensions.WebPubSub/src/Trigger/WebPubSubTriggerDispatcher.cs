@@ -75,14 +75,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 string reason = null;
                 WebPubSubEventRequest eventRequest = null;
 
-                // MQTT now uses an updated serialization method to address the challenge of deserializing *EventRequest classes that include a WebPubSubConnectionContext field.
-                // This new approach avoids using *EventRequest classes for deserialization, opting instead for a dedicated class designed specifically to represent the request body during deserialization.
-                // The previous approach involved writing a custom JSON converter for each class, which had limitations in reusability and required careful handling.
-                var mqttJsonSerializerOptions = new JsonSerializerOptions()
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                };
-
                 var requestType = Utilities.GetRequestType(context.EventType, context.EventName);
                 switch (requestType)
                 {
@@ -91,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             if (context is MqttConnectionContext mqttContext)
                             {
-                                var request = JsonSerializer.Deserialize<MqttConnectEventRequestDeserializationHelper>(content, mqttJsonSerializerOptions);
+                                var request = JsonSerializer.Deserialize<MqttConnectEventRequestDeserializationHelper>(content);
                                 eventRequest = new MqttConnectEventRequest(mqttContext, request.Claims, request.Query, request.ClientCertificates, request.Headers, request.Mqtt);
                             }
                             else
@@ -111,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             if (context is MqttConnectionContext mqttContext)
                             {
-                                var requestBody = JsonSerializer.Deserialize<MqttDisconnectedEventRequestDeserializationHelper>(content, mqttJsonSerializerOptions);
+                                var requestBody = JsonSerializer.Deserialize<MqttDisconnectedEventRequestDeserializationHelper>(content);
                                 eventRequest = new MqttDisconnectedEventRequest(mqttContext, requestBody.Reason, requestBody.Mqtt);
                             }
                             else
@@ -140,14 +132,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                         }
                     case RequestType.Connected:
                         {
-                            if (context is MqttConnectionContext mqttContext)
-                            {
-                                eventRequest = new MqttConnectedEventRequest(mqttContext);
-                            }
-                            else
-                            {
-                                eventRequest = new ConnectedEventRequest(context);
-                            }
+                            eventRequest = new ConnectedEventRequest(context);
                             break;
                         }
                     default:
