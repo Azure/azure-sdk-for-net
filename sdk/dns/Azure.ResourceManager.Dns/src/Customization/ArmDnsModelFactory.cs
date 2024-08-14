@@ -400,6 +400,7 @@ namespace Azure.ResourceManager.Dns.Models
             tlsaRecords ??= new List<DnsTlsaRecordInfo>();
             naptrRecords ??= new List<DnsNaptrRecordInfo>();
             serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+            DnsCnameRecordInfo cnameRecodrInfo = new DnsCnameRecordInfo() { Cname = cname };
 
             return new DnsRecordData(
                 id,
@@ -420,13 +421,13 @@ namespace Azure.ResourceManager.Dns.Models
                 ptrRecords: ptrRecords,
                 srvRecords: srvRecords,
                 txtRecords: txtRecords,
-                cnameRecordInfo: null,
+                cnameRecordInfo: cnameRecodrInfo,
                 soaRecordInfo: soaRecordInfo,
                 caaRecords: caaRecords,
                 dsRecords: dsRecords,
                 tlsaRecords: tlsaRecords,
                 naptrRecords: naptrRecords,
-                serializedAdditionalRawData: serializedAdditionalRawData){Cname=cname};
+                serializedAdditionalRawData: serializedAdditionalRawData);
         }
     }
 }
