@@ -263,6 +263,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Creates a new <see cref="FileDownloadInfo"/> instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileDownloadInfo FileDownloadInfo(
             long contentLength,
             Stream content,
