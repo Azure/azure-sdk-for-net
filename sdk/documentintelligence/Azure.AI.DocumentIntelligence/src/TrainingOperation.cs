@@ -12,6 +12,10 @@ namespace Azure.AI.DocumentIntelligence
     {
         private const string OperationIdNotFoundErrorMessage = "The operation ID was not present in the service response.";
 
+        // Location header pattern:
+        // https://<endpoint>/documentintelligence/<api>/<operationId>?api-version=<version>
+        private static readonly Regex s_locationHeaderRegex = new(@"[^:]+://[^/]+/documentintelligence/.+/([^?/]+)", RegexOptions.Compiled);
+
         private readonly Operation<BinaryData> _internalOperation;
 
         private readonly string _operationId;
@@ -51,9 +55,7 @@ namespace Azure.AI.DocumentIntelligence
 
             if (response.Headers.TryGetValue("operation-location", out string operationLocation))
             {
-                // Location header pattern:
-                // https://<endpoint>/documentintelligence/<api>/<operationId>?api-version=<version>
-                var match = Regex.Match(operationLocation, @"[^:]+://[^/]+/documentintelligence/.+/([^?/]+)");
+                var match = s_locationHeaderRegex.Match(operationLocation);
 
                 if (!match.Success || !match.Groups[1].Success)
                 {
