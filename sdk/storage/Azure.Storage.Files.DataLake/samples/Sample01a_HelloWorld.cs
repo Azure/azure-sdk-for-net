@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using Azure.Storage.Files.DataLake;
@@ -316,6 +317,113 @@ namespace Azure.Storage.Files.DataLake.Samples
                 }
 
                 // Verify the contents
+                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                filesystem.Delete();
+            }
+        }
+
+        /// <summary>
+        /// Download a DataLake File stream to a file.
+        /// </summary>
+        [Test]
+        public void ReadStreaming()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string originalPath = CreateTempFile(SampleFileContent);
+
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempPath();
+
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-read" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient("sample-filesystem-read");
+            filesystem.Create();
+            try
+            {
+                // Get a reference to a file named "sample-file" in a filesystem
+                DataLakeFileClient file = filesystem.GetFileClient("sample-file");
+
+                // First upload something the DataLake file so we have something to download
+                file.Upload(File.OpenRead(originalPath));
+
+                // Download the DataLake file's contents and save it to a file
+                // The ReadStreamingAsync() API downloads a file in a single requests.
+                // For large files, it may be faster to call ReadTo()
+                #region Snippet:SampleSnippetDataLakeFileClient_ReadStreaming
+                Response<DataLakeFileReadStreamingResult> fileContents = file.ReadStreaming();
+                #endregion Snippet:SampleSnippetDataLakeFileClient_ReadStreaming
+                using (FileStream stream = File.OpenWrite(downloadPath))
+                {
+                    fileContents.Value.Content.CopyTo(stream);
+                }
+
+                // Verify the contents
+                Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
+            }
+            finally
+            {
+                // Clean up after the test when we're finished
+                filesystem.Delete();
+            }
+        }
+
+        /// <summary>
+        /// Download a DataLake File content to a file.
+        /// </summary>
+        [Test]
+        public void ReadContent()
+        {
+            // Create a temporary Lorem Ipsum file on disk that we can upload
+            string originalPath = CreateTempFile(SampleFileContent);
+
+            // Get a temporary path on disk where we can download the file
+            string downloadPath = CreateTempPath();
+
+            // Make StorageSharedKeyCredential to pass to the serviceClient
+            string storageAccountName = StorageAccountName;
+            string storageAccountKey = StorageAccountKey;
+            Uri serviceUri = StorageAccountBlobUri;
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(storageAccountName, storageAccountKey);
+
+            // Create DataLakeServiceClient using StorageSharedKeyCredentials
+            DataLakeServiceClient serviceClient = new DataLakeServiceClient(serviceUri, sharedKeyCredential);
+
+            // Get a reference to a filesystem named "sample-filesystem-read" and then create it
+            DataLakeFileSystemClient filesystem = serviceClient.GetFileSystemClient("sample-filesystem-read");
+            filesystem.Create();
+            try
+            {
+                // Get a reference to a file named "sample-file" in a filesystem
+                DataLakeFileClient file = filesystem.GetFileClient("sample-file");
+
+                // First upload something the DataLake file so we have something to download
+                file.Upload(File.OpenRead(originalPath));
+
+                // Download the DataLake file's contents and save it to a file
+                // The ReadContentAsync() API downloads a file in a single requests.
+                // For large files, it may be faster to call ReadTo()
+                #region Snippet:SampleSnippetDataLakeFileClient_ReadContent
+                Response<DataLakeFileReadResult> fileContents = file.ReadContent();
+                #endregion Snippet:SampleSnippetDataLakeFileClient_ReadContent
+                byte[] data = fileContents.Value.Content.ToArray();
+                using (FileStream stream = File.OpenWrite(downloadPath))
+                {
+                    stream.Write(data, 0, data.Length);
+                }
+
+               // Verify the contents
                 Assert.AreEqual(SampleFileContent, File.ReadAllText(downloadPath));
             }
             finally
