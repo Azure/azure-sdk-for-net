@@ -2,7 +2,7 @@ parameters:
   FolderForUpload: ''
   TargetLanguage: ''
   BlobName: '' # To be removed once all usages are removed in the languages
-  StorageAccount: 'https://azuresdkdocs.blob.core.windows.net'
+  BlobAccountName: 'https://azuresdkdocs.blob.core.windows.net'
   ScriptPath: 'eng/common/scripts/copy-docs-to-blobstorage.ps1'
   ArtifactLocation: ''
   RepoId: $(Build.Repository.Name)
@@ -19,7 +19,7 @@ steps:
     ScriptPath: ${{ parameters.ScriptPath }}
     ScriptArguments: >
       -DocLocation "${{ parameters.FolderForUpload }}"
-      -BlobName "${{ parameters.BlobName }}"
+      -BlobAccountName "${{ parameters.BlobAccountName }}"
       -PublicArtifactLocation "${{ parameters.ArtifactLocation }}"
       -RepoReplaceRegex "(https://github.com/${{ parameters.RepoId }}/(?:blob|tree)/)$(DefaultBranch)"
     azurePowerShellVersion: latestVersion
