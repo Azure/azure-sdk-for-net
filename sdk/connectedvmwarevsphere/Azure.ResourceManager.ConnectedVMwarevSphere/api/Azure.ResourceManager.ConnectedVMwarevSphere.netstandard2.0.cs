@@ -1282,13 +1282,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     public partial class WindowsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.WindowsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.WindowsConfiguration>
     {
         public WindowsConfiguration() { }
-        public bool? AutoLogon { get { throw null; } set { } }
         public int? AutoLogonCount { get { throw null; } set { } }
         public string DomainName { get { throw null; } set { } }
         public string DomainUsername { get { throw null; } set { } }
         public string DomainUserPassword { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> FirstLogonCommands { get { throw null; } }
         public string FullName { get { throw null; } set { } }
+        public bool? IsAutoLogon { get { throw null; } set { } }
         public string OrgName { get { throw null; } set { } }
         public string ProductId { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
