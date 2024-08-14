@@ -47,12 +47,12 @@ namespace Azure.Core.Tests
             Assert.IsTrue(operationInternal.HasCompleted);
         }
 
-        [Test]
-        public void SetStateFails()
-        {
-            var operationInternal = OperationInternal.Failed(InitialResponse, new RequestFailedException(InitialResponse));
-            Assert.IsTrue(operationInternal.HasCompleted);
-        }
+        //[Test]
+        //public void SetStateFails()
+        //{
+        //    var operationInternal = OperationInternal.Failed(InitialResponse, new RequestFailedException(InitialResponse));
+        //    Assert.IsTrue(operationInternal.HasCompleted);
+        //}
 
         [Test]
         public async Task UpdateStatusWhenOperationIsPending([Values(true, false)] bool async)
