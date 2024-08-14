@@ -3517,8 +3517,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.Value.Details.CreatedOn);
             Assert.IsNotNull(response.Value.Details.Metadata);
 
-            BinaryData actual = new BinaryData(response.Value.Content);
-            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            byte[] actual = response.Value.Content.ToArray();
+            TestHelper.AssertSequenceEqual(data, actual);
         }
 
         [RecordedTest]
@@ -3655,8 +3655,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.IsNotNull(response.Value.Details.CreatedOn);
             AssertAccessControlListEquality(AccessControlList, response.Value.Details.AccessControlList.ToList());
 
-            BinaryData actual = new BinaryData(response.Value.Content);
-            TestHelper.AssertSequenceEqual(data, actual.ToArray());
+            byte[] actual = response.Value.Content.ToArray();
+            TestHelper.AssertSequenceEqual(data, actual);
         }
 
         [RecordedTest]
