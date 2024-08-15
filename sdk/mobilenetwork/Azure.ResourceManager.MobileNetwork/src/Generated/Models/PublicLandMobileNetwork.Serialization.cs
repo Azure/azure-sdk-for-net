@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -108,6 +109,82 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new PublicLandMobileNetwork(mcc, mnc, serializedAdditionalRawData, homeNetworkPublicKeys);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HomeNetworkPublicKeys), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  homeNetworkPublicKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HomeNetworkPublicKeys))
+                {
+                    builder.Append("  homeNetworkPublicKeys: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HomeNetworkPublicKeys, options, 2, false, "  homeNetworkPublicKeys: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mcc), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mcc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Mcc))
+                {
+                    builder.Append("  mcc: ");
+                    if (Mcc.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Mcc}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Mcc}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mnc), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mnc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Mnc))
+                {
+                    builder.Append("  mnc: ");
+                    if (Mnc.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Mnc}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Mnc}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PublicLandMobileNetwork>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PublicLandMobileNetwork>)this).GetFormatFromOptions(options) : options.Format;
@@ -116,6 +193,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PublicLandMobileNetwork)} does not support writing '{options.Format}' format.");
             }

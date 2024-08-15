@@ -2,21 +2,22 @@
 // Licensed under the MIT License.
 
 extern alias DMBlob;
+extern alias BaseShares;
 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Storage.Test.Shared;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Tests;
+using BaseShares::Azure.Storage.Files.Shares;
+using Azure.Storage.DataMovement.Files.Shares.Tests;
 using Azure.Storage.Blobs.Tests;
 using SharesClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
-    Azure.Storage.Files.Shares.ShareServiceClient,
-    Azure.Storage.Files.Shares.ShareClientOptions>;
+    BaseShares::Azure.Storage.Files.Shares.ShareServiceClient,
+    BaseShares::Azure.Storage.Files.Shares.ShareClientOptions>;
 using BlobsClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
     Azure.Storage.Blobs.BlobServiceClient,
     Azure.Storage.Blobs.BlobClientOptions>;
-using Azure.Storage.Files.Shares.Models;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Core;

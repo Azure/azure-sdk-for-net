@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -152,6 +153,84 @@ namespace Azure.ResourceManager.Hci.Models
             return new ArcIdentityResult(arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcApplicationClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    arcApplicationClientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArcApplicationClientId))
+                {
+                    builder.Append("    arcApplicationClientId: ");
+                    builder.AppendLine($"'{ArcApplicationClientId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcApplicationTenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    arcApplicationTenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArcApplicationTenantId))
+                {
+                    builder.Append("    arcApplicationTenantId: ");
+                    builder.AppendLine($"'{ArcApplicationTenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcServicePrincipalObjectId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    arcServicePrincipalObjectId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArcServicePrincipalObjectId))
+                {
+                    builder.Append("    arcServicePrincipalObjectId: ");
+                    builder.AppendLine($"'{ArcServicePrincipalObjectId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcApplicationObjectId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    arcApplicationObjectId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArcApplicationObjectId))
+                {
+                    builder.Append("    arcApplicationObjectId: ");
+                    builder.AppendLine($"'{ArcApplicationObjectId.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ArcIdentityResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcIdentityResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +239,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support writing '{options.Format}' format.");
             }

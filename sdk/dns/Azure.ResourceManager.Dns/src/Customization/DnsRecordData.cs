@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns.Models;
@@ -142,11 +143,21 @@ namespace Azure.ResourceManager.Dns
         public DnsSoaRecordInfo DnsSoaRecordInfo { get; set; }
         /// <summary> The list of CAA records in the record set. </summary>
         public IList<DnsCaaRecordInfo> DnsCaaRecords { get; }
-         /// <summary> The list of DS records in the record set. </summary>
+        /// <summary> The list of DS records in the record set. </summary>
         public IList<DnsDSRecordInfo> DnsDSRecords { get; }
         /// <summary> The list of TLSA records in the record set. </summary>
         public IList<DnsTlsaRecordInfo> DnsTlsaRecords { get; }
         /// <summary> The list of NAPTR records in the record set. </summary>
         public IList<DnsNaptrRecordInfo> DnsNaptrRecords { get; }
+        /// <summary> The DnsRecordType in the record set. </summary>
+        public DnsRecordType RecordType
+        {
+            get
+            {
+                var resourceTypeString = base.ResourceType.Type.Split('/').Where(part => !string.IsNullOrEmpty(part)).LastOrDefault();
+                DnsRecordType recordType = DnsRecordTypeExtensions.ToDnsRecordType(resourceTypeString);
+                return recordType;
+            }
+        }
     }
 }
