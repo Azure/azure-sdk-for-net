@@ -129,9 +129,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
         /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultBackupOperation"/> representing the result of the asynchronous operation.</returns>
         public virtual async Task<KeyVaultBackupOperation> StartPreBackupAsync(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(blobStorageUri, nameof(blobStorageUri));
+            Argument.AssertNotNull(sasToken, nameof(sasToken));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreBackupAsync)}");
             scope.Start();
             try
@@ -159,11 +164,16 @@ namespace Azure.Security.KeyVault.Administration
         /// Initiates a pre-backup check on the Key Vault. This operation checks if it is possible to back up the entire collection of keys from a Key Vault.
         /// </summary>
         /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
-        /// <param name="sasToken"></param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultBackupOperation"/> representing the result of the operation.</returns>
         public virtual KeyVaultBackupOperation StartPreBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(blobStorageUri, nameof(blobStorageUri));
+            Argument.AssertNotNull(sasToken, nameof(sasToken));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartPreBackup)}");
             scope.Start();
             try
@@ -237,9 +247,14 @@ namespace Azure.Security.KeyVault.Administration
         /// </param>
         /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public virtual async Task<KeyVaultRestoreOperation> StartPreRestoreAsync(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(folderUri, nameof(folderUri));
+            Argument.AssertNotNull(sasToken, nameof(sasToken));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
             scope.Start();
             try
@@ -274,9 +289,14 @@ namespace Azure.Security.KeyVault.Administration
         /// </param>
         /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         public virtual KeyVaultRestoreOperation StartPreRestore(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(folderUri, nameof(folderUri));
+            Argument.AssertNotNull(sasToken, nameof(sasToken));
+
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
             scope.Start();
             try
