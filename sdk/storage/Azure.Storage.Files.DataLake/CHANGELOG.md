@@ -3,7 +3,7 @@
 ## 12.20.0-beta.2 (Unreleased)
 
 ### Features Added
-- Added feature parity for DataLake download APIs with Blobs #45418
+- Deprecated Read()/ReadAsync() in favor of ReadStreaming()/ReadStreamingAsync() and ReadContent()/ReadContentAsync() for DataLake #45418
 
 ### Breaking Changes
 
