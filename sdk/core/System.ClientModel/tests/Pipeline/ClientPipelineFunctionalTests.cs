@@ -505,7 +505,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         }
 
         // No other events should have been logged
-        Assert.AreEqual(8, eventListener.EventData.Count());
+        Assert.AreEqual(11, eventListener.EventData.Count());
     }
 
     [Test]

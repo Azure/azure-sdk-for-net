@@ -227,7 +227,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         LoggerEvent log = _logger.SingleEventById(ExceptionResponseEvent);
         Assert.AreEqual(LogLevel.Information, log.LogLevel);
         Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(exception, log.Exception);
+        Assert.AreEqual(exception.ToString().Split(Environment.NewLine.ToCharArray())[0], log.GetValueFromArguments<string>("exception").Split(Environment.NewLine.ToCharArray())[0]);
     }
 
     [Test]

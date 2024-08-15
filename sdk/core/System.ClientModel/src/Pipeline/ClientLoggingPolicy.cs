@@ -58,8 +58,8 @@ public class ClientLoggingPolicy : PipelinePolicy
         _logContent = loggingOptions.IsLoggingContentEnabled;
         _maxLength = loggingOptions.LoggedContentSizeLimit;
         _sanitizer = new PipelineMessageSanitizer(loggingOptions.AllowedQueryParameters.ToArray(), loggingOptions.AllowedHeaderNames.ToArray());
-        _logger = loggingOptions.LoggerFactory.CreateLogger("ClientModel"); // Create one logger so we can check the log level
-        _logForwarder = new LogForwarder(loggingOptions.LoggerFactory);
+        _logger = loggingOptions.LoggerFactory.CreateLogger("System.ClientModel");
+        _logForwarder = new LogForwarder(_logger);
         _correlationIdHeaderName = loggingOptions.CorrelationIdHeaderName;
 
         if (_logger is not NullLogger)

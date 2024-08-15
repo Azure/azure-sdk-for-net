@@ -12,17 +12,15 @@ namespace System.ClientModel.Internal;
 
 internal class LogForwarder
 {
-    private readonly ILoggerFactory _loggerFactory;
-
-    private readonly ConcurrentDictionary<string, ILogger> _loggers = new ConcurrentDictionary<string, ILogger>();
+    private readonly ILogger _logger;
 
     private readonly Func<EventSourceEvent, Exception?, string> _formatMessage = FormatMessage;
 
     private ClientModelEventListener? _listener;
 
-    public LogForwarder(ILoggerFactory loggerFactory)
+    public LogForwarder(ILogger logger)
     {
-        _loggerFactory = loggerFactory;
+        _logger = logger;
     }
 
     public void Start()
@@ -32,18 +30,11 @@ internal class LogForwarder
 
     private void LogEvent(EventWrittenEventArgs eventData)
     {
-        if (_loggerFactory == null)
+        if (_logger == null)
         {
             return;
         }
-
-        var logger = _loggers.GetOrAdd(eventData.EventSource.Name, name => _loggerFactory.CreateLogger(ToLoggerName(name)));
-        logger.Log(MapLevel(eventData.Level), new EventId(eventData.EventId, eventData.EventName), new EventSourceEvent(eventData), null, _formatMessage);
-    }
-
-    private static string ToLoggerName(string name)
-    {
-        return name.Replace('-', '.');
+        _logger.Log(MapLevel(eventData.Level), new EventId(eventData.EventId, eventData.EventName), new EventSourceEvent(eventData), null, _formatMessage);
     }
 
     public void Dispose()
