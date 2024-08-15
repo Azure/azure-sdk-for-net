@@ -1,0 +1,3 @@
+directory: specification/{ProviderNameLowercase}/{TypeSpecDirectory}
+commit: {commitId}
+repo: Azure/azure-rest-api-specs
