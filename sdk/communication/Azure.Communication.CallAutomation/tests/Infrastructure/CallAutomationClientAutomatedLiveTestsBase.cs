@@ -32,6 +32,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private const string URIDomainRegEx = @"https://([^/?]+)";
         private const string TestDispatcherRegEx = @"https://incomingcalldispatcher.azurewebsites.net";
         private const string TestDispatcherQNameRegEx = @"(?<=\?q=)(.*)";
+        private const string ACSUserIdInUrlRegex = @"[0-9]%3Aacs%3A[a-f0-9-]+_[0-9a-f-]+";
 
         private Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventBase>> _eventstore;
         private ConcurrentDictionary<string, string> _incomingcontextstore;
@@ -53,9 +54,11 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             JsonPathSanitizers.Add("$..ivrContext");
             JsonPathSanitizers.Add("$..dialog.botAppId");
             BodyKeySanitizers.Add(new BodyKeySanitizer("..callbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized"});
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..file.uri") { Value = @"https://sanitized.skype.com/prompt.wav" });
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx) { Value = "https://sanitized.skype.com" });
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.skype.com" });
             UriRegexSanitizers.Add(new UriRegexSanitizer(TestDispatcherQNameRegEx));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(ACSUserIdInUrlRegex) { Value = SanitizeValue });
         }
 
         [SetUp]

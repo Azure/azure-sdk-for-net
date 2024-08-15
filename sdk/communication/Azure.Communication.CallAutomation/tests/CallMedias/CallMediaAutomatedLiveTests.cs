@@ -141,5 +141,215 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 await CleanUpCall(client, callConnectionId);
             }
         }
+        [RecordedTest]
+
+        public async Task HoldUnholdParticipantInACallTest()
+        {
+            // Create caller and receiver
+            var user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            var target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            var client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            var targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
+            try
+            {
+                // setup call - create and answer the call
+                callConnectionId = await SetupCallAsync(client, targetClient, user, target).ConfigureAwait(false);
+                var callConnection = client.GetCallConnection(callConnectionId);
+
+                // hold participant and asset
+                await AssertParticipantHoldAsync(client, callConnectionId, target, TestEnvironment.FileSourceUrl).ConfigureAwait(false);
+
+                // unhold participant and asset
+                await AssertParticipantUnholdAsync(callConnection, target).ConfigureAwait(false);
+
+                // hangup call
+                await HangUpCallAsync(client, callConnectionId).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId).ConfigureAwait(false);
+            }
+        }
+
+        [RecordedTest]
+        public async Task HoldUnholdParticipantInACallWithHoldOptionsTest()
+        {
+            // Create caller and receiver
+            var user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            var target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            var client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            var targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
+            try
+            {
+                // setup call - create and answer the call
+                callConnectionId = await SetupCallAsync(client, targetClient, user, target).ConfigureAwait(false);
+                var callConnection = client.GetCallConnection(callConnectionId);
+
+                var holdOptions = new HoldOptions(target)
+                {
+                    PlaySourceInfo = new FileSource(new Uri(TestEnvironment.FileSourceUrl)),
+                    OperationContext = "withholdoptions",
+                };
+                // hold participant and asset
+                await AssertParticipantHoldAsync(client, callConnectionId, target, TestEnvironment.FileSourceUrl).ConfigureAwait(false);
+
+                // unhold participant and asset
+                await AssertParticipantUnholdAsync(callConnection, target).ConfigureAwait(false);
+
+                // hangup call
+                await HangUpCallAsync(client, callConnectionId).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId).ConfigureAwait(false);
+            }
+        }
+
+        [RecordedTest]
+        public async Task HoldUnholdParticipantInACallWithPlaySourceTest()
+        {
+            // Create caller and receiver
+            var user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            var target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            var client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            var targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null;
+
+            try
+            {
+                // setup call - create and answer the call
+                callConnectionId = await SetupCallAsync(client, targetClient, user, target).ConfigureAwait(false);
+                var callConnection = client.GetCallConnection(callConnectionId);
+
+                // hold participant and asset
+                await AssertParticipantHoldAsync(client, callConnectionId, target, TestEnvironment.FileSourceUrl).ConfigureAwait(false);
+
+                // unhold participant and asset
+                await AssertParticipantUnholdAsync(callConnection, target).ConfigureAwait(false);
+
+                // hangup call
+                await HangUpCallAsync(client, callConnectionId).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId).ConfigureAwait(false);
+            }
+        }
+
+        private async Task<string> SetupCallAsync(CallAutomationClient client, CallAutomationClient targetClient, CommunicationUserIdentifier user, CommunicationUserIdentifier target)
+        {
+            var uniqueId = await ServiceBusWithNewCall(user, target).ConfigureAwait(false);
+            var result = await CreateAndAnswerCall(client, targetClient, target, uniqueId).ConfigureAwait(false);
+            var callConnectionId = result.CallerCallConnectionId;
+
+            var addParticipantSucceededEvent = await WaitForEvent<ParticipantsUpdated>(callConnectionId, TimeSpan.FromSeconds(20)).ConfigureAwait(false);
+            Assert.IsNotNull(addParticipantSucceededEvent);
+            Assert.IsTrue(addParticipantSucceededEvent is ParticipantsUpdated);
+            Assert.IsTrue(((ParticipantsUpdated)addParticipantSucceededEvent!).CallConnectionId == callConnectionId);
+
+            return callConnectionId;
+        }
+
+        private async Task AssertParticipantHoldAsync(CallAutomationClient client, string callConnectionId, CommunicationUserIdentifier target, string? fileSourceUrl = null, HoldOptions? holdOptions = null)
+        {
+            var callConnection = client.GetCallConnection(callConnectionId);
+            if (!string.IsNullOrWhiteSpace(fileSourceUrl))
+            {
+                await callConnection.GetCallMedia().HoldAsync(target, new FileSource(new Uri(TestEnvironment.FileSourceUrl))).ConfigureAwait(false);
+            }
+            else if (holdOptions != null)
+            {
+                await callConnection.GetCallMedia().HoldAsync(holdOptions).ConfigureAwait(false);
+            }
+
+            await Task.Delay(1000).ConfigureAwait(false);
+            var participantResult = await callConnection.GetParticipantAsync(target).ConfigureAwait(false);
+            Assert.IsNotNull(participantResult);
+            Assert.IsTrue(participantResult.Value.IsOnHold);
+        }
+
+        private async Task AssertParticipantUnholdAsync(CallConnection callConnection, CommunicationUserIdentifier target)
+        {
+            await callConnection.GetCallMedia().UnholdAsync(target).ConfigureAwait(false);
+            await Task.Delay(1000).ConfigureAwait(false);
+
+            var participantResult = await callConnection.GetParticipantAsync(target).ConfigureAwait(false);
+            Assert.IsNotNull(participantResult);
+            Assert.IsFalse(participantResult.Value.IsOnHold);
+        }
+
+        private async Task HangUpCallAsync(CallAutomationClient client, string callConnectionId)
+        {
+            await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+            var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20)).ConfigureAwait(false);
+            Assert.IsNotNull(disconnectedEvent);
+            Assert.IsTrue(disconnectedEvent is CallDisconnected);
+            Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
+            try
+            {
+                var properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            {
+                if (ex.Status == 404)
+                {
+                    callConnectionId = string.Empty;
+                }
+            }
+        }
+
+        private async Task<(string CallerCallConnectionId, string TargetCallConnectionId)> CreateAndAnswerCall(CallAutomationClient client,
+            CallAutomationClient targetClient,
+            CommunicationUserIdentifier target,
+            string uniqueId,
+            bool createCallWithCogService = false)
+        {
+            try
+            {
+                // create call and assert response
+                var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                CreateCallResult response = await client.CreateCallAsync(createCallOptions).ConfigureAwait(false);
+                var callerCallConnectionId = response.CallConnectionProperties.CallConnectionId;
+                Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+
+                // wait for incomingcall context
+                string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
+                Assert.IsNotNull(incomingCallContext);
+
+                // answer the call
+                var answerCallOptions = new AnswerCallOptions(incomingCallContext, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
+                AnswerCallResult answerResponse = await targetClient.AnswerCallAsync(answerCallOptions);
+
+                var targetCallConnectionId = answerResponse.CallConnectionProperties.CallConnectionId;
+                // wait for callConnected
+
+                var connectedEvent = await WaitForEvent<CallConnected>(targetCallConnectionId, TimeSpan.FromSeconds(20));
+                Assert.IsNotNull(connectedEvent);
+                Assert.IsTrue(connectedEvent is CallConnected);
+                Assert.AreEqual(targetCallConnectionId, ((CallConnected)connectedEvent!).CallConnectionId);
+                return (callerCallConnectionId, targetCallConnectionId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

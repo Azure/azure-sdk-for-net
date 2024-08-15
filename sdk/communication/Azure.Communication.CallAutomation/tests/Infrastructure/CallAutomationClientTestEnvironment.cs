@@ -31,6 +31,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private string botAppId = "BOT_APP_ID";
 
+        private string fileSourceUrl = "FILE_SOURCE_URL";
+
         /// <summary>
         /// The resource identifier associated with the Azure Communication Service.
         /// </summary>
@@ -75,6 +77,11 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// </summary>
         public string ServiceBusConnectionString => GetRecordedOptionalVariable(servicebusString,
             options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64).HasSecretConnectionStringParameter("SharedAccessKeyName"));
+
+        /// <summary>
+        /// file source for automated testing
+        /// </summary>
+        public string FileSourceUrl => GetRecordedOptionalVariable(fileSourceUrl, options => options.IsSecret("https://sanitized.skype.com/prompt.wav"));
 
         /// <summary>
         /// The callback url of the application where notification would be received.
