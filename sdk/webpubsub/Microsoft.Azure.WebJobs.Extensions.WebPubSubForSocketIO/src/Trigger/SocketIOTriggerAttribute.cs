@@ -17,6 +17,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 #pragma warning restore CS0618 // Type or member is obsolete
     public class SocketIOTriggerAttribute : Attribute
     {
+        private const string ConnectEventName = "connect";
+        private const string ConnectedEventName = "connected";
+        private const string DisconnectedEventName = "disconnected";
+
         /// <summary>
         /// Attribute used to bind a parameter to an Web PubSub for Socket.IO, when an request is from the service.
         /// </summary>
@@ -98,9 +102,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 
         private WebPubSubEventType GetEventTypeByEventName(string eventName)
         {
-            if (string.Equals(eventName, "connect", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(eventName, "connected", StringComparison.OrdinalIgnoreCase)
-                || string.Equals(eventName, "disconnected", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(eventName, ConnectEventName, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(eventName, ConnectedEventName, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(eventName, DisconnectedEventName, StringComparison.OrdinalIgnoreCase))
             {
                 return WebPubSubEventType.System;
             }
