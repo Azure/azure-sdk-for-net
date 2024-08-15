@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+## 12.21.2 (2024-08-08)
+
+### Bugs Fixed
+- Fixed \[BUG\] WrapKeyInternal to correctly call WrapKey in sync flow #42160
+
 ## 12.22.0-beta.1 (2024-08-06)
 
 ### Features Added
@@ -18,7 +23,6 @@
 
 ### Bugs Fixed
 - Fixed \[BUG\] BlobContainerClient(connectionString, blobContainerName, options) ctor to set clientSideEncryptionOptions #44623
-- Fixed \[BUG\] WrapKeyInternal to correctly call WrapKey in sync flow #42160
 
 ## 12.21.1 (2024-07-25)
 
