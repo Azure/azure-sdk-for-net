@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> Specifies the Windows Configuration settings for the virtual machine. </summary>
-    public partial class WindowsConfiguration
+    public partial class VMwareVmWindowsConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="WindowsConfiguration"/>. </summary>
-        public WindowsConfiguration()
+        /// <summary> Initializes a new instance of <see cref="VMwareVmWindowsConfiguration"/>. </summary>
+        public VMwareVmWindowsConfiguration()
         {
             FirstLogonCommands = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="WindowsConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareVmWindowsConfiguration"/>. </summary>
         /// <param name="fullName"> Sets full name of the owner of the vm. </param>
         /// <param name="orgName"> Sets org name to which the owner of the vm belongs. </param>
         /// <param name="domainName"> Sets domain name that vm should join. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="timeZone"> Specifies the time zone of the virtual machine. e.g. "Pacific Standard Time". Time zone name correspond to time zones listed at Microsoft Time Zone name values(https://learn.microsoft.com/en-us/previous-versions/windows/embedded/ms912391(v=winembedded.11)). </param>
         /// <param name="firstLogonCommands"> Sets first logon commands. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsConfiguration(string fullName, string orgName, string domainName, string domainUsername, string domainUserPassword, string workGroupName, string productId, bool? isAutoLogon, int? autoLogonCount, string timeZone, IList<string> firstLogonCommands, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VMwareVmWindowsConfiguration(string fullName, string orgName, string domainName, string domainUsername, string domainUserPassword, string workGroupName, string productId, bool? isAutoLogon, int? autoLogonCount, string timeZone, IList<string> firstLogonCommands, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FullName = fullName;
             OrgName = orgName;

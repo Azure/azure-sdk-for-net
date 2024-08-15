@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class WindowsConfiguration : IUtf8JsonSerializable, IJsonModel<WindowsConfiguration>
+    public partial class VMwareVmWindowsConfiguration : IUtf8JsonSerializable, IJsonModel<VMwareVmWindowsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WindowsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareVmWindowsConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<WindowsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VMwareVmWindowsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareVmWindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareVmWindowsConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -104,19 +104,19 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteEndObject();
         }
 
-        WindowsConfiguration IJsonModel<WindowsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VMwareVmWindowsConfiguration IJsonModel<VMwareVmWindowsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareVmWindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareVmWindowsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWindowsConfiguration(document.RootElement, options);
+            return DeserializeVMwareVmWindowsConfiguration(document.RootElement, options);
         }
 
-        internal static WindowsConfiguration DeserializeWindowsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VMwareVmWindowsConfiguration DeserializeVMwareVmWindowsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WindowsConfiguration(
+            return new VMwareVmWindowsConfiguration(
                 fullName,
                 orgName,
                 domainName,
@@ -232,35 +232,35 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<WindowsConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VMwareVmWindowsConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareVmWindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareVmWindowsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        WindowsConfiguration IPersistableModel<WindowsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VMwareVmWindowsConfiguration IPersistableModel<VMwareVmWindowsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareVmWindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeWindowsConfiguration(document.RootElement, options);
+                        return DeserializeVMwareVmWindowsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareVmWindowsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<WindowsConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VMwareVmWindowsConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

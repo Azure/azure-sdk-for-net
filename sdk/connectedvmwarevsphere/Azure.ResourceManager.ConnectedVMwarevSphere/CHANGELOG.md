@@ -5,10 +5,12 @@
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Upgraded api-version tag from 'package-2023-10' to 'package-2023-12'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b8932418d4fd4940849e8722cc90e2b7bf1f8fda/specification/connectedvmware/resource-manager/readme.md
 
 ### Other Changes
 
-- Change the name of attribute `Autologon` to `IsAutologon`
+- Upgraded Azure.Core from 1.36.0 to 1.42.0
+- Upgraded Azure.ResourceManager from 1.8.1 to 1.12.0
 
 ## 1.0.0 (2023-11-15)
 

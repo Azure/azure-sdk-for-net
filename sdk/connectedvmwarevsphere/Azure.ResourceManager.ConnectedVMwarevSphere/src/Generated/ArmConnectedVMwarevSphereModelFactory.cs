@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <param name="toolsVersion"> Gets or sets the current version of VMware Tools. </param>
         /// <param name="windowsConfiguration"> Windows Configuration. </param>
         /// <returns> A new <see cref="Models.OSProfileForVmInstance"/> instance for mocking. </returns>
-        public static OSProfileForVmInstance OSProfileForVmInstance(string computerName = null, string adminUsername = null, string adminPassword = null, string guestId = null, VMwareOSType? osType = null, string osSku = null, string toolsRunningStatus = null, string toolsVersionStatus = null, string toolsVersion = null, WindowsConfiguration windowsConfiguration = null)
+        public static OSProfileForVmInstance OSProfileForVmInstance(string computerName = null, string adminUsername = null, string adminPassword = null, string guestId = null, VMwareOSType? osType = null, string osSku = null, string toolsRunningStatus = null, string toolsVersionStatus = null, string toolsVersion = null, VMwareVmWindowsConfiguration windowsConfiguration = null)
         {
             return new OSProfileForVmInstance(
                 computerName,

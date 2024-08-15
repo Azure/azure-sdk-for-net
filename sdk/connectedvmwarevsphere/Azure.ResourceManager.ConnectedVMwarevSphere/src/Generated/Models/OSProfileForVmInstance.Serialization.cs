@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             string toolsRunningStatus = default;
             string toolsVersionStatus = default;
             string toolsVersion = default;
-            WindowsConfiguration windowsConfiguration = default;
+            VMwareVmWindowsConfiguration windowsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value, options);
+                    windowsConfiguration = VMwareVmWindowsConfiguration.DeserializeVMwareVmWindowsConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
