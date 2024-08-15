@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             }
         }
 
-        internal RequestUriBuilder CreateDownloadRequestUri(string reportName, string evidenceName, EvidenceFileDownloadContent content)
+        internal RequestUriBuilder CreateDownloadRequestUri(string reportName, string evidenceName, EvidenceFileDownloadRequestContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             return uri;
         }
 
-        internal HttpMessage CreateDownloadRequest(string reportName, string evidenceName, EvidenceFileDownloadContent content)
+        internal HttpMessage CreateDownloadRequest(string reportName, string evidenceName, EvidenceFileDownloadRequestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/>, <paramref name="evidenceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="evidenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EvidenceFileDownloadResult>> DownloadAsync(string reportName, string evidenceName, EvidenceFileDownloadContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<EvidenceFileDownloadResult>> DownloadAsync(string reportName, string evidenceName, EvidenceFileDownloadRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
             Argument.AssertNotNullOrEmpty(evidenceName, nameof(evidenceName));
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/>, <paramref name="evidenceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> or <paramref name="evidenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EvidenceFileDownloadResult> Download(string reportName, string evidenceName, EvidenceFileDownloadContent content, CancellationToken cancellationToken = default)
+        public Response<EvidenceFileDownloadResult> Download(string reportName, string evidenceName, EvidenceFileDownloadRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
             Argument.AssertNotNullOrEmpty(evidenceName, nameof(evidenceName));

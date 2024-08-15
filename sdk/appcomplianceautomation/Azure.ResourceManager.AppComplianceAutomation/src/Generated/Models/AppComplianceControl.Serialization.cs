@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(ControlDescriptionHyperLink))
             {
                 writer.WritePropertyName("controlDescriptionHyperLink"u8);
-                writer.WriteStringValue(ControlDescriptionHyperLink);
+                writer.WriteStringValue(ControlDescriptionHyperLink.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(ControlStatus))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             string controlName = default;
             string controlFullName = default;
             string controlDescription = default;
-            string controlDescriptionHyperLink = default;
+            Uri controlDescriptionHyperLink = default;
             AppComplianceControlStatus? controlStatus = default;
             IReadOnlyList<CustomerResponsibility> responsibilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -137,7 +137,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (property.NameEquals("controlDescriptionHyperLink"u8))
                 {
-                    controlDescriptionHyperLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    controlDescriptionHyperLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("controlStatus"u8))

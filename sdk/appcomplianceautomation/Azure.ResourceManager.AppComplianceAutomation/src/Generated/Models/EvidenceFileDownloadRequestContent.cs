@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    /// <summary> Snapshot's download request. </summary>
-    public partial class SnapshotDownloadContent
+    /// <summary> Evidence file's download request. </summary>
+    public partial class EvidenceFileDownloadRequestContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,24 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SnapshotDownloadContent"/>. </summary>
-        /// <param name="downloadType"> Indicates the download type. </param>
-        public SnapshotDownloadContent(AppComplianceDownloadType downloadType)
+        /// <summary> Initializes a new instance of <see cref="EvidenceFileDownloadRequestContent"/>. </summary>
+        public EvidenceFileDownloadRequestContent()
         {
-            DownloadType = downloadType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SnapshotDownloadContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EvidenceFileDownloadRequestContent"/>. </summary>
         /// <param name="reportCreatorTenantId"> Tenant id. </param>
-        /// <param name="downloadType"> Indicates the download type. </param>
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotDownloadContent(string reportCreatorTenantId, AppComplianceDownloadType downloadType, string offerGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EvidenceFileDownloadRequestContent(Guid? reportCreatorTenantId, string offerGuid, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReportCreatorTenantId = reportCreatorTenantId;
-            DownloadType = downloadType;
             OfferGuid = offerGuid;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SnapshotDownloadContent"/> for deserialization. </summary>
-        internal SnapshotDownloadContent()
-        {
-        }
-
         /// <summary> Tenant id. </summary>
-        public string ReportCreatorTenantId { get; set; }
-        /// <summary> Indicates the download type. </summary>
-        public AppComplianceDownloadType DownloadType { get; }
+        public Guid? ReportCreatorTenantId { get; set; }
         /// <summary> The offerGuid which mapping to the reports. </summary>
         public string OfferGuid { get; set; }
     }

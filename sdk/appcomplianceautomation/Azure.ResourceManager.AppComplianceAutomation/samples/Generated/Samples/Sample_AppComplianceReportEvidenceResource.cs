@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Samples
             AppComplianceReportEvidenceResource appComplianceReportEvidence = client.GetAppComplianceReportEvidenceResource(appComplianceReportEvidenceResourceId);
 
             // invoke the operation
-            EvidenceFileDownloadContent content = new EvidenceFileDownloadContent();
+            EvidenceFileDownloadRequestContent content = new EvidenceFileDownloadRequestContent();
             EvidenceFileDownloadResult result = await appComplianceReportEvidence.DownloadAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");

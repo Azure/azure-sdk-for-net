@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="controlStatus"> Control status. </param>
         /// <param name="responsibilities"> List of customer responsibility. </param>
         /// <returns> A new <see cref="Models.AppComplianceControl"/> instance for mocking. </returns>
-        public static AppComplianceControl AppComplianceControl(string controlId = null, string controlName = null, string controlFullName = null, string controlDescription = null, string controlDescriptionHyperLink = null, AppComplianceControlStatus? controlStatus = null, IEnumerable<CustomerResponsibility> responsibilities = null)
+        public static AppComplianceControl AppComplianceControl(string controlId = null, string controlName = null, string controlFullName = null, string controlDescription = null, Uri controlDescriptionHyperLink = null, AppComplianceControlStatus? controlStatus = null, IEnumerable<CustomerResponsibility> responsibilities = null)
         {
             responsibilities ??= new List<CustomerResponsibility>();
 
@@ -499,14 +499,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new RecommendationSolution(recommendationSolutionIndex, recommendationSolutionContent, isRecommendSolution, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SnapshotDownloadContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SnapshotDownloadRequestContent"/>. </summary>
         /// <param name="reportCreatorTenantId"> Tenant id. </param>
         /// <param name="downloadType"> Indicates the download type. </param>
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
-        /// <returns> A new <see cref="Models.SnapshotDownloadContent"/> instance for mocking. </returns>
-        public static SnapshotDownloadContent SnapshotDownloadContent(string reportCreatorTenantId = null, AppComplianceDownloadType downloadType = default, string offerGuid = null)
+        /// <returns> A new <see cref="Models.SnapshotDownloadRequestContent"/> instance for mocking. </returns>
+        public static SnapshotDownloadRequestContent SnapshotDownloadRequestContent(Guid? reportCreatorTenantId = null, AppComplianceDownloadType downloadType = default, string offerGuid = null)
         {
-            return new SnapshotDownloadContent(reportCreatorTenantId, downloadType, offerGuid, serializedAdditionalRawData: null);
+            return new SnapshotDownloadRequestContent(reportCreatorTenantId, downloadType, offerGuid, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppComplianceDownloadResult"/>. </summary>

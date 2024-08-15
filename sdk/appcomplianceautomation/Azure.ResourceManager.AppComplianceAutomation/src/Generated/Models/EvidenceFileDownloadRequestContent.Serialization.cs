@@ -13,26 +13,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class SnapshotDownloadContent : IUtf8JsonSerializable, IJsonModel<SnapshotDownloadContent>
+    public partial class EvidenceFileDownloadRequestContent : IUtf8JsonSerializable, IJsonModel<EvidenceFileDownloadRequestContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotDownloadContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EvidenceFileDownloadRequestContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SnapshotDownloadContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EvidenceFileDownloadRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EvidenceFileDownloadRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotDownloadContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EvidenceFileDownloadRequestContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ReportCreatorTenantId))
             {
                 writer.WritePropertyName("reportCreatorTenantId"u8);
-                writer.WriteStringValue(ReportCreatorTenantId);
+                writer.WriteStringValue(ReportCreatorTenantId.Value);
             }
-            writer.WritePropertyName("downloadType"u8);
-            writer.WriteStringValue(DownloadType.ToString());
             if (Optional.IsDefined(OfferGuid))
             {
                 writer.WritePropertyName("offerGuid"u8);
@@ -56,19 +54,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteEndObject();
         }
 
-        SnapshotDownloadContent IJsonModel<SnapshotDownloadContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EvidenceFileDownloadRequestContent IJsonModel<EvidenceFileDownloadRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EvidenceFileDownloadRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotDownloadContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EvidenceFileDownloadRequestContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSnapshotDownloadContent(document.RootElement, options);
+            return DeserializeEvidenceFileDownloadRequestContent(document.RootElement, options);
         }
 
-        internal static SnapshotDownloadContent DeserializeSnapshotDownloadContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EvidenceFileDownloadRequestContent DeserializeEvidenceFileDownloadRequestContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,8 +74,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            string reportCreatorTenantId = default;
-            AppComplianceDownloadType downloadType = default;
+            Guid? reportCreatorTenantId = default;
             string offerGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -85,12 +82,11 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 if (property.NameEquals("reportCreatorTenantId"u8))
                 {
-                    reportCreatorTenantId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("downloadType"u8))
-                {
-                    downloadType = new AppComplianceDownloadType(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reportCreatorTenantId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("offerGuid"u8))
@@ -104,38 +100,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SnapshotDownloadContent(reportCreatorTenantId, downloadType, offerGuid, serializedAdditionalRawData);
+            return new EvidenceFileDownloadRequestContent(reportCreatorTenantId, offerGuid, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SnapshotDownloadContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EvidenceFileDownloadRequestContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EvidenceFileDownloadRequestContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotDownloadContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EvidenceFileDownloadRequestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SnapshotDownloadContent IPersistableModel<SnapshotDownloadContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EvidenceFileDownloadRequestContent IPersistableModel<EvidenceFileDownloadRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EvidenceFileDownloadRequestContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSnapshotDownloadContent(document.RootElement, options);
+                        return DeserializeEvidenceFileDownloadRequestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotDownloadContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EvidenceFileDownloadRequestContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SnapshotDownloadContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EvidenceFileDownloadRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

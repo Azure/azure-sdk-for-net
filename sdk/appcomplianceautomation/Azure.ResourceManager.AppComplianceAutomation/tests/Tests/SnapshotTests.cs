@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             Assert.IsNotNull(snapshot);
 
             // Download snapshot
-            SnapshotDownloadContent content = new SnapshotDownloadContent(AppComplianceDownloadType.ComplianceDetailedPdfReport);
+            SnapshotDownloadRequestContent content = new SnapshotDownloadRequestContent(AppComplianceDownloadType.ComplianceDetailedPdfReport);
             content.OfferGuid = null;
-            content.ReportCreatorTenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+            content.ReportCreatorTenantId = new Guid("72f988bf-86f1-41af-91ab-2d7cd011db47");
 
             ArmOperation<AppComplianceDownloadResult> response = await snapshot.DownloadAsync(WaitUntil.Completed, content);
             Assert.IsNotNull(response);

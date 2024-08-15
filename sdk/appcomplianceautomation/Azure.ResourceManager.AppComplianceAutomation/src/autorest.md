@@ -55,6 +55,7 @@ rename-mapping:
   ComplianceResult: AppComplianceResult
   ContentType: WebhookContentType
   Control: AppComplianceControl
+  Control.controlDescriptionHyperLink: -|uri
   ControlFamily: AppComplianceControlFamily
   ControlStatus: AppComplianceControlStatus
   DeliveryStatus: WebhookDeliveryStatus
@@ -106,6 +107,8 @@ rename-mapping:
   TriggerEvaluationResponse: TriggerEvaluationResult
   QuickAssessment.resourceId: -|arm-id
   QuickAssessment.timestamp: CreatedOn
+  SnapshotDownloadRequest: SnapshotDownloadRequestContent
+  EvidenceFileDownloadRequest: EvidenceFileDownloadRequestContent
 
 override-operation-name:
   ProviderActions_CheckNameAvailability: CheckAppComplianceReportNameAvailability
@@ -113,6 +116,7 @@ override-operation-name:
 
 format-by-name-rules:
   'tenantId': 'uuid'
+  '*TenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'

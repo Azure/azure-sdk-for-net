@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="controlStatus"> Control status. </param>
         /// <param name="responsibilities"> List of customer responsibility. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppComplianceControl(string controlId, string controlName, string controlFullName, string controlDescription, string controlDescriptionHyperLink, AppComplianceControlStatus? controlStatus, IReadOnlyList<CustomerResponsibility> responsibilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppComplianceControl(string controlId, string controlName, string controlFullName, string controlDescription, Uri controlDescriptionHyperLink, AppComplianceControlStatus? controlStatus, IReadOnlyList<CustomerResponsibility> responsibilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ControlId = controlId;
             ControlName = controlName;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <summary> The control's description. </summary>
         public string ControlDescription { get; }
         /// <summary> The hyper link to the control's description'. </summary>
-        public string ControlDescriptionHyperLink { get; }
+        public Uri ControlDescriptionHyperLink { get; }
         /// <summary> Control status. </summary>
         public AppComplianceControlStatus? ControlStatus { get; }
         /// <summary> List of customer responsibility. </summary>

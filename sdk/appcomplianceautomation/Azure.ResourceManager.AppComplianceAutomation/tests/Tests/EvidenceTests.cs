@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             Assert.AreEqual(evidenceName, getResult.Data.Name);
 
             // download evidence current ppe cannot download evidence
-            EvidenceFileDownloadContent content = new EvidenceFileDownloadContent();
+            EvidenceFileDownloadRequestContent content = new EvidenceFileDownloadRequestContent();
             EvidenceFileDownloadResult download = await appComplianceReportEvidence.DownloadAsync(content);
             Assert.IsNotNull(download);
 
