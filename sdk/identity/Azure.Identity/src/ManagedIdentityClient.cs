@@ -37,16 +37,35 @@ namespace Azure.Identity
         {
         }
 
-        public ManagedIdentityClient(ManagedIdentityClientOptions options)
+        private void ValidateOptions(ManagedIdentityClientOptions options)
         {
-            if (options.ClientId != null && options.ResourceIdentifier != null)
+            int numberOfIdentifiersSpecified = 0;
+            if (options.ClientId != null)
+            {
+                numberOfIdentifiersSpecified++;
+            }
+            if (options.ResourceIdentifier != null)
+            {
+                numberOfIdentifiersSpecified++;
+            }
+            if (options.ObjectId != null)
+            {
+                numberOfIdentifiersSpecified++;
+            }
+            if (numberOfIdentifiersSpecified > 1)
             {
                 throw new ArgumentException(
-                    $"{nameof(ManagedIdentityClientOptions)} cannot specify both {nameof(options.ResourceIdentifier)} and {nameof(options.ClientId)}.");
+                    $"{nameof(ManagedIdentityClientOptions)} can only specify one of {nameof(options.ResourceIdentifier)}, {nameof(options.ClientId)}, or {nameof(options.ObjectId)}.");
             }
+        }
+
+        public ManagedIdentityClient(ManagedIdentityClientOptions options)
+        {
+            ValidateOptions(options);
 
             ClientId = string.IsNullOrEmpty(options.ClientId) ? null : options.ClientId;
             ResourceIdentifier = string.IsNullOrEmpty(options.ResourceIdentifier) ? null : options.ResourceIdentifier;
+            ObjectId = string.IsNullOrEmpty(options.ObjectId) ? null : options.ObjectId;
             Pipeline = options.Pipeline;
             _enableLegacyMI = options.EnableManagedIdentityLegacyBehavior;
             _isChainedCredential = options.Options?.IsChainedCredential ?? false;
@@ -58,6 +77,8 @@ namespace Azure.Identity
         internal CredentialPipeline Pipeline { get; }
 
         internal protected string ClientId { get; }
+
+        internal protected string ObjectId { get; }
 
         internal ResourceIdentifier ResourceIdentifier { get; }
 

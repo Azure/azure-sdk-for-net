@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,6 +41,10 @@ namespace Azure.Identity
             if (!string.IsNullOrEmpty(clientOptions?.ClientId))
             {
                 ManagedIdentityId = ManagedIdentityId.WithUserAssignedClientId(clientOptions.ClientId);
+            }
+            if (!string.IsNullOrEmpty(clientOptions?.ObjectId))
+            {
+                ManagedIdentityId = ManagedIdentityId.WithUserAssignedObjectId(clientOptions.ObjectId);
             }
             else if (clientOptions?.ResourceIdentifier != null)
             {

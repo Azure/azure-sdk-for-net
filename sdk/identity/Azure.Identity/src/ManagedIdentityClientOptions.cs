@@ -12,6 +12,8 @@ namespace Azure.Identity
 
         public string ClientId { get; set; }
 
+        public string ObjectId { get; set; }
+
         public ResourceIdentifier ResourceIdentifier { get; set; }
 
         public bool PreserveTransport { get; set; }

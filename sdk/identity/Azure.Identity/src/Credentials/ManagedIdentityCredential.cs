@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Linq;
 
 namespace Azure.Identity
 {
@@ -45,6 +45,17 @@ namespace Azure.Identity
             : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ClientId = clientId, Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true), Options = options }))
         {
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="ManagedIdentityCredential"/> capable of authenticating a resource with a user-assigned managed identity.
+        /// </summary>
+        /// <param name="options">Options to configure the management of the requests sent to Microsoft Entra ID.</param>
+        public ManagedIdentityCredential(ManagedIdentityCredentialOptions options)
+            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ObjectId = options.ObjectId, Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true), Options = options }))
+        {
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
+            _clientId = options.ObjectId;
         }
 
         /// <summary>
