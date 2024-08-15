@@ -412,7 +412,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 await file.UploadAsync(File.OpenRead(originalPath));
 
                 // Download the DataLake file's contents and save it to a file
-                // The ReadStreamingAsync() API downloads a file in a single requests.
+                // The ReadContentAsync() API downloads a file in a single requests.
                 // For large files, it may be faster to call ReadToAsync()
                 Response<DataLakeFileReadResult> fileContents = await file.ReadContentAsync();
                 BinaryData readData = fileContents.Value.Content;
