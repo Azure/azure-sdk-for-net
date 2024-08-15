@@ -30,6 +30,23 @@ public class ClientLoggingPolicy : PipelinePolicy
     private readonly LogForwarder _logForwarder;
     private readonly string? _correlationIdHeaderName;
     private readonly string _clientAssembly = "System-ClientModel";
+    private readonly bool _alwaysLog = false;
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="ClientLoggingPolicy"/> class.
+    /// </summary>
+    /// <param name="clientAssembly">The assembly name to include with each entry.</param>
+    /// <param name="alwaysLog">Always process a request/response for logging even if there are no "System-ClientModel" event listeners or a provided ILogger.
+    /// This ensures the virtual methods <see cref="OnSendingRequest(PipelineMessage, byte[], Encoding?)"/> and <see cref="OnLogResponse(PipelineMessage, double)"/>
+    /// or <see cref="OnSendingRequestAsync(PipelineMessage, byte[], Encoding?)"/> and <see cref="OnLogResponseAsync(PipelineMessage, double)"/> are always called.
+    /// It also ensures <see cref="OnLogResponseContent(PipelineMessage, byte[], Encoding?, int?)"/>
+    /// or <see cref="OnLogResponseContentAsync(PipelineMessage, byte[], Encoding?, int?)"/> is called if <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c>.</param>
+    /// <param name="options">The user-provided logging options object.</param>
+    protected ClientLoggingPolicy(string clientAssembly, bool alwaysLog, LoggingOptions? options = default) : this(options)
+    {
+        _clientAssembly = clientAssembly;
+        _alwaysLog = alwaysLog;
+    }
 
     /// <summary>
     /// Creates a new instance of the <see cref="ClientLoggingPolicy"/> class.
@@ -45,7 +62,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         _logForwarder = new LogForwarder(loggingOptions.LoggerFactory);
         _correlationIdHeaderName = loggingOptions.CorrelationIdHeaderName;
 
-        if (_logger is NullLogger)
+        if (_logger is not NullLogger)
         {
             _logForwarder.Start();
         }
@@ -65,7 +82,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled();
         var isLoggingEnabled = isLoggerEnabled || isEventSourceEnabled;
 
-        if (!isLoggingEnabled)
+        if (!(_alwaysLog || isLoggingEnabled))
         {
             if (async)
             {
@@ -420,13 +437,12 @@ public class ClientLoggingPolicy : PipelinePolicy
         {
             return ClientModelEventSource.Log.IsEnabled(eventLevel, keywords);
         }
-        // TODO - the forwarder turns on verbose logs since the level must be set when creating the listener
-        // and is not dynamic like it is with ILogger. This could be problematic because it will default to
-        // the ILogger log level even if there is a user's event source listener with a high level.
+        // TODO - This could be problematic because it will default to
+        // the ILogger log level even if there is a user's event source listener with a higher level.
         // On the flip side if we don't do this, if someone only wanted warnings with ILogger
         // the if enabled checks would always return true and there would be a lot of extra unnecessary string
         // formatting that would impact perf
-        return ClientModelEventSource.Log.IsEnabled(eventLevel, keywords);
+        return _logger.IsEnabled(logLevel);
     }
 
     private string? GetCorrelationIdFromHeaders(PipelineRequestHeaders keyValuePairs)

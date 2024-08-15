@@ -31,10 +31,12 @@ public class ClientLoggingPolicyTests : SyncAsyncTestBase
     private const int ExceptionResponseEvent = 18;
 
     private ILoggerFactory _loggerFactory;
+    private TestLogger _logger;
 
     public ClientLoggingPolicyTests(bool isAsync) : base(isAsync)
     {
-        _loggerFactory = new TestLoggingFactory();
+        _logger = new TestLogger(LogLevel.Debug);
+        _loggerFactory = new TestLoggingFactory(_logger);
     }
 
     [Test]

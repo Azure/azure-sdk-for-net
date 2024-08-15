@@ -42,7 +42,7 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     private TestLoggingFactory _factory;
     private TestLogger _logger;
 
-    private const string LoggingPolicyCategoryName = "System-ClientModel";
+    private const string LoggingPolicyCategoryName = "System.ClientModel";
     private const string CorrelationIdHeaderName = "Client-Id";
 
     public ClientModelLoggerTests(bool isAsync) : base(isAsync)

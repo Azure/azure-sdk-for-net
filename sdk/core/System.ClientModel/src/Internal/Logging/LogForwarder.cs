@@ -27,7 +27,7 @@ internal class LogForwarder
 
     public void Start()
     {
-        _listener ??= new ClientModelEventListener((e, s) => LogEvent(e), EventLevel.Verbose);
+        _listener ??= new ClientModelEventListener((e, s) => LogEvent(e));
     }
 
     private void LogEvent(EventWrittenEventArgs eventData)
@@ -46,7 +46,6 @@ internal class LogForwarder
         return name.Replace('-', '.');
     }
 
-    /// <inheritdoc />
     public void Dispose()
     {
         _listener?.Dispose();
