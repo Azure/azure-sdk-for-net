@@ -208,8 +208,6 @@ enum RateLimitTypes {
 }
 
 # Fetch the rate limit for the given RateLimitType
-# TODO: Possibly change the parameter to take in an array of types and return an
-# array of limits?
 function Get-RateLimit([RateLimitTypes]$RateLimitType) {
   $returnValue = gh api rate_limit
   if ($LASTEXITCODE) {
