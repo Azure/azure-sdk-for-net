@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevOpsResourceDetails"/>. </summary>
-        public DevOpsResourceDetails()
+        internal DevOpsResourceDetails()
         {
         }
 
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public DevOpsResourceDetailsProperties Properties { get; set; }
+        public DevOpsResourceDetailsProperties Properties { get; }
     }
 }

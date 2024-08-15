@@ -46,24 +46,24 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevOpsOrganization"/>. </summary>
-        /// <param name="organizationUri"> The Azure DevOps organization URL in which the pool should be created. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="organizationUri"/> is null. </exception>
-        public DevOpsOrganization(Uri organizationUri)
+        /// <param name="uri"> The Azure DevOps organization URL in which the pool should be created. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
+        public DevOpsOrganization(Uri uri)
         {
-            Argument.AssertNotNull(organizationUri, nameof(organizationUri));
+            Argument.AssertNotNull(uri, nameof(uri));
 
-            OrganizationUri = organizationUri;
+            Uri = uri;
             Projects = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsOrganization"/>. </summary>
-        /// <param name="organizationUri"> The Azure DevOps organization URL in which the pool should be created. </param>
+        /// <param name="uri"> The Azure DevOps organization URL in which the pool should be created. </param>
         /// <param name="projects"> Optional list of projects in which the pool should be created. </param>
         /// <param name="parallelism"> How many machines can be created at maximum in this organization out of the maximumConcurrency of the pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsOrganization(Uri organizationUri, IList<string> projects, int? parallelism, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevOpsOrganization(Uri uri, IList<string> projects, int? parallelism, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            OrganizationUri = organizationUri;
+            Uri = uri;
             Projects = projects;
             Parallelism = parallelism;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The Azure DevOps organization URL in which the pool should be created. </summary>
-        public Uri OrganizationUri { get; set; }
+        public Uri Uri { get; set; }
         /// <summary> Optional list of projects in which the pool should be created. </summary>
         public IList<string> Projects { get; }
         /// <summary> How many machines can be created at maximum in this organization out of the maximumConcurrency of the pool. </summary>

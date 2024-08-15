@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevOpsImageVersion"/>. </summary>
-        public DevOpsImageVersion()
+        internal DevOpsImageVersion()
         {
         }
 
@@ -66,12 +66,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal ImageVersionProperties Properties { get; set; }
+        internal ImageVersionProperties Properties { get; }
         /// <summary> Version of the image. </summary>
         public string ImageVersion
         {
-            get => Properties is null ? default : Properties.Version;
-            set => Properties = new ImageVersionProperties(value);
+            get => Properties?.Version;
         }
     }
 }

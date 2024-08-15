@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 return null;
             }
             ResourceSkuRestrictionsType? type = default;
-            IList<string> values = default;
+            IReadOnlyList<string> values = default;
             ResourceSkuRestrictionInfo restrictionInfo = default;
             ResourceSkuRestrictionsReasonCode? reasonCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;

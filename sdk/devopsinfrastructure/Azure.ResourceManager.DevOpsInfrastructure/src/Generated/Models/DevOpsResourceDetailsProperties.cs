@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="image"> The image name of the resource. </param>
         /// <param name="imageVersion"> The version of the image running on the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="image"/> or <paramref name="imageVersion"/> is null. </exception>
-        public DevOpsResourceDetailsProperties(DevOpsResourceStatus status, string image, string imageVersion)
+        internal DevOpsResourceDetailsProperties(DevOpsResourceStatus status, string image, string imageVersion)
         {
             Argument.AssertNotNull(image, nameof(image));
             Argument.AssertNotNull(imageVersion, nameof(imageVersion));
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> The status of the resource. </summary>
-        public DevOpsResourceStatus Status { get; set; }
+        public DevOpsResourceStatus Status { get; }
         /// <summary> The image name of the resource. </summary>
-        public string Image { get; set; }
+        public string Image { get; }
         /// <summary> The version of the image running on the resource. </summary>
-        public string ImageVersion { get; set; }
+        public string ImageVersion { get; }
     }
 }

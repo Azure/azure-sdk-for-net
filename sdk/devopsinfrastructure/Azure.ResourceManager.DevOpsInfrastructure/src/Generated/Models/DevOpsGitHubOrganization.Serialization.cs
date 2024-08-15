@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(OrganizationUri.AbsoluteUri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
             if (Optional.IsCollectionDefined(Repositories))
             {
                 writer.WritePropertyName("repositories"u8);

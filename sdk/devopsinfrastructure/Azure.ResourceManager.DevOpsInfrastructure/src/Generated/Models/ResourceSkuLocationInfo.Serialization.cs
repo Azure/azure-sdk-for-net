@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 return null;
             }
             AzureLocation location = default;
-            IList<string> zones = default;
-            IList<ResourceSkuZoneDetails> zoneDetails = default;
+            IReadOnlyList<string> zones = default;
+            IReadOnlyList<ResourceSkuZoneDetails> zoneDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
