@@ -14,8 +14,7 @@ EmailClient emailClient = new EmailClient(connectionString);
 ```
 
 ### Send email with attachments
-Azure Communication Services support sending emails with attachments. Adding an optional `contentId` parameter to the `EmailAttachment` constructor will make the attachment an inline attachment.
-See [EmailAttachmentType][email_attachmentTypes] for a list of supported attachments.
+Azure Communication Services support sending emails with attachments. See [EmailAttachmentType][email_attachmentTypes] for a list of supported attachments
 ```C# Snippet:Azure_Communication_Email_Send_With_Attachments_Async
 // Create the EmailMessage
 var emailMessage = new EmailMessage(
@@ -34,17 +33,17 @@ emailMessage.Attachments.Add(emailAttachment);
 
 try
 {
-EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
-Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
+    EmailSendOperation emailSendOperation = await emailClient.SendAsync(WaitUntil.Completed, emailMessage);
+    Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
 
-/// Get the OperationId so that it can be used for tracking the message for troubleshooting
-string operationId = emailSendOperation.Id;
-Console.WriteLine($"Email operation id = {operationId}");
+    /// Get the OperationId so that it can be used for tracking the message for troubleshooting
+    string operationId = emailSendOperation.Id;
+    Console.WriteLine($"Email operation id = {operationId}");
 }
 catch ( RequestFailedException ex )
 {
-/// OperationID is contained in the exception message and can be used for troubleshooting purposes
-Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
+    /// OperationID is contained in the exception message and can be used for troubleshooting purposes
+    Console.WriteLine($"Email send operation failed with error code: {ex.ErrorCode}, message: {ex.Message}");
 }
 ```
 
