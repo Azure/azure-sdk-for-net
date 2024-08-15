@@ -363,6 +363,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // For large files, it may be faster to call ReadTo()
                 #region Snippet:SampleSnippetDataLakeFileClient_ReadStreaming
                 Response<DataLakeFileReadStreamingResult> fileContents = file.ReadStreaming();
+                Stream readStream = fileContents.Value.Content;
                 #endregion Snippet:SampleSnippetDataLakeFileClient_ReadStreaming
                 using (FileStream stream = File.OpenWrite(downloadPath))
                 {
@@ -416,6 +417,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 // For large files, it may be faster to call ReadTo()
                 #region Snippet:SampleSnippetDataLakeFileClient_ReadContent
                 Response<DataLakeFileReadResult> fileContents = file.ReadContent();
+                BinaryData readData = fileContents.Value.Content;
                 #endregion Snippet:SampleSnippetDataLakeFileClient_ReadContent
                 byte[] data = fileContents.Value.Content.ToArray();
                 using (FileStream stream = File.OpenWrite(downloadPath))
