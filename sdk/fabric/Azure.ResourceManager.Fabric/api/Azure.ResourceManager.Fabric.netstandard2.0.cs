@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Fabric
     }
     public partial class FabricCapacityData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.FabricCapacityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.FabricCapacityData>
     {
-        public FabricCapacityData(Azure.Core.AzureLocation location, Azure.ResourceManager.Fabric.Models.FabricSku sku) { }
+        public FabricCapacityData(Azure.Core.AzureLocation location, Azure.ResourceManager.Fabric.Models.FabricCapacityProperties properties, Azure.ResourceManager.Fabric.Models.FabricSku sku) { }
         public Azure.ResourceManager.Fabric.Models.FabricCapacityProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Fabric.Models.FabricSku Sku { get { throw null; } set { } }
         Azure.ResourceManager.Fabric.FabricCapacityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.FabricCapacityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
