@@ -45,7 +45,7 @@ try
 {
     EmailSendOperation emailSendOperation = emailClient.Send(WaitUntil.Completed, emailMessage);
     Console.WriteLine($"Email Sent. Status = {emailSendOperation.Value.Status}");
-    
+
     /// Get the OperationId so that it can be used for tracking the message for troubleshooting
     string operationId = emailSendOperation.Id;
     Console.WriteLine($"Email operation id = {operationId}");
