@@ -270,6 +270,7 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent",
    "Usage": "Input,Json",
    "Description": "Details of the message to send.",
+   "Decorators": [],
    "DiscriminatorProperty": {
     "$id": "39",
     "Name": "kind",
@@ -337,6 +338,7 @@
      "Usage": "Input,Json",
      "Description": "A request to send a text notification.",
      "DiscriminatorValue": "text",
+     "Decorators": [],
      "BaseModel": {
       "$ref": "38"
      },
@@ -385,6 +387,7 @@
      "Usage": "Input,Json",
      "Description": "A request to send a media notification.",
      "DiscriminatorValue": "image",
+     "Decorators": [],
      "BaseModel": {
       "$ref": "38"
      },
@@ -447,6 +450,7 @@
      "Usage": "Input,Json",
      "Description": "A request to send a template notification.",
      "DiscriminatorValue": "template",
+     "Decorators": [],
      "BaseModel": {
       "$ref": "38"
      },
@@ -483,6 +487,7 @@
         "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate",
         "Usage": "Input,Json",
         "Description": "The template object used to create templates.",
+        "Decorators": [],
         "Properties": [
          {
           "$id": "67",
@@ -528,6 +533,7 @@
             "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValue",
             "Usage": "Input,Json",
             "Description": "The class describes a parameter of a template.",
+            "Decorators": [],
             "DiscriminatorProperty": {
              "$id": "74",
              "Name": "kind",
@@ -569,6 +575,7 @@
               "Usage": "Input,Json",
               "Description": "The message template's text value information.",
               "DiscriminatorValue": "text",
+              "Decorators": [],
               "BaseModel": {
                "$ref": "73"
               },
@@ -617,6 +624,7 @@
               "Usage": "Input,Json",
               "Description": "The message template's image value information.",
               "DiscriminatorValue": "image",
+              "Decorators": [],
               "BaseModel": {
                "$ref": "73"
               },
@@ -693,6 +701,7 @@
               "Usage": "Input,Json",
               "Description": "The message template's document value information.",
               "DiscriminatorValue": "document",
+              "Decorators": [],
               "BaseModel": {
                "$ref": "73"
               },
@@ -769,6 +778,7 @@
               "Usage": "Input,Json",
               "Description": "The message template's video value information.",
               "DiscriminatorValue": "video",
+              "Decorators": [],
               "BaseModel": {
                "$ref": "73"
               },
@@ -845,6 +855,7 @@
               "Usage": "Input,Json",
               "Description": "The message template's location value information.",
               "DiscriminatorValue": "location",
+              "Decorators": [],
               "BaseModel": {
                "$ref": "73"
               },
@@ -935,6 +946,7 @@
               "Usage": "Input,Json",
               "Description": "The message template's quick action value information.",
               "DiscriminatorValue": "quickAction",
+              "Decorators": [],
               "BaseModel": {
                "$ref": "73"
               },
@@ -1008,6 +1020,7 @@
            "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateBindings",
            "Usage": "Input,Json",
            "Description": "The binding object to link values to the template specific locations",
+           "Decorators": [],
            "DiscriminatorProperty": {
             "$id": "136",
             "Name": "kind",
@@ -1035,6 +1048,7 @@
              "Usage": "Input,Json",
              "Description": "The template bindings for WhatsApp",
              "DiscriminatorValue": "whatsApp",
+             "Decorators": [],
              "BaseModel": {
               "$ref": "135"
              },
@@ -1075,6 +1089,7 @@
                  "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsComponent",
                  "Usage": "Input,Json",
                  "Description": "The template bindings component for WhatsApp",
+                 "Decorators": [],
                  "Properties": [
                   {
                    "$id": "145",
@@ -1147,6 +1162,7 @@
                  "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsButton",
                  "Usage": "Input,Json",
                  "Description": "The template bindings component button for WhatsApp",
+                 "Decorators": [],
                  "Properties": [
                   {
                    "$id": "154",
@@ -1248,6 +1264,7 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.SendMessageResult",
    "Usage": "Output,Json",
    "Description": "Result of the send message operation.",
+   "Decorators": [],
    "Properties": [
     {
      "$id": "158",
@@ -1265,6 +1282,7 @@
        "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageReceipt",
        "Usage": "Output,Json",
        "Description": "Receipt of the sending one message.",
+       "Decorators": [],
        "Properties": [
         {
          "$id": "161",
@@ -1313,6 +1331,7 @@
    "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem",
    "Usage": "Output,Json",
    "Description": "The message template as returned from the service.",
+   "Decorators": [],
    "DiscriminatorProperty": {
     "$id": "166",
     "Name": "kind",
@@ -1379,6 +1398,7 @@
      "Usage": "Output,Json",
      "Description": "The WhatsApp-specific template response contract",
      "DiscriminatorValue": "whatsApp",
+     "Decorators": [],
      "BaseModel": {
       "$ref": "165"
      },
@@ -1431,6 +1451,7 @@
    "CrossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
    "Usage": "None",
    "Description": "Paged collection of MessageTemplateItem items",
+   "Decorators": [],
    "Properties": [
     {
      "$id": "180",

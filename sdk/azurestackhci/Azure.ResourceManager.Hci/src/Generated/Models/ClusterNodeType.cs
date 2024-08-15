@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Type of the cluster node hardware. </summary>
+    /// <summary> The node type of all the nodes of the cluster. </summary>
     public readonly partial struct ClusterNodeType : IEquatable<ClusterNodeType>
     {
         private readonly string _value;
