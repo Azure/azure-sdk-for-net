@@ -110,11 +110,11 @@ namespace System.ClientModel.Primitives
     public partial class ClientLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         public ClientLoggingPolicy(System.ClientModel.Primitives.LoggingOptions? options = null) { }
-        protected ClientLoggingPolicy(string clientAssembly, System.ClientModel.Primitives.LoggingOptions? options = null) { }
-        protected virtual void OnLogResponse(System.ClientModel.Primitives.PipelineMessage message, double elapsed) { }
-        protected virtual System.Threading.Tasks.ValueTask OnLogResponseAsync(System.ClientModel.Primitives.PipelineMessage message, double elapsed) { throw null; }
-        protected virtual void OnLogResponseContent(System.ClientModel.Primitives.PipelineMessage message, byte[] bytes, System.Text.Encoding? textEncoding, int? block) { }
-        protected virtual System.Threading.Tasks.ValueTask OnLogResponseContentAsync(System.ClientModel.Primitives.PipelineMessage message, byte[] bytes, System.Text.Encoding? textEncoding, int? block) { throw null; }
+        protected ClientLoggingPolicy(string clientAssembly, bool alwaysLog, System.ClientModel.Primitives.LoggingOptions? options = null) { }
+        protected virtual void OnLogResponse(System.ClientModel.Primitives.PipelineMessage message, double secondsElapsed) { }
+        protected virtual System.Threading.Tasks.ValueTask OnLogResponseAsync(System.ClientModel.Primitives.PipelineMessage message, double secondsElapsed) { throw null; }
+        protected virtual void OnLogResponseContent(System.ClientModel.Primitives.PipelineMessage message, byte[]? bytes, System.Text.Encoding? textEncoding, int? block) { }
+        protected virtual System.Threading.Tasks.ValueTask OnLogResponseContentAsync(System.ClientModel.Primitives.PipelineMessage message, byte[]? bytes, System.Text.Encoding? textEncoding, int? block) { throw null; }
         protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message, byte[]? bytes, System.Text.Encoding? encoding) { }
         protected virtual System.Threading.Tasks.ValueTask OnSendingRequestAsync(System.ClientModel.Primitives.PipelineMessage message, byte[]? bytes, System.Text.Encoding? encoding) { throw null; }
         public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
@@ -182,6 +182,14 @@ namespace System.ClientModel.Primitives
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
     }
+    public partial class JsonModelConverter : System.Text.Json.Serialization.JsonConverter<System.ClientModel.Primitives.IJsonModel<object>>
+    {
+        public JsonModelConverter() { }
+        public JsonModelConverter(System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public override bool CanConvert(System.Type typeToConvert) { throw null; }
+        public override System.ClientModel.Primitives.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
+    }
     public partial class LoggingOptions
     {
         public LoggingOptions() { }
@@ -193,14 +201,6 @@ namespace System.ClientModel.Primitives
         public Microsoft.Extensions.Logging.ILoggerFactory LoggerFactory { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
-    }
-    public partial class JsonModelConverter : System.Text.Json.Serialization.JsonConverter<System.ClientModel.Primitives.IJsonModel<object>>
-    {
-        public JsonModelConverter() { }
-        public JsonModelConverter(System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public override bool CanConvert(System.Type typeToConvert) { throw null; }
-        public override System.ClientModel.Primitives.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
     }
     public static partial class ModelReaderWriter
     {
