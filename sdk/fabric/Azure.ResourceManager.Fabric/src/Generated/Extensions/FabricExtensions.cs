@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_CheckNameAvailability</description>
+        /// <description>FabricCapacities_CheckFabricCapacityNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Fabric
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableFabricSubscriptionResource.CheckNameAvailabilityFabricCapacity(AzureLocation,FabricNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableFabricSubscriptionResource.CheckFabricCapacityNameAvailability(AzureLocation,FabricNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -247,11 +247,11 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<FabricNameAvailabilityResult>> CheckNameAvailabilityFabricCapacityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<FabricNameAvailabilityResult>> CheckFabricCapacityNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableFabricSubscriptionResource(subscriptionResource).CheckNameAvailabilityFabricCapacityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableFabricSubscriptionResource(subscriptionResource).CheckFabricCapacityNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_CheckNameAvailability</description>
+        /// <description>FabricCapacities_CheckFabricCapacityNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Fabric
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableFabricSubscriptionResource.CheckNameAvailabilityFabricCapacity(AzureLocation,FabricNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableFabricSubscriptionResource.CheckFabricCapacityNameAvailability(AzureLocation,FabricNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -284,11 +284,11 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<FabricNameAvailabilityResult> CheckNameAvailabilityFabricCapacity(this SubscriptionResource subscriptionResource, AzureLocation location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<FabricNameAvailabilityResult> CheckFabricCapacityNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, FabricNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableFabricSubscriptionResource(subscriptionResource).CheckNameAvailabilityFabricCapacity(location, content, cancellationToken);
+            return GetMockableFabricSubscriptionResource(subscriptionResource).CheckFabricCapacityNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
