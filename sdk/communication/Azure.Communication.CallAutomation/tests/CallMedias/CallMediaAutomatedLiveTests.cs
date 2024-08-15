@@ -195,7 +195,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                 var holdOptions = new HoldOptions(target)
                 {
-                    PlaySourceInfo = new FileSource(new Uri(TestEnvironment.FileSourceUrl)),
+                    PlaySource = new FileSource(new Uri(TestEnvironment.FileSourceUrl)),
                     OperationContext = "withholdoptions",
                 };
                 // hold participant and asset

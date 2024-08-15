@@ -511,7 +511,7 @@ namespace Azure.Communication.CallAutomation
                     CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
-                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySourceInfo),
+                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySource),
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 };
 
@@ -592,7 +592,7 @@ namespace Azure.Communication.CallAutomation
                     CommunicationIdentifierSerializer.Serialize(options.TargetParticipant))
                 {
                     OperationContext = options.OperationContext,
-                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySourceInfo),
+                    PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySource),
                     OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 };
 
