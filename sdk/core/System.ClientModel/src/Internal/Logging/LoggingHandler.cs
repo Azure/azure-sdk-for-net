@@ -9,37 +9,48 @@ using Microsoft.Extensions.Logging;
 
 namespace System.ClientModel.Internal;
 
-internal static class LoggingHandler
+internal class LoggingHandler
 {
-    public static void LogRequest(ILogger logger, PipelineRequest request, string requestId, string? assemblyName, PipelineMessageSanitizer sanitizer)
+    private ILogger _logger;
+    private PipelineMessageSanitizer _sanitizer;
+    private ClientModelLogMessages _logMessages;
+
+    public LoggingHandler(ILogger logger, PipelineMessageSanitizer sanitizer)
+    {
+        _logger = logger;
+        _sanitizer = sanitizer;
+        _logMessages = new ClientModelLogMessages(logger);
+    }
+
+    public void LogRequest(PipelineRequest request, string requestId, string? assemblyName)
     {
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Information);
 
         if (isLoggerEnabled)
         {
-            ClientModelLogMessages.Request(logger, requestId, request.Method, sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers, sanitizer), assemblyName);
+            _logMessages.Request(requestId, request.Method, _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers), assemblyName);
         }
         else if (isEventSourceEnabled)
         {
-            ClientModelEventSource.Log.Request(requestId, request.Method, sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers, sanitizer), assemblyName);
+            ClientModelEventSource.Log.Request(requestId, request.Method, _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers), assemblyName);
         }
     }
 
-    public static void LogRequestContent(ILogger logger, string requestId, byte[] content, Encoding? textEncoding)
+    public void LogRequestContent(string requestId, byte[] content, Encoding? textEncoding)
     {
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Verbose, EventKeywords.None);
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Debug);
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Debug);
 
         if (isLoggerEnabled)
         {
             if (textEncoding != null)
             {
-                ClientModelLogMessages.RequestContentText(logger, requestId, textEncoding.GetString(content));
+                _logMessages.RequestContentText(requestId, textEncoding.GetString(content));
             }
             else
             {
-                ClientModelLogMessages.RequestContent(logger, requestId, content);
+                _logMessages.RequestContent(requestId, content);
             }
         }
         else if (isEventSourceEnabled)
@@ -55,35 +66,35 @@ internal static class LoggingHandler
         }
     }
 
-    public static void LogResponse(ILogger logger, string requestId, PipelineResponse response, double seconds, PipelineMessageSanitizer sanitizer)
+    public void LogResponse(string requestId, PipelineResponse response, double seconds)
     {
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Information);
 
         if (isLoggerEnabled)
         {
-            ClientModelLogMessages.Response(logger, requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), seconds);
+            _logMessages.Response(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
         }
         else if (isEventSourceEnabled)
         {
-            ClientModelEventSource.Log.Response(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), seconds);
+            ClientModelEventSource.Log.Response(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
         }
     }
 
-    public static void LogResponseContent(ILogger logger, string requestId, byte[] content, Encoding? textEncoding)
+    public void LogResponseContent(string requestId, byte[] content, Encoding? textEncoding)
     {
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Verbose, EventKeywords.None);
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Debug);
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Debug);
 
         if (isLoggerEnabled)
         {
             if (textEncoding != null)
             {
-                ClientModelLogMessages.ResponseContentText(logger, requestId, textEncoding.GetString(content));
+                _logMessages.ResponseContentText(requestId, textEncoding.GetString(content));
             }
             else
             {
-                ClientModelLogMessages.ResponseContent(logger, requestId, content);
+                _logMessages.ResponseContent(requestId, content);
             }
         }
         else if (isEventSourceEnabled)
@@ -99,20 +110,20 @@ internal static class LoggingHandler
         }
     }
 
-    public static void LogResponseContentBlock(ILogger logger, string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
+    public void LogResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
     {
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Verbose, EventKeywords.None);
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Debug);
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Debug);
 
         if (isLoggerEnabled)
         {
             if (textEncoding != null)
             {
-                ClientModelLogMessages.ResponseContentTextBlock(logger, requestId, blockNumber, textEncoding.GetString(content));
+                _logMessages.ResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
             }
             else
             {
-                ClientModelLogMessages.ResponseContentBlock(logger, requestId, blockNumber, content);
+                _logMessages.ResponseContentBlock(requestId, blockNumber, content);
             }
         }
         else if (isEventSourceEnabled)
@@ -128,35 +139,35 @@ internal static class LoggingHandler
         }
     }
 
-    public static void LogErrorResponse(ILogger logger, string requestId, PipelineResponse response, double seconds, PipelineMessageSanitizer sanitizer)
+    public void LogErrorResponse(string requestId, PipelineResponse response, double seconds)
     {
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Warning, EventKeywords.None);
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Warning);
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Warning);
 
         if (isLoggerEnabled)
         {
-            ClientModelLogMessages.ErrorResponse(logger, requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), seconds);
+            _logMessages.ErrorResponse(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
         }
         else if (isEventSourceEnabled)
         {
-            ClientModelEventSource.Log.ErrorResponse(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers, sanitizer), seconds);
+            ClientModelEventSource.Log.ErrorResponse(requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
         }
     }
 
-    public static void LogErrorResponseContent(ILogger logger, string requestId, byte[] content, Encoding? textEncoding)
+    public void LogErrorResponseContent(string requestId, byte[] content, Encoding? textEncoding)
     {
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Information);
 
         if (isLoggerEnabled)
         {
             if (textEncoding != null)
             {
-                ClientModelLogMessages.ErrorResponseContentText(logger, requestId, textEncoding.GetString(content));
+                _logMessages.ErrorResponseContentText(requestId, textEncoding.GetString(content));
             }
             else
             {
-                ClientModelLogMessages.ErrorResponseContent(logger, requestId, content);
+                _logMessages.ErrorResponseContent(requestId, content);
             }
         }
         else if (isEventSourceEnabled)
@@ -172,20 +183,20 @@ internal static class LoggingHandler
         }
     }
 
-    public static void LogErrorResponseContentBlock(ILogger logger, string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
+    public void LogErrorResponseContentBlock(string requestId, int blockNumber, byte[] content, Encoding? textEncoding)
     {
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Information);
 
         if (isLoggerEnabled)
         {
             if (textEncoding != null)
             {
-                ClientModelLogMessages.ErrorResponseContentTextBlock(logger, requestId, blockNumber, textEncoding.GetString(content));
+                _logMessages.ErrorResponseContentTextBlock(requestId, blockNumber, textEncoding.GetString(content));
             }
             else
             {
-                ClientModelLogMessages.ErrorResponseContentBlock(logger, requestId, blockNumber, content);
+                _logMessages.ErrorResponseContentBlock(requestId, blockNumber, content);
             }
         }
         else if (isEventSourceEnabled)
@@ -201,14 +212,14 @@ internal static class LoggingHandler
         }
     }
 
-    public static void LogRequestRetrying(ILogger logger, string requestId, int retryCount, double seconds)
+    public void LogRequestRetrying(string requestId, int retryCount, double seconds)
     {
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Information);
 
         if (isLoggerEnabled)
         {
-            ClientModelLogMessages.RequestRetrying(logger, requestId, retryCount, seconds);
+            _logMessages.RequestRetrying(requestId, retryCount, seconds);
         }
         else if (isEventSourceEnabled)
         {
@@ -216,14 +227,14 @@ internal static class LoggingHandler
         }
     }
 
-    public static void LogResponseDelay(ILogger logger, string requestId, double seconds)
+    public void LogResponseDelay(string requestId, double seconds)
     {
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Information);
 
         if (isLoggerEnabled)
         {
-            ClientModelLogMessages.ResponseDelay(logger, requestId, seconds);
+            _logMessages.ResponseDelay(requestId, seconds);
         }
         else if (isEventSourceEnabled)
         {
@@ -231,14 +242,14 @@ internal static class LoggingHandler
         }
     }
 
-    public static void LogExceptionResponse(ILogger logger, string requestId, Exception exception)
+    public void LogExceptionResponse(string requestId, Exception exception)
     {
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None);
-        bool isLoggerEnabled = logger.IsEnabled(LogLevel.Information);
+        bool isLoggerEnabled = _logger.IsEnabled(LogLevel.Information);
 
         if (isLoggerEnabled)
         {
-            ClientModelLogMessages.ExceptionResponse(logger, requestId, exception);
+            _logMessages.ExceptionResponse(requestId, exception);
         }
         else if (isEventSourceEnabled)
         {
@@ -246,14 +257,14 @@ internal static class LoggingHandler
         }
     }
 
-    private static string FormatHeaders(IEnumerable<KeyValuePair<string, string>> headers, PipelineMessageSanitizer sanitizer)
+    private string FormatHeaders(IEnumerable<KeyValuePair<string, string>> headers)
     {
         var stringBuilder = new StringBuilder();
         foreach (var header in headers)
         {
             stringBuilder.Append(header.Key);
             stringBuilder.Append(':');
-            stringBuilder.Append(sanitizer.SanitizeHeader(header.Key, header.Value));
+            stringBuilder.Append(_sanitizer.SanitizeHeader(header.Key, header.Value));
             stringBuilder.Append(Environment.NewLine);
         }
         return stringBuilder.ToString();

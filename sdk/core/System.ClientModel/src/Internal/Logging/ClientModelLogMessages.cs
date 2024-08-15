@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace System.ClientModel.Internal;
 
 // The methods in this class should only ever be called from LoggingHandler
-internal static partial class ClientModelLogMessages
+internal partial class ClientModelLogMessages
 {
     private const int RequestEvent = 1;
     private const int RequestContentEvent = 2;
@@ -29,51 +29,57 @@ internal static partial class ClientModelLogMessages
     private const int RequestContentTextEvent = 17;
     private const int ExceptionResponseEvent = 18;
 
+    private ILogger _logger;
+    public ClientModelLogMessages(ILogger logger)
+    {
+        _logger = logger;
+    }
+
     [LoggerMessage(RequestEvent, LogLevel.Information, "Request [{requestId}] {method} {uri}\r\n{headers}client assembly: {clientAssembly}", EventName = "Request")]
-    public static partial void Request(ILogger logger, string requestId, string method, string uri, string headers, string? clientAssembly);
+    public partial void Request(string requestId, string method, string uri, string headers, string? clientAssembly);
 
     [LoggerMessage(RequestContentEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", EventName = "RequestContent")]
-    public static partial void RequestContent(ILogger logger, string requestId, byte[] content);
+    public partial void RequestContent(string requestId, byte[] content);
 
     [LoggerMessage(RequestContentTextEvent, LogLevel.Debug, "Request [{requestId}] content: {content}", EventName = "RequestContentText")]
-    public static partial void RequestContentText(ILogger logger, string requestId, string content);
+    public partial void RequestContentText(string requestId, string content);
 
     [LoggerMessage(ResponseEvent, LogLevel.Information, "Response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "Response")]
-    public static partial void Response(ILogger logger, string requestId, int status, string reasonPhrase, string headers, double seconds);
+    public partial void Response(string requestId, int status, string reasonPhrase, string headers, double seconds);
 
     [LoggerMessage(ResponseContentEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", EventName = "ResponseContent")]
-    public static partial void ResponseContent(ILogger logger, string requestId, byte[] content);
+    public partial void ResponseContent(string requestId, byte[] content);
 
     [LoggerMessage(ResponseContentTextEvent, LogLevel.Debug, "Response [{requestId}] content: {content}", EventName = "ResponseContentText")]
-    public static partial void ResponseContentText(ILogger logger, string requestId, string content);
+    public partial void ResponseContentText(string requestId, string content);
 
     [LoggerMessage(ResponseContentBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", EventName = "ResponseContentBlock")]
-    public static partial void ResponseContentBlock(ILogger logger, string requestId, int blockNumber, byte[] content);
+    public partial void ResponseContentBlock(string requestId, int blockNumber, byte[] content);
 
     [LoggerMessage(ResponseContentTextBlockEvent, LogLevel.Debug, "Response [{requestId}] content block {blockNumber}: {content}", EventName = "ResponseContentTextBlock")]
-    public static partial void ResponseContentTextBlock(ILogger logger, string requestId, int blockNumber, string content);
+    public partial void ResponseContentTextBlock(string requestId, int blockNumber, string content);
 
     [LoggerMessage(ErrorResponseEvent, LogLevel.Warning, "Error response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", EventName = "ErrorResponse")]
-    public static partial void ErrorResponse(ILogger logger, string requestId, int status, string reasonPhrase, string headers, double seconds);
+    public partial void ErrorResponse(string requestId, int status, string reasonPhrase, string headers, double seconds);
 
     [LoggerMessage(ErrorResponseContentEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", EventName = "ErrorResponseContent")]
-    public static partial void ErrorResponseContent(ILogger logger, string requestId, byte[] content);
+    public partial void ErrorResponseContent(string requestId, byte[] content);
 
     [LoggerMessage(ErrorResponseContentTextEvent, LogLevel.Information, "Error response [{requestId}] content: {content}", EventName = "ErrorResponseContentText")]
-    public static partial void ErrorResponseContentText(ILogger logger, string requestId, string content);
+    public partial void ErrorResponseContentText(string requestId, string content);
 
     [LoggerMessage(ErrorResponseContentBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", EventName = "ErrorResponseContentBlock")]
-    public static partial void ErrorResponseContentBlock(ILogger logger, string requestId, int blockNumber, byte[] content);
+    public partial void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content);
 
     [LoggerMessage(ErrorResponseContentTextBlockEvent, LogLevel.Information, "Error response [{requestId}] content block {blockNumber}: {content}", EventName = "ErrorResponseContentTextBlock")]
-    public static partial void ErrorResponseContentTextBlock(ILogger logger, string requestId, int blockNumber, string content);
+    public partial void ErrorResponseContentTextBlock(string requestId, int blockNumber, string content);
 
     [LoggerMessage(RequestRetryingEvent, LogLevel.Information, "Request [{requestId}] attempt number {retryCount} took {seconds:00.0}s", EventName = "RequestRetrying")]
-    public static partial void RequestRetrying(ILogger logger, string requestId, int retryCount, double seconds);
+    public partial void RequestRetrying(string requestId, int retryCount, double seconds);
 
     [LoggerMessage(ResponseDelayEvent, LogLevel.Warning, "Response [{requestId}] took {seconds:00.0}s", EventName = "ResponseDelay")]
-    public static partial void ResponseDelay(ILogger logger, string requestId, double seconds);
+    public partial void ResponseDelay(string requestId, double seconds);
 
     [LoggerMessage(ExceptionResponseEvent, LogLevel.Information, "Request [{requestId}] exception occurred.", EventName = "ExceptionResponse")]
-    public static partial void ExceptionResponse(ILogger logger, string requestId, Exception exception);
+    public partial void ExceptionResponse(string requestId, Exception exception);
 }
