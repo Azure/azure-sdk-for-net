@@ -278,6 +278,8 @@ rename-mapping:
   GalleryArtifactVersionFullSource.virtualMachineId: -|arm-id
   SecurityPostureReference: ComputeSecurityPostureReference
   SecurityPostureReference.excludeExtensions: ExcludeExtensionNames
+  VirtualMachineScaleSet.properties.skuProfile : ComputeSkuProfile
+  SkuProfileVMSize : ComputeSkuProfileVMSize
   
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SkuProfileVmSize : IUtf8JsonSerializable, IJsonModel<SkuProfileVmSize>
+    public partial class ComputeSkuProfileVmSize : IUtf8JsonSerializable, IJsonModel<ComputeSkuProfileVmSize>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuProfileVmSize>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSkuProfileVmSize>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SkuProfileVmSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeSkuProfileVmSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuProfileVmSize)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeSkuProfileVmSize)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        SkuProfileVmSize IJsonModel<SkuProfileVmSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeSkuProfileVmSize IJsonModel<ComputeSkuProfileVmSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuProfileVmSize)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeSkuProfileVmSize)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSkuProfileVmSize(document.RootElement, options);
+            return DeserializeComputeSkuProfileVmSize(document.RootElement, options);
         }
 
-        internal static SkuProfileVmSize DeserializeSkuProfileVmSize(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeSkuProfileVmSize DeserializeComputeSkuProfileVmSize(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -85,38 +85,38 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SkuProfileVmSize(name, serializedAdditionalRawData);
+            return new ComputeSkuProfileVmSize(name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SkuProfileVmSize>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeSkuProfileVmSize>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuProfileVmSize)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeSkuProfileVmSize)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SkuProfileVmSize IPersistableModel<SkuProfileVmSize>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeSkuProfileVmSize IPersistableModel<ComputeSkuProfileVmSize>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSkuProfileVmSize>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSkuProfileVmSize(document.RootElement, options);
+                        return DeserializeComputeSkuProfileVmSize(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuProfileVmSize)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeSkuProfileVmSize)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SkuProfileVmSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeSkuProfileVmSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

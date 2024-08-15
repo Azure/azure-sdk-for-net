@@ -209,10 +209,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("zonalPlatformFaultDomainAlignMode"u8);
                 writer.WriteStringValue(ZonalPlatformFaultDomainAlignMode.Value.ToString());
             }
-            if (Optional.IsDefined(SkuProfile))
+            if (Optional.IsDefined(ComputeSkuProfile))
             {
                 writer.WritePropertyName("skuProfile"u8);
-                writer.WriteObjectValue(SkuProfile, options);
+                writer.WriteObjectValue(ComputeSkuProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<SkuProfileVmSize> vmSizes = default;
+            IList<ComputeSkuProfileVmSize> vmSizes = default;
             AllocationStrategy? allocationStrategy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<SkuProfileVmSize> array = new List<SkuProfileVmSize>();
+                    List<ComputeSkuProfileVmSize> array = new List<ComputeSkuProfileVmSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuProfileVmSize.DeserializeSkuProfileVmSize(item, options));
+                        array.Add(ComputeSkuProfileVmSize.DeserializeComputeSkuProfileVmSize(item, options));
                     }
                     vmSizes = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SkuProfile(vmSizes ?? new ChangeTrackingList<SkuProfileVmSize>(), allocationStrategy, serializedAdditionalRawData);
+            return new SkuProfile(vmSizes ?? new ChangeTrackingList<ComputeSkuProfileVmSize>(), allocationStrategy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SkuProfile>.Write(ModelReaderWriterOptions options)

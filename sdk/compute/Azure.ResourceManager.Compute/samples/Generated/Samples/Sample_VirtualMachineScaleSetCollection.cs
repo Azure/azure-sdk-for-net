@@ -3994,17 +3994,17 @@ EnableIPForwarding = true,
                     BaseRegularPriorityCount = 4,
                     RegularPriorityPercentageAboveBase = 50,
                 },
-                SkuProfile = new SkuProfile()
+                ComputeSkuProfile = new SkuProfile()
                 {
                     VmSizes =
 {
-new SkuProfileVmSize()
+new ComputeSkuProfileVmSize()
 {
 Name = "Standard_D8s_v5",
-},new SkuProfileVmSize()
+},new ComputeSkuProfileVmSize()
 {
 Name = "Standard_E16s_v5",
-},new SkuProfileVmSize()
+},new ComputeSkuProfileVmSize()
 {
 Name = "Standard_D2s_v5",
 }

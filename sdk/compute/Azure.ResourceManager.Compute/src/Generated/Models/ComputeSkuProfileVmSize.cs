@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the VM Size. </summary>
-    public partial class SkuProfileVmSize
+    public partial class ComputeSkuProfileVmSize
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SkuProfileVmSize"/>. </summary>
-        public SkuProfileVmSize()
+        /// <summary> Initializes a new instance of <see cref="ComputeSkuProfileVmSize"/>. </summary>
+        public ComputeSkuProfileVmSize()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkuProfileVmSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeSkuProfileVmSize"/>. </summary>
         /// <param name="name"> Specifies the name of the VM Size. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SkuProfileVmSize(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeSkuProfileVmSize(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
