@@ -327,7 +327,7 @@ namespace Azure.Storage.Files.DataLake.Samples
         }
 
         /// <summary>
-        /// Download a DataLake File stream to a file.
+        /// Download a DataLake File's streaming data to a file.
         /// </summary>
         [Test]
         public void ReadStreaming()
@@ -381,7 +381,7 @@ namespace Azure.Storage.Files.DataLake.Samples
         }
 
         /// <summary>
-        /// Download a DataLake File content to a file.
+        /// Download a DataLake File's content data to a file.
         /// </summary>
         [Test]
         public void ReadContent()
