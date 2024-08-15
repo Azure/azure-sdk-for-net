@@ -367,7 +367,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 #endregion Snippet:SampleSnippetDataLakeFileClient_ReadStreaming
                 using (FileStream stream = File.OpenWrite(downloadPath))
                 {
-                    fileContents.Value.Content.CopyTo(stream);
+                    readStream.CopyTo(stream);
                 }
 
                 // Verify the contents
@@ -419,7 +419,7 @@ namespace Azure.Storage.Files.DataLake.Samples
                 Response<DataLakeFileReadResult> fileContents = file.ReadContent();
                 BinaryData readData = fileContents.Value.Content;
                 #endregion Snippet:SampleSnippetDataLakeFileClient_ReadContent
-                byte[] data = fileContents.Value.Content.ToArray();
+                byte[] data = readData.ToArray();
                 using (FileStream stream = File.OpenWrite(downloadPath))
                 {
                     stream.Write(data, 0, data.Length);
