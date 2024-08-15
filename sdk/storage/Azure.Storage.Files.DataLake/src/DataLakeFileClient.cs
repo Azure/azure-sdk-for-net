@@ -3023,7 +3023,7 @@ namespace Azure.Storage.Files.DataLake
         /// Get Blob</see>.
         /// </summary>
         /// <param name="range">
-        /// If provided, only donwload the bytes of the file in the specified
+        /// If provided, only download the bytes of the file in the specified
         /// range.  If not provided, download the entire file.
         /// </param>
         /// <param name="conditions">
