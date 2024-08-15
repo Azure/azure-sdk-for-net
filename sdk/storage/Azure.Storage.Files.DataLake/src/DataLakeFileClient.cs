@@ -3028,7 +3028,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
-        /// donwloading this file.
+        /// downloading this file.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
@@ -3097,12 +3097,12 @@ namespace Azure.Storage.Files.DataLake
         /// Get Blob</see>.
         /// </summary>
         /// <param name="range">
-        /// If provided, only donwload the bytes of the file in the specified
+        /// If provided, only download the bytes of the file in the specified
         /// range.  If not provided, download the entire file.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
-        /// donwloading this file.
+        /// downloading this file.
         /// </param>
         /// <param name="rangeGetContentHash">
         /// When set to true and specified together with the <paramref name="range"/>,
