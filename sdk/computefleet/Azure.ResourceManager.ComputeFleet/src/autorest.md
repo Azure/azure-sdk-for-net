@@ -8,6 +8,7 @@ csharp: true
 library-name: ComputeFleet
 namespace: Azure.ResourceManager.ComputeFleet
 require: https://github.com/Azure/azure-rest-api-specs/blob/ad73e424df6df56b4cd206fcba7149891b5b6660/specification/azurefleet/resource-manager/readme.md
+#tag: package-preview-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,8 +21,6 @@ use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
-
- 
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -54,7 +53,141 @@ acronym-mapping:
   Etag: ETag|etag
 
 rename-mapping:
-  VirtualMachineScaleSetManagedDiskParameters: VirtualMachineScaleSetManagedDisk
+  Fleet: ComputeFleet
+  FleetProperties: ComputeFleetProperties
+  FleetProperties.timeCreated: CreatedOn
+  Fleet.properties.timeCreated: CreatedOn
+  AdditionalUnattendContent: WindowsSetupAdditionalInformation
+  AdditionalUnattendContentComponentName: AdditionalInformationComponentName
+  AdditionalUnattendContentPassName: AdditionalInformationPassName
+  ApiErrorBase: ComputeFleetApiErrorInfo
+  BaseVirtualMachineProfile: ComputeFleetVmProfile
+  BaseVirtualMachineProfile.timeCreated: CreatedOn
+  BootDiagnostics.enabled: IsEnabled
+  DeleteOptions: ComputeFleetVmDeleteOptions
+  DiskControllerTypes.NVMe: Nvme
+  LinuxConfiguration.disablePasswordAuthentication: IsPasswordAuthenticationDisabled
+  LinuxConfiguration.provisionVMAgent: IsVmAgentProvisioned
+  LinuxConfiguration.enableVMAgentPlatformUpdates: IsVmAgentPlatformUpdatesEnabled
+  LinuxVMGuestPatchAutomaticByPlatformSettings.bypassPlatformSafetyChecksOnUserSchedule: IsBypassPlatformSafetyChecksOnUserScheduleEnabled
+  Mode: ProxyAgentExecuteMode
+  OSImageNotificationProfile.enable: IsEnabled
+  PatchSettings: ComputeFleetVmGuestPatchSettings
+  PatchSettings.enableHotpatching: IsHotPatchingEnabled
+  ProxyAgentSettings.enabled: IsEnabled
+  SecurityEncryptionTypes.NonPersistedTPM: NonPersistedTpm
+  SecurityProfile.encryptionAtHost: IsEncryptionAtHostEnabled
+  SettingNames: AdditionalInformationSettingNames
+  SpotPriorityProfile.maintain: IsMaintainEnabled
+  StorageAccountTypes.Standard_LRS: StandardLrs
+  StorageAccountTypes.Premium_LRS: PremiumLrs
+  StorageAccountTypes.StandardSSD_LRS: StandardSsdLrd
+  StorageAccountTypes.UltraSSD_LRS: UltraSsdLrs
+  StorageAccountTypes.Premium_ZRS: PremiumZrs
+  StorageAccountTypes.StandardSSD_ZRS: StandardSsdZrs
+  TerminateNotificationProfile.enable: IsEnabled
+  UefiSettings.secureBootEnabled: IsSecureBootEnabled
+  UefiSettings.vTpmEnabled: IsVTpmEnabled
+  VirtualMachineScaleSet: ComputeFleetVmssData
+  VirtualMachineScaleSetDataDisk: ComputeFleetVmssDataDisk
+  VirtualMachineScaleSetDataDisk.writeAcceleratorEnabled: IsWriteAcceleratorEnabled
+  VirtualMachineScaleSetExtension: ComputeFleetVmssExtension
+  VirtualMachineScaleSetExtensionProfile: ComputeFleetVmssExtensionProfile
+  VirtualMachineScaleSetExtensionProperties: ComputeFleetVmssExtensionProperties
+  VirtualMachineScaleSetExtensionProperties.type: ExtensionType
+  VirtualMachineScaleSetExtensionProperties.autoUpgradeMinorVersion: ShouldAutoUpgradeMinorVersion
+  VirtualMachineScaleSetExtensionProperties.enableAutomaticUpgrade: IsAutomaticUpgradeEnabled
+  VirtualMachineScaleSetExtensionProperties.suppressFailures: IsSuppressFailuresEnabled
+  VirtualMachineScaleSetHardwareProfile: ComputeFleetVmssHardwareProfile
+  VirtualMachineScaleSetIPConfiguration: ComputeFleetVmssIPConfiguration
+  VirtualMachineScaleSetIPConfigurationProperties: ComputeFleetVmssIPConfigurationProperties
+  VirtualMachineScaleSetIPConfigurationProperties.primary: IsPrimary
+  VirtualMachineScaleSetIpTag: ComputeFleetVmssIPTag
+  VirtualMachineScaleSetManagedDiskParameters: ComputeFleetVmssManagedDisk
+  VirtualMachineScaleSetNetworkConfiguration: ComputeFleetVmssNetworkConfiguration
+  VirtualMachineScaleSetNetworkConfigurationDnsSettings: ComputeFleetVmssNetworkDnsSettings
+  VirtualMachineScaleSetNetworkConfigurationProperties: ComputeFleetVmssNetworkConfigurationProperties
+  VirtualMachineScaleSetNetworkConfigurationProperties.primary: IsPrimary
+  VirtualMachineScaleSetNetworkConfigurationProperties.enableAcceleratedNetworking: IsAcceleratedNetworkingEnabled
+  VirtualMachineScaleSetNetworkConfigurationProperties.disableTcpStateTracking: IsTcpStateTrackingDisabled
+  VirtualMachineScaleSetNetworkConfigurationProperties.enableFpga: IsFpgaEnabled
+  VirtualMachineScaleSetNetworkConfigurationProperties.enableIPForwarding: IsIPForwardingEnabled
+  VirtualMachineScaleSetNetworkProfile: ComputeFleetVmssNetworkProfile
+  VirtualMachineScaleSetOSDisk: ComputeFleetVmssOSDisk
+  VirtualMachineScaleSetOSDisk.writeAcceleratorEnabled: IsWriteAcceleratorEnabled
+  VirtualMachineScaleSetOSProfile: ComputeFleetVmssOSProfile
+  VirtualMachineScaleSetOSProfile.allowExtensionOperations: AreExtensionOperationsAllowed
+  VirtualMachineScaleSetOSProfile.requireGuestProvisionSignal: IsGuestProvisionSignalRequired
+  VirtualMachineScaleSetPublicIPAddressConfiguration: ComputeFleetVmssPublicIPAddressConfiguration
+  VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings: ComputeFleetVmssPublicIPAddressDnsSettings
+  VirtualMachineScaleSetPublicIPAddressConfigurationProperties: ComputeFleetVmssPublicIPAddressConfigurationProperties
+  VirtualMachineScaleSetStorageProfile: ComputeFleetVmssStorageProfile
+  VMGalleryApplication.treatFailureAsDeploymentFailure: IsTreatFailureAsDeploymentFailureEnabled
+  VMGalleryApplication.enableAutomaticUpgrade: IsAutomaticUpgradeEnabled
+  WindowsConfiguration.provisionVMAgent: IsVmAgentProvisioned
+  WindowsConfiguration.enableAutomaticUpdates: IsAutomaticUpdatesEnabled
+  WindowsConfiguration.enableVMAgentPlatformUpdates: IsVmAgentPlatformUpdatesEnabled
+  WindowsVMGuestPatchAutomaticByPlatformSettings.bypassPlatformSafetyChecksOnUserSchedule: IsBypassPlatformSafetyChecksOnUserScheduleEnabled
 
+prepend-rp-prefix:
+  - ApiError
+  - ApplicationProfile
+  - BootDiagnostics
+  - CachingTypes
+  - ComputeProfile
+  - DiagnosticsProfile
+  - DiffDiskOptions
+  - DiffDiskPlacement
+  - DiffDiskSettings
+  - DiskControllerTypes
+  - DiskCreateOptionTypes
+  - DiskDeleteOptionTypes
+  - DomainNameLabelScopeTypes
+  - EncryptionIdentity
+  - EvictionPolicy
+  - ImageReference
+  - InnerError
+  - IPVersion
+  - KeyVaultSecretReference
+  - LinuxConfiguration
+  - LinuxPatchAssessmentMode
+  - LinuxPatchSettings
+  - LinuxVMGuestPatchAutomaticByPlatformRebootSetting
+  - LinuxVMGuestPatchAutomaticByPlatformSettings
+  - LinuxVMGuestPatchMode
+  - NetworkApiVersion
+  - NetworkInterfaceAuxiliaryMode
+  - NetworkInterfaceAuxiliarySku
+  - OperatingSystemTypes
+  - OSImageNotificationProfile
+  - ProtocolTypes
+  - ProvisioningState
+  - ProxyAgentSettings
+  - PublicIPAddressSku
+  - PublicIPAddressSkuName
+  - PublicIPAddressSkuTier
+  - ScheduledEventsProfile
+  - SecurityEncryptionTypes
+  - SecurityPostureReference
+  - SecurityProfile
+  - SecurityTypes
+  - SshConfiguration
+  - SshPublicKey
+  - StorageAccountTypes
+  - TerminateNotificationProfile
+  - UefiSettings
+  - VaultCertificate
+  - VaultSecretGroup
+  - VirtualHardDisk
+  - VMDiskSecurityProfile
+  - VMGalleryApplication
+  - VmSizeProfile
+  - VMSizeProperties
+  - WindowsConfiguration
+  - WindowsPatchAssessmentMode
+  - WindowsVMGuestPatchAutomaticByPlatformRebootSetting
+  - WindowsVMGuestPatchAutomaticByPlatformSettings
+  - WindowsVMGuestPatchMode
+  - WinRMListener
 
 ```

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetListResult"/>. </summary>
         /// <param name="value"> The VirtualMachineScaleSet items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal VirtualMachineScaleSetListResult(IEnumerable<VirtualMachineScaleSet> value)
+        internal VirtualMachineScaleSetListResult(IEnumerable<ComputeFleetVmssData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="value"> The VirtualMachineScaleSet items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetListResult(IReadOnlyList<VirtualMachineScaleSet> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineScaleSetListResult(IReadOnlyList<ComputeFleetVmssData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> The VirtualMachineScaleSet items on this page. </summary>
-        public IReadOnlyList<VirtualMachineScaleSet> Value { get; }
+        public IReadOnlyList<ComputeFleetVmssData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

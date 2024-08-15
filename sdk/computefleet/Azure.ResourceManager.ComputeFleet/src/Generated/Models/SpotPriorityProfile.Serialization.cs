@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("allocationStrategy"u8);
                 writer.WriteStringValue(AllocationStrategy.Value.ToString());
             }
-            if (Optional.IsDefined(Maintain))
+            if (Optional.IsDefined(IsMaintainEnabled))
             {
                 writer.WritePropertyName("maintain"u8);
-                writer.WriteBooleanValue(Maintain.Value);
+                writer.WriteBooleanValue(IsMaintainEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             int? capacity = default;
             int? minCapacity = default;
             float? maxPricePerVm = default;
-            EvictionPolicy? evictionPolicy = default;
+            ComputeFleetEvictionPolicy? evictionPolicy = default;
             SpotAllocationStrategy? allocationStrategy = default;
             bool? maintain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    evictionPolicy = new EvictionPolicy(property.Value.GetString());
+                    evictionPolicy = new ComputeFleetEvictionPolicy(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allocationStrategy"u8))

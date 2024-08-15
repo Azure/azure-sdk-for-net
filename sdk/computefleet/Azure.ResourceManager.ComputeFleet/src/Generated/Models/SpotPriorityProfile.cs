@@ -56,21 +56,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="maxPricePerVm"> Price per hour of each Spot VM will never exceed this. </param>
         /// <param name="evictionPolicy"> Eviction Policy to follow when evicting Spot VMs. </param>
         /// <param name="allocationStrategy"> Allocation strategy to follow when determining the VM sizes distribution for Spot VMs. </param>
-        /// <param name="maintain">
+        /// <param name="isMaintainEnabled">
         /// Flag to enable/disable continuous goal seeking for the desired capacity and restoration of evicted Spot VMs.
         /// If maintain is enabled, AzureFleetRP will use all VM sizes in vmSizesProfile to create new VMs (if VMs are evicted deleted)
         /// or update existing VMs with new VM sizes (if VMs are evicted deallocated or failed to allocate due to capacity constraint) in order to achieve the desired capacity.
         /// Maintain is enabled by default.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SpotPriorityProfile(int? capacity, int? minCapacity, float? maxPricePerVm, EvictionPolicy? evictionPolicy, SpotAllocationStrategy? allocationStrategy, bool? maintain, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SpotPriorityProfile(int? capacity, int? minCapacity, float? maxPricePerVm, ComputeFleetEvictionPolicy? evictionPolicy, SpotAllocationStrategy? allocationStrategy, bool? isMaintainEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Capacity = capacity;
             MinCapacity = minCapacity;
             MaxPricePerVm = maxPricePerVm;
             EvictionPolicy = evictionPolicy;
             AllocationStrategy = allocationStrategy;
-            Maintain = maintain;
+            IsMaintainEnabled = isMaintainEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Price per hour of each Spot VM will never exceed this. </summary>
         public float? MaxPricePerVm { get; set; }
         /// <summary> Eviction Policy to follow when evicting Spot VMs. </summary>
-        public EvictionPolicy? EvictionPolicy { get; set; }
+        public ComputeFleetEvictionPolicy? EvictionPolicy { get; set; }
         /// <summary> Allocation strategy to follow when determining the VM sizes distribution for Spot VMs. </summary>
         public SpotAllocationStrategy? AllocationStrategy { get; set; }
         /// <summary>
@@ -90,6 +90,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// or update existing VMs with new VM sizes (if VMs are evicted deallocated or failed to allocate due to capacity constraint) in order to achieve the desired capacity.
         /// Maintain is enabled by default.
         /// </summary>
-        public bool? Maintain { get; set; }
+        public bool? IsMaintainEnabled { get; set; }
     }
 }

@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="WinRMConfiguration"/>. </summary>
         public WinRMConfiguration()
         {
-            Listeners = new ChangeTrackingList<WinRMListener>();
+            Listeners = new ChangeTrackingList<ComputeFleetWinRMListener>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WinRMConfiguration"/>. </summary>
         /// <param name="listeners"> The list of Windows Remote Management listeners. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WinRMConfiguration(IList<WinRMListener> listeners, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WinRMConfiguration(IList<ComputeFleetWinRMListener> listeners, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Listeners = listeners;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Windows Remote Management listeners. </summary>
-        public IList<WinRMListener> Listeners { get; }
+        public IList<ComputeFleetWinRMListener> Listeners { get; }
     }
 }

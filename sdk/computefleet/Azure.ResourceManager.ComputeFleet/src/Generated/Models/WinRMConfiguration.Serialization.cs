@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            IList<WinRMListener> listeners = default;
+            IList<ComputeFleetWinRMListener> listeners = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    List<WinRMListener> array = new List<WinRMListener>();
+                    List<ComputeFleetWinRMListener> array = new List<ComputeFleetWinRMListener>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WinRMListener.DeserializeWinRMListener(item, options));
+                        array.Add(ComputeFleetWinRMListener.DeserializeComputeFleetWinRMListener(item, options));
                     }
                     listeners = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WinRMConfiguration(listeners ?? new ChangeTrackingList<WinRMListener>(), serializedAdditionalRawData);
+            return new WinRMConfiguration(listeners ?? new ChangeTrackingList<ComputeFleetWinRMListener>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WinRMConfiguration>.Write(ModelReaderWriterOptions options)

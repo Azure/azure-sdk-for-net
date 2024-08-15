@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableComputeFleetSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _fleetClientDiagnostics;
-        private FleetsRestOperations _fleetRestClient;
+        private ClientDiagnostics _computeFleetFleetsClientDiagnostics;
+        private FleetsRestOperations _computeFleetFleetsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableComputeFleetSubscriptionResource"/> class for mocking. </summary>
         protected MockableComputeFleetSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         {
         }
 
-        private ClientDiagnostics FleetClientDiagnostics => _fleetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeFleet", FleetResource.ResourceType.Namespace, Diagnostics);
-        private FleetsRestOperations FleetRestClient => _fleetRestClient ??= new FleetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FleetResource.ResourceType));
+        private ClientDiagnostics ComputeFleetFleetsClientDiagnostics => _computeFleetFleetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeFleet", ComputeFleetResource.ResourceType.Namespace, Diagnostics);
+        private FleetsRestOperations ComputeFleetFleetsRestClient => _computeFleetFleetsRestClient ??= new FleetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ComputeFleetResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="FleetResource"/></description>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FleetResource> GetFleetsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ComputeFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeFleetResource> GetComputeFleetsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FleetRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FleetRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FleetResource(Client, FleetData.DeserializeFleetData(e)), FleetClientDiagnostics, Pipeline, "MockableComputeFleetSubscriptionResource.GetFleets", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ComputeFleetFleetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ComputeFleetFleetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ComputeFleetResource(Client, ComputeFleetData.DeserializeComputeFleetData(e)), ComputeFleetFleetsClientDiagnostics, Pipeline, "MockableComputeFleetSubscriptionResource.GetComputeFleets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="FleetResource"/></description>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FleetResource> GetFleets(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeFleetResource> GetComputeFleets(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FleetRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FleetRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FleetResource(Client, FleetData.DeserializeFleetData(e)), FleetClientDiagnostics, Pipeline, "MockableComputeFleetSubscriptionResource.GetFleets", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ComputeFleetFleetsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ComputeFleetFleetsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ComputeFleetResource(Client, ComputeFleetData.DeserializeComputeFleetData(e)), ComputeFleetFleetsClientDiagnostics, Pipeline, "MockableComputeFleetSubscriptionResource.GetComputeFleets", "value", "nextLink", cancellationToken);
         }
     }
 }

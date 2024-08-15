@@ -1,6 +1,6 @@
-# Microsoft Azure ComputeFleet management client library for .NET
+# Microsoft Azure Compute Fleet management client library for .NET
 
-**[Describe the service briefly first.]**
+Azure Compute Fleet is a building block that gives you accelerated access to Azure's capacity in a given region. Compute Fleet launches a combination of virtual machines (VMs) at the lowest price and highest capacity. There are many ways you can use this product, whether by running a stateless web service, a big data cluster, or a Continuous Integration pipeline. Workloads such as financial risk analysis, log processing, or image rendering can benefit from the ability to run hundreds of concurrent core instances.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure ComputeFleet management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Compute Fleet management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.ComputeFleet --prerelease

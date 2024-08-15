@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of FleetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of FleetResources and their operations over a FleetResource. </returns>
-        public virtual FleetCollection GetFleets()
+        /// <summary> Gets a collection of ComputeFleetResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ComputeFleetResources and their operations over a ComputeFleetResource. </returns>
+        public virtual ComputeFleetCollection GetComputeFleets()
         {
-            return GetCachedClient(client => new FleetCollection(client, Id));
+            return GetCachedClient(client => new ComputeFleetCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="FleetResource"/></description>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FleetResource>> GetFleetAsync(string fleetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputeFleetResource>> GetComputeFleetAsync(string fleetName, CancellationToken cancellationToken = default)
         {
-            return await GetFleets().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
+            return await GetComputeFleets().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="FleetResource"/></description>
+        /// <description><see cref="ComputeFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FleetResource> GetFleet(string fleetName, CancellationToken cancellationToken = default)
+        public virtual Response<ComputeFleetResource> GetComputeFleet(string fleetName, CancellationToken cancellationToken = default)
         {
-            return GetFleets().Get(fleetName, cancellationToken);
+            return GetComputeFleets().Get(fleetName, cancellationToken);
         }
     }
 }

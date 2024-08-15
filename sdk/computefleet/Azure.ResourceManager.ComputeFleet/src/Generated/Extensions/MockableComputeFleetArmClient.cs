@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FleetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FleetResource.CreateResourceIdentifier" /> to create a <see cref="FleetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="ComputeFleetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ComputeFleetResource.CreateResourceIdentifier" /> to create a <see cref="ComputeFleetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FleetResource"/> object. </returns>
-        public virtual FleetResource GetFleetResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComputeFleetResource"/> object. </returns>
+        public virtual ComputeFleetResource GetComputeFleetResource(ResourceIdentifier id)
         {
-            FleetResource.ValidateResourceId(id);
-            return new FleetResource(Client, id);
+            ComputeFleetResource.ValidateResourceId(id);
+            return new ComputeFleetResource(Client, id);
         }
     }
 }
