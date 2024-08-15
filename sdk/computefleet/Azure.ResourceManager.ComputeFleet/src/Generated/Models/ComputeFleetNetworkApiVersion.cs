@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TwoThousandTwenty1101Value = "2020-11-01";
+        private const string Ver20201101Value = "2020-11-01";
 
         /// <summary> Initial version supported. Later versions are supported as well. </summary>
-        public static ComputeFleetNetworkApiVersion TwoThousandTwenty1101 { get; } = new ComputeFleetNetworkApiVersion(TwoThousandTwenty1101Value);
+        public static ComputeFleetNetworkApiVersion Ver20201101 { get; } = new ComputeFleetNetworkApiVersion(Ver20201101Value);
         /// <summary> Determines if two <see cref="ComputeFleetNetworkApiVersion"/> values are the same. </summary>
         public static bool operator ==(ComputeFleetNetworkApiVersion left, ComputeFleetNetworkApiVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ComputeFleetNetworkApiVersion"/> values are not the same. </summary>

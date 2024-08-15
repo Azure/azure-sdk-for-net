@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("diskIOPSReadWrite"u8);
                 writer.WriteNumberValue(DiskIopsReadWrite.Value);
             }
-            if (Optional.IsDefined(DiskMBpsReadWrite))
+            if (Optional.IsDefined(DiskMbpsReadWrite))
             {
                 writer.WritePropertyName("diskMBpsReadWrite"u8);
-                writer.WriteNumberValue(DiskMBpsReadWrite.Value);
+                writer.WriteNumberValue(DiskMbpsReadWrite.Value);
             }
             if (Optional.IsDefined(DeleteOption))
             {

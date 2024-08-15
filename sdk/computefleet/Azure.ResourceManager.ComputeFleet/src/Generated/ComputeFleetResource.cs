@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleets_ListVirtualMachineScaleSets</description>
+        /// <description>VirtualMachineScaleSet_ListVirtualMachineScaleSets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -369,12 +369,12 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ComputeFleetVmssData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ComputeFleetVmssData> GetVirtualMachineScaleSetsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ComputeFleetVmss"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ComputeFleetVmss> GetVirtualMachineScaleSetsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _computeFleetFleetsRestClient.CreateListVirtualMachineScaleSetsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computeFleetFleetsRestClient.CreateListVirtualMachineScaleSetsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ComputeFleetVmssData.DeserializeComputeFleetVmssData(e), _computeFleetFleetsClientDiagnostics, Pipeline, "ComputeFleetResource.GetVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ComputeFleetVmss.DeserializeComputeFleetVmss(e), _computeFleetFleetsClientDiagnostics, Pipeline, "ComputeFleetResource.GetVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleets_ListVirtualMachineScaleSets</description>
+        /// <description>VirtualMachineScaleSet_ListVirtualMachineScaleSets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -399,12 +399,12 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ComputeFleetVmssData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ComputeFleetVmssData> GetVirtualMachineScaleSets(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ComputeFleetVmss"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ComputeFleetVmss> GetVirtualMachineScaleSets(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _computeFleetFleetsRestClient.CreateListVirtualMachineScaleSetsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _computeFleetFleetsRestClient.CreateListVirtualMachineScaleSetsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ComputeFleetVmssData.DeserializeComputeFleetVmssData(e), _computeFleetFleetsClientDiagnostics, Pipeline, "ComputeFleetResource.GetVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ComputeFleetVmss.DeserializeComputeFleetVmss(e), _computeFleetFleetsClientDiagnostics, Pipeline, "ComputeFleetResource.GetVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

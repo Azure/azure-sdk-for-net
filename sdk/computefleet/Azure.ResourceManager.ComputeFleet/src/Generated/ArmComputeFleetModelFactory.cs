@@ -23,22 +23,15 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="zones"> Zones in which the Compute Fleet is available. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="plan"> Details of the resource plan. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="spotPriorityProfile"> Configuration Options for Spot instances in Compute Fleet. </param>
-        /// <param name="regularPriorityProfile"> Configuration Options for Regular instances in Compute Fleet. </param>
-        /// <param name="vmSizesProfile"> List of VM sizes supported for Compute Fleet. </param>
-        /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
-        /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
-        /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>
         /// <returns> A new <see cref="ComputeFleet.ComputeFleetData"/> instance for mocking. </returns>
-        public static ComputeFleetData ComputeFleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, ArmPlan plan = null, ComputeFleetProvisioningState? provisioningState = null, SpotPriorityProfile spotPriorityProfile = null, RegularPriorityProfile regularPriorityProfile = null, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = null, ComputeFleetComputeProfile computeProfile = null, DateTimeOffset? createdOn = null, string uniqueId = null)
+        public static ComputeFleetData ComputeFleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ComputeFleetProperties properties = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, ArmPlan plan = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
-            vmSizesProfile ??= new List<ComputeFleetVmSizeProfile>();
 
             return new ComputeFleetData(
                 id,
@@ -47,16 +40,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 systemData,
                 tags,
                 location,
+                properties,
                 zones?.ToList(),
                 identity,
                 plan,
-                provisioningState,
-                spotPriorityProfile,
-                regularPriorityProfile,
-                vmSizesProfile?.ToList(),
-                computeProfile,
-                createdOn,
-                uniqueId,
                 serializedAdditionalRawData: null);
         }
 
@@ -220,12 +207,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetVmssExtension"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the extension. </param>
-        /// <param name="virtualMachineScaleSetExtensionType"> Resource type. </param>
+        /// <param name="extensionType"> Resource type. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Scale Set Extension. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmssExtension"/> instance for mocking. </returns>
-        public static ComputeFleetVmssExtension ComputeFleetVmssExtension(ResourceIdentifier id = null, string name = null, string virtualMachineScaleSetExtensionType = null, ComputeFleetVmssExtensionProperties properties = null)
+        public static ComputeFleetVmssExtension ComputeFleetVmssExtension(ResourceIdentifier id = null, string name = null, string extensionType = null, ComputeFleetVmssExtensionProperties properties = null)
         {
-            return new ComputeFleetVmssExtension(id, name, virtualMachineScaleSetExtensionType, properties, serializedAdditionalRawData: null);
+            return new ComputeFleetVmssExtension(id, name, extensionType, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetVmssExtensionProperties"/>. </summary>
@@ -288,24 +275,18 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetVmssData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetVmss"/>. </summary>
+        /// <param name="id">
+        /// The compute RP resource id of the virtualMachineScaleSet
+        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}"
+        /// </param>
+        /// <param name="type"> Type of the virtualMachineScaleSet. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error Information when `operationStatus` is `Failed`. </param>
-        /// <returns> A new <see cref="Models.ComputeFleetVmssData"/> instance for mocking. </returns>
-        public static ComputeFleetVmssData ComputeFleetVmssData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ComputeFleetProvisioningState operationStatus = default, ComputeFleetApiError error = null)
+        /// <returns> A new <see cref="Models.ComputeFleetVmss"/> instance for mocking. </returns>
+        public static ComputeFleetVmss ComputeFleetVmss(string id = null, string type = null, ComputeFleetProvisioningState operationStatus = default, ComputeFleetApiError error = null)
         {
-            return new ComputeFleetVmssData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                operationStatus,
-                error,
-                serializedAdditionalRawData: null);
+            return new ComputeFleetVmss(id, type, operationStatus, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetApiError"/>. </summary>

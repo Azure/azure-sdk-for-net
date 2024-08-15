@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// StorageAccountType is UltraSSD_LRS. If not specified, a default value would be
         /// assigned based on diskSizeGB.
         /// </param>
-        /// <param name="diskMBpsReadWrite">
+        /// <param name="diskMbpsReadWrite">
         /// Specifies the bandwidth in MB per second for the managed disk. Should be used
         /// only when StorageAccountType is UltraSSD_LRS. If not specified, a default value
         /// would be assigned based on diskSizeGB.
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// deleted.&lt;br&gt;&lt;br&gt; The default value is set to **Delete**.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssDataDisk(string name, int lun, ComputeFleetCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeFleetDiskCreateOptionType createOption, int? diskSizeGB, ComputeFleetVmssManagedDisk managedDisk, long? diskIopsReadWrite, long? diskMBpsReadWrite, ComputeFleetDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeFleetVmssDataDisk(string name, int lun, ComputeFleetCachingType? caching, bool? isWriteAcceleratorEnabled, ComputeFleetDiskCreateOptionType createOption, int? diskSizeGB, ComputeFleetVmssManagedDisk managedDisk, long? diskIopsReadWrite, long? diskMbpsReadWrite, ComputeFleetDiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Lun = lun;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             DiskSizeGB = diskSizeGB;
             ManagedDisk = managedDisk;
             DiskIopsReadWrite = diskIopsReadWrite;
-            DiskMBpsReadWrite = diskMBpsReadWrite;
+            DiskMbpsReadWrite = diskMbpsReadWrite;
             DeleteOption = deleteOption;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// only when StorageAccountType is UltraSSD_LRS. If not specified, a default value
         /// would be assigned based on diskSizeGB.
         /// </summary>
-        public long? DiskMBpsReadWrite { get; set; }
+        public long? DiskMbpsReadWrite { get; set; }
         /// <summary>
         /// Specifies whether data disk should be deleted or detached upon VMSS Flex
         /// deletion (This feature is available for VMSS with Flexible OrchestrationMode

@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IdentityType))
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(IdentityType.Value.ToString());
+                writer.WriteStringValue(Type.Value.ToString());
             }
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {

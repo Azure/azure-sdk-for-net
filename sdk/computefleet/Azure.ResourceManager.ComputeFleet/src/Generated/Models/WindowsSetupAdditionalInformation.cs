@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// include the root element for the setting or feature that is being inserted.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsSetupAdditionalInformation(AdditionalInformationPassName? passName, AdditionalInformationComponentName? componentName, AdditionalInformationSettingName? settingName, string content, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WindowsSetupAdditionalInformation(WindowsSetupAdditionalInformationPassName? passName, WindowsSetupAdditionalInformationComponentName? componentName, AdditionalInformationSettingName? settingName, string content, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PassName = passName;
             ComponentName = componentName;
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> The pass name. Currently, the only allowable value is OobeSystem. </summary>
-        public AdditionalInformationPassName? PassName { get; set; }
+        public WindowsSetupAdditionalInformationPassName? PassName { get; set; }
         /// <summary>
         /// The component name. Currently, the only allowable value is
         /// Microsoft-Windows-Shell-Setup.
         /// </summary>
-        public AdditionalInformationComponentName? ComponentName { get; set; }
+        public WindowsSetupAdditionalInformationComponentName? ComponentName { get; set; }
         /// <summary>
         /// Specifies the name of the setting to which the content applies. Possible values
         /// are: FirstLogonCommands and AutoLogon.

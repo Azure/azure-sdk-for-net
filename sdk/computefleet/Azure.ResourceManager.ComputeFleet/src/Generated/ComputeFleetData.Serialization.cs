@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.ComputeFleet
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -82,49 +87,6 @@ namespace Azure.ResourceManager.ComputeFleet
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(SpotPriorityProfile))
-            {
-                writer.WritePropertyName("spotPriorityProfile"u8);
-                writer.WriteObjectValue(SpotPriorityProfile, options);
-            }
-            if (Optional.IsDefined(RegularPriorityProfile))
-            {
-                writer.WritePropertyName("regularPriorityProfile"u8);
-                writer.WriteObjectValue(RegularPriorityProfile, options);
-            }
-            if (Optional.IsCollectionDefined(VmSizesProfile))
-            {
-                writer.WritePropertyName("vmSizesProfile"u8);
-                writer.WriteStartArray();
-                foreach (var item in VmSizesProfile)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(ComputeProfile))
-            {
-                writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("timeCreated"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(UniqueId))
-            {
-                writer.WritePropertyName("uniqueId"u8);
-                writer.WriteStringValue(UniqueId);
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -163,6 +125,7 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 return null;
             }
+            ComputeFleetProperties properties = default;
             IList<string> zones = default;
             ManagedServiceIdentity identity = default;
             ArmPlan plan = default;
@@ -172,17 +135,19 @@ namespace Azure.ResourceManager.ComputeFleet
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ComputeFleetProvisioningState? provisioningState = default;
-            SpotPriorityProfile spotPriorityProfile = default;
-            RegularPriorityProfile regularPriorityProfile = default;
-            IList<ComputeFleetVmSizeProfile> vmSizesProfile = default;
-            ComputeFleetComputeProfile computeProfile = default;
-            DateTimeOffset? timeCreated = default;
-            string uniqueId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ComputeFleetProperties.DeserializeComputeFleetProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("zones"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -259,82 +224,6 @@ namespace Azure.ResourceManager.ComputeFleet
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ComputeFleetProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("spotPriorityProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            spotPriorityProfile = SpotPriorityProfile.DeserializeSpotPriorityProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("regularPriorityProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            regularPriorityProfile = RegularPriorityProfile.DeserializeRegularPriorityProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("vmSizesProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ComputeFleetVmSizeProfile> array = new List<ComputeFleetVmSizeProfile>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ComputeFleetVmSizeProfile.DeserializeComputeFleetVmSizeProfile(item, options));
-                            }
-                            vmSizesProfile = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("computeProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            computeProfile = ComputeFleetComputeProfile.DeserializeComputeFleetComputeProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("timeCreated"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeCreated = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("uniqueId"u8))
-                        {
-                            uniqueId = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -348,16 +237,10 @@ namespace Azure.ResourceManager.ComputeFleet
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 zones ?? new ChangeTrackingList<string>(),
                 identity,
                 plan,
-                provisioningState,
-                spotPriorityProfile,
-                regularPriorityProfile,
-                vmSizesProfile ?? new ChangeTrackingList<ComputeFleetVmSizeProfile>(),
-                computeProfile,
-                timeCreated,
-                uniqueId,
                 serializedAdditionalRawData);
         }
 

@@ -17,10 +17,11 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  flatten-models: false
 use-model-reader-writer: true
 
-#mgmt-debug:
-#  show-serialized-names: true
+mgmt-debug:
+  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -56,10 +57,9 @@ rename-mapping:
   Fleet: ComputeFleet
   FleetProperties: ComputeFleetProperties
   FleetProperties.timeCreated: CreatedOn
-  Fleet.properties.timeCreated: CreatedOn
   AdditionalUnattendContent: WindowsSetupAdditionalInformation
-  AdditionalUnattendContentComponentName: AdditionalInformationComponentName
-  AdditionalUnattendContentPassName: AdditionalInformationPassName
+  AdditionalUnattendContentComponentName: WindowsSetupAdditionalInformationComponentName
+  AdditionalUnattendContentPassName: WindowsSetupAdditionalInformationPassName
   ApiErrorBase: ComputeFleetApiErrorInfo
   BaseVirtualMachineProfile: ComputeFleetVmProfile
   BaseVirtualMachineProfile.timeCreated: CreatedOn
@@ -88,10 +88,13 @@ rename-mapping:
   TerminateNotificationProfile.enable: IsEnabled
   UefiSettings.secureBootEnabled: IsSecureBootEnabled
   UefiSettings.vTpmEnabled: IsVTpmEnabled
-  VirtualMachineScaleSet: ComputeFleetVmssData
+  VirtualMachineScaleSet: ComputeFleetVmss
   VirtualMachineScaleSetDataDisk: ComputeFleetVmssDataDisk
   VirtualMachineScaleSetDataDisk.writeAcceleratorEnabled: IsWriteAcceleratorEnabled
+  VirtualMachineScaleSetDataDisk.diskIOPSReadWrite: DiskIopsReadWrite
+  VirtualMachineScaleSetDataDisk.diskMBpsReadWrite: DiskMbpsReadWrite
   VirtualMachineScaleSetExtension: ComputeFleetVmssExtension
+  VirtualMachineScaleSetExtension.type: ExtensionType
   VirtualMachineScaleSetExtensionProfile: ComputeFleetVmssExtensionProfile
   VirtualMachineScaleSetExtensionProperties: ComputeFleetVmssExtensionProperties
   VirtualMachineScaleSetExtensionProperties.type: ExtensionType

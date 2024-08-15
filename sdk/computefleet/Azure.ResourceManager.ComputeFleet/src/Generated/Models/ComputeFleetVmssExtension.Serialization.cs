@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(VirtualMachineScaleSetExtensionType))
+            if (options.Format != "W" && Optional.IsDefined(ExtensionType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(VirtualMachineScaleSetExtensionType);
+                writer.WriteStringValue(ExtensionType);
             }
             if (Optional.IsDefined(Properties))
             {

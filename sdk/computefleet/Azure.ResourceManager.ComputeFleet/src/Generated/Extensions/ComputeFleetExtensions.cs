@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleets_ListBySubscription</description>
+        /// <description>Fleet_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleets_ListBySubscription</description>
+        /// <description>Fleet_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> List of VM sizes supported for Compute Fleet. </summary>
         public IList<ComputeFleetVmSizeProfile> VmSizesProfile { get; }
         /// <summary> Compute Profile to use for running user's workloads. </summary>
-        public ComputeFleetComputeProfile ComputeProfile { get; }
+        public ComputeFleetComputeProfile ComputeProfile { get; set; }
         /// <summary> Specifies the time at which the Compute Fleet is created. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Specifies the ID which uniquely identifies a Compute Fleet. </summary>

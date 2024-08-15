@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmssExtension"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the extension. </param>
-        /// <param name="virtualMachineScaleSetExtensionType"> Resource type. </param>
+        /// <param name="extensionType"> Resource type. </param>
         /// <param name="properties"> Describes the properties of a Virtual Machine Scale Set Extension. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmssExtension(ResourceIdentifier id, string name, string virtualMachineScaleSetExtensionType, ComputeFleetVmssExtensionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeFleetVmssExtension(ResourceIdentifier id, string name, string extensionType, ComputeFleetVmssExtensionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
-            VirtualMachineScaleSetExtensionType = virtualMachineScaleSetExtensionType;
+            ExtensionType = extensionType;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// <summary> The name of the extension. </summary>
         public string Name { get; set; }
         /// <summary> Resource type. </summary>
-        public string VirtualMachineScaleSetExtensionType { get; }
+        public string ExtensionType { get; }
         /// <summary> Describes the properties of a Virtual Machine Scale Set Extension. </summary>
         public ComputeFleetVmssExtensionProperties Properties { get; set; }
     }

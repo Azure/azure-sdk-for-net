@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            AdditionalInformationPassName? passName = default;
-            AdditionalInformationComponentName? componentName = default;
+            WindowsSetupAdditionalInformationPassName? passName = default;
+            WindowsSetupAdditionalInformationComponentName? componentName = default;
             AdditionalInformationSettingName? settingName = default;
             string content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    passName = new AdditionalInformationPassName(property.Value.GetString());
+                    passName = new WindowsSetupAdditionalInformationPassName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("componentName"u8))
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    componentName = new AdditionalInformationComponentName(property.Value.GetString());
+                    componentName = new WindowsSetupAdditionalInformationComponentName(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("settingName"u8))
