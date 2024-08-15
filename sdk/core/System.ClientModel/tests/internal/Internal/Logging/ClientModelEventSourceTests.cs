@@ -34,6 +34,10 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
     private const int ErrorResponseContentTextBlockEvent = 16;
     private const int ExceptionResponseEvent = 18;
 
+    // TODO
+    private const int ResponseDelayEvent = 7;
+    private const int RequestRetryingEvent = 10;
+
     private TestClientEventListener _listener;
 
     private const string SystemClientModelEventSourceName = "System-ClientModel";

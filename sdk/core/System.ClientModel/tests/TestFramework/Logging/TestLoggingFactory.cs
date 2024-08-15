@@ -12,6 +12,13 @@ namespace ClientModel.Tests;
 
 public class TestLoggingFactory : ILoggerFactory
 {
+    private readonly TestLogger _logger;
+
+    public TestLoggingFactory(TestLogger logger)
+    {
+        _logger = logger;
+    }
+
     public LogLevel LogLevel { get; set; }
 
     public void AddProvider(ILoggerProvider provider)
@@ -21,7 +28,8 @@ public class TestLoggingFactory : ILoggerFactory
 
     public ILogger CreateLogger(string categoryName)
     {
-        return new TestLogger(categoryName, LogLevel);
+        _logger.Name = categoryName;
+        return _logger;
     }
 
     public void Dispose()

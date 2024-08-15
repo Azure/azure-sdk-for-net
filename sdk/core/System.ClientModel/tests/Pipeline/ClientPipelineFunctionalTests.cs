@@ -351,7 +351,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task DoesntRetryClientCancellation()
+    public async Task DoesNotRetryClientCancellation()
     {
         var testDoneTcs = new CancellationTokenSource();
         int i = 0;
@@ -440,14 +440,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     {
         using FunctionalTestsEventListener eventListener = new();
 
-        var options = new ClientPipelineOptions
-        {
-            LoggingOptions = new LoggingOptions
-            {
-                LoggerFactory = new TestLoggingFactory()
-            }
-        };
-        ClientPipeline pipeline = ClientPipeline.Create(options);
+        ClientPipeline pipeline = ClientPipeline.Create();
 
         using TestServer testServer = new TestServer(
             async context =>
@@ -462,22 +455,19 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        foreach (string sourceName in new List<string>() { "System-ClientModel", "ClientModel.Tests.TestLoggingEventSource" })
-        {
-            // Request
-            EventWrittenEventArgs args = eventListener.SingleEventById(1, e => e.EventSource.Name == sourceName);
-            Assert.AreEqual(EventLevel.Informational, args.Level);
-            Assert.AreEqual("Request", args.EventName);
+        // Request
+        EventWrittenEventArgs args = eventListener.SingleEventById(1, e => e.EventSource.Name == "System-ClientModel");
+        Assert.AreEqual(EventLevel.Informational, args.Level);
+        Assert.AreEqual("Request", args.EventName);
 
-            // Response
-            args = eventListener.SingleEventById(5, e => e.EventSource.Name == sourceName);
-            Assert.AreEqual(EventLevel.Informational, args.Level);
-            Assert.AreEqual("Response", args.EventName);
-            Assert.AreEqual(201, args.GetProperty<int>("status"));
-        }
+        // Response
+        args = eventListener.SingleEventById(5, e => e.EventSource.Name == "System-ClientModel");
+        Assert.AreEqual(EventLevel.Informational, args.Level);
+        Assert.AreEqual("Response", args.EventName);
+        Assert.AreEqual(201, args.GetProperty<int>("status"));
 
         // No other events should have been logged
-        Assert.AreEqual(4, eventListener.EventData.Count());
+        Assert.AreEqual(2, eventListener.EventData.Count());
     }
 
     [Test]
@@ -485,14 +475,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     {
         using FunctionalTestsEventListener eventListener = new();
 
-        var options = new ClientPipelineOptions
-        {
-            LoggingOptions = new LoggingOptions
-            {
-                LoggerFactory = new TestLoggingFactory()
-            }
-        };
-        ClientPipeline pipeline = ClientPipeline.Create(options);
+        ClientPipeline pipeline = ClientPipeline.Create();
 
         using TestServer testServer = new TestServer(
             async context =>
@@ -509,11 +492,11 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         // Request Events
         IEnumerable<EventWrittenEventArgs> args = eventListener.EventsById(1);
-        Assert.AreEqual(8, args.Count());
+        Assert.AreEqual(4, args.Count());
 
         // Response Events
         args = eventListener.EventsById(18);
-        Assert.AreEqual(8, args.Count());
+        Assert.AreEqual(4, args.Count());
         foreach (EventWrittenEventArgs responseEventArgs in args)
         {
             Assert.AreEqual(EventLevel.Informational, responseEventArgs.Level);
@@ -522,7 +505,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         }
 
         // No other events should have been logged
-        Assert.AreEqual(16, eventListener.EventData.Count());
+        Assert.AreEqual(8, eventListener.EventData.Count());
     }
 
     [Test]
@@ -530,14 +513,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
     {
         using FunctionalTestsEventListener eventListener = new();
 
-        var options = new ClientPipelineOptions
-        {
-            LoggingOptions = new LoggingOptions
-            {
-                LoggerFactory = new TestLoggingFactory()
-            }
-        };
-        ClientPipeline pipeline = ClientPipeline.Create(options);
+        ClientPipeline pipeline = ClientPipeline.Create();
 
         using TestServer testServer = new TestServer(
             async context =>
@@ -552,29 +528,26 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
-        foreach (string sourceName in new List<string>() { "System-ClientModel", "ClientModel.Tests.TestLoggingEventSource" })
-        {
-            // Request
-            EventWrittenEventArgs args = eventListener.SingleEventById(1, e => e.EventSource.Name == sourceName);
-            Assert.AreEqual(EventLevel.Informational, args.Level);
-            Assert.AreEqual("Request", args.EventName);
+        // Request
+        EventWrittenEventArgs args = eventListener.SingleEventById(1, e => e.EventSource.Name == "System-ClientModel");
+        Assert.AreEqual(EventLevel.Informational, args.Level);
+        Assert.AreEqual("Request", args.EventName);
 
-            // Response
-            args = eventListener.SingleEventById(8, e => e.EventSource.Name == sourceName);
-            Assert.AreEqual(EventLevel.Warning, args.Level);
-            Assert.AreEqual("ErrorResponse", args.EventName);
-            Assert.AreEqual(args.GetProperty<int>("status"), 400);
-        }
+        // Response
+        args = eventListener.SingleEventById(8, e => e.EventSource.Name == "System-ClientModel");
+        Assert.AreEqual(EventLevel.Warning, args.Level);
+        Assert.AreEqual("ErrorResponse", args.EventName);
+        Assert.AreEqual(args.GetProperty<int>("status"), 400);
 
         // No other events should have been logged
-        Assert.AreEqual(4, eventListener.EventData.Count());
+        Assert.AreEqual(2, eventListener.EventData.Count());
     }
 
     private class FunctionalTestsEventListener : TestClientEventListener
     {
         protected override void OnEventSourceCreated(EventSource eventSource)
         {
-            if (eventSource.Name == "System-ClientModel" || eventSource.Name == "ClientModel.Tests.TestLoggingEventSource")
+            if (eventSource.Name == "System-ClientModel")
             {
                 EnableEvents(eventSource, EventLevel.Informational);
             }

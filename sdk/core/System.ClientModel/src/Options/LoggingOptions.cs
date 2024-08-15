@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// TODO
+/// Exposes client options related to logging.
 /// </summary>
 public class LoggingOptions
 {
@@ -52,8 +52,10 @@ public class LoggingOptions
     private ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
 
     /// <summary>
-    /// TODO.
+    /// Gets or sets the implementation of <see cref="ILoggerFactory"/> to use to
+    /// create <see cref="ILogger"/> instances for logging.
     /// </summary>
+    /// <value>Defaults to <see cref="NullLoggerFactory"/>.</value>
     public ILoggerFactory LoggerFactory
     {
         get => _loggerFactory;
@@ -66,8 +68,9 @@ public class LoggingOptions
     }
 
     /// <summary>
-    /// Gets or sets value indicating if request or response content should be logged.
+    /// Gets or sets value indicating if request and response content should be logged.
     /// </summary>
+    /// <value>Defaults to <c>false</c>.</value>
     public bool IsLoggingContentEnabled
     {
         get => _isLoggingContentEnabled;
@@ -80,8 +83,9 @@ public class LoggingOptions
     }
 
     /// <summary>
-    /// Gets or sets value indicating maximum size of content to log in bytes. Defaults to 4096.
+    /// Gets or sets value indicating maximum size of content to log in bytes.
     /// </summary>
+    /// <value>Defaults to <c>4096</c></value>
     public int LoggedContentSizeLimit
     {
         get => _loggedContentSizeLimit;
@@ -96,6 +100,8 @@ public class LoggingOptions
     /// <summary>
     /// Gets or sets a list of header names that are not redacted during logging.
     /// </summary>
+    /// <value>Defaults to a list of common header names that do not
+    /// typically hold sensitive information.</value>
     public IList<string> AllowedHeaderNames
     {
         get => _allowedHeaderNames;
@@ -104,14 +110,19 @@ public class LoggingOptions
     /// <summary>
     /// Gets or sets a list of query parameter names that are not redacted during logging.
     /// </summary>
+    /// <value>Defaults to a list of common query parameters that do not
+    /// typically hold sensitive information.</value>
     public IList<string> AllowedQueryParameters
     {
         get => _allowedQueryParameters;
     }
 
     /// <summary>
-    /// Gets or sets the header name that contains the request Id to include in logging.
+    /// Gets or sets the header name that contains the correlation identifier to
+    /// include in logging. If this value is not provided, then logs will include
+    /// a randomly generated correlation identifier.
     /// </summary>
+    /// <value>Defaults to <c>null</c>.</value>
     public string? CorrelationIdHeaderName
     {
         get => _correlationIdHeaderName;

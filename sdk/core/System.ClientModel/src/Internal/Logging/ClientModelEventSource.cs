@@ -28,23 +28,12 @@ internal sealed class ClientModelEventSource : EventSource
     private const int ErrorResponseContentTextBlockEvent = 16;
     private const int RequestContentTextEvent = 17;
     private const int ExceptionResponseEvent = 18;
-    private const int BackgroundRefreshFailedEvent = 19;
-    private const int RequestRedirectEvent = 20;
-    private const int RequestRedirectBlockedEvent = 21;
-    private const int RequestRedirectCountExceededEvent = 22;
-    private const int PipelineTransportOptionsNotAppliedEvent = 23;
 
     private ClientModelEventSource(string eventSourceName, string[]? traits = default) : base(eventSourceName, EventSourceSettings.Default, traits) { }
 
     //public static ClientModelEventSource Create(string eventSourceName, string[]? traits) => new(eventSourceName, traits);
 
     public static ClientModelEventSource Log = new("System-ClientModel");
-
-    [Event(BackgroundRefreshFailedEvent, Level = EventLevel.Informational, Message = "Background token refresh [{0}] failed with exception {1}")]
-    public void BackgroundRefreshFailed(string requestId, string exception)
-    {
-        WriteEvent(BackgroundRefreshFailedEvent, requestId, exception);
-    }
 
     // TODO - It's easier to have the IsEnabled calls in this file, but since the logging policy is checking the log level of the ILogger instance as well
     // the checks are done there instead. Need to avoid double checking. However, this approach might be prone to dev error - if someone forgets to check.
@@ -238,18 +227,6 @@ internal sealed class ClientModelEventSource : EventSource
     public void ExceptionResponse(string requestId, string exception)
     {
         WriteEvent(ExceptionResponseEvent, requestId, exception);
-    }
-
-    [NonEvent]
-    public void PipelineTransportOptionsNotApplied(Type optionsType)
-    {
-        PipelineTransportOptionsNotApplied(optionsType.FullName ?? string.Empty);
-    }
-
-    [Event(PipelineTransportOptionsNotAppliedEvent, Level = EventLevel.Informational, Message = "The client requires transport configuration but it was not applied because custom transport was provided. Type: {0}")]
-    public void PipelineTransportOptionsNotApplied(string optionsType)
-    {
-        WriteEvent(PipelineTransportOptionsNotAppliedEvent, optionsType);
     }
 
     [NonEvent]
