@@ -964,6 +964,12 @@
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
 
+# PRLabel: %DevOps - Infrastructure
+/sdk/devopsinfrastructure/Azure.ResourceManager.*/                 @oolaoluwa
+
+# ServiceLabel: %DevOps - Infrastructure
+# ServiceOwners:                                                   @oolaoluwa
+
 # PRLabel: %Informatica Data Management
 /sdk/informaticadatamanagement/Azure.ResourceManager.*/            @almasak
 
