@@ -85,8 +85,9 @@ namespace Azure.Monitor.Query
                 throw new InvalidOperationException("The endpoint URI and audience do not match. If setting the Audience which is regionally specific, please use the LogsQueryClient(TokenCredential, LogsQueryClientOptions) constructor.");
             }
 
-            var authorizationScope = $"{options.Audience}";
-            authorizationScope += "//.default";
+            var authorizationScope = options.Audience.ToString().EndsWith("/")
+            ? $"{options.Audience}/.default"
+            : $"{options.Audience}//.default";
             var scopes = new List<string> { authorizationScope };
 
             endpoint = new Uri(endpoint, options.GetVersionString());
