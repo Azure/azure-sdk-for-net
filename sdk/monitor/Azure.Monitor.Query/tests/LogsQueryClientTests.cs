@@ -330,7 +330,7 @@ namespace Azure.Monitor.Query.Tests
 
             var client = new LogsQueryClient(endpoint, credential);
 
-            Assert.AreEqual("https://custom.audience", client.Endpoint.OriginalString);
+            Assert.AreEqual(new Uri("https://custom.audience"), client.Endpoint);
         }
 
         [Test]
@@ -341,7 +341,21 @@ namespace Azure.Monitor.Query.Tests
 
             var client = new LogsQueryClient(endpoint, credential);
 
-            Assert.AreEqual("https://custom.audience", client.Endpoint.OriginalString);
+            Assert.AreEqual("https://custom.audience//", client.Endpoint.AbsoluteUri);
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsIsValid_UsesOptionsAsUri()
+        {
+            var credential = new DefaultAzureCredential();
+            var options = new LogsQueryClientOptions
+            {
+                Audience = LogsQueryAudience.AzureGovernment
+            };
+
+            var client = new LogsQueryClient(credential, options);
+
+            Assert.AreEqual(new Uri(LogsQueryAudience.AzureGovernment.ToString()), client.Endpoint);
         }
     }
 }
