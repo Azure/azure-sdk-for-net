@@ -87,7 +87,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
         /// <param name="lastModifiedTimeUtc"> Last time the app was modified, in UTC. Read-only. </param>
+        /// <param name="dnsConfiguration"> Property to configure various DNS related settings for a site. </param>
+        /// <param name="isVnetRouteAllEnabled"> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </param>
+        /// <param name="isVnetImagePullEnabled"> To enable pulling image over Virtual Network. </param>
+        /// <param name="isVnetContentShareEnabled"> To enable accessing content over virtual network. </param>
+        /// <param name="isVnetBackupRestoreEnabled"> To enable Backup and Restore operations over virtual network. </param>
         /// <param name="siteConfig"> Configuration of the app. </param>
+        /// <param name="functionAppConfig"> Configuration specific of the Azure Function app. </param>
+        /// <param name="daprConfig"> Dapr configuration of the app. </param>
+        /// <param name="workloadProfileName"> Workload profile name for function app to execute on. </param>
+        /// <param name="resourceConfig"> Function app resource requirements. </param>
         /// <param name="trafficManagerHostNames"> Azure Traffic Manager hostnames associated with the app. Read-only. </param>
         /// <param name="isScmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="targetSwapSlot"> Specifies which deployment slot this app will swap into. Read-only. </param>
@@ -126,15 +135,17 @@ namespace Azure.ResourceManager.AppService
         /// </param>
         /// <param name="redundancyMode"> Site redundancy mode. </param>
         /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
+        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
         /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="virtualNetworkSubnetId">
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
+        /// <param name="managedEnvironmentId"> Azure Resource Manager ID of the customer's selected Managed Environment on which to host this app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IReadOnlyList<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, ResourceIdentifier appServicePlanId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeUtc, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IReadOnlyList<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, ResourceIdentifier appServicePlanId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeUtc, SiteDnsConfig dnsConfiguration, bool? isVnetRouteAllEnabled, bool? isVnetImagePullEnabled, bool? isVnetContentShareEnabled, bool? isVnetBackupRestoreEnabled, SiteConfigProperties siteConfig, FunctionAppConfig functionAppConfig, AppDaprConfig daprConfig, string workloadProfileName, FunctionAppResourceConfig resourceConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, string publicNetworkAccess, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string managedEnvironmentId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ExtendedLocation = extendedLocation;
@@ -151,7 +162,16 @@ namespace Azure.ResourceManager.AppService
             IsXenon = isXenon;
             IsHyperV = isHyperV;
             LastModifiedTimeUtc = lastModifiedTimeUtc;
+            DnsConfiguration = dnsConfiguration;
+            IsVnetRouteAllEnabled = isVnetRouteAllEnabled;
+            IsVnetImagePullEnabled = isVnetImagePullEnabled;
+            IsVnetContentShareEnabled = isVnetContentShareEnabled;
+            IsVnetBackupRestoreEnabled = isVnetBackupRestoreEnabled;
             SiteConfig = siteConfig;
+            FunctionAppConfig = functionAppConfig;
+            DaprConfig = daprConfig;
+            WorkloadProfileName = workloadProfileName;
+            ResourceConfig = resourceConfig;
             TrafficManagerHostNames = trafficManagerHostNames;
             IsScmSiteAlsoStopped = isScmSiteAlsoStopped;
             TargetSwapSlot = targetSwapSlot;
@@ -176,9 +196,11 @@ namespace Azure.ResourceManager.AppService
             IsHttpsOnly = isHttpsOnly;
             RedundancyMode = redundancyMode;
             InProgressOperationId = inProgressOperationId;
+            PublicNetworkAccess = publicNetworkAccess;
             IsStorageAccountRequired = isStorageAccountRequired;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             VirtualNetworkSubnetId = virtualNetworkSubnetId;
+            ManagedEnvironmentId = managedEnvironmentId;
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -236,9 +258,36 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Last time the app was modified, in UTC. Read-only. </summary>
         [WirePath("properties.lastModifiedTimeUtc")]
         public DateTimeOffset? LastModifiedTimeUtc { get; }
+        /// <summary> Property to configure various DNS related settings for a site. </summary>
+        [WirePath("properties.dnsConfiguration")]
+        public SiteDnsConfig DnsConfiguration { get; set; }
+        /// <summary> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </summary>
+        [WirePath("properties.vnetRouteAllEnabled")]
+        public bool? IsVnetRouteAllEnabled { get; set; }
+        /// <summary> To enable pulling image over Virtual Network. </summary>
+        [WirePath("properties.vnetImagePullEnabled")]
+        public bool? IsVnetImagePullEnabled { get; set; }
+        /// <summary> To enable accessing content over virtual network. </summary>
+        [WirePath("properties.vnetContentShareEnabled")]
+        public bool? IsVnetContentShareEnabled { get; set; }
+        /// <summary> To enable Backup and Restore operations over virtual network. </summary>
+        [WirePath("properties.vnetBackupRestoreEnabled")]
+        public bool? IsVnetBackupRestoreEnabled { get; set; }
         /// <summary> Configuration of the app. </summary>
         [WirePath("properties.siteConfig")]
         public SiteConfigProperties SiteConfig { get; set; }
+        /// <summary> Configuration specific of the Azure Function app. </summary>
+        [WirePath("properties.functionAppConfig")]
+        public FunctionAppConfig FunctionAppConfig { get; set; }
+        /// <summary> Dapr configuration of the app. </summary>
+        [WirePath("properties.daprConfig")]
+        public AppDaprConfig DaprConfig { get; set; }
+        /// <summary> Workload profile name for function app to execute on. </summary>
+        [WirePath("properties.workloadProfileName")]
+        public string WorkloadProfileName { get; set; }
+        /// <summary> Function app resource requirements. </summary>
+        [WirePath("properties.resourceConfig")]
+        public FunctionAppResourceConfig ResourceConfig { get; set; }
         /// <summary> Azure Traffic Manager hostnames associated with the app. Read-only. </summary>
         [WirePath("properties.trafficManagerHostNames")]
         public IReadOnlyList<string> TrafficManagerHostNames { get; }
@@ -325,6 +374,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Specifies an operation id if this site has a pending operation. </summary>
         [WirePath("properties.inProgressOperationId")]
         public Guid? InProgressOperationId { get; }
+        /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
         /// <summary> Checks if Customer provided storage account is required. </summary>
         [WirePath("properties.storageAccountRequired")]
         public bool? IsStorageAccountRequired { get; set; }
@@ -337,6 +389,9 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.virtualNetworkSubnetId")]
         public ResourceIdentifier VirtualNetworkSubnetId { get; set; }
+        /// <summary> Azure Resource Manager ID of the customer's selected Managed Environment on which to host this app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </summary>
+        [WirePath("properties.managedEnvironmentId")]
+        public string ManagedEnvironmentId { get; set; }
         /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }

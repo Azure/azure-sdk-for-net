@@ -95,3 +95,10 @@ To delete an entity, invoke `DeleteEntity` and pass in its partition and row key
 // Delete the entity given the partition and row key.
 tableClient.DeleteEntity(partitionKey, rowKey);
 ```
+
+Alternatively, you can pass a `TableEntity`object.
+
+```C# Snippet:TablesSample2DeleteEntityUsingObject
+// Delete an entity given a TableEntity object
+tableClient.DeleteEntity(tableEntity);
+```

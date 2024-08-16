@@ -17,5 +17,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> The MTU (in bytes) signaled to the UE. The same MTU is set on the user plane data links for all data networks. The MTU set on the user plane access link is calculated to be 60 bytes greater than this value to allow for GTP encapsulation. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public int? UeMtu { get => UEMtu; set => UEMtu = value; }
+
+        /// <summary> The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute. </summary>
+        public int? NasRerouteMacroMmeGroupId { get => Signaling.NasRerouteMacroMmeGroupId; set => Signaling.NasRerouteMacroMmeGroupId = value; }
     }
 }

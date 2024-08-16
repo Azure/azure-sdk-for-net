@@ -8,13 +8,25 @@
 
 ### Bugs Fixed
 
-- Fixed an error that prevented relative URIs from being used with [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `EventData.Properties` collection. 
+### Other Changes
+
+## 5.11.5 (2024-08-14)
+
+### Other Changes
+
+- Bump `Azure.Core.Amqp` dependency to 1.3.1, which includes a fix to serialization of binary application properties.
+
+## 5.11.4 (2024-07-17)
+
+### Bugs Fixed
+
+- Fixed an error that prevented relative URIs from being used with [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `EventData.Properties` collection.
 
 - Fixed an error with ETW logs which caused structured arguments for Id 105 (Event Processor position determined) to be out-of-order with the message format.  This also caused the date to render incorrectly for some captures.
 
 ### Other Changes
 
-- The processor will now refresh the maximum message size each time a new AMQP link is opened; this is necessary for large message support, where the maximum message size for entities can be reconfigured and adjusted on the fly.  Because the client had cached the value, it would not be aware of the change and would enforce the wrong size for batch creation. 
+- The processor will now refresh the maximum message size each time a new AMQP link is opened; this is necessary for large message support, where the maximum message size for entities can be reconfigured and adjusted on the fly.  Because the client had cached the value, it would not be aware of the change and would enforce the wrong size for batch creation.
 
 - Adjusted the options used by the processor during startup validation to reduce the amount of data transferred and minimize impact on the outgoing events metric.
 
@@ -35,7 +47,7 @@
   - LastEnqueuedEventProperties.Offset
   - PartitionProperties.LastEnqueuedOffset
   - CheckpointPosition.Offset
-    
+
   Impacted methods:
   - EventPosition.FromOffset
   - EventHubsModelFactory.EventData
@@ -60,7 +72,7 @@
 
 - The `EventProcessorClient` will now create a unique span for each event emitted to the handler for processing.  Previously a single span was created for all events in a batch.  ([#31922](https://github.com/Azure/azure-sdk-for-net/issues/31922))
 
-- Fixed a parameter ordering error in ETW 22 (EventBatchProcessingError) that caused structured data arguments to be ordered differently than the associated replacement token in the log message. 
+- Fixed a parameter ordering error in ETW 22 (EventBatchProcessingError) that caused structured data arguments to be ordered differently than the associated replacement token in the log message.
 
 ### Other Changes
 

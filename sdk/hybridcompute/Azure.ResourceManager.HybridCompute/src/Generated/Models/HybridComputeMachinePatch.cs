@@ -44,26 +44,34 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </summary>
+        [WirePath("kind")]
         public ArcKindEnum? Kind { get; set; }
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
+        [WirePath("properties.locationData")]
         public HybridComputeLocation LocationData { get; set; }
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
+        [WirePath("properties.osProfile")]
         public HybridComputeOSProfile OSProfile { get; set; }
         /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
         internal HybridComputeCloudMetadata CloudMetadata { get; set; }
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
+        [WirePath("properties.cloudMetadata.provider")]
         public string CloudMetadataProvider
         {
             get => CloudMetadata is null ? default : CloudMetadata.Provider;
         }
 
         /// <summary> The info of the machine w.r.t Agent Upgrade. </summary>
+        [WirePath("properties.agentUpgrade")]
         public AgentUpgrade AgentUpgrade { get; set; }
         /// <summary> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </summary>
+        [WirePath("properties.parentClusterResourceId")]
         public ResourceIdentifier ParentClusterResourceId { get; set; }
         /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
+        [WirePath("properties.privateLinkScopeResourceId")]
         public ResourceIdentifier PrivateLinkScopeResourceId { get; set; }
     }
 }

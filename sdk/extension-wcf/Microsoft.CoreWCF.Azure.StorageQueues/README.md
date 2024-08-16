@@ -9,7 +9,7 @@ CoreWCF Azure Queue Storage is the service side library that will help existing 
 Install the Microsoft.CoreWCF.Azure.StorageQueues library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Microsoft.CoreWCF.Azure.StorageQueues
+dotnet add package Microsoft.CoreWCF.Azure.StorageQueues --prerelease
 ```
 
 ### Prerequisites

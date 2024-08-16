@@ -3,7 +3,7 @@
 
 using System;
 using System.ComponentModel;
-using System.Security.Cryptography;
+using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry
 {
@@ -17,9 +17,16 @@ namespace Azure.Data.SchemaRegistry
         private const string CustomValue = "Custom";
         private const string ProtobufValue = "Protobuf";
 
-        private const string AvroContentType = "Avro";
-        private const string JsonContentType = "Json";
-        private const string ProtobufContentType = "vnd.ms.protobuf";
+        // Temporary until autorest bug is fixed
+        private const string AvroContentType = "application/json; serialization=Avro";
+        private const string JsonContentType = "application/json; serialization=Json";
+        private const string CustomContentType = "text/plain; charset=utf-8";
+        private const string ProtobufContentType = "text/vnd.ms.protobuf";
+
+        private const string AvroContentTypeValue = "Avro";
+        private const string JsonContentTypeValue = "Json";
+        private const string CustomContentTypeValue = "utf-8";
+        private const string ProtobufContentTypeValue = "vnd.ms.protobuf";
 
         /// <summary> Initializes a new instance of <see cref="SchemaFormat"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -64,37 +71,34 @@ namespace Azure.Data.SchemaRegistry
             switch (_value)
             {
                 case AvroValue:
-                    return ContentType.Avro;
+                    return new ContentType(AvroContentType);
                 case JsonValue:
-                    return ContentType.Json;
+                    return new ContentType(JsonContentType);
                 //case ProtobufValue:
-                //    return ContentType.Protobuf;
+                //    return new ContentType(ProtobufContentType);
                 default:
-                    return ContentType.Custom;
+                    return new ContentType(CustomContentType);
             }
         }
 
         internal static SchemaFormat FromContentType(string contentTypeValue)
         {
             var contentTypeParameterValue = contentTypeValue.Split('=');
-            var contentSubType = contentTypeValue.Split('/');
             if (contentTypeParameterValue.Length > 1)
             {
                 switch (contentTypeParameterValue[1])
                 {
-                    case AvroContentType:
-                        return SchemaFormat.Avro;
-                    case JsonContentType:
-                        return SchemaFormat.Json;
+                    case AvroContentTypeValue:
+                        return Avro;
+                    case JsonContentTypeValue:
+                        return Json;
+                    case CustomContentTypeValue:
+                        return Custom;
                     default:
                         break;
                 }
             }
-            return contentSubType[1] switch
-            {
-                //ProtobufContentType => SchemaFormat.Protobuf,
-                _ => SchemaFormat.Custom,
-            };
+            return new SchemaFormat(contentTypeValue);
         }
     }
 }

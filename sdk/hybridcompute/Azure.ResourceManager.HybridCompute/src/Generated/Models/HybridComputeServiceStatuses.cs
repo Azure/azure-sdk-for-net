@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The state of the extension service on the Arc-enabled machine. </summary>
+        [WirePath("extensionService")]
         public HybridComputeServiceStatus ExtensionService { get; set; }
         /// <summary> The state of the guest configuration service on the Arc-enabled machine. </summary>
+        [WirePath("guestConfigurationService")]
         public HybridComputeServiceStatus GuestConfigurationService { get; set; }
     }
 }

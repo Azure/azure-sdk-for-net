@@ -11,15 +11,13 @@
 
   <ItemGroup>
     <PackageReference Include="Apache.Avro" />
-    <!-- <PackageReference Include="Azure.Data.SchemaRegistry" /> -->
+     <!--<PackageReference Include="Azure.Data.SchemaRegistry" />--> 
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Data.SchemaRegistry\src\Azure.Data.SchemaRegistry.csproj" />
-		<!-- Temporary, until we move SchemaValidator and LruCache into core.-->
-		<ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Azure.Data.SchemaRegistry\src\Azure.Data.SchemaRegistry.csproj" />
+	</ItemGroup>
 
   <!-- Shared source from Azure.Core -->
     <ItemGroup>
