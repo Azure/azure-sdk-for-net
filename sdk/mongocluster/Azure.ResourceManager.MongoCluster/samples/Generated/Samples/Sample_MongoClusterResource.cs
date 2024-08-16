@@ -163,14 +163,14 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             MongoClusterResource mongoCluster = client.GetMongoClusterResource(mongoClusterResourceId);
 
             // invoke the operation
-            MongoClusterData data = new MongoClusterData(new AzureLocation("placeholder"))
+            MongoClusterPatch patch = new MongoClusterPatch()
             {
-                Properties = new MongoClusterProperties()
+                Properties = new MongoClusterUpdateProperties()
                 {
                     PublicNetworkAccess = PublicNetworkAccess.Disabled,
                 },
             };
-            ArmOperation<MongoClusterResource> lro = await mongoCluster.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<MongoClusterResource> lro = await mongoCluster.UpdateAsync(WaitUntil.Completed, patch);
             MongoClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -202,15 +202,15 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             MongoClusterResource mongoCluster = client.GetMongoClusterResource(mongoClusterResourceId);
 
             // invoke the operation
-            MongoClusterData data = new MongoClusterData(new AzureLocation("placeholder"))
+            MongoClusterPatch patch = new MongoClusterPatch()
             {
-                Properties = new MongoClusterProperties()
+                Properties = new MongoClusterUpdateProperties()
                 {
                     AdministratorLogin = "mongoAdmin",
                     AdministratorLoginPassword = "password",
                 },
             };
-            ArmOperation<MongoClusterResource> lro = await mongoCluster.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<MongoClusterResource> lro = await mongoCluster.UpdateAsync(WaitUntil.Completed, patch);
             MongoClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -242,9 +242,9 @@ namespace Azure.ResourceManager.MongoCluster.Samples
             MongoClusterResource mongoCluster = client.GetMongoClusterResource(mongoClusterResourceId);
 
             // invoke the operation
-            MongoClusterData data = new MongoClusterData(new AzureLocation("placeholder"))
+            MongoClusterPatch patch = new MongoClusterPatch()
             {
-                Properties = new MongoClusterProperties()
+                Properties = new MongoClusterUpdateProperties()
                 {
                     AdministratorLogin = "mongoAdmin",
                     AdministratorLoginPassword = "password",
@@ -263,7 +263,7 @@ NodeCount = 1,
 },
                 },
             };
-            ArmOperation<MongoClusterResource> lro = await mongoCluster.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<MongoClusterResource> lro = await mongoCluster.UpdateAsync(WaitUntil.Completed, patch);
             MongoClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -295,9 +295,9 @@ NodeCount = 1,
             MongoClusterResource mongoCluster = client.GetMongoClusterResource(mongoClusterResourceId);
 
             // invoke the operation
-            MongoClusterData data = new MongoClusterData(new AzureLocation("placeholder"))
+            MongoClusterPatch patch = new MongoClusterPatch()
             {
-                Properties = new MongoClusterProperties()
+                Properties = new MongoClusterUpdateProperties()
                 {
                     NodeGroupSpecs =
 {
@@ -309,7 +309,7 @@ Kind = NodeKind.Shard,
 },
                 },
             };
-            ArmOperation<MongoClusterResource> lro = await mongoCluster.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<MongoClusterResource> lro = await mongoCluster.UpdateAsync(WaitUntil.Completed, patch);
             MongoClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: MongoCluster
 namespace: Azure.ResourceManager.MongoCluster
-require: https://github.com/welovej/azure-rest-api-specs/blob/7408d92e3d5f9082afc85fac60d4ecebd85e65fc/specification/mongocluster/resource-manager/readme.md
+require: https://github.com/welovej/azure-rest-api-specs/blob/cb7e594a46fa2b73919299dd80c65a3e8e9c2b1a/specification/mongocluster/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -51,8 +51,10 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
 rename-mapping:
   CheckNameAvailabilityResponse: CheckNameAvailabilityResult
   MongoClusterRestoreParameters: MongoClusterRestoreContent
   PrivateLinkResource: MongoClusterPrviateLinkResourceData
+  MongoClusterReplicaParameters: MongoClusterReplicaContent
 ```

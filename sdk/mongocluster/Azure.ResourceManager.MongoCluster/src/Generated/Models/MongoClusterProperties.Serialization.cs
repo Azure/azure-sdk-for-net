@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
             CreateMode? createMode = default;
             MongoClusterRestoreContent restoreParameters = default;
-            MongoClusterReplicaParameters replicaParameters = default;
+            MongoClusterReplicaContent replicaParameters = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
             string serverVersion = default;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    replicaParameters = MongoClusterReplicaParameters.DeserializeMongoClusterReplicaParameters(property.Value, options);
+                    replicaParameters = MongoClusterReplicaContent.DeserializeMongoClusterReplicaContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("administratorLogin"u8))

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="replica"> The replication properties for the mongo cluster. </param>
         /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterProperties(CreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaParameters replicaParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, ProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, PublicNetworkAccess? publicNetworkAccess, IList<NodeGroupSpec> nodeGroupSpecs, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<PreviewFeature> previewFeatures, ReplicationProperties replica, string infrastructureVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterProperties(CreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, ProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, PublicNetworkAccess? publicNetworkAccess, IList<NodeGroupSpec> nodeGroupSpecs, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<PreviewFeature> previewFeatures, ReplicationProperties replica, string infrastructureVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateMode = createMode;
             RestoreParameters = restoreParameters;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The parameters to create a point-in-time restore mongo cluster. </summary>
         public MongoClusterRestoreContent RestoreParameters { get; set; }
         /// <summary> The parameters to create a replica mongo cluster. </summary>
-        public MongoClusterReplicaParameters ReplicaParameters { get; set; }
+        public MongoClusterReplicaContent ReplicaParameters { get; set; }
         /// <summary> The administrator's login for the mongo cluster. </summary>
         public string AdministratorLogin { get; set; }
         /// <summary> The password of the administrator login. </summary>

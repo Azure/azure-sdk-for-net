@@ -290,7 +290,7 @@ NodeCount = 1,
                 Properties = new MongoClusterProperties()
                 {
                     CreateMode = CreateMode.GeoReplica,
-                    ReplicaParameters = new MongoClusterReplicaParameters(new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/mySourceMongoCluster"), "eastus"),
+                    ReplicaParameters = new MongoClusterReplicaContent(new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestResourceGroup/providers/Microsoft.DocumentDB/mongoClusters/mySourceMongoCluster"), "eastus"),
                 },
             };
             ArmOperation<MongoClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, mongoClusterName, data);

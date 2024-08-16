@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MongoCluster.Models
 {
     /// <summary> Parameters used for replica operations. </summary>
-    public partial class MongoClusterReplicaParameters
+    public partial class MongoClusterReplicaContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterReplicaParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterReplicaContent"/>. </summary>
         /// <param name="sourceResourceId"> The id of the replication source cluster. </param>
         /// <param name="sourceLocation"> The location of the source cluster. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/> or <paramref name="sourceLocation"/> is null. </exception>
-        public MongoClusterReplicaParameters(ResourceIdentifier sourceResourceId, string sourceLocation)
+        public MongoClusterReplicaContent(ResourceIdentifier sourceResourceId, string sourceLocation)
         {
             Argument.AssertNotNull(sourceResourceId, nameof(sourceResourceId));
             Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.MongoCluster.Models
             SourceLocation = sourceLocation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterReplicaParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterReplicaContent"/>. </summary>
         /// <param name="sourceResourceId"> The id of the replication source cluster. </param>
         /// <param name="sourceLocation"> The location of the source cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterReplicaParameters(ResourceIdentifier sourceResourceId, string sourceLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterReplicaContent(ResourceIdentifier sourceResourceId, string sourceLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceResourceId = sourceResourceId;
             SourceLocation = sourceLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterReplicaParameters"/> for deserialization. </summary>
-        internal MongoClusterReplicaParameters()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterReplicaContent"/> for deserialization. </summary>
+        internal MongoClusterReplicaContent()
         {
         }
 

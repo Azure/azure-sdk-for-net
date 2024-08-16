@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    public partial class MongoClusterReplicaParameters : IUtf8JsonSerializable, IJsonModel<MongoClusterReplicaParameters>
+    public partial class MongoClusterReplicaContent : IUtf8JsonSerializable, IJsonModel<MongoClusterReplicaContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterReplicaParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterReplicaContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MongoClusterReplicaParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoClusterReplicaContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplicaParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoClusterReplicaParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterReplicaContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.MongoCluster.Models
             writer.WriteEndObject();
         }
 
-        MongoClusterReplicaParameters IJsonModel<MongoClusterReplicaParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterReplicaContent IJsonModel<MongoClusterReplicaContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplicaParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoClusterReplicaParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterReplicaContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMongoClusterReplicaParameters(document.RootElement, options);
+            return DeserializeMongoClusterReplicaContent(document.RootElement, options);
         }
 
-        internal static MongoClusterReplicaParameters DeserializeMongoClusterReplicaParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoClusterReplicaContent DeserializeMongoClusterReplicaContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -90,38 +90,38 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MongoClusterReplicaParameters(sourceResourceId, sourceLocation, serializedAdditionalRawData);
+            return new MongoClusterReplicaContent(sourceResourceId, sourceLocation, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MongoClusterReplicaParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoClusterReplicaContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplicaParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoClusterReplicaParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterReplicaContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MongoClusterReplicaParameters IPersistableModel<MongoClusterReplicaParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoClusterReplicaContent IPersistableModel<MongoClusterReplicaContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplicaParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplicaContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMongoClusterReplicaParameters(document.RootElement, options);
+                        return DeserializeMongoClusterReplicaContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoClusterReplicaParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterReplicaContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MongoClusterReplicaParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoClusterReplicaContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
