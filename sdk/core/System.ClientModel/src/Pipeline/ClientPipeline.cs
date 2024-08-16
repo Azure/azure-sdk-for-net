@@ -220,45 +220,57 @@ public sealed partial class ClientPipeline
         await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
     }
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public async ValueTask<PipelineResponse> SendAsync(PipelineMessage message, RequestOptions options)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    /// <summary>
+    /// Provides a standard implementation of a client protocol method.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    public async ValueTask<ClientResult> ProcessMessageAsync(PipelineMessage message, RequestOptions options)
     {
+        message.Apply(options);
+
         await SendAsync(message).ConfigureAwait(false);
 
         // TODO: I think we can null-suppress Response, but double-check
 
-        if (message.Response!.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
-        {
-            // TODO: approach for customizing exception message?
+        // This allow protocols method to dispose message without disposing response
+        // in the case that the response is holding an un-buffered content stream.
+        PipelineResponse response = message.BufferResponse ? message.Response! : message.ExtractResponse()!;
 
-            throw await ClientResultException.CreateAsync(message.Response).ConfigureAwait(false);
+        if (response!.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
+        {
+            throw await message.ExceptionFactory.FromResponseAsync(response).ConfigureAwait(false);
         }
 
-        PipelineResponse response = message.BufferResponse ? message.Response : message.ExtractResponse()!;
-        return response;
+        return ClientResult.FromResponse(response);
     }
 
-    // Convenience for implementing RequestOptions features
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public PipelineResponse Send(PipelineMessage message, RequestOptions options)
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    /// <summary>
+    /// Provides a standard implementation of a client protocol method.
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
+    /// <exception cref="ClientResultException"></exception>
+    public ClientResult ProcessMessage(PipelineMessage message, RequestOptions options)
     {
-        Send(message);
+        message.Apply(options);
 
-        // Allow protocol method to dispose message.
-        PipelineResponse response = message.BufferResponse ? message.Response! : message.ExtractResponse()!;
+        Send(message);
 
         // TODO: I think we can null-suppress Response, but double-check
 
+        // This allow protocols method to dispose message without disposing response
+        // in the case that the response is holding an un-buffered content stream.
+        PipelineResponse response = message.BufferResponse ? message.Response! : message.ExtractResponse()!;
+
         if (response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
         {
-            // TODO: approach for customizing exception message?
-
-            throw new ClientResultException(response);
+            throw message.ExceptionFactory.FromResponse(response);
         }
 
-        return response;
+        return ClientResult.FromResponse(response);
     }
 
     private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)
