@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Parameters used for restore operations. </summary>
-    public partial class MongoClusterRestoreContent
+    /// <summary> Parameters used for replica operations. </summary>
+    public partial class MongoClusterReplicaParameters
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +46,38 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
-        public MongoClusterRestoreContent()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterReplicaParameters"/>. </summary>
+        /// <param name="sourceResourceId"> The id of the replication source cluster. </param>
+        /// <param name="sourceLocation"> The location of the source cluster. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/> or <paramref name="sourceLocation"/> is null. </exception>
+        public MongoClusterReplicaParameters(ResourceIdentifier sourceResourceId, string sourceLocation)
         {
+            Argument.AssertNotNull(sourceResourceId, nameof(sourceResourceId));
+            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
+
+            SourceResourceId = sourceResourceId;
+            SourceLocation = sourceLocation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
-        /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
-        /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterReplicaParameters"/>. </summary>
+        /// <param name="sourceResourceId"> The id of the replication source cluster. </param>
+        /// <param name="sourceLocation"> The location of the source cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterRestoreContent(DateTimeOffset? pointInTimeUTC, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterReplicaParameters(ResourceIdentifier sourceResourceId, string sourceLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PointInTimeUTC = pointInTimeUTC;
             SourceResourceId = sourceResourceId;
+            SourceLocation = sourceLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> UTC point in time to restore a mongo cluster. </summary>
-        public DateTimeOffset? PointInTimeUTC { get; set; }
-        /// <summary> Resource ID to locate the source cluster to restore. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterReplicaParameters"/> for deserialization. </summary>
+        internal MongoClusterReplicaParameters()
+        {
+        }
+
+        /// <summary> The id of the replication source cluster. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
+        /// <summary> The location of the source cluster. </summary>
+        public string SourceLocation { get; set; }
     }
 }

@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 writer.WritePropertyName("restoreParameters"u8);
                 writer.WriteObjectValue(RestoreParameters, options);
             }
+            if (Optional.IsDefined(ReplicaParameters))
+            {
+                writer.WritePropertyName("replicaParameters"u8);
+                writer.WriteObjectValue(ReplicaParameters, options);
+            }
             if (Optional.IsDefined(AdministratorLogin))
             {
                 writer.WritePropertyName("administratorLogin"u8);
@@ -96,6 +101,26 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(PreviewFeatures))
+            {
+                writer.WritePropertyName("previewFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in PreviewFeatures)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Replica))
+            {
+                writer.WritePropertyName("replica"u8);
+                writer.WriteObjectValue(Replica, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InfrastructureVersion))
+            {
+                writer.WritePropertyName("infrastructureVersion"u8);
+                writer.WriteStringValue(InfrastructureVersion);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -136,6 +161,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
             CreateMode? createMode = default;
             MongoClusterRestoreContent restoreParameters = default;
+            MongoClusterReplicaParameters replicaParameters = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
             string serverVersion = default;
@@ -146,6 +172,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
             PublicNetworkAccess? publicNetworkAccess = default;
             IList<NodeGroupSpec> nodeGroupSpecs = default;
             IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default;
+            IList<PreviewFeature> previewFeatures = default;
+            ReplicationProperties replica = default;
+            string infrastructureVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,6 +195,15 @@ namespace Azure.ResourceManager.MongoCluster.Models
                         continue;
                     }
                     restoreParameters = MongoClusterRestoreContent.DeserializeMongoClusterRestoreContent(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("replicaParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    replicaParameters = MongoClusterReplicaParameters.DeserializeMongoClusterReplicaParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("administratorLogin"u8))
@@ -248,6 +286,34 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     privateEndpointConnections = array;
                     continue;
                 }
+                if (property.NameEquals("previewFeatures"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PreviewFeature> array = new List<PreviewFeature>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new PreviewFeature(item.GetString()));
+                    }
+                    previewFeatures = array;
+                    continue;
+                }
+                if (property.NameEquals("replica"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    replica = ReplicationProperties.DeserializeReplicationProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("infrastructureVersion"u8))
+                {
+                    infrastructureVersion = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -257,6 +323,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterProperties(
                 createMode,
                 restoreParameters,
+                replicaParameters,
                 administratorLogin,
                 administratorLoginPassword,
                 serverVersion,
@@ -267,6 +334,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 publicNetworkAccess,
                 nodeGroupSpecs ?? new ChangeTrackingList<NodeGroupSpec>(),
                 privateEndpointConnections ?? new ChangeTrackingList<MongoClusterPrivateEndpointConnection>(),
+                previewFeatures ?? new ChangeTrackingList<PreviewFeature>(),
+                replica,
+                infrastructureVersion,
                 serializedAdditionalRawData);
         }
 

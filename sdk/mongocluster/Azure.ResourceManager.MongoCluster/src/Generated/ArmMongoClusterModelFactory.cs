@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> Initializes a new instance of <see cref="Models.MongoClusterProperties"/>. </summary>
         /// <param name="createMode"> The mode to create a mongo cluster. </param>
         /// <param name="restoreParameters"> The parameters to create a point-in-time restore mongo cluster. </param>
+        /// <param name="replicaParameters"> The parameters to create a replica mongo cluster. </param>
         /// <param name="administratorLogin"> The administrator's login for the mongo cluster. </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
         /// <param name="serverVersion"> The Mongo DB server version. Defaults to the latest available version if not specified. </param>
@@ -63,15 +64,20 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this mongo cluster. </param>
         /// <param name="nodeGroupSpecs"> The list of node group specs in the cluster. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="previewFeatures"> List of private endpoint connections. </param>
+        /// <param name="replica"> The replication properties for the mongo cluster. </param>
+        /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
         /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
-        public static MongoClusterProperties MongoClusterProperties(CreateMode? createMode = null, MongoClusterRestoreContent restoreParameters = null, string administratorLogin = null, string administratorLoginPassword = null, string serverVersion = null, string connectionString = null, string earliestRestoreTime = null, ProvisioningState? provisioningState = null, MongoClusterStatus? clusterStatus = null, PublicNetworkAccess? publicNetworkAccess = null, IEnumerable<NodeGroupSpec> nodeGroupSpecs = null, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = null)
+        public static MongoClusterProperties MongoClusterProperties(CreateMode? createMode = null, MongoClusterRestoreContent restoreParameters = null, MongoClusterReplicaParameters replicaParameters = null, string administratorLogin = null, string administratorLoginPassword = null, string serverVersion = null, string connectionString = null, string earliestRestoreTime = null, ProvisioningState? provisioningState = null, MongoClusterStatus? clusterStatus = null, PublicNetworkAccess? publicNetworkAccess = null, IEnumerable<NodeGroupSpec> nodeGroupSpecs = null, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = null, IEnumerable<PreviewFeature> previewFeatures = null, ReplicationProperties replica = null, string infrastructureVersion = null)
         {
             nodeGroupSpecs ??= new List<NodeGroupSpec>();
             privateEndpointConnections ??= new List<MongoClusterPrivateEndpointConnection>();
+            previewFeatures ??= new List<PreviewFeature>();
 
             return new MongoClusterProperties(
                 createMode,
                 restoreParameters,
+                replicaParameters,
                 administratorLogin,
                 administratorLoginPassword,
                 serverVersion,
@@ -82,6 +88,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 publicNetworkAccess,
                 nodeGroupSpecs?.ToList(),
                 privateEndpointConnections?.ToList(),
+                previewFeatures?.ToList(),
+                replica,
+                infrastructureVersion,
                 serializedAdditionalRawData: null);
         }
 
@@ -114,6 +123,16 @@ namespace Azure.ResourceManager.MongoCluster.Models
             groupIds ??= new List<string>();
 
             return new PrivateEndpointConnectionProperties(groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReplicationProperties"/>. </summary>
+        /// <param name="sourceResourceId"> The resource id the source cluster for the replica cluster. </param>
+        /// <param name="role"> The replication role of the cluster. </param>
+        /// <param name="replicationState"> The replication link state of the replica cluster. </param>
+        /// <returns> A new <see cref="Models.ReplicationProperties"/> instance for mocking. </returns>
+        public static ReplicationProperties ReplicationProperties(ResourceIdentifier sourceResourceId = null, ReplicationRole? role = null, ReplicationState? replicationState = null)
+        {
+            return new ReplicationProperties(sourceResourceId, role, replicationState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoCluster.FirewallRuleData"/>. </summary>
@@ -210,6 +229,33 @@ namespace Azure.ResourceManager.MongoCluster.Models
             requiredZoneNames ??= new List<string>();
 
             return new MongoClusterPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PromoteReplicaContent"/>. </summary>
+        /// <param name="promoteOption"> The promote option to apply to the operation. </param>
+        /// <param name="mode"> The mode to apply to the promote operation. Value is optional and default value is 'Switchover'. </param>
+        /// <returns> A new <see cref="Models.PromoteReplicaContent"/> instance for mocking. </returns>
+        public static PromoteReplicaContent PromoteReplicaContent(PromoteOption promoteOption = default, PromoteMode? mode = null)
+        {
+            return new PromoteReplicaContent(promoteOption, mode, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Replica"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.Replica"/> instance for mocking. </returns>
+        public static Replica Replica(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MongoClusterProperties properties = null)
+        {
+            return new Replica(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
     }
 }

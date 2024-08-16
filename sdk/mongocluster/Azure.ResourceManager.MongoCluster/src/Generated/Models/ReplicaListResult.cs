@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Parameters used for restore operations. </summary>
-    public partial class MongoClusterRestoreContent
+    /// <summary> The response of a Replica list operation. </summary>
+    internal partial class ReplicaListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +46,35 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
-        public MongoClusterRestoreContent()
+        /// <summary> Initializes a new instance of <see cref="ReplicaListResult"/>. </summary>
+        /// <param name="value"> The Replica items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ReplicaListResult(IEnumerable<Replica> value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
-        /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
-        /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
+        /// <summary> Initializes a new instance of <see cref="ReplicaListResult"/>. </summary>
+        /// <param name="value"> The Replica items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterRestoreContent(DateTimeOffset? pointInTimeUTC, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReplicaListResult(IReadOnlyList<Replica> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PointInTimeUTC = pointInTimeUTC;
-            SourceResourceId = sourceResourceId;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> UTC point in time to restore a mongo cluster. </summary>
-        public DateTimeOffset? PointInTimeUTC { get; set; }
-        /// <summary> Resource ID to locate the source cluster to restore. </summary>
-        public ResourceIdentifier SourceResourceId { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ReplicaListResult"/> for deserialization. </summary>
+        internal ReplicaListResult()
+        {
+        }
+
+        /// <summary> The Replica items on this page. </summary>
+        public IReadOnlyList<Replica> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

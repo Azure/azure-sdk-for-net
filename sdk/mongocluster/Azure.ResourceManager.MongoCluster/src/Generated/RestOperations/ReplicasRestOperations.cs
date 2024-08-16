@@ -15,20 +15,20 @@ using Azure.ResourceManager.MongoCluster.Models;
 
 namespace Azure.ResourceManager.MongoCluster
 {
-    internal partial class PrivateLinksRestOperations
+    internal partial class ReplicasRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of PrivateLinksRestOperations. </summary>
+        /// <summary> Initializes a new instance of ReplicasRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public PrivateLinksRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public ReplicasRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MongoCluster
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListByMongoClusterRequestUri(string subscriptionId, string resourceGroupName, string mongoClusterName)
+        internal RequestUriBuilder CreateListByParentRequestUri(string subscriptionId, string resourceGroupName, string mongoClusterName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.MongoCluster
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/mongoClusters/", false);
             uri.AppendPath(mongoClusterName, true);
-            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendPath("/replicas", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByMongoClusterRequest(string subscriptionId, string resourceGroupName, string mongoClusterName)
+        internal HttpMessage CreateListByParentRequest(string subscriptionId, string resourceGroupName, string mongoClusterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MongoCluster
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.DocumentDB/mongoClusters/", false);
             uri.AppendPath(mongoClusterName, true);
-            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendPath("/replicas", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -72,28 +72,28 @@ namespace Azure.ResourceManager.MongoCluster
             return message;
         }
 
-        /// <summary> list private links on the given resource. </summary>
+        /// <summary> List all the replicas for the mongo cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MongoClusterPrivateLinkResourceListResult>> ListByMongoClusterAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<ReplicaListResult>> ListByParentAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
 
-            using var message = CreateListByMongoClusterRequest(subscriptionId, resourceGroupName, mongoClusterName);
+            using var message = CreateListByParentRequest(subscriptionId, resourceGroupName, mongoClusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MongoClusterPrivateLinkResourceListResult value = default;
+                        ReplicaListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MongoClusterPrivateLinkResourceListResult.DeserializeMongoClusterPrivateLinkResourceListResult(document.RootElement);
+                        value = ReplicaListResult.DeserializeReplicaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,28 +101,28 @@ namespace Azure.ResourceManager.MongoCluster
             }
         }
 
-        /// <summary> list private links on the given resource. </summary>
+        /// <summary> List all the replicas for the mongo cluster. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MongoClusterPrivateLinkResourceListResult> ListByMongoCluster(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
+        public Response<ReplicaListResult> ListByParent(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
 
-            using var message = CreateListByMongoClusterRequest(subscriptionId, resourceGroupName, mongoClusterName);
+            using var message = CreateListByParentRequest(subscriptionId, resourceGroupName, mongoClusterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MongoClusterPrivateLinkResourceListResult value = default;
+                        ReplicaListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MongoClusterPrivateLinkResourceListResult.DeserializeMongoClusterPrivateLinkResourceListResult(document.RootElement);
+                        value = ReplicaListResult.DeserializeReplicaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MongoCluster
             }
         }
 
-        internal RequestUriBuilder CreateListByMongoClusterNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string mongoClusterName)
+        internal RequestUriBuilder CreateListByParentNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string mongoClusterName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MongoCluster
             return uri;
         }
 
-        internal HttpMessage CreateListByMongoClusterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string mongoClusterName)
+        internal HttpMessage CreateListByParentNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string mongoClusterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MongoCluster
             return message;
         }
 
-        /// <summary> list private links on the given resource. </summary>
+        /// <summary> List all the replicas for the mongo cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -160,22 +160,22 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MongoClusterPrivateLinkResourceListResult>> ListByMongoClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<ReplicaListResult>> ListByParentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
 
-            using var message = CreateListByMongoClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, mongoClusterName);
+            using var message = CreateListByParentNextPageRequest(nextLink, subscriptionId, resourceGroupName, mongoClusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MongoClusterPrivateLinkResourceListResult value = default;
+                        ReplicaListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MongoClusterPrivateLinkResourceListResult.DeserializeMongoClusterPrivateLinkResourceListResult(document.RootElement);
+                        value = ReplicaListResult.DeserializeReplicaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.MongoCluster
             }
         }
 
-        /// <summary> list private links on the given resource. </summary>
+        /// <summary> List all the replicas for the mongo cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -191,22 +191,22 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MongoClusterPrivateLinkResourceListResult> ListByMongoClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
+        public Response<ReplicaListResult> ListByParentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mongoClusterName, nameof(mongoClusterName));
 
-            using var message = CreateListByMongoClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, mongoClusterName);
+            using var message = CreateListByParentNextPageRequest(nextLink, subscriptionId, resourceGroupName, mongoClusterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        MongoClusterPrivateLinkResourceListResult value = default;
+                        ReplicaListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MongoClusterPrivateLinkResourceListResult.DeserializeMongoClusterPrivateLinkResourceListResult(document.RootElement);
+                        value = ReplicaListResult.DeserializeReplicaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

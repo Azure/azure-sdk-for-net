@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Parameters used for restore operations. </summary>
-    public partial class MongoClusterRestoreContent
+    /// <summary> Promote replica request properties. </summary>
+    public partial class PromoteReplicaContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +45,32 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
-        public MongoClusterRestoreContent()
+        /// <summary> Initializes a new instance of <see cref="PromoteReplicaContent"/>. </summary>
+        /// <param name="promoteOption"> The promote option to apply to the operation. </param>
+        public PromoteReplicaContent(PromoteOption promoteOption)
         {
+            PromoteOption = promoteOption;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
-        /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
-        /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
+        /// <summary> Initializes a new instance of <see cref="PromoteReplicaContent"/>. </summary>
+        /// <param name="promoteOption"> The promote option to apply to the operation. </param>
+        /// <param name="mode"> The mode to apply to the promote operation. Value is optional and default value is 'Switchover'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterRestoreContent(DateTimeOffset? pointInTimeUTC, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PromoteReplicaContent(PromoteOption promoteOption, PromoteMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PointInTimeUTC = pointInTimeUTC;
-            SourceResourceId = sourceResourceId;
+            PromoteOption = promoteOption;
+            Mode = mode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> UTC point in time to restore a mongo cluster. </summary>
-        public DateTimeOffset? PointInTimeUTC { get; set; }
-        /// <summary> Resource ID to locate the source cluster to restore. </summary>
-        public ResourceIdentifier SourceResourceId { get; set; }
+        /// <summary> Initializes a new instance of <see cref="PromoteReplicaContent"/> for deserialization. </summary>
+        internal PromoteReplicaContent()
+        {
+        }
+
+        /// <summary> The promote option to apply to the operation. </summary>
+        public PromoteOption PromoteOption { get; }
+        /// <summary> The mode to apply to the promote operation. Value is optional and default value is 'Switchover'. </summary>
+        public PromoteMode? Mode { get; set; }
     }
 }

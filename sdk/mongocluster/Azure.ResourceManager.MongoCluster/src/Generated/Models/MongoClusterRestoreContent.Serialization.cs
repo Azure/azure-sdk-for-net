@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 return null;
             }
             DateTimeOffset? pointInTimeUTC = default;
-            string sourceResourceId = default;
+            ResourceIdentifier sourceResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
                 if (property.NameEquals("sourceResourceId"u8))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

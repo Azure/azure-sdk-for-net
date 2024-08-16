@@ -24,11 +24,17 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         private const string DefaultValue = "Default";
         private const string PointInTimeRestoreValue = "PointInTimeRestore";
+        private const string GeoReplicaValue = "GeoReplica";
+        private const string ReplicaValue = "Replica";
 
         /// <summary> Create a new mongo cluster. </summary>
         public static CreateMode Default { get; } = new CreateMode(DefaultValue);
         /// <summary> Create a mongo cluster from a restore point-in-time. </summary>
         public static CreateMode PointInTimeRestore { get; } = new CreateMode(PointInTimeRestoreValue);
+        /// <summary> Create a replica cluster in distinct geographic region from the source cluster. </summary>
+        public static CreateMode GeoReplica { get; } = new CreateMode(GeoReplicaValue);
+        /// <summary> Create a replica cluster in the same geographic region as the source cluster. </summary>
+        public static CreateMode Replica { get; } = new CreateMode(ReplicaValue);
         /// <summary> Determines if two <see cref="CreateMode"/> values are the same. </summary>
         public static bool operator ==(CreateMode left, CreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CreateMode"/> values are not the same. </summary>

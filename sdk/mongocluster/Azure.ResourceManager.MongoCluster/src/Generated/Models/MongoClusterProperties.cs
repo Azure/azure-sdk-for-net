@@ -50,11 +50,13 @@ namespace Azure.ResourceManager.MongoCluster.Models
         {
             NodeGroupSpecs = new ChangeTrackingList<NodeGroupSpec>();
             PrivateEndpointConnections = new ChangeTrackingList<MongoClusterPrivateEndpointConnection>();
+            PreviewFeatures = new ChangeTrackingList<PreviewFeature>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterProperties"/>. </summary>
         /// <param name="createMode"> The mode to create a mongo cluster. </param>
         /// <param name="restoreParameters"> The parameters to create a point-in-time restore mongo cluster. </param>
+        /// <param name="replicaParameters"> The parameters to create a replica mongo cluster. </param>
         /// <param name="administratorLogin"> The administrator's login for the mongo cluster. </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
         /// <param name="serverVersion"> The Mongo DB server version. Defaults to the latest available version if not specified. </param>
@@ -65,11 +67,15 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this mongo cluster. </param>
         /// <param name="nodeGroupSpecs"> The list of node group specs in the cluster. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="previewFeatures"> List of private endpoint connections. </param>
+        /// <param name="replica"> The replication properties for the mongo cluster. </param>
+        /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterProperties(CreateMode? createMode, MongoClusterRestoreContent restoreParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, ProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, PublicNetworkAccess? publicNetworkAccess, IList<NodeGroupSpec> nodeGroupSpecs, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterProperties(CreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaParameters replicaParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, ProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, PublicNetworkAccess? publicNetworkAccess, IList<NodeGroupSpec> nodeGroupSpecs, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<PreviewFeature> previewFeatures, ReplicationProperties replica, string infrastructureVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateMode = createMode;
             RestoreParameters = restoreParameters;
+            ReplicaParameters = replicaParameters;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             ServerVersion = serverVersion;
@@ -80,6 +86,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
             PublicNetworkAccess = publicNetworkAccess;
             NodeGroupSpecs = nodeGroupSpecs;
             PrivateEndpointConnections = privateEndpointConnections;
+            PreviewFeatures = previewFeatures;
+            Replica = replica;
+            InfrastructureVersion = infrastructureVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -87,6 +96,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public CreateMode? CreateMode { get; set; }
         /// <summary> The parameters to create a point-in-time restore mongo cluster. </summary>
         public MongoClusterRestoreContent RestoreParameters { get; set; }
+        /// <summary> The parameters to create a replica mongo cluster. </summary>
+        public MongoClusterReplicaParameters ReplicaParameters { get; set; }
         /// <summary> The administrator's login for the mongo cluster. </summary>
         public string AdministratorLogin { get; set; }
         /// <summary> The password of the administrator login. </summary>
@@ -107,5 +118,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public IList<NodeGroupSpec> NodeGroupSpecs { get; }
         /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<MongoClusterPrivateEndpointConnection> PrivateEndpointConnections { get; }
+        /// <summary> List of private endpoint connections. </summary>
+        public IList<PreviewFeature> PreviewFeatures { get; }
+        /// <summary> The replication properties for the mongo cluster. </summary>
+        public ReplicationProperties Replica { get; }
+        /// <summary> The infrastructure version the cluster is provisioned on. </summary>
+        public string InfrastructureVersion { get; }
     }
 }

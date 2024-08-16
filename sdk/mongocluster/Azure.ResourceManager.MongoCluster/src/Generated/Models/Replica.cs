@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Parameters used for restore operations. </summary>
-    public partial class MongoClusterRestoreContent
+    /// <summary> Represents a mongo cluster replica. </summary>
+    public partial class Replica : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +47,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
-        public MongoClusterRestoreContent()
+        /// <summary> Initializes a new instance of <see cref="Replica"/>. </summary>
+        public Replica()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
-        /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
-        /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
+        /// <summary> Initializes a new instance of <see cref="Replica"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterRestoreContent(DateTimeOffset? pointInTimeUTC, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal Replica(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MongoClusterProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            PointInTimeUTC = pointInTimeUTC;
-            SourceResourceId = sourceResourceId;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> UTC point in time to restore a mongo cluster. </summary>
-        public DateTimeOffset? PointInTimeUTC { get; set; }
-        /// <summary> Resource ID to locate the source cluster to restore. </summary>
-        public ResourceIdentifier SourceResourceId { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public MongoClusterProperties Properties { get; set; }
     }
 }

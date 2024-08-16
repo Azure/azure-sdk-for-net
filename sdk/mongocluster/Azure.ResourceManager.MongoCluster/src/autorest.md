@@ -7,8 +7,7 @@ azure-arm: true
 csharp: true
 library-name: MongoCluster
 namespace: Azure.ResourceManager.MongoCluster
-require: https://github.com/welovej/azure-rest-api-specs/blob/9ffd9e0835d39d83623047904ce9643a6525fa4d/specification/mongocluster/resource-manager/readme.md
-# require: C:\repo\azure-rest-api-specs\specification\mongocluster\resource-manager\readme.md
+require: https://github.com/welovej/azure-rest-api-specs/blob/7408d92e3d5f9082afc85fac60d4ecebd85e65fc/specification/mongocluster/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

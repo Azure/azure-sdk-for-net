@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Parameters used for restore operations. </summary>
-    public partial class MongoClusterRestoreContent
+    /// <summary> Replica properties of the mongo cluster. </summary>
+    public partial class ReplicationProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +46,29 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
-        public MongoClusterRestoreContent()
+        /// <summary> Initializes a new instance of <see cref="ReplicationProperties"/>. </summary>
+        internal ReplicationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoClusterRestoreContent"/>. </summary>
-        /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
-        /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
+        /// <summary> Initializes a new instance of <see cref="ReplicationProperties"/>. </summary>
+        /// <param name="sourceResourceId"> The resource id the source cluster for the replica cluster. </param>
+        /// <param name="role"> The replication role of the cluster. </param>
+        /// <param name="replicationState"> The replication link state of the replica cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterRestoreContent(DateTimeOffset? pointInTimeUTC, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReplicationProperties(ResourceIdentifier sourceResourceId, ReplicationRole? role, ReplicationState? replicationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PointInTimeUTC = pointInTimeUTC;
             SourceResourceId = sourceResourceId;
+            Role = role;
+            ReplicationState = replicationState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> UTC point in time to restore a mongo cluster. </summary>
-        public DateTimeOffset? PointInTimeUTC { get; set; }
-        /// <summary> Resource ID to locate the source cluster to restore. </summary>
-        public ResourceIdentifier SourceResourceId { get; set; }
+        /// <summary> The resource id the source cluster for the replica cluster. </summary>
+        public ResourceIdentifier SourceResourceId { get; }
+        /// <summary> The replication role of the cluster. </summary>
+        public ReplicationRole? Role { get; }
+        /// <summary> The replication link state of the replica cluster. </summary>
+        public ReplicationState? ReplicationState { get; }
     }
 }
