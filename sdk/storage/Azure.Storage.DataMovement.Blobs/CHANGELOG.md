@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed bug where using OAuth would not preserve source properties to destination properties.
 
 ### Other Changes
 

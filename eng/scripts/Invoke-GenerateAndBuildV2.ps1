@@ -79,7 +79,7 @@ for ($i = 0; $i -le $readmeFiles.Count - 1; $i++) {
             $readme = "https://github.com/$org/azure-rest-api-specs/blob/$commitid/$readmeFile"
         }
     } else {
-        throw "No readme File path provided."
+        throw "[ERROR] Neither 'specFolder' nor 'headSha' is provided for `$readmeFile`. Please report this issue through https://aka.ms/azsdk/support/specreview-channel and include this pull request."
     }
 
     if ($autorestConfigYaml) {
@@ -109,6 +109,7 @@ if ($inputFileToGen) {
     UpdateExistingSDKByInputFiles -inputFilePaths $inputFileToGen -sdkRootPath $sdkPath -headSha $commitid -repoHttpsUrl $repoHttpsUrl -downloadUrlPrefix "$downloadUrlPrefix" -generatedSDKPackages $generatedSDKPackages
 }
 
+$exitCode = 0
 # generate sdk from typespec file
 if ($relatedTypeSpecProjectFolder) {
     foreach ($typespecRelativeFolder in $relatedTypeSpecProjectFolder) {
@@ -126,6 +127,7 @@ if ($relatedTypeSpecProjectFolder) {
             $serviceType = "resource-manager"
         }
         $repo = $repoHttpsUrl -replace "https://github.com/", ""
+        Write-host "Start to call tsp-client to generate package:$packageName"
         $tspclientCommand = "npx --package=@azure-tools/typespec-client-generator-cli --yes tsp-client init --tsp-config $tspConfigFile --repo $repo --commit $commitid"
         if ($swaggerDir) {
             $tspclientCommand += " --local-spec-repo $typespecFolder"
@@ -134,11 +136,14 @@ if ($relatedTypeSpecProjectFolder) {
         Invoke-Expression $tspclientCommand
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
-          Write-Error "Failed to generate typespec project. Exit code: $LASTEXITCODE"
+          Write-Error "[ERROR] Failed to generate typespec project:$typespecFolder. Exit code: $LASTEXITCODE."
+          Write-Error "[ERROR] Please review the detail errors for potential fixes."
+          Write-Error "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
           $generatedSDKPackages.Add(@{
             result = "failed";
             path=@("");
           })
+          $exitCode = $LASTEXITCODE
         } else {
             $relativeSdkPath = Resolve-Path $sdkProjectFolder -Relative
             GeneratePackage `
@@ -157,3 +162,4 @@ $outputJson = [PSCustomObject]@{
     packages = $generatedSDKPackages
 }
 $outputJson | ConvertTo-Json -depth 100 | Out-File $outputJsonFile
+exit $exitCode

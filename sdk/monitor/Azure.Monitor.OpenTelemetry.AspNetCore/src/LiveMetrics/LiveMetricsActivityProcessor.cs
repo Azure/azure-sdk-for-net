@@ -10,14 +10,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics
 {
     internal sealed class LiveMetricsActivityProcessor : BaseProcessor<Activity>
     {
-        private LiveMetricsResource? _resource;
         private readonly Manager _manager;
-
-        internal LiveMetricsResource? LiveMetricsResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
         internal LiveMetricsActivityProcessor(Manager manager)
         {
             _manager = manager;
+
+            // Resource is not available at sdk initialization and must be read later.
+            manager.LiveMetricsResourceFunc ??= () => ParentProvider?.GetResource().CreateAzureMonitorResource();
         }
 
         public override void OnEnd(Activity activity)
@@ -26,12 +26,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics
             if (!_manager.ShouldCollect())
             {
                 return;
-            }
-
-            // Resource is not available at initialization and must be set later.
-            if (_manager.LiveMetricsResource == null && LiveMetricsResource != null)
-            {
-                _manager.LiveMetricsResource = LiveMetricsResource;
             }
 
             if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
