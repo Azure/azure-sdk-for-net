@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Describes the ServerVersion of an a MongoDB account. </summary>
+    /// <summary> Describes the version of the MongoDB account. </summary>
     public readonly partial struct CosmosDBServerVersion : IEquatable<CosmosDBServerVersion>
     {
         private readonly string _value;
@@ -28,10 +28,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string V4_2Value = "4.2";
         private const string Five0Value = "5.0";
         private const string Six0Value = "6.0";
+        private const string Seven0Value = "7.0";
         /// <summary> 5.0. </summary>
         public static CosmosDBServerVersion Five0 { get; } = new CosmosDBServerVersion(Five0Value);
         /// <summary> 6.0. </summary>
         public static CosmosDBServerVersion Six0 { get; } = new CosmosDBServerVersion(Six0Value);
+        /// <summary> 7.0. </summary>
+        public static CosmosDBServerVersion Seven0 { get; } = new CosmosDBServerVersion(Seven0Value);
         /// <summary> Determines if two <see cref="CosmosDBServerVersion"/> values are the same. </summary>
         public static bool operator ==(CosmosDBServerVersion left, CosmosDBServerVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBServerVersion"/> values are not the same. </summary>
