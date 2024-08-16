@@ -65,8 +65,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="coreCount"> Number of physical cores on the cluster node. </param>
         /// <param name="memoryInGiB"> Total available memory on the cluster node (in GiB). </param>
         /// <param name="lastLicensingTimestamp"> Most recent licensing timestamp. </param>
+        /// <param name="oemActivation"> OEM activation status of the node. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, ClusterNodeType? nodeType, string ehcResourceId, string manufacturer, string model, string osName, string osVersion, string osDisplayVersion, string serialNumber, float? coreCount, float? memoryInGiB, DateTimeOffset? lastLicensingTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciClusterNode(string name, float? id, WindowsServerSubscription? windowsServerSubscription, ClusterNodeType? nodeType, string ehcResourceId, string manufacturer, string model, string osName, string osVersion, string osDisplayVersion, string serialNumber, float? coreCount, float? memoryInGiB, DateTimeOffset? lastLicensingTimestamp, OemActivation? oemActivation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Id = id;
@@ -82,36 +83,54 @@ namespace Azure.ResourceManager.Hci.Models
             CoreCount = coreCount;
             MemoryInGiB = memoryInGiB;
             LastLicensingTimestamp = lastLicensingTimestamp;
+            OemActivation = oemActivation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the cluster node. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Id of the node in the cluster. </summary>
+        [WirePath("id")]
         public float? Id { get; }
         /// <summary> State of Windows Server Subscription. </summary>
+        [WirePath("windowsServerSubscription")]
         public WindowsServerSubscription? WindowsServerSubscription { get; }
         /// <summary> Type of the cluster node hardware. </summary>
+        [WirePath("nodeType")]
         public ClusterNodeType? NodeType { get; }
         /// <summary> Edge Hardware Center Resource Id. </summary>
+        [WirePath("ehcResourceId")]
         public string EhcResourceId { get; }
         /// <summary> Manufacturer of the cluster node hardware. </summary>
+        [WirePath("manufacturer")]
         public string Manufacturer { get; }
         /// <summary> Model name of the cluster node hardware. </summary>
+        [WirePath("model")]
         public string Model { get; }
         /// <summary> Operating system running on the cluster node. </summary>
+        [WirePath("osName")]
         public string OSName { get; }
         /// <summary> Version of the operating system running on the cluster node. </summary>
+        [WirePath("osVersion")]
         public string OSVersion { get; }
         /// <summary> Display version of the operating system running on the cluster node. </summary>
+        [WirePath("osDisplayVersion")]
         public string OSDisplayVersion { get; }
         /// <summary> Immutable id of the cluster node. </summary>
+        [WirePath("serialNumber")]
         public string SerialNumber { get; }
         /// <summary> Number of physical cores on the cluster node. </summary>
+        [WirePath("coreCount")]
         public float? CoreCount { get; }
         /// <summary> Total available memory on the cluster node (in GiB). </summary>
+        [WirePath("memoryInGiB")]
         public float? MemoryInGiB { get; }
         /// <summary> Most recent licensing timestamp. </summary>
+        [WirePath("lastLicensingTimestamp")]
         public DateTimeOffset? LastLicensingTimestamp { get; }
+        /// <summary> OEM activation status of the node. </summary>
+        [WirePath("oemActivation")]
+        public OemActivation? OemActivation { get; }
     }
 }

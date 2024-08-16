@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
+            if (Optional.IsDefined(LinkedServiceVersion))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(LinkedServiceVersion);
+            }
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
@@ -79,6 +84,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("connectionString"u8);
                 JsonSerializer.Serialize(writer, ConnectionString);
             }
+            if (Optional.IsDefined(Server))
+            {
+                writer.WritePropertyName("server"u8);
+                JsonSerializer.Serialize(writer, Server);
+            }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                JsonSerializer.Serialize(writer, Port);
+            }
+            if (Optional.IsDefined(Uid))
+            {
+                writer.WritePropertyName("uid"u8);
+                JsonSerializer.Serialize(writer, Uid);
+            }
+            if (Optional.IsDefined(Database))
+            {
+                writer.WritePropertyName("database"u8);
+                JsonSerializer.Serialize(writer, Database);
+            }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("pwd"u8);
@@ -126,11 +151,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
+            string version = default;
             IntegrationRuntimeReference connectVia = default;
             string description = default;
             IDictionary<string, EntityParameterSpecification> parameters = default;
             IList<BinaryData> annotations = default;
             DataFactoryElement<string> connectionString = default;
+            DataFactoryElement<string> server = default;
+            DataFactoryElement<int> port = default;
+            DataFactoryElement<string> uid = default;
+            DataFactoryElement<string> database = default;
             DataFactoryKeyVaultSecret password = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -140,6 +170,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("connectVia"u8))
@@ -209,6 +244,42 @@ namespace Azure.ResourceManager.DataFactory.Models
                             connectionString = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("server"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("port"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            port = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("uid"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            uid = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("database"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("pwd"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -231,12 +302,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new VerticaLinkedService(
                 type,
+                version,
                 connectVia,
                 description,
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 additionalProperties,
                 connectionString,
+                server,
+                port,
+                uid,
+                database,
                 password,
                 encryptedCredential);
         }
