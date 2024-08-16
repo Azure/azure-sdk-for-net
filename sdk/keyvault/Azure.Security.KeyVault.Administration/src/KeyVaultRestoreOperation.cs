@@ -67,6 +67,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <inheritdoc/>
         public override string Id => _operationInternal.Id;
+
         /// <inheritdoc/>
         public override KeyVaultRestoreResult Value => _operationInternal.Value;
 
@@ -83,7 +84,8 @@ namespace Azure.Security.KeyVault.Administration
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operationInternal.UpdateStatus(cancellationToken);
 
         /// <inheritdoc/>
-        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
+        public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) =>
+            await _operationInternal.UpdateStatusAsync(cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc/>
         public override ValueTask<Response<KeyVaultRestoreResult>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
