@@ -8,6 +8,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using OpenAI.Audio;
@@ -35,7 +36,36 @@ public partial class AzureOpenAISamples
         AzureOpenAIClient azureClient = new(
             new Uri("https://your-azure-openai-resource.com"),
             new DefaultAzureCredential());
-        ChatClient chatClient = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
+        ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
         #endregion
+    }
+
+    public void UseAzureGovernment()
+    {
+        #region Snippet:ConfigureClient:GovernmentAudience
+        AzureOpenAIClientOptions options = new()
+        {
+            Audience = AzureOpenAIAudience.AzureGovernment,
+        };
+        AzureOpenAIClient azureClient = new(
+            new Uri("https://your-azure-openai-resource.com"),
+            new DefaultAzureCredential());
+        ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
+        #endregion
+    }
+
+    public void UseCustomAuthorizationScope()
+    {
+        #region Snippet:ConfigureClient:CustomAudience
+        AzureOpenAIClientOptions optionsWithCustomAudience = new()
+        {
+            Audience = "https://cognitiveservices.azure.com/.default",
+        };
+        #endregion
+
+        AzureOpenAIClient azureClient = new(
+        new Uri("https://your-azure-openai-resource.com"),
+        new DefaultAzureCredential());
+            ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
     }
 }
