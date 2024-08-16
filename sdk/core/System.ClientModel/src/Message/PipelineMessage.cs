@@ -102,6 +102,8 @@ public class PipelineMessage : IDisposable
     /// </summary>
     public PipelineMessageClassifier ResponseClassifier { get; set; }
 
+    public ClientExceptionCustomizer ExceptionCustomizer { get; set; }
+
     /// <summary>
     /// Apply the options from the provided <see cref="RequestOptions"/> to
     /// this <see cref="PipelineMessage"/> instance.

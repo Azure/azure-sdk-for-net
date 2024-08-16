@@ -220,6 +220,47 @@ public sealed partial class ClientPipeline
         await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
     }
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public async ValueTask<PipelineResponse> SendAsync(PipelineMessage message, RequestOptions options)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    {
+        await SendAsync(message).ConfigureAwait(false);
+
+        // TODO: I think we can null-suppress Response, but double-check
+
+        if (message.Response!.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
+        {
+            // TODO: approach for customizing exception message?
+
+            throw await ClientResultException.CreateAsync(message.Response).ConfigureAwait(false);
+        }
+
+        PipelineResponse response = message.BufferResponse ? message.Response : message.ExtractResponse()!;
+        return response;
+    }
+
+    // Convenience for implementing RequestOptions features
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public PipelineResponse Send(PipelineMessage message, RequestOptions options)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    {
+        Send(message);
+
+        // Allow protocol method to dispose message.
+        PipelineResponse response = message.BufferResponse ? message.Response! : message.ExtractResponse()!;
+
+        // TODO: I think we can null-suppress Response, but double-check
+
+        if (response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
+        {
+            // TODO: approach for customizing exception message?
+
+            throw new ClientResultException(response);
+        }
+
+        return response;
+    }
+
     private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)
     {
         if (message.UseCustomRequestPipeline)
