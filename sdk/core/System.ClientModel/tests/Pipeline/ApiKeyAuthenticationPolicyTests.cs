@@ -17,16 +17,17 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void CanImplicitlyCastApiKeyCredential()
+    public void CreateFromEnvironmentVariable()
     {
-        string keyValue = "test_key";
-        ApiKeyCredential credential1 = new(keyValue);
-        ApiKeyCredential credential2 = keyValue;
+        string variableName = "TEST_KEY_NAME";
+        string variableValue = "test_key_value";
+        Environment.SetEnvironmentVariable(variableName, variableValue);
 
-        credential1.Deconstruct(out string deconstructed1);
-        credential2.Deconstruct(out string deconstructed2);
+        ApiKeyCredential credential = ApiKeyCredential.FromEnvironmentVariable(variableName);
+        Assert.That(credential, Is.Not.Null);
 
-        Assert.AreEqual(deconstructed1, deconstructed2);
+        credential.Deconstruct(out string deconstructed);
+        Assert.That(deconstructed, Is.EqualTo(variableValue));
     }
 
     [Test]
