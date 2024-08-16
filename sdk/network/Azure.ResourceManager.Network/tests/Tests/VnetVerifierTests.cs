@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Tests
                 new ResourceIdentifier("/subscriptions/c9295b92-3574-4021-95a1-26c8f74f8359/resourceGroups/ipam-test-rg/providers/Microsoft.Compute/virtualMachines/ipam-test-vm-integration-test"),
                 new List<string>() { "10.0.0.1/24" }, new List<string>() { "10.0.8.0/24" }, new List<string>() { "22" }, new List<string>() { "*" }, new List<NetworkProtocol>() { "TCP" });
             _analysisRunName = SessionRecording.GenerateAssetName("analysisRun-");
-            _analysisRun = await _vnetVerifier.CreateAnalysisRunAsync(_analysisRunName, "/subscriptions/c9295b92-3574-4021-95a1-26c8f74f8359/resourceGroups/ipam-test-rg/providers/Microsoft.Network/networkManagers/arjun-test-nm/verifierWorkspaces/arjun-test-nm/reachabilityAnalysisIntents/myAnalysisIntent");
+            _analysisRun = await _vnetVerifier.CreateAnalysisRunAsync(_analysisRunName, _analysisIntent.Id.ToString());
         }
 
         [TearDown]
