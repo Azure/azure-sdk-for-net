@@ -11,9 +11,33 @@ public class ClientResultExceptionFactory
     public static ClientResultExceptionFactory Default { get; } = new();
 
     public virtual ClientResultException FromResponse(PipelineResponse response)
-        => new ClientResultException(response);
+    {
+        response.BufferContent();
 
-    public virtual Task<ClientResultException> FromResponseAsync(PipelineResponse response)
-        => ClientResultException.CreateAsync(response);
+        if (TryGetMessage(response, out string? message))
+        {
+            return new ClientResultException(message!, response);
+        }
+
+        return new ClientResultException(response);
+    }
+
+    public virtual async Task<ClientResultException> FromResponseAsync(PipelineResponse response)
+    {
+        await response.BufferContentAsync().ConfigureAwait(false);
+
+        if (TryGetMessage(response, out string? message))
+        {
+            return new ClientResultException(message!, response);
+        }
+
+        return new ClientResultException(response);
+    }
+
+    public virtual bool TryGetMessage(PipelineResponse response, out string? message)
+    {
+        message = null;
+        return false;
+    }
 }
 #pragma warning restore CS1591 // public XML comments
