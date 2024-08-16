@@ -1,6 +1,6 @@
 {
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/<service name>/Azure.ResourceManager.Template",
+  "TagPrefix": "net/LowercaseProviderShortName/Azure.ResourceManager.Template",
   "Tag": ""
 }

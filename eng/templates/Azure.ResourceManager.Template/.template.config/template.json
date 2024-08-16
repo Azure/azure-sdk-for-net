@@ -54,6 +54,30 @@
       "defaultValue": "",
       "replaces": "SwaggerVersionTag"
     },
+    "TypeSpecDirectory": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": false,
+      "description": "TypeSpecDirectory under sdk/providername.",
+      "defaultValue": "TypeSpecDirectory",
+      "replaces": "TypeSpecDirectory"
+    },
+    "SpecOrg": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": false,
+      "description": "the organization name of Azure spec repo.",
+      "defaultValue": "Azure",
+      "replaces": "SpecOrg"
+    },
+    "CommitId": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": false,
+      "description": "the commit id of Azure spec repo.",
+      "defaultValue": "CommitId",
+      "replaces": "CommitId"
+    },
     "includeCI": {
       "type": "parameter",
       "datatype": "bool",
@@ -61,12 +85,12 @@
       "description": "The optional parameter specifies whether generate related pipline ci.yml and test-resources.json in parent folder.",
       "defaultValue": "false"
     },
-    "ProviderShortNameLowercase": {
+    "LowercaseProviderShortName": {
       "type": "derived",
       "datatype": "text",
       "valueSource": "provider",
       "valueTransform": "ProviderShortNameLowerForm",
-      "replaces": "ProviderNameLowercase"
+      "replaces": "LowercaseProviderShortName"
     },
     "ProviderShortName": {
       "type": "derived",
