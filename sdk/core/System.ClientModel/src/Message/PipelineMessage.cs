@@ -32,6 +32,7 @@ public class PipelineMessage : IDisposable
 
         BufferResponse = true;
         ResponseClassifier = PipelineMessageClassifier.Default;
+        ExceptionFactory = ClientResultExceptionFactory.Default;
     }
 
     /// <summary>
@@ -83,7 +84,6 @@ public class PipelineMessage : IDisposable
     public CancellationToken CancellationToken
     {
         get;
-
         // Set internally by RequestOptions.Apply
         protected internal set;
     }
@@ -102,7 +102,10 @@ public class PipelineMessage : IDisposable
     /// </summary>
     public PipelineMessageClassifier ResponseClassifier { get; set; }
 
-    public ClientExceptionCustomizer ExceptionCustomizer { get; set; }
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    public ClientResultExceptionFactory ExceptionFactory { get; set; }
 
     /// <summary>
     /// Apply the options from the provided <see cref="RequestOptions"/> to
