@@ -68,6 +68,7 @@ trigger:
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
     - sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
+    - sdk/devopsinfrastructure/Azure.ResourceManager.DevOpsInfrastructure
     - sdk/devspaces/Azure.ResourceManager.DevSpaces
     - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs
     - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
@@ -266,6 +267,7 @@ pr:
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
     - sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
+    - sdk/devopsinfrastructure/Azure.ResourceManager.DevOpsInfrastructure
     - sdk/devspaces/Azure.ResourceManager.DevSpaces
     - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs
     - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
