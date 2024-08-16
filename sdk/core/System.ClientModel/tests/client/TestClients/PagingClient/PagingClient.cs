@@ -35,7 +35,7 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             cancellationToken.ToRequestOptions());
-        return PageCollectionHelpers.CreateAsync(enumerator);
+        return AsyncPageCollection<ValueItem>.FromEnumerator(enumerator);
     }
 
     public virtual AsyncPageCollection<ValueItem> GetValuesAsync(
@@ -52,7 +52,7 @@ public class PagingClient
             token.PageSize,
             token.Offset,
             cancellationToken.ToRequestOptions());
-        return PageCollectionHelpers.CreateAsync(enumerator);
+        return AsyncPageCollection<ValueItem>.FromEnumerator(enumerator);
     }
 
     public virtual PageCollection<ValueItem> GetValues(
@@ -68,7 +68,7 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             cancellationToken.ToRequestOptions());
-        return PageCollectionHelpers.Create(enumerator);
+        return PageCollection<ValueItem>.FromEnumerator(enumerator);
     }
 
     public virtual PageCollection<ValueItem> GetValues(
@@ -85,7 +85,7 @@ public class PagingClient
             token.PageSize,
             token.Offset,
             cancellationToken.ToRequestOptions());
-        return PageCollectionHelpers.Create(enumerator);
+        return PageCollection<ValueItem>.FromEnumerator(enumerator);
     }
 
     public virtual IAsyncEnumerable<ClientResult> GetValuesAsync(
@@ -101,7 +101,7 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             options);
-        return PageCollectionHelpers.CreateAsync(enumerator);
+        return enumerator.ToAsyncResultCollection();
     }
 
     public virtual IEnumerable<ClientResult> GetValues(
@@ -117,6 +117,6 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             options);
-        return PageCollectionHelpers.Create(enumerator);
+        return enumerator.ToResultCollection();
     }
 }

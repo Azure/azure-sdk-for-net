@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -27,6 +28,27 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
         // GetCurrentPage is called or the collection returned by GetAllValues
         // is enumerated, so this constructor calls the base class constructor
         // that does not take a PipelineResponse.
+    }
+
+    /// <summary>
+    /// TBD
+    /// </summary>
+    /// <param name="enumerator"></param>
+    /// <returns></returns>
+    public static PageCollection<T> FromEnumerator(PageEnumerator<T> enumerator)
+        => new EnumeratorPageCollection(enumerator);
+
+    /// <summary>
+    /// TBD
+    /// </summary>
+    /// <param name="enumerator"></param>
+    /// <returns></returns>
+    public static IEnumerable<ClientResult> FromEnumerator(PageEnumerator enumerator)
+    {
+        while (enumerator.MoveNext())
+        {
+            yield return enumerator.Current;
+        }
     }
 
     /// <summary>
@@ -70,4 +92,20 @@ public abstract class PageCollection<T> : IEnumerable<PageResult<T>>
         => GetEnumeratorCore();
 
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<PageResult<T>>)this).GetEnumerator();
+
+    private class EnumeratorPageCollection : PageCollection<T>
+    {
+        private readonly PageEnumerator<T> _enumerator;
+
+        public EnumeratorPageCollection(PageEnumerator<T> enumerator)
+        {
+            _enumerator = enumerator;
+        }
+
+        protected override PageResult<T> GetCurrentPageCore()
+            => _enumerator.GetCurrentPage();
+
+        protected override IEnumerator<PageResult<T>> GetEnumeratorCore()
+            => _enumerator;
+    }
 }

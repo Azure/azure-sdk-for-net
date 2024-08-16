@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -29,6 +30,27 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
         // GetCurrentPageAsync is called or the collection returned by
         // GetAllValuesAsync is enumerated, so this constructor calls the base
         // class constructor that does not take a PipelineResponse.
+    }
+
+    /// <summary>
+    /// TBD
+    /// </summary>
+    /// <param name="enumerator"></param>
+    /// <returns></returns>
+    public static AsyncPageCollection<T> FromEnumerator(PageEnumerator<T> enumerator)
+        => new AsyncEnumeratorPageCollection(enumerator);
+
+    /// <summary>
+    /// TBD.
+    /// </summary>
+    /// <param name="enumerator"></param>
+    /// <returns></returns>
+    public static async IAsyncEnumerable<ClientResult> FromEnumeratorAsync(PageEnumerator enumerator)
+    {
+        while (await enumerator.MoveNextAsync().ConfigureAwait(false))
+        {
+            yield return enumerator.Current;
+        }
     }
 
     /// <summary>
@@ -72,4 +94,20 @@ public abstract class AsyncPageCollection<T> : IAsyncEnumerable<PageResult<T>>
 
     IAsyncEnumerator<PageResult<T>> IAsyncEnumerable<PageResult<T>>.GetAsyncEnumerator(CancellationToken cancellationToken)
         => GetAsyncEnumeratorCore(cancellationToken);
+
+    private class AsyncEnumeratorPageCollection : AsyncPageCollection<T>
+    {
+        private readonly PageEnumerator<T> _enumerator;
+
+        public AsyncEnumeratorPageCollection(PageEnumerator<T> enumerator)
+        {
+            _enumerator = enumerator;
+        }
+
+        protected override async Task<PageResult<T>> GetCurrentPageAsyncCore()
+            => await _enumerator.GetCurrentPageAsync().ConfigureAwait(false);
+
+        protected override IAsyncEnumerator<PageResult<T>> GetAsyncEnumeratorCore(CancellationToken cancellationToken = default)
+            => _enumerator;
+    }
 }

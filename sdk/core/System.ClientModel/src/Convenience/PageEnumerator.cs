@@ -1,20 +1,35 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.ClientModel;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ClientModel.Tests.Paging;
+namespace System.ClientModel.Primitives;
 
-internal abstract class PageResultEnumerator : IAsyncEnumerator<ClientResult>, IEnumerator<ClientResult>
+#pragma warning disable CS1591
+public abstract class PageEnumerator : IAsyncEnumerator<ClientResult>, IEnumerator<ClientResult>
 {
     private ClientResult? _current;
     private bool _hasNext = true;
 
     public ClientResult Current => _current!;
+
+    public IEnumerable<ClientResult> ToResultCollection()
+    {
+        while (MoveNext())
+        {
+            yield return Current;
+        }
+    }
+
+    public async IAsyncEnumerable<ClientResult> ToAsyncResultCollection()
+    {
+        while (await MoveNextAsync().ConfigureAwait(false))
+        {
+            yield return Current;
+        }
+    }
 
     public abstract Task<ClientResult> GetFirstAsync();
 

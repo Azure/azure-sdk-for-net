@@ -5,9 +5,10 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ClientModel.Tests.Paging;
+namespace System.ClientModel.Primitives;
 
-internal abstract class PageEnumerator<T> : PageResultEnumerator,
+#pragma warning disable CS1591
+public abstract class PageEnumerator<T> : PageEnumerator,
     IAsyncEnumerator<PageResult<T>>,
     IEnumerator<PageResult<T>>
 {
@@ -59,3 +60,4 @@ internal abstract class PageEnumerator<T> : PageResultEnumerator,
         }
     }
 }
+#pragma warning restore CS1591
