@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,50 +10,49 @@ using Azure.Security.KeyVault.Administration.Models;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary>
-    /// A long-running operation for <see cref="KeyVaultBackupClient.StartRestore"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync"/>.
+    /// A long-running operation for <see cref="KeyVaultBackupClient.StartPreRestore"/> or <see cref="KeyVaultBackupClient.StartPreRestoreAsync"/>.
     /// </summary>
-    public class KeyVaultRestoreOperation : Operation<KeyVaultRestoreResult>
+    public class KeyVaultPreRestoreOperation : Operation<KeyVaultRestoreResult>
     {
-        internal readonly RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal> _operationInternal;
+        internal readonly RestoreOperationInternal<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal> _operationInternal;
 
         /// <summary>
-        /// Creates an instance of a KeyVaultRestoreOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
+        /// Creates an instance of a KeyVaultPreRestoreOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
         ///  <see cref="WaitForCompletionAsync(CancellationToken)"/>, or <see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/> must be called
         /// to re-populate the details of this operation.
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="id">The <see cref="Id" /> from a previous <see cref="KeyVaultBackupOperation" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
-        public KeyVaultRestoreOperation(KeyVaultBackupClient client, string id)
+        public KeyVaultPreRestoreOperation(KeyVaultBackupClient client, string id)
         {
-            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal>(client, id);
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal>(client, id);
         }
 
         /// <summary>
-        /// Initializes a new instance of a KeyVaultRestoreOperation.
+        /// Initializes a new instance of the <see cref="KeyVaultPreRestoreOperation"/> class.
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartRestore"/> or <see cref="KeyVaultBackupClient.StartRestoreAsync"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
-        internal KeyVaultRestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders> response)
+        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartPreRestore"/> or <see cref="KeyVaultBackupClient.StartPreRestoreAsync"/>.</param>
+        internal KeyVaultPreRestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders> response)
         {
-            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal>(client, response);
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal>(client, response);
         }
 
         /// <summary>
-        /// Initializes a new instance of a KeyVaultRestoreOperation for mocking purposes.
+        /// Initializes a new instance of a KeyVaultPreRestoreOperation for mocking purposes.
         /// </summary>
         /// <param name="value">The <see cref="RestoreDetailsInternal" /> that will be used to populate various properties.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> or <paramref name="response"/> or <paramref name="client"/> is null.</exception>
-        internal KeyVaultRestoreOperation(RestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
+        internal KeyVaultPreRestoreOperation(RestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
-            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal>(value, response, client);
+            _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal>(value, response, client);
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultRestoreOperation" /> for mocking. </summary>
-        protected KeyVaultRestoreOperation() {}
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPreRestoreOperation" /> for mocking. </summary>
+        protected KeyVaultPreRestoreOperation() {}
 
         /// <summary>
         /// The start time of the restore operation.

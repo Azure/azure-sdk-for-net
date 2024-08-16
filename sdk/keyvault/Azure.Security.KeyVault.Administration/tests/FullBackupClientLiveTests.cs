@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             builder.Path = BlobContainerName;
 
             // Start the pre-backup operation.
-            KeyVaultBackupOperation preBackupOperation = await Client.StartPreBackupAsync(builder.Uri, "?" + SasToken, source.Token);
+            KeyVaultPreBackupOperation preBackupOperation = await Client.StartPreBackupAsync(builder.Uri, "?" + SasToken, source.Token);
 
             KeyVaultBackupResult preBackupResult = await preBackupOperation.WaitForCompletionAsync(source.Token);
 
@@ -70,7 +70,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             Assert.That(preBackupOperation.HasValue, Is.True);
 
             // Start the pre-restore operation.
-            KeyVaultRestoreOperation preRestoreOperation = await Client.StartPreRestoreAsync(preBackupResult.FolderUri, "?" + SasToken, source.Token);
+            KeyVaultPreRestoreOperation preRestoreOperation = await Client.StartPreRestoreAsync(preBackupResult.FolderUri, "?" + SasToken, source.Token);
             KeyVaultRestoreResult preRestoreResult = await preRestoreOperation.WaitForCompletionAsync(source.Token);
             await WaitForOperationAsync();
 

@@ -131,8 +131,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="KeyVaultBackupOperation"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<KeyVaultBackupOperation> StartPreBackupAsync(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="KeyVaultPreBackupOperation"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<KeyVaultPreBackupOperation> StartPreBackupAsync(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(blobStorageUri, nameof(blobStorageUri));
             Argument.AssertNotNull(sasToken, nameof(sasToken));
@@ -151,7 +151,7 @@ namespace Azure.Security.KeyVault.Administration
                     cancellationToken).ConfigureAwait(false);
 
                 // Should this return a KeyVaultBackupOperation?
-                return new KeyVaultBackupOperation(this, response);
+                return new KeyVaultPreBackupOperation(this, response);
             }
             catch (Exception ex)
             {
@@ -168,8 +168,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="KeyVaultBackupOperation"/> representing the result of the operation.</returns>
-        public virtual KeyVaultBackupOperation StartPreBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="KeyVaultPreBackupOperation"/> representing the result of the operation.</returns>
+        public virtual KeyVaultPreBackupOperation StartPreBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(blobStorageUri, nameof(blobStorageUri));
             Argument.AssertNotNull(sasToken, nameof(sasToken));
@@ -188,7 +188,7 @@ namespace Azure.Security.KeyVault.Administration
                     cancellationToken);
 
                 // Should this return a KeyVaultBackupOperation?
-                return new KeyVaultBackupOperation(this, response);
+                return new KeyVaultPreBackupOperation(this, response);
             }
             catch (Exception ex)
             {
@@ -249,8 +249,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual async Task<KeyVaultRestoreOperation> StartPreRestoreAsync(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="KeyVaultPreRestoreOperation"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<KeyVaultPreRestoreOperation> StartPreRestoreAsync(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(folderUri, nameof(folderUri));
             Argument.AssertNotNull(sasToken, nameof(sasToken));
@@ -270,7 +270,7 @@ namespace Azure.Security.KeyVault.Administration
                         ),
                     cancellationToken).ConfigureAwait(false);
 
-                return new KeyVaultRestoreOperation(this, response);
+                return new KeyVaultPreRestoreOperation(this, response);
             }
             catch (Exception ex)
             {
@@ -291,8 +291,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
-        public virtual KeyVaultRestoreOperation StartPreRestore(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
+        /// <returns>A <see cref="KeyVaultPreRestoreOperation"/> to wait on this long-running operation.</returns>
+        public virtual KeyVaultPreRestoreOperation StartPreRestore(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(folderUri, nameof(folderUri));
             Argument.AssertNotNull(sasToken, nameof(sasToken));
@@ -311,7 +311,7 @@ namespace Azure.Security.KeyVault.Administration
                         folderUri.AbsoluteUri
                         ),
                     cancellationToken);
-                return new KeyVaultRestoreOperation(this, response);
+                return new KeyVaultPreRestoreOperation(this, response);
             }
             catch (Exception ex)
             {

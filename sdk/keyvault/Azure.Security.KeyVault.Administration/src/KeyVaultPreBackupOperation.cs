@@ -2,23 +2,23 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Administration.Models;
+using System.Threading.Tasks;
+using System.Threading;
+using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary>
-    /// A long-running operation for <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.
+    /// A long-running operation for <see cref="KeyVaultBackupClient.StartPreBackup"/> or <see cref="KeyVaultBackupClient.StartPreBackupAsync"/>.
     /// </summary>
-    public class KeyVaultBackupOperation : Operation<KeyVaultBackupResult>
+    public class KeyVaultPreBackupOperation : Operation<KeyVaultBackupResult>
     {
         /// <summary>
         /// The number of seconds recommended by the service to delay before checking on completion status.
         /// </summary>
-        internal int? _retryAfterSeconds;
+        internal long? _retryAfterSeconds;
         private readonly KeyVaultBackupClient _client;
         private Response _response;
         private FullBackupDetailsInternal _value;
@@ -26,14 +26,14 @@ namespace Azure.Security.KeyVault.Administration
         private RequestFailedException _requestFailedException;
 
         /// <summary>
-        /// Creates an instance of a KeyVaultBackupOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
+        /// Creates an instance of a KeyVaultPreBackupOperation from a previously started operation. <see cref="UpdateStatus(CancellationToken)"/>, <see cref="UpdateStatusAsync(CancellationToken)"/>,
         ///  <see cref="WaitForCompletionAsync(CancellationToken)"/>, or <see cref="WaitForCompletionAsync(TimeSpan, CancellationToken)"/> must be called
         /// to re-populate the details of this operation.
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        /// <param name="id">The <see cref="Id" /> from a previous <see cref="KeyVaultBackupOperation" />.</param>
+        /// <param name="id">The <see cref="Id" /> from a previous <see cref="KeyVaultPreBackupOperation" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
-        public KeyVaultBackupOperation(KeyVaultBackupClient client, string id)
+        public KeyVaultPreBackupOperation(KeyVaultBackupClient client, string id)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(client, nameof(client));
@@ -43,11 +43,12 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of a KeyVaultBackupOperation.
+        /// Initializes a new instance of a KeyVaultPreBackupOperation.
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartBackupAsync(Uri, string, CancellationToken)"/>.</param>
-        internal KeyVaultBackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationFullBackupHeaders> response)
+        /// <param name="response">The <see cref="ResponseWithHeaders{T,THeaders}"/> returned from <see cref="KeyVaultBackupClient.StartPreBackup(Uri, string, CancellationToken)"/> or <see cref="KeyVaultBackupClient.StartPreBackupAsync(Uri, string, CancellationToken)"/>.</param>
+        /// <exception cref="InvalidOperationException"> The server operation does not contains an Id</exception>
+        internal KeyVaultPreBackupOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationPreFullBackupHeaders> response)
         {
             _client = client;
             _response = response;
@@ -56,12 +57,12 @@ namespace Azure.Security.KeyVault.Administration
         }
 
         /// <summary>
-        /// Initializes a new instance of a KeyVaultBackupOperation for mocking purposes.
+        /// Initializes a new instance of a KeyVaultPreBackupOperation for mocking purposes.
         /// </summary>
         /// <param name="value">The <see cref="FullBackupDetailsInternal" /> that will be returned from <see cref="Value" />.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
-        internal KeyVaultBackupOperation(FullBackupDetailsInternal value, Response response, KeyVaultBackupClient client)
+        internal KeyVaultPreBackupOperation(FullBackupDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
             Argument.AssertNotNull(value, nameof(value));
             Argument.AssertNotNull(response, nameof(response));
@@ -73,8 +74,8 @@ namespace Azure.Security.KeyVault.Administration
             _client = client;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultBackupOperation" /> for mocking. </summary>
-        protected KeyVaultBackupOperation() {}
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPreBackupOperation" /> for mocking. </summary>
+        protected KeyVaultPreBackupOperation() { }
 
         /// <summary>
         /// The start time of the backup operation.

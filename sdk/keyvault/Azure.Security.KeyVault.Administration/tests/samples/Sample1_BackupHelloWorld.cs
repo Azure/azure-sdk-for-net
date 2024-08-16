@@ -87,7 +87,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
             };
 
             // Check for backup readiness.
-            KeyVaultBackupOperation backupOperation = await Client.StartPreBackupAsync(builder.Uri, sasToken);
+            KeyVaultPreBackupOperation backupOperation = await Client.StartPreBackupAsync(builder.Uri, sasToken);
 
             // Wait for completion of the PreBackupOperation.
             Response<KeyVaultBackupResult> backupResult = await backupOperation.WaitForCompletionAsync();
@@ -108,7 +108,7 @@ namespace Azure.Security.KeyVault.Administration.Tests
 
             #region Snippet:HelloPreFullRestoreAsync
             // Check for restore readiness using the backupBlobUri returned from a previous BackupOperation.
-            KeyVaultRestoreOperation preRestoreOperation = await Client.StartPreRestoreAsync(folderUri, sasToken);
+            KeyVaultPreRestoreOperation preRestoreOperation = await Client.StartPreRestoreAsync(folderUri, sasToken);
 
             // Wait for completion of the PreRestoreOperation.
             Response<KeyVaultRestoreResult> preRestoreResult = await preRestoreOperation.WaitForCompletionAsync();
