@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ComputeFleetNetworkApiVersion(string value) { throw null; }
-        public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkApiVersion Ver20201101 { get { throw null; } }
+        public static Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkApiVersion V20201101 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ComputeFleet.Models.ComputeFleetNetworkApiVersion other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
