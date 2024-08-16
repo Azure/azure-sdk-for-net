@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    public partial class MongoClusterPrviateLinkResourceData : IUtf8JsonSerializable, IJsonModel<MongoClusterPrviateLinkResourceData>
+    public partial class MongoClusterPrivateLinkResourceData : IUtf8JsonSerializable, IJsonModel<MongoClusterPrivateLinkResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterPrviateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterPrivateLinkResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MongoClusterPrviateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoClusterPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPrviateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoClusterPrviateLinkResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterPrivateLinkResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.MongoCluster.Models
             writer.WriteEndObject();
         }
 
-        MongoClusterPrviateLinkResourceData IJsonModel<MongoClusterPrviateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterPrivateLinkResourceData IJsonModel<MongoClusterPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPrviateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoClusterPrviateLinkResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterPrivateLinkResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMongoClusterPrviateLinkResourceData(document.RootElement, options);
+            return DeserializeMongoClusterPrivateLinkResourceData(document.RootElement, options);
         }
 
-        internal static MongoClusterPrviateLinkResourceData DeserializeMongoClusterPrviateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoClusterPrivateLinkResourceData DeserializeMongoClusterPrivateLinkResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MongoClusterPrviateLinkResourceData(
+            return new MongoClusterPrivateLinkResourceData(
                 id,
                 name,
                 type,
@@ -147,35 +147,35 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MongoClusterPrviateLinkResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoClusterPrivateLinkResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPrviateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoClusterPrviateLinkResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MongoClusterPrviateLinkResourceData IPersistableModel<MongoClusterPrviateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoClusterPrivateLinkResourceData IPersistableModel<MongoClusterPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPrviateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPrivateLinkResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMongoClusterPrviateLinkResourceData(document.RootElement, options);
+                        return DeserializeMongoClusterPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoClusterPrviateLinkResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterPrivateLinkResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MongoClusterPrviateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoClusterPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -49,11 +49,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> Initializes a new instance of <see cref="MongoClusterReplicaContent"/>. </summary>
         /// <param name="sourceResourceId"> The id of the replication source cluster. </param>
         /// <param name="sourceLocation"> The location of the source cluster. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/> or <paramref name="sourceLocation"/> is null. </exception>
-        public MongoClusterReplicaContent(ResourceIdentifier sourceResourceId, string sourceLocation)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceResourceId"/> is null. </exception>
+        public MongoClusterReplicaContent(ResourceIdentifier sourceResourceId, AzureLocation sourceLocation)
         {
             Argument.AssertNotNull(sourceResourceId, nameof(sourceResourceId));
-            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
 
             SourceResourceId = sourceResourceId;
             SourceLocation = sourceLocation;
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="sourceResourceId"> The id of the replication source cluster. </param>
         /// <param name="sourceLocation"> The location of the source cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterReplicaContent(ResourceIdentifier sourceResourceId, string sourceLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterReplicaContent(ResourceIdentifier sourceResourceId, AzureLocation sourceLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceResourceId = sourceResourceId;
             SourceLocation = sourceLocation;
@@ -78,6 +77,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The id of the replication source cluster. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
         /// <summary> The location of the source cluster. </summary>
-        public string SourceLocation { get; set; }
+        public AzureLocation SourceLocation { get; set; }
     }
 }

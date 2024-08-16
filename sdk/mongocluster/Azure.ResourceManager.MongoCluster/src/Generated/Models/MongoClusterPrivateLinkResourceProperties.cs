@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterPrivateLinkResourceProperties"/>. </summary>
-        public MongoClusterPrivateLinkResourceProperties()
+        internal MongoClusterPrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GroupId = groupId;
             RequiredMembers = requiredMembers;
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The private link resource required member names. </summary>
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource private link DNS zone name. </summary>
-        public IList<string> RequiredZoneNames { get; }
+        public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="Replica"/>. </summary>
-        public Replica()
+        internal Replica()
         {
         }
 
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public MongoClusterProperties Properties { get; set; }
+        public MongoClusterProperties Properties { get; }
     }
 }

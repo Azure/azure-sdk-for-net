@@ -1,0 +1,3 @@
+directory: specification\mongocluster\DocumentDB.MongoCluster.Management
+commit: bfd182adfa7a104cff6ba4f2fc9c41f1e8fcad1e
+repo: welovej/azure-rest-api-specs

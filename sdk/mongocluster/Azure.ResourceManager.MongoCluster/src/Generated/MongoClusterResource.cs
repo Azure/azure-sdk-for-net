@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinks_ListByMongoCluster</description>
+        /// <description>PrivateLinkResource_ListByMongoCluster</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -679,12 +679,12 @@ namespace Azure.ResourceManager.MongoCluster
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MongoClusterPrviateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MongoClusterPrviateLinkResourceData> GetPrivateLinksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MongoClusterPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MongoClusterPrivateLinkResourceData> GetPrivateLinksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinksRestClient.CreateListByMongoClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateLinksRestClient.CreateListByMongoClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MongoClusterPrviateLinkResourceData.DeserializeMongoClusterPrviateLinkResourceData(e), _privateLinksClientDiagnostics, Pipeline, "MongoClusterResource.GetPrivateLinks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MongoClusterPrivateLinkResourceData.DeserializeMongoClusterPrivateLinkResourceData(e), _privateLinksClientDiagnostics, Pipeline, "MongoClusterResource.GetPrivateLinks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinks_ListByMongoCluster</description>
+        /// <description>PrivateLinkResource_ListByMongoCluster</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -705,12 +705,12 @@ namespace Azure.ResourceManager.MongoCluster
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MongoClusterPrviateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MongoClusterPrviateLinkResourceData> GetPrivateLinks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MongoClusterPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MongoClusterPrivateLinkResourceData> GetPrivateLinks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinksRestClient.CreateListByMongoClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateLinksRestClient.CreateListByMongoClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MongoClusterPrviateLinkResourceData.DeserializeMongoClusterPrviateLinkResourceData(e), _privateLinksClientDiagnostics, Pipeline, "MongoClusterResource.GetPrivateLinks", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MongoClusterPrivateLinkResourceData.DeserializeMongoClusterPrivateLinkResourceData(e), _privateLinksClientDiagnostics, Pipeline, "MongoClusterResource.GetPrivateLinks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Replicas_ListByParent</description>
+        /// <description>Replica_ListByParent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Replicas_ListByParent</description>
+        /// <description>Replica_ListByParent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

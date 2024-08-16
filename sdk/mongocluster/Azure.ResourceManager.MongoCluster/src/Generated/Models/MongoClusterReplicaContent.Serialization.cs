@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 return null;
             }
             ResourceIdentifier sourceResourceId = default;
-            string sourceLocation = default;
+            AzureLocation sourceLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
                 if (property.NameEquals("sourceLocation"u8))
                 {
-                    sourceLocation = property.Value.GetString();
+                    sourceLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

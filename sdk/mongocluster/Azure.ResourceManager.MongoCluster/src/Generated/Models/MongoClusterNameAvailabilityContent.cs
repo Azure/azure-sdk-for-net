@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The check availability result. </summary>
-    public partial class CheckNameAvailabilityResult
+    /// <summary> The check availability request body. </summary>
+    public partial class MongoClusterNameAvailabilityContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
-        internal CheckNameAvailabilityResult()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterNameAvailabilityContent"/>. </summary>
+        public MongoClusterNameAvailabilityContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
-        /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is available. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityResult(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NameAvailable = nameAvailable;
-            Reason = reason;
-            Message = message;
+            Name = name;
+            ResourceType = resourceType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Indicates if the resource name is available. </summary>
-        public bool? NameAvailable { get; }
-        /// <summary> The reason why the given name is not available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; }
-        /// <summary> Detailed reason why the given name is available. </summary>
-        public string Message { get; }
+        /// <summary> The name of the resource for which availability needs to be checked. </summary>
+        public string Name { get; set; }
+        /// <summary> The resource type. </summary>
+        public string ResourceType { get; set; }
     }
 }
