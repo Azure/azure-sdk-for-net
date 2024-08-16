@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureFileStorageLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="version"> Version of the linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="serviceEndpoint"> File service endpoint of the Azure File Storage resource. It is mutually exclusive with connectionString, sasUri property. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureFileStorageLinkedService(string linkedServiceType, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<string> userId, DataFactorySecret password, DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecret accountKey, DataFactoryElement<string> sasUri, DataFactoryKeyVaultSecret sasToken, DataFactoryElement<string> fileShare, DataFactoryElement<string> snapshot, string encryptedCredential, DataFactoryElement<string> serviceEndpoint, DataFactoryCredentialReference credential) : base(linkedServiceType, version, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureFileStorageLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<string> userId, DataFactorySecret password, DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecret accountKey, DataFactoryElement<string> sasUri, DataFactoryKeyVaultSecret sasToken, DataFactoryElement<string> fileShare, DataFactoryElement<string> snapshot, string encryptedCredential, DataFactoryElement<string> serviceEndpoint, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             UserId = userId;

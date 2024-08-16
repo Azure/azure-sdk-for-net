@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="SharePointOnlineListLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
-        /// <param name="version"> Version of the linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalEmbeddedCert"> Specify the base64 encoded certificate of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalEmbeddedCertPassword"> Specify the password of your certificate if your certificate has a password and you are using AadServicePrincipal authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SharePointOnlineListLinkedService(string linkedServiceType, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> siteUri, DataFactoryElement<string> tenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalEmbeddedCert, DataFactorySecret servicePrincipalEmbeddedCertPassword, string encryptedCredential) : base(linkedServiceType, version, connectVia, description, parameters, annotations, additionalProperties)
+        internal SharePointOnlineListLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> siteUri, DataFactoryElement<string> tenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> servicePrincipalCredentialType, DataFactorySecret servicePrincipalEmbeddedCert, DataFactorySecret servicePrincipalEmbeddedCertPassword, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             SiteUri = siteUri;
             TenantId = tenantId;

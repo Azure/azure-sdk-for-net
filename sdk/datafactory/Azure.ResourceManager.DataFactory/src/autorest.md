@@ -149,6 +149,7 @@ rename-mapping:
   GlobalParameterSpecification.type: GlobalParameterType
   HDInsightActivityDebugInfoOption: HDInsightActivityDebugInfoOptionSetting
   HDInsightOnDemandLinkedService.typeProperties.timeToLive: TimeToLiveExpression
+  HDInsightOnDemandLinkedService.typeProperties.version: Version
   HttpSource: DataFactoryHttpFileSource
   IntegrationRuntime: DataFactoryIntegrationRuntimeProperties
   IntegrationRuntimeAutoUpdate: IntegrationRuntimeAutoUpdateState
@@ -251,6 +252,7 @@ rename-mapping:
   AzureFunctionActivity.typeProperties.headers: RequestHeaders
   WebActivity.typeProperties.headers: RequestHeaders
   WebHookActivity.typeProperties.headers: RequestHeaders
+  LinkedService.version: LinkedServiceVersion
 
 prepend-rp-prefix:
   - BlobEventsTrigger

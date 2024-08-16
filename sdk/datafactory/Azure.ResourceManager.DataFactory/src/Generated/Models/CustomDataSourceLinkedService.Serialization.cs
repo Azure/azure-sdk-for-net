@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #endif
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (Optional.IsDefined(Version))
+            if (Optional.IsDefined(LinkedServiceVersion))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                writer.WriteStringValue(LinkedServiceVersion);
             }
             if (Optional.IsDefined(ConnectVia))
             {
