@@ -1365,6 +1365,52 @@ namespace Azure.Data.AppConfiguration
             return SetReadOnlyAsync(setting.Key, setting.Label, requestOptions, isReadOnly, false, cancellationToken).EnsureCompleted();
         }
 
+        /// <summary> Gets a list of labels. </summary>
+        /// <param name="selector">Set of options for selecting <see cref="SettingLabel"/>.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<SettingLabel> GetLabelsAsync(SettingLabelSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+            var name = selector.NameFilter;
+            var fields = selector.Fields;
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+
+            var labelFields = new ChangeTrackingList<string>();
+            foreach (SettingLabelFields field in fields)
+            {
+                labelFields.Add(field.ToString());
+            }
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, null, dateTime, labelFields, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, null, dateTime, labelFields, context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
+        }
+
+        /// <summary> Gets a list of labels. </summary>
+        /// <param name="selector">Set of options for selecting <see cref="SettingLabel"/>.</param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<SettingLabel> GetLabels(SettingLabelSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+            var name = selector.NameFilter;
+            var fields = selector.Fields;
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+
+            var labelFields = new ChangeTrackingList<string>();
+            foreach (SettingLabelFields field in fields)
+            {
+                labelFields.Add(field.ToString());
+            }
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, null, dateTime, labelFields, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, null, dateTime, labelFields, context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
+        }
+
         private async ValueTask<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(SetReadOnly)}");

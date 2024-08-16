@@ -1,6 +1,6 @@
 # Guide for migrating to Azure.AI.DocumentIntelligence from Azure.AI.FormRecognizer
 
-This guide is intended to assist in the migration to `Azure.AI.DocumentIntelligence (1.0.0-beta.2)` from `Azure.AI.FormRecognizer (4.1.0 or 4.0.0)`. It will focus on side-by-side comparisons for similar operations between libraries. Please note that version `1.0.0-beta.2` will be used for comparison with `4.1.0`.
+This guide is intended to assist in the migration to `Azure.AI.DocumentIntelligence (1.0.0-beta.3)` from `Azure.AI.FormRecognizer (4.1.0 or 4.0.0)`. It will focus on side-by-side comparisons for similar operations between libraries. Please note that version `1.0.0-beta.3` will be used for comparison with `4.1.0`.
 
 Familiarity with the `Azure.AI.FormRecognizer` package is assumed. For those new to the Document Intelligence and the Form Recognizer client libraries for .NET, please refer to the [README][readme] rather than this guide. For an exhaustive list of breaking changes between the packages, see the [CHANGELOG][changelog].
 
@@ -22,7 +22,7 @@ Familiarity with the `Azure.AI.FormRecognizer` package is assumed. For those new
 
 A natural question to ask when considering whether to adopt a new version of a library is what the benefits of doing so would be. As Azure Document Intelligence has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and add value to our customers.
 
-There are many benefits to using the new `Azure.AI.DocumentIntelligence` library. This new library introduces two new clients: `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient`, providing support for the new features added by the service in API version `2024-02-29-preview` and higher.
+There are many benefits to using the new `Azure.AI.DocumentIntelligence` library. This new library introduces two new clients: `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient`, providing support for the new features added by the service in API version `2024-07-31-preview` and higher.
 
 New features provided by the `Azure.AI.DocumentIntelligence` library include:
 - **Markdown content format:** support to output with Markdown content format along with the default plain text. This is only supported for the "prebuilt-layout" model. Markdown content format is deemed a more friendly format for LLM consumption in a chat or automation use scenario.
@@ -36,7 +36,7 @@ The table below describes the relationship of each client and its supported API 
 
 Package|API version|Supported clients
 |-|-|-
-|Azure.AI.DocumentIntelligence | 2024-02-29-preview | DocumentIntelligenceClient and DocumentIntelligenceAdministrationClient
+|Azure.AI.DocumentIntelligence | 2024-07-31-preview | DocumentIntelligenceClient and DocumentIntelligenceAdministrationClient
 |Azure.AI.FormRecognizer |2023-07-31 | DocumentAnalysisClient and DocumentModelAdministrationClient
 |Azure.AI.FormRecognizer |2022-08-31 | DocumentAnalysisClient and DocumentModelAdministrationClient
 |Azure.AI.FormRecognizer |2.1 | FormRecognizerClient and FormTrainingClient
@@ -59,7 +59,7 @@ Some terminology has changed to reflect the enhanced capabilities of the latest 
 
 We continue to support API key and AAD authentication methods when creating the clients. Below are the differences between the two versions:
 
-- In `Azure.AI.DocumentIntelligence`, we have `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` which support API version `2024-02-29-preview` and higher.
+- In `Azure.AI.DocumentIntelligence`, we have `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` which support API version `2024-07-31-preview` and higher.
 - Some client methods have been renamed. See the [CHANGELOG][changelog] for an exhaustive list of changes.
 
 Creating new clients in `Azure.AI.FormRecognizer`:
@@ -85,7 +85,7 @@ var documentIntelligenceAdministrationClient = new DocumentIntelligenceAdministr
 ### Analyzing documents
 
 Differences between the versions:
-- The former `AnalyzeDocument` method taking a `Stream` as the input document is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0-beta.2. As a workaround you will need to use a URI input or the new Base64 input option, which is described later in this guide ([Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)).
+- The former `AnalyzeDocument` method taking a `Stream` as the input document is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0-beta.3. As a workaround you will need to use a URI input or the new Base64 input option, which is described later in this guide ([Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)).
 - `AnalyzeDocumentFromUri` has been renamed to `AnalyzeDocument` and its input arguments have been reorganized:
   - The `documentUri` parameter has been removed. Instead, an `AnalyzeDocumentContent` object must be passed to the method to select the desired input type: URI or Base64 binary data.
   - The `options` parameter has been removed. Instead, `pages`, `locale`, and `features` options can be passed directly as method parameters.
@@ -303,7 +303,7 @@ for (int i = 0; i < result.Documents.Count; i++)
 ### Classifying documents
 
 Differences between the versions:
-- The former `ClassifyDocument` method taking a `Stream` as the input document is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0-beta.2. As a workaround you will need to use a URI input or the new Base64 input option, which is described later in this guide ([Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)).
+- The former `ClassifyDocument` method taking a `Stream` as the input document is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0-beta.3. As a workaround you will need to use a URI input or the new Base64 input option, which is described later in this guide ([Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)).
 - `ClassifyDocumentFromUri` has been renamed to `ClassifyDocument` and its input arguments have been reorganized. The `documentUri` parameter has been removed. Instead, a `ClassifyDocumentContent` object must be passed to the method to select the desired input type: URI or Base64 binary data.
 
 Classifying documents with `Azure.AI.FormRecognizer`:
@@ -561,7 +561,7 @@ foreach (DocumentLine line in firstPage.Lines)
 
 ### Accessing an existing long-running operation
 
-Storing the ID of a long-running operation to retrieve its status at a later point in time is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0-beta.2. There are no straightforward workarounds to support this scenario.
+Storing the ID of a long-running operation to retrieve its status at a later point in time is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0-beta.3. There are no straightforward workarounds to support this scenario.
 
 ## Additional samples
 
