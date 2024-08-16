@@ -270,6 +270,7 @@
     {
       "filename": "**/sdk/computefleet/**/*.cs",
       "words": [
+        "mbps",
         "unattend",
         "nvme"
       ]
