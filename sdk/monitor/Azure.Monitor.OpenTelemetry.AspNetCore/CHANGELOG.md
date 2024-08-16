@@ -15,6 +15,9 @@
   `APPLICATIONINSIGHTS_CONNECTION_STRING` is present in `IConfiguration`.
   ([#45292](https://github.com/Azure/azure-sdk-for-net/pull/45292))
 
+* Fixed a bug where LiveMetrics displays "UNKNOWN_INSTANCE" and "UNKNOWN_NAME" for "server name" and "role name" respectively.
+  ([#45433](https://github.com/Azure/azure-sdk-for-net/pull/45433))
+
 * Updated field mappings for sample telemetry sent to LiveMetrics.
   ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
 

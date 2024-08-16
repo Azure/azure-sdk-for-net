@@ -46,6 +46,11 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item.Value, options);
             }
             writer.WriteEndObject();
+            if (Optional.IsDefined(AllowOverwrite))
+            {
+                writer.WritePropertyName("allowOverwrite"u8);
+                writer.WriteBooleanValue(AllowOverwrite.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,6 +93,7 @@ namespace Azure.AI.DocumentIntelligence
             string description = default;
             string baseClassifierId = default;
             IDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
+            bool? allowOverwrite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,13 +123,28 @@ namespace Azure.AI.DocumentIntelligence
                     docTypes = dictionary;
                     continue;
                 }
+                if (property.NameEquals("allowOverwrite"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowOverwrite = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BuildDocumentClassifierContent(classifierId, description, baseClassifierId, docTypes, serializedAdditionalRawData);
+            return new BuildDocumentClassifierContent(
+                classifierId,
+                description,
+                baseClassifierId,
+                docTypes,
+                allowOverwrite,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuildDocumentClassifierContent>.Write(ModelReaderWriterOptions options)

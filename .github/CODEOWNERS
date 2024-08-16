@@ -80,6 +80,12 @@
 # ServiceLabel: %AAD
 # ServiceOwners:                                                   @adamedx
 
+# PRLabel: %AI Model Inference
+/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper
+
+# ServiceLabel: %AI Model Inference
+# ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
+
 # ServiceLabel: %AKS
 # ServiceOwners:                                                   @Azure/aks-pm
 
@@ -943,6 +949,12 @@
 # ServiceLabel: %Astronomer %Mgmt
 # ServiceOwners:                                                   @banggaurav
 
+# PRLabel: %Azure Stack Hci
+/sdk/azurestackhci/Azure.ResourceManager.Hci/                      @priyjain358
+
+# ServiceLabel: %Azure Stack Hci %Mgmt
+# ServiceOwners:                                                   @priyjain358
+
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
@@ -951,6 +963,12 @@
 
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
+
+# PRLabel: %DevOps - Infrastructure
+/sdk/devopsinfrastructure/Azure.ResourceManager.*/                 @oolaoluwa
+
+# ServiceLabel: %DevOps - Infrastructure
+# ServiceOwners:                                                   @oolaoluwa
 
 # PRLabel: %Informatica Data Management
 /sdk/informaticadatamanagement/Azure.ResourceManager.*/            @almasak
