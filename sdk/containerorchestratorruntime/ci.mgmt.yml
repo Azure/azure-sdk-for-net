@@ -10,14 +10,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/healthdataaiservices/ci.mgmt.yml
-    - sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices/
+    - sdk/containerorchestratorruntime/ci.mgmt.yml
+    - sdk/containerorchestratorruntime/Azure.ResourceManager.ContainerOrchestratorRuntime/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: healthdataaiservices
+    ServiceDirectory: containerorchestratorruntime
     LimitForPullRequest: true
     Artifacts:
-      - name: Azure.ResourceManager.HealthDataAIServices
-        safeName: AzureResourceManagerHealthDataAIServices
+    - name: Azure.ResourceManager.ContainerOrchestratorRuntime
+      safeName: AzureResourceManagerContainerOrchestratorRuntime
