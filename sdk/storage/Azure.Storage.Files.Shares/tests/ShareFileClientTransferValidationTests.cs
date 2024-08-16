@@ -143,7 +143,7 @@ namespace Azure.Storage.Files.Shares.Tests
         public override void TestAutoResolve()
         {
             Assert.AreEqual(
-                StorageChecksumAlgorithm.MD5,
+                StorageChecksumAlgorithm.StorageCrc64,
                 TransferValidationOptionsExtensions.ResolveAuto(StorageChecksumAlgorithm.Auto));
         }
 
