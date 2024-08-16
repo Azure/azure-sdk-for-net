@@ -138,7 +138,7 @@ var blobClient = new BlobClient(
 
 ### Define a custom authentication flow with `ChainedTokenCredential`
 
-While `DefaultAzureCredential` is generally the quickest way to authenticate apps for Azure, you can customize the credentials that are considered. `ChainedTokenCredential` enables users to combine multiple credential instances to define a customized chain of credentials. For more information, see [ChainedTokenCredential overview][ctc_overview].
+While `DefaultAzureCredential` is generally the quickest way to authenticate apps for Azure, you can create a customized chain of credentials to be considered. `ChainedTokenCredential` enables users to combine multiple credential instances to define a customized chain of credentials. For more information, see [ChainedTokenCredential overview][ctc_overview].
 
 ## Managed identity support
 
@@ -174,7 +174,7 @@ var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), crede
 
 ## Sovereign cloud configuration
 
-By default, credentials authenticate to the Microsoft Entra endpoint for the Azure Public Cloud. To access resources in other clouds, such as Azure US Government or a private cloud, configure credentials with the `AuthorityHost` argument. [AzureAuthorityHosts](https://learn.microsoft.com/dotnet/api/azure.identity.azureauthorityhosts?view=azure-dotnet) defines authorities for well-known clouds:
+By default, credentials authenticate to the Microsoft Entra endpoint for the Azure Public Cloud. To access resources in other clouds, such as Azure US Government or a private cloud, configure credentials with the `AuthorityHost` option. [AzureAuthorityHosts](https://learn.microsoft.com/dotnet/api/azure.identity.azureauthorityhosts?view=azure-dotnet) defines authorities for well-known clouds:
 
 ```C# Snippet:AuthenticatingWithAuthorityHost
 var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { AuthorityHost = AzureAuthorityHosts.AzureGovernment });
