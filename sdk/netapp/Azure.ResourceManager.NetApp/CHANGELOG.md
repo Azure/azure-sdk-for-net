@@ -11,11 +11,11 @@
 
 - Upgraded Azure.Core from 1.40.0 to 1.42.0
 
-## 1.6.0 (2026-06-27)
+## 1.6.0 (2024-06-27)
 
 ### Features Added
 
-- Upgraded api-version tag from 'package-netapp-2023-07-01' to 'package-netapp-2023-11-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c54a97d08c5afd7dc04f87a5df65d9dc84c96159/specification/netapp/resource-manager/readme.md
+- Upgraded api-version tag from 'package-netapp-2023-07-01' to 'package-netapp-2023-11-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c54a97d08c5afd7dc04f87a5df65d9dc84c96159/specification/netapp/resource-manager/readme.md.
 
 ### Other Changes
 
@@ -26,7 +26,7 @@
 
 ### Features Added
 
-- Upgraded api-version tag from 'package-netapp-2023-05-01' to 'package-netapp-2023-07-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ac74f8d5cf37351c5b26ecf2df17128d0408bd8e/specification/netapp/resource-manager/readme.md
+- Upgraded api-version tag from 'package-netapp-2023-05-01' to 'package-netapp-2023-07-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ac74f8d5cf37351c5b26ecf2df17128d0408bd8e/specification/netapp/resource-manager/readme.md.
 
 ### Other Changes
 
@@ -38,7 +38,7 @@
 ### Features Added
 
 - Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Upgraded api-version tag from 'package-netapp-2023-05-01' to 'package-preview-2023-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f5aa38d3f04996bfab6b32dd7e61f02de0c81a7d/specification/netapp/resource-manager/readme.md
+- Upgraded api-version tag from 'package-netapp-2023-05-01' to 'package-preview-2023-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/f5aa38d3f04996bfab6b32dd7e61f02de0c81a7d/specification/netapp/resource-manager/readme.md.
 
 ### Other Changes
 
