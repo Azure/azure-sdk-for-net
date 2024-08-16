@@ -19,6 +19,460 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Network.SecurityAdminConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description of the security configuration. </param>
+        /// <param name="applyOnNetworkIntentPolicyBasedServices"> Enum list of network intent policy based services. </param>
+        /// <param name="networkGroupAddressSpaceAggregationOption"> Determine update behavior for changes to network groups referenced within the rules in this configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <returns> A new <see cref="Network.SecurityAdminConfigurationData"/> instance for mocking. </returns>
+        public static SecurityAdminConfigurationData SecurityAdminConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices = null, AddressSpaceAggregationOption? networkGroupAddressSpaceAggregationOption = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, string commonResourceType = null)
+        {
+            applyOnNetworkIntentPolicyBasedServices ??= new List<NetworkIntentPolicyBasedService>();
+
+            return new SecurityAdminConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                applyOnNetworkIntentPolicyBasedServices?.ToList(),
+                networkGroupAddressSpaceAggregationOption,
+                provisioningState,
+                resourceGuid,
+                commonResourceType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.AdminRuleGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> A description of the admin rule collection. </param>
+        /// <param name="appliesToGroups"> Groups for configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <returns> A new <see cref="Network.AdminRuleGroupData"/> instance for mocking. </returns>
+        public static AdminRuleGroupData AdminRuleGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<NetworkManagerSecurityGroupItem> appliesToGroups = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, string commonResourceType = null)
+        {
+            appliesToGroups ??= new List<NetworkManagerSecurityGroupItem>();
+
+            return new AdminRuleGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                appliesToGroups?.ToList(),
+                provisioningState,
+                resourceGuid,
+                commonResourceType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.BaseAdminRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="kind"> Whether the rule is custom or default. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <returns> A new <see cref="Network.BaseAdminRuleData"/> instance for mocking. </returns>
+        public static BaseAdminRuleData BaseAdminRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, string commonResourceType = null)
+        {
+            return new BaseAdminRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new AdminRuleKind(kind),
+                commonResourceType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.ReachabilityAnalysisIntentData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Represents the Reachability Analysis Intent properties. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <returns> A new <see cref="Network.ReachabilityAnalysisIntentData"/> instance for mocking. </returns>
+        public static ReachabilityAnalysisIntentData ReachabilityAnalysisIntentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReachabilityAnalysisIntentProperties properties = null, string commonResourceType = null)
+        {
+            return new ReachabilityAnalysisIntentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                commonResourceType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.ReachabilityAnalysisRunData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Represents the Reachability Analysis Run properties. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <returns> A new <see cref="Network.ReachabilityAnalysisRunData"/> instance for mocking. </returns>
+        public static ReachabilityAnalysisRunData ReachabilityAnalysisRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ReachabilityAnalysisRunProperties properties = null, string commonResourceType = null)
+        {
+            return new ReachabilityAnalysisRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                commonResourceType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReachabilityAnalysisRunProperties"/>. </summary>
+        /// <param name="description"></param>
+        /// <param name="intentId"> Id of the intent resource to run analysis on. </param>
+        /// <param name="intentContent"> Intent information. </param>
+        /// <param name="analysisResult"></param>
+        /// <param name="errorMessage"></param>
+        /// <param name="provisioningState"> Provisioning states of a resource. </param>
+        /// <returns> A new <see cref="Models.ReachabilityAnalysisRunProperties"/> instance for mocking. </returns>
+        public static ReachabilityAnalysisRunProperties ReachabilityAnalysisRunProperties(string description = null, string intentId = null, IntentContent intentContent = null, string analysisResult = null, string errorMessage = null, NetworkProvisioningState? provisioningState = null)
+        {
+            return new ReachabilityAnalysisRunProperties(
+                description,
+                intentId,
+                intentContent,
+                analysisResult,
+                errorMessage,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IntentContent"/>. </summary>
+        /// <param name="description"></param>
+        /// <param name="sourceResourceId"> Source resource id of the intent. </param>
+        /// <param name="destinationResourceId"> Destination resource id of the intent. </param>
+        /// <param name="ipTraffic"> IP traffic information. </param>
+        /// <returns> A new <see cref="Models.IntentContent"/> instance for mocking. </returns>
+        public static IntentContent IntentContent(string description = null, ResourceIdentifier sourceResourceId = null, ResourceIdentifier destinationResourceId = null, IPTraffic ipTraffic = null)
+        {
+            return new IntentContent(description, sourceResourceId, destinationResourceId, ipTraffic, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.VerifierWorkspaceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Properties of Verifier Workspace resource. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <returns> A new <see cref="Network.VerifierWorkspaceData"/> instance for mocking. </returns>
+        public static VerifierWorkspaceData VerifierWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, VerifierWorkspaceProperties properties = null, string commonResourceType = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new VerifierWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                commonResourceType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.IpamPoolData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <returns> A new <see cref="Network.IpamPoolData"/> instance for mocking. </returns>
+        public static IpamPoolData IpamPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IpamPoolProperties properties = null, string commonResourceType = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new IpamPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                commonResourceType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IpamPoolProperties"/>. </summary>
+        /// <param name="description"></param>
+        /// <param name="displayName"> String representing a friendly name for the resource. </param>
+        /// <param name="ipAddressType"> List of IP address type for the IpamPool. </param>
+        /// <param name="parentPoolName"> String representing parent IpamPool resource name. If empty the IpamPool will be a root pool. </param>
+        /// <param name="addressPrefixes"> List of IP address prefixes of the resource. </param>
+        /// <param name="provisioningState"> Provisioning states of a resource. </param>
+        /// <returns> A new <see cref="Models.IpamPoolProperties"/> instance for mocking. </returns>
+        public static IpamPoolProperties IpamPoolProperties(string description = null, string displayName = null, IEnumerable<IPType> ipAddressType = null, string parentPoolName = null, IEnumerable<string> addressPrefixes = null, NetworkProvisioningState? provisioningState = null)
+        {
+            ipAddressType ??= new List<IPType>();
+            addressPrefixes ??= new List<string>();
+
+            return new IpamPoolProperties(
+                description,
+                displayName,
+                ipAddressType?.ToList(),
+                parentPoolName,
+                addressPrefixes?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PoolUsage"/>. </summary>
+        /// <param name="addressPrefixes"> List of IP address prefixes of the resource. </param>
+        /// <param name="childPools"> List of IpamPool that are children of this IpamPool. </param>
+        /// <param name="allocatedAddressPrefixes"> List of assigned IP address prefixes. </param>
+        /// <param name="reservedAddressPrefixes"> List of reserved IP address prefixes. These IP addresses could be reclaimed if not assigned in the given time. </param>
+        /// <param name="availableAddressPrefixes"> List of available IP address prefixes. </param>
+        /// <param name="totalNumberOfIPAddresses"> Total number of IP addresses managed in the IpamPool. </param>
+        /// <param name="numberOfAllocatedIPAddresses"> Total number of assigned IP addresses in the IpamPool. </param>
+        /// <param name="numberOfReservedIPAddresses"> Total number of reserved IP addresses in the IpamPool. </param>
+        /// <param name="numberOfAvailableIPAddresses"> Total number of available IP addresses in the IpamPool. </param>
+        /// <returns> A new <see cref="Models.PoolUsage"/> instance for mocking. </returns>
+        public static PoolUsage PoolUsage(IEnumerable<string> addressPrefixes = null, IEnumerable<ResourceBasics> childPools = null, IEnumerable<string> allocatedAddressPrefixes = null, IEnumerable<string> reservedAddressPrefixes = null, IEnumerable<string> availableAddressPrefixes = null, string totalNumberOfIPAddresses = null, string numberOfAllocatedIPAddresses = null, string numberOfReservedIPAddresses = null, string numberOfAvailableIPAddresses = null)
+        {
+            addressPrefixes ??= new List<string>();
+            childPools ??= new List<ResourceBasics>();
+            allocatedAddressPrefixes ??= new List<string>();
+            reservedAddressPrefixes ??= new List<string>();
+            availableAddressPrefixes ??= new List<string>();
+
+            return new PoolUsage(
+                addressPrefixes?.ToList(),
+                childPools?.ToList(),
+                allocatedAddressPrefixes?.ToList(),
+                reservedAddressPrefixes?.ToList(),
+                availableAddressPrefixes?.ToList(),
+                totalNumberOfIPAddresses,
+                numberOfAllocatedIPAddresses,
+                numberOfReservedIPAddresses,
+                numberOfAvailableIPAddresses,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceBasics"/>. </summary>
+        /// <param name="resourceId"> ResourceId of the Azure resource. </param>
+        /// <param name="addressPrefixes"> List of IP address prefixes of the resource. </param>
+        /// <returns> A new <see cref="Models.ResourceBasics"/> instance for mocking. </returns>
+        public static ResourceBasics ResourceBasics(ResourceIdentifier resourceId = null, IEnumerable<string> addressPrefixes = null)
+        {
+            addressPrefixes ??= new List<string>();
+
+            return new ResourceBasics(resourceId, addressPrefixes?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PoolAssociation"/>. </summary>
+        /// <param name="resourceId"> Resource id of the associated Azure resource. </param>
+        /// <param name="poolId"> IpamPool id for which the resource is associated to. </param>
+        /// <param name="description"></param>
+        /// <param name="addressPrefixes"> List of assigned IP address prefixes in the IpamPool of the associated resource. </param>
+        /// <param name="reservedPrefixes"> List of reserved IP address prefixes in the IpamPool of the associated resource. </param>
+        /// <param name="totalNumberOfIPAddresses"> Total number of assigned IP addresses of the association. </param>
+        /// <param name="numberOfReservedIPAddresses"> Total number of reserved IP addresses of the association. </param>
+        /// <param name="createdOn"> Creation time of the association. </param>
+        /// <param name="reservationExpiresOn"> Expire time for IP addresses reserved. </param>
+        /// <returns> A new <see cref="Models.PoolAssociation"/> instance for mocking. </returns>
+        public static PoolAssociation PoolAssociation(ResourceIdentifier resourceId = null, ResourceIdentifier poolId = null, string description = null, IEnumerable<string> addressPrefixes = null, IEnumerable<string> reservedPrefixes = null, string totalNumberOfIPAddresses = null, string numberOfReservedIPAddresses = null, DateTimeOffset? createdOn = null, DateTimeOffset? reservationExpiresOn = null)
+        {
+            addressPrefixes ??= new List<string>();
+            reservedPrefixes ??= new List<string>();
+
+            return new PoolAssociation(
+                resourceId,
+                poolId,
+                description,
+                addressPrefixes?.ToList(),
+                reservedPrefixes?.ToList(),
+                totalNumberOfIPAddresses,
+                numberOfReservedIPAddresses,
+                createdOn,
+                reservationExpiresOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.StaticCidrData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Properties of static CIDR resource. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <returns> A new <see cref="Network.StaticCidrData"/> instance for mocking. </returns>
+        public static StaticCidrData StaticCidrData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, StaticCidrProperties properties = null, string commonResourceType = null)
+        {
+            return new StaticCidrData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                commonResourceType,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StaticCidrProperties"/>. </summary>
+        /// <param name="description"></param>
+        /// <param name="numberOfIPAddressesToAllocate"> Number of IP addresses to allocate for a static CIDR resource. The IP addresses will be assigned based on IpamPools available space. </param>
+        /// <param name="addressPrefixes"> List of IP address prefixes of the resource. </param>
+        /// <param name="totalNumberOfIPAddresses"> Total number of IP addresses allocated for the static CIDR resource. </param>
+        /// <param name="provisioningState"> Provisioning states of a resource. </param>
+        /// <returns> A new <see cref="Models.StaticCidrProperties"/> instance for mocking. </returns>
+        public static StaticCidrProperties StaticCidrProperties(string description = null, string numberOfIPAddressesToAllocate = null, IEnumerable<string> addressPrefixes = null, string totalNumberOfIPAddresses = null, NetworkProvisioningState? provisioningState = null)
+        {
+            addressPrefixes ??= new List<string>();
+
+            return new StaticCidrProperties(
+                description,
+                numberOfIPAddressesToAllocate,
+                addressPrefixes?.ToList(),
+                totalNumberOfIPAddresses,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkManagerData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="description"> A description of the network manager. </param>
+        /// <param name="networkManagerScopes"> Scope of Network Manager. </param>
+        /// <param name="networkManagerScopeAccesses"> Scope Access. </param>
+        /// <param name="provisioningState"> The provisioning state of the network manager resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <returns> A new <see cref="Network.NetworkManagerData"/> instance for mocking. </returns>
+        public static NetworkManagerData NetworkManagerData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, SystemData systemData = null, string description = null, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes = null, IEnumerable<NetworkConfigurationDeploymentType> networkManagerScopeAccesses = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            networkManagerScopeAccesses ??= new List<NetworkConfigurationDeploymentType>();
+
+            return new NetworkManagerData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                serializedAdditionalRawData: null,
+                etag,
+                systemData,
+                description,
+                networkManagerScopes,
+                networkManagerScopeAccesses?.ToList(),
+                provisioningState,
+                resourceGuid);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkManagerPropertiesNetworkManagerScopes"/>. </summary>
+        /// <param name="managementGroups"> List of management groups. </param>
+        /// <param name="subscriptions"> List of subscriptions. </param>
+        /// <param name="crossTenantScopes"> List of cross tenant scopes. </param>
+        /// <returns> A new <see cref="Models.NetworkManagerPropertiesNetworkManagerScopes"/> instance for mocking. </returns>
+        public static NetworkManagerPropertiesNetworkManagerScopes NetworkManagerPropertiesNetworkManagerScopes(IEnumerable<string> managementGroups = null, IEnumerable<string> subscriptions = null, IEnumerable<CrossTenantScopes> crossTenantScopes = null)
+        {
+            managementGroups ??= new List<string>();
+            subscriptions ??= new List<string>();
+            crossTenantScopes ??= new List<CrossTenantScopes>();
+
+            return new NetworkManagerPropertiesNetworkManagerScopes(managementGroups?.ToList(), subscriptions?.ToList(), crossTenantScopes?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CrossTenantScopes"/>. </summary>
+        /// <param name="tenantId"> Tenant ID. </param>
+        /// <param name="managementGroups"> List of management groups. </param>
+        /// <param name="subscriptions"> List of subscriptions. </param>
+        /// <returns> A new <see cref="Models.CrossTenantScopes"/> instance for mocking. </returns>
+        public static CrossTenantScopes CrossTenantScopes(Guid? tenantId = null, IEnumerable<string> managementGroups = null, IEnumerable<string> subscriptions = null)
+        {
+            managementGroups ??= new List<string>();
+            subscriptions ??= new List<string>();
+
+            return new CrossTenantScopes(tenantId, managementGroups?.ToList(), subscriptions?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkTrackedResourceData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.NetworkTrackedResourceData"/> instance for mocking. </returns>
+        public static NetworkTrackedResourceData NetworkTrackedResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkTrackedResourceData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkManagerCommit"/>. </summary>
+        /// <param name="commitId"> Commit Id. </param>
+        /// <param name="targetLocations"> List of target locations. </param>
+        /// <param name="configurationIds"> List of configuration ids. </param>
+        /// <param name="commitType"> Commit Type. </param>
+        /// <returns> A new <see cref="Models.NetworkManagerCommit"/> instance for mocking. </returns>
+        public static NetworkManagerCommit NetworkManagerCommit(string commitId = null, IEnumerable<string> targetLocations = null, IEnumerable<string> configurationIds = null, NetworkConfigurationDeploymentType commitType = default)
+        {
+            targetLocations ??= new List<string>();
+            configurationIds ??= new List<string>();
+
+            return new NetworkManagerCommit(commitId, targetLocations?.ToList(), configurationIds?.ToList(), commitType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkManagerDeploymentStatus"/>. </summary>
+        /// <param name="commitOn"> Commit Time. </param>
+        /// <param name="region"> Region Name. </param>
+        /// <param name="deploymentState"> Deployment Status. </param>
+        /// <param name="configurationIds"> List of configuration ids. </param>
+        /// <param name="deploymentType"> Configuration Deployment Type. </param>
+        /// <param name="errorMessage"> Error Message. </param>
+        /// <returns> A new <see cref="Models.NetworkManagerDeploymentStatus"/> instance for mocking. </returns>
+        public static NetworkManagerDeploymentStatus NetworkManagerDeploymentStatus(DateTimeOffset? commitOn = null, string region = null, NetworkManagerDeploymentState? deploymentState = null, IEnumerable<string> configurationIds = null, NetworkConfigurationDeploymentType? deploymentType = null, string errorMessage = null)
+        {
+            configurationIds ??= new List<string>();
+
+            return new NetworkManagerDeploymentStatus(
+                commitOn,
+                region,
+                deploymentState,
+                configurationIds?.ToList(),
+                deploymentType,
+                errorMessage,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Network.ApplicationGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -695,26 +1149,6 @@ namespace Azure.ResourceManager.Network.Models
                 etag,
                 resourceGuid,
                 provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkTrackedResourceData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkTrackedResourceData"/> instance for mocking. </returns>
-        public static NetworkTrackedResourceData NetworkTrackedResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new NetworkTrackedResourceData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.NetworkInterfaceData"/>. </summary>
@@ -4056,104 +4490,6 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Network.NetworkManagerData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="description"> A description of the network manager. </param>
-        /// <param name="networkManagerScopes"> Scope of Network Manager. </param>
-        /// <param name="networkManagerScopeAccesses"> Scope Access. </param>
-        /// <param name="provisioningState"> The provisioning state of the network manager resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <returns> A new <see cref="Network.NetworkManagerData"/> instance for mocking. </returns>
-        public static NetworkManagerData NetworkManagerData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null, ETag? etag = null, SystemData systemData = null, string description = null, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes = null, IEnumerable<NetworkConfigurationDeploymentType> networkManagerScopeAccesses = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            networkManagerScopeAccesses ??= new List<NetworkConfigurationDeploymentType>();
-
-            return new NetworkManagerData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags,
-                serializedAdditionalRawData: null,
-                etag,
-                systemData,
-                description,
-                networkManagerScopes,
-                networkManagerScopeAccesses?.ToList(),
-                provisioningState,
-                resourceGuid);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkManagerPropertiesNetworkManagerScopes"/>. </summary>
-        /// <param name="managementGroups"> List of management groups. </param>
-        /// <param name="subscriptions"> List of subscriptions. </param>
-        /// <param name="crossTenantScopes"> List of cross tenant scopes. </param>
-        /// <returns> A new <see cref="Models.NetworkManagerPropertiesNetworkManagerScopes"/> instance for mocking. </returns>
-        public static NetworkManagerPropertiesNetworkManagerScopes NetworkManagerPropertiesNetworkManagerScopes(IEnumerable<string> managementGroups = null, IEnumerable<string> subscriptions = null, IEnumerable<CrossTenantScopes> crossTenantScopes = null)
-        {
-            managementGroups ??= new List<string>();
-            subscriptions ??= new List<string>();
-            crossTenantScopes ??= new List<CrossTenantScopes>();
-
-            return new NetworkManagerPropertiesNetworkManagerScopes(managementGroups?.ToList(), subscriptions?.ToList(), crossTenantScopes?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CrossTenantScopes"/>. </summary>
-        /// <param name="tenantId"> Tenant ID. </param>
-        /// <param name="managementGroups"> List of management groups. </param>
-        /// <param name="subscriptions"> List of subscriptions. </param>
-        /// <returns> A new <see cref="Models.CrossTenantScopes"/> instance for mocking. </returns>
-        public static CrossTenantScopes CrossTenantScopes(Guid? tenantId = null, IEnumerable<string> managementGroups = null, IEnumerable<string> subscriptions = null)
-        {
-            managementGroups ??= new List<string>();
-            subscriptions ??= new List<string>();
-
-            return new CrossTenantScopes(tenantId, managementGroups?.ToList(), subscriptions?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkManagerCommit"/>. </summary>
-        /// <param name="commitId"> Commit Id. </param>
-        /// <param name="targetLocations"> List of target locations. </param>
-        /// <param name="configurationIds"> List of configuration ids. </param>
-        /// <param name="commitType"> Commit Type. </param>
-        /// <returns> A new <see cref="Models.NetworkManagerCommit"/> instance for mocking. </returns>
-        public static NetworkManagerCommit NetworkManagerCommit(string commitId = null, IEnumerable<string> targetLocations = null, IEnumerable<string> configurationIds = null, NetworkConfigurationDeploymentType commitType = default)
-        {
-            targetLocations ??= new List<string>();
-            configurationIds ??= new List<string>();
-
-            return new NetworkManagerCommit(commitId, targetLocations?.ToList(), configurationIds?.ToList(), commitType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkManagerDeploymentStatus"/>. </summary>
-        /// <param name="commitOn"> Commit Time. </param>
-        /// <param name="region"> Region Name. </param>
-        /// <param name="deploymentState"> Deployment Status. </param>
-        /// <param name="configurationIds"> List of configuration ids. </param>
-        /// <param name="deploymentType"> Configuration Deployment Type. </param>
-        /// <param name="errorMessage"> Error Message. </param>
-        /// <returns> A new <see cref="Models.NetworkManagerDeploymentStatus"/> instance for mocking. </returns>
-        public static NetworkManagerDeploymentStatus NetworkManagerDeploymentStatus(DateTimeOffset? commitOn = null, string region = null, NetworkManagerDeploymentState? deploymentState = null, IEnumerable<string> configurationIds = null, NetworkConfigurationDeploymentType? deploymentType = null, string errorMessage = null)
-        {
-            configurationIds ??= new List<string>();
-
-            return new NetworkManagerDeploymentStatus(
-                commitOn,
-                region,
-                deploymentState,
-                configurationIds?.ToList(),
-                deploymentType,
-                errorMessage,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ActiveConnectivityConfiguration"/>. </summary>
         /// <param name="id"> Connectivity configuration ID. </param>
         /// <param name="configurationGroups"> Effective configuration groups. </param>
@@ -4418,82 +4754,6 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Network.SecurityAdminConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description of the security configuration. </param>
-        /// <param name="applyOnNetworkIntentPolicyBasedServices"> Enum list of network intent policy based services. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.SecurityAdminConfigurationData"/> instance for mocking. </returns>
-        public static SecurityAdminConfigurationData SecurityAdminConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<NetworkIntentPolicyBasedService> applyOnNetworkIntentPolicyBasedServices = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
-        {
-            applyOnNetworkIntentPolicyBasedServices ??= new List<NetworkIntentPolicyBasedService>();
-
-            return new SecurityAdminConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description,
-                applyOnNetworkIntentPolicyBasedServices?.ToList(),
-                provisioningState,
-                resourceGuid,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.AdminRuleGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> A description of the admin rule collection. </param>
-        /// <param name="appliesToGroups"> Groups for configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.AdminRuleGroupData"/> instance for mocking. </returns>
-        public static AdminRuleGroupData AdminRuleGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, IEnumerable<NetworkManagerSecurityGroupItem> appliesToGroups = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null, ETag? etag = null)
-        {
-            appliesToGroups ??= new List<NetworkManagerSecurityGroupItem>();
-
-            return new AdminRuleGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description,
-                appliesToGroups?.ToList(),
-                provisioningState,
-                resourceGuid,
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Network.BaseAdminRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Whether the rule is custom or default. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.BaseAdminRuleData"/> instance for mocking. </returns>
-        public static BaseAdminRuleData BaseAdminRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
-        {
-            return new BaseAdminRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                kind == null ? default : new AdminRuleKind(kind),
-                etag,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Network.NetworkProfileData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -4679,7 +4939,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualApplianceDelegationProperties"/>. </summary>
         /// <param name="serviceName"> The service name to which the NVA is delegated. </param>
-        /// <param name="provisioningState"> The current provisioning state. </param>
+        /// <param name="provisioningState"> Provisioning states of a resource. </param>
         /// <returns> A new <see cref="Models.VirtualApplianceDelegationProperties"/> instance for mocking. </returns>
         public static VirtualApplianceDelegationProperties VirtualApplianceDelegationProperties(string serviceName = null, NetworkProvisioningState? provisioningState = null)
         {
@@ -7736,6 +7996,100 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkAdminRule"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
+        /// <param name="protocol"> Network protocol this rule applies to. </param>
+        /// <param name="sources"> The CIDR or source IP ranges. </param>
+        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
+        /// <param name="sourcePortRanges"> The source port ranges. </param>
+        /// <param name="destinationPortRanges"> The destination port ranges. </param>
+        /// <param name="access"> Indicates the access allowed for this particular rule. </param>
+        /// <param name="priority"> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
+        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <returns> A new <see cref="Models.NetworkAdminRule"/> instance for mocking. </returns>
+        public static NetworkAdminRule NetworkAdminRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string commonResourceType = null, string description = null, SecurityConfigurationRuleProtocol? protocol = null, IEnumerable<AddressPrefixItem> sources = null, IEnumerable<AddressPrefixItem> destinations = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityConfigurationRuleAccess? access = null, int? priority = null, SecurityConfigurationRuleDirection? direction = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        {
+            sources ??= new List<AddressPrefixItem>();
+            destinations ??= new List<AddressPrefixItem>();
+            sourcePortRanges ??= new List<string>();
+            destinationPortRanges ??= new List<string>();
+
+            return new NetworkAdminRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AdminRuleKind.Custom,
+                commonResourceType,
+                serializedAdditionalRawData: null,
+                description,
+                protocol,
+                sources?.ToList(),
+                destinations?.ToList(),
+                sourcePortRanges?.ToList(),
+                destinationPortRanges?.ToList(),
+                access,
+                priority,
+                direction,
+                provisioningState,
+                resourceGuid);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkDefaultAdminRule"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="commonResourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
+        /// <param name="flag"> Default rule flag. </param>
+        /// <param name="protocol"> Network protocol this rule applies to. </param>
+        /// <param name="sources"> The CIDR or source IP ranges. </param>
+        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
+        /// <param name="sourcePortRanges"> The source port ranges. </param>
+        /// <param name="destinationPortRanges"> The destination port ranges. </param>
+        /// <param name="access"> Indicates the access allowed for this particular rule. </param>
+        /// <param name="priority"> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
+        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <returns> A new <see cref="Models.NetworkDefaultAdminRule"/> instance for mocking. </returns>
+        public static NetworkDefaultAdminRule NetworkDefaultAdminRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string commonResourceType = null, string description = null, string flag = null, SecurityConfigurationRuleProtocol? protocol = null, IEnumerable<AddressPrefixItem> sources = null, IEnumerable<AddressPrefixItem> destinations = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityConfigurationRuleAccess? access = null, int? priority = null, SecurityConfigurationRuleDirection? direction = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null)
+        {
+            sources ??= new List<AddressPrefixItem>();
+            destinations ??= new List<AddressPrefixItem>();
+            sourcePortRanges ??= new List<string>();
+            destinationPortRanges ??= new List<string>();
+
+            return new NetworkDefaultAdminRule(
+                id,
+                name,
+                resourceType,
+                systemData,
+                AdminRuleKind.Default,
+                commonResourceType,
+                serializedAdditionalRawData: null,
+                description,
+                flag,
+                protocol,
+                sources?.ToList(),
+                destinations?.ToList(),
+                sourcePortRanges?.ToList(),
+                destinationPortRanges?.ToList(),
+                access,
+                priority,
+                direction,
+                provisioningState,
+                resourceGuid);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ActiveSecurityAdminRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="commitOn"> Deployment time string. </param>
@@ -7925,100 +8279,6 @@ namespace Azure.ResourceManager.Network.Models
                 ruleCollectionAppliesToGroups?.ToList(),
                 ruleGroups?.ToList(),
                 EffectiveAdminRuleKind.Default,
-                serializedAdditionalRawData: null,
-                description,
-                flag,
-                protocol,
-                sources?.ToList(),
-                destinations?.ToList(),
-                sourcePortRanges?.ToList(),
-                destinationPortRanges?.ToList(),
-                access,
-                priority,
-                direction,
-                provisioningState,
-                resourceGuid);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkAdminRule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
-        /// <param name="protocol"> Network protocol this rule applies to. </param>
-        /// <param name="sources"> The CIDR or source IP ranges. </param>
-        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
-        /// <param name="sourcePortRanges"> The source port ranges. </param>
-        /// <param name="destinationPortRanges"> The destination port ranges. </param>
-        /// <param name="access"> Indicates the access allowed for this particular rule. </param>
-        /// <param name="priority"> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
-        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <returns> A new <see cref="Models.NetworkAdminRule"/> instance for mocking. </returns>
-        public static NetworkAdminRule NetworkAdminRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string description = null, SecurityConfigurationRuleProtocol? protocol = null, IEnumerable<AddressPrefixItem> sources = null, IEnumerable<AddressPrefixItem> destinations = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityConfigurationRuleAccess? access = null, int? priority = null, SecurityConfigurationRuleDirection? direction = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null)
-        {
-            sources ??= new List<AddressPrefixItem>();
-            destinations ??= new List<AddressPrefixItem>();
-            sourcePortRanges ??= new List<string>();
-            destinationPortRanges ??= new List<string>();
-
-            return new NetworkAdminRule(
-                id,
-                name,
-                resourceType,
-                systemData,
-                AdminRuleKind.Custom,
-                etag,
-                serializedAdditionalRawData: null,
-                description,
-                protocol,
-                sources?.ToList(),
-                destinations?.ToList(),
-                sourcePortRanges?.ToList(),
-                destinationPortRanges?.ToList(),
-                access,
-                priority,
-                direction,
-                provisioningState,
-                resourceGuid);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkDefaultAdminRule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="description"> A description for this rule. Restricted to 140 chars. </param>
-        /// <param name="flag"> Default rule flag. </param>
-        /// <param name="protocol"> Network protocol this rule applies to. </param>
-        /// <param name="sources"> The CIDR or source IP ranges. </param>
-        /// <param name="destinations"> The destination address prefixes. CIDR or destination IP ranges. </param>
-        /// <param name="sourcePortRanges"> The source port ranges. </param>
-        /// <param name="destinationPortRanges"> The destination port ranges. </param>
-        /// <param name="access"> Indicates the access allowed for this particular rule. </param>
-        /// <param name="priority"> The priority of the rule. The value can be between 1 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
-        /// <param name="direction"> Indicates if the traffic matched against the rule in inbound or outbound. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <returns> A new <see cref="Models.NetworkDefaultAdminRule"/> instance for mocking. </returns>
-        public static NetworkDefaultAdminRule NetworkDefaultAdminRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string description = null, string flag = null, SecurityConfigurationRuleProtocol? protocol = null, IEnumerable<AddressPrefixItem> sources = null, IEnumerable<AddressPrefixItem> destinations = null, IEnumerable<string> sourcePortRanges = null, IEnumerable<string> destinationPortRanges = null, SecurityConfigurationRuleAccess? access = null, int? priority = null, SecurityConfigurationRuleDirection? direction = null, NetworkProvisioningState? provisioningState = null, Guid? resourceGuid = null)
-        {
-            sources ??= new List<AddressPrefixItem>();
-            destinations ??= new List<AddressPrefixItem>();
-            sourcePortRanges ??= new List<string>();
-            destinationPortRanges ??= new List<string>();
-
-            return new NetworkDefaultAdminRule(
-                id,
-                name,
-                resourceType,
-                systemData,
-                AdminRuleKind.Default,
-                etag,
                 serializedAdditionalRawData: null,
                 description,
                 flag,
