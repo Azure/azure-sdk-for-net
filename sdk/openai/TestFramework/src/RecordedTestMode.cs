@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace OpenAI.TestFramework.Recording;
+namespace OpenAI.TestFramework;
 
 /// <summary>
 /// The recording mode.
