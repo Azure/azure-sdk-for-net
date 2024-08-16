@@ -101,7 +101,7 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             options);
-        return enumerator.ToAsyncResultCollection();
+        return AsyncPageCollection<ValueItem>.FromEnumerator(enumerator);
     }
 
     public virtual IEnumerable<ClientResult> GetValues(
@@ -117,6 +117,6 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             options);
-        return enumerator.ToResultCollection();
+        return PageCollection<ValueItem>.FromEnumerator(enumerator);
     }
 }
