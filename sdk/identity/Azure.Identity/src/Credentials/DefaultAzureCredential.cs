@@ -101,14 +101,13 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials in the order
-        /// <see cref="EnvironmentCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="SharedTokenCacheCredential"/>, and
-        /// <see cref="InteractiveBrowserCredential"/> returning the first successfully obtained <see cref="AccessToken"/>. Acquired tokens
-        /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
+        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials, returning
+        /// the first successfully obtained <see cref="AccessToken"/>. Acquired tokens are cached by the credential
+        /// instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
         /// instances to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
-        /// Note that credentials requiring user interaction, such as the <see cref="InteractiveBrowserCredential"/>, are not included by default.
+        /// Credentials requiring user interaction, such as <see cref="InteractiveBrowserCredential"/>, are excluded by default.
         /// </remarks>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -120,14 +119,13 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials in the order
-        /// <see cref="EnvironmentCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="SharedTokenCacheCredential"/>, and
-        /// <see cref="InteractiveBrowserCredential"/> returning the first successfully obtained <see cref="AccessToken"/>. Acquired tokens
-        /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
+        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials, returning
+        /// the first successfully obtained <see cref="AccessToken"/>. Acquired tokens are cached by the credential
+        /// instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
         /// instances to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
-        /// Note that credentials requiring user interaction, such as the <see cref="InteractiveBrowserCredential"/>, are not included by default.
+        /// Credentials requiring user interaction, such as <see cref="InteractiveBrowserCredential"/>, are excluded by default.
         /// </remarks>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
