@@ -14,14 +14,17 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  skipped-operations:
+    - Fleets_Update
+    - Fleets_CreateOrUpdate
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
   flatten-models: false
 use-model-reader-writer: true
 
-mgmt-debug:
-  show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'

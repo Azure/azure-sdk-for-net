@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Plan))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            ManagedServiceIdentityUpdate identity = default;
+            ManagedServiceIdentity identity = default;
             ArmPlan plan = default;
             ComputeFleetProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     {
                         continue;
                     }
-                    identity = ManagedServiceIdentityUpdate.DeserializeManagedServiceIdentityUpdate(property.Value, options);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
