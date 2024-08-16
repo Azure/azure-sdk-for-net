@@ -1,15 +1,15 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
-- Upgraded api-version tag from 'package-netapp-2023-11-01' to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/aa23ddc02b2b1c5a34c56a49d83b77c0a1aaa614/specification/netapp/resource-manager/readme.md
+## 1.7.0 (2024-08-16)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded api-version tag from 'package-preview-2023-11' to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/aa23ddc02b2b1c5a34c56a49d83b77c0a1aaa614/specification/netapp/resource-manager/readme.md.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.40.0 to 1.42.0
 
 ## 1.6.0 (2026-06-27)
 
