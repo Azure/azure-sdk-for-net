@@ -18,13 +18,13 @@
 * Fixed a bug where LiveMetrics displays "UNKNOWN_INSTANCE" and "UNKNOWN_NAME" for "server name" and "role name" respectively.
   ([#45433](https://github.com/Azure/azure-sdk-for-net/pull/45433))
 
-* Updated field mappings for sample telemetry sent to LiveMetrics.
-  ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
-
 * Fixed a bug in LiveMetrics that counted all manually created Dependencies as failures.
   ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
 
 ### Other Changes
+
+* Updated field mappings for telemetry sent to LiveMetrics.
+  ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
 
 ## 1.3.0-beta.1 (2024-07-12)
 
