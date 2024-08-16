@@ -1,14 +1,12 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0 (2024-08-16)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Enhanced Swagger to support Vertica V2 integration in Azure Data Factory.
+- Added Managed Identity (MI) authentication support for Azure Files.
+- Introduced versioning property for better version control.
+- Implemented Service Principal Certificate Authentication in RestService and SharePointOnlineList Linked Services.
 
 ## 1.2.0 (2024-07-26)
 
