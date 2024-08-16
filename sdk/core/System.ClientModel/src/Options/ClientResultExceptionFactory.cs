@@ -10,7 +10,7 @@ public class ClientResultExceptionFactory
 {
     public static ClientResultExceptionFactory Default { get; } = new();
 
-    public virtual ClientResultException FromResponse(PipelineResponse response)
+    public virtual ClientResultException Create(PipelineResponse response)
     {
         response.BufferContent();
 
@@ -22,7 +22,7 @@ public class ClientResultExceptionFactory
         return new ClientResultException(response);
     }
 
-    public virtual async Task<ClientResultException> FromResponseAsync(PipelineResponse response)
+    public virtual async Task<ClientResultException> CreateAsync(PipelineResponse response)
     {
         await response.BufferContentAsync().ConfigureAwait(false);
 

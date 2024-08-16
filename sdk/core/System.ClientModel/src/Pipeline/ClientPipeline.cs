@@ -232,15 +232,13 @@ public sealed partial class ClientPipeline
 
         await SendAsync(message).ConfigureAwait(false);
 
-        // TODO: I think we can null-suppress Response, but double-check
-
         // This allow protocols method to dispose message without disposing response
         // in the case that the response is holding an un-buffered content stream.
         PipelineResponse response = message.BufferResponse ? message.Response! : message.ExtractResponse()!;
 
         if (response!.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
         {
-            throw await message.ExceptionFactory.FromResponseAsync(response).ConfigureAwait(false);
+            throw await message.ExceptionFactory.CreateAsync(response).ConfigureAwait(false);
         }
 
         return ClientResult.FromResponse(response);
@@ -259,15 +257,13 @@ public sealed partial class ClientPipeline
 
         Send(message);
 
-        // TODO: I think we can null-suppress Response, but double-check
-
         // This allow protocols method to dispose message without disposing response
         // in the case that the response is holding an un-buffered content stream.
         PipelineResponse response = message.BufferResponse ? message.Response! : message.ExtractResponse()!;
 
         if (response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
         {
-            throw message.ExceptionFactory.FromResponse(response);
+            throw message.ExceptionFactory.Create(response);
         }
 
         return ClientResult.FromResponse(response);

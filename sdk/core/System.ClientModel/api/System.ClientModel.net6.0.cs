@@ -132,8 +132,8 @@ namespace System.ClientModel.Primitives
     {
         public ClientResultExceptionFactory() { }
         public static System.ClientModel.Primitives.ClientResultExceptionFactory Default { get { throw null; } }
-        public virtual System.ClientModel.ClientResultException FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResultException> FromResponseAsync(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public virtual System.ClientModel.ClientResultException Create(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResultException> CreateAsync(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public virtual bool TryGetMessage(System.ClientModel.Primitives.PipelineResponse response, out string? message) { throw null; }
     }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
