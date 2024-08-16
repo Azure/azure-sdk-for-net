@@ -244,7 +244,7 @@ public sealed partial class ClientPipeline
     /// <param name="options"></param>
     /// <returns></returns>
     /// <exception cref="ClientResultException"></exception>
-    public bool Process(PipelineMessage message, RequestOptions options)
+    public bool TryProcess(PipelineMessage message, RequestOptions options)
     {
         message.Apply(options);
 
