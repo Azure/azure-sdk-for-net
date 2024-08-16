@@ -32,7 +32,7 @@ public class PipelineMessage : IDisposable
 
         BufferResponse = true;
         ResponseClassifier = PipelineMessageClassifier.Default;
-        ExceptionFactory = ClientResultExceptionFactory.Default;
+        //ExceptionFactory = ClientResultExceptionFactory.Default;
     }
 
     /// <summary>
@@ -102,10 +102,7 @@ public class PipelineMessage : IDisposable
     /// </summary>
     public PipelineMessageClassifier ResponseClassifier { get; set; }
 
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    public ClientResultExceptionFactory ExceptionFactory { get; set; }
+    //public ClientResultExceptionFactory ExceptionFactory { get; set; }
 
     /// <summary>
     /// Apply the options from the provided <see cref="RequestOptions"/> to

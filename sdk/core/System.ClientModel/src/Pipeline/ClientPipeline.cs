@@ -226,22 +226,15 @@ public sealed partial class ClientPipeline
     /// <param name="message"></param>
     /// <param name="options"></param>
     /// <returns></returns>
-    public async ValueTask<ClientResult> ProcessMessageAsync(PipelineMessage message, RequestOptions options)
+    public async ValueTask<bool> TryProcessAsync(PipelineMessage message, RequestOptions options)
     {
         message.Apply(options);
 
         await SendAsync(message).ConfigureAwait(false);
 
-        // This allow protocols method to dispose message without disposing response
-        // in the case that the response is holding an un-buffered content stream.
-        PipelineResponse response = message.BufferResponse ? message.Response! : message.ExtractResponse()!;
-
-        if (response!.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
-        {
-            throw await message.ExceptionFactory.CreateAsync(response).ConfigureAwait(false);
-        }
-
-        return ClientResult.FromResponse(response);
+        // return false if client should throw an exception
+        return !message.Response!.IsError ||
+               (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) == ClientErrorBehaviors.NoThrow;
     }
 
     /// <summary>
@@ -251,22 +244,15 @@ public sealed partial class ClientPipeline
     /// <param name="options"></param>
     /// <returns></returns>
     /// <exception cref="ClientResultException"></exception>
-    public ClientResult ProcessMessage(PipelineMessage message, RequestOptions options)
+    public bool Process(PipelineMessage message, RequestOptions options)
     {
         message.Apply(options);
 
         Send(message);
 
-        // This allow protocols method to dispose message without disposing response
-        // in the case that the response is holding an un-buffered content stream.
-        PipelineResponse response = message.BufferResponse ? message.Response! : message.ExtractResponse()!;
-
-        if (response.IsError && (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) != ClientErrorBehaviors.NoThrow)
-        {
-            throw message.ExceptionFactory.Create(response);
-        }
-
-        return ClientResult.FromResponse(response);
+        // return false if client should throw an exception
+        return !message.Response!.IsError ||
+               (options?.ErrorOptions & ClientErrorBehaviors.NoThrow) == ClientErrorBehaviors.NoThrow;
     }
 
     private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)

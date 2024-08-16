@@ -113,10 +113,10 @@ namespace System.ClientModel.Primitives
         public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.ClientPipelineOptions? options = null) { throw null; }
         public static System.ClientModel.Primitives.ClientPipeline Create(System.ClientModel.Primitives.ClientPipelineOptions options, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> perTryPolicies, System.ReadOnlySpan<System.ClientModel.Primitives.PipelinePolicy> beforeTransportPolicies) { throw null; }
         public System.ClientModel.Primitives.PipelineMessage CreateMessage() { throw null; }
-        public System.ClientModel.ClientResult ProcessMessage(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions options) { throw null; }
-        public System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult> ProcessMessageAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public bool Process(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public void Send(System.ClientModel.Primitives.PipelineMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public System.Threading.Tasks.ValueTask<bool> TryProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.ClientModel.Primitives.RequestOptions options) { throw null; }
     }
     public partial class ClientPipelineOptions
     {
@@ -127,14 +127,6 @@ namespace System.ClientModel.Primitives
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
-    }
-    public partial class ClientResultExceptionFactory
-    {
-        public ClientResultExceptionFactory() { }
-        public static System.ClientModel.Primitives.ClientResultExceptionFactory Default { get { throw null; } }
-        public virtual System.ClientModel.ClientResultException Create(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
-        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResultException> CreateAsync(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
-        public virtual bool TryGetMessage(System.ClientModel.Primitives.PipelineResponse response, out string? message) { throw null; }
     }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
@@ -222,7 +214,6 @@ namespace System.ClientModel.Primitives
         protected internal PipelineMessage(System.ClientModel.Primitives.PipelineRequest request) { }
         public bool BufferResponse { get { throw null; } set { } }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } protected internal set { } }
-        public System.ClientModel.Primitives.ClientResultExceptionFactory ExceptionFactory { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public System.ClientModel.Primitives.PipelineResponse? Response { get { throw null; } protected internal set { } }
