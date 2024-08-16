@@ -78,7 +78,7 @@ namespace Azure.Monitor.Query
             options ??= new LogsQueryClientOptions();
             if (string.IsNullOrEmpty(options.Audience?.ToString()))
             {
-                options.Audience = endpoint.OriginalString;
+                options.Audience = endpoint.AbsoluteUri;
             }
             else if (endpoint.Host != new Uri(options.Audience.ToString()).Host)
             {

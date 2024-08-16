@@ -332,5 +332,16 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.AreEqual("https://custom.audience", client.Endpoint.OriginalString);
         }
+
+        [Test]
+        public void Constructor_WhenOptionsIsNull_UsesEndpointSlash()
+        {
+            var endpoint = new Uri("https://custom.audience//");
+            var credential = new DefaultAzureCredential();
+
+            var client = new LogsQueryClient(endpoint, credential);
+
+            Assert.AreEqual("https://custom.audience", client.Endpoint.OriginalString);
+        }
     }
 }
