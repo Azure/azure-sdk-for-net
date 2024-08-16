@@ -187,7 +187,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 ### Credential chains
 
 |Credential | Usage | Reference
-|-|-
+|-|-|-
 |[`DefaultAzureCredential`][ref_DefaultAzureCredential]|Provides a simplified authentication experience to quickly start developing apps run in Azure.|[DefaultAzureCredential overview][dac_overview]
 |[`ChainedTokenCredential`][ref_ChainedTokenCredential]|Allows users to define custom authentication flows comprised of multiple credentials.|[ChainedTokenCredential overview][ctc_overview]
 
