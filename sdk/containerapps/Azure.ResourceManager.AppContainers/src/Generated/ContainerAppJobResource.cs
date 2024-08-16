@@ -91,6 +91,82 @@ namespace Azure.ResourceManager.AppContainers
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of JobDetectorResources in the ContainerAppJob. </summary>
+        /// <returns> An object representing collection of JobDetectorResources and their operations over a JobDetectorResource. </returns>
+        public virtual JobDetectorCollection GetJobDetectors()
+        {
+            return GetCachedClient(client => new JobDetectorCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the diagnostics data for a Container App Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_GetDetector</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-08-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDetectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="detectorName"> Name of the Container App Job detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<JobDetectorResource>> GetJobDetectorAsync(string detectorName, CancellationToken cancellationToken = default)
+        {
+            return await GetJobDetectors().GetAsync(detectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the diagnostics data for a Container App Job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_GetDetector</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-08-02-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobDetectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="detectorName"> Name of the Container App Job detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<JobDetectorResource> GetJobDetector(string detectorName, CancellationToken cancellationToken = default)
+        {
+            return GetJobDetectors().Get(detectorName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a JobDetectorPropertyResource along with the instance operations that can be performed on it in the ContainerAppJob. </summary>
+        /// <returns> Returns a <see cref="JobDetectorPropertyResource"/> object. </returns>
+        public virtual JobDetectorPropertyResource GetJobDetectorProperty()
+        {
+            return new JobDetectorPropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
+        }
+
         /// <summary> Gets a collection of ContainerAppJobExecutionResources in the ContainerAppJob. </summary>
         /// <returns> An object representing collection of ContainerAppJobExecutionResources and their operations over a ContainerAppJobExecutionResource. </returns>
         public virtual ContainerAppJobExecutionCollection GetContainerAppJobExecutions()
@@ -111,7 +187,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +218,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -173,7 +249,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -213,7 +289,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +329,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,7 +371,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -337,7 +413,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -383,7 +459,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -429,7 +505,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -472,7 +548,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,7 +591,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -557,7 +633,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -599,7 +675,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -628,7 +704,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -657,7 +733,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -719,7 +795,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -781,7 +857,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -838,7 +914,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -895,7 +971,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -955,7 +1031,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-05-01</description>
+        /// <description>2024-08-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

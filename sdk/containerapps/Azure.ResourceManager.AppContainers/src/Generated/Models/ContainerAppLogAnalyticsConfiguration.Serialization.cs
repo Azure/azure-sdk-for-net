@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
+            if (Optional.IsDefined(DynamicJsonColumns))
+            {
+                writer.WritePropertyName("dynamicJsonColumns"u8);
+                writer.WriteBooleanValue(DynamicJsonColumns.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             string customerId = default;
             string sharedKey = default;
+            bool? dynamicJsonColumns = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,13 +96,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     sharedKey = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("dynamicJsonColumns"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dynamicJsonColumns = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerAppLogAnalyticsConfiguration(customerId, sharedKey, serializedAdditionalRawData);
+            return new ContainerAppLogAnalyticsConfiguration(customerId, sharedKey, dynamicJsonColumns, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppLogAnalyticsConfiguration>.Write(ModelReaderWriterOptions options)

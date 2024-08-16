@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -85,6 +90,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
+            {
+                writer.WritePropertyName("deploymentErrors"u8);
+                writer.WriteStringValue(DeploymentErrors);
+            }
             if (Optional.IsDefined(ManagedEnvironmentId))
             {
                 writer.WritePropertyName("managedEnvironmentId"u8);
@@ -99,6 +109,11 @@ namespace Azure.ResourceManager.AppContainers
             {
                 writer.WritePropertyName("workloadProfileName"u8);
                 writer.WriteStringValue(WorkloadProfileName);
+            }
+            if (Optional.IsDefined(PatchingConfiguration))
+            {
+                writer.WritePropertyName("patchingConfiguration"u8);
+                writer.WriteObjectValue(PatchingConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LatestRevisionName))
             {
@@ -192,6 +207,7 @@ namespace Azure.ResourceManager.AppContainers
             ContainerAppExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
             string managedBy = default;
+            AppContainersKind? kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -199,9 +215,11 @@ namespace Azure.ResourceManager.AppContainers
             ResourceType type = default;
             SystemData systemData = default;
             ContainerAppProvisioningState? provisioningState = default;
+            string deploymentErrors = default;
             ResourceIdentifier managedEnvironmentId = default;
             ResourceIdentifier environmentId = default;
             string workloadProfileName = default;
+            ContainerAppPropertiesPatchingConfiguration patchingConfiguration = default;
             string latestRevisionName = default;
             string latestReadyRevisionName = default;
             string latestRevisionFqdn = default;
@@ -236,6 +254,15 @@ namespace Azure.ResourceManager.AppContainers
                 if (property.NameEquals("managedBy"u8))
                 {
                     managedBy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new AppContainersKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -299,6 +326,11 @@ namespace Azure.ResourceManager.AppContainers
                             provisioningState = new ContainerAppProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("deploymentErrors"u8))
+                        {
+                            deploymentErrors = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("managedEnvironmentId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -320,6 +352,15 @@ namespace Azure.ResourceManager.AppContainers
                         if (property0.NameEquals("workloadProfileName"u8))
                         {
                             workloadProfileName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("patchingConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            patchingConfiguration = ContainerAppPropertiesPatchingConfiguration.DeserializeContainerAppPropertiesPatchingConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("latestRevisionName"u8))
@@ -409,10 +450,13 @@ namespace Azure.ResourceManager.AppContainers
                 extendedLocation,
                 identity,
                 managedBy,
+                kind,
                 provisioningState,
+                deploymentErrors,
                 managedEnvironmentId,
                 environmentId,
                 workloadProfileName,
+                patchingConfiguration,
                 latestRevisionName,
                 latestReadyRevisionName,
                 latestRevisionFqdn,

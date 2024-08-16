@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppGitHubActionConfiguration"/>. </summary>
         public ContainerAppGitHubActionConfiguration()
         {
+            BuildEnvironmentVariables = new ChangeTrackingList<EnvironmentVariable>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppGitHubActionConfiguration"/>. </summary>
@@ -60,8 +61,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="os"> Operation system. </param>
         /// <param name="runtimeStack"> Runtime stack. </param>
         /// <param name="runtimeVersion"> Runtime version. </param>
+        /// <param name="buildEnvironmentVariables"> List of environment variables to be passed to the build. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppGitHubActionConfiguration(ContainerAppRegistryInfo registryInfo, ContainerAppCredentials azureCredentials, string contextPath, string gitHubPersonalAccessToken, string image, string publishType, string os, string runtimeStack, string runtimeVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppGitHubActionConfiguration(ContainerAppRegistryInfo registryInfo, ContainerAppCredentials azureCredentials, string contextPath, string gitHubPersonalAccessToken, string image, string publishType, string os, string runtimeStack, string runtimeVersion, IList<EnvironmentVariable> buildEnvironmentVariables, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegistryInfo = registryInfo;
             AzureCredentials = azureCredentials;
@@ -72,6 +74,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             OS = os;
             RuntimeStack = runtimeStack;
             RuntimeVersion = runtimeVersion;
+            BuildEnvironmentVariables = buildEnvironmentVariables;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -93,5 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string RuntimeStack { get; set; }
         /// <summary> Runtime version. </summary>
         public string RuntimeVersion { get; set; }
+        /// <summary> List of environment variables to be passed to the build. </summary>
+        public IList<EnvironmentVariable> BuildEnvironmentVariables { get; }
     }
 }

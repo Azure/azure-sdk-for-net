@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("dnsSuffix"u8);
                 writer.WriteStringValue(DnsSuffix);
             }
+            if (Optional.IsDefined(CertificateKeyVaultProperties))
+            {
+                writer.WritePropertyName("certificateKeyVaultProperties"u8);
+                writer.WriteObjectValue(CertificateKeyVaultProperties, options);
+            }
             if (Optional.IsDefined(CertificateValue))
             {
                 writer.WritePropertyName("certificateValue"u8);
@@ -101,6 +106,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             string customDomainVerificationId = default;
             string dnsSuffix = default;
+            CertificateKeyVaultProperties certificateKeyVaultProperties = default;
             byte[] certificateValue = default;
             string certificatePassword = default;
             DateTimeOffset? expirationDate = default;
@@ -118,6 +124,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("dnsSuffix"u8))
                 {
                     dnsSuffix = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("certificateKeyVaultProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    certificateKeyVaultProperties = CertificateKeyVaultProperties.DeserializeCertificateKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("certificateValue"u8))
@@ -162,6 +177,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppCustomDomainConfiguration(
                 customDomainVerificationId,
                 dnsSuffix,
+                certificateKeyVaultProperties,
                 certificateValue,
                 certificatePassword,
                 expirationDate,

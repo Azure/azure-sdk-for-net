@@ -71,6 +71,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("runtimeVersion"u8);
                 writer.WriteStringValue(RuntimeVersion);
             }
+            if (Optional.IsCollectionDefined(BuildEnvironmentVariables))
+            {
+                writer.WritePropertyName("buildEnvironmentVariables"u8);
+                writer.WriteStartArray();
+                foreach (var item in BuildEnvironmentVariables)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -118,6 +128,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string os = default;
             string runtimeStack = default;
             string runtimeVersion = default;
+            IList<EnvironmentVariable> buildEnvironmentVariables = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,6 +186,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                     runtimeVersion = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("buildEnvironmentVariables"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EnvironmentVariable> array = new List<EnvironmentVariable>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EnvironmentVariable.DeserializeEnvironmentVariable(item, options));
+                    }
+                    buildEnvironmentVariables = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -191,6 +216,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 os,
                 runtimeStack,
                 runtimeVersion,
+                buildEnvironmentVariables ?? new ChangeTrackingList<EnvironmentVariable>(),
                 serializedAdditionalRawData);
         }
 

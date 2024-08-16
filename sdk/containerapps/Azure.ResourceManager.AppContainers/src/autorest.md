@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/ad997e99eccc15b7ab4cd66ae3f1f9534a1e2628/specification/app/resource-manager/readme.md
+require: D:\azure-rest-api-specs\specification\app\resource-manager\readme.md
 # tag: package-2023-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -87,6 +87,7 @@ rename-mapping:
   AzureActiveDirectoryValidation: ContainerAppAzureActiveDirectoryValidationConfiguration
   AzureCredentials: ContainerAppCredentials
   AzureFileProperties: ContainerAppAzureFileProperties
+  NfsAzureFileProperties: ContainerAppNfsAzureFileProperties
   BaseContainer: ContainerAppBaseContainer
   BillingMeter: ContainerAppBillingMeter
   BillingMeterProperties: ContainerAppBillingMeterProperties
@@ -226,11 +227,13 @@ rename-mapping:
   JobsCollection: ContainerAppJobsCollection
   ManagedCertificate: ContainerAppManagedCertificate
   Mtls.enabled: IsMtlsEnabled
+  ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption.enabled: IsPeerToPeerEncryptionEnabled
   ServiceBind: ContainerAppServiceBind
   JobScale: ContainerAppJobScale
   JobScale.pollingInterval: PollingIntervalInSeconds
   JobScaleRule: ContainerAppJobScaleRule
   JobConfigurationEventTriggerConfig: EventTriggerConfiguration
+  DaprSubscriptionBulkSubscribeOptions: DaprSubscriptionBulkSubscribeConfig
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -240,6 +243,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprComponents/{componentName}: ContainerAppManagedEnvironmentDaprComponent
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectors/{detectorName}: ContainerAppManagedEnvironmentDetector
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi: ContainerAppManagedEnvironmentDetectorResourceProperty
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}: ContainerAppJob
 
 override-operation-name:
     Namespaces_CheckNameAvailability: CheckContainerAppNameAvailability

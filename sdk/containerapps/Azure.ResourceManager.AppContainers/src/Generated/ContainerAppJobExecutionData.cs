@@ -65,13 +65,15 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="startOn"> Job execution start time. </param>
         /// <param name="endOn"> Job execution end time. </param>
         /// <param name="template"> Job's execution container. </param>
+        /// <param name="detailedStatus"> Detailed status of the job execution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template, ExecutionStatus detailedStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartOn = startOn;
             EndOn = endOn;
             Template = template;
+            DetailedStatus = detailedStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,5 +85,12 @@ namespace Azure.ResourceManager.AppContainers
         public DateTimeOffset? EndOn { get; }
         /// <summary> Job's execution container. </summary>
         public ContainerAppJobExecutionTemplate Template { get; }
+        /// <summary> Detailed status of the job execution. </summary>
+        internal ExecutionStatus DetailedStatus { get; }
+        /// <summary> Replicas in the execution. </summary>
+        public IReadOnlyList<ReplicaExecutionStatus> DetailedStatusReplicas
+        {
+            get => DetailedStatus?.Replicas;
+        }
     }
 }

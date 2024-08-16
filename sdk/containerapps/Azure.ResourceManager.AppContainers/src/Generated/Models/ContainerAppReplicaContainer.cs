@@ -60,8 +60,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="runningStateDetails"> The details of container current running state. </param>
         /// <param name="logStreamEndpoint"> Log Stream endpoint. </param>
         /// <param name="execEndpoint"> Container exec endpoint. </param>
+        /// <param name="debugEndpoint"> Container debug endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppReplicaContainer(string name, string containerId, bool? isReady, bool? isStarted, int? restartCount, ContainerAppContainerRunningState? runningState, string runningStateDetails, string logStreamEndpoint, string execEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppReplicaContainer(string name, string containerId, bool? isReady, bool? isStarted, int? restartCount, ContainerAppContainerRunningState? runningState, string runningStateDetails, string logStreamEndpoint, string execEndpoint, string debugEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ContainerId = containerId;
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             RunningStateDetails = runningStateDetails;
             LogStreamEndpoint = logStreamEndpoint;
             ExecEndpoint = execEndpoint;
+            DebugEndpoint = debugEndpoint;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -93,5 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string LogStreamEndpoint { get; }
         /// <summary> Container exec endpoint. </summary>
         public string ExecEndpoint { get; }
+        /// <summary> Container debug endpoint. </summary>
+        public string DebugEndpoint { get; }
     }
 }

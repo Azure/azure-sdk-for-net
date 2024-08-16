@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.AppContainers
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation"u8);
+                writer.WriteObjectValue(ExtendedLocation, options);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -148,6 +153,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
+            ContainerAppExtendedLocation extendedLocation = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -166,6 +172,15 @@ namespace Azure.ResourceManager.AppContainers
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("extendedLocation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -300,6 +315,7 @@ namespace Azure.ResourceManager.AppContainers
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                extendedLocation,
                 identity,
                 provisioningState,
                 environmentId,

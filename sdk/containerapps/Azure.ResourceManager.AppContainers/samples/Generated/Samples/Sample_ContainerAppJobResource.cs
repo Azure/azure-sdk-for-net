@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetContainerAppJobs_ListContainerAppsJobsBySubscription()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Jobs_ListBySubscription.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/Jobs_ListBySubscription.json
             // this example is just showing the usage of "Jobs_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Job_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/Job_Get.json
             // this example is just showing the usage of "Jobs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Job_Delete.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/Job_Delete.json
             // this example is just showing the usage of "Jobs_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PatchContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Job_Patch.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/Job_Patch.json
             // this example is just showing the usage of "Jobs_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -207,7 +207,7 @@ Name = "testcontainerAppsJob0",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Start_RunAContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Job_Start.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/Job_Start.json
             // this example is just showing the usage of "Jobs_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -272,7 +272,7 @@ Memory = "100Mi",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StopMultipleExecutions_TerminateMultipleContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Job_Stop_Multiple.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/Job_Stop_Multiple.json
             // this example is just showing the usage of "Jobs_StopMultipleExecutions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -300,7 +300,7 @@ Memory = "100Mi",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetSecrets_ListContainerAppsJobSecrets()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Job_ListSecrets.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/Job_ListSecrets.json
             // this example is just showing the usage of "Jobs_ListSecrets" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

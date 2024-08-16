@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.AppContainers.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppContainers.Samples
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListEnvironmentsByResourceGroup()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/ManagedEnvironments_ListByResourceGroup.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/ManagedEnvironments_ListByResourceGroup.json
             // this example is just showing the usage of "ManagedEnvironments_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetEnvironmentsByName()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/ManagedEnvironments_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/ManagedEnvironments_Get.json
             // this example is just showing the usage of "ManagedEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetEnvironmentsByName()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/ManagedEnvironments_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/ManagedEnvironments_Get.json
             // this example is just showing the usage of "ManagedEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetEnvironmentsByName()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/ManagedEnvironments_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/ManagedEnvironments_Get.json
             // this example is just showing the usage of "ManagedEnvironments_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateEnvironmentWithCustomInfrastructureResourceGroup()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/ManagedEnvironments_CustomInfrastructureResourceGroup_Create.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/ManagedEnvironments_CustomInfrastructureResourceGroup_Create.json
             // this example is just showing the usage of "ManagedEnvironments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -238,7 +239,7 @@ MaximumNodeCount = 6,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateEnvironments()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/ManagedEnvironments_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2024-08-02-preview/examples/ManagedEnvironments_CreateOrUpdate.json
             // this example is just showing the usage of "ManagedEnvironments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -260,6 +261,13 @@ MaximumNodeCount = 6,
             string environmentName = "testcontainerenv";
             ContainerAppManagedEnvironmentData data = new ContainerAppManagedEnvironmentData(new AzureLocation("East US"))
             {
+                Identity = new ManagedServiceIdentity("SystemAssigned, UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/contoso-resources/providers/Microsoft.ManagedIdentity/userAssignedIdentities/contoso-identity")] = new UserAssignedIdentity(),
+},
+                },
                 DaprAIConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://northcentralus-0.in.applicationinsights.azure.com/",
                 VnetConfiguration = new ContainerAppVnetConfiguration()
                 {
@@ -271,7 +279,49 @@ MaximumNodeCount = 6,
                     {
                         CustomerId = "string",
                         SharedKey = "string",
+                        DynamicJsonColumns = true,
                     },
+                },
+                AppInsightsConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://eastus-8.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus.livediagnostics.monitor.azure.com/",
+                OpenTelemetryConfiguration = new OpenTelemetryConfiguration()
+                {
+                    DestinationsConfiguration = new DestinationsConfiguration()
+                    {
+                        DataDogConfiguration = new DataDogConfiguration()
+                        {
+                            Site = "string",
+                            Key = "000000000000000000000000",
+                        },
+                        OtlpConfigurations =
+{
+new OtlpConfiguration()
+{
+Name = "dashboard",
+Endpoint = "dashboard.k8s.region.azurecontainerapps.io:80",
+Insecure = true,
+Headers =
+{
+new Header()
+{
+Key = "api-key",
+Value = "xxxxxxxxxxx",
+}
+},
+}
+},
+                    },
+                    TracesDestinations =
+{
+"appInsights"
+},
+                    LogsDestinations =
+{
+"appInsights"
+},
+                    MetricsDestinations =
+{
+"dataDog"
+},
                 },
                 IsZoneRedundant = true,
                 CustomDomainConfiguration = new ContainerAppCustomDomainConfiguration()
@@ -297,6 +347,7 @@ MaximumNodeCount = 6,
 },new ContainerAppWorkloadProfile("My-consumption-01","Consumption")
 },
                 IsMtlsEnabled = true,
+                IsPeerToPeerEncryptionEnabled = true,
             };
             ArmOperation<ContainerAppManagedEnvironmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, environmentName, data);
             ContainerAppManagedEnvironmentResource result = lro.Value;

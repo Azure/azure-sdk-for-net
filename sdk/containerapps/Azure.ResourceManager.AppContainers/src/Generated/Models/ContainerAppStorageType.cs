@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         private const string AzureFileValue = "AzureFile";
         private const string EmptyDirValue = "EmptyDir";
         private const string SecretValue = "Secret";
+        private const string NfsAzureFileValue = "NfsAzureFile";
+        private const string SmbValue = "Smb";
 
         /// <summary> AzureFile. </summary>
         public static ContainerAppStorageType AzureFile { get; } = new ContainerAppStorageType(AzureFileValue);
@@ -32,6 +34,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static ContainerAppStorageType EmptyDir { get; } = new ContainerAppStorageType(EmptyDirValue);
         /// <summary> Secret. </summary>
         public static ContainerAppStorageType Secret { get; } = new ContainerAppStorageType(SecretValue);
+        /// <summary> NfsAzureFile. </summary>
+        public static ContainerAppStorageType NfsAzureFile { get; } = new ContainerAppStorageType(NfsAzureFileValue);
+        /// <summary> Smb. </summary>
+        public static ContainerAppStorageType Smb { get; } = new ContainerAppStorageType(SmbValue);
         /// <summary> Determines if two <see cref="ContainerAppStorageType"/> values are the same. </summary>
         public static bool operator ==(ContainerAppStorageType left, ContainerAppStorageType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerAppStorageType"/> values are not the same. </summary>

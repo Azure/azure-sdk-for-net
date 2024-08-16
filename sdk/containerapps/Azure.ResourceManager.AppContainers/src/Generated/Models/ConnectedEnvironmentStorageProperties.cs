@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Storage properties. </summary>
-    internal partial class ConnectedEnvironmentStorageProperties
+    public partial class ConnectedEnvironmentStorageProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,14 +52,18 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectedEnvironmentStorageProperties"/>. </summary>
         /// <param name="azureFile"> Azure file properties. </param>
+        /// <param name="smb"> SMB storage properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, SmbStorage smb, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureFile = azureFile;
+            Smb = smb;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure file properties. </summary>
         public ContainerAppAzureFileProperties AzureFile { get; set; }
+        /// <summary> SMB storage properties. </summary>
+        public SmbStorage Smb { get; set; }
     }
 }

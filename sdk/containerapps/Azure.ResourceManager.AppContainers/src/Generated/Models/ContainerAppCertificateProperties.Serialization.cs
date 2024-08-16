@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(CertificateKeyVaultProperties))
+            {
+                writer.WritePropertyName("certificateKeyVaultProperties"u8);
+                writer.WriteObjectValue(CertificateKeyVaultProperties, options);
+            }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
@@ -86,6 +91,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("publicKeyHash"u8);
                 writer.WriteStringValue(PublicKeyHash);
             }
+            if (Optional.IsDefined(CertificateType))
+            {
+                writer.WritePropertyName("certificateType"u8);
+                writer.WriteStringValue(CertificateType.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -125,6 +135,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             ContainerAppCertificateProvisioningState? provisioningState = default;
+            CertificateKeyVaultProperties certificateKeyVaultProperties = default;
             string password = default;
             string subjectName = default;
             IReadOnlyList<string> subjectAlternativeNames = default;
@@ -135,6 +146,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string thumbprint = default;
             bool? valid = default;
             string publicKeyHash = default;
+            CertificateType? certificateType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,6 +158,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                         continue;
                     }
                     provisioningState = new ContainerAppCertificateProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("certificateKeyVaultProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    certificateKeyVaultProperties = CertificateKeyVaultProperties.DeserializeCertificateKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("password"u8))
@@ -223,6 +244,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                     publicKeyHash = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("certificateType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    certificateType = new CertificateType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -231,6 +261,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppCertificateProperties(
                 provisioningState,
+                certificateKeyVaultProperties,
                 password,
                 subjectName,
                 subjectAlternativeNames ?? new ChangeTrackingList<string>(),
@@ -241,6 +272,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 thumbprint,
                 valid,
                 publicKeyHash,
+                certificateType,
                 serializedAdditionalRawData);
         }
 

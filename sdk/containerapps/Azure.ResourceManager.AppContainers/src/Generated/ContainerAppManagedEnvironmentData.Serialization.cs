@@ -34,6 +34,12 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -109,6 +115,16 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("appLogsConfiguration"u8);
                 writer.WriteObjectValue(AppLogsConfiguration, options);
             }
+            if (Optional.IsDefined(AppInsightsConfiguration))
+            {
+                writer.WritePropertyName("appInsightsConfiguration"u8);
+                writer.WriteObjectValue(AppInsightsConfiguration, options);
+            }
+            if (Optional.IsDefined(OpenTelemetryConfiguration))
+            {
+                writer.WritePropertyName("openTelemetryConfiguration"u8);
+                writer.WriteObjectValue(OpenTelemetryConfiguration, options);
+            }
             if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
@@ -154,6 +170,26 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("peerAuthentication"u8);
                 writer.WriteObjectValue(PeerAuthentication, options);
             }
+            if (Optional.IsDefined(PeerTrafficConfiguration))
+            {
+                writer.WritePropertyName("peerTrafficConfiguration"u8);
+                writer.WriteObjectValue(PeerTrafficConfiguration, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -194,6 +230,7 @@ namespace Azure.ResourceManager.AppContainers
                 return null;
             }
             string kind = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -208,6 +245,8 @@ namespace Azure.ResourceManager.AppContainers
             string defaultDomain = default;
             IPAddress staticIP = default;
             ContainerAppLogsConfiguration appLogsConfiguration = default;
+            AppInsightsConfiguration appInsightsConfiguration = default;
+            OpenTelemetryConfiguration openTelemetryConfiguration = default;
             bool? zoneRedundant = default;
             ContainerAppCustomDomainConfiguration customDomainConfiguration = default;
             string eventStreamEndpoint = default;
@@ -216,6 +255,9 @@ namespace Azure.ResourceManager.AppContainers
             DaprConfiguration daprConfiguration = default;
             string infrastructureResourceGroup = default;
             ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication = default;
+            ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration = default;
+            IReadOnlyList<AppContainersPrivateEndpointConnectionData> privateEndpointConnections = default;
+            PublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,6 +265,16 @@ namespace Azure.ResourceManager.AppContainers
                 if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -333,6 +385,24 @@ namespace Azure.ResourceManager.AppContainers
                             appLogsConfiguration = ContainerAppLogsConfiguration.DeserializeContainerAppLogsConfiguration(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("appInsightsConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            appInsightsConfiguration = AppInsightsConfiguration.DeserializeAppInsightsConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("openTelemetryConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            openTelemetryConfiguration = OpenTelemetryConfiguration.DeserializeOpenTelemetryConfiguration(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("zoneRedundant"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -402,6 +472,38 @@ namespace Azure.ResourceManager.AppContainers
                             peerAuthentication = ManagedEnvironmentPropertiesPeerAuthentication.DeserializeManagedEnvironmentPropertiesPeerAuthentication(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("peerTrafficConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            peerTrafficConfiguration = ManagedEnvironmentPropertiesPeerTrafficConfiguration.DeserializeManagedEnvironmentPropertiesPeerTrafficConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("privateEndpointConnections"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<AppContainersPrivateEndpointConnectionData> array = new List<AppContainersPrivateEndpointConnectionData>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(AppContainersPrivateEndpointConnectionData.DeserializeAppContainersPrivateEndpointConnectionData(item, options));
+                            }
+                            privateEndpointConnections = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("publicNetworkAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -419,6 +521,7 @@ namespace Azure.ResourceManager.AppContainers
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 kind,
+                identity,
                 provisioningState,
                 daprAIInstrumentationKey,
                 daprAIConnectionString,
@@ -427,6 +530,8 @@ namespace Azure.ResourceManager.AppContainers
                 defaultDomain,
                 staticIP,
                 appLogsConfiguration,
+                appInsightsConfiguration,
+                openTelemetryConfiguration,
                 zoneRedundant,
                 customDomainConfiguration,
                 eventStreamEndpoint,
@@ -435,6 +540,9 @@ namespace Azure.ResourceManager.AppContainers
                 daprConfiguration,
                 infrastructureResourceGroup,
                 peerAuthentication,
+                peerTrafficConfiguration,
+                privateEndpointConnections ?? new ChangeTrackingList<AppContainersPrivateEndpointConnectionData>(),
+                publicNetworkAccess,
                 serializedAdditionalRawData);
         }
 

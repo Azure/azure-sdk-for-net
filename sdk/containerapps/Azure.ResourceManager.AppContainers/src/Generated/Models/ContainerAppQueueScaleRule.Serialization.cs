@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(AccountName))
+            {
+                writer.WritePropertyName("accountName"u8);
+                writer.WriteStringValue(AccountName);
+            }
             if (Optional.IsDefined(QueueName))
             {
                 writer.WritePropertyName("queueName"u8);
@@ -45,6 +50,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteStringValue(Identity);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,13 +94,20 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
+            string accountName = default;
             string queueName = default;
             int? queueLength = default;
             IList<ContainerAppScaleRuleAuth> auth = default;
+            string identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("accountName"u8))
+                {
+                    accountName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("queueName"u8))
                 {
                     queueName = property.Value.GetString();
@@ -119,13 +136,24 @@ namespace Azure.ResourceManager.AppContainers.Models
                     auth = array;
                     continue;
                 }
+                if (property.NameEquals("identity"u8))
+                {
+                    identity = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerAppQueueScaleRule(queueName, queueLength, auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>(), serializedAdditionalRawData);
+            return new ContainerAppQueueScaleRule(
+                accountName,
+                queueName,
+                queueLength,
+                auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>(),
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppQueueScaleRule>.Write(ModelReaderWriterOptions options)

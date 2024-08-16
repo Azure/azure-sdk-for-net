@@ -71,6 +71,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("execEndpoint"u8);
                 writer.WriteStringValue(ExecEndpoint);
             }
+            if (options.Format != "W" && Optional.IsDefined(DebugEndpoint))
+            {
+                writer.WritePropertyName("debugEndpoint"u8);
+                writer.WriteStringValue(DebugEndpoint);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -118,6 +123,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string runningStateDetails = default;
             string logStreamEndpoint = default;
             string execEndpoint = default;
+            string debugEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,6 +189,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                     execEndpoint = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("debugEndpoint"u8))
+                {
+                    debugEndpoint = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -199,6 +210,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 runningStateDetails,
                 logStreamEndpoint,
                 execEndpoint,
+                debugEndpoint,
                 serializedAdditionalRawData);
         }
 
