@@ -8,6 +8,7 @@ using Azure.ResourceManager.Quota.Models;
 using NUnit.Framework;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.Identity;
+using System.Text.RegularExpressions;
 
 namespace Azure.ResourceManager.Quota.Tests.Tests
 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             };
 
             //Performs the GroupQuota PUT operation
-            var createResponse  = await collection.CreateOrUpdateAsync(WaitUntil.Started, groupQuotaName, data);
+            var createResponse  = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupQuotaName, data);
             Assert.IsNotNull(createResponse);
 
             // Delete the created Group Quota for cleanup
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                 {
                     RequestedResource = new GroupQuotaRequestBase()
                     {
-                        Limit = 225,
+                        Limit = 10,
                         Region = "westus",
                         Comments = "ticketComments"
                     }
@@ -126,7 +127,58 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             // Perform the QuotaLimit Request call
             var response = await groupQuotasEntity.CreateOrUpdateGroupQuotaLimitsRequestAsync(WaitUntil.Started, "Microsoft.Compute", "standarddv4family", requestBody);
-            Assert.IsNotNull(response);
+
+            // Get the QuotaLimit Response
+            var check = response.GetRawResponse();
+
+            string finalUri = "";
+            check.Headers.TryGetValue("Location", out finalUri);
+
+            // Get the requestId from the operationStatus URI
+            Regex regex = new Regex(@"groupQuotaOperationsStatus/([^?]+)");
+            Match match = regex.Match(finalUri);
+            string requestId = "";
+            if (match.Success)
+            {
+                requestId = match.Groups[1].Value;
+                Console.WriteLine(requestId);
+            }
+            else
+            {
+                Console.WriteLine("requestId not found");
+            }
+
+            ResourceIdentifier groupQuotaRequestStatusResourceId = GroupQuotaRequestStatusResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, requestId);
+
+            GroupQuotaRequestStatusResource groupQuotaRequestStatusResource = Client.GetGroupQuotaRequestStatusResource(groupQuotaRequestStatusResourceId);
+
+            // invoke the operation
+            DateTime startTime = DateTime.Now;
+
+            // Poll the operation Staus with request ID for 3 minutes
+            while((DateTime.Now - startTime) < TimeSpan.FromMinutes(3))
+            {
+                // invoke the operation
+                GroupQuotaRequestStatusResource result = await groupQuotaRequestStatusResource.GetAsync();
+
+                var provisioningState = result.Data.Properties.ProvisioningState.ToString();
+                Console.WriteLine(provisioningState);
+                if(provisioningState != "Accepted" && provisioningState != "InProgress")
+                {
+                    if(provisioningState == "Escalated")
+                    {
+                        Assert.Inconclusive();
+                        break;
+                    }
+                    else
+                    {
+                        Assert.AreEqual("Success", provisioningState);
+                    }
+                }
+
+                // Sleep for 30 seconds
+                System.Threading.Thread.Sleep(30000);
+            }
         }
 
         [TestCase]
@@ -162,14 +214,14 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             GroupQuotaSubscriptionCollection collection = groupQuotasEntity.GetGroupQuotaSubscriptions();
 
             // Add a Subscription to the Group Quota Object
-            var response = await collection.CreateOrUpdateAsync(WaitUntil.Started, defaultSubscriptionId);
+            var response = await collection.CreateOrUpdateAsync(WaitUntil.Completed, defaultSubscriptionId);
 
             //Clean up Sub
             ResourceIdentifier groupQuotaSubscriptionIdResourceId = GroupQuotaSubscriptionResource.CreateResourceIdentifier(managementGroupId, groupQuotaName, defaultSubscriptionId);
 
             GroupQuotaSubscriptionResource groupQuotaSubscriptionId = Client.GetGroupQuotaSubscriptionResource(groupQuotaSubscriptionIdResourceId);
 
-            await groupQuotaSubscriptionId.DeleteAsync(WaitUntil.Started);
+            await groupQuotaSubscriptionId.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
@@ -203,7 +255,57 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             var allocationResponse = await managementGroupResource.CreateOrUpdateGroupQuotaSubscriptionAllocationRequestAsync(WaitUntil.Started, defaultSubscriptionId, groupQuotaName, resourceProviderName, resourceName, data);
 
-            Assert.IsNotNull(allocationResponse);
+            // Get the QuotaLimit Response
+            var check = allocationResponse.GetRawResponse();
+
+            string finalUri = "";
+            check.Headers.TryGetValue("Location", out finalUri);
+
+            // Get the requestId from the operationStatus URI
+            Regex regex = new Regex(@"quotaAllocationOperationsStatus/([^?]+)");
+            Match match = regex.Match(finalUri);
+            string requestId = "";
+            if (match.Success)
+            {
+                requestId = match.Groups[1].Value;
+                Console.WriteLine(requestId);
+            }
+            else
+            {
+                Console.WriteLine("requestId not found");
+            }
+
+            ResourceIdentifier quotaAllocationRequestId = QuotaAllocationRequestStatusResource.CreateResourceIdentifier(managementGroupId, defaultSubscriptionId, groupQuotaName, requestId);
+
+            QuotaAllocationRequestStatusResource quotaAllocationStatusResource =Client.GetQuotaAllocationRequestStatusResource(quotaAllocationRequestId);
+
+            // invoke the operation
+            DateTime startTime = DateTime.Now;
+
+            // Poll the operation Staus with request ID for 3 minutes
+            while ((DateTime.Now - startTime) < TimeSpan.FromMinutes(3))
+            {
+                // invoke the operation
+                QuotaAllocationRequestStatusResource result = await quotaAllocationStatusResource.GetAsync();
+
+                var provisioningState = result.Data.ProvisioningState.ToString();
+                Console.WriteLine(provisioningState);
+                if (provisioningState != "Accepted" && provisioningState != "InProgress")
+                {
+                    if (provisioningState == "Escalated")
+                    {
+                        Assert.Inconclusive();
+                        break;
+                    }
+                    else
+                    {
+                        Assert.AreEqual("Success", provisioningState);
+                    }
+                }
+
+                // Sleep for 30 seconds
+                System.Threading.Thread.Sleep(30000);
+            }
 
             // Delete the Subscription as part of test cleanup
             await groupQuotaSubscriptionId.DeleteAsync(WaitUntil.Started);
