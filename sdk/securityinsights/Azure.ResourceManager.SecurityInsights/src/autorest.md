@@ -223,7 +223,12 @@ rename-mapping:
   HuntRelation: SecurityInsightsHuntRelation
   Job: AssignmentJob
   Recommendation: SecurityInsightsRecommendation
-  Setting: SecurityInsightsSetting
+  ActivityCustomEntityQuery.properties.enabled: IsEnabled
+  ActivityEntityQuery.properties.enabled: IsEnabled
+  Settings: SecurityInsightsSettings
+  SettingList: SecurityInsightsSettingList
+  Anomalies: SecurityInsightsSettingAnomaliesKind
+  Anomalies.properties.enabled: IsEnabled
   # Added property renaming due to api compat check with property breaking chang to dictionary type in 2024-01-01-preview version
   WatchlistItem.properties.itemsKeyValue: ItemsKeyValueDictionary
   WatchlistItem.properties.entityMapping: EntityMappingDictionary

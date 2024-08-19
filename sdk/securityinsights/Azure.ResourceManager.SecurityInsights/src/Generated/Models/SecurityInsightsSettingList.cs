@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> List of all the settings. </summary>
-    internal partial class SettingList
+    internal partial class SecurityInsightsSettingList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SettingList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSettingList"/>. </summary>
         /// <param name="value">
         /// Array of settings.
         /// Please note <see cref="SecurityInsightsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Anomalies"/>, <see cref="EntityAnalytics"/>, <see cref="EyesOn"/> and <see cref="Ueba"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SettingList(IEnumerable<SecurityInsightsSettingData> value)
+        internal SecurityInsightsSettingList(IEnumerable<SecurityInsightsSettingData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SettingList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSettingList"/>. </summary>
         /// <param name="value">
         /// Array of settings.
         /// Please note <see cref="SecurityInsightsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Anomalies"/>, <see cref="EntityAnalytics"/>, <see cref="EyesOn"/> and <see cref="Ueba"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SettingList(IReadOnlyList<SecurityInsightsSettingData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityInsightsSettingList(IReadOnlyList<SecurityInsightsSettingData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SettingList"/> for deserialization. </summary>
-        internal SettingList()
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSettingList"/> for deserialization. </summary>
+        internal SecurityInsightsSettingList()
         {
         }
 
