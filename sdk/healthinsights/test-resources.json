@@ -128,11 +128,11 @@
             "value": "[concat('https://', variables('textAnalyticsName'), parameters('cognitiveServicesEndpointSuffix'), '/')]"
         },
 
-        "HEALTHINSIGHTS_KEY": {
+        "AZURE_HEALTH_INSIGHTS_API_KEY": {
             "type": "string",
             "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('uniqueSubDomainName')),'2017-04-18').key1]"
         },
-        "HEALTHINSIGHTS_ENDPOINT": {
+        "AZURE_HEALTH_INSIGHTS_ENDPOINT": {
             "type": "string",
             "value": "[variables('endpointValue')]"
         }
