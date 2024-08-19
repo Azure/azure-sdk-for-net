@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateRecommendationRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId, RecommendationPatch patch)
+        internal RequestUriBuilder CreateRecommendationRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId, SecurityInsightsRecommendationPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateRecommendationRequest(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId, RecommendationPatch patch)
+        internal HttpMessage CreateRecommendationRequest(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId, SecurityInsightsRecommendationPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationData>> RecommendationAsync(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId, RecommendationPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsRecommendationData>> RecommendationAsync(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId, SecurityInsightsRecommendationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        RecommendationData value = default;
+                        SecurityInsightsRecommendationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationData.DeserializeRecommendationData(document.RootElement);
+                        value = SecurityInsightsRecommendationData.DeserializeSecurityInsightsRecommendationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationData> Recommendation(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId, RecommendationPatch patch, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsRecommendationData> Recommendation(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId, SecurityInsightsRecommendationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        RecommendationData value = default;
+                        SecurityInsightsRecommendationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationData.DeserializeRecommendationData(document.RootElement);
+                        value = SecurityInsightsRecommendationData.DeserializeSecurityInsightsRecommendationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

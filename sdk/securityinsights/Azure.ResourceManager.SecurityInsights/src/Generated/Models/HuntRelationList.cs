@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="HuntRelationList"/>. </summary>
         /// <param name="value"> Array of hunt relations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal HuntRelationList(IEnumerable<HuntRelationData> value)
+        internal HuntRelationList(IEnumerable<SecurityInsightsHuntRelationData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="nextLink"> URL to fetch the next set of hunt relations. </param>
         /// <param name="value"> Array of hunt relations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HuntRelationList(string nextLink, IReadOnlyList<HuntRelationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HuntRelationList(string nextLink, IReadOnlyList<SecurityInsightsHuntRelationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> URL to fetch the next set of hunt relations. </summary>
         public string NextLink { get; }
         /// <summary> Array of hunt relations. </summary>
-        public IReadOnlyList<HuntRelationData> Value { get; }
+        public IReadOnlyList<SecurityInsightsHuntRelationData> Value { get; }
     }
 }

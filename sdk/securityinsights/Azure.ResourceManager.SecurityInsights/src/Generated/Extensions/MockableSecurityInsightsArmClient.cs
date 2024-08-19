@@ -347,15 +347,15 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RecommendationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecommendationResource.CreateResourceIdentifier" /> to create a <see cref="RecommendationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsRecommendationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsRecommendationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecommendationResource"/> object. </returns>
-        public virtual RecommendationResource GetRecommendationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsRecommendationResource"/> object. </returns>
+        public virtual SecurityInsightsRecommendationResource GetSecurityInsightsRecommendationResource(ResourceIdentifier id)
         {
-            RecommendationResource.ValidateResourceId(id);
-            return new RecommendationResource(Client, id);
+            SecurityInsightsRecommendationResource.ValidateResourceId(id);
+            return new SecurityInsightsRecommendationResource(Client, id);
         }
 
         /// <summary>

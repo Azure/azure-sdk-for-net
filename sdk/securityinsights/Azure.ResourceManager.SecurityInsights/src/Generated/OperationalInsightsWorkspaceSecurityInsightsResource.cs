@@ -1329,11 +1329,11 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetSecurityInsightsSentinelOnboardingStates().Get(sentinelOnboardingStateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RecommendationResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
-        /// <returns> An object representing collection of RecommendationResources and their operations over a RecommendationResource. </returns>
-        public virtual RecommendationCollection GetRecommendations()
+        /// <summary> Gets a collection of SecurityInsightsRecommendationResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
+        /// <returns> An object representing collection of SecurityInsightsRecommendationResources and their operations over a SecurityInsightsRecommendationResource. </returns>
+        public virtual SecurityInsightsRecommendationCollection GetSecurityInsightsRecommendations()
         {
-            return GetCachedClient(client => new RecommendationCollection(client, Id));
+            return GetCachedClient(client => new SecurityInsightsRecommendationCollection(client, Id));
         }
 
         /// <summary>
@@ -1353,16 +1353,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RecommendationResource"/></description>
+        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendationId"> Recommendation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RecommendationResource>> GetRecommendationAsync(Guid recommendationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsRecommendationResource>> GetSecurityInsightsRecommendationAsync(Guid recommendationId, CancellationToken cancellationToken = default)
         {
-            return await GetRecommendations().GetAsync(recommendationId, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsRecommendations().GetAsync(recommendationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1382,16 +1382,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RecommendationResource"/></description>
+        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendationId"> Recommendation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<RecommendationResource> GetRecommendation(Guid recommendationId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsRecommendationResource> GetSecurityInsightsRecommendation(Guid recommendationId, CancellationToken cancellationToken = default)
         {
-            return GetRecommendations().Get(recommendationId, cancellationToken);
+            return GetSecurityInsightsRecommendations().Get(recommendationId, cancellationToken);
         }
 
         /// <summary> Gets a collection of SecurityMLAnalyticsSettingResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>

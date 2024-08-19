@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="RecommendationList"/>. </summary>
         internal RecommendationList()
         {
-            Value = new ChangeTrackingList<RecommendationData>();
+            Value = new ChangeTrackingList<SecurityInsightsRecommendationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RecommendationList"/>. </summary>
         /// <param name="value"> An list of recommendations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationList(IReadOnlyList<RecommendationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecommendationList(IReadOnlyList<SecurityInsightsRecommendationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An list of recommendations. </summary>
-        public IReadOnlyList<RecommendationData> Value { get; }
+        public IReadOnlyList<SecurityInsightsRecommendationData> Value { get; }
     }
 }

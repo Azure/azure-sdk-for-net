@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Recommendation Fields to update. </summary>
-    public partial class RecommendationPatch
+    public partial class SecurityInsightsRecommendationPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RecommendationPatch"/>. </summary>
-        public RecommendationPatch()
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRecommendationPatch"/>. </summary>
+        public SecurityInsightsRecommendationPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecommendationPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRecommendationPatch"/>. </summary>
         /// <param name="properties"> Recommendation Fields Properties to update. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationPatch(RecommendationPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityInsightsRecommendationPatch(RecommendationPatchProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;

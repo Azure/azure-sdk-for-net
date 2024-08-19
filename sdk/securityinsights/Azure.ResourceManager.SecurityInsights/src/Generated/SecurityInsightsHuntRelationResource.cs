@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         private readonly ClientDiagnostics _securityInsightsHuntRelationHuntRelationsClientDiagnostics;
         private readonly HuntRelationsRestOperations _securityInsightsHuntRelationHuntRelationsRestClient;
-        private readonly HuntRelationData _data;
+        private readonly SecurityInsightsHuntRelationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/hunts/relations";
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <summary> Initializes a new instance of the <see cref="SecurityInsightsHuntRelationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SecurityInsightsHuntRelationResource(ArmClient client, HuntRelationData data) : this(client, data.Id)
+        internal SecurityInsightsHuntRelationResource(ArmClient client, SecurityInsightsHuntRelationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual HuntRelationData Data
+        public virtual SecurityInsightsHuntRelationData Data
         {
             get
             {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="data"> The hunt relation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SecurityInsightsHuntRelationResource>> UpdateAsync(WaitUntil waitUntil, HuntRelationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityInsightsHuntRelationResource>> UpdateAsync(WaitUntil waitUntil, SecurityInsightsHuntRelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="data"> The hunt relation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SecurityInsightsHuntRelationResource> Update(WaitUntil waitUntil, HuntRelationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityInsightsHuntRelationResource> Update(WaitUntil waitUntil, SecurityInsightsHuntRelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class HuntRelationData : IUtf8JsonSerializable, IJsonModel<HuntRelationData>
+    public partial class SecurityInsightsHuntRelationData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsHuntRelationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HuntRelationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsHuntRelationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HuntRelationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityInsightsHuntRelationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HuntRelationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHuntRelationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HuntRelationData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsHuntRelationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,19 +103,19 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteEndObject();
         }
 
-        HuntRelationData IJsonModel<HuntRelationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecurityInsightsHuntRelationData IJsonModel<SecurityInsightsHuntRelationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HuntRelationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHuntRelationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HuntRelationData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsHuntRelationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHuntRelationData(document.RootElement, options);
+            return DeserializeSecurityInsightsHuntRelationData(document.RootElement, options);
         }
 
-        internal static HuntRelationData DeserializeHuntRelationData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SecurityInsightsHuntRelationData DeserializeSecurityInsightsHuntRelationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HuntRelationData(
+            return new SecurityInsightsHuntRelationData(
                 id,
                 name,
                 type,
@@ -236,35 +236,35 @@ namespace Azure.ResourceManager.SecurityInsights
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HuntRelationData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SecurityInsightsHuntRelationData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HuntRelationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHuntRelationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HuntRelationData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsHuntRelationData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HuntRelationData IPersistableModel<HuntRelationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SecurityInsightsHuntRelationData IPersistableModel<SecurityInsightsHuntRelationData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HuntRelationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHuntRelationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHuntRelationData(document.RootElement, options);
+                        return DeserializeSecurityInsightsHuntRelationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HuntRelationData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsHuntRelationData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HuntRelationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityInsightsHuntRelationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

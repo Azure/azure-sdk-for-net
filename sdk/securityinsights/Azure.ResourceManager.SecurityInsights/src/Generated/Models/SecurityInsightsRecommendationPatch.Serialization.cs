@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class RecommendationPatch : IUtf8JsonSerializable, IJsonModel<RecommendationPatch>
+    public partial class SecurityInsightsRecommendationPatch : IUtf8JsonSerializable, IJsonModel<SecurityInsightsRecommendationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsRecommendationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RecommendationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityInsightsRecommendationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecommendationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsRecommendationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendationPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsRecommendationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        RecommendationPatch IJsonModel<RecommendationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecurityInsightsRecommendationPatch IJsonModel<SecurityInsightsRecommendationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecommendationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsRecommendationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendationPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsRecommendationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRecommendationPatch(document.RootElement, options);
+            return DeserializeSecurityInsightsRecommendationPatch(document.RootElement, options);
         }
 
-        internal static RecommendationPatch DeserializeRecommendationPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SecurityInsightsRecommendationPatch DeserializeSecurityInsightsRecommendationPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -89,38 +89,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RecommendationPatch(properties, serializedAdditionalRawData);
+            return new SecurityInsightsRecommendationPatch(properties, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RecommendationPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SecurityInsightsRecommendationPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecommendationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsRecommendationPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendationPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsRecommendationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RecommendationPatch IPersistableModel<RecommendationPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SecurityInsightsRecommendationPatch IPersistableModel<SecurityInsightsRecommendationPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecommendationPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsRecommendationPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeRecommendationPatch(document.RootElement, options);
+                        return DeserializeSecurityInsightsRecommendationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendationPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsRecommendationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RecommendationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityInsightsRecommendationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

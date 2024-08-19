@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsHuntRelationResource : IJsonModel<HuntRelationData>
+    public partial class SecurityInsightsHuntRelationResource : IJsonModel<SecurityInsightsHuntRelationData>
     {
-        void IJsonModel<HuntRelationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HuntRelationData>)Data).Write(writer, options);
+        void IJsonModel<SecurityInsightsHuntRelationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsHuntRelationData>)Data).Write(writer, options);
 
-        HuntRelationData IJsonModel<HuntRelationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HuntRelationData>)Data).Create(ref reader, options);
+        SecurityInsightsHuntRelationData IJsonModel<SecurityInsightsHuntRelationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsHuntRelationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HuntRelationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SecurityInsightsHuntRelationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        HuntRelationData IPersistableModel<HuntRelationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HuntRelationData>(data, options);
+        SecurityInsightsHuntRelationData IPersistableModel<SecurityInsightsHuntRelationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsHuntRelationData>(data, options);
 
-        string IPersistableModel<HuntRelationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HuntRelationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsHuntRelationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsHuntRelationData>)Data).GetFormatFromOptions(options);
     }
 }

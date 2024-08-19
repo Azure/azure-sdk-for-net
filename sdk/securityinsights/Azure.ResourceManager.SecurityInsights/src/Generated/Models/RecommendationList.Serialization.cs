@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            IReadOnlyList<RecommendationData> value = default;
+            IReadOnlyList<SecurityInsightsRecommendationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<RecommendationData> array = new List<RecommendationData>();
+                    List<SecurityInsightsRecommendationData> array = new List<SecurityInsightsRecommendationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecommendationData.DeserializeRecommendationData(item, options));
+                        array.Add(SecurityInsightsRecommendationData.DeserializeSecurityInsightsRecommendationData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RecommendationList(value ?? new ChangeTrackingList<RecommendationData>(), serializedAdditionalRawData);
+            return new RecommendationList(value ?? new ChangeTrackingList<SecurityInsightsRecommendationData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendationList>.Write(ModelReaderWriterOptions options)

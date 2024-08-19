@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationData>> SingleRecommendationAsync(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsRecommendationData>> SingleRecommendationAsync(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -93,13 +93,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        RecommendationData value = default;
+                        SecurityInsightsRecommendationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationData.DeserializeRecommendationData(document.RootElement);
+                        value = SecurityInsightsRecommendationData.DeserializeSecurityInsightsRecommendationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecommendationData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsRecommendationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationData> SingleRecommendation(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsRecommendationData> SingleRecommendation(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -125,13 +125,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        RecommendationData value = default;
+                        SecurityInsightsRecommendationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationData.DeserializeRecommendationData(document.RootElement);
+                        value = SecurityInsightsRecommendationData.DeserializeSecurityInsightsRecommendationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RecommendationData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsRecommendationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

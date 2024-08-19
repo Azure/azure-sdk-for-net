@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsights.HuntRelationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsHuntRelationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1249,12 +1249,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="relatedResourceKind"> The resource that the relation is related to. </param>
         /// <param name="labels"> List of labels relevant to this hunt. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="SecurityInsights.HuntRelationData"/> instance for mocking. </returns>
-        public static HuntRelationData HuntRelationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string relatedResourceId = null, string relatedResourceName = null, string relationType = null, string relatedResourceKind = null, IEnumerable<string> labels = null, ETag? etag = null)
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsHuntRelationData"/> instance for mocking. </returns>
+        public static SecurityInsightsHuntRelationData SecurityInsightsHuntRelationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string relatedResourceId = null, string relatedResourceName = null, string relationType = null, string relatedResourceKind = null, IEnumerable<string> labels = null, ETag? etag = null)
         {
             labels ??= new List<string>();
 
-            return new HuntRelationData(
+            return new SecurityInsightsHuntRelationData(
                 id,
                 name,
                 resourceType,
@@ -1781,7 +1781,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsights.RecommendationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsRecommendationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1797,13 +1797,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceId"> Id of the resource this recommendation refers to. </param>
         /// <param name="additionalProperties"> Collection of additional properties for the recommendation. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="SecurityInsights.RecommendationData"/> instance for mocking. </returns>
-        public static RecommendationData RecommendationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string recommendationTypeId = null, State? state = null, string title = null, string description = null, DateTimeOffset? creationTimeUtc = null, DateTimeOffset? lastEvaluatedTimeUtc = null, DateTimeOffset? lastModifiedTimeUtc = null, IEnumerable<RecommendedSuggestion> suggestions = null, string resourceId = null, IDictionary<string, string> additionalProperties = null, ETag? etag = null)
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsRecommendationData"/> instance for mocking. </returns>
+        public static SecurityInsightsRecommendationData SecurityInsightsRecommendationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string recommendationTypeId = null, State? state = null, string title = null, string description = null, DateTimeOffset? creationTimeUtc = null, DateTimeOffset? lastEvaluatedTimeUtc = null, DateTimeOffset? lastModifiedTimeUtc = null, IEnumerable<RecommendedSuggestion> suggestions = null, string resourceId = null, IDictionary<string, string> additionalProperties = null, ETag? etag = null)
         {
             suggestions ??= new List<RecommendedSuggestion>();
             additionalProperties ??= new Dictionary<string, string>();
 
-            return new RecommendationData(
+            return new SecurityInsightsRecommendationData(
                 id,
                 name,
                 resourceType,

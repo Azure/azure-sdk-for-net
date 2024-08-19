@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 return null;
             }
             string nextLink = default;
-            IReadOnlyList<HuntRelationData> value = default;
+            IReadOnlyList<SecurityInsightsHuntRelationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    List<HuntRelationData> array = new List<HuntRelationData>();
+                    List<SecurityInsightsHuntRelationData> array = new List<SecurityInsightsHuntRelationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HuntRelationData.DeserializeHuntRelationData(item, options));
+                        array.Add(SecurityInsightsHuntRelationData.DeserializeSecurityInsightsHuntRelationData(item, options));
                     }
                     value = array;
                     continue;

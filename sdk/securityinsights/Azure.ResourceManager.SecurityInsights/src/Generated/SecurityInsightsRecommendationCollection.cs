@@ -18,33 +18,33 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RecommendationResource"/> and their operations.
-    /// Each <see cref="RecommendationResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
-    /// To get a <see cref="RecommendationCollection"/> instance call the GetRecommendations method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// A class representing a collection of <see cref="SecurityInsightsRecommendationResource"/> and their operations.
+    /// Each <see cref="SecurityInsightsRecommendationResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// To get a <see cref="SecurityInsightsRecommendationCollection"/> instance call the GetSecurityInsightsRecommendations method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
     /// </summary>
-    public partial class RecommendationCollection : ArmCollection, IEnumerable<RecommendationResource>, IAsyncEnumerable<RecommendationResource>
+    public partial class SecurityInsightsRecommendationCollection : ArmCollection, IEnumerable<SecurityInsightsRecommendationResource>, IAsyncEnumerable<SecurityInsightsRecommendationResource>
     {
-        private readonly ClientDiagnostics _recommendationGetClientDiagnostics;
-        private readonly GetRestOperations _recommendationGetRestClient;
-        private readonly ClientDiagnostics _recommendationGetRecommendationsClientDiagnostics;
-        private readonly GetRecommendationsRestOperations _recommendationGetRecommendationsRestClient;
+        private readonly ClientDiagnostics _securityInsightsRecommendationGetClientDiagnostics;
+        private readonly GetRestOperations _securityInsightsRecommendationGetRestClient;
+        private readonly ClientDiagnostics _securityInsightsRecommendationGetRecommendationsClientDiagnostics;
+        private readonly GetRecommendationsRestOperations _securityInsightsRecommendationGetRecommendationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RecommendationCollection"/> class for mocking. </summary>
-        protected RecommendationCollection()
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsRecommendationCollection"/> class for mocking. </summary>
+        protected SecurityInsightsRecommendationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecommendationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsRecommendationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal RecommendationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityInsightsRecommendationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recommendationGetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", RecommendationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RecommendationResource.ResourceType, out string recommendationGetApiVersion);
-            _recommendationGetRestClient = new GetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recommendationGetApiVersion);
-            _recommendationGetRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", RecommendationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RecommendationResource.ResourceType, out string recommendationGetRecommendationsApiVersion);
-            _recommendationGetRecommendationsRestClient = new GetRecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recommendationGetRecommendationsApiVersion);
+            _securityInsightsRecommendationGetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsRecommendationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SecurityInsightsRecommendationResource.ResourceType, out string securityInsightsRecommendationGetApiVersion);
+            _securityInsightsRecommendationGetRestClient = new GetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsRecommendationGetApiVersion);
+            _securityInsightsRecommendationGetRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsRecommendationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SecurityInsightsRecommendationResource.ResourceType, out string securityInsightsRecommendationGetRecommendationsApiVersion);
+            _securityInsightsRecommendationGetRecommendationsRestClient = new GetRecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsRecommendationGetRecommendationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RecommendationResource"/></description>
+        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendationId"> Recommendation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RecommendationResource>> GetAsync(Guid recommendationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsRecommendationResource>> GetAsync(Guid recommendationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _recommendationGetClientDiagnostics.CreateScope("RecommendationCollection.Get");
+            using var scope = _securityInsightsRecommendationGetClientDiagnostics.CreateScope("SecurityInsightsRecommendationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _recommendationGetRestClient.SingleRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recommendationId, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsRecommendationGetRestClient.SingleRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recommendationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecommendationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -114,22 +114,22 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RecommendationResource"/></description>
+        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendationId"> Recommendation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RecommendationResource> Get(Guid recommendationId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsRecommendationResource> Get(Guid recommendationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _recommendationGetClientDiagnostics.CreateScope("RecommendationCollection.Get");
+            using var scope = _securityInsightsRecommendationGetClientDiagnostics.CreateScope("SecurityInsightsRecommendationCollection.Get");
             scope.Start();
             try
             {
-                var response = _recommendationGetRestClient.SingleRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recommendationId, cancellationToken);
+                var response = _securityInsightsRecommendationGetRestClient.SingleRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recommendationId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new RecommendationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -155,16 +155,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RecommendationResource"/></description>
+        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RecommendationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityInsightsRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityInsightsRecommendationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendationGetRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RecommendationResource(Client, RecommendationData.DeserializeRecommendationData(e)), _recommendationGetRecommendationsClientDiagnostics, Pipeline, "RecommendationCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsRecommendationGetRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SecurityInsightsRecommendationResource(Client, SecurityInsightsRecommendationData.DeserializeSecurityInsightsRecommendationData(e)), _securityInsightsRecommendationGetRecommendationsClientDiagnostics, Pipeline, "SecurityInsightsRecommendationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -184,16 +184,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RecommendationResource"/></description>
+        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecommendationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RecommendationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityInsightsRecommendationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityInsightsRecommendationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _recommendationGetRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RecommendationResource(Client, RecommendationData.DeserializeRecommendationData(e)), _recommendationGetRecommendationsClientDiagnostics, Pipeline, "RecommendationCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsRecommendationGetRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SecurityInsightsRecommendationResource(Client, SecurityInsightsRecommendationData.DeserializeSecurityInsightsRecommendationData(e)), _securityInsightsRecommendationGetRecommendationsClientDiagnostics, Pipeline, "SecurityInsightsRecommendationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RecommendationResource"/></description>
+        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(Guid recommendationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _recommendationGetClientDiagnostics.CreateScope("RecommendationCollection.Exists");
+            using var scope = _securityInsightsRecommendationGetClientDiagnostics.CreateScope("SecurityInsightsRecommendationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _recommendationGetRestClient.SingleRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsRecommendationGetRestClient.SingleRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RecommendationResource"/></description>
+        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,11 +260,11 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(Guid recommendationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _recommendationGetClientDiagnostics.CreateScope("RecommendationCollection.Exists");
+            using var scope = _securityInsightsRecommendationGetClientDiagnostics.CreateScope("SecurityInsightsRecommendationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _recommendationGetRestClient.SingleRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recommendationId, cancellationToken: cancellationToken);
+                var response = _securityInsightsRecommendationGetRestClient.SingleRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recommendationId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,22 +291,22 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RecommendationResource"/></description>
+        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendationId"> Recommendation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<RecommendationResource>> GetIfExistsAsync(Guid recommendationId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SecurityInsightsRecommendationResource>> GetIfExistsAsync(Guid recommendationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _recommendationGetClientDiagnostics.CreateScope("RecommendationCollection.GetIfExists");
+            using var scope = _securityInsightsRecommendationGetClientDiagnostics.CreateScope("SecurityInsightsRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _recommendationGetRestClient.SingleRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsRecommendationGetRestClient.SingleRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<RecommendationResource>(response.GetRawResponse());
-                return Response.FromValue(new RecommendationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SecurityInsightsRecommendationResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -332,22 +332,22 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RecommendationResource"/></description>
+        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendationId"> Recommendation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<RecommendationResource> GetIfExists(Guid recommendationId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SecurityInsightsRecommendationResource> GetIfExists(Guid recommendationId, CancellationToken cancellationToken = default)
         {
-            using var scope = _recommendationGetClientDiagnostics.CreateScope("RecommendationCollection.GetIfExists");
+            using var scope = _securityInsightsRecommendationGetClientDiagnostics.CreateScope("SecurityInsightsRecommendationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _recommendationGetRestClient.SingleRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recommendationId, cancellationToken: cancellationToken);
+                var response = _securityInsightsRecommendationGetRestClient.SingleRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, recommendationId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<RecommendationResource>(response.GetRawResponse());
-                return Response.FromValue(new RecommendationResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SecurityInsightsRecommendationResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        IEnumerator<RecommendationResource> IEnumerable<RecommendationResource>.GetEnumerator()
+        IEnumerator<SecurityInsightsRecommendationResource> IEnumerable<SecurityInsightsRecommendationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<RecommendationResource> IAsyncEnumerable<RecommendationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SecurityInsightsRecommendationResource> IAsyncEnumerable<SecurityInsightsRecommendationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

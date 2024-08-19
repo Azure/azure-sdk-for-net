@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="huntRelationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="huntRelationId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SecurityInsightsHuntRelationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string huntRelationId, HuntRelationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityInsightsHuntRelationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string huntRelationId, SecurityInsightsHuntRelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(huntRelationId, nameof(huntRelationId));
             Argument.AssertNotNull(data, nameof(data));
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="huntRelationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="huntRelationId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SecurityInsightsHuntRelationResource> CreateOrUpdate(WaitUntil waitUntil, string huntRelationId, HuntRelationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityInsightsHuntRelationResource> CreateOrUpdate(WaitUntil waitUntil, string huntRelationId, SecurityInsightsHuntRelationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(huntRelationId, nameof(huntRelationId));
             Argument.AssertNotNull(data, nameof(data));
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsHuntRelationHuntRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsHuntRelationHuntRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsHuntRelationResource(Client, HuntRelationData.DeserializeHuntRelationData(e)), _securityInsightsHuntRelationHuntRelationsClientDiagnostics, Pipeline, "SecurityInsightsHuntRelationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsHuntRelationResource(Client, SecurityInsightsHuntRelationData.DeserializeSecurityInsightsHuntRelationData(e)), _securityInsightsHuntRelationHuntRelationsClientDiagnostics, Pipeline, "SecurityInsightsHuntRelationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsHuntRelationHuntRelationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsHuntRelationHuntRelationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsHuntRelationResource(Client, HuntRelationData.DeserializeHuntRelationData(e)), _securityInsightsHuntRelationHuntRelationsClientDiagnostics, Pipeline, "SecurityInsightsHuntRelationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsHuntRelationResource(Client, SecurityInsightsHuntRelationData.DeserializeSecurityInsightsHuntRelationData(e)), _securityInsightsHuntRelationHuntRelationsClientDiagnostics, Pipeline, "SecurityInsightsHuntRelationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

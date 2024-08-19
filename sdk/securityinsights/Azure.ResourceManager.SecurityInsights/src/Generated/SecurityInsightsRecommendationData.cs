@@ -14,10 +14,10 @@ using Azure.ResourceManager.SecurityInsights.Models;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing the Recommendation data model.
+    /// A class representing the SecurityInsightsRecommendation data model.
     /// Recommendation object.
     /// </summary>
-    public partial class RecommendationData : ResourceData
+    public partial class SecurityInsightsRecommendationData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RecommendationData"/>. </summary>
-        public RecommendationData()
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRecommendationData"/>. </summary>
+        public SecurityInsightsRecommendationData()
         {
             Suggestions = new ChangeTrackingList<RecommendedSuggestion>();
             AdditionalProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecommendationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRecommendationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="additionalProperties"> Collection of additional properties for the recommendation. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationTypeId, State? state, string title, string description, DateTimeOffset? creationTimeUtc, DateTimeOffset? lastEvaluatedTimeUtc, DateTimeOffset? lastModifiedTimeUtc, IList<RecommendedSuggestion> suggestions, string resourceId, IDictionary<string, string> additionalProperties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsRecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationTypeId, State? state, string title, string description, DateTimeOffset? creationTimeUtc, DateTimeOffset? lastEvaluatedTimeUtc, DateTimeOffset? lastModifiedTimeUtc, IList<RecommendedSuggestion> suggestions, string resourceId, IDictionary<string, string> additionalProperties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RecommendationTypeId = recommendationTypeId;
             State = state;
