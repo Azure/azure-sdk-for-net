@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListConnectionStringsResult>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MongoClusterConnectionStringsResult>> GetConnectionStringsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterResource.GetConnectionStrings");
             scope.Start();
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListConnectionStringsResult> GetConnectionStrings(CancellationToken cancellationToken = default)
+        public virtual Response<MongoClusterConnectionStringsResult> GetConnectionStrings(CancellationToken cancellationToken = default)
         {
             using var scope = _mongoClusterClientDiagnostics.CreateScope("MongoClusterResource.GetConnectionStrings");
             scope.Start();

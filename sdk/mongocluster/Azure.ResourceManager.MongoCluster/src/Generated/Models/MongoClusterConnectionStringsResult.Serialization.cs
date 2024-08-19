@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    public partial class ListConnectionStringsResult : IUtf8JsonSerializable, IJsonModel<ListConnectionStringsResult>
+    public partial class MongoClusterConnectionStringsResult : IUtf8JsonSerializable, IJsonModel<MongoClusterConnectionStringsResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListConnectionStringsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterConnectionStringsResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ListConnectionStringsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoClusterConnectionStringsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ListConnectionStringsResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterConnectionStringsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListConnectionStringsResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterConnectionStringsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.MongoCluster.Models
             writer.WriteEndObject();
         }
 
-        ListConnectionStringsResult IJsonModel<ListConnectionStringsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterConnectionStringsResult IJsonModel<MongoClusterConnectionStringsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ListConnectionStringsResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterConnectionStringsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ListConnectionStringsResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterConnectionStringsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeListConnectionStringsResult(document.RootElement, options);
+            return DeserializeMongoClusterConnectionStringsResult(document.RootElement, options);
         }
 
-        internal static ListConnectionStringsResult DeserializeListConnectionStringsResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoClusterConnectionStringsResult DeserializeMongoClusterConnectionStringsResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -99,38 +99,38 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ListConnectionStringsResult(connectionStrings ?? new ChangeTrackingList<MongoClusterConnectionString>(), serializedAdditionalRawData);
+            return new MongoClusterConnectionStringsResult(connectionStrings ?? new ChangeTrackingList<MongoClusterConnectionString>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ListConnectionStringsResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoClusterConnectionStringsResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ListConnectionStringsResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterConnectionStringsResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ListConnectionStringsResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterConnectionStringsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ListConnectionStringsResult IPersistableModel<ListConnectionStringsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoClusterConnectionStringsResult IPersistableModel<MongoClusterConnectionStringsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ListConnectionStringsResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterConnectionStringsResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeListConnectionStringsResult(document.RootElement, options);
+                        return DeserializeMongoClusterConnectionStringsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ListConnectionStringsResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterConnectionStringsResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ListConnectionStringsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoClusterConnectionStringsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

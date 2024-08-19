@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListConnectionStringsResult>> ListConnectionStringsAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<MongoClusterConnectionStringsResult>> ListConnectionStringsAsync(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -619,9 +619,9 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 case 200:
                     {
-                        ListConnectionStringsResult value = default;
+                        MongoClusterConnectionStringsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ListConnectionStringsResult.DeserializeListConnectionStringsResult(document.RootElement);
+                        value = MongoClusterConnectionStringsResult.DeserializeMongoClusterConnectionStringsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListConnectionStringsResult> ListConnectionStrings(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
+        public Response<MongoClusterConnectionStringsResult> ListConnectionStrings(string subscriptionId, string resourceGroupName, string mongoClusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -648,9 +648,9 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 case 200:
                     {
-                        ListConnectionStringsResult value = default;
+                        MongoClusterConnectionStringsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ListConnectionStringsResult.DeserializeListConnectionStringsResult(document.RootElement);
+                        value = MongoClusterConnectionStringsResult.DeserializeMongoClusterConnectionStringsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -223,14 +223,14 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ListConnectionStringsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterConnectionStringsResult"/>. </summary>
         /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
-        /// <returns> A new <see cref="Models.ListConnectionStringsResult"/> instance for mocking. </returns>
-        public static ListConnectionStringsResult ListConnectionStringsResult(IEnumerable<MongoClusterConnectionString> connectionStrings = null)
+        /// <returns> A new <see cref="Models.MongoClusterConnectionStringsResult"/> instance for mocking. </returns>
+        public static MongoClusterConnectionStringsResult MongoClusterConnectionStringsResult(IEnumerable<MongoClusterConnectionString> connectionStrings = null)
         {
             connectionStrings ??= new List<MongoClusterConnectionString>();
 
-            return new ListConnectionStringsResult(connectionStrings?.ToList(), serializedAdditionalRawData: null);
+            return new MongoClusterConnectionStringsResult(connectionStrings?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoClusterConnectionString"/>. </summary>
@@ -244,13 +244,13 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MongoClusterNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <returns> A new <see cref="Models.MongoClusterNameAvailabilityResult"/> instance for mocking. </returns>
-        public static MongoClusterNameAvailabilityResult MongoClusterNameAvailabilityResult(bool? nameAvailable = null, MongoClusterNameUnavailableReason? reason = null, string message = null)
+        public static MongoClusterNameAvailabilityResult MongoClusterNameAvailabilityResult(bool? isNameAvailable = null, MongoClusterNameUnavailableReason? reason = null, string message = null)
         {
-            return new MongoClusterNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new MongoClusterNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PromoteReplicaContent"/>. </summary>

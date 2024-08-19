@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MongoCluster.Models
 {
     /// <summary> The connection strings for the given mongo cluster. </summary>
-    public partial class ListConnectionStringsResult
+    public partial class MongoClusterConnectionStringsResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
-        internal ListConnectionStringsResult()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterConnectionStringsResult"/>. </summary>
+        internal MongoClusterConnectionStringsResult()
         {
             ConnectionStrings = new ChangeTrackingList<MongoClusterConnectionString>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterConnectionStringsResult"/>. </summary>
         /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListConnectionStringsResult(IReadOnlyList<MongoClusterConnectionString> connectionStrings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterConnectionStringsResult(IReadOnlyList<MongoClusterConnectionString> connectionStrings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionStrings = connectionStrings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
