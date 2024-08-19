@@ -411,6 +411,13 @@
       ]
     },
     {
+      "filename": "**/sdk/devopsinfrastructure/**/*.cs",
+      "words": [
+        "Reimage",
+        "Reimaging"
+      ]
+    },
+    {
       "filename": "**/sdk/newrelic/**/*.cs",
       "words": [
         "liftr",

@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userName"> The username of the Appfigures source. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The password of the AppFigures source. </param>
         /// <param name="clientKey"> The client key for the AppFigures source. </param>
-        internal AppFiguresLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> userName, DataFactorySecret password, DataFactorySecret clientKey) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AppFiguresLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> userName, DataFactorySecret password, DataFactorySecret clientKey) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             UserName = userName;
             Password = password;

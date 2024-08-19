@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of <see cref="VmInstanceGuestCredential"/>. </summary>
         /// <param name="username"> Gets or sets username to connect with the guest. </param>
         /// <param name="password"> Gets or sets the password to connect with the guest. </param>
+        /// <param name="privateKey"> Private key used to authenticate to a virtual machine through ssh. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmInstanceGuestCredential(string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VmInstanceGuestCredential(string username, string password, string privateKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
+            PrivateKey = privateKey;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public string Username { get; set; }
         /// <summary> Gets or sets the password to connect with the guest. </summary>
         public string Password { get; set; }
+        /// <summary> Private key used to authenticate to a virtual machine through ssh. </summary>
+        public string PrivateKey { get; set; }
     }
 }
