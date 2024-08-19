@@ -3247,12 +3247,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
         /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
-        /// blob.  A source blob in the same storage account can be
-        /// authenticated via Shared Key.  However, if the source is a blob in
-        /// another account, the source blob must either be public or must be
-        /// authenticated via a shared access signature. If the source blob
-        /// is public, no authentication is required to perform the copy
-        /// operation.
+        /// blob. <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         ///
         /// The source object may be a file in the Azure File service.  If the
         /// source object is a file that is to be copied to a blob, then the
@@ -3314,12 +3310,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
         /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
-        /// blob.  A source blob in the same storage account can be
-        /// authenticated via Shared Key.  However, if the source is a blob in
-        /// another account, the source blob must either be public or must be
-        /// authenticated via a shared access signature. If the source blob
-        /// is public, no authentication is required to perform the copy
-        /// operation.
+        /// blob. <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         ///
         /// The source object may be a file in the Azure File service.  If the
         /// source object is a file that is to be copied to a blob, then the
@@ -3402,12 +3394,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
         /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
-        /// blob.  A source blob in the same storage account can be
-        /// authenticated via Shared Key.  However, if the source is a blob in
-        /// another account, the source blob must either be public or must be
-        /// authenticated via a shared access signature. If the source blob
-        /// is public, no authentication is required to perform the copy
-        /// operation.
+        /// blob. <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         ///
         /// The source object may be a file in the Azure File service.  If the
         /// source object is a file that is to be copied to a blob, then the
@@ -3469,12 +3457,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
         /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
-        /// blob.  A source blob in the same storage account can be
-        /// authenticated via Shared Key.  However, if the source is a blob in
-        /// another account, the source blob must either be public or must be
-        /// authenticated via a shared access signature. If the source blob
-        /// is public, no authentication is required to perform the copy
-        /// operation.
+        /// blob. <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         ///
         /// The source object may be a file in the Azure File service.  If the
         /// source object is a file that is to be copied to a blob, then the
@@ -3557,12 +3541,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="source">
         /// Specifies the <see cref="Uri"/> of the source blob.  The value may
         /// be a <see cref="Uri" /> of up to 2 KB in length that specifies a
-        /// blob.  A source blob in the same storage account can be
-        /// authenticated via Shared Key.  However, if the source is a blob in
-        /// another account, the source blob must either be public or must be
-        /// authenticated via a shared access signature. If the source blob
-        /// is public, no authentication is required to perform the copy
-        /// operation.
+        /// blob. <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see>
         ///
         /// The source object may be a file in the Azure File service.  If the
         /// source object is a file that is to be copied to a blob, then the
