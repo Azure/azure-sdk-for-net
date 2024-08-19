@@ -22,7 +22,6 @@ namespace System.ClientModel.Tests.Options
             Assert.AreEqual(1, options.AllowedQueryParameters.Count);
             Assert.AreEqual(false, options.IsLoggingContentEnabled);
             Assert.IsInstanceOf(typeof(NullLoggerFactory), options.LoggerFactory);
-            Assert.AreEqual(null, options.CorrelationIdHeaderName);
         }
 
         [Test]
@@ -38,7 +37,6 @@ namespace System.ClientModel.Tests.Options
             Assert.Throws<NotSupportedException>(() => options.AllowedQueryParameters.Add("ShouldNotAdd"));
             Assert.Throws<InvalidOperationException>(() => options.LoggedContentSizeLimit = 5);
             Assert.Throws<InvalidOperationException>(() => options.IsLoggingContentEnabled = true);
-            Assert.Throws<InvalidOperationException>(() => options.CorrelationIdHeaderName = "ShouldNotSet");
             Assert.Throws<InvalidOperationException>(() => options.LoggerFactory = new NullLoggerFactory());
         }
     }

@@ -28,24 +28,16 @@ public class ClientLoggingPolicy : PipelinePolicy
     private readonly PipelineMessageSanitizer _sanitizer;
     private readonly ILogger _logger;
     private readonly LogForwarder _logForwarder;
-    private readonly string? _correlationIdHeaderName;
     private readonly string _clientAssembly = "System-ClientModel";
-    private readonly bool _alwaysLog = false;
 
     /// <summary>
     /// Creates a new instance of the <see cref="ClientLoggingPolicy"/> class.
     /// </summary>
     /// <param name="clientAssembly">The assembly name to include with each entry.</param>
-    /// <param name="alwaysLog">Always process a request/response for logging even if there are no "System-ClientModel" event listeners or a provided ILogger.
-    /// This ensures the virtual methods <see cref="OnSendingRequest(PipelineMessage, byte[], Encoding?)"/> and <see cref="OnLogResponse(PipelineMessage, double)"/>
-    /// or <see cref="OnSendingRequestAsync(PipelineMessage, byte[], Encoding?)"/> and <see cref="OnLogResponseAsync(PipelineMessage, double)"/> are always called.
-    /// It also ensures <see cref="OnLogResponseContent(PipelineMessage, byte[], Encoding?, int?)"/>
-    /// or <see cref="OnLogResponseContentAsync(PipelineMessage, byte[], Encoding?, int?)"/> is called if <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c>.</param>
     /// <param name="options">The user-provided logging options object.</param>
-    protected ClientLoggingPolicy(string clientAssembly, bool alwaysLog, LoggingOptions? options = default) : this(options)
+    protected ClientLoggingPolicy(string clientAssembly, LoggingOptions? options = default) : this(options)
     {
         _clientAssembly = clientAssembly;
-        _alwaysLog = alwaysLog;
     }
 
     /// <summary>
@@ -60,7 +52,6 @@ public class ClientLoggingPolicy : PipelinePolicy
         _sanitizer = new PipelineMessageSanitizer(loggingOptions.AllowedQueryParameters.ToArray(), loggingOptions.AllowedHeaderNames.ToArray());
         _logger = loggingOptions.LoggerFactory.CreateLogger("System.ClientModel");
         _logForwarder = new LogForwarder(_logger);
-        _correlationIdHeaderName = loggingOptions.CorrelationIdHeaderName;
 
         if (_logger is not NullLogger)
         {
@@ -82,7 +73,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         bool isEventSourceEnabled = ClientModelEventSource.Log.IsEnabled();
         var isLoggingEnabled = isLoggerEnabled || isEventSourceEnabled;
 
-        if (!(_alwaysLog || isLoggingEnabled))
+        if (!isLoggingEnabled)
         {
             if (async)
             {
@@ -99,9 +90,7 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         PipelineRequest request = message.Request;
 
-        // If a request Id wasn't set, generate one so at least all the logs for this request and its corresponding response
-        // can be correlated with each other.
-        string requestId = GetCorrelationIdFromHeaders(request.Headers) ?? Guid.NewGuid().ToString();
+        string requestId = Guid.NewGuid().ToString();
         message.LoggingCorrelationId = requestId;
 
         LogRequest(requestId, request, message, async);
@@ -134,123 +123,18 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
-        // Prefer the value from the service if one is provided
-        string responseId = GetCorrelationIdFromHeaders(response.Headers) ?? requestId; // Use the request ID if there was no response id
-        message.LoggingCorrelationId = responseId;
-
-        LogResponse(_logger, message, response, responseId, elapsed, async);
+        LogResponse(_logger, message, response, requestId, elapsed, async);
 
         if (_logContent)
         {
-            LogResponseContent(_logger, message, responseId, message.BufferResponse, async);
+            LogResponseContent(_logger, message, requestId, message.BufferResponse, async);
         }
 
         if (elapsed > RequestTooLongTime)
         {
-            ClientModelEventSource.Log.ResponseDelay(responseId, elapsed);
+            ClientModelEventSource.Log.ResponseDelay(requestId, elapsed);
         }
     }
-
-    /// <summary>
-    /// A method that can be overridden by derived types to extend the default
-    /// <see cref="ClientLoggingPolicy"/> logic. It is called from
-    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
-    /// prior to passing control to the next policy in the pipeline.
-    /// </summary>
-    /// <param name="message">The <see cref="PipelineMessage"/> containing the
-    /// <see cref="PipelineRequest"/> to be sent to the service.</param>
-    /// <param name="bytes">The content of the request in bytes if
-    /// <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c> and the
-    /// request content is not <c>null</c>, <c>null</c> otherwise.</param>
-    /// <param name="encoding">The text encoding of the request content if the content is
-    /// text and <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c>,
-    /// <c>null</c> otherwise.</param>
-    protected virtual void OnSendingRequest(PipelineMessage message, byte[]? bytes, Encoding? encoding) { }
-
-    /// <summary>
-    /// A method that can be overridden by derived types to extend the default
-    /// <see cref="ClientLoggingPolicy"/> logic. It is called from
-    /// <see cref="ProcessAsync(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
-    /// prior to passing control to the next policy in the pipeline.
-    /// </summary>
-    /// <param name="message">The <see cref="PipelineMessage"/> containing the
-    /// <see cref="PipelineRequest"/> to be sent to the service.</param>
-    /// <param name="bytes">The content of the request in bytes if
-    /// <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c> and the
-    /// request content is not <c>null</c>, <c>null</c> otherwise.</param>
-    /// <param name="encoding">The text encoding of the request content if the content is
-    /// text and <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c>,
-    /// <c>null</c> otherwise.</param>
-    protected virtual ValueTask OnSendingRequestAsync(PipelineMessage message, byte[]? bytes, Encoding? encoding) => default;
-
-    /// <summary>
-    /// A method that can be overridden by derived types to extend the default
-    /// <see cref="ClientLoggingPolicy"/> logic. It is called from
-    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
-    /// after control has returned from the previous policy in the pipeline, and the response
-    /// has been logged.
-    /// </summary>
-    /// <param name="message">The <see cref="PipelineMessage"/> containing the
-    /// <see cref="PipelineResponse"/> that was received from the service.</param>
-    /// <param name="secondsElapsed">The number of seconds between sending the request and
-    /// receiving a response.</param>
-    protected virtual void OnLogResponse(PipelineMessage message, double secondsElapsed) { }
-
-    /// <summary>
-    /// A method that can be overridden by derived types to extend the default
-    /// <see cref="ClientLoggingPolicy"/> logic. It is called from
-    /// <see cref="ProcessAsync(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
-    /// after control has returned from the previous policy in the pipeline, and the response
-    /// has been logged.
-    /// </summary>
-    /// <param name="message">The <see cref="PipelineMessage"/> containing the
-    /// <see cref="PipelineResponse"/> that was received from the service.</param>
-    /// <param name="secondsElapsed">The number of seconds between sending the request and
-    /// receiving a response.</param>
-    protected virtual ValueTask OnLogResponseAsync(PipelineMessage message, double secondsElapsed) => default;
-
-    /// <summary>
-    /// A method that can be overridden by derived types to extend the default
-    /// <see cref="ClientLoggingPolicy"/> logic. It is called from
-    /// <see cref="Process(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
-    /// after control has returned from the previous policy in the pipeline, and the
-    /// response content has been logged.
-    /// </summary>
-    /// <remarks>
-    /// This method will only be called if
-    /// <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c>.
-    /// </remarks>
-    /// <param name="message">The <see cref="PipelineMessage"/> containing the
-    /// <see cref="PipelineResponse"/> that was received from the service.</param>
-    /// <param name="bytes">The content of the response in bytes. If the response content
-    /// is <c>null</c>, then this value is <c>null</c>.</param>
-    /// <param name="textEncoding">The text encoding of the response content if the content is
-    /// text, <c>null</c> otherwise.</param>
-    /// <param name="block">The block number of the content when the content is logged in
-    /// blocks, otherwise <c>null</c>.</param>
-    protected virtual void OnLogResponseContent(PipelineMessage message, byte[]? bytes, Encoding? textEncoding, int? block) { }
-
-    /// <summary>
-    /// A method that can be overridden by derived types to extend the default
-    /// <see cref="ClientLoggingPolicy"/> logic. It is called from
-    /// <see cref="ProcessAsync(PipelineMessage, IReadOnlyList{PipelinePolicy}, int)"/>
-    /// after control has been returned from the previous policy in the pipeline, and the
-    /// response content has been logged.
-    /// </summary>
-    /// <remarks>
-    /// This method will only be called if
-    /// <see cref="LoggingOptions.IsLoggingContentEnabled"/> is <c>true</c>.
-    /// </remarks>
-    /// <param name="message">The <see cref="PipelineMessage"/> containing the
-    /// <see cref="PipelineResponse"/> that was received from the service.</param>
-    /// <param name="bytes">The content of the response in bytes. If the response content
-    /// is <c>null</c>, then this value is <c>null</c>.</param>
-    /// <param name="textEncoding">The text encoding of the response content if the content is
-    /// text, <c>null</c> otherwise.</param>
-    /// <param name="block"></param>
-    /// <returns>The block number of the content when the content is logged in
-    /// blocks, otherwise <c>null</c>.</returns>
-    protected virtual ValueTask OnLogResponseContentAsync(PipelineMessage message, byte[]? bytes, Encoding? textEncoding, int? block) => default;
 
     #region Log methods
 
@@ -294,18 +178,9 @@ public class ClientLoggingPolicy : PipelinePolicy
 
             ClientModelEventSource.Log.RequestContent(requestId, bytes, encoding);
         }
-
-        if (async)
-        {
-            await OnSendingRequestAsync(message, bytes, encoding).ConfigureAwait(false);
-        }
-        else
-        {
-            OnSendingRequest(message, bytes, encoding);
-        }
     }
 
-    private async void LogResponse(ILogger logger, PipelineMessage message, PipelineResponse response, string responseId, double elapsed, bool async)
+    private void LogResponse(ILogger logger, PipelineMessage message, PipelineResponse response, string responseId, double elapsed, bool async)
     {
         bool isEnabled = response.IsError ?
             IsLoggingEnabled(LogLevel.Warning, EventLevel.Warning)
@@ -313,15 +188,6 @@ public class ClientLoggingPolicy : PipelinePolicy
 
         if (!isEnabled)
         {
-            if (async)
-            {
-                await OnLogResponseAsync(message, elapsed).ConfigureAwait(false);
-            }
-            else
-            {
-                OnLogResponse(message, elapsed);
-            }
-
             return;
         }
 
@@ -333,17 +199,9 @@ public class ClientLoggingPolicy : PipelinePolicy
         {
             ClientModelEventSource.Log.Response(responseId, response, _sanitizer, elapsed);
         }
-        if (async)
-        {
-            await OnLogResponseAsync(message, elapsed).ConfigureAwait(false);
-        }
-        else
-        {
-            OnLogResponse(message, elapsed);
-        }
     }
 
-    private async void LogResponseContent(ILogger logger, PipelineMessage message, string responseId, bool contentBuffered, bool async)
+    private void LogResponseContent(ILogger logger, PipelineMessage message, string responseId, bool contentBuffered, bool async)
     {
         PipelineResponse response = message.Response!;
 
@@ -351,14 +209,6 @@ public class ClientLoggingPolicy : PipelinePolicy
         // if (response.ContentStream == null || !IsLoggingEnabled(LogLevel.Information, EventLevel.Informational))
         if (response.ContentStream == null)
         {
-            if (async)
-            {
-                await OnLogResponseContentAsync(message, null, null, null).ConfigureAwait(false);
-            }
-            else
-            {
-                OnLogResponseContent(message, null, null, null);
-            }
             return;
         }
 
@@ -386,15 +236,6 @@ public class ClientLoggingPolicy : PipelinePolicy
                 ClientModelEventSource.Log.ResponseContent(responseId, bytes, responseTextEncoding);
             }
 
-            if (async)
-            {
-                await OnLogResponseContentAsync(message, bytes, responseTextEncoding, null).ConfigureAwait(false);
-            }
-            else
-            {
-                OnLogResponseContent(message, bytes, responseTextEncoding, null);
-            }
-
             return;
         }
 
@@ -414,19 +255,10 @@ public class ClientLoggingPolicy : PipelinePolicy
                 ClientModelEventSource.Log.ResponseContent(responseId, bytes, responseTextEncoding);
             }
 
-            if (async)
-            {
-                await OnLogResponseContentAsync(message, bytes, responseTextEncoding, null).ConfigureAwait(false);
-            }
-            else
-            {
-                OnLogResponseContent(message, bytes, responseTextEncoding, null);
-            }
-
             return;
         }
 
-        response.ContentStream = new LoggingStream(this, logger, responseId, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding, message);
+        response.ContentStream = new LoggingStream(logger, responseId, _maxLength, response.ContentStream!, response.IsError, responseTextEncoding, message);
     }
     #endregion
 
@@ -443,26 +275,6 @@ public class ClientLoggingPolicy : PipelinePolicy
         // the if enabled checks would always return true and there would be a lot of extra unnecessary string
         // formatting that would impact perf
         return _logger.IsEnabled(logLevel);
-    }
-
-    private string? GetCorrelationIdFromHeaders(PipelineRequestHeaders keyValuePairs)
-    {
-        if (_correlationIdHeaderName == null)
-        {
-            return null;
-        }
-        keyValuePairs.TryGetValue(_correlationIdHeaderName, out var clientRequestId);
-        return clientRequestId;
-    }
-
-    private string? GetCorrelationIdFromHeaders(PipelineResponseHeaders keyValuePairs)
-    {
-        if (_correlationIdHeaderName == null)
-        {
-            return null;
-        }
-        keyValuePairs.TryGetValue(_correlationIdHeaderName, out var clientRequestId);
-        return clientRequestId;
     }
 
     #endregion
@@ -513,9 +325,8 @@ public class ClientLoggingPolicy : PipelinePolicy
         private int _blockNumber;
         private readonly ILogger _logger;
         private readonly PipelineMessage _message;
-        private readonly ClientLoggingPolicy _policy;
 
-        public LoggingStream(ClientLoggingPolicy policy, ILogger logger, string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding, PipelineMessage message)
+        public LoggingStream(ILogger logger, string requestId, int maxLoggedBytes, Stream originalStream, bool error, Encoding? textEncoding, PipelineMessage message)
         {
             // Should only wrap non-seekable streams
             Debug.Assert(!originalStream.CanSeek);
@@ -527,7 +338,6 @@ public class ClientLoggingPolicy : PipelinePolicy
             _textEncoding = textEncoding;
             _logger = logger;
             _message = message;
-            _policy = policy;
         }
 
         public override long Seek(long offset, SeekOrigin origin)
@@ -546,7 +356,7 @@ public class ClientLoggingPolicy : PipelinePolicy
             return result;
         }
 
-        private async void LogBuffer(byte[] buffer, int offset, int length, bool async)
+        private void LogBuffer(byte[] buffer, int offset, int length, bool async)
         {
             if (length == 0 || buffer == null)
             {
@@ -573,15 +383,6 @@ public class ClientLoggingPolicy : PipelinePolicy
             else
             {
                 ClientModelEventSource.Log.ResponseContentBlock(_requestId, _blockNumber, bytes, _textEncoding);
-            }
-
-            if (async)
-            {
-                await _policy.OnLogResponseContentAsync(_message, bytes, _textEncoding, _blockNumber).ConfigureAwait(false);
-            }
-            else
-            {
-                _policy.OnLogResponseContent(_message, bytes, _textEncoding, _blockNumber);
             }
 
             _blockNumber++;

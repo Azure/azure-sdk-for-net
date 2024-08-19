@@ -34,16 +34,26 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     private const int ErrorResponseContentTextEvent = 14;
     private const int ErrorResponseContentTextBlockEvent = 16;
     private const int ExceptionResponseEvent = 18;
+    private const int RequestRetryingEvent = 10;
 
     // TODO
     private const int ResponseDelayEvent = 7;
-    private const int RequestRetryingEvent = 10;
 
     private TestLoggingFactory _factory;
     private TestLogger _logger;
 
-    private const string LoggingPolicyCategoryName = "System.ClientModel";
-    private const string CorrelationIdHeaderName = "Client-Id";
+    private const string LoggingPolicyCategoryName = "System-ClientModel";
+
+    private readonly MockResponseHeaders _defaultHeaders = new(new Dictionary<string, string>()
+    {
+        { "Custom-Response-Header", "custom-response-header-value" }
+    });
+
+    private readonly MockResponseHeaders _defaultTextHeaders = new(new Dictionary<string, string>()
+    {
+        { "Custom-Response-Header", "custom-response-header-value" },
+        { "Content-Type", "text/plain" }
+    });
 
     public ClientModelLoggerTests(bool isAsync) : base(isAsync)
     {
@@ -54,7 +64,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     [SetUp]
     public void Setup()
     {
-        // Each test needs its own logger
         _logger = new TestLogger(LogLevel.Debug);
         _factory = new TestLoggingFactory(_logger);
     }
@@ -66,141 +75,352 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     }
 
     [Test]
-    public async Task AllDefaultOptionsWorkAsExpected()
+    public async Task RequestAndResponseProduceLogs()
     {
-        string requestContent = "Hello";
-        string responseContent = "World";
-        Uri uri = new("http://example.com/Index.htm?q1=v1&q2=v2");
+        byte[] requestContent = new byte[] { 1, 2, 3, 4, 5 };
+        byte[] responseContent = new byte[] { 6, 7, 8, 9, 0 };
 
-        Dictionary<string, string> headers = new()
+        LoggingOptions loggingOptions = new()
         {
-            { "Custom-Response-Header", "Value" },
-            { "Date", "4/29/2024" },
-            { "ETag", "version1" }
+            IsLoggingContentEnabled = true,
+            LoggedContentSizeLimit = int.MaxValue,
+            LoggerFactory = _factory
         };
-        var mockHeaders = new MockResponseHeaders(headers);
-        var response = new MockPipelineResponse(200, mockHeaders: mockHeaders);
+
+        MockPipelineResponse response = new(200, mockHeaders: _defaultHeaders);
         response.SetContent(responseContent);
 
-        ClientPipelineOptions options = new()
-        {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions()
-            {
-                LoggerFactory = _factory
-            }
-        };
+        await CreatePipelineAndSendRequest(response, requestContentBytes: requestContent, loggingOptions: loggingOptions);
 
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Method = "GET";
-        message.Request.Uri = uri;
-        message.Request.Headers.Add("Custom-Header", "Value");
-        message.Request.Headers.Add("Date", "3/28/2024");
-        message.Request.Headers.Add("ETag", "version1");
-        message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        Assert.AreEqual(2, _logger.Logs.Count());
-
-        LoggerEvent log = _logger.SingleEventById(RequestEvent);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual(null, log.Exception);
-        Assert.AreEqual("Request", log.EventId.Name);
-
-        Guid requestId = Guid.Parse(log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual("http://example.com/Index.htm?q1=REDACTED&q2=REDACTED", log.GetValueFromArguments<string>("uri"));
+        LoggerEvent log = GetSingleEvent(RequestEvent, "Request", LogLevel.Information);
+        Assert.AreEqual("http://example.com/", log.GetValueFromArguments<string>("uri"));
         Assert.AreEqual("GET", log.GetValueFromArguments<string>("method"));
-        StringAssert.Contains($"Date:3/28/2024{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-        StringAssert.Contains($"ETag:version1{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-        StringAssert.Contains($"Custom-Header:REDACTED{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-        Assert.AreEqual("System-ClientModel", log.GetValueFromArguments<string>("clientAssembly"));
+        StringAssert.Contains($"Date:08/16/2024{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+        StringAssert.Contains($"Custom-Header:custom-header-value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
 
-        log = _logger.SingleEventById(ResponseEvent);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual("Response", log.EventId.Name);
-        Assert.AreEqual(null, log.Exception);
-        Guid responseId = Guid.Parse(log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(responseId.ToString(), requestId.ToString());
+        log = GetSingleEvent(RequestContentEvent, "RequestContent", LogLevel.Debug);
+        CollectionAssert.AreEqual(requestContent, log.GetValueFromArguments<byte[]>("content"));
+
+        log = GetSingleEvent(ResponseEvent, "Response", LogLevel.Information);
         Assert.AreEqual(log.GetValueFromArguments<int>("status"), 200);
-        StringAssert.Contains($"Custom-Response-Header:REDACTED{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+        StringAssert.Contains($"Custom-Response-Header:custom-response-header-value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+
+        log = GetSingleEvent(ResponseContentEvent, "ResponseContent", LogLevel.Debug);
+        CollectionAssert.AreEqual(responseContent, log.GetValueFromArguments<byte[]>("content"));
     }
 
     [Test]
-    public async Task SendingRequestProducesEvents()
+    public async Task ErrorResponseProducesLogs()
     {
-        string requestContent = "Hello";
-        string responseContent = "World";
-        string clientId = "client1";
+        byte[] responseContent = new byte[] { 6, 7, 8, 9, 0 };
 
-        var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Value" } });
-        var response = new MockPipelineResponse(200, mockHeaders: headers);
+        LoggingOptions loggingOptions = new()
+        {
+            IsLoggingContentEnabled = true,
+            LoggedContentSizeLimit = int.MaxValue,
+            LoggerFactory = _factory
+        };
+
+        MockPipelineResponse response = new(500, mockHeaders: _defaultHeaders);
         response.SetContent(responseContent);
 
-        ClientPipelineOptions options = new()
-        {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = true,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
-                LoggerFactory = _factory
-            }
-        };
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
+        await CreatePipelineAndSendRequest(response, requestContentBytes: new byte[] { 1, 2, 3, 4, 5 }, loggingOptions: loggingOptions);
 
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
+        LoggerEvent log = GetSingleEvent(ErrorResponseEvent, "ErrorResponse", LogLevel.Warning);
+        Assert.AreEqual(log.GetValueFromArguments<int>("status"), 500);
+        StringAssert.Contains($"Custom-Response-Header:custom-response-header-value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
 
-        PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Method = "GET";
-        message.Request.Uri = new Uri("http://example.com");
-        message.Request.Headers.Add("Custom-Header", "Value");
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
-        message.Request.Headers.Add("Date", "3/28/2024");
-        message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        LoggerEvent log = _logger.SingleEventById(RequestEvent);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual("Request", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual("http://example.com/", log.GetValueFromArguments<string>("uri"));
-        Assert.AreEqual("GET", log.GetValueFromArguments<string>("method"));
-        StringAssert.Contains($"Date:3/28/2024{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-        StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-
-        log = _logger.SingleEventById(RequestContentEvent);
-        Assert.AreEqual(LogLevel.Debug, log.LogLevel);
-        Assert.AreEqual("RequestContent", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
-        CollectionAssert.AreEqual(requestContent, log.GetValueFromArguments<byte[]>("content"));
-
-        log = _logger.SingleEventById(ResponseEvent);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual("Response", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(log.GetValueFromArguments<int>("status"), 200);
-        StringAssert.Contains($"Custom-Response-Header:Value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-
-        log = _logger.SingleEventById(ResponseContentEvent);
-        Assert.AreEqual(LogLevel.Debug, log.LogLevel);
-        Assert.AreEqual("ResponseContent", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
+        log = GetSingleEvent(ErrorResponseContentEvent, "ErrorResponseContent", LogLevel.Information);
         CollectionAssert.AreEqual(responseContent, log.GetValueFromArguments<byte[]>("content"));
+
+        // TODO - add retry checks
+    }
+
+    [Test]
+    public async Task RequestAndResponseContentIsLoggedAsText()
+    {
+        string requestContent = "Hello";
+        string responseContent = "World!";
+
+        LoggingOptions loggingOptions = new()
+        {
+            IsLoggingContentEnabled = true,
+            LoggedContentSizeLimit = int.MaxValue,
+            LoggerFactory = _factory
+        };
+
+        MockPipelineResponse response = new(200, mockHeaders: _defaultTextHeaders);
+        response.SetContent(responseContent);
+
+        await CreatePipelineAndSendRequest(response, requestContentString: requestContent, loggingOptions: loggingOptions);
+
+        LoggerEvent log = GetSingleEvent(RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
+        Assert.AreEqual(requestContent, log.GetValueFromArguments<string>("content"));
+
+        log = GetSingleEvent(ResponseContentTextEvent, "ResponseContentText", LogLevel.Debug);
+        Assert.AreEqual(responseContent, log.GetValueFromArguments<string>("content"));
+
+        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
+    }
+
+    [Test]
+    public async Task ContentIsNotLoggedAsTextWhenDisabled()
+    {
+        LoggingOptions loggingOptions = new()
+        {
+            IsLoggingContentEnabled = false,
+            LoggedContentSizeLimit = int.MaxValue,
+            LoggerFactory = _factory
+        };
+
+        MockPipelineResponse response = new(500, mockHeaders: _defaultTextHeaders);
+        response.SetContent("TextResponseContent");
+
+        await CreatePipelineAndSendRequest(response, requestContentString: "TextRequestContent", loggingOptions: loggingOptions);
+
+        AssertNoContentLogged();
+    }
+
+    [Test]
+    public async Task ContentIsNotLoggedWhenDisabled()
+    {
+        LoggingOptions loggingOptions = new()
+        {
+            IsLoggingContentEnabled = false,
+            LoggedContentSizeLimit = int.MaxValue,
+            LoggerFactory = _factory
+        };
+
+        MockPipelineResponse response = new(500, mockHeaders: _defaultHeaders);
+        response.SetContent(new byte[] { 1, 2, 3 });
+
+        await CreatePipelineAndSendRequest(response, requestContentBytes: Encoding.UTF8.GetBytes("Hello world"), loggingOptions: loggingOptions);
+
+        AssertNoContentLogged();
+    }
+
+    [Test]
+    public async Task NonSeekableResponsesAreLoggedInBlocks()
+    {
+        await CreatePipelineAndSendRequestWithStreamingResponse(200, false, _defaultHeaders);
+
+        LoggerEvent[] contentEvents = _logger.EventsById(ResponseContentBlockEvent).ToArray();
+
+        Assert.AreEqual(2, contentEvents.Length);
+
+        Assert.AreEqual(LogLevel.Debug, contentEvents[0].LogLevel);
+        Assert.AreEqual("ResponseContentBlock", contentEvents[0].EventId.Name);
+        Assert.AreEqual(0, contentEvents[0].GetValueFromArguments<int>("blockNumber"));
+        CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, contentEvents[0].GetValueFromArguments<byte[]>("content"));
+
+        Assert.AreEqual(LogLevel.Debug, contentEvents[1].LogLevel);
+        Assert.AreEqual("ResponseContentBlock", contentEvents[1].EventId.Name);
+        Assert.AreEqual(1, contentEvents[1].GetValueFromArguments<int>("blockNumber"));
+        CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, contentEvents[1].GetValueFromArguments<byte[]>("content"));
+
+        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
+    }
+
+    [Test]
+    public async Task NonSeekableResponsesErrorsAreLoggedInBlocks()
+    {
+        await CreatePipelineAndSendRequestWithStreamingResponse(500, false, _defaultHeaders);
+
+        LoggerEvent[] errorContentEvents = _logger.EventsById(ErrorResponseContentBlockEvent).ToArray();
+
+        Assert.AreEqual(2, errorContentEvents.Length);
+
+        Assert.AreEqual(LogLevel.Information, errorContentEvents[0].LogLevel);
+        Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[0].EventId.Name);
+        Assert.AreEqual(0, errorContentEvents[0].GetValueFromArguments<int>("blockNumber"));
+        CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, errorContentEvents[0].GetValueFromArguments<byte[]>("content"));
+
+        Assert.AreEqual(LogLevel.Information, errorContentEvents[1].LogLevel);
+        Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[1].EventId.Name);
+        Assert.AreEqual(1, errorContentEvents[1].GetValueFromArguments<int>("blockNumber"));
+        CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, errorContentEvents[1].GetValueFromArguments<byte[]>("content"));
+
+        CollectionAssert.IsEmpty(_logger.EventsById(ErrorResponseContentEvent));
+    }
+
+    [Test]
+    public async Task NonSeekableResponsesAreLoggedInTextBlocks()
+    {
+        await CreatePipelineAndSendRequestWithStreamingResponse(200, false, _defaultTextHeaders);
+
+        LoggerEvent[] contentEvents = _logger.EventsById(ResponseContentTextBlockEvent).ToArray();
+
+        Assert.AreEqual(2, contentEvents.Length);
+
+        Assert.AreEqual(LogLevel.Debug, contentEvents[0].LogLevel);
+
+        Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventId.Name);
+        Assert.AreEqual(0, contentEvents[0].GetValueFromArguments<int>("blockNumber"));
+        Assert.AreEqual("Hello ", contentEvents[0].GetValueFromArguments<string>("content"));
+
+        Assert.AreEqual(LogLevel.Debug, contentEvents[1].LogLevel);
+        Assert.AreEqual("ResponseContentTextBlock", contentEvents[1].EventId.Name);
+        Assert.AreEqual(1, contentEvents[1].GetValueFromArguments<int>("blockNumber"));
+        Assert.AreEqual("world", contentEvents[1].GetValueFromArguments<string>("content"));
+
+        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
+    }
+
+    [Test]
+    public async Task NonSeekableResponsesErrorsAreLoggedInTextBlocks()
+    {
+        await CreatePipelineAndSendRequestWithStreamingResponse(500, false, _defaultTextHeaders);
+
+        LoggerEvent[] errorContentEvents = _logger.EventsById(ErrorResponseContentTextBlockEvent).ToArray();
+
+        Assert.AreEqual(2, errorContentEvents.Length);
+
+        Assert.AreEqual(LogLevel.Information, errorContentEvents[0].LogLevel);
+        Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[0].EventId.Name);
+        Assert.AreEqual(0, errorContentEvents[0].GetValueFromArguments<int>("blockNumber"));
+        Assert.AreEqual("Hello ", errorContentEvents[0].GetValueFromArguments<string>("content"));
+
+        Assert.AreEqual(LogLevel.Information, errorContentEvents[1].LogLevel);
+        Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[1].EventId.Name);
+        Assert.AreEqual(1, errorContentEvents[1].GetValueFromArguments<int>("blockNumber"));
+        Assert.AreEqual("world", errorContentEvents[1].GetValueFromArguments<string>("content"));
+
+        CollectionAssert.IsEmpty(_logger.EventsById(ErrorResponseContentEvent));
+    }
+
+    [Test]
+    public async Task SeekableTextResponsesAreLoggedInText()
+    {
+        await CreatePipelineAndSendRequestWithStreamingResponse(200, true, _defaultTextHeaders);
+
+        LoggerEvent logEvent = GetSingleEvent(ResponseContentTextEvent, "ResponseContentText", LogLevel.Debug);
+        Assert.AreEqual("Hello world", logEvent.GetValueFromArguments<string>("content"));
+    }
+
+    [Test]
+    public async Task SeekableTextResponsesErrorsAreLoggedInText()
+    {
+        await CreatePipelineAndSendRequestWithStreamingResponse(500, true, _defaultTextHeaders, 5);
+
+        LoggerEvent logEvent = GetSingleEvent(ErrorResponseContentTextEvent, "ErrorResponseContentText", LogLevel.Information);
+        Assert.AreEqual("Hello", logEvent.GetValueFromArguments<string>("content"));
+    }
+
+    [Test]
+    public async Task SeekableTextResponsesAreLimitedInLength()
+    {
+        await CreatePipelineAndSendRequestWithStreamingResponse(200, true, _defaultTextHeaders, 5);
+
+        LoggerEvent logEvent = GetSingleEvent(ResponseContentTextEvent, "ResponseContentText", LogLevel.Debug);
+        Assert.AreEqual("Hello", logEvent.GetValueFromArguments<string>("content"));
+    }
+
+    [Test]
+    public async Task RequestContentLogsAreLimitedInLength()
+    {
+        var response = new MockPipelineResponse(500);
+
+        LoggingOptions loggingOptions = new LoggingOptions
+        {
+            IsLoggingContentEnabled = true,
+            LoggedContentSizeLimit = 5,
+            LoggerFactory = _factory
+        };
+
+        Dictionary<string, string> requestHeaders = new()
+        {
+            { "Content-Type", "text/plain" }
+        };
+
+        await CreatePipelineAndSendRequest(response, requestContentBytes: Encoding.UTF8.GetBytes("Hello world"), requestHeaders: requestHeaders, loggingOptions: loggingOptions);
+
+        LoggerEvent logEvent = GetSingleEvent(RequestContentTextEvent, "RequestContentText", LogLevel.Debug);
+        Assert.AreEqual("Hello", logEvent.GetValueFromArguments<string>("content"));
+
+        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
+    }
+
+    [Test]
+    public async Task NonSeekableResponsesAreLimitedInLength()
+    {
+        await CreatePipelineAndSendRequestWithStreamingResponse(200, false, _defaultTextHeaders, 5);
+
+        LoggerEvent logEvent = GetSingleEvent(ResponseContentTextBlockEvent, "ResponseContentTextBlock", LogLevel.Debug);
+        Assert.AreEqual("Hello", logEvent.GetValueFromArguments<string>("content"));
+
+        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
+    }
+
+    [Test]
+    public async Task HeadersAndQueryParametersAreSanitized()
+    {
+        var mockHeaders = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Improved value" }, { "Secret-Response-Header", "Very secret" } });
+        var response = new MockPipelineResponse(200, mockHeaders: mockHeaders);
+        response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
+
+        Dictionary<string, string> requestHeaders = new()
+        {
+            { "Secret-Custom-Header", "secret-value" },
+            { "Content-Type", "text/json" }
+        };
+
+        Uri requestUri = new("https://contoso.a.io?api-version=5&secret=123");
+
+        await CreatePipelineAndSendRequest(response, requestContentBytes: new byte[] { 1, 2, 3, 4, 5 }, requestHeaders: requestHeaders, requestUri: requestUri);
+
+        LoggerEvent log = GetSingleEvent(RequestEvent, "Request", LogLevel.Information);
+        Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=REDACTED", log.GetValueFromArguments<string>("uri"));
+        Assert.AreEqual("GET", log.GetValueFromArguments<string>("method"));
+        StringAssert.Contains($"Date:08/16/2024{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+        StringAssert.Contains($"Custom-Header:custom-header-value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+        StringAssert.Contains($"Secret-Custom-Header:REDACTED{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+
+        log = GetSingleEvent(ResponseEvent, "Response", LogLevel.Information);
+        Assert.AreEqual(log.GetValueFromArguments<int>("status"), 200);
+        StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+        StringAssert.Contains($"Secret-Response-Header:REDACTED{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+    }
+
+    [Test]
+    public async Task HeadersAndQueryParametersAreNotSanitizedWhenStars()
+    {
+        var mockHeaders = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Improved value" }, { "Secret-Response-Header", "Very secret" } });
+        var response = new MockPipelineResponse(200, mockHeaders: mockHeaders);
+        response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
+
+        LoggingOptions loggingOptions = new()
+        {
+            LoggerFactory = _factory
+        };
+        loggingOptions.AllowedQueryParameters.Add("*");
+        loggingOptions.AllowedHeaderNames.Add("*");
+
+        Uri requestUri = new("https://contoso.a.io?api-version=5&secret=123");
+
+        Dictionary<string, string> requestHeaders = new()
+        {
+            { "Secret-Custom-Header", "Value" },
+            { "Content-Type", "text/json" }
+        };
+
+        await CreatePipelineAndSendRequest(response, requestContentBytes: new byte[] { 1, 2, 3, 4, 5 }, requestHeaders: requestHeaders, requestUri: requestUri, loggingOptions: loggingOptions);
+
+        LoggerEvent log = GetSingleEvent(RequestEvent, "Request", LogLevel.Information);
+        Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=123", log.GetValueFromArguments<string>("uri"));
+        Assert.AreEqual("GET", log.GetValueFromArguments<string>("method"));
+        StringAssert.Contains($"Date:08/16/2024{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+        StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+        StringAssert.Contains($"Secret-Custom-Header:Value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+
+        log = GetSingleEvent(ResponseEvent, "Response", LogLevel.Information);
+        Assert.AreEqual(log.GetValueFromArguments<int>("status"), 200);
+        StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+        StringAssert.Contains($"Secret-Response-Header:Very secret{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
     }
 
     [Test]
     public void GettingExceptionResponseProducesEvents()
     {
-        string clientId = "client1";
-
         var exception = new InvalidOperationException();
         ClientPipelineOptions options = new()
         {
@@ -208,7 +428,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             LoggingOptions = new LoggingOptions
             {
                 IsLoggingContentEnabled = true,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
                 LoggerFactory = _factory
             }
         };
@@ -220,207 +439,23 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Headers.Add("User-Agent", "agent");
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
 
         Assert.ThrowsAsync<InvalidOperationException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
 
-        LoggerEvent log = _logger.SingleEventById(ExceptionResponseEvent);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(exception.ToString().Split(Environment.NewLine.ToCharArray())[0], log.GetValueFromArguments<string>("exception").Split(Environment.NewLine.ToCharArray())[0]);
+        LoggerEvent log = GetSingleEvent(ExceptionResponseEvent, "ExceptionResponse", LogLevel.Information);
+        Assert.AreEqual(exception, log.Exception);
     }
 
-    [Test]
-    public async Task GettingErrorResponseProducesEvents()
+    #region Helpers
+
+    private LoggerEvent GetSingleEvent(int id, string expectedEventName, LogLevel expectedLogLevel)
     {
-        byte[] requestContent = new byte[] { 1, 2, 3, 4, 5 };
-        byte[] responseContent = new byte[] { 6, 7, 8, 9, 0 };
-        string clientId = "client1";
+        LoggerEvent log = _logger.SingleEventById(id);
+        Assert.AreEqual(expectedEventName, log.EventId.Name);
+        Assert.AreEqual(expectedLogLevel, log.LogLevel);
+        Guid.Parse(log.GetValueFromArguments<string>("requestId"));
 
-        var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Value - 2" } });
-        var response = new MockPipelineResponse(500, mockHeaders: headers);
-        response.SetContent(responseContent);
-
-        ClientPipelineOptions options = new()
-        {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            RetryPolicy = new ObservablePolicy("RetryPolicy"),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = int.MaxValue,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
-                LoggerFactory = _factory
-            }
-        };
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
-        options.LoggingOptions.AllowedHeaderNames.Add("Date");
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Method = "GET";
-        message.Request.Uri = new Uri("http://example.com");
-        message.Request.Headers.Add("Custom-Header", "Value");
-        message.Request.Headers.Add(clientId, clientId);
-        message.Request.Headers.Add("Date", "3/28/2024");
-        message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        LoggerEvent log = _logger.SingleEventById(ErrorResponseEvent);
-        Assert.AreEqual(LogLevel.Warning, log.LogLevel);
-        Assert.AreEqual("ErrorResponse", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(log.GetValueFromArguments<int>("status"), 500);
-        StringAssert.Contains($"Custom-Response-Header:Value - 2{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-
-        log = _logger.SingleEventById(ErrorResponseContentEvent);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual("ErrorResponseContent", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
-        CollectionAssert.AreEqual(responseContent, log.GetValueFromArguments<byte[]>("content"));
-    }
-
-    [Test]
-    public async Task RequestContentIsLoggedAsText()
-    {
-        string clientId = "client1";
-        string requestContent = "Hello world";
-
-        var response = new MockPipelineResponse(500);
-
-        ClientPipelineOptions options = new()
-        {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            RetryPolicy = new ObservablePolicy("RetryPolicy"),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = int.MaxValue,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
-                LoggerFactory = _factory
-            }
-        };
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Method = "GET";
-        message.Request.Uri = new Uri("http://example.com");
-        message.Request.Headers.Add("Custom-Header", "Value");
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
-        message.Request.Headers.Add("Date", "3/28/2024");
-        message.Request.Headers.Add("Content-Type", "text/json");
-        message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes(requestContent)));
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        LoggerEvent log = _logger.SingleEventById(RequestContentTextEvent);
-        Assert.AreEqual(LogLevel.Debug, log.LogLevel);
-        Assert.AreEqual("RequestContentText", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(requestContent, log.GetValueFromArguments<string>("content"));
-
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
-    }
-
-    [Test]
-    public async Task ContentIsNotLoggedAsTextWhenDisabled()
-    {
-        var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Content-Type", "text/json" } });
-        var response = new MockPipelineResponse(500);
-        response.ContentStream = new MemoryStream(new byte[] { 1, 2, 3 });
-
-        ClientPipelineOptions options = new()
-        {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = false,
-                LoggedContentSizeLimit = int.MaxValue,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
-                LoggerFactory = _factory
-            }
-        };
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Method = "GET";
-        message.Request.Uri = new Uri("http://example.com");
-        message.Request.Headers.Add("Custom-Header", "Value");
-        message.Request.Headers.Add("Date", "3/28/2024");
-        message.Request.Headers.Add("Content-Type", "text/json");
-        message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
-        message.Request.Headers.Add(CorrelationIdHeaderName, "client1");
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        AssertNoContentLogged();
-    }
-
-    [Test]
-    public async Task ContentIsNotLoggedWhenDisabled()
-    {
-        var response = new MockPipelineResponse(500);
-        response.ContentStream = new NonSeekableMemoryStream(new byte[] { 1, 2, 3 });
-
-        ClientPipelineOptions options = new()
-        {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions
-            {
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
-                LoggerFactory = _factory
-            }
-        };
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-
-        PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Method = "GET";
-        message.Request.Uri = new Uri("http://example.com");
-        message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
-        message.Request.Headers.Add(CorrelationIdHeaderName, "client-id");
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        AssertNoContentLogged();
-    }
-
-    [Test]
-    public async Task RequestContentIsNotLoggedWhenDisabled()
-    {
-        var response = new MockPipelineResponse(500);
-        response.ContentStream = new MemoryStream(new byte[] { 1, 2, 3 });
-
-        ClientPipelineOptions options = new()
-        {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions
-            {
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
-                LoggerFactory = _factory
-            }
-        };
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-
-        PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Method = "GET";
-        message.Request.Uri = new Uri("http://example.com");
-        message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        AssertNoContentLogged();
+        return log;
     }
 
     private void AssertNoContentLogged()
@@ -437,345 +472,13 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         CollectionAssert.IsEmpty(_logger.EventsById(ErrorResponseContentTextBlockEvent));
     }
 
-    [Test]
-    public async Task NonSeekableResponsesAreLoggedInBlocks()
+    private async Task CreatePipelineAndSendRequestWithStreamingResponse(int statusCode,
+                                                                         bool isSeekable,
+                                                                         MockResponseHeaders responseHeaders,
+                                                                         int maxLength = int.MaxValue)
     {
-        await SendRequest(isSeekable: false, isError: false);
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
+        MockPipelineResponse response = new(status: statusCode, mockHeaders: responseHeaders);
 
-        LoggerEvent[] contentEvents = _logger.EventsById(ResponseContentBlockEvent).ToArray();
-
-        Assert.AreEqual(2, contentEvents.Length);
-
-        Assert.AreEqual(LogLevel.Debug, contentEvents[0].LogLevel);
-        Assert.AreEqual("ResponseContentBlock", contentEvents[0].EventId.Name);
-        Assert.AreEqual("client-id", contentEvents[0].GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(0, contentEvents[0].GetValueFromArguments<int>("blockNumber"));
-        CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, contentEvents[0].GetValueFromArguments<byte[]>("content"));
-
-        Assert.AreEqual(LogLevel.Debug, contentEvents[1].LogLevel);
-        Assert.AreEqual("ResponseContentBlock", contentEvents[1].EventId.Name);
-        Assert.AreEqual("client-id", contentEvents[1].GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(1, contentEvents[1].GetValueFromArguments<int>("blockNumber"));
-        CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, contentEvents[1].GetValueFromArguments<byte[]>("content"));
-
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
-    }
-
-    [Test]
-    public async Task NonSeekableResponsesErrorsAreLoggedInBlocks()
-    {
-        await SendRequest(isSeekable: false, isError: true);
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        LoggerEvent[] errorContentEvents = _logger.EventsById(ErrorResponseContentBlockEvent).ToArray();
-
-        Assert.AreEqual(2, errorContentEvents.Length);
-
-        Assert.AreEqual(LogLevel.Information, errorContentEvents[0].LogLevel);
-        Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[0].EventId.Name);
-        Assert.AreEqual("client-id", errorContentEvents[0].GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(0, errorContentEvents[0].GetValueFromArguments<int>("blockNumber"));
-        CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, errorContentEvents[0].GetValueFromArguments<byte[]>("content"));
-
-        Assert.AreEqual(LogLevel.Information, errorContentEvents[1].LogLevel);
-        Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[1].EventId.Name);
-        Assert.AreEqual("client-id", errorContentEvents[1].GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(1, errorContentEvents[1].GetValueFromArguments<int>("blockNumber"));
-        CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, errorContentEvents[1].GetValueFromArguments<byte[]>("content"));
-
-        CollectionAssert.IsEmpty(_logger.EventsById(ErrorResponseContentEvent));
-    }
-
-    [Test]
-    public async Task NonSeekableResponsesAreLoggedInTextBlocks()
-    {
-        await SendRequest(
-            isSeekable: false,
-            isError: false,
-            mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } })
-        );
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        LoggerEvent[] contentEvents = _logger.EventsById(ResponseContentTextBlockEvent).ToArray();
-
-        Assert.AreEqual(2, contentEvents.Length);
-
-        Assert.AreEqual(LogLevel.Debug, contentEvents[0].LogLevel);
-
-        Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventId.Name);
-        Assert.AreEqual("client-id", contentEvents[0].GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(0, contentEvents[0].GetValueFromArguments<int>("blockNumber"));
-        Assert.AreEqual("Hello ", contentEvents[0].GetValueFromArguments<string>("content"));
-
-        Assert.AreEqual(LogLevel.Debug, contentEvents[1].LogLevel);
-        Assert.AreEqual("ResponseContentTextBlock", contentEvents[1].EventId.Name);
-        Assert.AreEqual("client-id", contentEvents[1].GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(1, contentEvents[1].GetValueFromArguments<int>("blockNumber"));
-        Assert.AreEqual("world", contentEvents[1].GetValueFromArguments<string>("content"));
-
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
-    }
-
-    [Test]
-    public async Task NonSeekableResponsesErrorsAreLoggedInTextBlocks()
-    {
-        await SendRequest(
-            isSeekable: false,
-            isError: true,
-            mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } })
-        );
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        LoggerEvent[] errorContentEvents = _logger.EventsById(ErrorResponseContentTextBlockEvent).ToArray();
-
-        Assert.AreEqual(2, errorContentEvents.Length);
-
-        Assert.AreEqual(LogLevel.Information, errorContentEvents[0].LogLevel);
-        Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[0].EventId.Name);
-        Assert.AreEqual("client-id", errorContentEvents[0].GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(0, errorContentEvents[0].GetValueFromArguments<int>("blockNumber"));
-        Assert.AreEqual("Hello ", errorContentEvents[0].GetValueFromArguments<string>("content"));
-
-        Assert.AreEqual(LogLevel.Information, errorContentEvents[1].LogLevel);
-        Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[1].EventId.Name);
-        Assert.AreEqual("client-id", errorContentEvents[1].GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(1, errorContentEvents[1].GetValueFromArguments<int>("blockNumber"));
-        Assert.AreEqual("world", errorContentEvents[1].GetValueFromArguments<string>("content"));
-
-        CollectionAssert.IsEmpty(_logger.EventsById(ErrorResponseContentEvent));
-    }
-
-    [Test]
-    public async Task SeekableTextResponsesAreLoggedInText()
-    {
-        await SendRequest(
-            isSeekable: true,
-            isError: false,
-            mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } })
-        );
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        LoggerEvent contentEvent = _logger.SingleEventById(ResponseContentTextEvent);
-
-        Assert.AreEqual(LogLevel.Debug, contentEvent.LogLevel);
-        Assert.AreEqual("ResponseContentText", contentEvent.EventId.Name);
-        Assert.AreEqual("client-id", contentEvent.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual("Hello world", contentEvent.GetValueFromArguments<string>("content"));
-    }
-
-    [Test]
-    public async Task SeekableTextResponsesErrorsAreLoggedInText()
-    {
-        await SendRequest(
-            isSeekable: true,
-            isError: true,
-            mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } }),
-            maxLength: 5
-        );
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        LoggerEvent errorContentEvent = _logger.SingleEventById(ErrorResponseContentTextEvent);
-
-        Assert.AreEqual(LogLevel.Information, errorContentEvent.LogLevel);
-        Assert.AreEqual("ErrorResponseContentText", errorContentEvent.EventId.Name);
-        Assert.AreEqual("client-id", errorContentEvent.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual("Hello", errorContentEvent.GetValueFromArguments<string>("content"));
-    }
-
-    [Test]
-    public async Task SeekableTextResponsesAreLimitedInLength()
-    {
-        await SendRequest(
-            isSeekable: true,
-            isError: false,
-            mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } }),
-            maxLength: 5
-        );
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        LoggerEvent contentEvent = _logger.SingleEventById(ResponseContentTextEvent);
-
-        Assert.AreEqual(LogLevel.Debug, contentEvent.LogLevel);
-        Assert.AreEqual("ResponseContentText", contentEvent.EventId.Name);
-        Assert.AreEqual("client-id", contentEvent.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual("Hello", contentEvent.GetValueFromArguments<string>("content"));
-    }
-
-    [Test]
-    public async Task RequestContentLogsAreLimitedInLength()
-    {
-        var response = new MockPipelineResponse(500);
-
-        ClientPipelineOptions options = new()
-        {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            RetryPolicy = new ObservablePolicy("RetryPolicy"),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = 5,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
-                LoggerFactory = _factory
-            }
-        };
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Method = "GET";
-        message.Request.Uri = new Uri("http://example.com");
-        message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
-        message.Request.Headers.Add("Content-Type", "text/json");
-        message.Request.Headers.Add(CorrelationIdHeaderName, "client1");
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        LoggerEvent log = _logger.SingleEventById(RequestContentTextEvent);
-        Assert.AreEqual(LogLevel.Debug, log.LogLevel);
-        Assert.AreEqual("RequestContentText", log.EventId.Name);
-        Assert.AreEqual("client1", log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual("Hello", log.GetValueFromArguments<string>("content"));
-
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
-    }
-
-    [Test]
-    public async Task NonSeekableResponsesAreLimitedInLength()
-    {
-        await SendRequest(
-            isSeekable: false,
-            isError: false,
-            mockHeaders: new MockResponseHeaders(new Dictionary<string, string>() { { "Content-Type", "text/xml" } }),
-            maxLength: 5
-        );
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        LoggerEvent[] contentEvents = _logger.EventsById(ResponseContentTextBlockEvent).ToArray();
-
-        Assert.AreEqual(1, contentEvents.Length);
-
-        Assert.AreEqual(LogLevel.Debug, contentEvents[0].LogLevel);
-        Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventId.Name);
-        Assert.AreEqual("client-id", contentEvents[0].GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(0, contentEvents[0].GetValueFromArguments<int>("blockNumber"));
-        Assert.AreEqual("Hello", contentEvents[0].GetValueFromArguments<string>("content"));
-
-        CollectionAssert.IsEmpty(_logger.EventsById(ResponseContentEvent));
-    }
-
-    [Test]
-    public async Task HeadersAndQueryParametersAreSanitized()
-    {
-        string clientId = "client1";
-
-        var mockHeaders = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Improved value" }, { "Secret-Response-Header", "Very secret" } });
-        var response = new MockPipelineResponse(200, mockHeaders: mockHeaders);
-        response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
-
-        ClientPipelineOptions options = new()
-        {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions
-            {
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
-                LoggerFactory = _factory
-            }
-        };
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
-        options.LoggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Method = "GET";
-        message.Request.Uri = new Uri("https://contoso.a.io?api-version=5&secret=123");
-        message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
-        message.Request.Headers.Add("Content-Type", "text/json");
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
-        message.Request.Headers.Add("Date", "4/18/2024");
-        message.Request.Headers.Add("Custom-Header", "Value");
-        message.Request.Headers.Add("Secret-Custom-Header", "Value");
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        LoggerEvent log = _logger.SingleEventById(RequestEvent);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual("Request", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=REDACTED", log.GetValueFromArguments<string>("uri"));
-        Assert.AreEqual("GET", log.GetValueFromArguments<string>("method"));
-        StringAssert.Contains($"Date:4/18/2024{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-        StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-        StringAssert.Contains($"Secret-Custom-Header:REDACTED{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-
-        log = _logger.SingleEventById(ResponseEvent);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual("Response", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(log.GetValueFromArguments<int>("status"), 200);
-        StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-        StringAssert.Contains($"Secret-Response-Header:REDACTED{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-    }
-
-    [Test]
-    public async Task HeadersAndQueryParametersAreNotSanitizedWhenStars()
-    {
-        string clientId = "client1";
-        var mockHeaders = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Improved value" }, { "Secret-Response-Header", "Very secret" } });
-        var response = new MockPipelineResponse(200, mockHeaders: mockHeaders);
-        response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
-
-        ClientPipelineOptions options = new()
-        {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions
-            {
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
-                LoggerFactory = _factory
-            }
-        };
-        options.LoggingOptions.AllowedQueryParameters.Add("*");
-        options.LoggingOptions.AllowedHeaderNames.Add("*");
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
-
-        PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Method = "GET";
-        message.Request.Uri = new Uri("https://contoso.a.io?api-version=5&secret=123");
-        message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
-        message.Request.Headers.Add("Content-Type", "text/json");
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
-        message.Request.Headers.Add("Date", "4/18/2024");
-        message.Request.Headers.Add("Secret-Custom-Header", "Value");
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
-
-        LoggerEvent log = _logger.SingleEventById(RequestEvent);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual("Request", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=123", log.GetValueFromArguments<string>("uri"));
-        Assert.AreEqual("GET", log.GetValueFromArguments<string>("method"));
-        StringAssert.Contains($"Date:4/18/2024{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-        StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-        StringAssert.Contains($"Secret-Custom-Header:Value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-
-        log = _logger.SingleEventById(ResponseEvent);
-        Assert.AreEqual(LogLevel.Information, log.LogLevel);
-        Assert.AreEqual("Response", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
-        Assert.AreEqual(log.GetValueFromArguments<int>("status"), 200);
-        StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-        StringAssert.Contains($"Secret-Response-Header:Very secret{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-    }
-
-    private async Task<MockPipelineResponse> SendRequest(bool isSeekable, bool isError, MockResponseHeaders? mockHeaders = default, int maxLength = int.MaxValue)
-    {
-        var response = new MockPipelineResponse(isError ? 500 : 200, mockHeaders: mockHeaders);
         byte[] responseContent = Encoding.UTF8.GetBytes("Hello world");
         if (isSeekable)
         {
@@ -786,33 +489,18 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             response.ContentStream = new NonSeekableMemoryStream(responseContent);
         }
 
-        ClientPipelineOptions options = new()
+        LoggingOptions loggingOptions = new()
         {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            RetryPolicy = new ObservablePolicy("RetryPolicy"),
-            LoggingOptions = new LoggingOptions
-            {
-                IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = maxLength,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
-                LoggerFactory = _factory
-            }
+            IsLoggingContentEnabled = true,
+            LoggedContentSizeLimit = maxLength,
+            LoggerFactory = _factory
         };
-
-        ClientPipeline pipeline = ClientPipeline.Create(options);
-
-        PipelineMessage message = pipeline.CreateMessage();
-        message.Request.Method = "GET";
-        message.Request.Uri = new Uri("http://example.com");
-        message.Request.Headers.Add(CorrelationIdHeaderName, "client-id");
 
         // These tests are essentially testing whether the logging policy works
         // correctly when responses are buffered (memory stream) and unbuffered
         // (non-seekable). In order to validate the intent of the test, we set
         // message.BufferResponse accordingly here.
-        message.BufferResponse = isSeekable;
-
-        await pipeline.SendSyncOrAsync(message, IsAsync);
+        await CreatePipelineAndSendRequest(response, loggingOptions: loggingOptions, bufferResponse: isSeekable);
 
         var buffer = new byte[11];
 
@@ -828,7 +516,65 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             Assert.AreEqual(5, response.ContentStream.Read(buffer, 6, 5));
             Assert.AreEqual(0, response.ContentStream.Read(buffer, 0, 5));
         }
-
-        return response;
     }
+
+    private async Task CreatePipelineAndSendRequest(MockPipelineResponse response,
+                                                    string? requestContentString = default,
+                                                    byte[]? requestContentBytes = default,
+                                                    Dictionary<string, string>? requestHeaders = default,
+                                                    Uri? requestUri = default,
+                                                    LoggingOptions? loggingOptions = default,
+                                                    bool? bufferResponse = default)
+    {
+        loggingOptions ??= new LoggingOptions
+        {
+            LoggerFactory = _factory
+        };
+        loggingOptions.AllowedHeaderNames.Add("Custom-Header");
+        loggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", i => response),
+            LoggingOptions = loggingOptions,
+            RetryPolicy = new ObservablePolicy("RetryPolicy")
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+        Assert.AreEqual(LoggingPolicyCategoryName, _logger.Name);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = requestUri ?? new Uri("http://example.com");
+
+        if (requestHeaders != null)
+        {
+            foreach (KeyValuePair<string, string> header in requestHeaders)
+            {
+                message.Request.Headers.Add(header.Key, header.Value);
+            }
+        }
+
+        message.Request.Headers.Add("Custom-Header", "custom-header-value");
+        message.Request.Headers.Add("Date", "08/16/2024");
+
+        if (bufferResponse != null)
+        {
+            message.BufferResponse = bufferResponse.Value;
+        }
+
+        if (requestContentBytes != null)
+        {
+            message.Request.Content = BinaryContent.Create(new BinaryData(requestContentBytes));
+        }
+        else if (requestContentString != null)
+        {
+            message.Request.Headers.Add("Content-Type", "text/plain");
+            message.Request.Content = BinaryContent.Create(new BinaryData(requestContentString));
+        }
+
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+    }
+
+    #endregion
 }

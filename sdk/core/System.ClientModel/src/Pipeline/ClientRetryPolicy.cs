@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -121,10 +122,8 @@ public class ClientRetryPolicy : PipelinePolicy
                 message.RetryCount++;
                 OnTryComplete(message);
 
-                if (ClientModelEventSource.Log.IsEnabled())
+                if (ClientModelEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.None))
                 {
-                    // TODO add ILogger - I think we need to get the logging options here to be able to get
-                    // the ILogger instance
                     ClientModelEventSource.Log.RequestRetrying(message.LoggingCorrelationId ?? string.Empty, message.RetryCount, elapsed);
                 }
 

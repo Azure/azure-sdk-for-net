@@ -48,7 +48,6 @@ public class LoggingOptions
     private bool _isLoggingContentEnabled = DefaultIsLoggingContentEnabled;
     private IList<string> _allowedHeaderNames = new List<string>(s_defaultAllowedHeaderNames);
     private IList<string> _allowedQueryParameters = new List<string>(s_defaultAllowedQueryParameters);
-    private string? _correlationIdHeaderName;
     private ILoggerFactory _loggerFactory = NullLoggerFactory.Instance;
 
     /// <summary>
@@ -115,23 +114,6 @@ public class LoggingOptions
     public IList<string> AllowedQueryParameters
     {
         get => _allowedQueryParameters;
-    }
-
-    /// <summary>
-    /// Gets or sets the header name that contains the correlation identifier to
-    /// include in logging. If this value is not provided, then logs will include
-    /// a randomly generated correlation identifier.
-    /// </summary>
-    /// <value>Defaults to <c>null</c>.</value>
-    public string? CorrelationIdHeaderName
-    {
-        get => _correlationIdHeaderName;
-        set
-        {
-            AssertNotFrozen();
-
-            _correlationIdHeaderName = value;
-        }
     }
 
     /// <summary>
