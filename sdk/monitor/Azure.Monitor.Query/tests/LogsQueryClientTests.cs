@@ -357,5 +357,14 @@ namespace Azure.Monitor.Query.Tests
 
             Assert.AreEqual(new Uri(LogsQueryAudience.AzureGovernment.ToString()), client.Endpoint);
         }
+
+        [Test]
+        public void Constructor_WhenOptionsIsNull_EndpointIsNull()
+        {
+            var credential = new DefaultAzureCredential();
+            var client = new LogsQueryClient(credential);
+
+            Assert.AreEqual(new Uri(LogsQueryAudience.AzurePublicCloud.ToString()), client.Endpoint);
+        }
     }
 }

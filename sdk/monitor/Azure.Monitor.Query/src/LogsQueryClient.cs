@@ -76,18 +76,24 @@ namespace Azure.Monitor.Query
 
             Endpoint = endpoint;
             options ??= new LogsQueryClientOptions();
+
+            // Set authorization scope from Endpoint if Audience is not set.
+            string authorizationScope = "";
             if (string.IsNullOrEmpty(options.Audience?.ToString()))
             {
                 options.Audience = endpoint.AbsoluteUri;
+                // Endpoint.AbsoluteUri includes an extra / so only adding one here
+                authorizationScope = $"{options.Audience}/.default";
             }
             else if (endpoint.Host != new Uri(options.Audience.ToString()).Host)
             {
                 throw new InvalidOperationException("The endpoint URI and audience do not match. If setting the Audience which is regionally specific, please use the LogsQueryClient(TokenCredential, LogsQueryClientOptions) constructor.");
             }
+            else
+            {
+                authorizationScope = $"{options.Audience}//.default";
+            }
 
-            var authorizationScope = options.Audience.ToString().EndsWith("/")
-            ? $"{options.Audience}/.default"
-            : $"{options.Audience}//.default";
             var scopes = new List<string> { authorizationScope };
 
             endpoint = new Uri(endpoint, options.GetVersionString());
