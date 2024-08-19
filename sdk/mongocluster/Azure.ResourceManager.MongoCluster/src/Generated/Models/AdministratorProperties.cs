@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Represents a mongo cluster replica. </summary>
-    public partial class Replica : ResourceData
+    /// <summary> The local administrator login properties. </summary>
+    public partial class AdministratorProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,25 +45,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Replica"/>. </summary>
-        internal Replica()
+        /// <summary> Initializes a new instance of <see cref="AdministratorProperties"/>. </summary>
+        public AdministratorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Replica"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="AdministratorProperties"/>. </summary>
+        /// <param name="userName"> The administrator user name. </param>
+        /// <param name="password"> The administrator password. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Replica(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MongoClusterProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AdministratorProperties(string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            UserName = userName;
+            Password = password;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public MongoClusterProperties Properties { get; }
+        /// <summary> The administrator user name. </summary>
+        public string UserName { get; set; }
+        /// <summary> The administrator password. </summary>
+        public string Password { get; set; }
     }
 }

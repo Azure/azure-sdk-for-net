@@ -26,15 +26,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AdministratorLogin))
+            if (Optional.IsDefined(Administrator))
             {
-                writer.WritePropertyName("administratorLogin"u8);
-                writer.WriteStringValue(AdministratorLogin);
-            }
-            if (Optional.IsDefined(AdministratorLoginPassword))
-            {
-                writer.WritePropertyName("administratorLoginPassword"u8);
-                writer.WriteStringValue(AdministratorLoginPassword);
+                writer.WritePropertyName("administrator"u8);
+                writer.WriteObjectValue(Administrator, options);
             }
             if (Optional.IsDefined(ServerVersion))
             {
@@ -46,15 +41,30 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(NodeGroupSpecs))
+            if (Optional.IsDefined(HighAvailability))
             {
-                writer.WritePropertyName("nodeGroupSpecs"u8);
-                writer.WriteStartArray();
-                foreach (var item in NodeGroupSpecs)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("highAvailability"u8);
+                writer.WriteObjectValue(HighAvailability, options);
+            }
+            if (Optional.IsDefined(Storage))
+            {
+                writer.WritePropertyName("storage"u8);
+                writer.WriteObjectValue(Storage, options);
+            }
+            if (Optional.IsDefined(Sharding))
+            {
+                writer.WritePropertyName("sharding"u8);
+                writer.WriteObjectValue(Sharding, options);
+            }
+            if (Optional.IsDefined(Compute))
+            {
+                writer.WritePropertyName("compute"u8);
+                writer.WriteObjectValue(Compute, options);
+            }
+            if (Optional.IsDefined(Backup))
+            {
+                writer.WritePropertyName("backup"u8);
+                writer.WriteObjectValue(Backup, options);
             }
             if (Optional.IsCollectionDefined(PreviewFeatures))
             {
@@ -104,24 +114,26 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 return null;
             }
-            string administratorLogin = default;
-            string administratorLoginPassword = default;
+            AdministratorProperties administrator = default;
             string serverVersion = default;
             PublicNetworkAccess? publicNetworkAccess = default;
-            IList<NodeGroupSpec> nodeGroupSpecs = default;
-            IList<PreviewFeature> previewFeatures = default;
+            HighAvailabilityProperties highAvailability = default;
+            StorageProperties storage = default;
+            ShardingProperties sharding = default;
+            ComputeProperties compute = default;
+            BackupProperties backup = default;
+            IList<MongoClusterPreviewFeature> previewFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("administratorLogin"u8))
+                if (property.NameEquals("administrator"u8))
                 {
-                    administratorLogin = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("administratorLoginPassword"u8))
-                {
-                    administratorLoginPassword = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    administrator = AdministratorProperties.DeserializeAdministratorProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serverVersion"u8))
@@ -138,18 +150,49 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     publicNetworkAccess = new PublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nodeGroupSpecs"u8))
+                if (property.NameEquals("highAvailability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<NodeGroupSpec> array = new List<NodeGroupSpec>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    highAvailability = HighAvailabilityProperties.DeserializeHighAvailabilityProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("storage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(NodeGroupSpec.DeserializeNodeGroupSpec(item, options));
+                        continue;
                     }
-                    nodeGroupSpecs = array;
+                    storage = StorageProperties.DeserializeStorageProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("sharding"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sharding = ShardingProperties.DeserializeShardingProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("compute"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    compute = ComputeProperties.DeserializeComputeProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("backup"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backup = BackupProperties.DeserializeBackupProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previewFeatures"u8))
@@ -158,10 +201,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    List<PreviewFeature> array = new List<PreviewFeature>();
+                    List<MongoClusterPreviewFeature> array = new List<MongoClusterPreviewFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new PreviewFeature(item.GetString()));
+                        array.Add(new MongoClusterPreviewFeature(item.GetString()));
                     }
                     previewFeatures = array;
                     continue;
@@ -173,12 +216,15 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new MongoClusterUpdateProperties(
-                administratorLogin,
-                administratorLoginPassword,
+                administrator,
                 serverVersion,
                 publicNetworkAccess,
-                nodeGroupSpecs ?? new ChangeTrackingList<NodeGroupSpec>(),
-                previewFeatures ?? new ChangeTrackingList<PreviewFeature>(),
+                highAvailability,
+                storage,
+                sharding,
+                compute,
+                backup,
+                previewFeatures ?? new ChangeTrackingList<MongoClusterPreviewFeature>(),
                 serializedAdditionalRawData);
         }
 

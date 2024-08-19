@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 return null;
             }
-            PromoteOption promoteOption = default;
-            PromoteMode? mode = default;
+            MongoClusterPromoteOption promoteOption = default;
+            MongoClusterPromoteMode? mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("promoteOption"u8))
                 {
-                    promoteOption = new PromoteOption(property.Value.GetString());
+                    promoteOption = new MongoClusterPromoteOption(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    mode = new PromoteMode(property.Value.GetString());
+                    mode = new MongoClusterPromoteMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

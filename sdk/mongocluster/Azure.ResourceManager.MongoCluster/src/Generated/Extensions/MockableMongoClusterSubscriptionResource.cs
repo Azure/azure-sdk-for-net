@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<MogoClusterNameAvailabilityResult>> CheckMongoClusterNameAvailabilityAsync(AzureLocation location, MongoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MongoClusterNameAvailabilityResult>> CheckMongoClusterNameAvailabilityAsync(AzureLocation location, MongoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
+        /// <description>2024-07-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<MogoClusterNameAvailabilityResult> CheckMongoClusterNameAvailability(AzureLocation location, MongoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<MongoClusterNameAvailabilityResult> CheckMongoClusterNameAvailability(AzureLocation location, MongoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

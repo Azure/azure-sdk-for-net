@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Replica properties of the mongo cluster. </summary>
-    public partial class ReplicationProperties
+    /// <summary> The sharding properties of the cluster. This includes the shard count and scaling options for the cluster. </summary>
+    internal partial class ShardingProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,29 +45,21 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReplicationProperties"/>. </summary>
-        internal ReplicationProperties()
+        /// <summary> Initializes a new instance of <see cref="ShardingProperties"/>. </summary>
+        public ShardingProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReplicationProperties"/>. </summary>
-        /// <param name="sourceResourceId"> The resource id the source cluster for the replica cluster. </param>
-        /// <param name="role"> The replication role of the cluster. </param>
-        /// <param name="replicationState"> The replication link state of the replica cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="ShardingProperties"/>. </summary>
+        /// <param name="shardCount"> Number of shards to provision on the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationProperties(ResourceIdentifier sourceResourceId, ReplicationRole? role, ReplicationState? replicationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ShardingProperties(int? shardCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SourceResourceId = sourceResourceId;
-            Role = role;
-            ReplicationState = replicationState;
+            ShardCount = shardCount;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource id the source cluster for the replica cluster. </summary>
-        public ResourceIdentifier SourceResourceId { get; }
-        /// <summary> The replication role of the cluster. </summary>
-        public ReplicationRole? Role { get; }
-        /// <summary> The replication link state of the replica cluster. </summary>
-        public ReplicationState? ReplicationState { get; }
+        /// <summary> Number of shards to provision on the cluster. </summary>
+        public int? ShardCount { get; set; }
     }
 }

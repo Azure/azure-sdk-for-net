@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The connection strings for the given mongo cluster. </summary>
-    public partial class ListConnectionStringsResult
+    /// <summary> The compute properties of the cluster. This includes the virtual-cores/memory and scaling options applied to servers in the cluster. </summary>
+    internal partial class ComputeProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,21 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
-        internal ListConnectionStringsResult()
+        /// <summary> Initializes a new instance of <see cref="ComputeProperties"/>. </summary>
+        public ComputeProperties()
         {
-            ConnectionStrings = new ChangeTrackingList<MongoClusterConnectionString>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
-        /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="ComputeProperties"/>. </summary>
+        /// <param name="tier"> The compute tier to assign to the cluster, where each tier maps to a virtual-core and memory size. Example values: 'M30', 'M40'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListConnectionStringsResult(IReadOnlyList<MongoClusterConnectionString> connectionStrings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeProperties(string tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ConnectionStrings = connectionStrings;
+            Tier = tier;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array that contains the connection strings for a mongo cluster. </summary>
-        public IReadOnlyList<MongoClusterConnectionString> ConnectionStrings { get; }
+        /// <summary> The compute tier to assign to the cluster, where each tier maps to a virtual-core and memory size. Example values: 'M30', 'M40'. </summary>
+        public string Tier { get; set; }
     }
 }

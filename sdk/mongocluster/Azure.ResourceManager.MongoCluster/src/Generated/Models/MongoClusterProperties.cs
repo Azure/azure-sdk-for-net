@@ -48,43 +48,46 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> Initializes a new instance of <see cref="MongoClusterProperties"/>. </summary>
         public MongoClusterProperties()
         {
-            NodeGroupSpecs = new ChangeTrackingList<NodeGroupSpec>();
             PrivateEndpointConnections = new ChangeTrackingList<MongoClusterPrivateEndpointConnection>();
-            PreviewFeatures = new ChangeTrackingList<PreviewFeature>();
+            PreviewFeatures = new ChangeTrackingList<MongoClusterPreviewFeature>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterProperties"/>. </summary>
         /// <param name="createMode"> The mode to create a mongo cluster. </param>
         /// <param name="restoreParameters"> The parameters to create a point-in-time restore mongo cluster. </param>
         /// <param name="replicaParameters"> The parameters to create a replica mongo cluster. </param>
-        /// <param name="administratorLogin"> The administrator's login for the mongo cluster. </param>
-        /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
+        /// <param name="administrator"> The local administrator properties for the mongo cluster. </param>
         /// <param name="serverVersion"> The Mongo DB server version. Defaults to the latest available version if not specified. </param>
         /// <param name="connectionString"> The default mongo connection string for the cluster. </param>
-        /// <param name="earliestRestoreTime"> Earliest restore timestamp in UTC ISO8601 format. </param>
         /// <param name="provisioningState"> The provisioning state of the mongo cluster. </param>
         /// <param name="clusterStatus"> The status of the mongo cluster. </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this mongo cluster. </param>
-        /// <param name="nodeGroupSpecs"> The list of node group specs in the cluster. </param>
+        /// <param name="highAvailability"> The high availability properties of the mongo cluster. </param>
+        /// <param name="storage"> The storage properties of the mongo cluster. </param>
+        /// <param name="sharding"> The sharding properties of the mongo cluster. </param>
+        /// <param name="compute"> The compute properties of the mongo cluster. </param>
+        /// <param name="backup"> The backup properties of the mongo cluster. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="previewFeatures"> List of private endpoint connections. </param>
         /// <param name="replica"> The replication properties for the mongo cluster. </param>
         /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterProperties(CreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, string administratorLogin, string administratorLoginPassword, string serverVersion, string connectionString, string earliestRestoreTime, ProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, PublicNetworkAccess? publicNetworkAccess, IList<NodeGroupSpec> nodeGroupSpecs, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<PreviewFeature> previewFeatures, ReplicationProperties replica, string infrastructureVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterProperties(MongoClusterCreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, AdministratorProperties administrator, string serverVersion, string connectionString, MongoClusterProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, PublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, StorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<MongoClusterPreviewFeature> previewFeatures, MongoClusterReplicationProperties replica, string infrastructureVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateMode = createMode;
             RestoreParameters = restoreParameters;
             ReplicaParameters = replicaParameters;
-            AdministratorLogin = administratorLogin;
-            AdministratorLoginPassword = administratorLoginPassword;
+            Administrator = administrator;
             ServerVersion = serverVersion;
             ConnectionString = connectionString;
-            EarliestRestoreTime = earliestRestoreTime;
             ProvisioningState = provisioningState;
             ClusterStatus = clusterStatus;
             PublicNetworkAccess = publicNetworkAccess;
-            NodeGroupSpecs = nodeGroupSpecs;
+            HighAvailability = highAvailability;
+            Storage = storage;
+            Sharding = sharding;
+            Compute = compute;
+            Backup = backup;
             PrivateEndpointConnections = privateEndpointConnections;
             PreviewFeatures = previewFeatures;
             Replica = replica;
@@ -93,35 +96,93 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> The mode to create a mongo cluster. </summary>
-        public CreateMode? CreateMode { get; set; }
+        public MongoClusterCreateMode? CreateMode { get; set; }
         /// <summary> The parameters to create a point-in-time restore mongo cluster. </summary>
         public MongoClusterRestoreContent RestoreParameters { get; set; }
         /// <summary> The parameters to create a replica mongo cluster. </summary>
         public MongoClusterReplicaContent ReplicaParameters { get; set; }
-        /// <summary> The administrator's login for the mongo cluster. </summary>
-        public string AdministratorLogin { get; set; }
-        /// <summary> The password of the administrator login. </summary>
-        public string AdministratorLoginPassword { get; set; }
+        /// <summary> The local administrator properties for the mongo cluster. </summary>
+        public AdministratorProperties Administrator { get; set; }
         /// <summary> The Mongo DB server version. Defaults to the latest available version if not specified. </summary>
         public string ServerVersion { get; set; }
         /// <summary> The default mongo connection string for the cluster. </summary>
         public string ConnectionString { get; }
-        /// <summary> Earliest restore timestamp in UTC ISO8601 format. </summary>
-        public string EarliestRestoreTime { get; }
         /// <summary> The provisioning state of the mongo cluster. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MongoClusterProvisioningState? ProvisioningState { get; }
         /// <summary> The status of the mongo cluster. </summary>
         public MongoClusterStatus? ClusterStatus { get; }
         /// <summary> Whether or not public endpoint access is allowed for this mongo cluster. </summary>
         public PublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> The list of node group specs in the cluster. </summary>
-        public IList<NodeGroupSpec> NodeGroupSpecs { get; }
+        /// <summary> The high availability properties of the mongo cluster. </summary>
+        internal HighAvailabilityProperties HighAvailability { get; set; }
+        /// <summary> The target high availability mode requested for the cluster. </summary>
+        public HighAvailabilityMode? HighAvailabilityTargetMode
+        {
+            get => HighAvailability is null ? default : HighAvailability.TargetMode;
+            set
+            {
+                if (HighAvailability is null)
+                    HighAvailability = new HighAvailabilityProperties();
+                HighAvailability.TargetMode = value;
+            }
+        }
+
+        /// <summary> The storage properties of the mongo cluster. </summary>
+        internal StorageProperties Storage { get; set; }
+        /// <summary> The size of the data disk assigned to each server. </summary>
+        public long? StorageSizeGb
+        {
+            get => Storage is null ? default : Storage.SizeGb;
+            set
+            {
+                if (Storage is null)
+                    Storage = new StorageProperties();
+                Storage.SizeGb = value;
+            }
+        }
+
+        /// <summary> The sharding properties of the mongo cluster. </summary>
+        internal ShardingProperties Sharding { get; set; }
+        /// <summary> Number of shards to provision on the cluster. </summary>
+        public int? ShardingShardCount
+        {
+            get => Sharding is null ? default : Sharding.ShardCount;
+            set
+            {
+                if (Sharding is null)
+                    Sharding = new ShardingProperties();
+                Sharding.ShardCount = value;
+            }
+        }
+
+        /// <summary> The compute properties of the mongo cluster. </summary>
+        internal ComputeProperties Compute { get; set; }
+        /// <summary> The compute tier to assign to the cluster, where each tier maps to a virtual-core and memory size. Example values: 'M30', 'M40'. </summary>
+        public string ComputeTier
+        {
+            get => Compute is null ? default : Compute.Tier;
+            set
+            {
+                if (Compute is null)
+                    Compute = new ComputeProperties();
+                Compute.Tier = value;
+            }
+        }
+
+        /// <summary> The backup properties of the mongo cluster. </summary>
+        internal BackupProperties Backup { get; set; }
+        /// <summary> Earliest restore timestamp in UTC ISO8601 format. </summary>
+        public string BackupEarliestRestoreTime
+        {
+            get => Backup is null ? default : Backup.EarliestRestoreTime;
+        }
+
         /// <summary> List of private endpoint connections. </summary>
         public IReadOnlyList<MongoClusterPrivateEndpointConnection> PrivateEndpointConnections { get; }
         /// <summary> List of private endpoint connections. </summary>
-        public IList<PreviewFeature> PreviewFeatures { get; }
+        public IList<MongoClusterPreviewFeature> PreviewFeatures { get; }
         /// <summary> The replication properties for the mongo cluster. </summary>
-        public ReplicationProperties Replica { get; }
+        public MongoClusterReplicationProperties Replica { get; }
         /// <summary> The infrastructure version the cluster is provisioned on. </summary>
         public string InfrastructureVersion { get; }
     }

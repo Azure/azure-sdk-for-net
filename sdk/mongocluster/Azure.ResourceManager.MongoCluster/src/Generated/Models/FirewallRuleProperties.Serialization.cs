@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
+            MongoClusterProvisioningState? provisioningState = default;
             string startIPAddress = default;
             string endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new MongoClusterProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startIpAddress"u8))

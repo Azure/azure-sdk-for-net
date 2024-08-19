@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The connection strings for the given mongo cluster. </summary>
-    public partial class ListConnectionStringsResult
+    /// <summary> Replica properties of the mongo cluster. </summary>
+    public partial class MongoClusterReplicationProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +46,29 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
-        internal ListConnectionStringsResult()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterReplicationProperties"/>. </summary>
+        internal MongoClusterReplicationProperties()
         {
-            ConnectionStrings = new ChangeTrackingList<MongoClusterConnectionString>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
-        /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterReplicationProperties"/>. </summary>
+        /// <param name="sourceResourceId"> The resource id the source cluster for the replica cluster. </param>
+        /// <param name="role"> The replication role of the cluster. </param>
+        /// <param name="replicationState"> The replication link state of the replica cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListConnectionStringsResult(IReadOnlyList<MongoClusterConnectionString> connectionStrings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterReplicationProperties(ResourceIdentifier sourceResourceId, MongoClusterReplicationRole? role, MongoClusterReplicationState? replicationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ConnectionStrings = connectionStrings;
+            SourceResourceId = sourceResourceId;
+            Role = role;
+            ReplicationState = replicationState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array that contains the connection strings for a mongo cluster. </summary>
-        public IReadOnlyList<MongoClusterConnectionString> ConnectionStrings { get; }
+        /// <summary> The resource id the source cluster for the replica cluster. </summary>
+        public ResourceIdentifier SourceResourceId { get; }
+        /// <summary> The replication role of the cluster. </summary>
+        public MongoClusterReplicationRole? Role { get; }
+        /// <summary> The replication link state of the replica cluster. </summary>
+        public MongoClusterReplicationState? ReplicationState { get; }
     }
 }

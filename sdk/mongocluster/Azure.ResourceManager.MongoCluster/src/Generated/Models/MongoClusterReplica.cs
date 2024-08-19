@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The check availability result. </summary>
-    public partial class MogoClusterNameAvailabilityResult
+    /// <summary> Represents a mongo cluster replica. </summary>
+    public partial class MongoClusterReplica : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +47,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MogoClusterNameAvailabilityResult"/>. </summary>
-        internal MogoClusterNameAvailabilityResult()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterReplica"/>. </summary>
+        internal MongoClusterReplica()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MogoClusterNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
-        /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is not available. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterReplica"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MogoClusterNameAvailabilityResult(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterReplica(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MongoClusterProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            NameAvailable = nameAvailable;
-            Reason = reason;
-            Message = message;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Indicates if the resource name is available. </summary>
-        public bool? NameAvailable { get; }
-        /// <summary> The reason why the given name is not available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; }
-        /// <summary> Detailed reason why the given name is not available. </summary>
-        public string Message { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public MongoClusterProperties Properties { get; }
     }
 }

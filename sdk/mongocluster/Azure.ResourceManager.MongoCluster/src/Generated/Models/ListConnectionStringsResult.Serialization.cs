@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 return null;
             }
-            IReadOnlyList<ConnectionString> connectionStrings = default;
+            IReadOnlyList<MongoClusterConnectionString> connectionStrings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    List<ConnectionString> array = new List<ConnectionString>();
+                    List<MongoClusterConnectionString> array = new List<MongoClusterConnectionString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionString.DeserializeConnectionString(item, options));
+                        array.Add(MongoClusterConnectionString.DeserializeMongoClusterConnectionString(item, options));
                     }
                     connectionStrings = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ListConnectionStringsResult(connectionStrings ?? new ChangeTrackingList<ConnectionString>(), serializedAdditionalRawData);
+            return new ListConnectionStringsResult(connectionStrings ?? new ChangeTrackingList<MongoClusterConnectionString>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ListConnectionStringsResult>.Write(ModelReaderWriterOptions options)

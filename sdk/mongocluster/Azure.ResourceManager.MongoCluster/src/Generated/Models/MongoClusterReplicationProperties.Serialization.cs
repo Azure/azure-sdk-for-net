@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    public partial class ReplicationProperties : IUtf8JsonSerializable, IJsonModel<ReplicationProperties>
+    public partial class MongoClusterReplicationProperties : IUtf8JsonSerializable, IJsonModel<MongoClusterReplicationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterReplicationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ReplicationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoClusterReplicationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterReplicationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.MongoCluster.Models
             writer.WriteEndObject();
         }
 
-        ReplicationProperties IJsonModel<ReplicationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterReplicationProperties IJsonModel<MongoClusterReplicationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterReplicationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReplicationProperties(document.RootElement, options);
+            return DeserializeMongoClusterReplicationProperties(document.RootElement, options);
         }
 
-        internal static ReplicationProperties DeserializeReplicationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoClusterReplicationProperties DeserializeMongoClusterReplicationProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 return null;
             }
             ResourceIdentifier sourceResourceId = default;
-            ReplicationRole? role = default;
-            ReplicationState? replicationState = default;
+            MongoClusterReplicationRole? role = default;
+            MongoClusterReplicationState? replicationState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    role = new ReplicationRole(property.Value.GetString());
+                    role = new MongoClusterReplicationRole(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("replicationState"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    replicationState = new ReplicationState(property.Value.GetString());
+                    replicationState = new MongoClusterReplicationState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,38 +119,38 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ReplicationProperties(sourceResourceId, role, replicationState, serializedAdditionalRawData);
+            return new MongoClusterReplicationProperties(sourceResourceId, role, replicationState, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ReplicationProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoClusterReplicationProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterReplicationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ReplicationProperties IPersistableModel<ReplicationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoClusterReplicationProperties IPersistableModel<MongoClusterReplicationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeReplicationProperties(document.RootElement, options);
+                        return DeserializeMongoClusterReplicationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterReplicationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ReplicationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoClusterReplicationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    public partial class MogoClusterNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<MogoClusterNameAvailabilityResult>
+    public partial class MongoClusterNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<MongoClusterNameAvailabilityResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MogoClusterNameAvailabilityResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterNameAvailabilityResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MogoClusterNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoClusterNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MogoClusterNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MogoClusterNameAvailabilityResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterNameAvailabilityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.MongoCluster.Models
             writer.WriteEndObject();
         }
 
-        MogoClusterNameAvailabilityResult IJsonModel<MogoClusterNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterNameAvailabilityResult IJsonModel<MongoClusterNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MogoClusterNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MogoClusterNameAvailabilityResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterNameAvailabilityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMogoClusterNameAvailabilityResult(document.RootElement, options);
+            return DeserializeMongoClusterNameAvailabilityResult(document.RootElement, options);
         }
 
-        internal static MogoClusterNameAvailabilityResult DeserializeMogoClusterNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoClusterNameAvailabilityResult DeserializeMongoClusterNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -115,38 +115,38 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MogoClusterNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
+            return new MongoClusterNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<MogoClusterNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoClusterNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MogoClusterNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MogoClusterNameAvailabilityResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterNameAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MogoClusterNameAvailabilityResult IPersistableModel<MogoClusterNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoClusterNameAvailabilityResult IPersistableModel<MongoClusterNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MogoClusterNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMogoClusterNameAvailabilityResult(document.RootElement, options);
+                        return DeserializeMongoClusterNameAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MogoClusterNameAvailabilityResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterNameAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MogoClusterNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoClusterNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

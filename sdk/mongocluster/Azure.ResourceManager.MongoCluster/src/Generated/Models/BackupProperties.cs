@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The connection strings for the given mongo cluster. </summary>
-    public partial class ListConnectionStringsResult
+    /// <summary> The backup properties of the cluster. This includes the earliest restore time and retention settings. </summary>
+    internal partial class BackupProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,21 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
-        internal ListConnectionStringsResult()
+        /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
+        public BackupProperties()
         {
-            ConnectionStrings = new ChangeTrackingList<MongoClusterConnectionString>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
-        /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="BackupProperties"/>. </summary>
+        /// <param name="earliestRestoreTime"> Earliest restore timestamp in UTC ISO8601 format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListConnectionStringsResult(IReadOnlyList<MongoClusterConnectionString> connectionStrings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackupProperties(string earliestRestoreTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ConnectionStrings = connectionStrings;
+            EarliestRestoreTime = earliestRestoreTime;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array that contains the connection strings for a mongo cluster. </summary>
-        public IReadOnlyList<MongoClusterConnectionString> ConnectionStrings { get; }
+        /// <summary> Earliest restore timestamp in UTC ISO8601 format. </summary>
+        public string EarliestRestoreTime { get; }
     }
 }

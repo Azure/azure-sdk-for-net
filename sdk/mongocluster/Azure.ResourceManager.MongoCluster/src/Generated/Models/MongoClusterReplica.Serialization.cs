@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    public partial class Replica : IUtf8JsonSerializable, IJsonModel<Replica>
+    public partial class MongoClusterReplica : IUtf8JsonSerializable, IJsonModel<MongoClusterReplica>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Replica>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterReplica>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Replica>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoClusterReplica>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Replica>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplica>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Replica)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterReplica)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.MongoCluster.Models
             writer.WriteEndObject();
         }
 
-        Replica IJsonModel<Replica>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterReplica IJsonModel<MongoClusterReplica>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Replica>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplica>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Replica)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterReplica)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReplica(document.RootElement, options);
+            return DeserializeMongoClusterReplica(document.RootElement, options);
         }
 
-        internal static Replica DeserializeReplica(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoClusterReplica DeserializeMongoClusterReplica(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Replica(
+            return new MongoClusterReplica(
                 id,
                 name,
                 type,
@@ -147,35 +147,35 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Replica>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoClusterReplica>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Replica>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplica>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Replica)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterReplica)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Replica IPersistableModel<Replica>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoClusterReplica IPersistableModel<MongoClusterReplica>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Replica>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterReplica>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeReplica(document.RootElement, options);
+                        return DeserializeMongoClusterReplica(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Replica)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterReplica)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Replica>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoClusterReplica>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

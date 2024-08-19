@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MongoCluster.Models
 {
     /// <summary> Connection string for the mongo cluster. </summary>
-    public partial class ConnectionString
+    public partial class MongoClusterConnectionString
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,21 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionString"/>. </summary>
-        internal ConnectionString()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterConnectionString"/>. </summary>
+        internal MongoClusterConnectionString()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConnectionString"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterConnectionString"/>. </summary>
         /// <param name="uri"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>
+        /// <param name="name"> Name of the connection string. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectionString(string uri, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterConnectionString(string uri, string description, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             Description = description;
+            Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public string Uri { get; }
         /// <summary> Description of the connection string. </summary>
         public string Description { get; }
+        /// <summary> Name of the connection string. </summary>
+        public string Name { get; }
     }
 }

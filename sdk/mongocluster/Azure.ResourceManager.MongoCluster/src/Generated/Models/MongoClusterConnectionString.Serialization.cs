@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    public partial class ConnectionString : IUtf8JsonSerializable, IJsonModel<ConnectionString>
+    public partial class MongoClusterConnectionString : IUtf8JsonSerializable, IJsonModel<MongoClusterConnectionString>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionString>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterConnectionString>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConnectionString>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoClusterConnectionString>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionString>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterConnectionString>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionString)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterConnectionString)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,19 +59,19 @@ namespace Azure.ResourceManager.MongoCluster.Models
             writer.WriteEndObject();
         }
 
-        ConnectionString IJsonModel<ConnectionString>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterConnectionString IJsonModel<MongoClusterConnectionString>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionString>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterConnectionString>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionString)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterConnectionString)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectionString(document.RootElement, options);
+            return DeserializeMongoClusterConnectionString(document.RootElement, options);
         }
 
-        internal static ConnectionString DeserializeConnectionString(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoClusterConnectionString DeserializeMongoClusterConnectionString(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             }
             string connectionString = default;
             string description = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,44 +96,49 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectionString(connectionString, description, serializedAdditionalRawData);
+            return new MongoClusterConnectionString(connectionString, description, name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConnectionString>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoClusterConnectionString>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionString>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterConnectionString>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionString)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterConnectionString)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectionString IPersistableModel<ConnectionString>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoClusterConnectionString IPersistableModel<MongoClusterConnectionString>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionString>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterConnectionString>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConnectionString(document.RootElement, options);
+                        return DeserializeMongoClusterConnectionString(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionString)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterConnectionString)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConnectionString>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoClusterConnectionString>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

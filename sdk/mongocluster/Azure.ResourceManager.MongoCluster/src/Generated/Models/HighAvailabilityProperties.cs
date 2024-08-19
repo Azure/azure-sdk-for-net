@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The connection strings for the given mongo cluster. </summary>
-    public partial class ListConnectionStringsResult
+    /// <summary> The high availability properties of the cluster. </summary>
+    internal partial class HighAvailabilityProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,21 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
-        internal ListConnectionStringsResult()
+        /// <summary> Initializes a new instance of <see cref="HighAvailabilityProperties"/>. </summary>
+        public HighAvailabilityProperties()
         {
-            ConnectionStrings = new ChangeTrackingList<MongoClusterConnectionString>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
-        /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="HighAvailabilityProperties"/>. </summary>
+        /// <param name="targetMode"> The target high availability mode requested for the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListConnectionStringsResult(IReadOnlyList<MongoClusterConnectionString> connectionStrings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HighAvailabilityProperties(HighAvailabilityMode? targetMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ConnectionStrings = connectionStrings;
+            TargetMode = targetMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array that contains the connection strings for a mongo cluster. </summary>
-        public IReadOnlyList<MongoClusterConnectionString> ConnectionStrings { get; }
+        /// <summary> The target high availability mode requested for the cluster. </summary>
+        public HighAvailabilityMode? TargetMode { get; set; }
     }
 }

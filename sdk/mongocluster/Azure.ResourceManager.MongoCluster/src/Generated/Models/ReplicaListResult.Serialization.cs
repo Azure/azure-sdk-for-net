@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 return null;
             }
-            IReadOnlyList<Replica> value = default;
+            IReadOnlyList<MongoClusterReplica> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<Replica> array = new List<Replica>();
+                    List<MongoClusterReplica> array = new List<MongoClusterReplica>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Replica.DeserializeReplica(item, options));
+                        array.Add(MongoClusterReplica.DeserializeMongoClusterReplica(item, options));
                     }
                     value = array;
                     continue;

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The connection strings for the given mongo cluster. </summary>
-    public partial class ListConnectionStringsResult
+    /// <summary> The check availability result. </summary>
+    public partial class MongoClusterNameAvailabilityResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,29 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
-        internal ListConnectionStringsResult()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterNameAvailabilityResult"/>. </summary>
+        internal MongoClusterNameAvailabilityResult()
         {
-            ConnectionStrings = new ChangeTrackingList<MongoClusterConnectionString>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListConnectionStringsResult"/>. </summary>
-        /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterNameAvailabilityResult"/>. </summary>
+        /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
+        /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListConnectionStringsResult(IReadOnlyList<MongoClusterConnectionString> connectionStrings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterNameAvailabilityResult(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ConnectionStrings = connectionStrings;
+            NameAvailable = nameAvailable;
+            Reason = reason;
+            Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array that contains the connection strings for a mongo cluster. </summary>
-        public IReadOnlyList<MongoClusterConnectionString> ConnectionStrings { get; }
+        /// <summary> Indicates if the resource name is available. </summary>
+        public bool? NameAvailable { get; }
+        /// <summary> The reason why the given name is not available. </summary>
+        public CheckNameAvailabilityReason? Reason { get; }
+        /// <summary> Detailed reason why the given name is not available. </summary>
+        public string Message { get; }
     }
 }

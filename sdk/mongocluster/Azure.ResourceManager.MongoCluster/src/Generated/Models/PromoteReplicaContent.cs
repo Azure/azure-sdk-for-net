@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Initializes a new instance of <see cref="PromoteReplicaContent"/>. </summary>
         /// <param name="promoteOption"> The promote option to apply to the operation. </param>
-        public PromoteReplicaContent(PromoteOption promoteOption)
+        public PromoteReplicaContent(MongoClusterPromoteOption promoteOption)
         {
             PromoteOption = promoteOption;
         }
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="promoteOption"> The promote option to apply to the operation. </param>
         /// <param name="mode"> The mode to apply to the promote operation. Value is optional and default value is 'Switchover'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PromoteReplicaContent(PromoteOption promoteOption, PromoteMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PromoteReplicaContent(MongoClusterPromoteOption promoteOption, MongoClusterPromoteMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PromoteOption = promoteOption;
             Mode = mode;
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> The promote option to apply to the operation. </summary>
-        public PromoteOption PromoteOption { get; }
+        public MongoClusterPromoteOption PromoteOption { get; }
         /// <summary> The mode to apply to the promote operation. Value is optional and default value is 'Switchover'. </summary>
-        public PromoteMode? Mode { get; set; }
+        public MongoClusterPromoteMode? Mode { get; set; }
     }
 }
