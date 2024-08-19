@@ -59,10 +59,11 @@
   },
     "variables": {
         "textAnalyticsName":  "[format('textanalytics-{0}', parameters('baseName'))]",
-        "textAnalyticsResourceId": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', parameters('baseName'), '/providers/Microsoft.CognitiveServices/accounts/', variables('textAnalyticsName'))]",        
+        "resourceGroupName":"[concat('rg-',parameters('endpointPrefix'),'-',parameters('baseName'))]",
+        "textAnalyticsResourceId": "[concat('/subscriptions/', parameters('subscriptionId'), '/resourceGroups/', variables('resourceGroupName') , '/providers/Microsoft.CognitiveServices/accounts/', variables('textAnalyticsName'))]",        
         "cognitiveApiVersion": "2022-03-01",
         "roleDefinitionId": "[concat('/subscriptions/', parameters('subscriptionId'), '/providers/Microsoft.Authorization/roleDefinitions/a97b65f3-24c7-4388-baec-2e87135dc908')]",
-        "HealthInsightsName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
+        "healthInsightsName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
         "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('cognitiveServicesEndpointSuffix'))]",
         "systemAndUserIdentities": {
             "type": "SystemAssigned, UserAssigned",
@@ -84,13 +85,13 @@
                 "customSubDomainName": "[toLower(variables('textAnalyticsName'))]"
             },
           "dependsOn": [
-            "[concat('Microsoft.CognitiveServices/accounts/', variables('HealthInsightsName'))]"
+            "[concat('Microsoft.CognitiveServices/accounts/', variables('healthInsightsName'))]"
           ]
         },
         {
             "type": "Microsoft.CognitiveServices/accounts",
             "apiVersion": "2023-10-01-preview",
-            "name": "[variables('HealthInsightsName')]",
+            "name": "[variables('healthInsightsName')]",
             "location":"[parameters('location')]",
             "sku": {
                 "name": "S0"
@@ -101,7 +102,7 @@
                 "apiProperties": {
                     "TA4HResourceId": "[variables('textAnalyticsResourceId')]"
                 },
-                "customSubDomainName": "[toLower(variables('HealthInsightsName'))]"
+                "customSubDomainName": "[toLower(variables('healthInsightsName'))]"
             }
         },
         {
@@ -142,7 +143,7 @@
 
         "AZURE_HEALTH_INSIGHTS_API_KEY": {
             "type": "string",
-            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('HealthInsightsName')),'2017-04-18').key1]"
+            "value": "[listKeys(resourceId('Microsoft.CognitiveServices/accounts',variables('healthInsightsName')),'2017-04-18').key1]"
         },
         "AZURE_HEALTH_INSIGHTS_ENDPOINT": {
             "type": "string",
