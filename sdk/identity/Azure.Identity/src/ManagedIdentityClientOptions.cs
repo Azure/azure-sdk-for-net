@@ -14,6 +14,8 @@ namespace Azure.Identity
 
         public ResourceIdentifier ResourceIdentifier { get; set; }
 
+        public ManagedIdentityId ManagedIdentityId { get; set; }
+
         public bool PreserveTransport { get; set; }
 
         public TimeSpan? InitialImdsConnectionTimeout { get; set; }

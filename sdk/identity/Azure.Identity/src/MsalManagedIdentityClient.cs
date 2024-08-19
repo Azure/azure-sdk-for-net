@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Identity.Client;
-using Microsoft.Identity.Client.AppConfig;
 
 namespace Azure.Identity
 {
@@ -19,7 +18,7 @@ namespace Azure.Identity
         private bool _isForceRefreshEnabled { get; }
 
         internal bool IsSupportLoggingEnabled { get; }
-        internal ManagedIdentityId ManagedIdentityId { get; }
+        internal Microsoft.Identity.Client.AppConfig.ManagedIdentityId ManagedIdentityId { get; }
         internal bool DisableInstanceDiscovery { get; }
         internal CredentialPipeline Pipeline { get; }
         internal Uri AuthorityHost { get; }
@@ -41,15 +40,15 @@ namespace Azure.Identity
             // select the correct managed identity Id.
             if (!string.IsNullOrEmpty(clientOptions?.ClientId))
             {
-                ManagedIdentityId = ManagedIdentityId.WithUserAssignedClientId(clientOptions.ClientId);
+                ManagedIdentityId = Microsoft.Identity.Client.AppConfig.ManagedIdentityId.WithUserAssignedClientId(clientOptions.ClientId);
             }
             else if (clientOptions?.ResourceIdentifier != null)
             {
-                ManagedIdentityId = ManagedIdentityId.WithUserAssignedResourceId(clientOptions.ResourceIdentifier.ToString());
+                ManagedIdentityId = Microsoft.Identity.Client.AppConfig.ManagedIdentityId.WithUserAssignedResourceId(clientOptions.ResourceIdentifier.ToString());
             }
             else
             {
-                ManagedIdentityId = ManagedIdentityId.SystemAssigned;
+                ManagedIdentityId = Microsoft.Identity.Client.AppConfig.ManagedIdentityId.SystemAssigned;
             }
             Pipeline = clientOptions.Pipeline;
             _clientAsyncLock = new AsyncLockWithValue<IManagedIdentityApplication>();

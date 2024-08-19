@@ -61,6 +61,17 @@ namespace Azure.Identity
             _clientId = resourceId.ToString();
         }
 
+        /// <summary>
+        /// Creates an instance of <see cref="ManagedIdentityCredential"/> configured with the specified options.
+        /// </summary>
+        /// <param name="options">The options used to configure the credential.</param>
+        public ManagedIdentityCredential(ManagedIdentityCredentialOptions options)
+            : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { ManagedIdentityId = options.ManagedIdentityId, Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true), Options = options }))
+        {
+            Argument.AssertNotNull(options, nameof(options));
+            _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
+        }
+
         internal ManagedIdentityCredential(string clientId, CredentialPipeline pipeline, TokenCredentialOptions options = null, bool preserveTransport = false)
             : this(new ManagedIdentityClient(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId, PreserveTransport = preserveTransport, Options = options }))
         {
