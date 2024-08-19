@@ -90,6 +90,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <summary>
         /// Specifies which client protocol can trigger the Web PubSub trigger functions. By default, it accepts all client protocols.
         /// </summary>
-        public WebPubSubTriggerClientProtocol ClientProtocol { get; set; } = WebPubSubTriggerClientProtocol.All;
+        public WebPubSubTriggerAcceptedClientProtocol ClientProtocol { get; set; } = WebPubSubTriggerAcceptedClientProtocol.All;
     }
 }

@@ -1,0 +1,28 @@
+# Contribution Hints
+
+This file provides some hints for contributing to the Microsoft.Azure.WebPubSub.Common library.
+
+## JSON serialization and deserialization
+
+The main purpose of this project is to provide classes for JSON serialization and deserialization to the Azure Functions extensions and the `AspNetCore` project.
+
+Due to the limitation of Azure Functions extensions, we should support both `Newtonsoft.Json` and `System.Text.Json` libraries at the same time. Concretely, `System.Text.Json` handles deserialization of HTTP requests from Azure Web PubSub service and serialization corresponding HTTP responses; `Newtonsoft.Json` handles serialization.
+
+```mermaid
+sequenceDiagram
+    participant W as Web PubSub Service
+    participant H as Functions Extensions (Host Process)
+    participant WP as Functions Extensions (Worker Process)
+
+    W->>H: Send HTTP Request
+    H->>H: Deserialize HTTP Request using System.Text.Json
+
+    H->>H: Serialize HTTP Request Body Object using Newtonsoft.Json
+    H->>WP: Send JSON requests
+    WP->>WP: Process Request in Worker Process
+
+    WP->>H: Return JSON responses
+    H->>H: Deserialize JSON Response using Newtonsoft.Json
+    H->>H: Serialize into HTTP response using System.Text.Json
+    H->>W: Send HTTP Response
+```

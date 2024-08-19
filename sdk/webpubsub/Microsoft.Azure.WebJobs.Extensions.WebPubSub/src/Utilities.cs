@@ -145,7 +145,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 {
                     if (context is MqttConnectionContext mqttContext)
                     {
-                        var mqttErrorConnectResponse = response.ToObject<MqttConnectEventErrorResponseDeserializationHelper>();
+                        var mqttErrorConnectResponse = response.ToObject<MqttConnectEventErrorResponseContent>();
                         return BuildErrorResponse(JsonConvert.SerializeObject(mqttErrorConnectResponse), mqttErrorConnectResponse.Code);
                     }
                     var error = response.ToObject<EventErrorResponse>();
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             return false;
         }
 
-        public static string GetFunctionKey(string hub, WebPubSubEventType type, string eventName, WebPubSubTriggerClientProtocol clientProtocol = WebPubSubTriggerClientProtocol.All) => $"{hub}.{type}.{eventName}.{clientProtocol}";
+        public static string GetFunctionKey(string hub, WebPubSubEventType type, string eventName, WebPubSubTriggerAcceptedClientProtocol clientProtocol = WebPubSubTriggerAcceptedClientProtocol.All) => $"{hub}.{type}.{eventName}.{clientProtocol}";
 
         private static Dictionary<string, BinaryData> GetStatesFromJson(JObject response)
         {
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         private static MqttConnectEventErrorResponse ToMqttConnectErrorResponse(JObject jObject)
         {
-            return jObject.ToObject<MqttConnectEventErrorResponseDeserializationHelper>();
+            return jObject.ToObject<MqttConnectEventErrorResponseContent>();
         }
     }
 }

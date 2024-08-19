@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             if (context is MqttConnectionContext mqttContext)
                             {
-                                var request = JsonSerializer.Deserialize<MqttConnectEventRequestDeserializationHelper>(content);
+                                var request = JsonSerializer.Deserialize<MqttConnectEventRequestContent>(content);
                                 eventRequest = new MqttConnectEventRequest(mqttContext, request.Claims, request.Query, request.ClientCertificates, request.Headers, request.Mqtt);
                             }
                             else
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             var content = await req.Content.ReadAsStringAsync().ConfigureAwait(false);
                             if (context is MqttConnectionContext mqttContext)
                             {
-                                var requestBody = JsonSerializer.Deserialize<MqttDisconnectedEventRequestDeserializationHelper>(content);
+                                var requestBody = JsonSerializer.Deserialize<MqttDisconnectedEventRequestContent>(content);
                                 eventRequest = new MqttDisconnectedEventRequest(mqttContext, requestBody.Reason, requestBody.Mqtt);
                             }
                             else
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                             {
                                 MqttProtocolVersion.V311 => new MqttConnectEventErrorResponse(MqttV500ConnectReasonCode.ServerUnavailable, ex.Message),
                                 MqttProtocolVersion.V500 => new MqttConnectEventErrorResponse(MqttV500ConnectReasonCode.ServerUnavailable, ex.Message),
-                                _ => throw new NotSupportedException()
+                                _ => throw new NotSupportedException($"MQTT protocol version {mqttProtocolVersion} is not supported yet.")
                             };
                             return Utilities.BuildErrorResponse(errorResponse);
                         }
@@ -253,12 +253,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private bool TryResolveListener(WebPubSubConnectionContext context, out WebPubSubListener listener)
         {
             // Try to match a listener for specified client protocol
-            var key = Utilities.GetFunctionKey(context.Hub, context.EventType, context.EventName, (context is MqttConnectionContext ? WebPubSubTriggerClientProtocol.Mqtt : WebPubSubTriggerClientProtocol.WebPubSub));
+            var key = Utilities.GetFunctionKey(context.Hub, context.EventType, context.EventName, (context is MqttConnectionContext ? WebPubSubTriggerAcceptedClientProtocol.Mqtt : WebPubSubTriggerAcceptedClientProtocol.WebPubSub));
             if (_listeners.TryGetValue(key, out listener))
             {
                 return true;
             }
-            key = $"{context.Hub}.{context.EventType}.{context.EventName}.{WebPubSubTriggerClientProtocol.All}"; // match all client protocols
+            key = $"{context.Hub}.{context.EventType}.{context.EventName}.{WebPubSubTriggerAcceptedClientProtocol.All}"; // match all client protocols
             if (_listeners.TryGetValue(key, out listener))
             {
                 return true;

@@ -191,6 +191,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
     }
+    public enum WebPubSubTriggerAcceptedClientProtocol
+    {
+        All = 0,
+        WebPubSub = 1,
+        Mqtt = 2,
+    }
     [Microsoft.Azure.WebJobs.Description.BindingAttribute(TriggerHandlesReturnValue=true)]
     [System.AttributeUsageAttribute(System.AttributeTargets.Parameter)]
     public partial class WebPubSubTriggerAttribute : System.Attribute
@@ -199,7 +205,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public WebPubSubTriggerAttribute(Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName, params string[] connections) { }
         public WebPubSubTriggerAttribute(string hub, Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName) { }
         public WebPubSubTriggerAttribute(string hub, Microsoft.Azure.WebPubSub.Common.WebPubSubEventType eventType, string eventName, params string[] connections) { }
-        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubTriggerClientProtocol ClientProtocol { get { throw null; } set { } }
+        public Microsoft.Azure.WebJobs.Extensions.WebPubSub.WebPubSubTriggerAcceptedClientProtocol ClientProtocol { get { throw null; } set { } }
         public string[] Connections { get { throw null; } }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         public string EventName { get { throw null; } }
@@ -207,12 +213,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public Microsoft.Azure.WebPubSub.Common.WebPubSubEventType EventType { get { throw null; } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Hub { get { throw null; } }
-    }
-    public enum WebPubSubTriggerClientProtocol
-    {
-        All = 0,
-        WebPubSub = 1,
-        Mqtt = 2,
     }
 }
 namespace Microsoft.Extensions.Hosting

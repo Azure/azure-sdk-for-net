@@ -7,9 +7,9 @@ namespace Microsoft.Azure.WebPubSub.Common;
 
 #nullable enable
 
-internal class MqttConnectEventErrorResponseDeserializationHelper : MqttConnectEventErrorResponse
+internal class MqttConnectEventErrorResponseContent : MqttConnectEventErrorResponse
 {
-    public MqttConnectEventErrorResponseDeserializationHelper(MqttConnectEventErrorResponsePropertiesDeserializationHelper mqtt) : base(new MqttConnectEventErrorResponseProperties((MqttV500ConnectReasonCode)mqtt.Code))
+    public MqttConnectEventErrorResponseContent(MqttConnectEventErrorResponsePropertiesContent mqtt) : base(new MqttConnectEventErrorResponseProperties((MqttV500ConnectReasonCode)mqtt.Code))
     {
         Mqtt.Reason = mqtt.Reason;
         Mqtt.UserProperties = mqtt.UserProperties;
@@ -27,9 +27,9 @@ internal class MqttConnectEventErrorResponseDeserializationHelper : MqttConnectE
     }
 }
 
-internal class MqttConnectEventErrorResponsePropertiesDeserializationHelper : MqttConnectEventErrorResponseProperties
+internal class MqttConnectEventErrorResponsePropertiesContent : MqttConnectEventErrorResponseProperties
 {
-    public MqttConnectEventErrorResponsePropertiesDeserializationHelper(int code, string? reason, IReadOnlyList<MqttUserProperty>? userProperties) : base((MqttV500ConnectReasonCode)code)
+    public MqttConnectEventErrorResponsePropertiesContent(int code, string? reason, IReadOnlyList<MqttUserProperty>? userProperties) : base((MqttV500ConnectReasonCode)code)
     {
         Reason = reason;
         UserProperties = userProperties;

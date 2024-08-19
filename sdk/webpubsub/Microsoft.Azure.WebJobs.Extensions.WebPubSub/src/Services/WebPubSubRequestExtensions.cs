@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
                         if (context is MqttConnectionContext mqttContext)
                         {
-                            var requestBody = JsonSerializer.Deserialize<MqttConnectEventRequestDeserializationHelper>(content);
+                            var requestBody = JsonSerializer.Deserialize<MqttConnectEventRequestContent>(content);
                             return new MqttConnectEventRequest(mqttContext, requestBody.Claims, requestBody.Query, requestBody.ClientCertificates, requestBody.Headers, requestBody.Mqtt);
                         }
                         else
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
                         if (context is MqttConnectionContext mqttContext)
                         {
-                            var requestBody = JsonSerializer.Deserialize<MqttDisconnectedEventRequestDeserializationHelper>(content);
+                            var requestBody = JsonSerializer.Deserialize<MqttDisconnectedEventRequestContent>(content);
                             return new MqttDisconnectedEventRequest(mqttContext, requestBody.Reason, requestBody.Mqtt);
                         }
                         else

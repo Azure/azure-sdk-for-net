@@ -151,7 +151,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
             var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
-            var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connect", WebPubSubTriggerClientProtocol.Mqtt), dispatcher, null);
+            var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connect", WebPubSubTriggerAcceptedClientProtocol.Mqtt), dispatcher, null);
             await wpsListener.StartAsync(default);
             mockExecutor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Callback<TriggeredFunctionData, CancellationToken>((functionData, token) =>
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
 
             var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
             var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
-            var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connect", WebPubSubTriggerClientProtocol.Mqtt), dispatcher, null);
+            var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connect", WebPubSubTriggerAcceptedClientProtocol.Mqtt), dispatcher, null);
             await wpsListener.StartAsync(default);
             mockExecutor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Callback<TriggeredFunctionData, CancellationToken>((functionData, token) =>
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             connectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttSessionId, "sessionId");
             var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
             var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
-            var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connected", WebPubSubTriggerClientProtocol.Mqtt), dispatcher, null);
+            var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "connected", WebPubSubTriggerAcceptedClientProtocol.Mqtt), dispatcher, null);
             await wpsListener.StartAsync(default);
             mockExecutor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Callback<TriggeredFunctionData, CancellationToken>((functionData, token) =>
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             disconnectedRequest.Headers.Add(Constants.Headers.CloudEvents.MqttSessionId, "sessionId");
             var dispatcher = new WebPubSubTriggerDispatcher(NullLogger.Instance, new() { Hub = TestHub });
             var mockExecutor = new Mock<ITriggeredFunctionExecutor>();
-            var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "disconnected", WebPubSubTriggerClientProtocol.Mqtt), dispatcher, null);
+            var wpsListener = new WebPubSubListener(mockExecutor.Object, Utilities.GetFunctionKey(TestHub, WebPubSubEventType.System, "disconnected", WebPubSubTriggerAcceptedClientProtocol.Mqtt), dispatcher, null);
             await wpsListener.StartAsync(default);
             mockExecutor.Setup(f => f.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
                 .Callback<TriggeredFunctionData, CancellationToken>((functionData, token) =>
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var httpResponse = await dispatcher.ExecuteAsync(disconnectedRequest);
         }
 
-        private static WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent, string connectionString = null, WebPubSubTriggerClientProtocol clientProtocol = WebPubSubTriggerClientProtocol.All)
+        private static WebPubSubTriggerDispatcher SetupDispatcher(string hub = TestHub, WebPubSubEventType type = TestType, string eventName = TestEvent, string connectionString = null, WebPubSubTriggerAcceptedClientProtocol clientProtocol = WebPubSubTriggerAcceptedClientProtocol.All)
         {
             var funcName = Utilities.GetFunctionKey(hub, type, eventName, clientProtocol).ToLower();
             var wpsOptions = new WebPubSubFunctionsOptions

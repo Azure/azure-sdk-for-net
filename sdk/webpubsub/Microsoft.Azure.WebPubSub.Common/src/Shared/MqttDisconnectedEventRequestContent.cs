@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common;
 
-internal class MqttDisconnectedEventRequestDeserializationHelper
+internal class MqttDisconnectedEventRequestContent
 {
     [JsonPropertyName("reason")]
     public string Reason { get; set; }

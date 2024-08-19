@@ -15,9 +15,9 @@
   <ItemGroup>
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\ConnectionStatesConverter.cs" LinkBase="Bindings\Shared" />
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\WebPubSubStatusCode.cs" LinkBase="Bindings\Shared" />
-    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttDisconnectedEventRequestDeserializationHelper.cs" LinkBase="Bindings\Shared" />
-    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttConnectEventRequestDeserializationHelper.cs" LinkBase="Bindings\Shared" />
-    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttConnectEventErrorResponseDeserializationHelper.cs" LinkBase="Bindings\Shared" />
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttDisconnectedEventRequestContent.cs" LinkBase="Bindings\Shared" />
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttConnectEventRequestContent.cs" LinkBase="Bindings\Shared" />
+    <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\MqttConnectEventErrorResponseContent.cs" LinkBase="Bindings\Shared" />
     <Compile Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Shared\WebPubSubErrorCodeExtensions.cs" LinkBase="Bindings\Shared" />
   </ItemGroup>
 
