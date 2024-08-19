@@ -3901,11 +3901,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="source">
         /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
-        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
-        /// source blob must either be public or must be authorized via a shared access signature. If the
-        /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
-        /// the source blob has to be block blob.
+        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see> If the size of the source blob is greater than 256 MiB, the request will fail
+        /// with 409 (Conflict). The blob type of the source blob has to be block blob.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -3955,11 +3954,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="source">
         /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
-        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
-        /// source blob must either be public or must be authorized via a shared access signature. If the
-        /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
-        /// the source blob has to be block blob.
+        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see> If the size of the source blob is greater than 256 MiB, the request will fail
+        /// with 409 (Conflict). The blob type of the source blob has to be block blob.
         /// </param>
         /// <param name="options">
         /// Optional parameters.
@@ -4009,11 +4007,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </summary>
         /// <param name="source">
         /// Required. Specifies the URL of the source blob. The value may be a URL of up to 2 KB in length
-        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI. The
-        /// source blob must either be public or must be authorized via a shared access signature. If the
-        /// source blob is public, no authorization is required to perform the operation. If the size of the
-        /// source blob is greater than 256 MiB, the request will fail with 409 (Conflict). The blob type of
-        /// the source blob has to be block blob.
+        /// that specifies a blob. The value should be URL-encoded as it would appear in a request URI.
+        /// <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/copy-blob?tabs=microsoft-entra-id#authorization">
+        /// Source Blob Authentication</see> If the size of the source blob is greater than 256 MiB, the request will fail
+        /// with 409 (Conflict). The blob type of the source blob has to be block blob.
         /// </param>
         /// <param name="metadata">
         /// Optional custom metadata to set for this blob.
