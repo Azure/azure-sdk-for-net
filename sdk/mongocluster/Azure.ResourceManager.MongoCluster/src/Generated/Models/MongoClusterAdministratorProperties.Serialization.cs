@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    public partial class AdministratorProperties : IUtf8JsonSerializable, IJsonModel<AdministratorProperties>
+    public partial class MongoClusterAdministratorProperties : IUtf8JsonSerializable, IJsonModel<MongoClusterAdministratorProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdministratorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterAdministratorProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AdministratorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoClusterAdministratorProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdministratorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterAdministratorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdministratorProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterAdministratorProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.MongoCluster.Models
             writer.WriteEndObject();
         }
 
-        AdministratorProperties IJsonModel<AdministratorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterAdministratorProperties IJsonModel<MongoClusterAdministratorProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdministratorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterAdministratorProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdministratorProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterAdministratorProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAdministratorProperties(document.RootElement, options);
+            return DeserializeMongoClusterAdministratorProperties(document.RootElement, options);
         }
 
-        internal static AdministratorProperties DeserializeAdministratorProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoClusterAdministratorProperties DeserializeMongoClusterAdministratorProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AdministratorProperties(userName, password, serializedAdditionalRawData);
+            return new MongoClusterAdministratorProperties(userName, password, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AdministratorProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoClusterAdministratorProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdministratorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterAdministratorProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdministratorProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterAdministratorProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AdministratorProperties IPersistableModel<AdministratorProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoClusterAdministratorProperties IPersistableModel<MongoClusterAdministratorProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdministratorProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterAdministratorProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAdministratorProperties(document.RootElement, options);
+                        return DeserializeMongoClusterAdministratorProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdministratorProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterAdministratorProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AdministratorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoClusterAdministratorProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

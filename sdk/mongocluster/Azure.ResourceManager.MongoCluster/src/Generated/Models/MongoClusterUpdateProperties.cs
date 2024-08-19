@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="backup"> The backup properties of the mongo cluster. </param>
         /// <param name="previewFeatures"> List of private endpoint connections. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterUpdateProperties(AdministratorProperties administrator, string serverVersion, PublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, StorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, IList<MongoClusterPreviewFeature> previewFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterUpdateProperties(MongoClusterAdministratorProperties administrator, string serverVersion, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, StorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, IList<MongoClusterPreviewFeature> previewFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Administrator = administrator;
             ServerVersion = serverVersion;
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> The local administrator properties for the mongo cluster. </summary>
-        public AdministratorProperties Administrator { get; set; }
+        public MongoClusterAdministratorProperties Administrator { get; set; }
         /// <summary> The Mongo DB server version. Defaults to the latest available version if not specified. </summary>
         public string ServerVersion { get; set; }
         /// <summary> Whether or not public endpoint access is allowed for this mongo cluster. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public MongoClusterPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The high availability properties of the mongo cluster. </summary>
         internal HighAvailabilityProperties HighAvailability { get; set; }
         /// <summary> The target high availability mode requested for the cluster. </summary>

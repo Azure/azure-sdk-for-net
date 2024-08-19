@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterNameAvailabilityResult(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterNameAvailabilityResult(bool? nameAvailable, MongoClusterNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> Indicates if the resource name is available. </summary>
         public bool? NameAvailable { get; }
         /// <summary> The reason why the given name is not available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; }
+        public MongoClusterNameUnavailableReason? Reason { get; }
         /// <summary> Detailed reason why the given name is not available. </summary>
         public string Message { get; }
     }

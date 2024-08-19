@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="replica"> The replication properties for the mongo cluster. </param>
         /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
         /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
-        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = null, MongoClusterRestoreContent restoreParameters = null, MongoClusterReplicaContent replicaParameters = null, AdministratorProperties administrator = null, string serverVersion = null, string connectionString = null, MongoClusterProvisioningState? provisioningState = null, MongoClusterStatus? clusterStatus = null, PublicNetworkAccess? publicNetworkAccess = null, HighAvailabilityMode? highAvailabilityTargetMode = null, long? storageSizeGb = null, int? shardingShardCount = null, string computeTier = null, string backupEarliestRestoreTime = null, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = null, IEnumerable<MongoClusterPreviewFeature> previewFeatures = null, MongoClusterReplicationProperties replica = null, string infrastructureVersion = null)
+        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = null, MongoClusterRestoreContent restoreParameters = null, MongoClusterReplicaContent replicaParameters = null, MongoClusterAdministratorProperties administrator = null, string serverVersion = null, string connectionString = null, MongoClusterProvisioningState? provisioningState = null, MongoClusterStatus? clusterStatus = null, MongoClusterPublicNetworkAccess? publicNetworkAccess = null, HighAvailabilityMode? highAvailabilityTargetMode = null, long? storageSizeGb = null, int? shardingShardCount = null, string computeTier = null, string backupEarliestRestoreTime = null, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = null, IEnumerable<MongoClusterPreviewFeature> previewFeatures = null, MongoClusterReplicationProperties replica = null, string infrastructureVersion = null)
         {
             privateEndpointConnections ??= new List<MongoClusterPrivateEndpointConnection>();
             previewFeatures ??= new List<MongoClusterPreviewFeature>();
@@ -153,16 +153,16 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoCluster.PrivateEndpointConnectionResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoCluster.MongoClusterPrivateEndpointConnectionResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="MongoCluster.PrivateEndpointConnectionResourceData"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionResourceData PrivateEndpointConnectionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
+        /// <returns> A new <see cref="MongoCluster.MongoClusterPrivateEndpointConnectionResourceData"/> instance for mocking. </returns>
+        public static MongoClusterPrivateEndpointConnectionResourceData MongoClusterPrivateEndpointConnectionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateEndpointConnectionProperties properties = null)
         {
-            return new PrivateEndpointConnectionResourceData(
+            return new MongoClusterPrivateEndpointConnectionResourceData(
                 id,
                 name,
                 resourceType,
@@ -171,16 +171,16 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoCluster.FirewallRuleData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoCluster.MongoClusterFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="MongoCluster.FirewallRuleData"/> instance for mocking. </returns>
-        public static FirewallRuleData FirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FirewallRuleProperties properties = null)
+        /// <returns> A new <see cref="MongoCluster.MongoClusterFirewallRuleData"/> instance for mocking. </returns>
+        public static MongoClusterFirewallRuleData MongoClusterFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FirewallRuleProperties properties = null)
         {
-            return new FirewallRuleData(
+            return new MongoClusterFirewallRuleData(
                 id,
                 name,
                 resourceType,
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
         /// <returns> A new <see cref="Models.MongoClusterNameAvailabilityResult"/> instance for mocking. </returns>
-        public static MongoClusterNameAvailabilityResult MongoClusterNameAvailabilityResult(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        public static MongoClusterNameAvailabilityResult MongoClusterNameAvailabilityResult(bool? nameAvailable = null, MongoClusterNameUnavailableReason? reason = null, string message = null)
         {
             return new MongoClusterNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }

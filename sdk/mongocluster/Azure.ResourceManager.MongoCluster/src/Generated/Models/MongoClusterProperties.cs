@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="replica"> The replication properties for the mongo cluster. </param>
         /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterProperties(MongoClusterCreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, AdministratorProperties administrator, string serverVersion, string connectionString, MongoClusterProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, PublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, StorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<MongoClusterPreviewFeature> previewFeatures, MongoClusterReplicationProperties replica, string infrastructureVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MongoClusterProperties(MongoClusterCreateMode? createMode, MongoClusterRestoreContent restoreParameters, MongoClusterReplicaContent replicaParameters, MongoClusterAdministratorProperties administrator, string serverVersion, string connectionString, MongoClusterProvisioningState? provisioningState, MongoClusterStatus? clusterStatus, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, StorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, IReadOnlyList<MongoClusterPrivateEndpointConnection> privateEndpointConnections, IList<MongoClusterPreviewFeature> previewFeatures, MongoClusterReplicationProperties replica, string infrastructureVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CreateMode = createMode;
             RestoreParameters = restoreParameters;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The parameters to create a replica mongo cluster. </summary>
         public MongoClusterReplicaContent ReplicaParameters { get; set; }
         /// <summary> The local administrator properties for the mongo cluster. </summary>
-        public AdministratorProperties Administrator { get; set; }
+        public MongoClusterAdministratorProperties Administrator { get; set; }
         /// <summary> The Mongo DB server version. Defaults to the latest available version if not specified. </summary>
         public string ServerVersion { get; set; }
         /// <summary> The default mongo connection string for the cluster. </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The status of the mongo cluster. </summary>
         public MongoClusterStatus? ClusterStatus { get; }
         /// <summary> Whether or not public endpoint access is allowed for this mongo cluster. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public MongoClusterPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The high availability properties of the mongo cluster. </summary>
         internal HighAvailabilityProperties HighAvailability { get; set; }
         /// <summary> The target high availability mode requested for the cluster. </summary>

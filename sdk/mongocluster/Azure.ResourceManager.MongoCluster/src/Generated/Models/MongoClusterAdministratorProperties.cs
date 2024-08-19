@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.MongoCluster.Models;
 
-namespace Azure.ResourceManager.MongoCluster
+namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary>
-    /// A class representing the FirewallRule data model.
-    /// Represents a mongo cluster firewall rule.
-    /// </summary>
-    public partial class FirewallRuleData : ResourceData
+    /// <summary> The local administrator login properties. </summary>
+    public partial class MongoClusterAdministratorProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +45,25 @@ namespace Azure.ResourceManager.MongoCluster
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FirewallRuleData"/>. </summary>
-        public FirewallRuleData()
+        /// <summary> Initializes a new instance of <see cref="MongoClusterAdministratorProperties"/>. </summary>
+        public MongoClusterAdministratorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FirewallRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="MongoClusterAdministratorProperties"/>. </summary>
+        /// <param name="userName"> The administrator user name. </param>
+        /// <param name="password"> The administrator password. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FirewallRuleProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MongoClusterAdministratorProperties(string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            UserName = userName;
+            Password = password;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public FirewallRuleProperties Properties { get; set; }
+        /// <summary> The administrator user name. </summary>
+        public string UserName { get; set; }
+        /// <summary> The administrator password. </summary>
+        public string Password { get; set; }
     }
 }

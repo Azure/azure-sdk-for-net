@@ -15,16 +15,16 @@ using Azure.ResourceManager.MongoCluster.Models;
 
 namespace Azure.ResourceManager.MongoCluster
 {
-    public partial class PrivateEndpointConnectionResourceData : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnectionResourceData>
+    public partial class MongoClusterPrivateEndpointConnectionResourceData : IUtf8JsonSerializable, IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PrivateEndpointConnectionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterPrivateEndpointConnectionResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.MongoCluster
             writer.WriteEndObject();
         }
 
-        PrivateEndpointConnectionResourceData IJsonModel<PrivateEndpointConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterPrivateEndpointConnectionResourceData IJsonModel<MongoClusterPrivateEndpointConnectionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterPrivateEndpointConnectionResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateEndpointConnectionResourceData(document.RootElement, options);
+            return DeserializeMongoClusterPrivateEndpointConnectionResourceData(document.RootElement, options);
         }
 
-        internal static PrivateEndpointConnectionResourceData DeserializePrivateEndpointConnectionResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoClusterPrivateEndpointConnectionResourceData DeserializeMongoClusterPrivateEndpointConnectionResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MongoCluster
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PrivateEndpointConnectionResourceData(
+            return new MongoClusterPrivateEndpointConnectionResourceData(
                 id,
                 name,
                 type,
@@ -148,35 +148,35 @@ namespace Azure.ResourceManager.MongoCluster
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PrivateEndpointConnectionResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterPrivateEndpointConnectionResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PrivateEndpointConnectionResourceData IPersistableModel<PrivateEndpointConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoClusterPrivateEndpointConnectionResourceData IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePrivateEndpointConnectionResourceData(document.RootElement, options);
+                        return DeserializeMongoClusterPrivateEndpointConnectionResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterPrivateEndpointConnectionResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoClusterPrivateEndpointConnectionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

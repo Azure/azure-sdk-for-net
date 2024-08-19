@@ -47,27 +47,27 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="FirewallRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MongoClusterFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoClusterFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="MongoClusterFirewallRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirewallRuleResource"/> object. </returns>
-        public virtual FirewallRuleResource GetFirewallRuleResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoClusterFirewallRuleResource"/> object. </returns>
+        public virtual MongoClusterFirewallRuleResource GetMongoClusterFirewallRuleResource(ResourceIdentifier id)
         {
-            FirewallRuleResource.ValidateResourceId(id);
-            return new FirewallRuleResource(Client, id);
+            MongoClusterFirewallRuleResource.ValidateResourceId(id);
+            return new MongoClusterFirewallRuleResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="MongoClusterPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MongoClusterPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MongoClusterPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
-        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MongoClusterPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual MongoClusterPrivateEndpointConnectionResource GetMongoClusterPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            PrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new PrivateEndpointConnectionResource(Client, id);
+            MongoClusterPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new MongoClusterPrivateEndpointConnectionResource(Client, id);
         }
     }
 }

@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 return null;
             }
-            AdministratorProperties administrator = default;
+            MongoClusterAdministratorProperties administrator = default;
             string serverVersion = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            MongoClusterPublicNetworkAccess? publicNetworkAccess = default;
             HighAvailabilityProperties highAvailability = default;
             StorageProperties storage = default;
             ShardingProperties sharding = default;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    administrator = AdministratorProperties.DeserializeAdministratorProperties(property.Value, options);
+                    administrator = MongoClusterAdministratorProperties.DeserializeMongoClusterAdministratorProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serverVersion"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(property.Value.GetString());
+                    publicNetworkAccess = new MongoClusterPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("highAvailability"u8))

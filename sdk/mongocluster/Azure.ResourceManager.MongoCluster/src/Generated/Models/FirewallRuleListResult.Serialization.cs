@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 return null;
             }
-            IReadOnlyList<FirewallRuleData> value = default;
+            IReadOnlyList<MongoClusterFirewallRuleData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<FirewallRuleData> array = new List<FirewallRuleData>();
+                    List<MongoClusterFirewallRuleData> array = new List<MongoClusterFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallRuleData.DeserializeFirewallRuleData(item, options));
+                        array.Add(MongoClusterFirewallRuleData.DeserializeMongoClusterFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;

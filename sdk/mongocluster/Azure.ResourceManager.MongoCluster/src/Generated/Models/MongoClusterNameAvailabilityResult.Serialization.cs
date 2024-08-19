@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 return null;
             }
             bool? nameAvailable = default;
-            CheckNameAvailabilityReason? reason = default;
+            MongoClusterNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     {
                         continue;
                     }
-                    reason = new CheckNameAvailabilityReason(property.Value.GetString());
+                    reason = new MongoClusterNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))

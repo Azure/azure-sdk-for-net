@@ -15,16 +15,16 @@ using Azure.ResourceManager.MongoCluster.Models;
 
 namespace Azure.ResourceManager.MongoCluster
 {
-    public partial class FirewallRuleData : IUtf8JsonSerializable, IJsonModel<FirewallRuleData>
+    public partial class MongoClusterFirewallRuleData : IUtf8JsonSerializable, IJsonModel<MongoClusterFirewallRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoClusterFirewallRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoClusterFirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterFirewallRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.MongoCluster
             writer.WriteEndObject();
         }
 
-        FirewallRuleData IJsonModel<FirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoClusterFirewallRuleData IJsonModel<MongoClusterFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoClusterFirewallRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFirewallRuleData(document.RootElement, options);
+            return DeserializeMongoClusterFirewallRuleData(document.RootElement, options);
         }
 
-        internal static FirewallRuleData DeserializeFirewallRuleData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MongoClusterFirewallRuleData DeserializeMongoClusterFirewallRuleData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.MongoCluster
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FirewallRuleData(
+            return new MongoClusterFirewallRuleData(
                 id,
                 name,
                 type,
@@ -148,35 +148,35 @@ namespace Azure.ResourceManager.MongoCluster
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FirewallRuleData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoClusterFirewallRuleData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterFirewallRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FirewallRuleData IPersistableModel<FirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoClusterFirewallRuleData IPersistableModel<MongoClusterFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoClusterFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFirewallRuleData(document.RootElement, options);
+                        return DeserializeMongoClusterFirewallRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoClusterFirewallRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoClusterFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

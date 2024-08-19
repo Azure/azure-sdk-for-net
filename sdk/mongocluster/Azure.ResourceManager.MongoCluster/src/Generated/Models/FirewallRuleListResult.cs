@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> Initializes a new instance of <see cref="FirewallRuleListResult"/>. </summary>
         /// <param name="value"> The FirewallRule items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal FirewallRuleListResult(IEnumerable<FirewallRuleData> value)
+        internal FirewallRuleListResult(IEnumerable<MongoClusterFirewallRuleData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="value"> The FirewallRule items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallRuleListResult(IReadOnlyList<FirewallRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirewallRuleListResult(IReadOnlyList<MongoClusterFirewallRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         }
 
         /// <summary> The FirewallRule items on this page. </summary>
-        public IReadOnlyList<FirewallRuleData> Value { get; }
+        public IReadOnlyList<MongoClusterFirewallRuleData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }
