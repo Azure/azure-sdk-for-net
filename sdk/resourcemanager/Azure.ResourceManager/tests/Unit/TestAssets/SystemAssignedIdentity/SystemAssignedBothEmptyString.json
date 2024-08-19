@@ -1,0 +1,8 @@
+﻿{
+  "identity": {
+    "principalId": "",
+    "tenantId": "",
+    "type": "SystemAssigned",
+    "userAssignedIdentities": null
+  }
+}

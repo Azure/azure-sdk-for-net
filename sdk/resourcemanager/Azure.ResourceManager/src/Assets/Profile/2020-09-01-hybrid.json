@@ -1,0 +1,678 @@
+{
+    "info": {
+      "name": "2020-09-01-hybrid",
+      "description": "Profile definition targeted for hybrid applications that could run on azure stack general availability version and azure cloud for 2010."
+    },
+    "resource-manager": {
+      "microsoft.authorization": {
+        "2016-09-01": [
+          {
+            "resourceType": "locks",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json"
+          }
+        ],
+        "2016-12-01": [
+          {
+            "resourceType": "policyAssignments",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-12-01/policyAssignments.json"
+          },
+          {
+            "resourceType": "policyDefinitions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-12-01/policyDefinitions.json"
+          }
+        ],
+        "2015-07-01": [
+          {
+            "resourceType": "permissions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/authorization/resource-manager/Microsoft.Authorization/stable/2015-07-01/authorization-ClassicAdminCalls.json"
+          },
+          {
+            "resourceType": "roleAssignments",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/authorization/resource-manager/Microsoft.Authorization/stable/2015-07-01/authorization-RoleAssignmentsCalls.json"
+          },
+          {
+            "resourceType": "roleDefinitions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/authorization/resource-manager/Microsoft.Authorization/stable/2015-07-01/authorization-RoleDefinitionsCalls.json"
+          },
+          {
+            "resourceType": "providerOperations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/authorization/resource-manager/Microsoft.Authorization/stable/2015-07-01/authorization-ProviderOperationsCalls.json"
+          }
+        ]
+      },
+      "microsoft.commerce": {
+        "2015-06-01-preview": [
+          {
+            "resourceType": "estimateResourceSpend",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/commerce/resource-manager/Microsoft.Commerce/preview/2015-06-01-preview/commerce.json"
+          },
+          {
+            "resourceType": "operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/commerce/resource-manager/Microsoft.Commerce/preview/2015-06-01-preview/commerce.json"
+          },
+          {
+            "resourceType": "subscriberUsageAggregates",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/commerce/resource-manager/Microsoft.Commerce/preview/2015-06-01-preview/commerce.json"
+          },
+          {
+            "resourceType": "usageAggregates",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/commerce/resource-manager/Microsoft.Commerce/preview/2015-06-01-preview/commerce.json"
+          }
+        ]
+      },
+      "microsoft.compute": {
+        "2020-06-01": [
+          {
+            "resourceType": "availabilitySets",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "images",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "locations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "locations/publishers",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "locations/operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "locations/usages",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "locations/vmSizes",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "virtualMachines",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "virtualMachines/extensions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "virtualMachineScaleSets",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "virtualMachineScaleSets/extensions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "virtualmachineScaleSets/networkInterfaces",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "virtualMachineScaleSets/virtualMachines",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          },
+          {
+            "resourceType": "virtualMachineScaleSets/virtualMachines/networkInterfaces",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2020-06-01/compute.json"
+          }
+        ],
+        "2019-07-01": [
+          {
+            "resourceType": "disks",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2019-07-01/disk.json"
+          },
+          {
+            "resourceType": "snapshots",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/compute/resource-manager/Microsoft.Compute/stable/2019-07-01/disk.json"
+          }
+        ]
+      },
+      "microsoft.databoxedge": {
+        "2019-08-01": [
+          {
+            "resourceType": "dataBoxEdgeDevices",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2019-08-01/databoxedge.json"
+          },
+          {
+            "resourceType": "dataBoxEdgeDevices/checkNameAvailability",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2019-08-01/databoxedge.json"
+          },
+          {
+            "resourceType": "operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/databoxedge/resource-manager/Microsoft.DataBoxEdge/stable/2019-08-01/databoxedge.json"
+          }
+        ]
+      },
+      "microsoft.devices": {
+        "2019-07-01-preview": [
+          {
+            "resourceType": "usages",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/iothub/resource-manager/Microsoft.Devices/preview/2019-07-01-preview/iothub.json"
+          },
+          {
+            "resourceType": "locations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/iothub/resource-manager/Microsoft.Devices/preview/2019-07-01-preview/iothub.json"
+          },
+          {
+            "resourceType": "locations/quotas",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/iothub/resource-manager/Microsoft.Devices/preview/2019-07-01-preview/iothub.json"
+          },
+          {
+            "resourceType": "locations/skus",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/iothub/resource-manager/Microsoft.Devices/preview/2019-07-01-preview/iothub.json"
+          },
+          {
+            "resourceType": "checkNameAvailability",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/iothub/resource-manager/Microsoft.Devices/preview/2019-07-01-preview/iothub.json"
+          },
+          {
+            "resourceType": "operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/iothub/resource-manager/Microsoft.Devices/preview/2019-07-01-preview/iothub.json"
+          },
+          {
+            "resourceType": "operationResults",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/iothub/resource-manager/Microsoft.Devices/preview/2019-07-01-preview/iothub.json"
+          },
+          {
+            "resourceType": "IotHubs",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/iothub/resource-manager/Microsoft.Devices/preview/2019-07-01-preview/iothub.json"
+          },
+          {
+            "resourceType": "backupProviders",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/iothub/resource-manager/Microsoft.Devices/preview/2019-07-01-preview/iothub.json"
+          },
+          {
+            "resourceType": "backupProviders/operationResults",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/iothub/resource-manager/Microsoft.Devices/preview/2019-07-01-preview/iothub.json"
+          }
+        ]
+      },
+      "microsoft.eventhubs": {
+        "2018-01-01-preview": [
+          {
+            "resourceType": "availableClusterRegions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/eventhub/resource-manager/Microsoft.EventHub/preview/2018-01-01-preview/AvailableClusterRegions-preview.json"
+          },
+          {
+            "resourceType": "clusters",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/eventhub/resource-manager/Microsoft.EventHub/preview/2018-01-01-preview/Clusters-preview.json"
+          },
+          {
+            "resourceType": "namespaces",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/eventhub/resource-manager/Microsoft.EventHub/preview/2018-01-01-preview/namespaces-preview.json"
+          }
+        ],
+        "2017-04-01": [
+          {
+            "resourceType": "checkNameAvailability",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/eventhub/resource-manager/Microsoft.EventHub/stable/2017-04-01/CheckNameAvailability.json"
+          },
+          {
+            "resourceType": "namespaces/authorizationRules",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/eventhub/resource-manager/Microsoft.EventHub/stable/2017-04-01/AuthorizationRules.json"
+          },
+          {
+            "resourceType": "namespaces/eventhubs",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/eventhub/resource-manager/Microsoft.EventHub/stable/2017-04-01/eventhubs.json"
+          },
+          {
+            "resourceType": "namespaces/eventhubs/authorizationRules",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/eventhub/resource-manager/Microsoft.EventHub/stable/2017-04-01/AuthorizationRules.json"
+          },
+          {
+            "resourceType": "namespaces/eventhubs/consumerGroups",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/eventhub/resource-manager/Microsoft.EventHub/stable/2017-04-01/consumergroups.json"
+          },
+          {
+            "resourceType": "operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/eventhub/resource-manager/Microsoft.EventHub/stable/2017-04-01/operations.json"
+          },
+          {
+            "resourceType": "sku",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/eventhub/resource-manager/Microsoft.EventHub/stable/2017-04-01/sku.json"
+          }
+        ]
+      },
+      "microsoft.insights": {
+        "2018-01-01": [
+          {
+            "resourceType": "metricDefinitions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metricDefinitions_API.json"
+          },
+          {
+            "resourceType": "metrics",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/monitor/resource-manager/Microsoft.Insights/stable/2018-01-01/metrics_API.json"
+          }
+        ],
+        "2017-05-01-preview": [
+          {
+            "resourceType": "diagnosticSettings",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-05-01-preview/diagnosticsSettings_API.json"
+          },
+          {
+            "resourceType": "diagnosticSettingCategories",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/monitor/resource-manager/Microsoft.Insights/preview/2017-05-01-preview/diagnosticsSettingsCategories_API.json"
+          }
+        ],
+        "2015-04-01": [
+          {
+            "resourceType": "eventCategories",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/eventCategories_API.json"
+          },
+          {
+            "resourceType": "operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/monitor/resource-manager/Microsoft.Insights/stable/2015-04-01/operations_API.json"
+          }
+        ]
+      },
+      "microsoft.keyvault": {
+        "2019-09-01": [
+          {
+            "resourceType": "operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2019-09-01/providers.json"
+          },
+          {
+            "resourceType": "vaults",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2019-09-01/keyvault.json"
+          },
+          {
+            "resourceType": "vaults/accessPolicies",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2019-09-01/keyvault.json"
+          },
+          {
+            "resourceType": "vaults/secrets",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/keyvault/resource-manager/Microsoft.KeyVault/stable/2019-09-01/secrets.json"
+          }
+        ]
+      },
+      "microsoft.network": {
+        "2018-11-01": [
+          {
+            "resourceType": "connections",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/virtualNetworkGateway.json"
+          },
+          {
+            "resourceType": "loadBalancers",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/loadBalancer.json"
+          },
+          {
+            "resourceType": "localNetworkGateways",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/virtualNetworkGateway.json"
+          },
+          {
+            "resourceType": "locations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/network.json"
+          },
+          {
+            "resourceType": "locations/operationResults",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/network.json"
+          },
+          {
+            "resourceType": "locations/operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/network.json"
+          },
+          {
+            "resourceType": "locations/usages",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/network.json"
+          },
+          {
+            "resourceType": "networkInterfaces",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/networkInterface.json"
+          },
+          {
+            "resourceType": "networkSecurityGroups",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/networkSecurityGroup.json"
+          },
+          {
+            "resourceType": "operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/operation.json"
+          },
+          {
+            "resourceType": "publicIpAddresses",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/publicIpAddress.json"
+          },
+          {
+            "resourceType": "routeTables",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/routeTable.json"
+          },
+          {
+            "resourceType": "virtualNetworkGateways",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/virtualNetworkGateway.json"
+          },
+          {
+            "resourceType": "virtualNetworks",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/network/resource-manager/Microsoft.Network/stable/2018-11-01/virtualNetwork.json"
+          }
+        ],
+        "2016-04-01": [
+          {
+            "resourceType": "dnsZones",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/dns/resource-manager/Microsoft.Network/stable/2016-04-01/dns.json"
+          }
+        ]
+      },
+      "microsoft.resources": {
+        "2016-06-01": [
+          {
+            "resourceType": "subscriptions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2016-06-01/subscriptions.json"
+          },
+          {
+            "resourceType": "subscriptions/locations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2016-06-01/subscriptions.json"
+          },
+          {
+            "resourceType": "tenants",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2016-06-01/subscriptions.json"
+          }
+        ],
+        "2019-10-01": [
+          {
+            "resourceType": "deployments",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "deployments/operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "links",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "locations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "providers",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "resourceGroups",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "resources",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "subscriptions/operationresults",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "subscriptions/providers",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "subscriptions/resourceGroups",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "subscriptions/resourceGroups/resources",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "subscriptions/resources",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "subscriptions/tagNames",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          },
+          {
+            "resourceType": "subscriptions/tagNames/tagValues",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/resources/resource-manager/Microsoft.Resources/stable/2019-10-01/resources.json"
+          }
+        ]
+      },
+      "microsoft.storage": {
+        "2019-06-01": [
+          {
+            "resourceType": "checkNameAvailability",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json"
+          },
+          {
+            "resourceType": "locations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json"
+          },
+          {
+            "resourceType": "locations/quotas",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json"
+          },
+          {
+            "resourceType": "operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json"
+          },
+          {
+            "resourceType": "storageAccounts",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json"
+          },
+          {
+            "resourceType": "storageAccounts/blobServices",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json"
+          },
+          {
+            "resourceType": "storageAccounts/queueServices",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json"
+          },
+          {
+            "resourceType": "storageAccounts/tableServices",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json"
+          },
+          {
+            "resourceType": "usages",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/storage/resource-manager/Microsoft.Storage/stable/2019-06-01/storage.json"
+          }
+        ]
+      },
+      "microsoft.web": {
+        "2018-02-01": [
+          {
+            "resourceType": "certificates",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/Certificates.json"
+          },
+          {
+            "resourceType": "operations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "checknameavailability",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/ResourceProvider.json"
+          },
+          {
+            "resourceType": "metadata",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "sites",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "sites/domainOwnershipIdentifiers",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "sites/extensions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "sites/hostNameBindings",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "sites/instances",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "sites/instances/extensions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "sites/slots",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "sites/slots/hostNameBindings",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "sites/slots/instances",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "sites/slots/instances/extensions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "serverFarms",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/WebApps.json"
+          },
+          {
+            "resourceType": "serverFarms/metricDefinitions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/AppServicePlans.json"
+          },
+          {
+            "resourceType": "serverFarms/metrics",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/AppServicePlans.json"
+          },
+          {
+            "resourceType": "serverFarms/usages",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/AppServicePlans.json"
+          },
+          {
+            "resourceType": "availableStacks",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/Provider.json"
+          },
+          {
+            "resourceType": "deploymentLocations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/ResourceProvider.json"
+          },
+          {
+            "resourceType": "georegions",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/ResourceProvider.json"
+          },
+          {
+            "resourceType": "listSitesAssignedToHostName",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/ResourceProvider.json"
+          },
+          {
+            "resourceType": "publishingUsers",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/ResourceProvider.json"
+          },
+          {
+            "resourceType": "recommendations",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/Recommendations.json"
+          },
+          {
+            "resourceType": "sourceControls",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/ResourceProvider.json"
+          },
+          {
+            "resourceType": "validate",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/specification/web/resource-manager/Microsoft.Web/stable/2018-02-01/ResourceProvider.json"
+          }
+        ]
+      },
+      "microsoft.containerregistry" : {
+        "2019-05-01": [
+          {
+            "resourceType": "registries",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2019-05-01/containerregistry.json"
+          },
+          {
+            "resourceType": "registries/importImage",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2019-05-01/containerregistry.json"
+          },
+          {
+            "resourceType": "registries/webhooks",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2019-05-01/containerregistry.json"
+          },
+          {
+            "resourceType": "registries/webhooks/ping",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2019-05-01/containerregistry.json"
+          },
+          {
+            "resourceType": "registries/webhooks/getCallbackConfig",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2019-05-01/containerregistry.json"
+          },
+          {
+            "resourceType": "registries/webhooks/listEvents",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2019-05-01/containerregistry.json"
+          },
+          {
+            "resourceType": "registries/listCredentials",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2019-05-01/containerregistry.json"
+          },
+          {
+            "resourceType": "registries/regenerateCredential",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2019-05-01/containerregistry.json"
+          },
+          {
+            "resourceType": "checkNameAvailability",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2019-05-01/containerregistry.json"
+          },
+          {
+            "resourceType": "operations",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/stable/2019-05-01/containerregistry.json"
+          }
+        ]
+      },
+      "microsoft.containerservice" : {
+        "2020-11-01": [
+          {
+            "resourceType": "managedclusters",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerservice/resource-manager/Microsoft.ContainerService/stable/2020-11-01/managedClusters.json"
+          }
+        ],
+        "2019-04-01": [
+          {
+            "resourceType": "locations/orchestrators",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerservice/resource-manager/Microsoft.ContainerService/stable/2019-04-01/location.json"
+          }
+        ],
+        "2017-07-01": [
+          {
+            "resourceType": "containerServices",
+            "path" : "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerservice/resource-manager/Microsoft.ContainerService/stable/2017-07-01/containerService.json"
+          }
+        ]
+      }
+    },
+    "data-plane": {
+      "microsoft.keyvault": {
+        "7.1": [
+          {
+            "resourceType": "secrets",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/data-plane/Microsoft.KeyVault/stable/7.1/secrets.json"
+          },
+          {
+              "resourceType": "keys",
+              "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/keyvault/data-plane/Microsoft.KeyVault/stable/7.1/keys.json"
+            }
+        ]
+      },
+      "microsoft.containerregistry": {
+        "2019-08-15-preview": [
+          {
+            "resourceType": "*",
+            "path": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/containerregistry/data-plane/Microsoft.ContainerRegistry/preview/2019-08-15/containerregistry.json"
+          }
+        ]
+      },
+      "microsoft.storage": {
+        "resourceType": "*",
+        "2019-07-07": []
+      }
+    }
+  }
