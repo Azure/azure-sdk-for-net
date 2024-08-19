@@ -47,7 +47,7 @@ namespace Azure.Data.Tables.Sas
         }
 
         /// <summary>
-        /// Initializes an instance of a <see cref="TableSasBuilder"/> with no details set. At minimum, additional properties must be set to make create a valid SaS.
+        /// Initializes an instance of a <see cref="TableSasBuilder"/> with no details set. At minimum, additional properties must be set to create a valid SaS.
         /// These include setting the <see cref="TableName"/>, permissions, and an expiry. Permissions and expiry can also be specified in a shared access policy, which can be
         /// selected by specifying the name of the policy on the <see cref="Identifier"/> property.
         ///
