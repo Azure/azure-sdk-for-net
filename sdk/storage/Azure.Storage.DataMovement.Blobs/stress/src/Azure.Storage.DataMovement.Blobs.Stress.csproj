@@ -1,9 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Description>Azure DataMovement Blobs Stress Testing</Description>
+    <Version>12.0.0-beta.6</Version>
+    <PackageTags>Microsoft Azure Storage DataMovement, DataMovement, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+    <NoWarn>
+      <!-- TODO: Investigate and remove suppressions https://github.com/Azure/azure-sdk-for-net/issues/17154 -->
+      $(NoWarn);CA2213
+    </NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core.Amqp" />
+    <PackageReference Include="Microsoft.Azure.Amqp" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="Azure.Storage.Blobs" />
+    <PackageReference Include="CommandLineParser" />
+    <PackageReference Include="Microsoft.ApplicationInsights" />
+  </ItemGroup>
 
 </Project>
