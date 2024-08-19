@@ -24,8 +24,12 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="id">The <see cref="Id" /> from a previous <see cref="KeyVaultBackupOperation" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="id"/> is empty.</exception>
         public KeyVaultPreRestoreOperation(KeyVaultBackupClient client, string id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
             _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal>(client, id);
         }
 
@@ -34,8 +38,12 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="response">The <see cref="ResponseWithHeaders{T, THeaders}" /> returned from <see cref="KeyVaultBackupClient.StartPreRestore"/> or <see cref="KeyVaultBackupClient.StartPreRestoreAsync"/>.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="client"/> or <paramref name="response"/> is null.</exception>
         internal KeyVaultPreRestoreOperation(KeyVaultBackupClient client, ResponseWithHeaders<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders> response)
         {
+            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(response, nameof(response));
+
             _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal>(client, response);
         }
 
@@ -48,6 +56,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="value"/> or <paramref name="response"/> or <paramref name="client"/> is null.</exception>
         internal KeyVaultPreRestoreOperation(RestoreDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
+            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(response, nameof(response));
+            Argument.AssertNotNull(client, nameof(client));
+
             _operationInternal = new RestoreOperationInternal<AzureSecurityKeyVaultAdministrationPreFullRestoreOperationHeaders, KeyVaultRestoreResult, RestoreDetailsInternal>(value, response, client);
         }
 

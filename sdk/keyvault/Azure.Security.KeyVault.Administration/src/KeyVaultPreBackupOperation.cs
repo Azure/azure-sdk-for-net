@@ -33,9 +33,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
         /// <param name="id">The <see cref="Id" /> from a previous <see cref="KeyVaultPreBackupOperation" />.</param>
         /// <exception cref="ArgumentNullException"><paramref name="id"/> or <paramref name="client"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="id"/> is empty.</exception>
         public KeyVaultPreBackupOperation(KeyVaultBackupClient client, string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(client, nameof(client));
 
             _client = client;
@@ -62,6 +63,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="value">The <see cref="FullBackupDetailsInternal" /> that will be returned from <see cref="Value" />.</param>
         /// <param name="response">The <see cref="Response" /> that will be returned from <see cref="GetRawResponse" />.</param>
         /// <param name="client">An instance of <see cref="KeyVaultBackupClient" />.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/>, <paramref name="response"/>, or <paramref name="client"/> is null.</exception>
         internal KeyVaultPreBackupOperation(FullBackupDetailsInternal value, Response response, KeyVaultBackupClient client)
         {
             Argument.AssertNotNull(value, nameof(value));
