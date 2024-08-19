@@ -47,7 +47,7 @@ public class ClientLoggingPolicy : PipelinePolicy
         _logContent = loggingOptions.IsLoggingContentEnabled;
         _maxLength = loggingOptions.LoggedContentSizeLimit;
         PipelineMessageSanitizer sanitizer = new(loggingOptions.AllowedQueryParameters.ToArray(), loggingOptions.AllowedHeaderNames.ToArray());
-        _logger = loggingOptions.LoggerFactory.CreateLogger("System-ClientModel");
+        _logger = loggingOptions.LoggerFactory.CreateLogger("System.ClientModel");
         _handler = new LoggingHandler(_logger, sanitizer);
     }
 

@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace System.ClientModel.Primitives;
 
@@ -38,6 +40,8 @@ public class ClientRetryPolicy : PipelinePolicy
         _maxRetries = maxRetries;
         _initialDelay = DefaultInitialDelay;
     }
+
+    internal LoggingHandler? LogHandler { get; set; } = null;
 
     /// <inheritdoc/>
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
@@ -121,8 +125,7 @@ public class ClientRetryPolicy : PipelinePolicy
                 message.RetryCount++;
                 OnTryComplete(message);
 
-                // TODO - we need to pass the logging options to the retry policy
-                //LoggingHandler.LogRequestRetrying(_logger, message.LoggingCorrelationId, message.RetryCount, elapsed);
+                LogHandler?.LogRequestRetrying(message.LoggingCorrelationId ?? string.Empty, message.RetryCount, elapsed);
 
                 continue;
             }
