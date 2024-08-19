@@ -371,15 +371,15 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SettingResource.CreateResourceIdentifier" /> to create a <see cref="SettingResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsSettingResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SettingResource"/> object. </returns>
-        public virtual SettingResource GetSettingResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsSettingResource"/> object. </returns>
+        public virtual SecurityInsightsSettingResource GetSecurityInsightsSettingResource(ResourceIdentifier id)
         {
-            SettingResource.ValidateResourceId(id);
-            return new SettingResource(Client, id);
+            SecurityInsightsSettingResource.ValidateResourceId(id);
+            return new SecurityInsightsSettingResource(Client, id);
         }
 
         /// <summary>

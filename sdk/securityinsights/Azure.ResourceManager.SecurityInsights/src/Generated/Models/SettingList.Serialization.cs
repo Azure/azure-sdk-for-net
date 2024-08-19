@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            IReadOnlyList<SettingData> value = default;
+            IReadOnlyList<SecurityInsightsSettingData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<SettingData> array = new List<SettingData>();
+                    List<SecurityInsightsSettingData> array = new List<SecurityInsightsSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SettingData.DeserializeSettingData(item, options));
+                        array.Add(SecurityInsightsSettingData.DeserializeSecurityInsightsSettingData(item, options));
                     }
                     value = array;
                     continue;

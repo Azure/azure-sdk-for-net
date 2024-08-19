@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Settings with single toggle. </summary>
-    public partial class Anomalies : SettingData
+    public partial class Anomalies : SecurityInsightsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="Anomalies"/>. </summary>
         public Anomalies()

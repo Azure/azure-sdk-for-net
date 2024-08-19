@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Unknown version of Settings. </summary>
-    internal partial class UnknownSettings : SettingData
+    internal partial class UnknownSettings : SecurityInsightsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSettings"/>. </summary>
         /// <param name="id"> The id. </param>

@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="requiredInputFieldsSets"> List of the fields of the source entity that are required to run the query. </param>
         /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
         /// <param name="templateName"> The template id this activity was created from. </param>
-        /// <param name="enabled"> Determines whether this activity is enabled or disabled. </param>
+        /// <param name="isEnabled"> Determines whether this activity is enabled or disabled. </param>
         /// <param name="createdTimeUtc"> The time the activity was created. </param>
         /// <param name="lastModifiedTimeUtc"> The last time the activity was updated. </param>
-        internal ActivityEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, string content, string description, ActivityEntityQueriesPropertiesQueryDefinitions queryDefinitions, EntityType? inputEntityType, IList<IList<string>> requiredInputFieldsSets, IDictionary<string, IList<string>> entitiesFilter, string templateName, bool? enabled, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastModifiedTimeUtc) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        internal ActivityEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, string content, string description, ActivityEntityQueriesPropertiesQueryDefinitions queryDefinitions, EntityType? inputEntityType, IList<IList<string>> requiredInputFieldsSets, IDictionary<string, IList<string>> entitiesFilter, string templateName, bool? isEnabled, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastModifiedTimeUtc) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Title = title;
             Content = content;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             RequiredInputFieldsSets = requiredInputFieldsSets;
             EntitiesFilter = entitiesFilter;
             TemplateName = templateName;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             CreatedTimeUtc = createdTimeUtc;
             LastModifiedTimeUtc = lastModifiedTimeUtc;
             Kind = kind;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> The template id this activity was created from. </summary>
         public string TemplateName { get; set; }
         /// <summary> Determines whether this activity is enabled or disabled. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The time the activity was created. </summary>
         public DateTimeOffset? CreatedTimeUtc { get; }
         /// <summary> The last time the activity was updated. </summary>

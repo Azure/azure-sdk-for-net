@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("templateName"u8);
                 writer.WriteStringValue(TemplateName);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedTimeUtc))
             {

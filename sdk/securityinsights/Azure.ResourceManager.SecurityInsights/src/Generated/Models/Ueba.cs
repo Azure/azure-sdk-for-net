@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Settings with single toggle. </summary>
-    public partial class Ueba : SettingData
+    public partial class Ueba : SecurityInsightsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="Ueba"/>. </summary>
         public Ueba()

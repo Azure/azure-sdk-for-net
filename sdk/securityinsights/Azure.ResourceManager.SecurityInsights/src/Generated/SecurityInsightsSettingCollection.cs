@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SettingResource"/> and their operations.
-    /// Each <see cref="SettingResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
-    /// To get a <see cref="SettingCollection"/> instance call the GetSettings method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// A class representing a collection of <see cref="SecurityInsightsSettingResource"/> and their operations.
+    /// Each <see cref="SecurityInsightsSettingResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// To get a <see cref="SecurityInsightsSettingCollection"/> instance call the GetSecurityInsightsSettings method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
     /// </summary>
-    public partial class SettingCollection : ArmCollection, IEnumerable<SettingResource>, IAsyncEnumerable<SettingResource>
+    public partial class SecurityInsightsSettingCollection : ArmCollection, IEnumerable<SecurityInsightsSettingResource>, IAsyncEnumerable<SecurityInsightsSettingResource>
     {
-        private readonly ClientDiagnostics _settingProductSettingsClientDiagnostics;
-        private readonly ProductSettingsRestOperations _settingProductSettingsRestClient;
+        private readonly ClientDiagnostics _securityInsightsSettingProductSettingsClientDiagnostics;
+        private readonly ProductSettingsRestOperations _securityInsightsSettingProductSettingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SettingCollection"/> class for mocking. </summary>
-        protected SettingCollection()
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsSettingCollection"/> class for mocking. </summary>
+        protected SecurityInsightsSettingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SettingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsSettingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityInsightsSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _settingProductSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SettingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SettingResource.ResourceType, out string settingProductSettingsApiVersion);
-            _settingProductSettingsRestClient = new ProductSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, settingProductSettingsApiVersion);
+            _securityInsightsSettingProductSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsSettingResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SecurityInsightsSettingResource.ResourceType, out string securityInsightsSettingProductSettingsApiVersion);
+            _securityInsightsSettingProductSettingsRestClient = new ProductSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsSettingProductSettingsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SettingResource"/></description>
+        /// <description><see cref="SecurityInsightsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="settingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="settingsName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string settingsName, SettingData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityInsightsSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string settingsName, SecurityInsightsSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsName, nameof(settingsName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _settingProductSettingsClientDiagnostics.CreateScope("SettingCollection.CreateOrUpdate");
+            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _settingProductSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _settingProductSettingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, data);
+                var response = await _securityInsightsSettingProductSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _securityInsightsSettingProductSettingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SettingResource>(Response.FromValue(new SettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsSettingResource>(Response.FromValue(new SecurityInsightsSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SettingResource"/></description>
+        /// <description><see cref="SecurityInsightsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="settingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="settingsName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SettingResource> CreateOrUpdate(WaitUntil waitUntil, string settingsName, SettingData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityInsightsSettingResource> CreateOrUpdate(WaitUntil waitUntil, string settingsName, SecurityInsightsSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsName, nameof(settingsName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _settingProductSettingsClientDiagnostics.CreateScope("SettingCollection.CreateOrUpdate");
+            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _settingProductSettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, data, cancellationToken);
-                var uri = _settingProductSettingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, data);
+                var response = _securityInsightsSettingProductSettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, data, cancellationToken);
+                var uri = _securityInsightsSettingProductSettingsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SettingResource>(Response.FromValue(new SettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsSettingResource>(Response.FromValue(new SecurityInsightsSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SettingResource"/></description>
+        /// <description><see cref="SecurityInsightsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="settingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="settingsName"/> is null. </exception>
-        public virtual async Task<Response<SettingResource>> GetAsync(string settingsName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsSettingResource>> GetAsync(string settingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsName, nameof(settingsName));
 
-            using var scope = _settingProductSettingsClientDiagnostics.CreateScope("SettingCollection.Get");
+            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _settingProductSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsSettingProductSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SettingResource"/></description>
+        /// <description><see cref="SecurityInsightsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="settingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="settingsName"/> is null. </exception>
-        public virtual Response<SettingResource> Get(string settingsName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsSettingResource> Get(string settingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsName, nameof(settingsName));
 
-            using var scope = _settingProductSettingsClientDiagnostics.CreateScope("SettingCollection.Get");
+            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _settingProductSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, cancellationToken);
+                var response = _securityInsightsSettingProductSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SettingResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,16 +260,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SettingResource"/></description>
+        /// <description><see cref="SecurityInsightsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SettingResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SettingResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityInsightsSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityInsightsSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _settingProductSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SettingResource(Client, SettingData.DeserializeSettingData(e)), _settingProductSettingsClientDiagnostics, Pipeline, "SettingCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsSettingProductSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SecurityInsightsSettingResource(Client, SecurityInsightsSettingData.DeserializeSecurityInsightsSettingData(e)), _securityInsightsSettingProductSettingsClientDiagnostics, Pipeline, "SecurityInsightsSettingCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -289,16 +289,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SettingResource"/></description>
+        /// <description><see cref="SecurityInsightsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SettingResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SettingResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityInsightsSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityInsightsSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _settingProductSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SettingResource(Client, SettingData.DeserializeSettingData(e)), _settingProductSettingsClientDiagnostics, Pipeline, "SettingCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsSettingProductSettingsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SecurityInsightsSettingResource(Client, SecurityInsightsSettingData.DeserializeSecurityInsightsSettingData(e)), _securityInsightsSettingProductSettingsClientDiagnostics, Pipeline, "SecurityInsightsSettingCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SettingResource"/></description>
+        /// <description><see cref="SecurityInsightsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNullOrEmpty(settingsName, nameof(settingsName));
 
-            using var scope = _settingProductSettingsClientDiagnostics.CreateScope("SettingCollection.Exists");
+            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _settingProductSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsSettingProductSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SettingResource"/></description>
+        /// <description><see cref="SecurityInsightsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,11 +373,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNullOrEmpty(settingsName, nameof(settingsName));
 
-            using var scope = _settingProductSettingsClientDiagnostics.CreateScope("SettingCollection.Exists");
+            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _settingProductSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, cancellationToken: cancellationToken);
+                var response = _securityInsightsSettingProductSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SettingResource"/></description>
+        /// <description><see cref="SecurityInsightsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,18 +412,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="settingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="settingsName"/> is null. </exception>
-        public virtual async Task<NullableResponse<SettingResource>> GetIfExistsAsync(string settingsName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SecurityInsightsSettingResource>> GetIfExistsAsync(string settingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsName, nameof(settingsName));
 
-            using var scope = _settingProductSettingsClientDiagnostics.CreateScope("SettingCollection.GetIfExists");
+            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _settingProductSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsSettingProductSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<SettingResource>(response.GetRawResponse());
-                return Response.FromValue(new SettingResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SecurityInsightsSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SettingResource"/></description>
+        /// <description><see cref="SecurityInsightsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,18 +457,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="settingsName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="settingsName"/> is null. </exception>
-        public virtual NullableResponse<SettingResource> GetIfExists(string settingsName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SecurityInsightsSettingResource> GetIfExists(string settingsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(settingsName, nameof(settingsName));
 
-            using var scope = _settingProductSettingsClientDiagnostics.CreateScope("SettingCollection.GetIfExists");
+            using var scope = _securityInsightsSettingProductSettingsClientDiagnostics.CreateScope("SecurityInsightsSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _settingProductSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, cancellationToken: cancellationToken);
+                var response = _securityInsightsSettingProductSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, settingsName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<SettingResource>(response.GetRawResponse());
-                return Response.FromValue(new SettingResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SecurityInsightsSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        IEnumerator<SettingResource> IEnumerable<SettingResource>.GetEnumerator()
+        IEnumerator<SecurityInsightsSettingResource> IEnumerable<SecurityInsightsSettingResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SettingResource> IAsyncEnumerable<SettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SecurityInsightsSettingResource> IAsyncEnumerable<SecurityInsightsSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

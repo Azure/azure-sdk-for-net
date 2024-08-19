@@ -1463,11 +1463,11 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetSecurityMLAnalyticsSettings().Get(settingsResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SettingResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
-        /// <returns> An object representing collection of SettingResources and their operations over a SettingResource. </returns>
-        public virtual SettingCollection GetSettings()
+        /// <summary> Gets a collection of SecurityInsightsSettingResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
+        /// <returns> An object representing collection of SecurityInsightsSettingResources and their operations over a SecurityInsightsSettingResource. </returns>
+        public virtual SecurityInsightsSettingCollection GetSecurityInsightsSettings()
         {
-            return GetCachedClient(client => new SettingCollection(client, Id));
+            return GetCachedClient(client => new SecurityInsightsSettingCollection(client, Id));
         }
 
         /// <summary>
@@ -1487,7 +1487,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SettingResource"/></description>
+        /// <description><see cref="SecurityInsightsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1496,9 +1496,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="settingsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="settingsName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SettingResource>> GetSettingAsync(string settingsName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsSettingResource>> GetSecurityInsightsSettingAsync(string settingsName, CancellationToken cancellationToken = default)
         {
-            return await GetSettings().GetAsync(settingsName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsSettings().GetAsync(settingsName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1518,7 +1518,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SettingResource"/></description>
+        /// <description><see cref="SecurityInsightsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1527,9 +1527,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="settingsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="settingsName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SettingResource> GetSetting(string settingsName, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsSettingResource> GetSecurityInsightsSetting(string settingsName, CancellationToken cancellationToken = default)
         {
-            return GetSettings().Get(settingsName, cancellationToken);
+            return GetSecurityInsightsSettings().Get(settingsName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SourceControlResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>

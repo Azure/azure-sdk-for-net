@@ -14,12 +14,12 @@ using Azure.ResourceManager.SecurityInsights.Models;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing the Setting data model.
+    /// A class representing the SecurityInsightsSetting data model.
     /// The Setting.
-    /// Please note <see cref="SettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="SecurityInsightsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="Anomalies"/>, <see cref="EntityAnalytics"/>, <see cref="EyesOn"/> and <see cref="Ueba"/>.
     /// </summary>
-    public abstract partial class SettingData : ResourceData
+    public abstract partial class SecurityInsightsSettingData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SettingData"/>. </summary>
-        protected SettingData()
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSettingData"/>. </summary>
+        protected SecurityInsightsSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SettingData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="kind"> The kind of the setting. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ETag = etag;

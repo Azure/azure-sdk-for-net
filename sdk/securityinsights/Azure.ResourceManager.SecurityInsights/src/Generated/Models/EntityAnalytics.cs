@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Settings with single toggle. </summary>
-    public partial class EntityAnalytics : SettingData
+    public partial class EntityAnalytics : SecurityInsightsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="EntityAnalytics"/>. </summary>
         public EntityAnalytics()

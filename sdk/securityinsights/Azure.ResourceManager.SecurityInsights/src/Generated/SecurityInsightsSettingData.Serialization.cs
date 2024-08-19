@@ -14,16 +14,16 @@ using Azure.ResourceManager.SecurityInsights.Models;
 namespace Azure.ResourceManager.SecurityInsights
 {
     [PersistableModelProxy(typeof(UnknownSettings))]
-    public partial class SettingData : IUtf8JsonSerializable, IJsonModel<SettingData>
+    public partial class SecurityInsightsSettingData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsSettingData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SettingData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsSettingData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityInsightsSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SettingData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SettingData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsSettingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteEndObject();
         }
 
-        SettingData IJsonModel<SettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecurityInsightsSettingData IJsonModel<SecurityInsightsSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SettingData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SettingData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsSettingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSettingData(document.RootElement, options);
+            return DeserializeSecurityInsightsSettingData(document.RootElement, options);
         }
 
-        internal static SettingData DeserializeSettingData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SecurityInsightsSettingData DeserializeSecurityInsightsSettingData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -105,35 +105,35 @@ namespace Azure.ResourceManager.SecurityInsights
             return UnknownSettings.DeserializeUnknownSettings(element, options);
         }
 
-        BinaryData IPersistableModel<SettingData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SecurityInsightsSettingData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SettingData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsSettingData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SettingData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsSettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SettingData IPersistableModel<SettingData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SecurityInsightsSettingData IPersistableModel<SecurityInsightsSettingData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SettingData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsSettingData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSettingData(document.RootElement, options);
+                        return DeserializeSecurityInsightsSettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SettingData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsSettingData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityInsightsSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

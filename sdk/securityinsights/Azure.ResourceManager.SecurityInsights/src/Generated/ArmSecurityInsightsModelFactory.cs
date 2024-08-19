@@ -1850,15 +1850,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SettingData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the setting. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="SecurityInsights.SettingData"/> instance for mocking. </returns>
-        public static SettingData SettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsSettingData"/> instance for mocking. </returns>
+        public static SecurityInsightsSettingData SecurityInsightsSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
         {
             return new UnknownSettings(
                 id,
@@ -3576,11 +3576,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="requiredInputFieldsSets"> List of the fields of the source entity that are required to run the query. </param>
         /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
         /// <param name="templateName"> The template id this activity was created from. </param>
-        /// <param name="enabled"> Determines whether this activity is enabled or disabled. </param>
+        /// <param name="isEnabled"> Determines whether this activity is enabled or disabled. </param>
         /// <param name="createdTimeUtc"> The time the activity was created. </param>
         /// <param name="lastModifiedTimeUtc"> The last time the activity was updated. </param>
         /// <returns> A new <see cref="Models.ActivityEntityQuery"/> instance for mocking. </returns>
-        public static ActivityEntityQuery ActivityEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string title = null, string content = null, string description = null, string query = null, EntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null, string templateName = null, bool? enabled = null, DateTimeOffset? createdTimeUtc = null, DateTimeOffset? lastModifiedTimeUtc = null)
+        public static ActivityEntityQuery ActivityEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string title = null, string content = null, string description = null, string query = null, EntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null, string templateName = null, bool? isEnabled = null, DateTimeOffset? createdTimeUtc = null, DateTimeOffset? lastModifiedTimeUtc = null)
         {
             requiredInputFieldsSets ??= new List<IList<string>>();
             entitiesFilter ??= new Dictionary<string, IList<string>>();
@@ -3601,7 +3601,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 requiredInputFieldsSets?.ToList(),
                 entitiesFilter,
                 templateName,
-                enabled,
+                isEnabled,
                 createdTimeUtc,
                 lastModifiedTimeUtc);
         }
@@ -3620,11 +3620,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="requiredInputFieldsSets"> List of the fields of the source entity that are required to run the query. </param>
         /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
         /// <param name="templateName"> The template id this activity was created from. </param>
-        /// <param name="enabled"> Determines whether this activity is enabled or disabled. </param>
+        /// <param name="isEnabled"> Determines whether this activity is enabled or disabled. </param>
         /// <param name="createdTimeUtc"> The time the activity was created. </param>
         /// <param name="lastModifiedTimeUtc"> The last time the activity was updated. </param>
         /// <returns> A new <see cref="Models.ActivityCustomEntityQuery"/> instance for mocking. </returns>
-        public static ActivityCustomEntityQuery ActivityCustomEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string title = null, string content = null, string description = null, string query = null, EntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null, string templateName = null, bool? enabled = null, DateTimeOffset? createdTimeUtc = null, DateTimeOffset? lastModifiedTimeUtc = null)
+        public static ActivityCustomEntityQuery ActivityCustomEntityQuery(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string title = null, string content = null, string description = null, string query = null, EntityType? inputEntityType = null, IEnumerable<IList<string>> requiredInputFieldsSets = null, IDictionary<string, IList<string>> entitiesFilter = null, string templateName = null, bool? isEnabled = null, DateTimeOffset? createdTimeUtc = null, DateTimeOffset? lastModifiedTimeUtc = null)
         {
             requiredInputFieldsSets ??= new List<IList<string>>();
             entitiesFilter ??= new Dictionary<string, IList<string>>();
@@ -3645,7 +3645,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 requiredInputFieldsSets?.ToList(),
                 entitiesFilter,
                 templateName,
-                enabled,
+                isEnabled,
                 createdTimeUtc,
                 lastModifiedTimeUtc);
         }

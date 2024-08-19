@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Settings with single toggle. </summary>
-    public partial class EyesOn : SettingData
+    public partial class EyesOn : SecurityInsightsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="EyesOn"/>. </summary>
         public EyesOn()
