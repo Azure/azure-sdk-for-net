@@ -1060,5 +1060,399 @@ namespace Azure.AI.Vision.Face.Samples
 
             Response<IReadOnlyList<LivenessSessionAuditEntry>> response = await client.GetLivenessWithVerifySessionAuditEntriesAsync("<sessionId>", start: "<start>", top: 1234);
         }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceSessionClient_DetectFromSessionImage_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                sessionImageId = "<sessionImageId>",
+            });
+            Response response = client.DetectFromSessionImage(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("top").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("left").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("width").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("height").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceSessionClient_DetectFromSessionImage_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                sessionImageId = "<sessionImageId>",
+            });
+            Response response = await client.DetectFromSessionImageAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("top").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("left").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("width").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("height").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceSessionClient_DetectFromSessionImage_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceDetectionResult>> response = client.DetectFromSessionImage("<sessionImageId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceSessionClient_DetectFromSessionImage_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceDetectionResult>> response = await client.DetectFromSessionImageAsync("<sessionImageId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceSessionClient_DetectFromSessionImage_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                sessionImageId = "<sessionImageId>",
+            });
+            Response response = client.DetectFromSessionImage(content, detectionModel: "detection_01", recognitionModel: "recognition_01", returnFaceId: true, returnFaceAttributes: new FaceAttributeType[] { FaceAttributeType.HeadPose }, returnFaceLandmarks: true, returnRecognitionModel: true, faceIdTimeToLive: 1234);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("recognitionModel").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("top").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("left").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("width").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("height").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilLeft").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilLeft").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilRight").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilRight").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseTip").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseTip").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthLeft").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthLeft").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthRight").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthRight").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftOuter").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftOuter").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftInner").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftInner").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftOuter").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftOuter").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftTop").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftTop").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftBottom").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftBottom").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftInner").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftInner").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightInner").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightInner").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightOuter").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightOuter").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightInner").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightInner").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightTop").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightTop").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightBottom").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightBottom").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightOuter").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightOuter").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootLeft").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootLeft").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootRight").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootRight").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarTop").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarTop").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarTop").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarTop").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarOutTip").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarOutTip").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarOutTip").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarOutTip").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipTop").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipTop").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipBottom").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipBottom").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipTop").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipTop").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipBottom").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipBottom").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("age").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("smile").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("facialHair").GetProperty("moustache").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("facialHair").GetProperty("beard").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("facialHair").GetProperty("sideburns").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("glasses").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("headPose").GetProperty("pitch").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("headPose").GetProperty("roll").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("headPose").GetProperty("yaw").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("bald").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("invisible").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("hairColor")[0].GetProperty("color").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("hairColor")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("occlusion").GetProperty("foreheadOccluded").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("occlusion").GetProperty("eyeOccluded").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("occlusion").GetProperty("mouthOccluded").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("accessories")[0].GetProperty("type").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("accessories")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("blur").GetProperty("blurLevel").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("blur").GetProperty("value").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("exposure").GetProperty("exposureLevel").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("exposure").GetProperty("value").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("noise").GetProperty("noiseLevel").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("noise").GetProperty("value").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("mask").GetProperty("noseAndMouthCovered").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("mask").GetProperty("type").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("qualityForRecognition").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceSessionClient_DetectFromSessionImage_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                sessionImageId = "<sessionImageId>",
+            });
+            Response response = await client.DetectFromSessionImageAsync(content, detectionModel: "detection_01", recognitionModel: "recognition_01", returnFaceId: true, returnFaceAttributes: new FaceAttributeType[] { FaceAttributeType.HeadPose }, returnFaceLandmarks: true, returnRecognitionModel: true, faceIdTimeToLive: 1234);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result[0].GetProperty("faceId").ToString());
+            Console.WriteLine(result[0].GetProperty("recognitionModel").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("top").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("left").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("width").ToString());
+            Console.WriteLine(result[0].GetProperty("faceRectangle").GetProperty("height").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilLeft").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilLeft").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilRight").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("pupilRight").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseTip").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseTip").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthLeft").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthLeft").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthRight").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("mouthRight").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftOuter").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftOuter").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftInner").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowLeftInner").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftOuter").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftOuter").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftTop").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftTop").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftBottom").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftBottom").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftInner").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeLeftInner").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightInner").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightInner").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightOuter").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyebrowRightOuter").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightInner").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightInner").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightTop").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightTop").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightBottom").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightBottom").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightOuter").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("eyeRightOuter").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootLeft").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootLeft").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootRight").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRootRight").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarTop").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarTop").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarTop").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarTop").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarOutTip").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseLeftAlarOutTip").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarOutTip").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("noseRightAlarOutTip").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipTop").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipTop").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipBottom").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("upperLipBottom").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipTop").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipTop").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipBottom").GetProperty("x").ToString());
+            Console.WriteLine(result[0].GetProperty("faceLandmarks").GetProperty("underLipBottom").GetProperty("y").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("age").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("smile").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("facialHair").GetProperty("moustache").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("facialHair").GetProperty("beard").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("facialHair").GetProperty("sideburns").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("glasses").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("headPose").GetProperty("pitch").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("headPose").GetProperty("roll").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("headPose").GetProperty("yaw").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("bald").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("invisible").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("hairColor")[0].GetProperty("color").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("hair").GetProperty("hairColor")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("occlusion").GetProperty("foreheadOccluded").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("occlusion").GetProperty("eyeOccluded").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("occlusion").GetProperty("mouthOccluded").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("accessories")[0].GetProperty("type").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("accessories")[0].GetProperty("confidence").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("blur").GetProperty("blurLevel").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("blur").GetProperty("value").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("exposure").GetProperty("exposureLevel").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("exposure").GetProperty("value").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("noise").GetProperty("noiseLevel").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("noise").GetProperty("value").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("mask").GetProperty("noseAndMouthCovered").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("mask").GetProperty("type").ToString());
+            Console.WriteLine(result[0].GetProperty("faceAttributes").GetProperty("qualityForRecognition").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceSessionClient_DetectFromSessionImage_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceDetectionResult>> response = client.DetectFromSessionImage("<sessionImageId>", detectionModel: FaceDetectionModel.Detection01, recognitionModel: FaceRecognitionModel.Recognition01, returnFaceId: true, returnFaceAttributes: new FaceAttributeType[] { FaceAttributeType.HeadPose }, returnFaceLandmarks: true, returnRecognitionModel: true, faceIdTimeToLive: 1234);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceSessionClient_DetectFromSessionImage_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response<IReadOnlyList<FaceDetectionResult>> response = await client.DetectFromSessionImageAsync("<sessionImageId>", detectionModel: FaceDetectionModel.Detection01, recognitionModel: FaceRecognitionModel.Recognition01, returnFaceId: true, returnFaceAttributes: new FaceAttributeType[] { FaceAttributeType.HeadPose }, returnFaceLandmarks: true, returnRecognitionModel: true, faceIdTimeToLive: 1234);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceSessionClient_GetSessionImage_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response response = client.GetSessionImage("<sessionImageId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceSessionClient_GetSessionImage_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response response = await client.GetSessionImageAsync("<sessionImageId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceSessionClient_GetSessionImage_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response<BinaryData> response = client.GetSessionImage("<sessionImageId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceSessionClient_GetSessionImage_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response<BinaryData> response = await client.GetSessionImageAsync("<sessionImageId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceSessionClient_GetSessionImage_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response response = client.GetSessionImage("<sessionImageId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceSessionClient_GetSessionImage_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response response = await client.GetSessionImageAsync("<sessionImageId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_FaceSessionClient_GetSessionImage_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response<BinaryData> response = client.GetSessionImage("<sessionImageId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_FaceSessionClient_GetSessionImage_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            FaceSessionClient client = new FaceSessionClient(endpoint, credential);
+
+            Response<BinaryData> response = await client.GetSessionImageAsync("<sessionImageId>");
+        }
     }
 }

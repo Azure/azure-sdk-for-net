@@ -13,16 +13,16 @@ namespace Azure.AI.Vision.Face.Samples
     public partial class Sample5_LargePersonGroup : FaceSamplesBase
     {
         [Test]
-        public async Task VerifyAndIdentifyFromLargePersonGroupAsync()
+        public void VerifyAndIdentifyFromLargePersonGroup()
         {
             var groupClient = CreateLargePersonGroupClient();
-            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_CreateLargePersonGroupAsync
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_CreateLargePersonGroup
             var groupId = "lpg_family1";
 
-            await groupClient.CreateAsync(groupId, "Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
+            groupClient.Create(groupId, "Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
             #endregion
 
-            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_CreatePersonAndAddFacesAsync
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_CreatePersonAndAddFaces
             var persons = new[]
             {
                 new { Name = "Bill", UserData = "Dad", ImageUrls = new[] { FaceTestConstant.UrlFamily1Dad1Image, FaceTestConstant.UrlFamily1Dad2Image } },
@@ -33,45 +33,45 @@ namespace Azure.AI.Vision.Face.Samples
 
             foreach (var person in persons)
             {
-                var createPersonResponse = await groupClient.CreatePersonAsync(groupId, person.Name, userData: person.UserData);
+                var createPersonResponse = groupClient.CreatePerson(groupId, person.Name, userData: person.UserData);
                 var personId = createPersonResponse.Value.PersonId;
                 personIds.Add(person.Name, personId);
 
                 foreach (var imageUrl in person.ImageUrls)
                 {
-                    await groupClient.AddFaceAsync(groupId, personId, new Uri(imageUrl), userData: $"{person.UserData}-{imageUrl}", detectionModel: FaceDetectionModel.Detection03);
+                    groupClient.AddFace(groupId, personId, new Uri(imageUrl), userData: $"{person.UserData}-{imageUrl}", detectionModel: FaceDetectionModel.Detection03);
                 }
             }
             #endregion
 
-            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_TrainAsync
-            var operation = await groupClient.TrainAsync(WaitUntil.Completed, groupId);
-            await operation.WaitForCompletionResponseAsync();
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_Train
+            var operation = groupClient.Train(WaitUntil.Completed, groupId);
+            operation.WaitForCompletionResponse();
             #endregion
 
             var faceClient = CreateClient();
-            var detectResponse = await faceClient.DetectAsync(new Uri(FaceTestConstant.UrlFamily1Dad3Image), FaceDetectionModel.Detection03, FaceRecognitionModel.Recognition04, true);
+            var detectResponse = faceClient.Detect(new Uri(FaceTestConstant.UrlFamily1Dad3Image), FaceDetectionModel.Detection03, FaceRecognitionModel.Recognition04, true);
             var faceId = detectResponse.Value[0].FaceId.Value;
 
-            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_VerifyAsync
-            var verifyDadResponse = await faceClient.VerifyFromLargePersonGroupAsync(faceId, groupId, personIds["Bill"]);
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_Verify
+            var verifyDadResponse = faceClient.VerifyFromLargePersonGroup(faceId, groupId, personIds["Bill"]);
             Console.WriteLine($"Is the detected face Bill? {verifyDadResponse.Value.IsIdentical} ({verifyDadResponse.Value.Confidence})");
 
-            var verifyMomResponse = await faceClient.VerifyFromLargePersonGroupAsync(faceId, groupId, personIds["Clare"]);
+            var verifyMomResponse = faceClient.VerifyFromLargePersonGroup(faceId, groupId, personIds["Clare"]);
             Console.WriteLine($"Is the detected face Clare? {verifyMomResponse.Value.IsIdentical} ({verifyMomResponse.Value.Confidence})");
             #endregion
 
-            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_IdentifyAsync
-            var identifyResponse = await faceClient.IdentifyFromLargePersonGroupAsync(new[] { faceId }, groupId);
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_Identify
+            var identifyResponse = faceClient.IdentifyFromLargePersonGroup(new[] { faceId }, groupId);
             foreach (var candidate in identifyResponse.Value[0].Candidates)
             {
-                var person = await groupClient.GetPersonAsync(groupId, candidate.PersonId);
+                var person = groupClient.GetPerson(groupId, candidate.PersonId);
                 Console.WriteLine($"The detected face belongs to {person.Value.Name} ({candidate.Confidence})");
             }
             #endregion
 
-            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_DeleteLargePersonGroupAsync
-            await groupClient.DeleteAsync(groupId);
+            #region Snippet:VerifyAndIdentifyFromLargePersonGroup_DeleteLargePersonGroup
+            groupClient.Delete(groupId);
             #endregion
         }
     }

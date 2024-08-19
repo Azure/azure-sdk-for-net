@@ -13,16 +13,16 @@ namespace Azure.AI.Vision.Face.Samples
     public partial class Sample6_LargeFaceList : FaceSamplesBase
     {
         [Test]
-        public async Task FindSimilarFromLargeFaceListAsync()
+        public void FindSimilarFromLargeFaceList()
         {
             var listClient = CreateLargeFaceListClient();
 
-            #region Snippet:CreateLargeFaceListAsync
+            #region Snippet:CreateLargeFaceList
             var listId = "lfl_family1";
-            await listClient.CreateAsync(listId, "Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
+            listClient.Create(listId, "Family 1", userData: "A sweet family", recognitionModel: FaceRecognitionModel.Recognition04);
             #endregion
 
-            #region Snippet:AddFacesToLargeFaceListAsync
+            #region Snippet:AddFacesToLargeFaceList
             var faces = new[]
             {
                 new { UserData = "Dad", ImageUrl = new Uri(FaceTestConstant.UrlFamily1Dad1Image) },
@@ -33,30 +33,30 @@ namespace Azure.AI.Vision.Face.Samples
 
             foreach (var face in faces)
             {
-                var addFaceResponse = await listClient.AddFaceAsync(listId, face.ImageUrl, userData: face.UserData);
+                var addFaceResponse = listClient.AddFace(listId, face.ImageUrl, userData: face.UserData);
                 faceIds[addFaceResponse.Value.PersistedFaceId] = face.UserData;
             }
             #endregion
 
-            #region Snippet:TrainLargeFaceListAsync
-            var operation = await listClient.TrainAsync(WaitUntil.Completed, listId);
-            await operation.WaitForCompletionResponseAsync();
+            #region Snippet:TrainLargeFaceList
+            var operation = listClient.Train(WaitUntil.Completed, listId);
+            operation.WaitForCompletionResponse();
             #endregion
 
-            #region Snippet:FindSimilarFromLargeFaceListAsync
+            #region Snippet:FindSimilarFromLargeFaceList
             var faceClient = CreateClient();
-            var detectResponse = await faceClient.DetectAsync(new Uri(FaceTestConstant.UrlFamily1Dad3Image), FaceDetectionModel.Detection03, FaceRecognitionModel.Recognition04, true);
+            var detectResponse = faceClient.Detect(new Uri(FaceTestConstant.UrlFamily1Dad3Image), FaceDetectionModel.Detection03, FaceRecognitionModel.Recognition04, true);
             var faceId = detectResponse.Value[0].FaceId.Value;
 
-            var findSimilarResponse = await faceClient.FindSimilarFromLargeFaceListAsync(faceId, listId);
+            var findSimilarResponse = faceClient.FindSimilarFromLargeFaceList(faceId, listId);
             foreach (var similarFace in findSimilarResponse.Value)
             {
                 Console.WriteLine($"The detected face is similar to the face with '{faceIds[similarFace.PersistedFaceId.Value]}' ID {similarFace.PersistedFaceId} ({similarFace.Confidence})");
             }
             #endregion
 
-            #region Snippet:DeleteLargeFaceListAsync
-            await listClient.DeleteAsync(listId);
+            #region Snippet:DeleteLargeFaceList
+            listClient.Delete(listId);
             #endregion
         }
     }

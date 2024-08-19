@@ -106,18 +106,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks>
-        /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
-        ///
-        /// Permissions includes...
-        /// &gt;
-        /// *
-        ///   * Ability to call /detectLiveness/singleModal for up to 3 retries.
-        ///   * A token lifetime of 10 minutes.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt; Client access can be revoked by deleting the session using the Delete Liveness Session operation. To retrieve a result, use the Get Liveness Session. To audit the individual requests that a client has made to your resource, use the List Liveness Session Audit Entries.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-session for more details. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessSessionAsync(CreateLivenessSessionContent,CancellationToken)']/*" />
         public virtual async Task<Response<CreateLivenessSessionResult>> CreateLivenessSessionAsync(CreateLivenessSessionContent body, CancellationToken cancellationToken = default)
         {
@@ -133,18 +122,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks>
-        /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
-        ///
-        /// Permissions includes...
-        /// &gt;
-        /// *
-        ///   * Ability to call /detectLiveness/singleModal for up to 3 retries.
-        ///   * A token lifetime of 10 minutes.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt; Client access can be revoked by deleting the session using the Delete Liveness Session operation. To retrieve a result, use the Get Liveness Session. To audit the individual requests that a client has made to your resource, use the List Liveness Session Audit Entries.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-session for more details. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='CreateLivenessSession(CreateLivenessSessionContent,CancellationToken)']/*" />
         public virtual Response<CreateLivenessSessionResult> CreateLivenessSession(CreateLivenessSessionContent body, CancellationToken cancellationToken = default)
         {
@@ -306,7 +284,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        /// <summary> Get session result of detectLiveness/singleModal call. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-session-result for more details. </summary>
         /// <param name="sessionId"> The unique ID to reference this session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
@@ -321,7 +299,7 @@ namespace Azure.AI.Vision.Face
             return Response.FromValue(LivenessSession.FromResponse(response), response);
         }
 
-        /// <summary> Get session result of detectLiveness/singleModal call. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-session-result for more details. </summary>
         /// <param name="sessionId"> The unique ID to reference this session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
@@ -337,7 +315,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Get session result of detectLiveness/singleModal call.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-session-result for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -377,7 +355,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Get session result of detectLiveness/singleModal call.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-session-result for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -420,11 +398,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// List sessions from the last sessionId greater than the 'start'.
-        ///
-        /// The result should be ordered by sessionId in ascending order.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-sessions for more details. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessionsAsync(string,int?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<LivenessSessionItem>>> GetLivenessSessionsAsync(string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -445,11 +419,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// List sessions from the last sessionId greater than the 'start'.
-        ///
-        /// The result should be ordered by sessionId in ascending order.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-sessions for more details. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessSessions(string,int?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<LivenessSessionItem>> GetLivenessSessions(string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -540,7 +510,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        /// <summary> Gets session requests and response body for the session. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-session-audit-entries for more details. </summary>
         /// <param name="sessionId"> The unique ID to reference this session. </param>
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
@@ -565,7 +535,7 @@ namespace Azure.AI.Vision.Face
             return Response.FromValue(value, response);
         }
 
-        /// <summary> Gets session requests and response body for the session. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-session-audit-entries for more details. </summary>
         /// <param name="sessionId"> The unique ID to reference this session. </param>
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
@@ -591,7 +561,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Gets session requests and response body for the session.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-session-audit-entries for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -633,7 +603,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Gets session requests and response body for the session.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-session-audit-entries for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -678,26 +648,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks>
-        /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
-        ///
-        /// Permissions includes...
-        /// &gt;
-        /// *
-        ///   * Ability to call /detectLivenessWithVerify/singleModal for up to 3 retries.
-        ///   * A token lifetime of 10 minutes.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt;
-        /// &gt; *
-        /// &gt;   * Client access can be revoked by deleting the session using the Delete Liveness With Verify Session operation.
-        /// &gt;   * To retrieve a result, use the Get Liveness With Verify Session.
-        /// &gt;   * To audit the individual requests that a client has made to your resource, use the List Liveness With Verify Session Audit Entries.
-        ///
-        /// Alternative Option: Client device submits VerifyImage during the /detectLivenessWithVerify/singleModal call.
-        /// &gt; [!NOTE]
-        /// &gt; Extra measures should be taken to validate that the client is sending the expected VerifyImage.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-with-verify-session for more details. </remarks>
         internal virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionAsync(CreateLivenessWithVerifySessionJsonContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -712,26 +663,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks>
-        /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
-        ///
-        /// Permissions includes...
-        /// &gt;
-        /// *
-        ///   * Ability to call /detectLivenessWithVerify/singleModal for up to 3 retries.
-        ///   * A token lifetime of 10 minutes.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt;
-        /// &gt; *
-        /// &gt;   * Client access can be revoked by deleting the session using the Delete Liveness With Verify Session operation.
-        /// &gt;   * To retrieve a result, use the Get Liveness With Verify Session.
-        /// &gt;   * To audit the individual requests that a client has made to your resource, use the List Liveness With Verify Session Audit Entries.
-        ///
-        /// Alternative Option: Client device submits VerifyImage during the /detectLivenessWithVerify/singleModal call.
-        /// &gt; [!NOTE]
-        /// &gt; Extra measures should be taken to validate that the client is sending the expected VerifyImage.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-with-verify-session for more details. </remarks>
         internal virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySession(CreateLivenessWithVerifySessionJsonContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -822,24 +754,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="body"> Request content of liveness with verify session creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks>
-        /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
-        ///
-        /// Permissions includes...
-        /// &gt;
-        /// *
-        ///   * Ability to call /detectLivenessWithVerify/singleModal for up to 3 retries.
-        ///   * A token lifetime of 10 minutes.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt;
-        /// &gt; *
-        /// &gt;   * Client access can be revoked by deleting the session using the Delete Liveness With Verify Session operation.
-        /// &gt;   * To retrieve a result, use the Get Liveness With Verify Session.
-        /// &gt;   * To audit the individual requests that a client has made to your resource, use the List Liveness With Verify Session Audit Entries.
-        ///
-        /// Recommended Option: VerifyImage is provided during session creation.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-with-verify-session-with-verify-image for more details. </remarks>
         internal virtual async Task<Response<CreateLivenessWithVerifySessionResult>> CreateLivenessWithVerifySessionWithVerifyImageAsync(CreateLivenessWithVerifySessionMultipartContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -854,24 +769,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="body"> Request content of liveness with verify session creation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <remarks>
-        /// A session is best for client device scenarios where developers want to authorize a client device to perform only a liveness detection without granting full access to their resource. Created sessions have a limited life span and only authorize clients to perform the desired action before access is expired.
-        ///
-        /// Permissions includes...
-        /// &gt;
-        /// *
-        ///   * Ability to call /detectLivenessWithVerify/singleModal for up to 3 retries.
-        ///   * A token lifetime of 10 minutes.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt;
-        /// &gt; *
-        /// &gt;   * Client access can be revoked by deleting the session using the Delete Liveness With Verify Session operation.
-        /// &gt;   * To retrieve a result, use the Get Liveness With Verify Session.
-        /// &gt;   * To audit the individual requests that a client has made to your resource, use the List Liveness With Verify Session Audit Entries.
-        ///
-        /// Recommended Option: VerifyImage is provided during session creation.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/create-liveness-with-verify-session-with-verify-image for more details. </remarks>
         internal virtual Response<CreateLivenessWithVerifySessionResult> CreateLivenessWithVerifySessionWithVerifyImage(CreateLivenessWithVerifySessionMultipartContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -1032,7 +930,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        /// <summary> Get session result of detectLivenessWithVerify/singleModal call. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-session-result for more details. </summary>
         /// <param name="sessionId"> The unique ID to reference this session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
@@ -1047,7 +945,7 @@ namespace Azure.AI.Vision.Face
             return Response.FromValue(LivenessWithVerifySession.FromResponse(response), response);
         }
 
-        /// <summary> Get session result of detectLivenessWithVerify/singleModal call. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-session-result for more details. </summary>
         /// <param name="sessionId"> The unique ID to reference this session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
@@ -1063,7 +961,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Get session result of detectLivenessWithVerify/singleModal call.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-session-result for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1103,7 +1001,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Get session result of detectLivenessWithVerify/singleModal call.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-session-result for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1146,11 +1044,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// List sessions from the last sessionId greater than the "start".
-        ///
-        /// The result should be ordered by sessionId in ascending order.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-sessions for more details. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessionsAsync(string,int?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<LivenessSessionItem>>> GetLivenessWithVerifySessionsAsync(string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -1171,11 +1065,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// List sessions from the last sessionId greater than the "start".
-        ///
-        /// The result should be ordered by sessionId in ascending order.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-sessions for more details. </remarks>
         /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetLivenessWithVerifySessions(string,int?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<LivenessSessionItem>> GetLivenessWithVerifySessions(string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -1266,7 +1156,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        /// <summary> Gets session requests and response body for the session. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-session-audit-entries for more details. </summary>
         /// <param name="sessionId"> The unique ID to reference this session. </param>
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
@@ -1291,7 +1181,7 @@ namespace Azure.AI.Vision.Face
             return Response.FromValue(value, response);
         }
 
-        /// <summary> Gets session requests and response body for the session. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-session-audit-entries for more details. </summary>
         /// <param name="sessionId"> The unique ID to reference this session. </param>
         /// <param name="start"> List resources greater than the "start". It contains no more than 64 characters. Default is empty. </param>
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
@@ -1317,7 +1207,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Gets session requests and response body for the session.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-session-audit-entries for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1359,7 +1249,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Gets session requests and response body for the session.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-liveness-with-verify-session-audit-entries for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1391,6 +1281,270 @@ namespace Azure.AI.Vision.Face
             try
             {
                 using HttpMessage message = CreateGetLivenessWithVerifySessionAuditEntriesRequest(sessionId, start, top, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks, and attributes. </summary>
+        /// <param name="sessionImageId"> Id of session image. </param>
+        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
+        /// <param name="recognitionModel"> The 'recognitionModel' associated with the detected faceIds. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02', 'recognition_03' or 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. </param>
+        /// <param name="returnFaceId"> Return faceIds of the detected faces or not. The default value is true. </param>
+        /// <param name="returnFaceAttributes"> Analyze and return the one or more specified face attributes in the comma-separated string like 'returnFaceAttributes=headPose,glasses'. Face attribute analysis has additional computational and time cost. </param>
+        /// <param name="returnFaceLandmarks"> Return face landmarks of the detected faces or not. The default value is false. </param>
+        /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. This is only applicable when returnFaceId = true. </param>
+        /// <param name="faceIdTimeToLive"> The number of seconds for the face ID being cached. Supported range from 60 seconds up to 86400 seconds. The default value is 86400 (24 hours). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionImageId"/> is null. </exception>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-detection-operations/detect-from-session-image-id for more details. </remarks>
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='DetectFromSessionImageAsync(string,FaceDetectionModel?,FaceRecognitionModel?,bool?,IEnumerable{FaceAttributeType},bool?,bool?,int?,CancellationToken)']/*" />
+        public virtual async Task<Response<IReadOnlyList<FaceDetectionResult>>> DetectFromSessionImageAsync(string sessionImageId, FaceDetectionModel? detectionModel = null, FaceRecognitionModel? recognitionModel = null, bool? returnFaceId = null, IEnumerable<FaceAttributeType> returnFaceAttributes = null, bool? returnFaceLandmarks = null, bool? returnRecognitionModel = null, int? faceIdTimeToLive = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(sessionImageId, nameof(sessionImageId));
+
+            DetectFromSessionImageRequest detectFromSessionImageRequest = new DetectFromSessionImageRequest(sessionImageId, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DetectFromSessionImageAsync(detectFromSessionImageRequest.ToRequestContent(), detectionModel?.ToString(), recognitionModel?.ToString(), returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context).ConfigureAwait(false);
+            IReadOnlyList<FaceDetectionResult> value = default;
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            List<FaceDetectionResult> array = new List<FaceDetectionResult>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(FaceDetectionResult.DeserializeFaceDetectionResult(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary> Detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks, and attributes. </summary>
+        /// <param name="sessionImageId"> Id of session image. </param>
+        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. </param>
+        /// <param name="recognitionModel"> The 'recognitionModel' associated with the detected faceIds. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02', 'recognition_03' or 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. </param>
+        /// <param name="returnFaceId"> Return faceIds of the detected faces or not. The default value is true. </param>
+        /// <param name="returnFaceAttributes"> Analyze and return the one or more specified face attributes in the comma-separated string like 'returnFaceAttributes=headPose,glasses'. Face attribute analysis has additional computational and time cost. </param>
+        /// <param name="returnFaceLandmarks"> Return face landmarks of the detected faces or not. The default value is false. </param>
+        /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. This is only applicable when returnFaceId = true. </param>
+        /// <param name="faceIdTimeToLive"> The number of seconds for the face ID being cached. Supported range from 60 seconds up to 86400 seconds. The default value is 86400 (24 hours). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionImageId"/> is null. </exception>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-detection-operations/detect-from-session-image-id for more details. </remarks>
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='DetectFromSessionImage(string,FaceDetectionModel?,FaceRecognitionModel?,bool?,IEnumerable{FaceAttributeType},bool?,bool?,int?,CancellationToken)']/*" />
+        public virtual Response<IReadOnlyList<FaceDetectionResult>> DetectFromSessionImage(string sessionImageId, FaceDetectionModel? detectionModel = null, FaceRecognitionModel? recognitionModel = null, bool? returnFaceId = null, IEnumerable<FaceAttributeType> returnFaceAttributes = null, bool? returnFaceLandmarks = null, bool? returnRecognitionModel = null, int? faceIdTimeToLive = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(sessionImageId, nameof(sessionImageId));
+
+            DetectFromSessionImageRequest detectFromSessionImageRequest = new DetectFromSessionImageRequest(sessionImageId, null);
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = DetectFromSessionImage(detectFromSessionImageRequest.ToRequestContent(), detectionModel?.ToString(), recognitionModel?.ToString(), returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context);
+            IReadOnlyList<FaceDetectionResult> value = default;
+            using var document = JsonDocument.Parse(response.ContentStream);
+            List<FaceDetectionResult> array = new List<FaceDetectionResult>();
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                array.Add(FaceDetectionResult.DeserializeFaceDetectionResult(item));
+            }
+            value = array;
+            return Response.FromValue(value, response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks, and attributes.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectFromSessionImageAsync(string,FaceDetectionModel?,FaceRecognitionModel?,bool?,IEnumerable{FaceAttributeType},bool?,bool?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
+        /// <param name="recognitionModel"> The 'recognitionModel' associated with the detected faceIds. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02', 'recognition_03' or 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. Allowed values: "recognition_01" | "recognition_02" | "recognition_03" | "recognition_04". </param>
+        /// <param name="returnFaceId"> Return faceIds of the detected faces or not. The default value is true. </param>
+        /// <param name="returnFaceAttributes"> Analyze and return the one or more specified face attributes in the comma-separated string like 'returnFaceAttributes=headPose,glasses'. Face attribute analysis has additional computational and time cost. </param>
+        /// <param name="returnFaceLandmarks"> Return face landmarks of the detected faces or not. The default value is false. </param>
+        /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. This is only applicable when returnFaceId = true. </param>
+        /// <param name="faceIdTimeToLive"> The number of seconds for the face ID being cached. Supported range from 60 seconds up to 86400 seconds. The default value is 86400 (24 hours). </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='DetectFromSessionImageAsync(RequestContent,string,string,bool?,IEnumerable{FaceAttributeType},bool?,bool?,int?,RequestContext)']/*" />
+        public virtual async Task<Response> DetectFromSessionImageAsync(RequestContent content, string detectionModel = null, string recognitionModel = null, bool? returnFaceId = null, IEnumerable<FaceAttributeType> returnFaceAttributes = null, bool? returnFaceLandmarks = null, bool? returnRecognitionModel = null, int? faceIdTimeToLive = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.DetectFromSessionImage");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDetectFromSessionImageRequest(content, detectionModel, recognitionModel, returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Detect human faces in an image, return face rectangles, and optionally with faceIds, landmarks, and attributes.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DetectFromSessionImage(string,FaceDetectionModel?,FaceRecognitionModel?,bool?,IEnumerable{FaceAttributeType},bool?,bool?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="detectionModel"> The 'detectionModel' associated with the detected faceIds. Supported 'detectionModel' values include 'detection_01', 'detection_02' and 'detection_03'. The default value is 'detection_01'. Allowed values: "detection_01" | "detection_02" | "detection_03". </param>
+        /// <param name="recognitionModel"> The 'recognitionModel' associated with the detected faceIds. Supported 'recognitionModel' values include 'recognition_01', 'recognition_02', 'recognition_03' or 'recognition_04'. The default value is 'recognition_01'. 'recognition_04' is recommended since its accuracy is improved on faces wearing masks compared with 'recognition_03', and its overall accuracy is improved compared with 'recognition_01' and 'recognition_02'. Allowed values: "recognition_01" | "recognition_02" | "recognition_03" | "recognition_04". </param>
+        /// <param name="returnFaceId"> Return faceIds of the detected faces or not. The default value is true. </param>
+        /// <param name="returnFaceAttributes"> Analyze and return the one or more specified face attributes in the comma-separated string like 'returnFaceAttributes=headPose,glasses'. Face attribute analysis has additional computational and time cost. </param>
+        /// <param name="returnFaceLandmarks"> Return face landmarks of the detected faces or not. The default value is false. </param>
+        /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. This is only applicable when returnFaceId = true. </param>
+        /// <param name="faceIdTimeToLive"> The number of seconds for the face ID being cached. Supported range from 60 seconds up to 86400 seconds. The default value is 86400 (24 hours). </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='DetectFromSessionImage(RequestContent,string,string,bool?,IEnumerable{FaceAttributeType},bool?,bool?,int?,RequestContext)']/*" />
+        public virtual Response DetectFromSessionImage(RequestContent content, string detectionModel = null, string recognitionModel = null, bool? returnFaceId = null, IEnumerable<FaceAttributeType> returnFaceAttributes = null, bool? returnFaceLandmarks = null, bool? returnRecognitionModel = null, int? faceIdTimeToLive = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.DetectFromSessionImage");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDetectFromSessionImageRequest(content, detectionModel, recognitionModel, returnFaceId, returnFaceAttributes, returnFaceLandmarks, returnRecognitionModel, faceIdTimeToLive, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-session-image for more details. </summary>
+        /// <param name="sessionImageId"> The request ID of the image to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionImageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionImageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetSessionImageAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<BinaryData>> GetSessionImageAsync(string sessionImageId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sessionImageId, nameof(sessionImageId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetSessionImageAsync(sessionImageId, context).ConfigureAwait(false);
+            return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-session-image for more details. </summary>
+        /// <param name="sessionImageId"> The request ID of the image to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionImageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionImageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetSessionImage(string,CancellationToken)']/*" />
+        public virtual Response<BinaryData> GetSessionImage(string sessionImageId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sessionImageId, nameof(sessionImageId));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetSessionImage(sessionImageId, context);
+            return Response.FromValue(response.Content, response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-session-image for more details.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSessionImageAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sessionImageId"> The request ID of the image to be retrieved. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionImageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionImageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetSessionImageAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetSessionImageAsync(string sessionImageId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(sessionImageId, nameof(sessionImageId));
+
+            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.GetSessionImage");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSessionImageRequest(sessionImageId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/liveness-session-operations/get-session-image for more details.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSessionImage(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sessionImageId"> The request ID of the image to be retrieved. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionImageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionImageId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/FaceSessionClient.xml" path="doc/members/member[@name='GetSessionImage(string,RequestContext)']/*" />
+        public virtual Response GetSessionImage(string sessionImageId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(sessionImageId, nameof(sessionImageId));
+
+            using var scope = ClientDiagnostics.CreateScope("FaceSessionClient.GetSessionImage");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSessionImageRequest(sessionImageId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1608,6 +1762,67 @@ namespace Azure.AI.Vision.Face
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDetectFromSessionImageRequest(RequestContent content, string detectionModel, string recognitionModel, bool? returnFaceId, IEnumerable<FaceAttributeType> returnFaceAttributes, bool? returnFaceLandmarks, bool? returnRecognitionModel, int? faceIdTimeToLive, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/face/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/detect", false);
+            if (detectionModel != null)
+            {
+                uri.AppendQuery("detectionModel", detectionModel, true);
+            }
+            if (recognitionModel != null)
+            {
+                uri.AppendQuery("recognitionModel", recognitionModel, true);
+            }
+            if (returnFaceId != null)
+            {
+                uri.AppendQuery("returnFaceId", returnFaceId.Value, true);
+            }
+            if (returnFaceAttributes != null && !(returnFaceAttributes is ChangeTrackingList<FaceAttributeType> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                uri.AppendQueryDelimited("returnFaceAttributes", returnFaceAttributes, ",", true);
+            }
+            if (returnFaceLandmarks != null)
+            {
+                uri.AppendQuery("returnFaceLandmarks", returnFaceLandmarks.Value, true);
+            }
+            if (returnRecognitionModel != null)
+            {
+                uri.AppendQuery("returnRecognitionModel", returnRecognitionModel.Value, true);
+            }
+            if (faceIdTimeToLive != null)
+            {
+                uri.AppendQuery("faceIdTimeToLive", faceIdTimeToLive.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetSessionImageRequest(string sessionImageId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/face/", false);
+            uri.AppendRaw(_apiVersion, true);
+            uri.AppendPath("/session/sessionImages/", false);
+            uri.AppendPath(sessionImageId, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream");
             return message;
         }
 

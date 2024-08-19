@@ -66,21 +66,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// A Large Person Group is a container holding the uploaded person data, including the face recognition features. It can hold up to 1,000,000 entities.
-        ///
-        /// After creation, use "Create Large Person Group Person" to add person into the group, and call "Train Large Person Group" to get this group ready for "Identify From Large Person Group".
-        ///
-        /// No image will be stored. Only the person's extracted face feature(s) and userData will be stored on server until "Delete Large Person Group Person" or "Delete Large Person Group" is called.
-        ///
-        /// 'recognitionModel' should be specified to associate with this Large Person Group. The default value for 'recognitionModel' is 'recognition_01', if the latest model needed, please explicitly specify the model you need in this parameter. New faces that are added to an existing Large Person Group will use the recognition model that's already associated with the collection. Existing face feature(s) in a Large Person Group can't be updated to features extracted by another version of recognition model.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt;
-        /// &gt; *
-        /// &gt;   * Free-tier subscription quota: 1,000 Large Person Groups.
-        /// &gt;   * S0-tier subscription quota: 1,000,000 Large Person Groups.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/create-large-person-group for more details. </remarks>
         /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreateAsync(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
         public virtual async Task<Response> CreateAsync(string largePersonGroupId, string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
         {
@@ -101,21 +87,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// A Large Person Group is a container holding the uploaded person data, including the face recognition features. It can hold up to 1,000,000 entities.
-        ///
-        /// After creation, use "Create Large Person Group Person" to add person into the group, and call "Train Large Person Group" to get this group ready for "Identify From Large Person Group".
-        ///
-        /// No image will be stored. Only the person's extracted face feature(s) and userData will be stored on server until "Delete Large Person Group Person" or "Delete Large Person Group" is called.
-        ///
-        /// 'recognitionModel' should be specified to associate with this Large Person Group. The default value for 'recognitionModel' is 'recognition_01', if the latest model needed, please explicitly specify the model you need in this parameter. New faces that are added to an existing Large Person Group will use the recognition model that's already associated with the collection. Existing face feature(s) in a Large Person Group can't be updated to features extracted by another version of recognition model.
-        ///
-        /// &gt; [!NOTE]
-        /// &gt;
-        /// &gt; *
-        /// &gt;   * Free-tier subscription quota: 1,000 Large Person Groups.
-        /// &gt;   * S0-tier subscription quota: 1,000,000 Large Person Groups.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/create-large-person-group for more details. </remarks>
         /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='Create(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
         public virtual Response Create(string largePersonGroupId, string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
         {
@@ -214,7 +186,7 @@ namespace Azure.AI.Vision.Face
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete an existing Large Person Group with specified personGroupId. Persisted data in this Large Person Group will be deleted.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/delete-large-person-group for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -250,7 +222,7 @@ namespace Azure.AI.Vision.Face
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete an existing Large Person Group with specified personGroupId. Persisted data in this Large Person Group will be deleted.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/delete-large-person-group for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -284,7 +256,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        /// <summary> Retrieve the information of a Large Person Group, including its name, userData and recognitionModel. This API returns Large Person Group information only, use "Get Large Person Group Persons" instead to retrieve person information under the Large Person Group. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group for more details. </summary>
         /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -300,7 +272,7 @@ namespace Azure.AI.Vision.Face
             return Response.FromValue(LargePersonGroup.FromResponse(response), response);
         }
 
-        /// <summary> Retrieve the information of a Large Person Group, including its name, userData and recognitionModel. This API returns Large Person Group information only, use "Get Large Person Group Persons" instead to retrieve person information under the Large Person Group. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group for more details. </summary>
         /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -317,7 +289,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve the information of a Large Person Group, including its name, userData and recognitionModel. This API returns Large Person Group information only, use "Get Large Person Group Persons" instead to retrieve person information under the Large Person Group.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -358,7 +330,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve the information of a Large Person Group, including its name, userData and recognitionModel. This API returns Large Person Group information only, use "Get Large Person Group Persons" instead to retrieve person information under the Large Person Group.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -399,7 +371,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Update an existing Large Person Group's name and userData. The properties keep unchanged if they are not in request body.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/update-large-person-group for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -436,7 +408,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Update an existing Large Person Group's name and userData. The properties keep unchanged if they are not in request body.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/update-large-person-group for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -477,20 +449,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// Large Person Groups are stored in alphabetical order of largePersonGroupId.
-        /// &gt;
-        /// *
-        ///   * "start" parameter (string, optional) specifies an ID value from which returned entries will have larger IDs based on string comparison. Setting "start" to an empty value indicates that entries should be returned starting from the first item.
-        ///   * "top" parameter (int, optional) determines the maximum number of entries to be returned, with a limit of up to 1000 entries per call. To retrieve additional entries beyond this limit, specify "start" with the personId of the last entry returned in the current call.
-        ///
-        /// &gt; [!TIP]
-        /// &gt;
-        /// &gt; * For example, there are total 5 items with their IDs: "itemId1", ..., "itemId5".
-        /// &gt;   * "start=&amp;top=" will return all 5 items.
-        /// &gt;   * "start=&amp;top=2" will return "itemId1", "itemId2".
-        /// &gt;   * "start=itemId2&amp;top=3" will return "itemId3", "itemId4", "itemId5".
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-groups for more details. </remarks>
         /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetLargePersonGroupsAsync(string,int?,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<LargePersonGroup>>> GetLargePersonGroupsAsync(string start = null, int? top = null, bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
@@ -512,20 +471,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="top"> The number of items to list, ranging in [1, 1000]. Default is 1000. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <remarks>
-        /// Large Person Groups are stored in alphabetical order of largePersonGroupId.
-        /// &gt;
-        /// *
-        ///   * "start" parameter (string, optional) specifies an ID value from which returned entries will have larger IDs based on string comparison. Setting "start" to an empty value indicates that entries should be returned starting from the first item.
-        ///   * "top" parameter (int, optional) determines the maximum number of entries to be returned, with a limit of up to 1000 entries per call. To retrieve additional entries beyond this limit, specify "start" with the personId of the last entry returned in the current call.
-        ///
-        /// &gt; [!TIP]
-        /// &gt;
-        /// &gt; * For example, there are total 5 items with their IDs: "itemId1", ..., "itemId5".
-        /// &gt;   * "start=&amp;top=" will return all 5 items.
-        /// &gt;   * "start=&amp;top=2" will return "itemId1", "itemId2".
-        /// &gt;   * "start=itemId2&amp;top=3" will return "itemId3", "itemId4", "itemId5".
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-groups for more details. </remarks>
         /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetLargePersonGroups(string,int?,bool?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<LargePersonGroup>> GetLargePersonGroups(string start = null, int? top = null, bool? returnRecognitionModel = null, CancellationToken cancellationToken = default)
         {
@@ -623,7 +569,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Training time depends on the number of person entries, and their faces in a Large Person Group. It could be in seconds, or up to half an hour for 1,000,000 persons. </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-training-status for more details. </remarks>
         /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatusAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<TrainingResult>> GetTrainingStatusAsync(string largePersonGroupId, CancellationToken cancellationToken = default)
         {
@@ -639,7 +585,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks> Training time depends on the number of person entries, and their faces in a Large Person Group. It could be in seconds, or up to half an hour for 1,000,000 persons. </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-training-status for more details. </remarks>
         /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetTrainingStatus(string,CancellationToken)']/*" />
         public virtual Response<TrainingResult> GetTrainingStatus(string largePersonGroupId, CancellationToken cancellationToken = default)
         {
@@ -737,17 +683,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// &gt; [!NOTE]
-        /// &gt;
-        /// &gt; *
-        /// &gt;   * Free-tier subscription quota:
-        /// &gt;     * 1,000 persons in all Large Person Groups.
-        /// &gt;   * S0-tier subscription quota:
-        /// &gt;     * 1,000,000 persons per Large Person Group.
-        /// &gt;     * 1,000,000 Large Person Groups.
-        /// &gt;     * 1,000,000,000 persons in all Large Person Groups.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/create-large-person-group-person for more details. </remarks>
         /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreatePersonAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<CreatePersonResult>> CreatePersonAsync(string largePersonGroupId, string name, string userData = null, CancellationToken cancellationToken = default)
         {
@@ -767,17 +703,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// &gt; [!NOTE]
-        /// &gt;
-        /// &gt; *
-        /// &gt;   * Free-tier subscription quota:
-        /// &gt;     * 1,000 persons in all Large Person Groups.
-        /// &gt;   * S0-tier subscription quota:
-        /// &gt;     * 1,000,000 persons per Large Person Group.
-        /// &gt;     * 1,000,000 Large Person Groups.
-        /// &gt;     * 1,000,000,000 persons in all Large Person Groups.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/create-large-person-group-person for more details. </remarks>
         /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='CreatePerson(string,string,string,CancellationToken)']/*" />
         public virtual Response<CreatePersonResult> CreatePerson(string largePersonGroupId, string name, string userData = null, CancellationToken cancellationToken = default)
         {
@@ -876,7 +802,7 @@ namespace Azure.AI.Vision.Face
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete an existing person from a Large Person Group. The persistedFaceId, userData, person name and face feature(s) in the person entry will all be deleted.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/delete-large-person-group-person for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -913,7 +839,7 @@ namespace Azure.AI.Vision.Face
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete an existing person from a Large Person Group. The persistedFaceId, userData, person name and face feature(s) in the person entry will all be deleted.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/delete-large-person-group-person for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -948,7 +874,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        /// <summary> Retrieve a person's name and userData, and the persisted faceIds representing the registered person face feature(s). </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-person for more details. </summary>
         /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -964,7 +890,7 @@ namespace Azure.AI.Vision.Face
             return Response.FromValue(LargePersonGroupPerson.FromResponse(response), response);
         }
 
-        /// <summary> Retrieve a person's name and userData, and the persisted faceIds representing the registered person face feature(s). </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-person for more details. </summary>
         /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -981,7 +907,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a person's name and userData, and the persisted faceIds representing the registered person face feature(s).
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-person for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1022,7 +948,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a person's name and userData, and the persisted faceIds representing the registered person face feature(s).
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-person for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1063,7 +989,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Update name or userData of a person.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/update-large-person-group-person for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1101,7 +1027,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Update name or userData of a person.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/update-large-person-group-person for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1145,20 +1071,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Persons are stored in alphabetical order of personId created in "Create Large Person Group Person".
-        /// &gt;
-        /// *
-        ///   * "start" parameter (string, optional) specifies an ID value from which returned entries will have larger IDs based on string comparison. Setting "start" to an empty value indicates that entries should be returned starting from the first item.
-        ///   * "top" parameter (int, optional) determines the maximum number of entries to be returned, with a limit of up to 1000 entries per call. To retrieve additional entries beyond this limit, specify "start" with the personId of the last entry returned in the current call.
-        ///
-        /// &gt; [!TIP]
-        /// &gt;
-        /// &gt; * For example, there are total 5 items with their IDs: "itemId1", ..., "itemId5".
-        /// &gt;   * "start=&amp;top=" will return all 5 items.
-        /// &gt;   * "start=&amp;top=2" will return "itemId1", "itemId2".
-        /// &gt;   * "start=itemId2&amp;top=3" will return "itemId3", "itemId4", "itemId5".
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-persons for more details. </remarks>
         /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersonsAsync(string,string,int?,CancellationToken)']/*" />
         public virtual async Task<Response<IReadOnlyList<LargePersonGroupPerson>>> GetPersonsAsync(string largePersonGroupId, string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -1184,20 +1097,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Persons are stored in alphabetical order of personId created in "Create Large Person Group Person".
-        /// &gt;
-        /// *
-        ///   * "start" parameter (string, optional) specifies an ID value from which returned entries will have larger IDs based on string comparison. Setting "start" to an empty value indicates that entries should be returned starting from the first item.
-        ///   * "top" parameter (int, optional) determines the maximum number of entries to be returned, with a limit of up to 1000 entries per call. To retrieve additional entries beyond this limit, specify "start" with the personId of the last entry returned in the current call.
-        ///
-        /// &gt; [!TIP]
-        /// &gt;
-        /// &gt; * For example, there are total 5 items with their IDs: "itemId1", ..., "itemId5".
-        /// &gt;   * "start=&amp;top=" will return all 5 items.
-        /// &gt;   * "start=&amp;top=2" will return "itemId1", "itemId2".
-        /// &gt;   * "start=itemId2&amp;top=3" will return "itemId3", "itemId4", "itemId5".
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-persons for more details. </remarks>
         /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='GetPersons(string,string,int?,CancellationToken)']/*" />
         public virtual Response<IReadOnlyList<LargePersonGroupPerson>> GetPersons(string largePersonGroupId, string start = null, int? top = null, CancellationToken cancellationToken = default)
         {
@@ -1310,29 +1210,15 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="uri"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Large Person Group Person Face", "Delete Large Person Group Person" or "Delete Large Person Group" is called.
-        ///
-        /// Note that persistedFaceId is different from faceId generated by "Detect".
-        /// &gt;
-        /// *
-        ///   * Higher face image quality means better recognition precision. Please consider high-quality faces: frontal, clear, and face size is 200x200 pixels (100 pixels between eyes) or bigger.
-        ///   * Each person entry can hold up to 248 faces.
-        ///   * JPEG, PNG, GIF (the first frame), and BMP format are supported. The allowed image file size is from 1KB to 6MB.
-        ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
-        ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
-        ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
-        /// </remarks>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='AddFaceFromUrlAsync(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<AddFaceResult>> AddFaceFromUrlAsync(string largePersonGroupId, Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/add-large-person-group-person-face-from-url for more details. </remarks>
+        internal virtual async Task<Response<AddFaceResult>> AddFaceFromUrlImplAsync(string largePersonGroupId, Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(uri, nameof(uri));
 
             AddFaceFromUrlRequest addFaceFromUrlRequest = new AddFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddFaceFromUrlAsync(largePersonGroupId, personId, addFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
+            Response response = await AddFaceFromUrlImplAsync(largePersonGroupId, personId, addFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -1346,29 +1232,15 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="uri"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Large Person Group Person Face", "Delete Large Person Group Person" or "Delete Large Person Group" is called.
-        ///
-        /// Note that persistedFaceId is different from faceId generated by "Detect".
-        /// &gt;
-        /// *
-        ///   * Higher face image quality means better recognition precision. Please consider high-quality faces: frontal, clear, and face size is 200x200 pixels (100 pixels between eyes) or bigger.
-        ///   * Each person entry can hold up to 248 faces.
-        ///   * JPEG, PNG, GIF (the first frame), and BMP format are supported. The allowed image file size is from 1KB to 6MB.
-        ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
-        ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
-        ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
-        /// </remarks>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='AddFaceFromUrl(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual Response<AddFaceResult> AddFaceFromUrl(string largePersonGroupId, Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/add-large-person-group-person-face-from-url for more details. </remarks>
+        internal virtual Response<AddFaceResult> AddFaceFromUrlImpl(string largePersonGroupId, Guid personId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(uri, nameof(uri));
 
             AddFaceFromUrlRequest addFaceFromUrlRequest = new AddFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddFaceFromUrl(largePersonGroupId, personId, addFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
+            Response response = AddFaceFromUrlImpl(largePersonGroupId, personId, addFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -1382,7 +1254,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceFromUrlAsync(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceFromUrlImplAsync(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1398,17 +1270,16 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='AddFaceFromUrlAsync(string,Guid,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
-        public virtual async Task<Response> AddFaceFromUrlAsync(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual async Task<Response> AddFaceFromUrlImplAsync(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.AddFaceFromUrl");
+            using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.AddFaceFromUrlImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceFromUrlRequest(largePersonGroupId, personId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceFromUrlImplRequest(largePersonGroupId, personId, content, targetFace, detectionModel, userData, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1428,7 +1299,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceFromUrl(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceFromUrlImpl(string,Guid,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1444,17 +1315,16 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='AddFaceFromUrl(string,Guid,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
-        public virtual Response AddFaceFromUrl(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual Response AddFaceFromUrlImpl(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.AddFaceFromUrl");
+            using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.AddFaceFromUrlImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceFromUrlRequest(largePersonGroupId, personId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceFromUrlImplRequest(largePersonGroupId, personId, content, targetFace, detectionModel, userData, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1474,29 +1344,15 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="imageContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Large Person Group Person Face", "Delete Large Person Group Person" or "Delete Large Person Group" is called.
-        ///
-        /// Note that persistedFaceId is different from faceId generated by "Detect".
-        /// &gt;
-        /// *
-        ///   * Higher face image quality means better recognition precision. Please consider high-quality faces: frontal, clear, and face size is 200x200 pixels (100 pixels between eyes) or bigger.
-        ///   * Each person entry can hold up to 248 faces.
-        ///   * JPEG, PNG, GIF (the first frame), and BMP format are supported. The allowed image file size is from 1KB to 6MB.
-        ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
-        ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
-        ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
-        /// </remarks>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='AddFaceAsync(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<AddFaceResult>> AddFaceAsync(string largePersonGroupId, Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/add-large-person-group-person-face for more details. </remarks>
+        internal virtual async Task<Response<AddFaceResult>> AddFaceImplAsync(string largePersonGroupId, Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             using RequestContent content = imageContent;
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddFaceAsync(largePersonGroupId, personId, content, targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
+            Response response = await AddFaceImplAsync(largePersonGroupId, personId, content, targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -1510,29 +1366,15 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="largePersonGroupId"/> or <paramref name="imageContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Large Person Group Person Face", "Delete Large Person Group Person" or "Delete Large Person Group" is called.
-        ///
-        /// Note that persistedFaceId is different from faceId generated by "Detect".
-        /// &gt;
-        /// *
-        ///   * Higher face image quality means better recognition precision. Please consider high-quality faces: frontal, clear, and face size is 200x200 pixels (100 pixels between eyes) or bigger.
-        ///   * Each person entry can hold up to 248 faces.
-        ///   * JPEG, PNG, GIF (the first frame), and BMP format are supported. The allowed image file size is from 1KB to 6MB.
-        ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
-        ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
-        ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
-        /// </remarks>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='AddFace(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual Response<AddFaceResult> AddFace(string largePersonGroupId, Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/add-large-person-group-person-face for more details. </remarks>
+        internal virtual Response<AddFaceResult> AddFaceImpl(string largePersonGroupId, Guid personId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             using RequestContent content = imageContent;
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddFace(largePersonGroupId, personId, content, targetFace, detectionModel?.ToString(), userData, context);
+            Response response = AddFaceImpl(largePersonGroupId, personId, content, targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -1546,7 +1388,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceAsync(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceImplAsync(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1562,17 +1404,16 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='AddFaceAsync(string,Guid,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
-        public virtual async Task<Response> AddFaceAsync(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual async Task<Response> AddFaceImplAsync(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.AddFace");
+            using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.AddFaceImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceRequest(largePersonGroupId, personId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceImplRequest(largePersonGroupId, personId, content, targetFace, detectionModel, userData, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1592,7 +1433,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFace(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceImpl(string,Guid,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1608,17 +1449,16 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="largePersonGroupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LargePersonGroupClient.xml" path="doc/members/member[@name='AddFace(string,Guid,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
-        public virtual Response AddFace(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual Response AddFaceImpl(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(largePersonGroupId, nameof(largePersonGroupId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.AddFace");
+            using var scope = ClientDiagnostics.CreateScope("LargePersonGroupClient.AddFaceImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceRequest(largePersonGroupId, personId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceImplRequest(largePersonGroupId, personId, content, targetFace, detectionModel, userData, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1704,7 +1544,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        /// <summary> Retrieve person face information. The persisted person face is specified by its largePersonGroupId, personId and persistedFaceId. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-person-face for more details. </summary>
         /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
@@ -1721,7 +1561,7 @@ namespace Azure.AI.Vision.Face
             return Response.FromValue(LargePersonGroupPersonFace.FromResponse(response), response);
         }
 
-        /// <summary> Retrieve person face information. The persisted person face is specified by its largePersonGroupId, personId and persistedFaceId. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-person-face for more details. </summary>
         /// <param name="largePersonGroupId"> ID of the container. </param>
         /// <param name="personId"> ID of the person. </param>
         /// <param name="persistedFaceId"> Face ID of the face. </param>
@@ -1739,7 +1579,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve person face information. The persisted person face is specified by its largePersonGroupId, personId and persistedFaceId.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-person-face for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1781,7 +1621,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve person face information. The persisted person face is specified by its largePersonGroupId, personId and persistedFaceId.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/get-large-person-group-person-face for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1823,7 +1663,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Update a person persisted face's userData field.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/update-large-person-group-person-face for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1862,7 +1702,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Update a person persisted face's userData field.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/person-group-operations/update-large-person-group-person-face for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -2207,7 +2047,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateAddFaceFromUrlRequest(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
+        internal HttpMessage CreateAddFaceFromUrlImplRequest(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2240,7 +2080,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateAddFaceRequest(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
+        internal HttpMessage CreateAddFaceImplRequest(string largePersonGroupId, Guid personId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

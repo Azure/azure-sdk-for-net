@@ -66,17 +66,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Up to 64 Face Lists are allowed in one subscription.
-        ///
-        /// Face List is a list of faces, up to 1,000 faces, and used by "Find Similar From Face List".
-        ///
-        /// After creation, user should use "Add Face List Face" to import the faces. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Face List" is called.
-        ///
-        /// "Find Similar" is used for scenario like finding celebrity-like faces, similar face filtering, or as a light way face identification. But if the actual use is to identify person, please use Person Group / Large Person Group and "Identify".
-        ///
-        /// Please consider Large Face List when the face number is large. It can support up to 1,000,000 faces.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/create-face-list for more details. </remarks>
         /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='CreateAsync(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
         public virtual async Task<Response> CreateAsync(string faceListId, string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
         {
@@ -97,17 +87,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Up to 64 Face Lists are allowed in one subscription.
-        ///
-        /// Face List is a list of faces, up to 1,000 faces, and used by "Find Similar From Face List".
-        ///
-        /// After creation, user should use "Add Face List Face" to import the faces. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Face List" is called.
-        ///
-        /// "Find Similar" is used for scenario like finding celebrity-like faces, similar face filtering, or as a light way face identification. But if the actual use is to identify person, please use Person Group / Large Person Group and "Identify".
-        ///
-        /// Please consider Large Face List when the face number is large. It can support up to 1,000,000 faces.
-        /// </remarks>
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/create-face-list for more details. </remarks>
         /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='Create(string,string,string,FaceRecognitionModel?,CancellationToken)']/*" />
         public virtual Response Create(string faceListId, string name, string userData = null, FaceRecognitionModel? recognitionModel = null, CancellationToken cancellationToken = default)
         {
@@ -206,7 +186,7 @@ namespace Azure.AI.Vision.Face
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete a specified Face List.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/delete-face-list for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -242,7 +222,7 @@ namespace Azure.AI.Vision.Face
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Delete a specified Face List.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/delete-face-list for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -276,7 +256,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        /// <summary> Retrieve a Face List's faceListId, name, userData, recognitionModel and faces in the Face List. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-face-list for more details. </summary>
         /// <param name="faceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -292,7 +272,7 @@ namespace Azure.AI.Vision.Face
             return Response.FromValue(FaceList.FromResponse(response), response);
         }
 
-        /// <summary> Retrieve a Face List's faceListId, name, userData, recognitionModel and faces in the Face List. </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-face-list for more details. </summary>
         /// <param name="faceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -309,7 +289,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a Face List's faceListId, name, userData, recognitionModel and faces in the Face List.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-face-list for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -350,7 +330,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieve a Face List's faceListId, name, userData, recognitionModel and faces in the Face List.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-face-list for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -391,7 +371,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Update information of a Face List, including name and userData.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/update-face-list for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -428,7 +408,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] Update information of a Face List, including name and userData.
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/update-face-list for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -464,11 +444,7 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        /// <summary>
-        /// List Face Lists' faceListId, name, userData and recognitionModel.
-        ///
-        /// To get face information inside Face List use "Get Face List".
-        /// </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-face-lists for more details. </summary>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='GetFaceListsAsync(bool?,CancellationToken)']/*" />
@@ -487,11 +463,7 @@ namespace Azure.AI.Vision.Face
             return Response.FromValue(value, response);
         }
 
-        /// <summary>
-        /// List Face Lists' faceListId, name, userData and recognitionModel.
-        ///
-        /// To get face information inside Face List use "Get Face List".
-        /// </summary>
+        /// <summary> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-face-lists for more details. </summary>
         /// <param name="returnRecognitionModel"> Return 'recognitionModel' or not. The default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='GetFaceLists(bool?,CancellationToken)']/*" />
@@ -511,9 +483,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] List Face Lists' faceListId, name, userData and recognitionModel.
-        ///
-        /// To get face information inside Face List use "Get Face List".
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-face-lists for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -549,9 +519,7 @@ namespace Azure.AI.Vision.Face
         }
 
         /// <summary>
-        /// [Protocol Method] List Face Lists' faceListId, name, userData and recognitionModel.
-        ///
-        /// To get face information inside Face List use "Get Face List".
+        /// [Protocol Method] Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/get-face-lists for more details.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -595,29 +563,15 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> or <paramref name="uri"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Face List Face" or "Delete Face List" is called.
-        ///
-        /// Note that persistedFaceId is different from faceId generated by "Detect".
-        /// &gt;
-        /// *
-        ///   * Higher face image quality means better recognition precision. Please consider high-quality faces: frontal, clear, and face size is 200x200 pixels (100 pixels between eyes) or bigger.
-        ///   * Each person entry can hold up to 248 faces.
-        ///   * JPEG, PNG, GIF (the first frame), and BMP format are supported. The allowed image file size is from 1KB to 6MB.
-        ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
-        ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
-        ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
-        /// </remarks>
-        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFaceFromUrlAsync(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<AddFaceResult>> AddFaceFromUrlAsync(string faceListId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/add-face-list-face-from-url for more details. </remarks>
+        internal virtual async Task<Response<AddFaceResult>> AddFaceFromUrlImplAsync(string faceListId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(uri, nameof(uri));
 
             AddFaceFromUrlRequest3 addFaceFromUrlRequest3 = new AddFaceFromUrlRequest3(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddFaceFromUrlAsync(faceListId, addFaceFromUrlRequest3.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
+            Response response = await AddFaceFromUrlImplAsync(faceListId, addFaceFromUrlRequest3.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -630,29 +584,15 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> or <paramref name="uri"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Face List Face" or "Delete Face List" is called.
-        ///
-        /// Note that persistedFaceId is different from faceId generated by "Detect".
-        /// &gt;
-        /// *
-        ///   * Higher face image quality means better recognition precision. Please consider high-quality faces: frontal, clear, and face size is 200x200 pixels (100 pixels between eyes) or bigger.
-        ///   * Each person entry can hold up to 248 faces.
-        ///   * JPEG, PNG, GIF (the first frame), and BMP format are supported. The allowed image file size is from 1KB to 6MB.
-        ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
-        ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
-        ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
-        /// </remarks>
-        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFaceFromUrl(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual Response<AddFaceResult> AddFaceFromUrl(string faceListId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/add-face-list-face-from-url for more details. </remarks>
+        internal virtual Response<AddFaceResult> AddFaceFromUrlImpl(string faceListId, Uri uri, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(uri, nameof(uri));
 
             AddFaceFromUrlRequest3 addFaceFromUrlRequest3 = new AddFaceFromUrlRequest3(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddFaceFromUrl(faceListId, addFaceFromUrlRequest3.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
+            Response response = AddFaceFromUrlImpl(faceListId, addFaceFromUrlRequest3.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -666,7 +606,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceFromUrlAsync(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceFromUrlImplAsync(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -681,17 +621,16 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFaceFromUrlAsync(string,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
-        public virtual async Task<Response> AddFaceFromUrlAsync(string faceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual async Task<Response> AddFaceFromUrlImplAsync(string faceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClient.AddFaceFromUrl");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.AddFaceFromUrlImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceFromUrlRequest(faceListId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceFromUrlImplRequest(faceListId, content, targetFace, detectionModel, userData, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -711,7 +650,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceFromUrl(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceFromUrlImpl(string,Uri,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -726,17 +665,16 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFaceFromUrl(string,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
-        public virtual Response AddFaceFromUrl(string faceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual Response AddFaceFromUrlImpl(string faceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClient.AddFaceFromUrl");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.AddFaceFromUrlImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceFromUrlRequest(faceListId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceFromUrlImplRequest(faceListId, content, targetFace, detectionModel, userData, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -755,29 +693,15 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> or <paramref name="imageContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Face List Face" or "Delete Face List" is called.
-        ///
-        /// Note that persistedFaceId is different from faceId generated by "Detect".
-        /// &gt;
-        /// *
-        ///   * Higher face image quality means better recognition precision. Please consider high-quality faces: frontal, clear, and face size is 200x200 pixels (100 pixels between eyes) or bigger.
-        ///   * Each person entry can hold up to 248 faces.
-        ///   * JPEG, PNG, GIF (the first frame), and BMP format are supported. The allowed image file size is from 1KB to 6MB.
-        ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
-        ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
-        ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
-        /// </remarks>
-        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFaceAsync(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual async Task<Response<AddFaceResult>> AddFaceAsync(string faceListId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/add-face-list-face for more details. </remarks>
+        internal virtual async Task<Response<AddFaceResult>> AddFaceImplAsync(string faceListId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             using RequestContent content = imageContent;
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddFaceAsync(faceListId, content, targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
+            Response response = await AddFaceImplAsync(faceListId, content, targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -790,29 +714,15 @@ namespace Azure.AI.Vision.Face
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="faceListId"/> or <paramref name="imageContent"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// To deal with an image containing multiple faces, input face can be specified as an image with a targetFace rectangle. It returns a persistedFaceId representing the added face. No image will be stored. Only the extracted face feature(s) will be stored on server until "Delete Face List Face" or "Delete Face List" is called.
-        ///
-        /// Note that persistedFaceId is different from faceId generated by "Detect".
-        /// &gt;
-        /// *
-        ///   * Higher face image quality means better recognition precision. Please consider high-quality faces: frontal, clear, and face size is 200x200 pixels (100 pixels between eyes) or bigger.
-        ///   * Each person entry can hold up to 248 faces.
-        ///   * JPEG, PNG, GIF (the first frame), and BMP format are supported. The allowed image file size is from 1KB to 6MB.
-        ///   * "targetFace" rectangle should contain one face. Zero or multiple faces will be regarded as an error. If the provided "targetFace" rectangle is not returned from "Detect", there's no guarantee to detect and add the face successfully.
-        ///   * Out of detectable face size (36x36 - 4096x4096 pixels), large head-pose, or large occlusions will cause failures.
-        ///   * The minimum detectable face size is 36x36 pixels in an image no larger than 1920x1080 pixels. Images with dimensions higher than 1920x1080 pixels will need a proportionally larger minimum face size.
-        ///   * Different 'detectionModel' values can be provided. To use and compare different detection models, please refer to https://learn.microsoft.com/azure/ai-services/computer-vision/how-to/specify-detection-model
-        /// </remarks>
-        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFace(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)']/*" />
-        public virtual Response<AddFaceResult> AddFace(string faceListId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
+        /// <remarks> Please refer to https://learn.microsoft.com/rest/api/face/face-list-operations/add-face-list-face for more details. </remarks>
+        internal virtual Response<AddFaceResult> AddFaceImpl(string faceListId, BinaryData imageContent, IEnumerable<int> targetFace = null, FaceDetectionModel? detectionModel = null, string userData = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(imageContent, nameof(imageContent));
 
             using RequestContent content = imageContent;
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddFace(faceListId, content, targetFace, detectionModel?.ToString(), userData, context);
+            Response response = AddFaceImpl(faceListId, content, targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -826,7 +736,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFaceAsync(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceImplAsync(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -841,17 +751,16 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFaceAsync(string,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
-        public virtual async Task<Response> AddFaceAsync(string faceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual async Task<Response> AddFaceImplAsync(string faceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClient.AddFace");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.AddFaceImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceRequest(faceListId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceImplRequest(faceListId, content, targetFace, detectionModel, userData, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -871,7 +780,7 @@ namespace Azure.AI.Vision.Face
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AddFace(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AddFaceImpl(string,BinaryData,IEnumerable{int},FaceDetectionModel?,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -886,17 +795,16 @@ namespace Azure.AI.Vision.Face
         /// <exception cref="ArgumentException"> <paramref name="faceListId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/FaceListClient.xml" path="doc/members/member[@name='AddFace(string,RequestContent,IEnumerable{int},string,string,RequestContext)']/*" />
-        public virtual Response AddFace(string faceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
+        internal virtual Response AddFaceImpl(string faceListId, RequestContent content, IEnumerable<int> targetFace = null, string detectionModel = null, string userData = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(faceListId, nameof(faceListId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("FaceListClient.AddFace");
+            using var scope = ClientDiagnostics.CreateScope("FaceListClient.AddFaceImpl");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAddFaceRequest(faceListId, content, targetFace, detectionModel, userData, context);
+                using HttpMessage message = CreateAddFaceImplRequest(faceListId, content, targetFace, detectionModel, userData, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1071,7 +979,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateAddFaceFromUrlRequest(string faceListId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
+        internal HttpMessage CreateAddFaceFromUrlImplRequest(string faceListId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1102,7 +1010,7 @@ namespace Azure.AI.Vision.Face
             return message;
         }
 
-        internal HttpMessage CreateAddFaceRequest(string faceListId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
+        internal HttpMessage CreateAddFaceImplRequest(string faceListId, RequestContent content, IEnumerable<int> targetFace, string detectionModel, string userData, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
