@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MongoCluster
             {
                 return null;
             }
-            PrivateEndpointConnectionProperties properties = default;
+            MongoClusterPrivateEndpointConnectionProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MongoCluster
                     {
                         continue;
                     }
-                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(property.Value, options);
+                    properties = MongoClusterPrivateEndpointConnectionProperties.DeserializeMongoClusterPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

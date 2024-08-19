@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The private endpoint connection properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MongoClusterPrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MongoClusterPrivateEndpointConnectionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The private endpoint connection properties. </summary>
-        public PrivateEndpointConnectionProperties Properties { get; }
+        public MongoClusterPrivateEndpointConnectionProperties Properties { get; }
     }
 }
