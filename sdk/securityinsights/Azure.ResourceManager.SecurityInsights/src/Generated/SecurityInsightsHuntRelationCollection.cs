@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsHuntRelationResource"/> and their operations.
-    /// Each <see cref="SecurityInsightsHuntRelationResource"/> in the collection will belong to the same instance of <see cref="HuntResource"/>.
-    /// To get a <see cref="SecurityInsightsHuntRelationCollection"/> instance call the GetSecurityInsightsHuntRelations method from an instance of <see cref="HuntResource"/>.
+    /// Each <see cref="SecurityInsightsHuntRelationResource"/> in the collection will belong to the same instance of <see cref="SecurityInsightsHuntResource"/>.
+    /// To get a <see cref="SecurityInsightsHuntRelationCollection"/> instance call the GetSecurityInsightsHuntRelations method from an instance of <see cref="SecurityInsightsHuntResource"/>.
     /// </summary>
     public partial class SecurityInsightsHuntRelationCollection : ArmCollection, IEnumerable<SecurityInsightsHuntRelationResource>, IAsyncEnumerable<SecurityInsightsHuntRelationResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != HuntResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HuntResource.ResourceType), nameof(id));
+            if (id.ResourceType != SecurityInsightsHuntResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityInsightsHuntResource.ResourceType), nameof(id));
         }
 
         /// <summary>

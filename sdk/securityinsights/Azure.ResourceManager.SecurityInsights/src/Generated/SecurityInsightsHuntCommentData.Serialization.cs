@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class HuntCommentData : IUtf8JsonSerializable, IJsonModel<HuntCommentData>
+    public partial class SecurityInsightsHuntCommentData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsHuntCommentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HuntCommentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsHuntCommentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HuntCommentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityInsightsHuntCommentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HuntCommentData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHuntCommentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HuntCommentData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsHuntCommentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteEndObject();
         }
 
-        HuntCommentData IJsonModel<HuntCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecurityInsightsHuntCommentData IJsonModel<SecurityInsightsHuntCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HuntCommentData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHuntCommentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HuntCommentData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsHuntCommentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHuntCommentData(document.RootElement, options);
+            return DeserializeSecurityInsightsHuntCommentData(document.RootElement, options);
         }
 
-        internal static HuntCommentData DeserializeHuntCommentData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SecurityInsightsHuntCommentData DeserializeSecurityInsightsHuntCommentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HuntCommentData(
+            return new SecurityInsightsHuntCommentData(
                 id,
                 name,
                 type,
@@ -174,35 +174,35 @@ namespace Azure.ResourceManager.SecurityInsights
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HuntCommentData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SecurityInsightsHuntCommentData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HuntCommentData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHuntCommentData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HuntCommentData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsHuntCommentData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HuntCommentData IPersistableModel<HuntCommentData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SecurityInsightsHuntCommentData IPersistableModel<SecurityInsightsHuntCommentData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HuntCommentData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsHuntCommentData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHuntCommentData(document.RootElement, options);
+                        return DeserializeSecurityInsightsHuntCommentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HuntCommentData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsHuntCommentData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HuntCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityInsightsHuntCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

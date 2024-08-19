@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// A Class representing a SecurityInsightsHuntRelation along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsHuntRelationResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsHuntRelationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="HuntResource"/> using the GetSecurityInsightsHuntRelation method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityInsightsHuntResource"/> using the GetSecurityInsightsHuntRelation method.
     /// </summary>
     public partial class SecurityInsightsHuntRelationResource : ArmResource
     {

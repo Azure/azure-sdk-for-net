@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing a Job along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="JobResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkspaceManagerAssignmentResource"/> using the GetJob method.
+    /// A Class representing an AssignmentJob along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AssignmentJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAssignmentJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkspaceManagerAssignmentResource"/> using the GetAssignmentJob method.
     /// </summary>
-    public partial class JobResource : ArmResource
+    public partial class AssignmentJobResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="JobResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AssignmentJobResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="workspaceName"> The workspaceName. </param>
@@ -34,35 +34,35 @@ namespace Azure.ResourceManager.SecurityInsights
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _jobWorkspaceManagerAssignmentJobsClientDiagnostics;
-        private readonly WorkspaceManagerAssignmentJobsRestOperations _jobWorkspaceManagerAssignmentJobsRestClient;
-        private readonly JobData _data;
+        private readonly ClientDiagnostics _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics;
+        private readonly WorkspaceManagerAssignmentJobsRestOperations _assignmentJobWorkspaceManagerAssignmentJobsRestClient;
+        private readonly AssignmentJobData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/workspaceManagerAssignments/jobs";
 
-        /// <summary> Initializes a new instance of the <see cref="JobResource"/> class for mocking. </summary>
-        protected JobResource()
+        /// <summary> Initializes a new instance of the <see cref="AssignmentJobResource"/> class for mocking. </summary>
+        protected AssignmentJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AssignmentJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal JobResource(ArmClient client, JobData data) : this(client, data.Id)
+        internal AssignmentJobResource(ArmClient client, AssignmentJobData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AssignmentJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal JobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AssignmentJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobWorkspaceManagerAssignmentJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string jobWorkspaceManagerAssignmentJobsApiVersion);
-            _jobWorkspaceManagerAssignmentJobsRestClient = new WorkspaceManagerAssignmentJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobWorkspaceManagerAssignmentJobsApiVersion);
+            _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string assignmentJobWorkspaceManagerAssignmentJobsApiVersion);
+            _assignmentJobWorkspaceManagerAssignmentJobsRestClient = new WorkspaceManagerAssignmentJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, assignmentJobWorkspaceManagerAssignmentJobsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual JobData Data
+        public virtual AssignmentJobData Data
         {
             get
             {
@@ -106,21 +106,21 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="AssignmentJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<JobResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AssignmentJobResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _jobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("JobResource.Get");
+            using var scope = _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("AssignmentJobResource.Get");
             scope.Start();
             try
             {
-                var response = await _jobWorkspaceManagerAssignmentJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _assignmentJobWorkspaceManagerAssignmentJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssignmentJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -146,21 +146,21 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="AssignmentJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<JobResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AssignmentJobResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _jobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("JobResource.Get");
+            using var scope = _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("AssignmentJobResource.Get");
             scope.Start();
             try
             {
-                var response = _jobWorkspaceManagerAssignmentJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _assignmentJobWorkspaceManagerAssignmentJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssignmentJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="AssignmentJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _jobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("JobResource.Delete");
+            using var scope = _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("AssignmentJobResource.Delete");
             scope.Start();
             try
             {
-                var response = await _jobWorkspaceManagerAssignmentJobsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _jobWorkspaceManagerAssignmentJobsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var response = await _assignmentJobWorkspaceManagerAssignmentJobsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _assignmentJobWorkspaceManagerAssignmentJobsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="AssignmentJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,12 +238,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _jobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("JobResource.Delete");
+            using var scope = _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("AssignmentJobResource.Delete");
             scope.Start();
             try
             {
-                var response = _jobWorkspaceManagerAssignmentJobsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _jobWorkspaceManagerAssignmentJobsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
+                var response = _assignmentJobWorkspaceManagerAssignmentJobsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _assignmentJobWorkspaceManagerAssignmentJobsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)

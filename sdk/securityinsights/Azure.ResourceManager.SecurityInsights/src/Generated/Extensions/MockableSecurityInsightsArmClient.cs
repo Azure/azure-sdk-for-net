@@ -251,15 +251,15 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HuntResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HuntResource.CreateResourceIdentifier" /> to create a <see cref="HuntResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsHuntResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsHuntResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsHuntResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HuntResource"/> object. </returns>
-        public virtual HuntResource GetHuntResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsHuntResource"/> object. </returns>
+        public virtual SecurityInsightsHuntResource GetSecurityInsightsHuntResource(ResourceIdentifier id)
         {
-            HuntResource.ValidateResourceId(id);
-            return new HuntResource(Client, id);
+            SecurityInsightsHuntResource.ValidateResourceId(id);
+            return new SecurityInsightsHuntResource(Client, id);
         }
 
         /// <summary>
@@ -275,15 +275,15 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HuntCommentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HuntCommentResource.CreateResourceIdentifier" /> to create a <see cref="HuntCommentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SecurityInsightsHuntCommentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityInsightsHuntCommentResource.CreateResourceIdentifier" /> to create a <see cref="SecurityInsightsHuntCommentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HuntCommentResource"/> object. </returns>
-        public virtual HuntCommentResource GetHuntCommentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SecurityInsightsHuntCommentResource"/> object. </returns>
+        public virtual SecurityInsightsHuntCommentResource GetSecurityInsightsHuntCommentResource(ResourceIdentifier id)
         {
-            HuntCommentResource.ValidateResourceId(id);
-            return new HuntCommentResource(Client, id);
+            SecurityInsightsHuntCommentResource.ValidateResourceId(id);
+            return new SecurityInsightsHuntCommentResource(Client, id);
         }
 
         /// <summary>
@@ -455,15 +455,15 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="JobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JobResource.CreateResourceIdentifier" /> to create a <see cref="JobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AssignmentJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AssignmentJobResource.CreateResourceIdentifier" /> to create an <see cref="AssignmentJobResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JobResource"/> object. </returns>
-        public virtual JobResource GetJobResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AssignmentJobResource"/> object. </returns>
+        public virtual AssignmentJobResource GetAssignmentJobResource(ResourceIdentifier id)
         {
-            JobResource.ValidateResourceId(id);
-            return new JobResource(Client, id);
+            AssignmentJobResource.ValidateResourceId(id);
+            return new AssignmentJobResource(Client, id);
         }
 
         /// <summary>

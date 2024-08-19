@@ -217,6 +217,11 @@ rename-mapping:
   ReevaluateResponse: ReevaluateResult
   CustomizableConnectorDefinition: CustomizableConnectorDefinitionData
   TiTaxiiDataConnectorDataTypesTaxiiClient: TiTaxiiDataConnectorDataTypes
+  Hunt: SecurityInsightsHunt
+  HuntList: SecurityInsightsHuntList
+  HuntComment: SecurityInsightsHuntComment
+  HuntRelation: SecurityInsightsHuntRelation
+  Job: AssignmentJob
   # Added property renaming due to api compat check with property breaking chang to dictionary type in 2024-01-01-preview version
   WatchlistItem.properties.itemsKeyValue: ItemsKeyValueDictionary
   WatchlistItem.properties.entityMapping: EntityMappingDictionary

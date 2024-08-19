@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="JobResource"/> and their operations.
-    /// Each <see cref="JobResource"/> in the collection will belong to the same instance of <see cref="WorkspaceManagerAssignmentResource"/>.
-    /// To get a <see cref="JobCollection"/> instance call the GetJobs method from an instance of <see cref="WorkspaceManagerAssignmentResource"/>.
+    /// A class representing a collection of <see cref="AssignmentJobResource"/> and their operations.
+    /// Each <see cref="AssignmentJobResource"/> in the collection will belong to the same instance of <see cref="WorkspaceManagerAssignmentResource"/>.
+    /// To get an <see cref="AssignmentJobCollection"/> instance call the GetAssignmentJobs method from an instance of <see cref="WorkspaceManagerAssignmentResource"/>.
     /// </summary>
-    public partial class JobCollection : ArmCollection, IEnumerable<JobResource>, IAsyncEnumerable<JobResource>
+    public partial class AssignmentJobCollection : ArmCollection, IEnumerable<AssignmentJobResource>, IAsyncEnumerable<AssignmentJobResource>
     {
-        private readonly ClientDiagnostics _jobWorkspaceManagerAssignmentJobsClientDiagnostics;
-        private readonly WorkspaceManagerAssignmentJobsRestOperations _jobWorkspaceManagerAssignmentJobsRestClient;
+        private readonly ClientDiagnostics _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics;
+        private readonly WorkspaceManagerAssignmentJobsRestOperations _assignmentJobWorkspaceManagerAssignmentJobsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="JobCollection"/> class for mocking. </summary>
-        protected JobCollection()
+        /// <summary> Initializes a new instance of the <see cref="AssignmentJobCollection"/> class for mocking. </summary>
+        protected AssignmentJobCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="JobCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AssignmentJobCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal JobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AssignmentJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _jobWorkspaceManagerAssignmentJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", JobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(JobResource.ResourceType, out string jobWorkspaceManagerAssignmentJobsApiVersion);
-            _jobWorkspaceManagerAssignmentJobsRestClient = new WorkspaceManagerAssignmentJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, jobWorkspaceManagerAssignmentJobsApiVersion);
+            _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", AssignmentJobResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AssignmentJobResource.ResourceType, out string assignmentJobWorkspaceManagerAssignmentJobsApiVersion);
+            _assignmentJobWorkspaceManagerAssignmentJobsRestClient = new WorkspaceManagerAssignmentJobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, assignmentJobWorkspaceManagerAssignmentJobsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="AssignmentJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,18 +76,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual async Task<Response<JobResource>> GetAsync(string jobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AssignmentJobResource>> GetAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _jobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("JobCollection.Get");
+            using var scope = _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("AssignmentJobCollection.Get");
             scope.Start();
             try
             {
-                var response = await _jobWorkspaceManagerAssignmentJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken).ConfigureAwait(false);
+                var response = await _assignmentJobWorkspaceManagerAssignmentJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssignmentJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="AssignmentJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,18 +121,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual Response<JobResource> Get(string jobName, CancellationToken cancellationToken = default)
+        public virtual Response<AssignmentJobResource> Get(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _jobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("JobCollection.Get");
+            using var scope = _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("AssignmentJobCollection.Get");
             scope.Start();
             try
             {
-                var response = _jobWorkspaceManagerAssignmentJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken);
+                var response = _assignmentJobWorkspaceManagerAssignmentJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AssignmentJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="AssignmentJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="JobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<JobResource> GetAllAsync(string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AssignmentJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AssignmentJobResource> GetAllAsync(string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobWorkspaceManagerAssignmentJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobWorkspaceManagerAssignmentJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, JobData.DeserializeJobData(e)), _jobWorkspaceManagerAssignmentJobsClientDiagnostics, Pipeline, "JobCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentJobWorkspaceManagerAssignmentJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _assignmentJobWorkspaceManagerAssignmentJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AssignmentJobResource(Client, AssignmentJobData.DeserializeAssignmentJobData(e)), _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics, Pipeline, "AssignmentJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="AssignmentJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="JobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<JobResource> GetAll(string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AssignmentJobResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AssignmentJobResource> GetAll(string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobWorkspaceManagerAssignmentJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobWorkspaceManagerAssignmentJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, JobData.DeserializeJobData(e)), _jobWorkspaceManagerAssignmentJobsClientDiagnostics, Pipeline, "JobCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _assignmentJobWorkspaceManagerAssignmentJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _assignmentJobWorkspaceManagerAssignmentJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AssignmentJobResource(Client, AssignmentJobData.DeserializeAssignmentJobData(e)), _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics, Pipeline, "AssignmentJobCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="AssignmentJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,11 +236,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _jobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("JobCollection.Exists");
+            using var scope = _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("AssignmentJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _jobWorkspaceManagerAssignmentJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _assignmentJobWorkspaceManagerAssignmentJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="AssignmentJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _jobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("JobCollection.Exists");
+            using var scope = _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("AssignmentJobCollection.Exists");
             scope.Start();
             try
             {
-                var response = _jobWorkspaceManagerAssignmentJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken);
+                var response = _assignmentJobWorkspaceManagerAssignmentJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="AssignmentJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,18 +318,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual async Task<NullableResponse<JobResource>> GetIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AssignmentJobResource>> GetIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _jobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("JobCollection.GetIfExists");
+            using var scope = _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("AssignmentJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _jobWorkspaceManagerAssignmentJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _assignmentJobWorkspaceManagerAssignmentJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<JobResource>(response.GetRawResponse());
-                return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AssignmentJobResource>(response.GetRawResponse());
+                return Response.FromValue(new AssignmentJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="JobResource"/></description>
+        /// <description><see cref="AssignmentJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -363,18 +363,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public virtual NullableResponse<JobResource> GetIfExists(string jobName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AssignmentJobResource> GetIfExists(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using var scope = _jobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("JobCollection.GetIfExists");
+            using var scope = _assignmentJobWorkspaceManagerAssignmentJobsClientDiagnostics.CreateScope("AssignmentJobCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _jobWorkspaceManagerAssignmentJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken);
+                var response = _assignmentJobWorkspaceManagerAssignmentJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, jobName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<JobResource>(response.GetRawResponse());
-                return Response.FromValue(new JobResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AssignmentJobResource>(response.GetRawResponse());
+                return Response.FromValue(new AssignmentJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        IEnumerator<JobResource> IEnumerable<JobResource>.GetEnumerator()
+        IEnumerator<AssignmentJobResource> IEnumerable<AssignmentJobResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<JobResource> IAsyncEnumerable<JobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AssignmentJobResource> IAsyncEnumerable<AssignmentJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

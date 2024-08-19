@@ -9,15 +9,14 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing the Job data model.
-    /// The assignment job
+    /// A class representing the SecurityInsightsHuntComment data model.
+    /// Represents a Hunt Comment in Azure Security Insights
     /// </summary>
-    public partial class JobData : ResourceData
+    public partial class SecurityInsightsHuntCommentData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,45 +50,28 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="JobData"/>. </summary>
-        public JobData()
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntCommentData"/>. </summary>
+        public SecurityInsightsHuntCommentData()
         {
-            Items = new ChangeTrackingList<JobItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntCommentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="endOn"> The time the job completed. </param>
-        /// <param name="items"> List of items published by the job. </param>
-        /// <param name="provisioningState"> State of the job. </param>
-        /// <param name="startOn"> The time the job started. </param>
-        /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
+        /// <param name="message"> The message for the comment. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? endOn, IList<JobItem> items, ProvisioningState? provisioningState, DateTimeOffset? startOn, string errorMessage, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsHuntCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string message, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            EndOn = endOn;
-            Items = items;
-            ProvisioningState = provisioningState;
-            StartOn = startOn;
-            ErrorMessage = errorMessage;
+            Message = message;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The time the job completed. </summary>
-        public DateTimeOffset? EndOn { get; }
-        /// <summary> List of items published by the job. </summary>
-        public IList<JobItem> Items { get; }
-        /// <summary> State of the job. </summary>
-        public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The time the job started. </summary>
-        public DateTimeOffset? StartOn { get; }
-        /// <summary> Message to describe error, if an error exists. </summary>
-        public string ErrorMessage { get; }
+        /// <summary> The message for the comment. </summary>
+        public string Message { get; set; }
         /// <summary> Etag of the azure resource. </summary>
         public ETag? ETag { get; set; }
     }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="JobList"/>. </summary>
         /// <param name="value"> Array of jobs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal JobList(IEnumerable<JobData> value)
+        internal JobList(IEnumerable<AssignmentJobData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="nextLink"> URL to fetch the next set of jobs. </param>
         /// <param name="value"> Array of jobs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobList(string nextLink, IReadOnlyList<JobData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal JobList(string nextLink, IReadOnlyList<AssignmentJobData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> URL to fetch the next set of jobs. </summary>
         public string NextLink { get; }
         /// <summary> Array of jobs. </summary>
-        public IReadOnlyList<JobData> Value { get; }
+        public IReadOnlyList<AssignmentJobData> Value { get; }
     }
 }

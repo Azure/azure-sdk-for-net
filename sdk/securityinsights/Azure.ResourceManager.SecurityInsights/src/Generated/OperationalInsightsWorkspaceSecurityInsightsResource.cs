@@ -1053,11 +1053,11 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetFileImports().Get(fileImportId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of HuntResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
-        /// <returns> An object representing collection of HuntResources and their operations over a HuntResource. </returns>
-        public virtual HuntCollection GetHunts()
+        /// <summary> Gets a collection of SecurityInsightsHuntResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>
+        /// <returns> An object representing collection of SecurityInsightsHuntResources and their operations over a SecurityInsightsHuntResource. </returns>
+        public virtual SecurityInsightsHuntCollection GetSecurityInsightsHunts()
         {
-            return GetCachedClient(client => new HuntCollection(client, Id));
+            return GetCachedClient(client => new SecurityInsightsHuntCollection(client, Id));
         }
 
         /// <summary>
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1086,9 +1086,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="huntId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="huntId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HuntResource>> GetHuntAsync(string huntId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsHuntResource>> GetSecurityInsightsHuntAsync(string huntId, CancellationToken cancellationToken = default)
         {
-            return await GetHunts().GetAsync(huntId, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityInsightsHunts().GetAsync(huntId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1117,9 +1117,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="huntId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="huntId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HuntResource> GetHunt(string huntId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsHuntResource> GetSecurityInsightsHunt(string huntId, CancellationToken cancellationToken = default)
         {
-            return GetHunts().Get(huntId, cancellationToken);
+            return GetSecurityInsightsHunts().Get(huntId, cancellationToken);
         }
 
         /// <summary> Gets a collection of MetadataModelResources in the OperationalInsightsWorkspaceSecurityInsights. </summary>

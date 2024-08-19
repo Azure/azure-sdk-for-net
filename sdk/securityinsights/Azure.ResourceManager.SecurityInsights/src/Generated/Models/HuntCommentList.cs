@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="HuntCommentList"/>. </summary>
         /// <param name="value"> Array of hunt comments. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal HuntCommentList(IEnumerable<HuntCommentData> value)
+        internal HuntCommentList(IEnumerable<SecurityInsightsHuntCommentData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="nextLink"> URL to fetch the next set of hunt comments. </param>
         /// <param name="value"> Array of hunt comments. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HuntCommentList(string nextLink, IReadOnlyList<HuntCommentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HuntCommentList(string nextLink, IReadOnlyList<SecurityInsightsHuntCommentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> URL to fetch the next set of hunt comments. </summary>
         public string NextLink { get; }
         /// <summary> Array of hunt comments. </summary>
-        public IReadOnlyList<HuntCommentData> Value { get; }
+        public IReadOnlyList<SecurityInsightsHuntCommentData> Value { get; }
     }
 }

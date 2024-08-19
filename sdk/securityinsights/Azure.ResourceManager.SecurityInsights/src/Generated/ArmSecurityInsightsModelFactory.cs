@@ -1200,7 +1200,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new ValidationError(recordIndex, errorMessages?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsights.HuntData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsHuntData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1214,14 +1214,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="labels"> List of labels relevant to this hunt. </param>
         /// <param name="owner"> Describes a user that the hunt is assigned to. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="SecurityInsights.HuntData"/> instance for mocking. </returns>
-        public static HuntData HuntData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, Status? status = null, HypothesisStatus? hypothesisStatus = null, IEnumerable<SecurityInsightsAttackTactic> attackTactics = null, IEnumerable<string> attackTechniques = null, IEnumerable<string> labels = null, HuntOwner owner = null, ETag? etag = null)
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsHuntData"/> instance for mocking. </returns>
+        public static SecurityInsightsHuntData SecurityInsightsHuntData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, Status? status = null, HypothesisStatus? hypothesisStatus = null, IEnumerable<SecurityInsightsAttackTactic> attackTactics = null, IEnumerable<string> attackTechniques = null, IEnumerable<string> labels = null, HuntOwner owner = null, ETag? etag = null)
         {
             attackTactics ??= new List<SecurityInsightsAttackTactic>();
             attackTechniques ??= new List<string>();
             labels ??= new List<string>();
 
-            return new HuntData(
+            return new SecurityInsightsHuntData(
                 id,
                 name,
                 resourceType,
@@ -1268,17 +1268,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsights.HuntCommentData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.SecurityInsightsHuntCommentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="message"> The message for the comment. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="SecurityInsights.HuntCommentData"/> instance for mocking. </returns>
-        public static HuntCommentData HuntCommentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string message = null, ETag? etag = null)
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsHuntCommentData"/> instance for mocking. </returns>
+        public static SecurityInsightsHuntCommentData SecurityInsightsHuntCommentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string message = null, ETag? etag = null)
         {
-            return new HuntCommentData(
+            return new SecurityInsightsHuntCommentData(
                 id,
                 name,
                 resourceType,
@@ -2453,7 +2453,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityInsights.JobData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsights.AssignmentJobData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2464,12 +2464,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="startOn"> The time the job started. </param>
         /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="SecurityInsights.JobData"/> instance for mocking. </returns>
-        public static JobData JobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? endOn = null, IEnumerable<JobItem> items = null, ProvisioningState? provisioningState = null, DateTimeOffset? startOn = null, string errorMessage = null, ETag? etag = null)
+        /// <returns> A new <see cref="SecurityInsights.AssignmentJobData"/> instance for mocking. </returns>
+        public static AssignmentJobData AssignmentJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? endOn = null, IEnumerable<JobItem> items = null, ProvisioningState? provisioningState = null, DateTimeOffset? startOn = null, string errorMessage = null, ETag? etag = null)
         {
             items ??= new List<JobItem>();
 
-            return new JobData(
+            return new AssignmentJobData(
                 id,
                 name,
                 resourceType,

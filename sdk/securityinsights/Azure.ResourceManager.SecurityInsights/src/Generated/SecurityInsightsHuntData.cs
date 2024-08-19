@@ -14,10 +14,10 @@ using Azure.ResourceManager.SecurityInsights.Models;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing the Hunt data model.
+    /// A class representing the SecurityInsightsHunt data model.
     /// Represents a Hunt in Azure Security Insights.
     /// </summary>
-    public partial class HuntData : ResourceData
+    public partial class SecurityInsightsHuntData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,15 +51,15 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HuntData"/>. </summary>
-        public HuntData()
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntData"/>. </summary>
+        public SecurityInsightsHuntData()
         {
             AttackTactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
             AttackTechniques = new ChangeTrackingList<string>();
             Labels = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HuntData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="owner"> Describes a user that the hunt is assigned to. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HuntData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, Status? status, HypothesisStatus? hypothesisStatus, IList<SecurityInsightsAttackTactic> attackTactics, IList<string> attackTechniques, IList<string> labels, HuntOwner owner, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsHuntData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, Status? status, HypothesisStatus? hypothesisStatus, IList<SecurityInsightsAttackTactic> attackTactics, IList<string> attackTechniques, IList<string> labels, HuntOwner owner, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;

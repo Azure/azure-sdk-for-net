@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HuntList>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsHuntList>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        HuntList value = default;
+                        SecurityInsightsHuntList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HuntList.DeserializeHuntList(document.RootElement);
+                        value = SecurityInsightsHuntList.DeserializeSecurityInsightsHuntList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HuntList> List(string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsHuntList> List(string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        HuntList value = default;
+                        SecurityInsightsHuntList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HuntList.DeserializeHuntList(document.RootElement);
+                        value = SecurityInsightsHuntList.DeserializeSecurityInsightsHuntList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="huntId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="huntId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HuntData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string huntId, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsHuntData>> GetAsync(string subscriptionId, string resourceGroupName, string workspaceName, string huntId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -229,13 +229,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        HuntData value = default;
+                        SecurityInsightsHuntData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HuntData.DeserializeHuntData(document.RootElement);
+                        value = SecurityInsightsHuntData.DeserializeSecurityInsightsHuntData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HuntData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsHuntData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="huntId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="huntId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HuntData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string huntId, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsHuntData> Get(string subscriptionId, string resourceGroupName, string workspaceName, string huntId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -262,13 +262,13 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        HuntData value = default;
+                        SecurityInsightsHuntData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HuntData.DeserializeHuntData(document.RootElement);
+                        value = SecurityInsightsHuntData.DeserializeSecurityInsightsHuntData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((HuntData)null, message.Response);
+                    return Response.FromValue((SecurityInsightsHuntData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string huntId, HuntData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string huntId, SecurityInsightsHuntData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string huntId, HuntData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string huntId, SecurityInsightsHuntData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="huntId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="huntId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HuntData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string huntId, HuntData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsHuntData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string workspaceName, string huntId, SecurityInsightsHuntData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -432,9 +432,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        HuntData value = default;
+                        SecurityInsightsHuntData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HuntData.DeserializeHuntData(document.RootElement);
+                        value = SecurityInsightsHuntData.DeserializeSecurityInsightsHuntData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="huntId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="huntId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HuntData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string huntId, HuntData data, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsHuntData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string workspaceName, string huntId, SecurityInsightsHuntData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -466,9 +466,9 @@ namespace Azure.ResourceManager.SecurityInsights
                 case 200:
                 case 201:
                     {
-                        HuntData value = default;
+                        SecurityInsightsHuntData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HuntData.DeserializeHuntData(document.RootElement);
+                        value = SecurityInsightsHuntData.DeserializeSecurityInsightsHuntData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HuntList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityInsightsHuntList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -523,9 +523,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        HuntList value = default;
+                        SecurityInsightsHuntList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HuntList.DeserializeHuntList(document.RootElement);
+                        value = SecurityInsightsHuntList.DeserializeSecurityInsightsHuntList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HuntList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<SecurityInsightsHuntList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -558,9 +558,9 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case 200:
                     {
-                        HuntList value = default;
+                        SecurityInsightsHuntList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HuntList.DeserializeHuntList(document.RootElement);
+                        value = SecurityInsightsHuntList.DeserializeSecurityInsightsHuntList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

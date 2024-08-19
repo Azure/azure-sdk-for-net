@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HuntCommentResource"/> and their operations.
-    /// Each <see cref="HuntCommentResource"/> in the collection will belong to the same instance of <see cref="HuntResource"/>.
-    /// To get a <see cref="HuntCommentCollection"/> instance call the GetHuntComments method from an instance of <see cref="HuntResource"/>.
+    /// A class representing a collection of <see cref="SecurityInsightsHuntCommentResource"/> and their operations.
+    /// Each <see cref="SecurityInsightsHuntCommentResource"/> in the collection will belong to the same instance of <see cref="SecurityInsightsHuntResource"/>.
+    /// To get a <see cref="SecurityInsightsHuntCommentCollection"/> instance call the GetSecurityInsightsHuntComments method from an instance of <see cref="SecurityInsightsHuntResource"/>.
     /// </summary>
-    public partial class HuntCommentCollection : ArmCollection, IEnumerable<HuntCommentResource>, IAsyncEnumerable<HuntCommentResource>
+    public partial class SecurityInsightsHuntCommentCollection : ArmCollection, IEnumerable<SecurityInsightsHuntCommentResource>, IAsyncEnumerable<SecurityInsightsHuntCommentResource>
     {
-        private readonly ClientDiagnostics _huntCommentClientDiagnostics;
-        private readonly HuntCommentsRestOperations _huntCommentRestClient;
+        private readonly ClientDiagnostics _securityInsightsHuntCommentHuntCommentsClientDiagnostics;
+        private readonly HuntCommentsRestOperations _securityInsightsHuntCommentHuntCommentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="HuntCommentCollection"/> class for mocking. </summary>
-        protected HuntCommentCollection()
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsHuntCommentCollection"/> class for mocking. </summary>
+        protected SecurityInsightsHuntCommentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HuntCommentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsHuntCommentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal HuntCommentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SecurityInsightsHuntCommentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _huntCommentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", HuntCommentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HuntCommentResource.ResourceType, out string huntCommentApiVersion);
-            _huntCommentRestClient = new HuntCommentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, huntCommentApiVersion);
+            _securityInsightsHuntCommentHuntCommentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsHuntCommentResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SecurityInsightsHuntCommentResource.ResourceType, out string securityInsightsHuntCommentHuntCommentsApiVersion);
+            _securityInsightsHuntCommentHuntCommentsRestClient = new HuntCommentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsHuntCommentHuntCommentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.SecurityInsights
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != HuntResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, HuntResource.ResourceType), nameof(id));
+            if (id.ResourceType != SecurityInsightsHuntResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SecurityInsightsHuntResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntCommentResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntCommentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="huntCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="huntCommentId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<HuntCommentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string huntCommentId, HuntCommentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SecurityInsightsHuntCommentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string huntCommentId, SecurityInsightsHuntCommentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(huntCommentId, nameof(huntCommentId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _huntCommentClientDiagnostics.CreateScope("HuntCommentCollection.CreateOrUpdate");
+            using var scope = _securityInsightsHuntCommentHuntCommentsClientDiagnostics.CreateScope("SecurityInsightsHuntCommentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _huntCommentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, data, cancellationToken).ConfigureAwait(false);
-                var uri = _huntCommentRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, data);
+                var response = await _securityInsightsHuntCommentHuntCommentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, data, cancellationToken).ConfigureAwait(false);
+                var uri = _securityInsightsHuntCommentHuntCommentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<HuntCommentResource>(Response.FromValue(new HuntCommentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsHuntCommentResource>(Response.FromValue(new SecurityInsightsHuntCommentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntCommentResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntCommentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="huntCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="huntCommentId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<HuntCommentResource> CreateOrUpdate(WaitUntil waitUntil, string huntCommentId, HuntCommentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SecurityInsightsHuntCommentResource> CreateOrUpdate(WaitUntil waitUntil, string huntCommentId, SecurityInsightsHuntCommentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(huntCommentId, nameof(huntCommentId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _huntCommentClientDiagnostics.CreateScope("HuntCommentCollection.CreateOrUpdate");
+            using var scope = _securityInsightsHuntCommentHuntCommentsClientDiagnostics.CreateScope("SecurityInsightsHuntCommentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _huntCommentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, data, cancellationToken);
-                var uri = _huntCommentRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, data);
+                var response = _securityInsightsHuntCommentHuntCommentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, data, cancellationToken);
+                var uri = _securityInsightsHuntCommentHuntCommentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<HuntCommentResource>(Response.FromValue(new HuntCommentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsHuntCommentResource>(Response.FromValue(new SecurityInsightsHuntCommentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntCommentResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntCommentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="huntCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="huntCommentId"/> is null. </exception>
-        public virtual async Task<Response<HuntCommentResource>> GetAsync(string huntCommentId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecurityInsightsHuntCommentResource>> GetAsync(string huntCommentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(huntCommentId, nameof(huntCommentId));
 
-            using var scope = _huntCommentClientDiagnostics.CreateScope("HuntCommentCollection.Get");
+            using var scope = _securityInsightsHuntCommentHuntCommentsClientDiagnostics.CreateScope("SecurityInsightsHuntCommentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _huntCommentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsHuntCommentHuntCommentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HuntCommentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsHuntCommentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntCommentResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntCommentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,18 +223,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="huntCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="huntCommentId"/> is null. </exception>
-        public virtual Response<HuntCommentResource> Get(string huntCommentId, CancellationToken cancellationToken = default)
+        public virtual Response<SecurityInsightsHuntCommentResource> Get(string huntCommentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(huntCommentId, nameof(huntCommentId));
 
-            using var scope = _huntCommentClientDiagnostics.CreateScope("HuntCommentCollection.Get");
+            using var scope = _securityInsightsHuntCommentHuntCommentsClientDiagnostics.CreateScope("SecurityInsightsHuntCommentCollection.Get");
             scope.Start();
             try
             {
-                var response = _huntCommentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, cancellationToken);
+                var response = _securityInsightsHuntCommentHuntCommentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new HuntCommentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsHuntCommentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntCommentResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntCommentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,12 +269,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HuntCommentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HuntCommentResource> GetAllAsync(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityInsightsHuntCommentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityInsightsHuntCommentResource> GetAllAsync(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _huntCommentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _huntCommentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HuntCommentResource(Client, HuntCommentData.DeserializeHuntCommentData(e)), _huntCommentClientDiagnostics, Pipeline, "HuntCommentCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsHuntCommentHuntCommentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsHuntCommentHuntCommentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsHuntCommentResource(Client, SecurityInsightsHuntCommentData.DeserializeSecurityInsightsHuntCommentData(e)), _securityInsightsHuntCommentHuntCommentsClientDiagnostics, Pipeline, "SecurityInsightsHuntCommentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntCommentResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntCommentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,12 +303,12 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HuntCommentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HuntCommentResource> GetAll(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityInsightsHuntCommentResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityInsightsHuntCommentResource> GetAll(string filter = null, string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _huntCommentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _huntCommentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HuntCommentResource(Client, HuntCommentData.DeserializeHuntCommentData(e)), _huntCommentClientDiagnostics, Pipeline, "HuntCommentCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsHuntCommentHuntCommentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsHuntCommentHuntCommentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, orderBy, top, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsHuntCommentResource(Client, SecurityInsightsHuntCommentData.DeserializeSecurityInsightsHuntCommentData(e)), _securityInsightsHuntCommentHuntCommentsClientDiagnostics, Pipeline, "SecurityInsightsHuntCommentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntCommentResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntCommentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNullOrEmpty(huntCommentId, nameof(huntCommentId));
 
-            using var scope = _huntCommentClientDiagnostics.CreateScope("HuntCommentCollection.Exists");
+            using var scope = _securityInsightsHuntCommentHuntCommentsClientDiagnostics.CreateScope("SecurityInsightsHuntCommentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _huntCommentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsHuntCommentHuntCommentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntCommentResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntCommentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,11 +383,11 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNullOrEmpty(huntCommentId, nameof(huntCommentId));
 
-            using var scope = _huntCommentClientDiagnostics.CreateScope("HuntCommentCollection.Exists");
+            using var scope = _securityInsightsHuntCommentHuntCommentsClientDiagnostics.CreateScope("SecurityInsightsHuntCommentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _huntCommentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, cancellationToken: cancellationToken);
+                var response = _securityInsightsHuntCommentHuntCommentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntCommentResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntCommentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,18 +422,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="huntCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="huntCommentId"/> is null. </exception>
-        public virtual async Task<NullableResponse<HuntCommentResource>> GetIfExistsAsync(string huntCommentId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SecurityInsightsHuntCommentResource>> GetIfExistsAsync(string huntCommentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(huntCommentId, nameof(huntCommentId));
 
-            using var scope = _huntCommentClientDiagnostics.CreateScope("HuntCommentCollection.GetIfExists");
+            using var scope = _securityInsightsHuntCommentHuntCommentsClientDiagnostics.CreateScope("SecurityInsightsHuntCommentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _huntCommentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsHuntCommentHuntCommentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<HuntCommentResource>(response.GetRawResponse());
-                return Response.FromValue(new HuntCommentResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SecurityInsightsHuntCommentResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsHuntCommentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="HuntCommentResource"/></description>
+        /// <description><see cref="SecurityInsightsHuntCommentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -467,18 +467,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="huntCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="huntCommentId"/> is null. </exception>
-        public virtual NullableResponse<HuntCommentResource> GetIfExists(string huntCommentId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SecurityInsightsHuntCommentResource> GetIfExists(string huntCommentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(huntCommentId, nameof(huntCommentId));
 
-            using var scope = _huntCommentClientDiagnostics.CreateScope("HuntCommentCollection.GetIfExists");
+            using var scope = _securityInsightsHuntCommentHuntCommentsClientDiagnostics.CreateScope("SecurityInsightsHuntCommentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _huntCommentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, cancellationToken: cancellationToken);
+                var response = _securityInsightsHuntCommentHuntCommentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, huntCommentId, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<HuntCommentResource>(response.GetRawResponse());
-                return Response.FromValue(new HuntCommentResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<SecurityInsightsHuntCommentResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsHuntCommentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        IEnumerator<HuntCommentResource> IEnumerable<HuntCommentResource>.GetEnumerator()
+        IEnumerator<SecurityInsightsHuntCommentResource> IEnumerable<SecurityInsightsHuntCommentResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<HuntCommentResource> IAsyncEnumerable<HuntCommentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SecurityInsightsHuntCommentResource> IAsyncEnumerable<SecurityInsightsHuntCommentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -15,16 +15,16 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class JobData : IUtf8JsonSerializable, IJsonModel<JobData>
+    public partial class AssignmentJobData : IUtf8JsonSerializable, IJsonModel<AssignmentJobData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentJobData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<JobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AssignmentJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentJobData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -104,19 +104,19 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WriteEndObject();
         }
 
-        JobData IJsonModel<JobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AssignmentJobData IJsonModel<AssignmentJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentJobData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentJobData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeJobData(document.RootElement, options);
+            return DeserializeAssignmentJobData(document.RootElement, options);
         }
 
-        internal static JobData DeserializeJobData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AssignmentJobData DeserializeAssignmentJobData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new JobData(
+            return new AssignmentJobData(
                 id,
                 name,
                 type,
@@ -249,35 +249,35 @@ namespace Azure.ResourceManager.SecurityInsights
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<JobData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AssignmentJobData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentJobData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentJobData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        JobData IPersistableModel<JobData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AssignmentJobData IPersistableModel<AssignmentJobData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JobData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentJobData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeJobData(document.RootElement, options);
+                        return DeserializeAssignmentJobData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentJobData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<JobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AssignmentJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

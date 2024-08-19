@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> List all the hunts. </summary>
-    internal partial class HuntList
+    internal partial class SecurityInsightsHuntList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="HuntList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntList"/>. </summary>
         /// <param name="value"> Array of hunts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal HuntList(IEnumerable<HuntData> value)
+        internal SecurityInsightsHuntList(IEnumerable<SecurityInsightsHuntData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="HuntList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of hunts. </param>
         /// <param name="value"> Array of hunts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HuntList(string nextLink, IReadOnlyList<HuntData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityInsightsHuntList(string nextLink, IReadOnlyList<SecurityInsightsHuntData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HuntList"/> for deserialization. </summary>
-        internal HuntList()
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntList"/> for deserialization. </summary>
+        internal SecurityInsightsHuntList()
         {
         }
 
         /// <summary> URL to fetch the next set of hunts. </summary>
         public string NextLink { get; }
         /// <summary> Array of hunts. </summary>
-        public IReadOnlyList<HuntData> Value { get; }
+        public IReadOnlyList<SecurityInsightsHuntData> Value { get; }
     }
 }
