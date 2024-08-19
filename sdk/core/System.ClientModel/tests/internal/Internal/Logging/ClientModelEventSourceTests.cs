@@ -140,8 +140,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             Transport = new MockPipelineTransport("Transport", i => response),
             LoggingOptions = new LoggingOptions
             {
-                IsLoggingContentEnabled = true,
-                CorrelationIdHeaderName = CorrelationIdHeaderName
+                IsLoggingContentEnabled = true
             }
         };
         options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
@@ -203,8 +202,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             Transport = new MockPipelineTransport("Transport", (PipelineMessage i) => throw exception),
             LoggingOptions = new LoggingOptions
             {
-                IsLoggingContentEnabled = true,
-                CorrelationIdHeaderName = CorrelationIdHeaderName
+                IsLoggingContentEnabled = true
             }
         };
 
@@ -245,7 +243,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             {
                 IsLoggingContentEnabled = true,
                 LoggedContentSizeLimit = int.MaxValue,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
             }
         };
         options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
@@ -296,8 +293,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             LoggingOptions = new LoggingOptions
             {
                 IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = int.MaxValue,
-                CorrelationIdHeaderName = CorrelationIdHeaderName
+                LoggedContentSizeLimit = int.MaxValue
             }
         };
 
@@ -337,8 +333,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             LoggingOptions = new LoggingOptions
             {
                 IsLoggingContentEnabled = false,
-                LoggedContentSizeLimit = int.MaxValue,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
+                LoggedContentSizeLimit = int.MaxValue
             }
         };
         options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
@@ -367,11 +362,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
 
         ClientPipelineOptions options = new()
         {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions
-            {
-                CorrelationIdHeaderName = CorrelationIdHeaderName
-            }
+            Transport = new MockPipelineTransport("Transport", i => response)
         };
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -395,11 +386,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
 
         ClientPipelineOptions options = new()
         {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions
-            {
-                CorrelationIdHeaderName = CorrelationIdHeaderName
-            }
+            Transport = new MockPipelineTransport("Transport", i => response)
         };
 
         ClientPipeline pipeline = ClientPipeline.Create(options);
@@ -608,8 +595,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             LoggingOptions = new LoggingOptions
             {
                 IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = 5,
-                CorrelationIdHeaderName = CorrelationIdHeaderName
+                LoggedContentSizeLimit = 5
             }
         };
 
@@ -669,11 +655,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
 
         ClientPipelineOptions options = new()
         {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions
-            {
-                CorrelationIdHeaderName = CorrelationIdHeaderName
-            }
+            Transport = new MockPipelineTransport("Transport", i => response)
         };
         options.LoggingOptions.AllowedHeaderNames.Add("Custom-Header");
         options.LoggingOptions.AllowedHeaderNames.Add("Custom-Response-Header");
@@ -723,11 +705,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
 
         ClientPipelineOptions options = new()
         {
-            Transport = new MockPipelineTransport("Transport", i => response),
-            LoggingOptions = new LoggingOptions
-            {
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
-            }
+            Transport = new MockPipelineTransport("Transport", i => response)
         };
         options.LoggingOptions.AllowedQueryParameters.Add("*");
         options.LoggingOptions.AllowedHeaderNames.Add("*");
@@ -786,8 +764,7 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
             LoggingOptions = new LoggingOptions
             {
                 IsLoggingContentEnabled = true,
-                LoggedContentSizeLimit = maxLength,
-                CorrelationIdHeaderName = CorrelationIdHeaderName
+                LoggedContentSizeLimit = maxLength
             }
         };
 

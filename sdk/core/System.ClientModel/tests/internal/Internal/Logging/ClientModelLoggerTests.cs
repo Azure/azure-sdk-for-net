@@ -135,7 +135,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
     {
         string requestContent = "Hello";
         string responseContent = "World";
-        string clientId = "client1";
 
         var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Value" } });
         var response = new MockPipelineResponse(200, mockHeaders: headers);
@@ -147,7 +146,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             LoggingOptions = new LoggingOptions
             {
                 IsLoggingContentEnabled = true,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
                 LoggerFactory = _factory
             }
         };
@@ -161,7 +159,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Headers.Add("Custom-Header", "Value");
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
         message.Request.Headers.Add("Date", "3/28/2024");
         message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
 
@@ -170,7 +167,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         LoggerEvent log = _logger.SingleEventById(RequestEvent);
         Assert.AreEqual(LogLevel.Information, log.LogLevel);
         Assert.AreEqual("Request", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
         Assert.AreEqual("http://example.com/", log.GetValueFromArguments<string>("uri"));
         Assert.AreEqual("GET", log.GetValueFromArguments<string>("method"));
         StringAssert.Contains($"Date:3/28/2024{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
@@ -179,20 +175,17 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
         log = _logger.SingleEventById(RequestContentEvent);
         Assert.AreEqual(LogLevel.Debug, log.LogLevel);
         Assert.AreEqual("RequestContent", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
         CollectionAssert.AreEqual(requestContent, log.GetValueFromArguments<byte[]>("content"));
 
         log = _logger.SingleEventById(ResponseEvent);
         Assert.AreEqual(LogLevel.Information, log.LogLevel);
         Assert.AreEqual("Response", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
         Assert.AreEqual(log.GetValueFromArguments<int>("status"), 200);
         StringAssert.Contains($"Custom-Response-Header:Value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
 
         log = _logger.SingleEventById(ResponseContentEvent);
         Assert.AreEqual(LogLevel.Debug, log.LogLevel);
         Assert.AreEqual("ResponseContent", log.EventId.Name);
-        Assert.AreEqual(clientId, log.GetValueFromArguments<string>("requestId"));
         CollectionAssert.AreEqual(responseContent, log.GetValueFromArguments<byte[]>("content"));
     }
 
@@ -208,7 +201,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             LoggingOptions = new LoggingOptions
             {
                 IsLoggingContentEnabled = true,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
                 LoggerFactory = _factory
             }
         };
@@ -249,7 +241,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             {
                 IsLoggingContentEnabled = true,
                 LoggedContentSizeLimit = int.MaxValue,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
                 LoggerFactory = _factory
             }
         };
@@ -301,7 +292,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             {
                 IsLoggingContentEnabled = true,
                 LoggedContentSizeLimit = int.MaxValue,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
                 LoggerFactory = _factory
             }
         };
@@ -343,7 +333,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             {
                 IsLoggingContentEnabled = false,
                 LoggedContentSizeLimit = int.MaxValue,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
                 LoggerFactory = _factory
             }
         };
@@ -377,7 +366,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             Transport = new MockPipelineTransport("Transport", i => response),
             LoggingOptions = new LoggingOptions
             {
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
                 LoggerFactory = _factory
             }
         };
@@ -406,7 +394,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             Transport = new MockPipelineTransport("Transport", i => response),
             LoggingOptions = new LoggingOptions
             {
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
                 LoggerFactory = _factory
             }
         };
@@ -615,7 +602,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             {
                 IsLoggingContentEnabled = true,
                 LoggedContentSizeLimit = 5,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
                 LoggerFactory = _factory
             }
         };
@@ -679,7 +665,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             Transport = new MockPipelineTransport("Transport", i => response),
             LoggingOptions = new LoggingOptions
             {
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
                 LoggerFactory = _factory
             }
         };
@@ -733,7 +718,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             Transport = new MockPipelineTransport("Transport", i => response),
             LoggingOptions = new LoggingOptions
             {
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
                 LoggerFactory = _factory
             }
         };
@@ -794,7 +778,6 @@ public class ClientModelLoggerTests : SyncAsyncPolicyTestBase
             {
                 IsLoggingContentEnabled = true,
                 LoggedContentSizeLimit = maxLength,
-                CorrelationIdHeaderName = CorrelationIdHeaderName,
                 LoggerFactory = _factory
             }
         };
