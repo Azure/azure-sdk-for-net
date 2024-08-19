@@ -18,19 +18,20 @@ internal partial class AzureFileClient : FileClient
     private readonly Uri _endpoint;
     private readonly string _apiVersion;
 
-    internal AzureFileClient(
-        ClientPipeline pipeline,
-        Uri endpoint,
-        AzureOpenAIClientOptions options)
-            : base(pipeline, endpoint, options)
+    internal AzureFileClient(ClientPipeline pipeline, Uri endpoint, AzureOpenAIClientOptions options)
+        : base(pipeline, new OpenAIClientOptions() { Endpoint = endpoint })
     {
+        Argument.AssertNotNull(pipeline, nameof(pipeline));
+        Argument.AssertNotNull(endpoint, nameof(endpoint));
         options ??= new();
+
         _endpoint = endpoint;
         _apiVersion = options.Version;
     }
 
     protected AzureFileClient()
-    { }
+    {
+    }
 
     /// <inheritdoc />
     public override ClientResult<OpenAIFileInfo> UploadFile(Stream file, string filename, FileUploadPurpose purpose, CancellationToken cancellationToken = default)
