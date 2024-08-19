@@ -22,5 +22,4 @@
     <PackageReference Include="CommandLineParser" />
     <PackageReference Include="Microsoft.ApplicationInsights" />
   </ItemGroup>
-
 </Project>

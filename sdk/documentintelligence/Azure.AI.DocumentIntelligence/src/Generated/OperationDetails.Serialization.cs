@@ -107,6 +107,7 @@ namespace Azure.AI.DocumentIntelligence
                 switch (discriminator.GetString())
                 {
                     case "documentClassifierBuild": return DocumentClassifierBuildOperationDetails.DeserializeDocumentClassifierBuildOperationDetails(element, options);
+                    case "documentClassifierCopyTo": return DocumentClassifierCopyToOperationDetails.DeserializeDocumentClassifierCopyToOperationDetails(element, options);
                     case "documentModelBuild": return DocumentModelBuildOperationDetails.DeserializeDocumentModelBuildOperationDetails(element, options);
                     case "documentModelCompose": return DocumentModelComposeOperationDetails.DeserializeDocumentModelComposeOperationDetails(element, options);
                     case "documentModelCopyTo": return DocumentModelCopyToOperationDetails.DeserializeDocumentModelCopyToOperationDetails(element, options);

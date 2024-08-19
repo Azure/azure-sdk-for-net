@@ -177,6 +177,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(await _backupCollection.ExistsAsync(backupName));
             exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _backupCollection.GetAsync(backupName); });
             Assert.AreEqual(404, exception.Status);
+            await LiveDelay(40000);
         }
 
         [RecordedTest]
