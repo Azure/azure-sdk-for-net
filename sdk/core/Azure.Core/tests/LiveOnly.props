@@ -1,7 +1,0 @@
-﻿<Project ToolsVersion="15.0">
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)\TestFramework\LiveOnlyAttribute.cs" Link="TestFramework\LiveOnlyAttribute.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)\TestFramework\RecordedTestMode.cs" Link="TestFramework\RecordedTestMode.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)\TestFramework\RecordedTestUtilities.cs" Link="TestFramework\RecordedTestUtilities.cs" />
-  </ItemGroup>
-</Project>

@@ -1,5 +1,0 @@
-<Project>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Core.Spatial" />
-  </ItemGroup>
-</Project>

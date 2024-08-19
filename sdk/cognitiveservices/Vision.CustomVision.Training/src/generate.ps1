@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "cognitiveservices/data-plane/CustomVision/Training" -AutoRestVersion "latest"
