@@ -1,0 +1,13 @@
+{
+    "kind": "X",
+    "name": "xmodel",
+    "xProperty": 100,
+    "fields": [
+        "testField"
+    ],
+    "nullProperty": null,
+    "keyValuePairs": {
+        "color": "red"
+    },
+    "extra": "stuff" 
+}

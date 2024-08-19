@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.Core.TestFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Azure.Core\src\Shared\ForwardsClientCallsAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\Azure.Core\src\Shared\PageResponseEnumerator.cs" LinkBase="Shared\Core" />
+    <Compile Include="..\..\Azure.Core\src\Shared\AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+  </ItemGroup>
+
+</Project>

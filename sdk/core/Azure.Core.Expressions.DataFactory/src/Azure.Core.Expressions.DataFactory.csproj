@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>This is the implementation of the DataFactoryExpressions</Description>
+    <AssemblyTitle>Microsoft Azure DataFactory Expressions</AssemblyTitle>
+    <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <PackageTags>azure;datafactory</PackageTags>
+    <Nullable>enable</Nullable>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
+    <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" VersionOverride="1.36.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)Utf8JsonWriterExtensions.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)TypeFormatters.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)JsonElementExtensions.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)Optional.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingDictionary.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingList.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)PropertyReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)InitializationConstructorAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)SerializationConstructorAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+
+</Project>

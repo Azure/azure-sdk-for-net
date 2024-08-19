@@ -1,0 +1,9 @@
+﻿<Tag>
+  <Key>Color</Key>
+  <Value>Red</Value>
+  <ReadOnlyProperty>ReadOnly</ReadOnlyProperty>
+  <ChildTag>
+    <ChildValue>ChildRed</ChildValue>
+    <ChildReadOnlyProperty>ChildReadOnly</ChildReadOnlyProperty>
+  </ChildTag>
+</Tag>
