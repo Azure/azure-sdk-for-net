@@ -45,7 +45,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
     private TestClientEventListener _listener;
 
     private const string SystemClientModelEventSourceName = "System-ClientModel";
-    private const string CorrelationIdHeaderName = "Client-Id";
 
     public ClientModelEventSourceTests(bool isAsync) : base(isAsync)
     {
@@ -129,7 +128,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
     {
         string requestContent = "Hello";
         string responseContent = "World";
-        string clientId = "client1";
 
         var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Value" } });
         var response = new MockPipelineResponse(200, mockHeaders: headers);
@@ -152,7 +150,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Headers.Add("Custom-Header", "Value");
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
         message.Request.Headers.Add("Date", "3/28/2024");
         message.Request.Content = BinaryContent.Create(new BinaryData(requestContent));
 
@@ -162,7 +159,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Informational, args.Level);
         Assert.AreEqual(SystemClientModelEventSourceName, args.EventSource.Name);
         Assert.AreEqual("Request", args.EventName);
-        Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
         Assert.AreEqual("http://example.com/", args.GetProperty<string>("uri"));
         Assert.AreEqual("GET", args.GetProperty<string>("method"));
         StringAssert.Contains($"Date:3/28/2024{Environment.NewLine}", args.GetProperty<string>("headers"));
@@ -172,14 +168,12 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Verbose, args.Level);
         Assert.AreEqual(SystemClientModelEventSourceName, args.EventSource.Name);
         Assert.AreEqual("RequestContent", args.EventName);
-        Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
         CollectionAssert.AreEqual(requestContent, args.GetProperty<byte[]>("content"));
 
         args = _listener.SingleEventById(ResponseEvent);
         Assert.AreEqual(EventLevel.Informational, args.Level);
         Assert.AreEqual(SystemClientModelEventSourceName, args.EventSource.Name);
         Assert.AreEqual("Response", args.EventName);
-        Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
         Assert.AreEqual(args.GetProperty<int>("status"), 200);
         StringAssert.Contains($"Custom-Response-Header:Value{Environment.NewLine}", args.GetProperty<string>("headers"));
 
@@ -187,15 +181,12 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Verbose, args.Level);
         Assert.AreEqual(SystemClientModelEventSourceName, args.EventSource.Name);
         Assert.AreEqual("ResponseContent", args.EventName);
-        Assert.AreEqual(clientId, args.GetProperty<string>("requestId"));
         CollectionAssert.AreEqual(responseContent, args.GetProperty<byte[]>("content"));
     }
 
     [Test]
     public void GettingExceptionResponseProducesEvents()
     {
-        string clientId = "client1";
-
         var exception = new InvalidOperationException();
         ClientPipelineOptions options = new()
         {
@@ -212,14 +203,12 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Headers.Add("User-Agent", "agent");
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
 
         Assert.ThrowsAsync<InvalidOperationException>(async () => await pipeline.SendSyncOrAsync(message, IsAsync));
 
         EventWrittenEventArgs e = _listener.SingleEventById(ExceptionResponseEvent);
         Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
         Assert.AreEqual(EventLevel.Informational, e.Level);
-        Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
         Assert.AreEqual(exception.ToString().Split(Environment.NewLine.ToCharArray())[0],
             e.GetProperty<string>("exception").Split(Environment.NewLine.ToCharArray())[0]);
     }
@@ -229,7 +218,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
     {
         byte[] requestContent = new byte[] { 1, 2, 3, 4, 5 };
         byte[] responseContent = new byte[] { 6, 7, 8, 9, 0 };
-        string clientId = "client1";
 
         var headers = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Value - 2" } });
         var response = new MockPipelineResponse(500, mockHeaders: headers);
@@ -255,10 +243,8 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Headers.Add("Custom-Header", "Value");
-        message.Request.Headers.Add(clientId, clientId);
         message.Request.Headers.Add("Date", "3/28/2024");
         message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -266,7 +252,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
         Assert.AreEqual(EventLevel.Warning, e.Level);
         Assert.AreEqual("ErrorResponse", e.EventName);
-        Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
         Assert.AreEqual(e.GetProperty<int>("status"), 500);
         StringAssert.Contains($"Custom-Response-Header:Value - 2{Environment.NewLine}", e.GetProperty<string>("headers"));
 
@@ -274,14 +259,12 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
         Assert.AreEqual(EventLevel.Informational, e.Level);
         Assert.AreEqual("ErrorResponseContent", e.EventName);
-        Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
         CollectionAssert.AreEqual(responseContent, e.GetProperty<byte[]>("content"));
     }
 
     [Test]
     public async Task RequestContentIsLoggedAsText()
     {
-        string clientId = "client1";
         string requestContent = "Hello world";
 
         var response = new MockPipelineResponse(500);
@@ -303,7 +286,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Headers.Add("Custom-Header", "Value");
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
         message.Request.Headers.Add("Date", "3/28/2024");
         message.Request.Headers.Add("Content-Type", "text/json");
         message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes(requestContent)));
@@ -314,7 +296,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Verbose, e.Level);
         Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
         Assert.AreEqual("RequestContentText", e.EventName);
-        Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
         Assert.AreEqual(requestContent, e.GetProperty<string>("content"));
 
         CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
@@ -347,7 +328,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         message.Request.Headers.Add("Date", "3/28/2024");
         message.Request.Headers.Add("Content-Type", "text/json");
         message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
-        message.Request.Headers.Add(CorrelationIdHeaderName, "client1");
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -371,7 +351,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
-        message.Request.Headers.Add(CorrelationIdHeaderName, "client-id");
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -427,14 +406,12 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
         Assert.AreEqual(SystemClientModelEventSourceName, contentEvents[0].EventSource.Name);
         Assert.AreEqual("ResponseContentBlock", contentEvents[0].EventName);
-        Assert.AreEqual("client-id", contentEvents[0].GetProperty<string>("requestId"));
         Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
         CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, contentEvents[0].GetProperty<byte[]>("content"));
 
         Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
         Assert.AreEqual(SystemClientModelEventSourceName, contentEvents[1].EventSource.Name);
         Assert.AreEqual("ResponseContentBlock", contentEvents[1].EventName);
-        Assert.AreEqual("client-id", contentEvents[1].GetProperty<string>("requestId"));
         Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
         CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, contentEvents[1].GetProperty<byte[]>("content"));
 
@@ -453,14 +430,12 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
         Assert.AreEqual(SystemClientModelEventSourceName, errorContentEvents[0].EventSource.Name);
         Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[0].EventName);
-        Assert.AreEqual("client-id", errorContentEvents[0].GetProperty<string>("requestId"));
         Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
         CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, errorContentEvents[0].GetProperty<byte[]>("content"));
 
         Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
         Assert.AreEqual(SystemClientModelEventSourceName, errorContentEvents[1].EventSource.Name);
         Assert.AreEqual("ErrorResponseContentBlock", errorContentEvents[1].EventName);
-        Assert.AreEqual("client-id", errorContentEvents[1].GetProperty<string>("requestId"));
         Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
         CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, errorContentEvents[1].GetProperty<byte[]>("content"));
 
@@ -483,14 +458,12 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
         Assert.AreEqual(SystemClientModelEventSourceName, contentEvents[0].EventSource.Name);
         Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventName);
-        Assert.AreEqual("client-id", contentEvents[0].GetProperty<string>("requestId"));
         Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
         Assert.AreEqual("Hello ", contentEvents[0].GetProperty<string>("content"));
 
         Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
         Assert.AreEqual(SystemClientModelEventSourceName, contentEvents[1].EventSource.Name);
         Assert.AreEqual("ResponseContentTextBlock", contentEvents[1].EventName);
-        Assert.AreEqual("client-id", contentEvents[1].GetProperty<string>("requestId"));
         Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
         Assert.AreEqual("world", contentEvents[1].GetProperty<string>("content"));
 
@@ -513,14 +486,12 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
         Assert.AreEqual(SystemClientModelEventSourceName, errorContentEvents[0].EventSource.Name);
         Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[0].EventName);
-        Assert.AreEqual("client-id", errorContentEvents[0].GetProperty<string>("requestId"));
         Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
         Assert.AreEqual("Hello ", errorContentEvents[0].GetProperty<string>("content"));
 
         Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
         Assert.AreEqual(SystemClientModelEventSourceName, errorContentEvents[1].EventSource.Name);
         Assert.AreEqual("ErrorResponseContentTextBlock", errorContentEvents[1].EventName);
-        Assert.AreEqual("client-id", errorContentEvents[1].GetProperty<string>("requestId"));
         Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
         Assert.AreEqual("world", errorContentEvents[1].GetProperty<string>("content"));
 
@@ -541,7 +512,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
         Assert.AreEqual(SystemClientModelEventSourceName, contentEvent.EventSource.Name);
         Assert.AreEqual("ResponseContentText", contentEvent.EventName);
-        Assert.AreEqual("client-id", contentEvent.GetProperty<string>("requestId"));
         Assert.AreEqual("Hello world", contentEvent.GetProperty<string>("content"));
     }
 
@@ -560,7 +530,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Informational, errorContentEvent.Level);
         Assert.AreEqual(SystemClientModelEventSourceName, errorContentEvent.EventSource.Name);
         Assert.AreEqual("ErrorResponseContentText", errorContentEvent.EventName);
-        Assert.AreEqual("client-id", errorContentEvent.GetProperty<string>("requestId"));
         Assert.AreEqual("Hello", errorContentEvent.GetProperty<string>("content"));
     }
 
@@ -579,7 +548,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
         Assert.AreEqual(SystemClientModelEventSourceName, contentEvent.EventSource.Name);
         Assert.AreEqual("ResponseContentText", contentEvent.EventName);
-        Assert.AreEqual("client-id", contentEvent.GetProperty<string>("requestId"));
         Assert.AreEqual("Hello", contentEvent.GetProperty<string>("content"));
     }
 
@@ -606,7 +574,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         message.Request.Uri = new Uri("http://example.com");
         message.Request.Content = BinaryContent.Create(new BinaryData(Encoding.UTF8.GetBytes("Hello world")));
         message.Request.Headers.Add("Content-Type", "text/json");
-        message.Request.Headers.Add(CorrelationIdHeaderName, "client1");
 
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
@@ -614,7 +581,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
         Assert.AreEqual(EventLevel.Verbose, e.Level);
         Assert.AreEqual("RequestContentText", e.EventName);
-        Assert.AreEqual("client1", e.GetProperty<string>("requestId"));
         Assert.AreEqual("Hello", e.GetProperty<string>("content"));
 
         CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
@@ -637,7 +603,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
         Assert.AreEqual(SystemClientModelEventSourceName, contentEvents[0].EventSource.Name);
         Assert.AreEqual("ResponseContentTextBlock", contentEvents[0].EventName);
-        Assert.AreEqual("client-id", contentEvents[0].GetProperty<string>("requestId"));
         Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
         Assert.AreEqual("Hello", contentEvents[0].GetProperty<string>("content"));
 
@@ -647,8 +612,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
     [Test]
     public async Task HeadersAndQueryParametersAreSanitized()
     {
-        string clientId = "client1";
-
         var mockHeaders = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Improved value" }, { "Secret-Response-Header", "Very secret" } });
         var response = new MockPipelineResponse(200, mockHeaders: mockHeaders);
         response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
@@ -667,7 +630,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         message.Request.Uri = new Uri("https://contoso.a.io?api-version=5&secret=123");
         message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
         message.Request.Headers.Add("Content-Type", "text/json");
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
         message.Request.Headers.Add("Date", "4/18/2024");
         message.Request.Headers.Add("Custom-Header", "Value");
         message.Request.Headers.Add("Secret-Custom-Header", "Value");
@@ -678,7 +640,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
         Assert.AreEqual(EventLevel.Informational, e.Level);
         Assert.AreEqual("Request", e.EventName);
-        Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
         Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=REDACTED", e.GetProperty<string>("uri"));
         Assert.AreEqual("GET", e.GetProperty<string>("method"));
         StringAssert.Contains($"Date:4/18/2024{Environment.NewLine}", e.GetProperty<string>("headers"));
@@ -689,7 +650,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
         Assert.AreEqual(EventLevel.Informational, e.Level);
         Assert.AreEqual("Response", e.EventName);
-        Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
         Assert.AreEqual(e.GetProperty<int>("status"), 200);
         StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
         StringAssert.Contains($"Secret-Response-Header:REDACTED{Environment.NewLine}", e.GetProperty<string>("headers"));
@@ -698,7 +658,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
     [Test]
     public async Task HeadersAndQueryParametersAreNotSanitizedWhenStars()
     {
-        string clientId = "client1";
         var mockHeaders = new MockResponseHeaders(new Dictionary<string, string> { { "Custom-Response-Header", "Improved value" }, { "Secret-Response-Header", "Very secret" } });
         var response = new MockPipelineResponse(200, mockHeaders: mockHeaders);
         response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
@@ -717,7 +676,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         message.Request.Uri = new Uri("https://contoso.a.io?api-version=5&secret=123");
         message.Request.Content = BinaryContent.Create(new BinaryData(new byte[] { 1, 2, 3, 4, 5 }));
         message.Request.Headers.Add("Content-Type", "text/json");
-        message.Request.Headers.Add(CorrelationIdHeaderName, clientId);
         message.Request.Headers.Add("Date", "4/18/2024");
         message.Request.Headers.Add("Secret-Custom-Header", "Value");
 
@@ -727,7 +685,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
         Assert.AreEqual(EventLevel.Informational, e.Level);
         Assert.AreEqual("Request", e.EventName);
-        Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
         Assert.AreEqual("https://contoso.a.io/?api-version=5&secret=123", e.GetProperty<string>("uri"));
         Assert.AreEqual("GET", e.GetProperty<string>("method"));
         StringAssert.Contains($"Date:4/18/2024{Environment.NewLine}", e.GetProperty<string>("headers"));
@@ -738,7 +695,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         Assert.AreEqual(EventLevel.Informational, e.Level);
         Assert.AreEqual(SystemClientModelEventSourceName, e.EventSource.Name);
         Assert.AreEqual("Response", e.EventName);
-        Assert.AreEqual(clientId, e.GetProperty<string>("requestId"));
         Assert.AreEqual(e.GetProperty<int>("status"), 200);
         StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
         StringAssert.Contains($"Secret-Response-Header:Very secret{Environment.NewLine}", e.GetProperty<string>("headers"));
@@ -773,7 +729,6 @@ public class ClientModelEventSourceTests : SyncAsyncPolicyTestBase
         PipelineMessage message = pipeline.CreateMessage();
         message.Request.Method = "GET";
         message.Request.Uri = new Uri("http://example.com");
-        message.Request.Headers.Add(CorrelationIdHeaderName, "client-id");
 
         // These tests are essentially testing whether the logging policy works
         // correctly when responses are buffered (memory stream) and unbuffered

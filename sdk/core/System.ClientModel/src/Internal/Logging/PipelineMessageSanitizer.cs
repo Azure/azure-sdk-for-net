@@ -8,9 +8,6 @@ using System.Text;
 
 namespace System.ClientModel.Internal;
 
-/// <summary>
-/// TODO.
-/// </summary>
 internal class PipelineMessageSanitizer
 {
     private const string LogAllValue = "*";
@@ -24,12 +21,6 @@ internal class PipelineMessageSanitizer
     private static StringBuilder? s_cachedStringBuilder;
     private const int MaxCachedStringBuilderCapacity = 1024;
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="allowedQueryParameters"></param>
-    /// <param name="allowedHeaders"></param>
-    /// <param name="redactedPlaceholder"></param>
     public PipelineMessageSanitizer(string[] allowedQueryParameters, string[] allowedHeaders, string redactedPlaceholder = "REDACTED")
     {
         _logAllHeaders = allowedHeaders.Contains(LogAllValue);
@@ -40,12 +31,6 @@ internal class PipelineMessageSanitizer
         _allowedHeaders = new HashSet<string>(allowedHeaders, StringComparer.InvariantCultureIgnoreCase);
     }
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="value"></param>
-    /// <returns></returns>
     public string SanitizeHeader(string name, string value)
     {
         if (_logAllHeaders || _allowedHeaders.Contains(name))
@@ -56,11 +41,6 @@ internal class PipelineMessageSanitizer
         return _redactedPlaceholder;
     }
 
-    /// <summary>
-    /// TODO.
-    /// </summary>
-    /// <param name="url"></param>
-    /// <returns></returns>
     public string SanitizeUrl(string url)
     {
         if (_logFullQueries)
