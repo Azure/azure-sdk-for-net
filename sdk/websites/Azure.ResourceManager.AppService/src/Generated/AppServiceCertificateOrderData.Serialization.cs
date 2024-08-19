@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
+                    DeserializeTypeValue(property, ref type);
                     continue;
                 }
                 if (property.NameEquals("systemData"u8))

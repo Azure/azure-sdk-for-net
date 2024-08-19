@@ -28,7 +28,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
             // TODO: Replace this ActivityListener with an OpenTelemetry provider.
-            var listener = new ActivityListener
+            using var listener = new ActivityListener
             {
                 ShouldListenTo = _ => true,
                 Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
@@ -87,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             var activitySourceName = $"activitySourceName{uniqueTestId}";
             using var activitySource = new ActivitySource(activitySourceName);
             // TODO: Replace this ActivityListener with an OpenTelemetry provider.
-            var listener = new ActivityListener
+            using var listener = new ActivityListener
             {
                 ShouldListenTo = _ => true,
                 Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,

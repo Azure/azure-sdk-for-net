@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+extern alias BaseShares;
 
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Storage.Files.Shares.Models;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Tests;
 using Moq;
@@ -90,7 +89,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 contentDisposition: new("inline"),
                 cacheControl: new("no-cache"),
                 fileAttributes: new(NtfsFileAttributes.Archive),
-                filePermissionKey: default,
+                preserveFilePermission: true,
                 fileLastWrittenOn: new(DateTimeOffset.Now),
                 fileChangedOn: new(DateTimeOffset.Now),
                 fileCreatedOn: new(DateTimeOffset.Now),
@@ -133,7 +132,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.That(storageResource._options.DirectoryMetadata.Value, Is.EqualTo(originalDestinationData.DirectoryMetadata.Value));
             Assert.That(storageResource._options.FileAttributes.Preserve, Is.EqualTo(originalDestinationData.FileAttributes.Preserve));
             Assert.That(storageResource._options.FileAttributes.Value, Is.EqualTo(originalDestinationData.FileAttributes.Value));
-            Assert.That(storageResource._options.FilePermissionKey, Is.EqualTo(originalDestinationData.FilePermissionKey));
+            Assert.IsTrue(storageResource._options.FilePermissions.Preserve);
             Assert.That(storageResource._options.FileCreatedOn.Preserve, Is.EqualTo(originalDestinationData.FileCreatedOn.Preserve));
             Assert.That(storageResource._options.FileCreatedOn.Value, Is.EqualTo(originalDestinationData.FileCreatedOn.Value));
             Assert.That(storageResource._options.FileLastWrittenOn.Preserve, Is.EqualTo(originalDestinationData.FileLastWrittenOn.Preserve));

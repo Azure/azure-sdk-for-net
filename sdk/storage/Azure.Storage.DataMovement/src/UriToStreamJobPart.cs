@@ -291,7 +291,7 @@ namespace Azure.Storage.DataMovement
                 // To prevent requesting a range that is invalid when
                 // we already know the length we can just make one get blob request.
                 StorageResourceReadStreamResult result = await _sourceResource.
-                    ReadStreamAsync(cancellationToken: _cancellationToken)
+                    ReadStreamAsync(length: totalLength, cancellationToken: _cancellationToken)
                     .ConfigureAwait(false);
 
                 long downloadLength = result.ContentLength.Value;

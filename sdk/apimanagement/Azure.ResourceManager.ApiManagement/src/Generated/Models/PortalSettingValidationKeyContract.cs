@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> This is secret value of the validation key in portal settings. </summary>
+        [WirePath("validationKey")]
         public string ValidationKey { get; }
     }
 }

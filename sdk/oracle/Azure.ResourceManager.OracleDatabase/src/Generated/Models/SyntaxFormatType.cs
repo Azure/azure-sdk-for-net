@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// Syntax format type enum.
-    /// Serialized Name: SyntaxFormatType
-    /// </summary>
+    /// <summary> Syntax format type enum. </summary>
     public readonly partial struct SyntaxFormatType : IEquatable<SyntaxFormatType>
     {
         private readonly string _value;
@@ -27,23 +24,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         private const string LongValue = "Long";
         private const string EzconnectValue = "Ezconnect";
-        private const string EzconnectplusValue = "Ezconnectplus";
+        private const string EzconnectPlusValue = "Ezconnectplus";
 
-        /// <summary>
-        /// Long format
-        /// Serialized Name: SyntaxFormatType.Long
-        /// </summary>
+        /// <summary> Long format. </summary>
         public static SyntaxFormatType Long { get; } = new SyntaxFormatType(LongValue);
-        /// <summary>
-        /// Ezconnect format
-        /// Serialized Name: SyntaxFormatType.Ezconnect
-        /// </summary>
+        /// <summary> Ezconnect format. </summary>
         public static SyntaxFormatType Ezconnect { get; } = new SyntaxFormatType(EzconnectValue);
-        /// <summary>
-        /// Ezconnectplus format
-        /// Serialized Name: SyntaxFormatType.Ezconnectplus
-        /// </summary>
-        public static SyntaxFormatType Ezconnectplus { get; } = new SyntaxFormatType(EzconnectplusValue);
+        /// <summary> Ezconnectplus format. </summary>
+        public static SyntaxFormatType EzconnectPlus { get; } = new SyntaxFormatType(EzconnectPlusValue);
         /// <summary> Determines if two <see cref="SyntaxFormatType"/> values are the same. </summary>
         public static bool operator ==(SyntaxFormatType left, SyntaxFormatType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SyntaxFormatType"/> values are not the same. </summary>
@@ -59,7 +47,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> First name. </summary>
+        [WirePath("firstName")]
         public string FirstName { get; set; }
         /// <summary> Last name. </summary>
+        [WirePath("lastName")]
         public string LastName { get; set; }
         /// <summary> User Email. </summary>
+        [WirePath("emailAddress")]
         public string EmailAddress { get; set; }
         /// <summary> Contact phone number. </summary>
+        [WirePath("phoneNumber")]
         public string PhoneNumber { get; set; }
         /// <summary> country if user. </summary>
+        [WirePath("country")]
         public string Country { get; set; }
     }
 }

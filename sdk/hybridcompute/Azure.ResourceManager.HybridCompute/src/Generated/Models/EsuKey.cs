@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> SKU number. </summary>
+        [WirePath("sku")]
         public string Sku { get; }
         /// <summary> The current status of the license profile key. Represented by the same integer value that is presented on the machine itself when querying the license key status. </summary>
+        [WirePath("licenseStatus")]
         public int? LicenseStatus { get; }
     }
 }

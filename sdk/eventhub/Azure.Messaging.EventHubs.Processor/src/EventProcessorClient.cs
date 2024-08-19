@@ -579,7 +579,7 @@ namespace Azure.Messaging.EventHubs
         /// <param name="consumerGroup">The name of the consumer group this processor is associated with.  The processor will assert exclusive read access to partitions for this group.</param>
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to connect to.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the processor with.</param>
-        /// <param name="credential">The Azure identity credential to use for authorization.  Access controls may be specified by the Event Hubs namespace or the requested Event Hub, depending on Azure configuration.</param>
+        /// <param name="credential">The Azure identity credential to use for authorization.  Requires RBAC assignment of the "Event Hubs Access Data Owner" role for the Event Hubs namespace or the requested Event Hub. A role assignment for the requested consumer group is not adequate.</param>
         /// <param name="clientOptions">The set of options to use for this processor.</param>
         ///
         /// <remarks>

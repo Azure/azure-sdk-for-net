@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Type of the cluster node hardware. </summary>
+    /// <summary> The node type of all the nodes of the cluster. </summary>
     public readonly partial struct ClusterNodeType : IEquatable<ClusterNodeType>
     {
         private readonly string _value;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

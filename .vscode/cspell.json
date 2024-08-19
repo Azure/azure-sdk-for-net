@@ -47,7 +47,6 @@
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
     "sdk/monitor/Azure.ResourceManager.Monitor/api/*.cs",
-    "sdk/monitor/Microsoft.Azure.Management.Monitor/**/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
@@ -211,13 +210,22 @@
       "words": [
         "cref",
         "imds",
-        "IMDS"
+        "IMDS",
+        "Wdac",
+        "Adou",
+        "Drtm",
+        "Hvci"
       ]
     },
     {
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
-        "cifs"
+        "cifs",
+        "ocpdate",
+        "Reimage",
+        "Reimaging",
+        "reimaging",
+        "SSDLRS"
       ]
     },
     {
@@ -272,10 +280,35 @@
       "filename": "**/sdk/cognitivelanguage/**/*",
       "words": [
         "apim",
+        "armn",
+        "bangla",
+        "dbauth",
+        "ethi",
+        "gebr",
+        "geor",
+        "grek",
+        "gujr",
+        "gurmukhi",
+        "hebr",
+        "inclusivity",
+        "jpan",
+        "khmr",
+        "knda",
+        "laoo",
+        "mlym",
+        "mymr",
         "nigiri",
-        "qnas",
+        "odia",
+        "orya",
         "petabit",
-        "Picometer"
+        "picometer",
+        "qnas",
+        "regon",
+        "taml",
+        "telu",
+        "thaa",
+        "thaana",
+        "tibt"
       ]
     },
     {
@@ -375,6 +408,13 @@
       "filename": "**/sdk/datadog/**/*.cs",
       "words": [
         "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/devopsinfrastructure/**/*.cs",
+      "words": [
+        "Reimage",
+        "Reimaging"
       ]
     },
     {
@@ -569,6 +609,17 @@
       ]
     },
     {
+      "filename": "**/sdk/hdinsightcontainers/**/*.cs",
+      "words": [
+        "trino",
+        "flink",
+        "llap",
+        "SSDLRS",
+        "SSDZRS",
+        "HDDLRS"
+      ]
+    },
+    {
       "filename": "**/sdk/healthcareapis/**/*.cs",
       "words": [
         "dicom",
@@ -601,16 +652,24 @@
       ]
     },
     {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "filename": "**/sdk/informaticadatamanagement/**/*.cs",
       "words": [
-        "kustomization",
-        "kustomizations"
+        "cdie",
+        "infa",
+        "informatica"
       ]
     },
     {
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "words": [
+        "kustomization",
+        "kustomizations"
       ]
     },
     {
@@ -786,6 +845,14 @@
         "mbps",
         "gshut",
         "dscp"
+      ]
+    },
+    {
+      "filename": "**/sdk/maps/Azure.Maps.TimeZone/**/*.cs",
+      "words": [
+        "Posix",
+        "posix",
+        "POSIX"
       ]
     },
     {
@@ -1205,7 +1272,10 @@
         "Ragzrs",
         "Rehydrated",
         "Undelete",
-        "Aadkerb"
+        "Aadkerb",
+        "Mibps",
+        "Nfsv",
+        "Sddl"
       ]
     },
     {
@@ -1223,7 +1293,8 @@
     {
       "filename": "**/sdk/storagemover/**/*.cs",
       "words": [
-        "Unregistering"
+        "Unregistering",
+        "Mbps"
       ]
     },
     {
@@ -1312,7 +1383,11 @@
         "Guage",
         "Plex",
         "Vstsrm",
-        "Localizable"
+        "Localizable",
+        "Dapr",
+        "TLSAES",
+        "Unregistering",
+        "Diffie"
       ]
     },
     {
@@ -1415,6 +1490,16 @@
         "nfvi",
         "NFVIs",
         "nfvis"
+      ]
+    },
+    {
+      "filename": "**/sdk/healthdataaiservices/**/*",
+      "words": [
+        "Deidentification",
+        "Deidentify",
+        "Deidentified",
+        "Deid",
+        "HEALTHDATAAISERVICES"
       ]
     },
     {

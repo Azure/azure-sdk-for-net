@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,21 +10,27 @@ namespace Azure.AI.DocumentIntelligence
 {
     internal class TrainingOperation : Operation<BinaryData>
     {
+        private const string OperationIdNotFoundErrorMessage = "The operation ID was not present in the service response.";
+
+        // Location header pattern:
+        // https://<endpoint>/documentintelligence/<api>/<operationId>?api-version=<version>
+        private static readonly Regex s_locationHeaderRegex = new(@"[^:]+://[^/]+/documentintelligence/.+/([^?/]+)", RegexOptions.Compiled);
+
         private readonly Operation<BinaryData> _internalOperation;
 
-        private readonly Lazy<string> _operationId;
+        private readonly string _operationId;
 
         internal TrainingOperation(Operation<BinaryData> internalOperation)
         {
             _internalOperation = internalOperation;
-            _operationId = new Lazy<string>(GetOperationId);
+            _operationId = GetOperationId();
         }
 
         public override BinaryData Value => _internalOperation.Value;
 
         public override bool HasValue => _internalOperation.HasValue;
 
-        public override string Id => _operationId.Value;
+        public override string Id => _operationId ?? throw new InvalidOperationException(OperationIdNotFoundErrorMessage);
 
         public override bool HasCompleted => _internalOperation.HasCompleted;
 
@@ -46,38 +51,21 @@ namespace Azure.AI.DocumentIntelligence
 
         private string GetOperationId()
         {
-            const string OperationIdNotFoundErrorMessage = "The operation ID was not present in the service response.";
             var response = GetRawResponse();
-
-            // If the "operation-location" header is present, it means the latest response came from a POST request,
-            // so the operation ID can be extracted from the header.
-            // Otherwise, the latest response came from a GET request, so the operation ID can be obtained directly
-            // from the response's content.
 
             if (response.Headers.TryGetValue("operation-location", out string operationLocation))
             {
-                // "operation-location" header pattern:
-                // https://<endpoint>/documentintelligence/operations/<operationId>?api-version=<version>
-                var match = Regex.Match(operationLocation, @"[^:]+://[^/]+/documentintelligence/operations/([^?]+)");
+                var match = s_locationHeaderRegex.Match(operationLocation);
 
-                if (!match.Success)
+                if (!match.Success || !match.Groups[1].Success)
                 {
-                    throw new InvalidOperationException(OperationIdNotFoundErrorMessage);
+                    return null;
                 }
 
                 return match.Groups[1].Value;
             }
-            else
-            {
-                using var document = JsonDocument.Parse(response.Content);
 
-                if (!document.RootElement.TryGetProperty("operationId", out JsonElement operationIdProperty))
-                {
-                    throw new InvalidOperationException(OperationIdNotFoundErrorMessage);
-                }
-
-                return operationIdProperty.GetRawText().Trim('"');
-            }
+            return null;
         }
     }
 }

@@ -8,53 +8,46 @@ parameters:
   # EnvVars is used to help diagnose variable conflict issues early
   - name: EnvVars
     type: object
-    default: null
+    default: {}
   - name: SubscriptionConfigurationFilePaths
     type: object
     default: null
 
 steps:
+  - task: AzurePowerShell@5
+    displayName: Set Pipeline Subnet Info
+    condition: and(succeeded(), ne(variables['Pool'], ''))
+    env: ${{ parameters.EnvVars }}
+    inputs:
+      azureSubscription: azure-sdk-tests
+      azurePowerShellVersion: LatestVersion
+      pwsh: true
+      ScriptType: InlineScript
+      Inline: |
+        Set-AzContext 'Azure SDK Engineering System'
+        if ($env:Pool -eq 'Azure Pipelines') {
+          Write-Host "Skipping pool subnet lookup when running on an Azure Pipelines hosted pool"
+          Write-Host "##vso[task.setvariable variable=PoolSubnet;]"
+          exit 0
+        }
+        $poolSubnet = (Get-AzResource -ResourceGroupName azsdk-pools -Name $env:Pool -ExpandProperties).Properties.networkProfile.subnetId
+        Write-Host "Setting pipeline subnet env variable PoolSubnet to '$poolSubnet'"
+        Write-Host "##vso[task.setvariable variable=PoolSubnet;]$poolSubnet"
+
   - pwsh: |
       . ./eng/common/TestResources/SubConfig-Helpers.ps1
 
-      $finalConfig = @{}
-      $baseSubConfigRaw = @'
+      $baseSubConfigJson = @'
         ${{ parameters.SubscriptionConfiguration }}
       '@.Trim()
-      if ($baseSubConfigRaw) {
-        $baseSubConfig = $baseSubConfigRaw | ConvertFrom-Json -AsHashtable
 
-        Write-Host "Setting base sub config"
-        $finalConfig = SetSubscriptionConfiguration $baseSubConfig
-      }
-
-      $subConfigJsonsRaw = @'
+      $additionalSubConfigsJson = @'
         ${{ convertToJson(parameters.SubscriptionConfigurations) }}
       '@.Trim() -replace '"{', '{' -replace '}"', '}'
 
-      if ($subConfigJsonsRaw) {
-        $subConfigs = $subConfigJsonsRaw | ConvertFrom-Json -AsHashtable
-
-        foreach ($subConfig in $subConfigs) {
-          Write-Host "Merging sub config from list"
-          $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
-        }
-      }
-
-      $subConfigFilesRaw = @'
+      $subConfigFilesJson = @'
         ${{ convertToJson(parameters.SubscriptionConfigurationFilePaths) }}
       '@.Trim()
 
-      if ($subConfigFilesRaw) {
-        $subConfigFiles = $subConfigFilesRaw | ConvertFrom-Json -AsHashtable
-        foreach ($file in $subConfigFiles) {
-          Write-Host "Merging sub config from file: $file"
-          $subConfig = Get-Content $file | ConvertFrom-Json -AsHashtable
-          $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
-        }
-      }
-
-      Write-Host ($finalConfig | ConvertTo-Json)
-      $serialized = $finalConfig | ConvertTo-Json -Compress
-      Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+      BuildAndSetSubscriptionConfig $baseSubConfigJson $additionalSubConfigsJson $subConfigFilesJson
     displayName: Merge subscription configurations

@@ -51,16 +51,16 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Retrieves the network a given device is on. Returns network in a networkCode format that can be used for other APIs. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="networkIdentifier"> Identifier for the network to be queried. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="networkIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
         /// <include file="Docs/DeviceNetwork.xml" path="doc/members/member[@name='RetrieveAsync(string,NetworkIdentifier,CancellationToken)']/*" />
-        public virtual async Task<Response<NetworkRetrievalResult>> RetrieveAsync(string apcGatewayId, NetworkIdentifier networkIdentifier, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkRetrievalResult>> RetrieveAsync(string apcGatewayId, NetworkIdentifier body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(networkIdentifier, nameof(networkIdentifier));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = networkIdentifier.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await RetrieveAsync(apcGatewayId, content, context).ConfigureAwait(false);
             return Response.FromValue(NetworkRetrievalResult.FromResponse(response), response);
@@ -68,16 +68,16 @@ namespace Azure.Communication.ProgrammableConnectivity
 
         /// <summary> Retrieves the network a given device is on. Returns network in a networkCode format that can be used for other APIs. </summary>
         /// <param name="apcGatewayId"> The identifier of the APC Gateway resource which should handle this request. </param>
-        /// <param name="networkIdentifier"> Identifier for the network to be queried. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="networkIdentifier"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="apcGatewayId"/> or <paramref name="body"/> is null. </exception>
         /// <include file="Docs/DeviceNetwork.xml" path="doc/members/member[@name='Retrieve(string,NetworkIdentifier,CancellationToken)']/*" />
-        public virtual Response<NetworkRetrievalResult> Retrieve(string apcGatewayId, NetworkIdentifier networkIdentifier, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkRetrievalResult> Retrieve(string apcGatewayId, NetworkIdentifier body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(apcGatewayId, nameof(apcGatewayId));
-            Argument.AssertNotNull(networkIdentifier, nameof(networkIdentifier));
+            Argument.AssertNotNull(body, nameof(body));
 
-            using RequestContent content = networkIdentifier.ToRequestContent();
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Retrieve(apcGatewayId, content, context);
             return Response.FromValue(NetworkRetrievalResult.FromResponse(response), response);

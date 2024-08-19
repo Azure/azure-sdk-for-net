@@ -14,9 +14,10 @@ namespace Azure.Health.Insights.RadiologyInsights
     internal partial class UnknownProcedureRecommendation : ProcedureRecommendation
     {
         /// <summary> Initializes a new instance of <see cref="UnknownProcedureRecommendation"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for ProcedureRecommendation. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownProcedureRecommendation(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
+        internal UnknownProcedureRecommendation(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, extension, serializedAdditionalRawData)
         {
         }
 

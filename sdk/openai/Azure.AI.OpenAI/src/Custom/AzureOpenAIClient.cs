@@ -144,7 +144,7 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// <param name="endpoint"> The endpoint to use. </param>
     /// <param name="options"> The additional client options to use. </param>
     protected AzureOpenAIClient(ClientPipeline pipeline, Uri endpoint, AzureOpenAIClientOptions options)
-        : base(pipeline, endpoint, options)
+        : base(pipeline, endpoint, null)
     {
         _options = options;
     }
@@ -253,11 +253,14 @@ public partial class AzureOpenAIClient : OpenAIClient
     private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AzureOpenAIClientOptions options)
         => ClientPipeline.Create(
             options ?? new(),
-            perCallPolicies: [],
+            perCallPolicies:
+            [
+                CreateAddUserAgentHeaderPolicy(options),
+                CreateAddClientRequestIdHeaderPolicy(),
+            ],
             perTryPolicies:
             [
                 authenticationPolicy,
-                CreateAddUserAgentHeaderPolicy(options),
             ],
             beforeTransportPolicies: []);
 
@@ -270,7 +273,9 @@ public partial class AzureOpenAIClient : OpenAIClient
     internal static ClientPipeline CreatePipeline(TokenCredential credential, AzureOpenAIClientOptions options = null)
     {
         Argument.AssertNotNull(credential, nameof(credential));
-        return CreatePipeline(new AzureTokenAuthenticationPolicy(credential), options);
+        string authorizationScope = options?.Audience?.ToString()
+            ?? AzureOpenAIAudience.AzurePublicCloud.ToString();
+        return CreatePipeline(new AzureTokenAuthenticationPolicy(credential, [authorizationScope]), options);
     }
 
     internal static new ApiKeyCredential GetApiKey(ApiKeyCredential explicitCredential = null, bool requireExplicitCredential = false)
@@ -304,10 +309,6 @@ public partial class AzureOpenAIClient : OpenAIClient
         {
             return explicitEndpoint;
         }
-        else if (options?.Endpoint is not null)
-        {
-            return options.Endpoint;
-        }
         // To do: IConfiguration support
         else if (requireExplicitEndpoint)
         {
@@ -329,7 +330,7 @@ public partial class AzureOpenAIClient : OpenAIClient
 
     private static PipelinePolicy CreateAddUserAgentHeaderPolicy(AzureOpenAIClientOptions options = null)
     {
-        Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly);
+        Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options?.ApplicationId);
         return new GenericActionPipelinePolicy(message =>
         {
             if (message?.Request?.Headers?.TryGetValue(s_userAgentHeaderKey, out string _) == false)
@@ -339,10 +340,25 @@ public partial class AzureOpenAIClient : OpenAIClient
         });
     }
 
+    private static PipelinePolicy CreateAddClientRequestIdHeaderPolicy()
+    {
+        return new GenericActionPipelinePolicy(message =>
+        {
+            if (message?.Request?.Headers is not null)
+            {
+                string requestId = message.Request.Headers.TryGetValue(s_clientRequestIdHeaderKey, out string existingHeader) == true
+                    ? existingHeader
+                    : Guid.NewGuid().ToString().ToLowerInvariant();
+                message.Request.Headers.Set(s_clientRequestIdHeaderKey, requestId);
+            }
+        });
+    }
+
     private static readonly string s_aoaiEndpointEnvironmentVariable = "AZURE_OPENAI_ENDPOINT";
     private static readonly string s_aoaiApiKeyEnvironmentVariable = "AZURE_OPENAI_API_KEY";
     private static readonly string s_userAgentHeaderKey = "User-Agent";
-    private static PipelineMessageClassifier _pipelineMessageClassifier200;
-    internal static PipelineMessageClassifier PipelineMessageClassifier200
-        => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+    private static readonly string s_clientRequestIdHeaderKey = "x-ms-client-request-id";
+    private static PipelineMessageClassifier s_pipelineMessageClassifier;
+    internal static PipelineMessageClassifier PipelineMessageClassifier
+        => s_pipelineMessageClassifier ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
 }

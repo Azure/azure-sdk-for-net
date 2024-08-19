@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Gets the certificates. </summary>
+        [WirePath("certificates")]
         public IList<string> Certificates { get; }
     }
 }

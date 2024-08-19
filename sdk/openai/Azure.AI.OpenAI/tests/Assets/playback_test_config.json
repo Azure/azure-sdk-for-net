@@ -1,0 +1,38 @@
+﻿{
+  "default": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-4-turbo",
+    "resource_group": "Sanitized",
+    "subscription_id": "Sanitized"
+  },
+  "audio": {
+    "deployment": "whisper"
+  },
+  "embedding": {
+    "deployment": "text-embedding-ada-002"
+  },
+  "fine_tuning": {
+    "deployment": "gpt-35-turbo-0613",
+    "fine_tuned_model": "gpt-35-turbo-0613.ft-53f9c10199f84dfea3ec772341862ff5-azure-ai-openai-integration-test"
+  },
+  "image": {
+    "deployment": "dall-e-3"
+  },
+  "rate_limited_chat": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-35-turbo-low-quota"
+  },
+  "search": {
+    "endpoint": "https://Sanitized.search.windows.net/",
+    "key": "Sanitized",
+    "index": "openaiwikisearchindex"
+  },
+  "tts": {
+    "deployment": "tts"
+  },
+  "vision": {
+    "deployment": "gpt-4-vision-preview"
+  }
+}
