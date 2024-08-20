@@ -27,19 +27,27 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 #else
         [Theory]
 #endif
-        [InlineData(LogLevel.Information, "TestInfoEvent: hello")]
-        [InlineData(LogLevel.Warning, "TestWarningEvent: hello")]
-        [InlineData(LogLevel.Debug, null)]
-        public async Task DistroLogForwarderIsAdded(LogLevel eventLevel, string expectedMessage)
+        [InlineData(false, LogLevel.Debug, null)]
+        [InlineData(false, LogLevel.Information, null)]
+        [InlineData(false, LogLevel.Warning, "TestWarningEvent: hello")]
+        [InlineData(true, LogLevel.Information, "TestInfoEvent: hello")]
+        [InlineData(true, LogLevel.Warning, "TestWarningEvent: hello")]
+        [InlineData(true, LogLevel.Debug, "TestVerboseEvent: hello")]
+        public async Task DistroLogForwarderIsAdded(bool addLoggingFilter, LogLevel eventLevel, string expectedMessage)
         {
             var builder = WebApplication.CreateBuilder();
+            using TestEventSource source = new TestEventSource(addLoggingFilter ? "Azure-LoggingFilter" : "Azure-Test");
+
+            if (addLoggingFilter)
+            {
+                builder.Logging.AddFilter(source.Name.Replace('-', '.'), eventLevel);
+            }
             var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
             SetUpOTelAndLogging(builder, transport, LogLevel.Information);
 
             using var app = builder.Build();
             await app.StartAsync();
 
-            using TestEventSource source = new TestEventSource();
             Assert.True(source.IsEnabled());
             source.LogMessage("hello", eventLevel);
             WaitForRequest(transport);
@@ -79,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             await app.StartAsync();
 
-            using TestEventSource source = new TestEventSource();
+            using TestEventSource source = new TestEventSource("Azure-Test");
             Assert.True(source.IsEnabled());
             source.LogMessage("hello", eventLevel);
 
@@ -140,6 +148,27 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.False(logAzureFilterCalled);
         }
 
+        [Fact]
+        public async Task DistroLogForwarderAppliesWildCardFilter()
+        {
+            var builder = WebApplication.CreateBuilder();
+            builder.Logging.AddFilter("Azure.*", LogLevel.Warning);
+
+            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
+            SetUpOTelAndLogging(builder, transport, LogLevel.Information);
+
+            using var app = builder.Build();
+            await app.StartAsync();
+
+            using TestEventSource source = new TestEventSource("Azure-Test");
+            Assert.True(source.IsEnabled());
+            source.LogMessage("hello", LogLevel.Warning);
+            WaitForRequest(transport);
+
+            Assert.Single(transport.Requests);
+            await AssertContentContains(transport.Requests.Single(), "TestWarningEvent: hello", LogLevel.Warning);
+        }
+
         private IEnumerable<MockRequest> WaitForRequest(MockTransport transport, Func<MockRequest, bool>? filter = null)
         {
             filter = filter ?? (_ => true);
@@ -161,7 +190,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             contentStream.Position = 0;
             var content = BinaryData.FromStream(contentStream).ToString();
             var jsonMessage = $"\"message\":\"{expectedMessage}\"";
-            var jsonLevel = $"\"severityLevel\":\"{expectedLevel}\"";
+            var level = expectedLevel == LogLevel.Debug ? "Verbose" : expectedLevel.ToString();
+            var jsonLevel = $"\"severityLevel\":\"{level}\"";
             Assert.Contains(jsonMessage, content);
             Assert.Contains(jsonLevel, content);
 
@@ -206,9 +236,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
         internal class TestEventSource : AzureEventSource
         {
-            private const string EventSourceName = "Azure-Test";
-            public TestEventSource() : base(EventSourceName)
+            private readonly string EventSourceName;
+
+            public TestEventSource(string eventSourceName) : base(eventSourceName)
             {
+                EventSourceName = eventSourceName;
             }
 
             [Event(1, Level = EventLevel.Informational, Message = "TestInfoEvent: {0}")]
