@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Removed implicit cast from `string` to `ApiKeyCredential`.
+
 ### Bugs Fixed
 
 ### Other Changes
