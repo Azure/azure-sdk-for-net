@@ -123,11 +123,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
             switch (liveMetricsTagsProcessor.ActivityType)
             {
                 case OperationType.Http:
+                    remoteDependencyDocument.Name = activity.DisplayName;
 
                     var httpUrl = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeUrlFull)?.ToString();
-                    remoteDependencyDocument.Name = liveMetricsTagsProcessor.Tags.GetNewSchemaHttpDependencyName(httpUrl) ?? activity.DisplayName;
-
                     remoteDependencyDocument.CommandName = httpUrl;
+
                     var httpResponseStatusCode = AzMonList.GetTagValue(ref liveMetricsTagsProcessor.Tags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
                     remoteDependencyDocument.ResultCode = httpResponseStatusCode ?? "0";
 
@@ -145,9 +145,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.DataCollection
 
                     break;
                 case OperationType.Messaging:
-                    var (messagingUrl, _) = liveMetricsTagsProcessor.Tags.GetMessagingUrlAndSourceOrTarget(activity.Kind);
-
                     remoteDependencyDocument.Name = activity.DisplayName;
+
+                    var (messagingUrl, _) = liveMetricsTagsProcessor.Tags.GetMessagingUrlAndSourceOrTarget(activity.Kind);
                     remoteDependencyDocument.CommandName = messagingUrl;
 
                     break;
