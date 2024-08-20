@@ -26,18 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AutologgerSettings))
-            {
-                if (AutologgerSettings != null)
-                {
-                    writer.WritePropertyName("autologgerSettings"u8);
-                    writer.WriteObjectValue(AutologgerSettings, options);
-                }
-                else
-                {
-                    writer.WriteNull("autologgerSettings");
-                }
-            }
             if (Optional.IsDefined(CodeId))
             {
                 if (CodeId != null)
@@ -240,24 +228,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notificationSetting");
                 }
             }
-            if (Optional.IsCollectionDefined(SecretsConfiguration))
-            {
-                if (SecretsConfiguration != null)
-                {
-                    writer.WritePropertyName("secretsConfiguration"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in SecretsConfiguration)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("secretsConfiguration");
-                }
-            }
             if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
@@ -367,7 +337,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            AutologgerSettings autologgerSettings = default;
             ResourceIdentifier codeId = default;
             string command = default;
             MachineLearningDistributionConfiguration distribution = default;
@@ -387,7 +356,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             bool? isArchived = default;
             JobType jobType = default;
             NotificationSetting notificationSetting = default;
-            IDictionary<string, SecretConfiguration> secretsConfiguration = default;
             IDictionary<string, MachineLearningJobService> services = default;
             MachineLearningJobStatus? status = default;
             string description = default;
@@ -397,16 +365,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("autologgerSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        autologgerSettings = null;
-                        continue;
-                    }
-                    autologgerSettings = AutologgerSettings.DeserializeAutologgerSettings(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("codeId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -590,21 +548,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("secretsConfiguration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        secretsConfiguration = null;
-                        continue;
-                    }
-                    Dictionary<string, SecretConfiguration> dictionary = new Dictionary<string, SecretConfiguration>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, SecretConfiguration.DeserializeSecretConfiguration(property0.Value, options));
-                    }
-                    secretsConfiguration = dictionary;
-                    continue;
-                }
                 if (property.NameEquals("services"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -688,10 +631,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 isArchived,
                 jobType,
                 notificationSetting,
-                secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status,
-                autologgerSettings,
                 codeId,
                 command,
                 distribution,

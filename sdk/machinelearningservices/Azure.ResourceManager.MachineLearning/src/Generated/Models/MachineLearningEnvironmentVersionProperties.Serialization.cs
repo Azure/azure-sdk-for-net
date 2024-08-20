@@ -56,18 +56,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("inferenceConfig"u8);
                 writer.WriteObjectValue(InferenceConfig, options);
             }
-            if (Optional.IsDefined(IntellectualProperty))
-            {
-                if (IntellectualProperty != null)
-                {
-                    writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty, options);
-                }
-                else
-                {
-                    writer.WriteNull("intellectualProperty");
-                }
-            }
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
@@ -88,18 +76,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("stage");
-                }
-            }
-            if (Optional.IsDefined(AutoDeleteSetting))
-            {
-                if (AutoDeleteSetting != null)
-                {
-                    writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("autoDeleteSetting");
                 }
             }
             if (Optional.IsDefined(IsAnonymous))
@@ -204,11 +180,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningEnvironmentType? environmentType = default;
             string image = default;
             MachineLearningInferenceContainerProperties inferenceConfig = default;
-            IntellectualProperty intellectualProperty = default;
             MachineLearningOperatingSystemType? osType = default;
             RegistryAssetProvisioningState? provisioningState = default;
             string stage = default;
-            AutoDeleteSetting autoDeleteSetting = default;
             bool? isAnonymous = default;
             bool? isArchived = default;
             string description = default;
@@ -264,16 +238,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     inferenceConfig = MachineLearningInferenceContainerProperties.DeserializeMachineLearningInferenceContainerProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("intellectualProperty"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        intellectualProperty = null;
-                        continue;
-                    }
-                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("osType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -300,16 +264,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     stage = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("autoDeleteSetting"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        autoDeleteSetting = null;
-                        continue;
-                    }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"u8))
@@ -381,7 +335,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                autoDeleteSetting,
                 isAnonymous,
                 isArchived,
                 autoRebuild,
@@ -390,7 +343,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 environmentType,
                 image,
                 inferenceConfig,
-                intellectualProperty,
                 osType,
                 provisioningState,
                 stage);

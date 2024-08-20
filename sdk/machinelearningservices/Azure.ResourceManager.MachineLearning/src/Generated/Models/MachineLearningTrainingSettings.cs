@@ -61,13 +61,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
         /// </param>
         /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
-        /// <param name="trainingMode">
-        /// TrainingMode mode - Setting to 'auto' is same as setting it to 'non-distributed' for now, however in the future may result in mixed mode or heuristics based mode selection. Default is 'auto'.
-        /// If 'Distributed' then only distributed featurization is used and distributed algorithms are chosen.
-        /// If 'NonDistributed' then only non distributed algorithms are chosen.
-        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, TrainingMode? trainingMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningTrainingSettings(bool? isDnnTrainingEnabled, bool? isModelExplainabilityEnabled, bool? isOnnxCompatibleModelsEnabled, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsDnnTrainingEnabled = isDnnTrainingEnabled;
             IsModelExplainabilityEnabled = isModelExplainabilityEnabled;
@@ -76,7 +71,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IsVoteEnsembleEnabled = isVoteEnsembleEnabled;
             EnsembleModelDownloadTimeout = ensembleModelDownloadTimeout;
             StackEnsembleSettings = stackEnsembleSettings;
-            TrainingMode = trainingMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -97,11 +91,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public TimeSpan? EnsembleModelDownloadTimeout { get; set; }
         /// <summary> Stack ensemble settings for stack ensemble run. </summary>
         public MachineLearningStackEnsembleSettings StackEnsembleSettings { get; set; }
-        /// <summary>
-        /// TrainingMode mode - Setting to 'auto' is same as setting it to 'non-distributed' for now, however in the future may result in mixed mode or heuristics based mode selection. Default is 'auto'.
-        /// If 'Distributed' then only distributed featurization is used and distributed algorithms are chosen.
-        /// If 'NonDistributed' then only non distributed algorithms are chosen.
-        /// </summary>
-        public TrainingMode? TrainingMode { get; set; }
     }
 }

@@ -29,42 +29,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("dataUri"u8);
             writer.WriteStringValue(DataUri.AbsoluteUri);
-            if (Optional.IsDefined(IntellectualProperty))
-            {
-                if (IntellectualProperty != null)
-                {
-                    writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty, options);
-                }
-                else
-                {
-                    writer.WriteNull("intellectualProperty");
-                }
-            }
-            if (Optional.IsDefined(Stage))
-            {
-                if (Stage != null)
-                {
-                    writer.WritePropertyName("stage"u8);
-                    writer.WriteStringValue(Stage);
-                }
-                else
-                {
-                    writer.WriteNull("stage");
-                }
-            }
-            if (Optional.IsDefined(AutoDeleteSetting))
-            {
-                if (AutoDeleteSetting != null)
-                {
-                    writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("autoDeleteSetting");
-                }
-            }
             if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);

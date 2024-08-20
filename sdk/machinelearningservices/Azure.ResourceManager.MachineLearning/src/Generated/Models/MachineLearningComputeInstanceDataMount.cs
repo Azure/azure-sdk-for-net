@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceDataMount"/>. </summary>
-        internal MachineLearningComputeInstanceDataMount()
+        public MachineLearningComputeInstanceDataMount()
         {
         }
 
@@ -55,18 +55,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sourceType"> Data source type. </param>
         /// <param name="mountName"> name of the ComputeInstance data mount. </param>
         /// <param name="mountAction"> Mount Action. </param>
+        /// <param name="mountMode"> Mount Mode. </param>
         /// <param name="createdBy"> who this data mount created by. </param>
         /// <param name="mountPath"> Path of this data mount. </param>
         /// <param name="mountState"> Mount state. </param>
         /// <param name="mountedOn"> The time when the disk mounted. </param>
         /// <param name="error"> Error of this data mount. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningComputeInstanceDataMount(string source, MachineLearningSourceType? sourceType, string mountName, MachineLearningMountAction? mountAction, string createdBy, string mountPath, MachineLearningMountState? mountState, DateTimeOffset? mountedOn, string error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningComputeInstanceDataMount(string source, MachineLearningSourceType? sourceType, string mountName, MachineLearningMountAction? mountAction, MountMode? mountMode, string createdBy, string mountPath, MachineLearningMountState? mountState, DateTimeOffset? mountedOn, string error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
             SourceType = sourceType;
             MountName = mountName;
             MountAction = mountAction;
+            MountMode = mountMode;
             CreatedBy = createdBy;
             MountPath = mountPath;
             MountState = mountState;
@@ -76,22 +78,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Source of the ComputeInstance data mount. </summary>
-        public string Source { get; }
+        public string Source { get; set; }
         /// <summary> Data source type. </summary>
-        public MachineLearningSourceType? SourceType { get; }
+        public MachineLearningSourceType? SourceType { get; set; }
         /// <summary> name of the ComputeInstance data mount. </summary>
-        public string MountName { get; }
+        public string MountName { get; set; }
         /// <summary> Mount Action. </summary>
-        public MachineLearningMountAction? MountAction { get; }
+        public MachineLearningMountAction? MountAction { get; set; }
+        /// <summary> Mount Mode. </summary>
+        public MountMode? MountMode { get; set; }
         /// <summary> who this data mount created by. </summary>
-        public string CreatedBy { get; }
+        public string CreatedBy { get; set; }
         /// <summary> Path of this data mount. </summary>
-        public string MountPath { get; }
+        public string MountPath { get; set; }
         /// <summary> Mount state. </summary>
-        public MachineLearningMountState? MountState { get; }
+        public MachineLearningMountState? MountState { get; set; }
         /// <summary> The time when the disk mounted. </summary>
-        public DateTimeOffset? MountedOn { get; }
+        public DateTimeOffset? MountedOn { get; set; }
         /// <summary> Error of this data mount. </summary>
-        public string Error { get; }
+        public string Error { get; set; }
     }
 }

@@ -30,42 +30,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(DataType.ToString());
             writer.WritePropertyName("dataUri"u8);
             writer.WriteStringValue(DataUri.AbsoluteUri);
-            if (Optional.IsDefined(IntellectualProperty))
-            {
-                if (IntellectualProperty != null)
-                {
-                    writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty, options);
-                }
-                else
-                {
-                    writer.WriteNull("intellectualProperty");
-                }
-            }
-            if (Optional.IsDefined(Stage))
-            {
-                if (Stage != null)
-                {
-                    writer.WritePropertyName("stage"u8);
-                    writer.WriteStringValue(Stage);
-                }
-                else
-                {
-                    writer.WriteNull("stage");
-                }
-            }
-            if (Optional.IsDefined(AutoDeleteSetting))
-            {
-                if (AutoDeleteSetting != null)
-                {
-                    writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("autoDeleteSetting");
-                }
-            }
             if (Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
@@ -164,9 +128,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             MachineLearningDataType dataType = "Unknown";
             Uri dataUri = default;
-            IntellectualProperty intellectualProperty = default;
-            string stage = default;
-            AutoDeleteSetting autoDeleteSetting = default;
             bool? isAnonymous = default;
             bool? isArchived = default;
             string description = default;
@@ -184,36 +145,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("dataUri"u8))
                 {
                     dataUri = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("intellectualProperty"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        intellectualProperty = null;
-                        continue;
-                    }
-                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("stage"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        stage = null;
-                        continue;
-                    }
-                    stage = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("autoDeleteSetting"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        autoDeleteSetting = null;
-                        continue;
-                    }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"u8))
@@ -285,13 +216,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                autoDeleteSetting,
                 isAnonymous,
                 isArchived,
                 dataType,
-                dataUri,
-                intellectualProperty,
-                stage);
+                dataUri);
         }
 
         BinaryData IPersistableModel<MachineLearningDataVersionProperties>.Write(ModelReaderWriterOptions options)

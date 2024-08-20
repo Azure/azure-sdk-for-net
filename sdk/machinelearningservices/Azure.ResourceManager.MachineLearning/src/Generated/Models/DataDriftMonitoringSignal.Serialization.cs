@@ -26,18 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(DataSegment))
-            {
-                if (DataSegment != null)
-                {
-                    writer.WritePropertyName("dataSegment"u8);
-                    writer.WriteObjectValue(DataSegment, options);
-                }
-                else
-                {
-                    writer.WriteNull("dataSegment");
-                }
-            }
             if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
             {
                 if (FeatureDataTypeOverride != null)
@@ -54,6 +42,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("featureDataTypeOverride");
+                }
+            }
+            if (Optional.IsDefined(FeatureImportanceSettings))
+            {
+                if (FeatureImportanceSettings != null)
+                {
+                    writer.WritePropertyName("featureImportanceSettings"u8);
+                    writer.WriteObjectValue(FeatureImportanceSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("featureImportanceSettings");
                 }
             }
             if (Optional.IsDefined(Features))
@@ -79,10 +79,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(ProductionData, options);
             writer.WritePropertyName("referenceData"u8);
             writer.WriteObjectValue(ReferenceData, options);
-            if (Optional.IsDefined(Mode))
+            if (Optional.IsCollectionDefined(NotificationTypes))
             {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
+                if (NotificationTypes != null)
+                {
+                    writer.WritePropertyName("notificationTypes"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in NotificationTypes)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("notificationTypes");
+                }
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -142,29 +154,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MonitoringDataSegment dataSegment = default;
             IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride = default;
+            FeatureImportanceSettings featureImportanceSettings = default;
             MonitoringFeatureFilterBase features = default;
             IList<DataDriftMetricThresholdBase> metricThresholds = default;
             MonitoringInputDataBase productionData = default;
             MonitoringInputDataBase referenceData = default;
-            MonitoringNotificationMode? mode = default;
+            IList<MonitoringNotificationType> notificationTypes = default;
             IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dataSegment"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        dataSegment = null;
-                        continue;
-                    }
-                    dataSegment = MonitoringDataSegment.DeserializeMonitoringDataSegment(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("featureDataTypeOverride"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -178,6 +180,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dictionary.Add(property0.Name, new MonitoringFeatureDataType(property0.Value.GetString()));
                     }
                     featureDataTypeOverride = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("featureImportanceSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        featureImportanceSettings = null;
+                        continue;
+                    }
+                    featureImportanceSettings = FeatureImportanceSettings.DeserializeFeatureImportanceSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("features"u8))
@@ -210,13 +222,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("mode"u8))
+                if (property.NameEquals("notificationTypes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        notificationTypes = null;
                         continue;
                     }
-                    mode = new MonitoringNotificationMode(property.Value.GetString());
+                    List<MonitoringNotificationType> array = new List<MonitoringNotificationType>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new MonitoringNotificationType(item.GetString()));
+                    }
+                    notificationTypes = array;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -246,12 +264,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new DataDriftMonitoringSignal(
-                mode,
+                notificationTypes ?? new ChangeTrackingList<MonitoringNotificationType>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 signalType,
                 serializedAdditionalRawData,
-                dataSegment,
                 featureDataTypeOverride ?? new ChangeTrackingDictionary<string, MonitoringFeatureDataType>(),
+                featureImportanceSettings,
                 features,
                 metricThresholds,
                 productionData,

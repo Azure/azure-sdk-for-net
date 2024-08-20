@@ -59,6 +59,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status, options);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ChangeableIsolationModes))
+            {
+                writer.WritePropertyName("changeableIsolationModes"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChangeableIsolationModes)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -101,6 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string networkId = default;
             IDictionary<string, MachineLearningOutboundRule> outboundRules = default;
             ManagedNetworkProvisionStatus status = default;
+            IReadOnlyList<IsolationMode> changeableIsolationModes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,13 +154,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     status = ManagedNetworkProvisionStatus.DeserializeManagedNetworkProvisionStatus(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("changeableIsolationModes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IsolationMode> array = new List<IsolationMode>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new IsolationMode(item.GetString()));
+                    }
+                    changeableIsolationModes = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ManagedNetworkSettings(isolationMode, networkId, outboundRules ?? new ChangeTrackingDictionary<string, MachineLearningOutboundRule>(), status, serializedAdditionalRawData);
+            return new ManagedNetworkSettings(
+                isolationMode,
+                networkId,
+                outboundRules ?? new ChangeTrackingDictionary<string, MachineLearningOutboundRule>(),
+                status,
+                changeableIsolationModes ?? new ChangeTrackingList<IsolationMode>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedNetworkSettings>.Write(ModelReaderWriterOptions options)

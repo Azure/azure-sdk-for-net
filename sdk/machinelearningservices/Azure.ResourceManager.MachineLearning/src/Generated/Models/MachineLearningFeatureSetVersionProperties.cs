@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Dto object representing feature set version. </summary>
+    /// <summary> DTO object representing feature set version. </summary>
     public partial class MachineLearningFeatureSetVersionProperties : MachineLearningAssetBase
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningFeatureSetVersionProperties"/>. </summary>
@@ -24,15 +24,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
-        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
+        /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="entities"> Specifies list of entities. </param>
         /// <param name="materializationSettings"> Specifies the materialization settings. </param>
         /// <param name="provisioningState"> Provisioning state for the featureset version container. </param>
         /// <param name="specification"> Specifies the feature spec details. </param>
         /// <param name="stage"> Specifies the asset stage. </param>
-        internal MachineLearningFeatureSetVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, IList<string> entities, MaterializationSettings materializationSettings, RegistryAssetProvisioningState? provisioningState, FeaturesetSpecification specification, string stage) : base(description, properties, tags, serializedAdditionalRawData, autoDeleteSetting, isAnonymous, isArchived)
+        internal MachineLearningFeatureSetVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isAnonymous, bool? isArchived, IList<string> entities, MaterializationSettings materializationSettings, RegistryAssetProvisioningState? provisioningState, FeaturesetSpecification specification, string stage) : base(description, properties, tags, serializedAdditionalRawData, isAnonymous, isArchived)
         {
             Entities = entities;
             MaterializationSettings = materializationSettings;

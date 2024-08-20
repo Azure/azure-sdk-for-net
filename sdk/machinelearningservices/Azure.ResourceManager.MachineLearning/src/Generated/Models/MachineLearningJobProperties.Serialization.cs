@@ -97,24 +97,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notificationSetting");
                 }
             }
-            if (Optional.IsCollectionDefined(SecretsConfiguration))
-            {
-                if (SecretsConfiguration != null)
-                {
-                    writer.WritePropertyName("secretsConfiguration"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in SecretsConfiguration)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("secretsConfiguration");
-                }
-            }
             if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
@@ -230,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     case "AutoML": return AutoMLJob.DeserializeAutoMLJob(element, options);
                     case "Command": return MachineLearningCommandJob.DeserializeMachineLearningCommandJob(element, options);
-                    case "Labeling": return LabelingJobProperties.DeserializeLabelingJobProperties(element, options);
+                    case "FineTuning": return FineTuningJob.DeserializeFineTuningJob(element, options);
                     case "Pipeline": return MachineLearningPipelineJob.DeserializeMachineLearningPipelineJob(element, options);
                     case "Spark": return SparkJob.DeserializeSparkJob(element, options);
                     case "Sweep": return MachineLearningSweepJob.DeserializeMachineLearningSweepJob(element, options);

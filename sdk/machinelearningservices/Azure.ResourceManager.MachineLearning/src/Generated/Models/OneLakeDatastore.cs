@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="artifact">
         /// [Required] OneLake artifact backing the datastore.
@@ -45,10 +45,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
-        /// <param name="intellectualProperty"> Intellectual Property details. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         /// <param name="artifact">
         /// [Required] OneLake artifact backing the datastore.
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="endpoint"> OneLake endpoint to use for the datastore. </param>
         /// <param name="oneLakeWorkspaceName"> [Required] OneLake workspace name. </param>
         /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
-        internal OneLakeDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, IntellectualProperty intellectualProperty, bool? isDefault, OneLakeArtifact artifact, string endpoint, string oneLakeWorkspaceName, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, serializedAdditionalRawData, credentials, datastoreType, intellectualProperty, isDefault)
+        internal OneLakeDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, OneLakeArtifact artifact, string endpoint, string oneLakeWorkspaceName, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, serializedAdditionalRawData, credentials, datastoreType, isDefault)
         {
             Artifact = artifact;
             Endpoint = endpoint;

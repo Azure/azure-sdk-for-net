@@ -13,10 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    /// <summary>
-    /// A class representing the MachineLearningOutboundRuleBasic data model.
-    /// Outbound Rule Basic Resource for the managed network of a machine learning workspace.
-    /// </summary>
+    /// <summary> A class representing the MachineLearningOutboundRuleBasic data model. </summary>
     public partial class MachineLearningOutboundRuleBasicData : ResourceData
     {
         /// <summary>

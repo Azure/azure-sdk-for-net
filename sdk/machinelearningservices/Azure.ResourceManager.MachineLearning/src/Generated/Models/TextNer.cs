@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         {
             Argument.AssertNotNull(trainingData, nameof(trainingData));
 
-            SearchSpace = new ChangeTrackingList<NlpParameterSubspace>();
             TaskType = TaskType.TextNER;
         }
 
@@ -42,19 +41,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Only 'Accuracy' is supported for Text-NER, so user need not set this explicitly.
         /// </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
-        /// <param name="fixedParameters"> Model/training parameters that will remain constant throughout training. </param>
         /// <param name="limitSettings"> Execution constraints for AutoMLJob. </param>
-        /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
-        /// <param name="sweepSettings"> Settings for model sweeping and hyperparameter tuning. </param>
         /// <param name="validationData"> Validation data inputs. </param>
-        internal TextNer(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> serializedAdditionalRawData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpFixedParameters fixedParameters, NlpVerticalLimitSettings limitSettings, IList<NlpParameterSubspace> searchSpace, NlpSweepSettings sweepSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData)
+        internal TextNer(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> serializedAdditionalRawData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpVerticalLimitSettings limitSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData)
         {
             PrimaryMetric = primaryMetric;
             FeaturizationSettings = featurizationSettings;
-            FixedParameters = fixedParameters;
             LimitSettings = limitSettings;
-            SearchSpace = searchSpace;
-            SweepSettings = sweepSettings;
             ValidationData = validationData;
             TaskType = taskType;
         }
@@ -83,14 +76,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> Model/training parameters that will remain constant throughout training. </summary>
-        public NlpFixedParameters FixedParameters { get; set; }
         /// <summary> Execution constraints for AutoMLJob. </summary>
         public NlpVerticalLimitSettings LimitSettings { get; set; }
-        /// <summary> Search space for sampling different combinations of models and their hyperparameters. </summary>
-        public IList<NlpParameterSubspace> SearchSpace { get; set; }
-        /// <summary> Settings for model sweeping and hyperparameter tuning. </summary>
-        public NlpSweepSettings SweepSettings { get; set; }
         /// <summary> Validation data inputs. </summary>
         public MachineLearningTableJobInput ValidationData { get; set; }
     }

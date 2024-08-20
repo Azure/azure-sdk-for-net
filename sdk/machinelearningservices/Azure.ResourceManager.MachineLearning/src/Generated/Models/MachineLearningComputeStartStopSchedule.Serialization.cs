@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningComputeProvisioningStatus? provisioningStatus = default;
             MachineLearningScheduleStatus? status = default;
             MachineLearningComputePowerAction? action = default;
-            MachineLearningTriggerType? triggerType = default;
+            ComputeTriggerType? triggerType = default;
             ComputeStartStopRecurrenceSchedule recurrence = default;
             ComputeStartStopCronSchedule cron = default;
             MachineLearningScheduleBase schedule = default;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    triggerType = new MachineLearningTriggerType(property.Value.GetString());
+                    triggerType = new ComputeTriggerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recurrence"u8))

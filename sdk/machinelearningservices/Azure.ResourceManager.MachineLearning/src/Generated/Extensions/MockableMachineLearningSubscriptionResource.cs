@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -358,14 +358,15 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="aiCapabilities"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(string kind = null, string skip = null, string aiCapabilities = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skip, kind);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skip, kind);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, kind, skip, aiCapabilities);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, kind, skip, aiCapabilities);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningWorkspaceResource(Client, MachineLearningWorkspaceData.DeserializeMachineLearningWorkspaceData(e)), MachineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningWorkspaces", "value", "nextLink", cancellationToken);
         }
 
@@ -382,7 +383,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -390,14 +391,15 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="aiCapabilities"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(string kind = null, string skip = null, string aiCapabilities = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skip, kind);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, skip, kind);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, kind, skip, aiCapabilities);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MachineLearningWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, kind, skip, aiCapabilities);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningWorkspaceResource(Client, MachineLearningWorkspaceData.DeserializeMachineLearningWorkspaceData(e)), MachineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningWorkspaces", "value", "nextLink", cancellationToken);
         }
     }

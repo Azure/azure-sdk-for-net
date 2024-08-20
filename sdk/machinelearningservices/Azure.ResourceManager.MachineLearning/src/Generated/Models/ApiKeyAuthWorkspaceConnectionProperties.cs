@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -43,12 +44,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"></param>
         /// <param name="expiryOn"></param>
-        /// <param name="metadata"> Any object. </param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"></param>
+        /// <param name="peStatus"></param>
+        /// <param name="sharedUserList"></param>
         /// <param name="target"></param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"> Api key object for workspace connection credential. </param>
-        internal ApiKeyAuthWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, DateTimeOffset? expiryOn, BinaryData metadata, string target, IDictionary<string, BinaryData> serializedAdditionalRawData, WorkspaceConnectionApiKey credentials) : base(authType, category, expiryOn, metadata, target, serializedAdditionalRawData)
+        internal ApiKeyAuthWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, ConnectionGroup? group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData, WorkspaceConnectionApiKey credentials) : base(authType, category, createdByWorkspaceArmId, error, expiryOn, group, isSharedToAll, metadata, peRequirement, peStatus, sharedUserList, target, useWorkspaceManagedIdentity, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;

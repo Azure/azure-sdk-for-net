@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class JobQueueSettings : IUtf8JsonSerializable, IJsonModel<JobQueueSettings>
+    internal partial class JobQueueSettings : IUtf8JsonSerializable, IJsonModel<JobQueueSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobQueueSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -30,18 +30,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 writer.WritePropertyName("jobTier"u8);
                 writer.WriteStringValue(JobTier.Value.ToString());
-            }
-            if (Optional.IsDefined(Priority))
-            {
-                if (Priority != null)
-                {
-                    writer.WritePropertyName("priority"u8);
-                    writer.WriteNumberValue(Priority.Value);
-                }
-                else
-                {
-                    writer.WriteNull("priority");
-                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,7 +70,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             JobTier? jobTier = default;
-            int? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,23 +83,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     jobTier = new JobTier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("priority"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        priority = null;
-                        continue;
-                    }
-                    priority = property.Value.GetInt32();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new JobQueueSettings(jobTier, priority, serializedAdditionalRawData);
+            return new JobQueueSettings(jobTier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobQueueSettings>.Write(ModelReaderWriterOptions options)

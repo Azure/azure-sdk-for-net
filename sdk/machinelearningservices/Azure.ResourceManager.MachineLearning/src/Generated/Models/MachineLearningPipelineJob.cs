@@ -41,7 +41,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="isArchived"> Is the asset archived?. </param>
         /// <param name="jobType"> [Required] Specifies the type of job. </param>
         /// <param name="notificationSetting"> Notification setting for the job. </param>
-        /// <param name="secretsConfiguration"> Configuration for secrets to be made available during runtime. </param>
         /// <param name="services">
         /// List of JobEndpoints.
         /// For local jobs, a job endpoint will have an endpoint value of FileStreamObject.
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="settings"> Pipeline settings, for things like ContinueRunOnStepFailure etc. </param>
         /// <param name="sourceJobId"> ARM resource ID of source job. </param>
-        internal MachineLearningPipelineJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, BinaryData> jobs, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData settings, ResourceIdentifier sourceJobId) : base(description, properties, tags, serializedAdditionalRawData, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
+        internal MachineLearningPipelineJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, IDictionary<string, MachineLearningJobInput> inputs, IDictionary<string, BinaryData> jobs, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData settings, ResourceIdentifier sourceJobId) : base(description, properties, tags, serializedAdditionalRawData, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, services, status)
         {
             Inputs = inputs;
             Jobs = jobs;

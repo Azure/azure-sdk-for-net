@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Dto object representing specification. </summary>
+    /// <summary> DTO object representing specification. </summary>
     internal partial class FeaturesetSpecification
     {
         /// <summary>

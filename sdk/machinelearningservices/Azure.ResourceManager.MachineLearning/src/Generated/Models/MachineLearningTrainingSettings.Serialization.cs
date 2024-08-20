@@ -68,11 +68,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("stackEnsembleSettings");
                 }
             }
-            if (Optional.IsDefined(TrainingMode))
-            {
-                writer.WritePropertyName("trainingMode"u8);
-                writer.WriteStringValue(TrainingMode.Value.ToString());
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -118,7 +113,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             bool? enableVoteEnsemble = default;
             TimeSpan? ensembleModelDownloadTimeout = default;
             MachineLearningStackEnsembleSettings stackEnsembleSettings = default;
-            TrainingMode? trainingMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,15 +181,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     stackEnsembleSettings = MachineLearningStackEnsembleSettings.DeserializeMachineLearningStackEnsembleSettings(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("trainingMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    trainingMode = new TrainingMode(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -210,7 +195,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 enableVoteEnsemble,
                 ensembleModelDownloadTimeout,
                 stackEnsembleSettings,
-                trainingMode,
                 serializedAdditionalRawData);
         }
 

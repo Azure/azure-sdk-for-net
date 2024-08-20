@@ -44,18 +44,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("flavors");
                 }
             }
-            if (Optional.IsDefined(IntellectualProperty))
-            {
-                if (IntellectualProperty != null)
-                {
-                    writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty, options);
-                }
-                else
-                {
-                    writer.WriteNull("intellectualProperty");
-                }
-            }
             if (Optional.IsDefined(JobName))
             {
                 if (JobName != null)
@@ -107,18 +95,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("stage");
-                }
-            }
-            if (Optional.IsDefined(AutoDeleteSetting))
-            {
-                if (AutoDeleteSetting != null)
-                {
-                    writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("autoDeleteSetting");
                 }
             }
             if (Optional.IsDefined(IsAnonymous))
@@ -218,13 +194,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             IDictionary<string, MachineLearningFlavorData> flavors = default;
-            IntellectualProperty intellectualProperty = default;
             string jobName = default;
             string modelType = default;
             Uri modelUri = default;
             RegistryAssetProvisioningState? provisioningState = default;
             string stage = default;
-            AutoDeleteSetting autoDeleteSetting = default;
             bool? isAnonymous = default;
             bool? isArchived = default;
             string description = default;
@@ -247,16 +221,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dictionary.Add(property0.Name, MachineLearningFlavorData.DeserializeMachineLearningFlavorData(property0.Value, options));
                     }
                     flavors = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("intellectualProperty"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        intellectualProperty = null;
-                        continue;
-                    }
-                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jobName"u8))
@@ -306,16 +270,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     stage = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("autoDeleteSetting"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        autoDeleteSetting = null;
-                        continue;
-                    }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"u8))
@@ -387,11 +341,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 properties ?? new ChangeTrackingDictionary<string, string>(),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
-                autoDeleteSetting,
                 isAnonymous,
                 isArchived,
                 flavors ?? new ChangeTrackingDictionary<string, MachineLearningFlavorData>(),
-                intellectualProperty,
                 jobName,
                 modelType,
                 modelUri,

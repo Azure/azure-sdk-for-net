@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAAKSCompute()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/get/AKSCompute.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/get/AKSCompute.json
             // this example is just showing the usage of "Compute_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAAMLCompute()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/get/AmlCompute.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/get/AmlCompute.json
             // this example is just showing the usage of "Compute_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAKubernetesCompute()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/get/KubernetesCompute.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/get/KubernetesCompute.json
             // this example is just showing the usage of "Compute_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAnComputeInstance()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/get/ComputeInstance.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/get/ComputeInstance.json
             // this example is just showing the usage of "Compute_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateAAmlComputeCompute()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/patch.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/patch.json
             // this example is just showing the usage of "Compute_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteCompute()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/delete.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/delete.json
             // this example is just showing the usage of "Compute_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateCustomServices_UpdateCustomServices()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/updateCustomServices.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/updateCustomServices.json
             // this example is just showing the usage of "Compute_UpdateCustomServices" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -293,7 +293,7 @@ Target = "/home/testuser/",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNodes_GetComputeNodesInformationForACompute()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/listNodes.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/listNodes.json
             // this example is just showing the usage of "Compute_ListNodes" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -324,7 +324,7 @@ Target = "/home/testuser/",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetKeys_ListAKSComputeKeys()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/listKeys.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/listKeys.json
             // this example is just showing the usage of "Compute_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -347,12 +347,52 @@ Target = "/home/testuser/",
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Update Data Mounts
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task UpdateDataMounts_UpdateDataMounts()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/updateDataMounts.json
+            // this example is just showing the usage of "Compute_UpdateDataMounts" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningComputeResource created on azure
+            // for more information of creating MachineLearningComputeResource, please refer to the document of MachineLearningComputeResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string workspaceName = "workspaces123";
+            string computeName = "compute123";
+            ResourceIdentifier machineLearningComputeResourceId = MachineLearningComputeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, computeName);
+            MachineLearningComputeResource machineLearningCompute = client.GetMachineLearningComputeResource(machineLearningComputeResourceId);
+
+            // invoke the operation
+            IEnumerable<MachineLearningComputeInstanceDataMount> dataMounts = new MachineLearningComputeInstanceDataMount[]
+            {
+new MachineLearningComputeInstanceDataMount()
+{
+Source = "azureml://subscriptions/some-sub/resourcegroups/some-rg/workspaces/some-ws/data/some-data-asset-name/versions/some-data-asset-version",
+SourceType = MachineLearningSourceType.Uri,
+MountName = "hello",
+MountAction = MachineLearningMountAction.Mount,
+MountMode = MountMode.ReadOnly,
+MountPath = "/some/random/path/on/host",
+}
+            };
+            await machineLearningCompute.UpdateDataMountsAsync(dataMounts);
+
+            Console.WriteLine($"Succeeded");
+        }
+
         // Start ComputeInstance Compute
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Start_StartComputeInstanceCompute()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/start.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/start.json
             // this example is just showing the usage of "Compute_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -380,7 +420,7 @@ Target = "/home/testuser/",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Stop_StopComputeInstanceCompute()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/stop.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/stop.json
             // this example is just showing the usage of "Compute_Stop" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -408,7 +448,7 @@ Target = "/home/testuser/",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Restart_RestartComputeInstanceCompute()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/restart.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/restart.json
             // this example is just showing the usage of "Compute_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -436,7 +476,7 @@ Target = "/home/testuser/",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateIdleShutdownSetting_UpdateIdleShutdownSettingOfComputeInstance()
         {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2023-06-01-preview/examples/Compute/updateIdleShutdownSetting.json
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/updateIdleShutdownSetting.json
             // this example is just showing the usage of "Compute_UpdateIdleShutdownSetting" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -459,6 +499,69 @@ Target = "/home/testuser/",
                 IdleTimeBeforeShutdown = "PT120M",
             };
             await machineLearningCompute.UpdateIdleShutdownSettingAsync(idleShutdownSetting);
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // List VM Sizes
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetAllowedResizeSizes_ListVMSizes()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/getAllowedVMSizesForResize.json
+            // this example is just showing the usage of "Compute_GetAllowedResizeSizes" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningComputeResource created on azure
+            // for more information of creating MachineLearningComputeResource, please refer to the document of MachineLearningComputeResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string workspaceName = "workspaces123";
+            string computeName = "compute123";
+            ResourceIdentifier machineLearningComputeResourceId = MachineLearningComputeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, computeName);
+            MachineLearningComputeResource machineLearningCompute = client.GetMachineLearningComputeResource(machineLearningComputeResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (MachineLearningVmSize item in machineLearningCompute.GetAllowedResizeSizesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // List VM Sizes
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Resize_ListVMSizes()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/preview/2024-07-01-preview/examples/Compute/resize.json
+            // this example is just showing the usage of "Compute_Resize" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningComputeResource created on azure
+            // for more information of creating MachineLearningComputeResource, please refer to the document of MachineLearningComputeResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string workspaceName = "workspaces123";
+            string computeName = "compute123";
+            ResourceIdentifier machineLearningComputeResourceId = MachineLearningComputeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, computeName);
+            MachineLearningComputeResource machineLearningCompute = client.GetMachineLearningComputeResource(machineLearningComputeResourceId);
+
+            // invoke the operation
+            ResizeSchema resizeSchema = new ResizeSchema()
+            {
+                TargetVmSize = "Standard_DS11_v2",
+            };
+            await machineLearningCompute.ResizeAsync(WaitUntil.Completed, resizeSchema);
 
             Console.WriteLine($"Succeeded");
         }

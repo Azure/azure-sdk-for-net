@@ -357,6 +357,25 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="MarketplaceSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MarketplaceSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMarketplaceSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MarketplaceSubscriptionResource"/> object. </returns>
+        public static MarketplaceSubscriptionResource GetMarketplaceSubscriptionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMachineLearningArmClient(client).GetMarketplaceSubscriptionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="MachineLearningRegistryModelContainerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningRegistryModelContainerResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningRegistryModelContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -604,25 +623,6 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MachineLearningLabelingJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineLearningLabelingJobResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningLabelingJobResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetMachineLearningLabelingJobResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MachineLearningLabelingJobResource"/> object. </returns>
-        public static MachineLearningLabelingJobResource GetMachineLearningLabelingJobResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableMachineLearningArmClient(client).GetMachineLearningLabelingJobResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="MachineLearningOnlineEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningOnlineEndpointResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningOnlineEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -680,6 +680,25 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ServerlessEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerlessEndpointResource.CreateResourceIdentifier" /> to create a <see cref="ServerlessEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetServerlessEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServerlessEndpointResource"/> object. </returns>
+        public static ServerlessEndpointResource GetServerlessEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMachineLearningArmClient(client).GetServerlessEndpointResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="MachineLearningRegistryResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MachineLearningRegistryResource.CreateResourceIdentifier" /> to create a <see cref="MachineLearningRegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -734,6 +753,139 @@ namespace Azure.ResourceManager.MachineLearning
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMachineLearningArmClient(client).GetMachineLearningWorkspaceConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceConnectionDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceConnectionDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceConnectionDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetWorkspaceConnectionDeploymentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkspaceConnectionDeploymentResource"/> object. </returns>
+        public static WorkspaceConnectionDeploymentResource GetWorkspaceConnectionDeploymentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMachineLearningArmClient(client).GetWorkspaceConnectionDeploymentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceEndpointDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceEndpointDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceEndpointDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetWorkspaceEndpointDeploymentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkspaceEndpointDeploymentResource"/> object. </returns>
+        public static WorkspaceEndpointDeploymentResource GetWorkspaceEndpointDeploymentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMachineLearningArmClient(client).GetWorkspaceEndpointDeploymentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RaiBlocklistPropertiesBasicResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RaiBlocklistPropertiesBasicResource.CreateResourceIdentifier" /> to create a <see cref="RaiBlocklistPropertiesBasicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiBlocklistPropertiesBasicResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RaiBlocklistPropertiesBasicResource"/> object. </returns>
+        public static RaiBlocklistPropertiesBasicResource GetRaiBlocklistPropertiesBasicResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMachineLearningArmClient(client).GetRaiBlocklistPropertiesBasicResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RaiBlocklistItemPropertiesBasicResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RaiBlocklistItemPropertiesBasicResource.CreateResourceIdentifier" /> to create a <see cref="RaiBlocklistItemPropertiesBasicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetRaiBlocklistItemPropertiesBasicResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RaiBlocklistItemPropertiesBasicResource"/> object. </returns>
+        public static RaiBlocklistItemPropertiesBasicResource GetRaiBlocklistItemPropertiesBasicResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMachineLearningArmClient(client).GetRaiBlocklistItemPropertiesBasicResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceConnectionRaiPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceConnectionRaiPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceConnectionRaiPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetWorkspaceConnectionRaiPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkspaceConnectionRaiPolicyResource"/> object. </returns>
+        public static WorkspaceConnectionRaiPolicyResource GetWorkspaceConnectionRaiPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMachineLearningArmClient(client).GetWorkspaceConnectionRaiPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="WorkspaceEndpointRaiPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspaceEndpointRaiPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceEndpointRaiPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetWorkspaceEndpointRaiPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="WorkspaceEndpointRaiPolicyResource"/> object. </returns>
+        public static WorkspaceEndpointRaiPolicyResource GetWorkspaceEndpointRaiPolicyResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMachineLearningArmClient(client).GetWorkspaceEndpointRaiPolicyResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EndpointResourcePropertiesBasicResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EndpointResourcePropertiesBasicResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResourcePropertiesBasicResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningArmClient.GetEndpointResourcePropertiesBasicResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EndpointResourcePropertiesBasicResource"/> object. </returns>
+        public static EndpointResourcePropertiesBasicResource GetEndpointResourcePropertiesBasicResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMachineLearningArmClient(client).GetEndpointResourcePropertiesBasicResource(id);
         }
 
         /// <summary>
@@ -804,7 +956,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -842,7 +994,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -897,7 +1049,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -910,7 +1062,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -935,7 +1087,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -948,7 +1100,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -973,7 +1125,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1006,7 +1158,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1039,7 +1191,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1072,7 +1224,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1105,7 +1257,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1139,7 +1291,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1173,7 +1325,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1206,7 +1358,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1239,7 +1391,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1275,7 +1427,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1311,7 +1463,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1320,20 +1472,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetMachineLearningWorkspaces(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetMachineLearningWorkspaces(string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="aiCapabilities"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string kind = null, string skip = null, string aiCapabilities = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspacesAsync(skip, kind, cancellationToken);
+            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspacesAsync(kind, skip, aiCapabilities, cancellationToken);
         }
 
         /// <summary>
@@ -1349,7 +1502,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1358,20 +1511,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetMachineLearningWorkspaces(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningSubscriptionResource.GetMachineLearningWorkspaces(string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="aiCapabilities"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="MachineLearningWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string kind = null, string skip = null, string aiCapabilities = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspaces(skip, kind, cancellationToken);
+            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspaces(kind, skip, aiCapabilities, cancellationToken);
         }
     }
 }

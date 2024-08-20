@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="location"> The location. </param>
         public MachineLearningRegistryData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<RegistryPrivateEndpointConnection>();
+            RegistryPrivateEndpointConnections = new ChangeTrackingList<RegistryPrivateEndpointConnection>();
             RegionDetails = new ChangeTrackingList<RegistryRegionArmDetails>();
         }
 
@@ -69,15 +69,16 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="discoveryUri"> Discovery URL for the Registry. </param>
         /// <param name="intellectualPropertyPublisher"> IntellectualPropertyPublisher for the registry. </param>
         /// <param name="managedResourceGroup"> ResourceId of the managed RG if the registry has system created resources. </param>
+        /// <param name="managedResourceGroupSettings"> Managed resource group specific settings. </param>
         /// <param name="mlFlowRegistryUri"> MLFlow Registry URI for the Registry. </param>
-        /// <param name="privateEndpointConnections"> Private endpoint connections info used for pending connections in private link portal. </param>
+        /// <param name="registryPrivateEndpointConnections"> Private endpoint connections info used for pending connections in private link portal. </param>
         /// <param name="publicNetworkAccess">
         /// Is the Registry accessible from the internet?
         /// Possible values: "Enabled" or "Disabled"
         /// </param>
         /// <param name="regionDetails"> Details of each region the registry is in. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningSku sku, Uri discoveryUri, string intellectualPropertyPublisher, ArmResourceId managedResourceGroup, Uri mlFlowRegistryUri, IList<RegistryPrivateEndpointConnection> privateEndpointConnections, string publicNetworkAccess, IList<RegistryRegionArmDetails> regionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal MachineLearningRegistryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string kind, MachineLearningSku sku, Uri discoveryUri, string intellectualPropertyPublisher, ArmResourceId managedResourceGroup, ManagedResourceGroupSettings managedResourceGroupSettings, Uri mlFlowRegistryUri, IList<RegistryPrivateEndpointConnection> registryPrivateEndpointConnections, string publicNetworkAccess, IList<RegistryRegionArmDetails> regionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Kind = kind;
@@ -85,8 +86,9 @@ namespace Azure.ResourceManager.MachineLearning
             DiscoveryUri = discoveryUri;
             IntellectualPropertyPublisher = intellectualPropertyPublisher;
             ManagedResourceGroup = managedResourceGroup;
+            ManagedResourceGroupSettings = managedResourceGroupSettings;
             MlFlowRegistryUri = mlFlowRegistryUri;
-            PrivateEndpointConnections = privateEndpointConnections;
+            RegistryPrivateEndpointConnections = registryPrivateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
             RegionDetails = regionDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -124,10 +126,24 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        /// <summary> Managed resource group specific settings. </summary>
+        internal ManagedResourceGroupSettings ManagedResourceGroupSettings { get; set; }
+        /// <summary> List of assigned identities for the managed resource group. </summary>
+        public IList<ManagedResourceGroupAssignedIdentities> ManagedResourceGroupAssignedIdentities
+        {
+            get => ManagedResourceGroupSettings is null ? default : ManagedResourceGroupSettings.AssignedIdentities;
+            set
+            {
+                if (ManagedResourceGroupSettings is null)
+                    ManagedResourceGroupSettings = new ManagedResourceGroupSettings();
+                ManagedResourceGroupSettings.AssignedIdentities = value;
+            }
+        }
+
         /// <summary> MLFlow Registry URI for the Registry. </summary>
         public Uri MlFlowRegistryUri { get; set; }
         /// <summary> Private endpoint connections info used for pending connections in private link portal. </summary>
-        public IList<RegistryPrivateEndpointConnection> PrivateEndpointConnections { get; set; }
+        public IList<RegistryPrivateEndpointConnection> RegistryPrivateEndpointConnections { get; set; }
         /// <summary>
         /// Is the Registry accessible from the internet?
         /// Possible values: "Enabled" or "Disabled"

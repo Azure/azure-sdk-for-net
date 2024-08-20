@@ -26,42 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(AssetName))
-            {
-                if (AssetName != null)
-                {
-                    writer.WritePropertyName("assetName"u8);
-                    writer.WriteStringValue(AssetName);
-                }
-                else
-                {
-                    writer.WriteNull("assetName");
-                }
-            }
-            if (Optional.IsDefined(AssetVersion))
-            {
-                if (AssetVersion != null)
-                {
-                    writer.WritePropertyName("assetVersion"u8);
-                    writer.WriteStringValue(AssetVersion);
-                }
-                else
-                {
-                    writer.WriteNull("assetVersion");
-                }
-            }
-            if (Optional.IsDefined(AutoDeleteSetting))
-            {
-                if (AutoDeleteSetting != null)
-                {
-                    writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting, options);
-                }
-                else
-                {
-                    writer.WriteNull("autoDeleteSetting");
-                }
-            }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -131,9 +95,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            string assetName = default;
-            string assetVersion = default;
-            AutoDeleteSetting autoDeleteSetting = default;
             MachineLearningOutputDeliveryMode? mode = default;
             Uri uri = default;
             string description = default;
@@ -142,36 +103,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("assetName"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        assetName = null;
-                        continue;
-                    }
-                    assetName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("assetVersion"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        assetVersion = null;
-                        continue;
-                    }
-                    assetVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("autoDeleteSetting"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        autoDeleteSetting = null;
-                        continue;
-                    }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -212,15 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningUriFileJobOutput(
-                description,
-                jobOutputType,
-                serializedAdditionalRawData,
-                assetName,
-                assetVersion,
-                autoDeleteSetting,
-                mode,
-                uri);
+            return new MachineLearningUriFileJobOutput(description, jobOutputType, serializedAdditionalRawData, mode, uri);
         }
 
         BinaryData IPersistableModel<MachineLearningUriFileJobOutput>.Write(ModelReaderWriterOptions options)

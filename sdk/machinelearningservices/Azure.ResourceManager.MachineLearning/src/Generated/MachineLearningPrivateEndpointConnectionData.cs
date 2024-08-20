@@ -94,6 +94,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> The connection state. </summary>
         public MachineLearningPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The current provisioning state. </summary>
-        public MachineLearningPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public MachineLearningPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
     }
 }

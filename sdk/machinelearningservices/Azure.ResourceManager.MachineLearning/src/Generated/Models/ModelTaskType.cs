@@ -24,14 +24,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string ClassificationValue = "Classification";
         private const string RegressionValue = "Regression";
-        private const string QuestionAnsweringValue = "QuestionAnswering";
 
         /// <summary> Classification. </summary>
         public static ModelTaskType Classification { get; } = new ModelTaskType(ClassificationValue);
         /// <summary> Regression. </summary>
         public static ModelTaskType Regression { get; } = new ModelTaskType(RegressionValue);
-        /// <summary> QuestionAnswering. </summary>
-        public static ModelTaskType QuestionAnswering { get; } = new ModelTaskType(QuestionAnsweringValue);
         /// <summary> Determines if two <see cref="ModelTaskType"/> values are the same. </summary>
         public static bool operator ==(ModelTaskType left, ModelTaskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ModelTaskType"/> values are not the same. </summary>

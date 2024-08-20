@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("mountAction"u8);
                 writer.WriteStringValue(MountAction.Value.ToString());
             }
+            if (Optional.IsDefined(MountMode))
+            {
+                writer.WritePropertyName("mountMode"u8);
+                writer.WriteStringValue(MountMode.Value.ToString());
+            }
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
@@ -113,6 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MachineLearningSourceType? sourceType = default;
             string mountName = default;
             MachineLearningMountAction? mountAction = default;
+            MountMode? mountMode = default;
             string createdBy = default;
             string mountPath = default;
             MachineLearningMountState? mountState = default;
@@ -148,6 +154,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     mountAction = new MachineLearningMountAction(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("mountMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mountMode = new MountMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("createdBy"u8))
@@ -194,6 +209,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 sourceType,
                 mountName,
                 mountAction,
+                mountMode,
                 createdBy,
                 mountPath,
                 mountState,

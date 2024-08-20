@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MachineLearningRecurrenceFrequency? frequency = default;
+            ComputeRecurrenceFrequency? frequency = default;
             int? interval = default;
             string startTime = default;
             string timeZone = default;
-            MachineLearningRecurrenceSchedule schedule = default;
+            ComputeRecurrenceSchedule schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    frequency = new MachineLearningRecurrenceFrequency(property.Value.GetString());
+                    frequency = new ComputeRecurrenceFrequency(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("interval"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    schedule = MachineLearningRecurrenceSchedule.DeserializeMachineLearningRecurrenceSchedule(property.Value, options);
+                    schedule = ComputeRecurrenceSchedule.DeserializeComputeRecurrenceSchedule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

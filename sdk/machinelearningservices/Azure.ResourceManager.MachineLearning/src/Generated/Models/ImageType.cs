@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML images. </summary>
+    /// <summary> Type of the image. Possible values are: docker - For docker images. azureml - For AzureML Environment images (custom and curated). </summary>
     public readonly partial struct ImageType : IEquatable<ImageType>
     {
         private readonly string _value;

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="sparkStatus"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="subresourceTarget"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateEndpointDestination(string serviceResourceId, bool? sparkEnabled, OutboundRuleStatus? sparkStatus, string subresourceTarget, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateEndpointDestination(ResourceIdentifier serviceResourceId, bool? sparkEnabled, OutboundRuleStatus? sparkStatus, string subresourceTarget, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServiceResourceId = serviceResourceId;
             SparkEnabled = sparkEnabled;
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the service resource id. </summary>
-        public string ServiceResourceId { get; set; }
+        public ResourceIdentifier ServiceResourceId { get; set; }
         /// <summary> Gets or sets the spark enabled. </summary>
         public bool? SparkEnabled { get; set; }
         /// <summary> Type of a managed network Outbound Rule of a machine learning workspace. </summary>

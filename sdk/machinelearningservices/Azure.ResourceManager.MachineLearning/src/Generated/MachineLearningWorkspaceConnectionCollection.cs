@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -266,12 +266,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="category"> Category of the workspace connection. </param>
+        /// <param name="includeAll"> query parameter that indicates if get connection call should return both connections and datastores. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningWorkspaceConnectionResource> GetAllAsync(string target = null, string category = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningWorkspaceConnectionResource> GetAllAsync(string target = null, string category = null, bool? includeAll = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category, includeAll);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category, includeAll);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningWorkspaceConnectionResource(Client, MachineLearningWorkspaceConnectionData.DeserializeMachineLearningWorkspaceConnectionData(e)), _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics, Pipeline, "MachineLearningWorkspaceConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -288,7 +289,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -298,12 +299,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="category"> Category of the workspace connection. </param>
+        /// <param name="includeAll"> query parameter that indicates if get connection call should return both connections and datastores. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningWorkspaceConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningWorkspaceConnectionResource> GetAll(string target = null, string category = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningWorkspaceConnectionResource> GetAll(string target = null, string category = null, bool? includeAll = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category, includeAll);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category, includeAll);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningWorkspaceConnectionResource(Client, MachineLearningWorkspaceConnectionData.DeserializeMachineLearningWorkspaceConnectionData(e)), _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics, Pipeline, "MachineLearningWorkspaceConnectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -320,7 +322,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,7 +365,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -406,7 +408,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -451,7 +453,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

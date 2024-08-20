@@ -35,7 +35,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string Feed { get; set; }
         /// <summary> View type for including/excluding (for example) archived entities. </summary>
         public MachineLearningListViewType? ListViewType { get; set; }
-        /// <summary> Model stage. </summary>
-        public string Stage { get; set; }
     }
 }

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -245,76 +245,6 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// List versions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnvironmentVersions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningEnvironmentVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="orderBy"> Ordering of list. </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
-        /// <param name="stage"> Stage for including/excluding (for example) archived entities. Takes priority over listViewType. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningEnvironmentVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningEnvironmentVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, string stage = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningEnvironmentVersionEnvironmentVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, stage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningEnvironmentVersionEnvironmentVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, stage);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningEnvironmentVersionResource(Client, MachineLearningEnvironmentVersionData.DeserializeMachineLearningEnvironmentVersionData(e)), _machineLearningEnvironmentVersionEnvironmentVersionsClientDiagnostics, Pipeline, "MachineLearningEnvironmentVersionCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List versions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/environments/{name}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EnvironmentVersions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MachineLearningEnvironmentVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="orderBy"> Ordering of list. </param>
-        /// <param name="top"> Maximum number of records to return. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
-        /// <param name="stage"> Stage for including/excluding (for example) archived entities. Takes priority over listViewType. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningEnvironmentVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningEnvironmentVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, string stage = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningEnvironmentVersionEnvironmentVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, stage);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningEnvironmentVersionEnvironmentVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, listViewType, stage);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningEnvironmentVersionResource(Client, MachineLearningEnvironmentVersionData.DeserializeMachineLearningEnvironmentVersionData(e)), _machineLearningEnvironmentVersionEnvironmentVersionsClientDiagnostics, Pipeline, "MachineLearningEnvironmentVersionCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -327,7 +257,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -370,7 +300,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -413,7 +343,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -458,7 +388,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2024-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

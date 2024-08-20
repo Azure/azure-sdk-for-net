@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.MachineLearning
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01-preview";
+            _apiVersion = apiVersion ?? "2024-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, string skip, string kind)
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId, string kind, string skip, string aiCapabilities)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -44,18 +44,22 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("$skip", skip, true);
-            }
             if (kind != null)
             {
                 uri.AppendQuery("kind", kind, true);
             }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip, true);
+            }
+            if (aiCapabilities != null)
+            {
+                uri.AppendQuery("aiCapabilities", aiCapabilities, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, string skip, string kind)
+        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, string kind, string skip, string aiCapabilities)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,13 +70,17 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (kind != null)
+            {
+                uri.AppendQuery("kind", kind, true);
+            }
             if (skip != null)
             {
                 uri.AppendQuery("$skip", skip, true);
             }
-            if (kind != null)
+            if (aiCapabilities != null)
             {
-                uri.AppendQuery("kind", kind, true);
+                uri.AppendQuery("aiCapabilities", aiCapabilities, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -82,16 +90,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary> Lists all the available machine learning workspaces under the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="aiCapabilities"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceListResult>> ListBySubscriptionAsync(string subscriptionId, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceListResult>> ListBySubscriptionAsync(string subscriptionId, string kind = null, string skip = null, string aiCapabilities = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListBySubscriptionRequest(subscriptionId, skip, kind);
+            using var message = CreateListBySubscriptionRequest(subscriptionId, kind, skip, aiCapabilities);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -109,16 +118,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         /// <summary> Lists all the available machine learning workspaces under the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="aiCapabilities"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceListResult> ListBySubscription(string subscriptionId, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        public Response<WorkspaceListResult> ListBySubscription(string subscriptionId, string kind = null, string skip = null, string aiCapabilities = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListBySubscriptionRequest(subscriptionId, skip, kind);
+            using var message = CreateListBySubscriptionRequest(subscriptionId, kind, skip, aiCapabilities);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -134,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string skip, string kind)
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string kind, string skip, string aiCapabilities)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -144,18 +154,22 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skip != null)
-            {
-                uri.AppendQuery("$skip", skip, true);
-            }
             if (kind != null)
             {
                 uri.AppendQuery("kind", kind, true);
             }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip, true);
+            }
+            if (aiCapabilities != null)
+            {
+                uri.AppendQuery("aiCapabilities", aiCapabilities, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string skip, string kind)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string kind, string skip, string aiCapabilities)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -168,13 +182,17 @@ namespace Azure.ResourceManager.MachineLearning
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.MachineLearningServices/workspaces", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (kind != null)
+            {
+                uri.AppendQuery("kind", kind, true);
+            }
             if (skip != null)
             {
                 uri.AppendQuery("$skip", skip, true);
             }
-            if (kind != null)
+            if (aiCapabilities != null)
             {
-                uri.AppendQuery("kind", kind, true);
+                uri.AppendQuery("aiCapabilities", aiCapabilities, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -185,17 +203,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Lists all the available machine learning workspaces under the specified resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="aiCapabilities"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string kind = null, string skip = null, string aiCapabilities = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, skip, kind);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, kind, skip, aiCapabilities);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -214,17 +233,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Lists all the available machine learning workspaces under the specified resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="aiCapabilities"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        public Response<WorkspaceListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, string kind = null, string skip = null, string aiCapabilities = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, skip, kind);
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, kind, skip, aiCapabilities);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -285,7 +305,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Deletes a machine learning workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="forceToPurge"> Flag to indicate delete is a purge request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -312,7 +332,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Deletes a machine learning workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="forceToPurge"> Flag to indicate delete is a purge request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -373,7 +393,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Gets the properties of the specified machine learning workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -404,7 +424,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Gets the properties of the specified machine learning workspace. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -473,7 +493,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Updates a machine learning workspace with the specified parameters. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="patch"> The parameters for updating a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
@@ -500,7 +520,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Updates a machine learning workspace with the specified parameters. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="patch"> The parameters for updating a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
@@ -565,7 +585,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Creates or updates a workspace with the specified parameters. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="data"> The parameters for creating or updating a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
@@ -592,7 +612,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Creates or updates a workspace with the specified parameters. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="data"> The parameters for creating or updating a machine learning workspace. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
@@ -662,7 +682,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Diagnose workspace setup issue. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="content"> The parameter of diagnosing workspace health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -688,7 +708,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Diagnose workspace setup issue. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="content"> The parameter of diagnosing workspace health. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
@@ -750,7 +770,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Lists all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -779,7 +799,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Lists all the keys associated with this workspace. This includes keys for the storage account, app insights and password for container registry. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -844,7 +864,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Get Azure Machine Learning Workspace notebook access token. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -873,7 +893,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Get Azure Machine Learning Workspace notebook access token. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -938,7 +958,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Lists keys of Azure Machine Learning Workspaces notebook. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -967,7 +987,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Lists keys of Azure Machine Learning Workspaces notebook. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1032,7 +1052,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Lists keys of Azure Machine Learning Workspace's storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1061,7 +1081,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Lists keys of Azure Machine Learning Workspace's storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1126,7 +1146,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Called by Client (Portal, CLI, etc) to get a list of all external outbound dependencies (FQDNs) programmatically. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1155,7 +1175,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Called by Client (Portal, CLI, etc) to get a list of all external outbound dependencies (FQDNs) programmatically. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1220,7 +1240,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Prepare Azure Machine Learning Workspace's notebook resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1245,7 +1265,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Prepare Azure Machine Learning Workspace's notebook resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1306,7 +1326,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Resync all the keys associated with this workspace.This includes keys for the storage account, app insights and password for container registry. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1331,7 +1351,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Resync all the keys associated with this workspace.This includes keys for the storage account, app insights and password for container registry. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="workspaceName"> Name of Azure Machine Learning workspace. </param>
+        /// <param name="workspaceName"> Azure Machine Learning Workspace Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1353,7 +1373,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, string skip, string kind)
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId, string kind, string skip, string aiCapabilities)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1361,7 +1381,7 @@ namespace Azure.ResourceManager.MachineLearning
             return uri;
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, string skip, string kind)
+        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, string kind, string skip, string aiCapabilities)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1378,17 +1398,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Lists all the available machine learning workspaces under the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="aiCapabilities"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, string kind = null, string skip = null, string aiCapabilities = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, skip, kind);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, kind, skip, aiCapabilities);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1407,17 +1428,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <summary> Lists all the available machine learning workspaces under the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="aiCapabilities"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        public Response<WorkspaceListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, string kind = null, string skip = null, string aiCapabilities = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, skip, kind);
+            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, kind, skip, aiCapabilities);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1433,7 +1455,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string skip, string kind)
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string kind, string skip, string aiCapabilities)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1441,7 +1463,7 @@ namespace Azure.ResourceManager.MachineLearning
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string skip, string kind)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string kind, string skip, string aiCapabilities)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1459,18 +1481,19 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="aiCapabilities"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<WorkspaceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        public async Task<Response<WorkspaceListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string kind = null, string skip = null, string aiCapabilities = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, skip, kind);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, kind, skip, aiCapabilities);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1490,18 +1513,19 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="kind"> Kind of workspace. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
+        /// <param name="aiCapabilities"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<WorkspaceListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string skip = null, string kind = null, CancellationToken cancellationToken = default)
+        public Response<WorkspaceListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string kind = null, string skip = null, string aiCapabilities = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, skip, kind);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, kind, skip, aiCapabilities);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

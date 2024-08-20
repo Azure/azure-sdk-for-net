@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="schedule"> [Required] The recurrence schedule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeStartStopRecurrenceSchedule(MachineLearningRecurrenceFrequency? frequency, int? interval, string startTime, string timeZone, MachineLearningRecurrenceSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComputeStartStopRecurrenceSchedule(ComputeRecurrenceFrequency? frequency, int? interval, string startTime, string timeZone, ComputeRecurrenceSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Frequency = frequency;
             Interval = interval;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] The frequency to trigger schedule. </summary>
-        public MachineLearningRecurrenceFrequency? Frequency { get; set; }
+        public ComputeRecurrenceFrequency? Frequency { get; set; }
         /// <summary> [Required] Specifies schedule interval in conjunction with frequency. </summary>
         public int? Interval { get; set; }
         /// <summary> The start time in yyyy-MM-ddTHH:mm:ss format. </summary>
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </summary>
         public string TimeZone { get; set; }
         /// <summary> [Required] The recurrence schedule. </summary>
-        public MachineLearningRecurrenceSchedule Schedule { get; set; }
+        public ComputeRecurrenceSchedule Schedule { get; set; }
     }
 }

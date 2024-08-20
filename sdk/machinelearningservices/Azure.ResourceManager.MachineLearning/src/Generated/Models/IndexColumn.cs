@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Dto object representing index column. </summary>
+    /// <summary> DTO object representing index column. </summary>
     public partial class IndexColumn
     {
         /// <summary>

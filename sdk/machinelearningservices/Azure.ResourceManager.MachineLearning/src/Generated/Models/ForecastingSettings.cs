@@ -48,7 +48,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="ForecastingSettings"/>. </summary>
         public ForecastingSettings()
         {
-            FeaturesUnknownAtForecastTime = new ChangeTrackingList<string>();
             TimeSeriesIdColumnNames = new ChangeTrackingList<string>();
         }
 
@@ -63,10 +62,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// three days apart.
         /// </param>
         /// <param name="featureLags"> Flag for generating lags for the numeric features with 'auto' or null. </param>
-        /// <param name="featuresUnknownAtForecastTime">
-        /// The feature columns that are available for training but unknown at the time of forecast/inference.
-        /// If features_unknown_at_forecast_time is not set, it is assumed that all the feature columns in the dataset are known at inference time.
-        /// </param>
         /// <param name="forecastHorizon">
         /// The desired maximum forecast horizon in units of time-series frequency.
         /// Please note <see cref="Models.ForecastHorizon"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -101,12 +96,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="useStl"> Configure STL Decomposition of the time-series target column. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, IList<string> featuresUnknownAtForecastTime, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, MachineLearningUseStl? useStl, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, MachineLearningUseStl? useStl, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CountryOrRegionForHolidays = countryOrRegionForHolidays;
             CvStepSize = cvStepSize;
             FeatureLags = featureLags;
-            FeaturesUnknownAtForecastTime = featuresUnknownAtForecastTime;
             ForecastHorizon = forecastHorizon;
             Frequency = frequency;
             Seasonality = seasonality;
@@ -133,11 +127,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public int? CvStepSize { get; set; }
         /// <summary> Flag for generating lags for the numeric features with 'auto' or null. </summary>
         public MachineLearningFeatureLag? FeatureLags { get; set; }
-        /// <summary>
-        /// The feature columns that are available for training but unknown at the time of forecast/inference.
-        /// If features_unknown_at_forecast_time is not set, it is assumed that all the feature columns in the dataset are known at inference time.
-        /// </summary>
-        public IList<string> FeaturesUnknownAtForecastTime { get; set; }
         /// <summary>
         /// The desired maximum forecast horizon in units of time-series frequency.
         /// Please note <see cref="Models.ForecastHorizon"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

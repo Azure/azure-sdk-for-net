@@ -98,24 +98,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notificationSetting");
                 }
             }
-            if (Optional.IsCollectionDefined(SecretsConfiguration))
-            {
-                if (SecretsConfiguration != null)
-                {
-                    writer.WritePropertyName("secretsConfiguration"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in SecretsConfiguration)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value, options);
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("secretsConfiguration");
-                }
-            }
             if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
@@ -233,7 +215,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             bool? isArchived = default;
             JobType jobType = "Unknown";
             NotificationSetting notificationSetting = default;
-            IDictionary<string, SecretConfiguration> secretsConfiguration = default;
             IDictionary<string, MachineLearningJobService> services = default;
             MachineLearningJobStatus? status = default;
             string description = default;
@@ -310,21 +291,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("secretsConfiguration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        secretsConfiguration = null;
-                        continue;
-                    }
-                    Dictionary<string, SecretConfiguration> dictionary = new Dictionary<string, SecretConfiguration>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, SecretConfiguration.DeserializeSecretConfiguration(property0.Value, options));
-                    }
-                    secretsConfiguration = dictionary;
                     continue;
                 }
                 if (property.NameEquals("services"u8))
@@ -410,7 +376,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 isArchived,
                 jobType,
                 notificationSetting,
-                secretsConfiguration ?? new ChangeTrackingDictionary<string, SecretConfiguration>(),
                 services ?? new ChangeTrackingDictionary<string, MachineLearningJobService>(),
                 status);
         }

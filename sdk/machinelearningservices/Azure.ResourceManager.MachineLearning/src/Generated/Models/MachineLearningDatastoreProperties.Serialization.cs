@@ -29,18 +29,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(Credentials, options);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
-            if (Optional.IsDefined(IntellectualProperty))
-            {
-                if (IntellectualProperty != null)
-                {
-                    writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty, options);
-                }
-                else
-                {
-                    writer.WriteNull("intellectualProperty");
-                }
-            }
             if (options.Format != "W" && Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
@@ -140,7 +128,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "AzureDataLakeGen1": return MachineLearningAzureDataLakeGen1Datastore.DeserializeMachineLearningAzureDataLakeGen1Datastore(element, options);
                     case "AzureDataLakeGen2": return MachineLearningAzureDataLakeGen2Datastore.DeserializeMachineLearningAzureDataLakeGen2Datastore(element, options);
                     case "AzureFile": return MachineLearningAzureFileDatastore.DeserializeMachineLearningAzureFileDatastore(element, options);
-                    case "Hdfs": return HdfsDatastore.DeserializeHdfsDatastore(element, options);
                     case "OneLake": return OneLakeDatastore.DeserializeOneLakeDatastore(element, options);
                 }
             }

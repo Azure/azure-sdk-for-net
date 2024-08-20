@@ -53,8 +53,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineRequestSettings"/>. </summary>
         /// <param name="maxConcurrentRequestsPerInstance"> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </param>
         /// <param name="maxQueueWait">
-        /// The maximum amount of time a request will stay in the queue in ISO 8601 format.
+        /// (Deprecated for Managed Online Endpoints) The maximum amount of time a request will stay in the queue in ISO 8601 format.
         /// Defaults to 500ms.
+        /// (Now increase `request_timeout_ms` to account for any networking/queue delays)
         /// </param>
         /// <param name="requestTimeout">
         /// The scoring timeout in ISO 8601 format.
@@ -72,8 +73,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The number of maximum concurrent requests per node allowed per deployment. Defaults to 1. </summary>
         public int? MaxConcurrentRequestsPerInstance { get; set; }
         /// <summary>
-        /// The maximum amount of time a request will stay in the queue in ISO 8601 format.
+        /// (Deprecated for Managed Online Endpoints) The maximum amount of time a request will stay in the queue in ISO 8601 format.
         /// Defaults to 500ms.
+        /// (Now increase `request_timeout_ms` to account for any networking/queue delays)
         /// </summary>
         public TimeSpan? MaxQueueWait { get; set; }
         /// <summary>
