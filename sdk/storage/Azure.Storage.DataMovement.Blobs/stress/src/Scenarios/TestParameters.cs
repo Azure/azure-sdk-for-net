@@ -4,6 +4,8 @@
 using System;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using Azure.Storage.DataMovement;
+using Azure.Storage.DataMovement.Blobs;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress;
 
@@ -39,7 +41,7 @@ public class TestParameters : IDisposable
     ///   The handler to use for processing messages in this test's processor instance.
     /// <summary/>
     ///
-    public Func<ProcessMessageEventArgs, Task> messageHandler;
+    public Func<, Task> messageHandler;
 
     /// <summary>
     ///   The handler to use for processing errors in this test's processor instance.
