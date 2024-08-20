@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Generator.CSharp.ClientModel" />
+	</ItemGroup>
+
+	<!-- Copy output to package dist path for local execution and  -->
+	<Target Name="CopyForNpmPackage" AfterTargets="Build">
+		<Message Text="Copying output to dist path" Importance="high" />
+		<ItemGroup>
+			<SourceDir Include="$(OutputPath)**\*.*" />
+		</ItemGroup>
+		<Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\dist\generator\%(RecursiveDir)" />
+	</Target>
+	
+</Project>
