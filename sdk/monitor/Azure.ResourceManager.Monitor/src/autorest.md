@@ -333,6 +333,7 @@ rename-mapping:
   NetworkingConfiguration: PipelineGroupNetworkingConfiguration
   NetworkingRoute: PipelineGroupNetworkingRoute
   ExternalNetworkingMode: PipelineGroupExternalNetworkingMode
+  AzureResourceManagerCommonTypesExtendedLocation: Azure.ResourceManager.CommonTypes.ExtendedLocation
 
 suppress-abstract-base-class:
 - MetricAlertCriteria

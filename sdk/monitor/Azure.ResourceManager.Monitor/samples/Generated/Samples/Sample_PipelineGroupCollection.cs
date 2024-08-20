@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor.Samples
 {
@@ -185,7 +186,10 @@ namespace Azure.ResourceManager.Monitor.Samples
             string pipelineGroupName = "plGroup1";
             PipelineGroupData data = new PipelineGroupData(new AzureLocation("eastus2"))
             {
-                ExtendedLocation = new ExtendedLocation(ExtendedLocationType.CustomLocation, "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation"),
+                ExtendedLocation = new ExtendedLocation()
+                {
+                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
+                },
                 Receivers =
 {
 new PipelineGroupReceiver(PipelineGroupReceiverType.UDP,"udp-receiver1")
@@ -274,7 +278,10 @@ Processors =
             string pipelineGroupName = "plGroup1";
             PipelineGroupData data = new PipelineGroupData(new AzureLocation("eastus2"))
             {
-                ExtendedLocation = new ExtendedLocation(ExtendedLocationType.CustomLocation, "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation"),
+                ExtendedLocation = new ExtendedLocation()
+                {
+                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
+                },
                 Receivers =
 {
 new PipelineGroupReceiver(PipelineGroupReceiverType.Syslog,"syslog-receiver1")
@@ -362,7 +369,10 @@ Processors =
             string pipelineGroupName = "plGroup1";
             PipelineGroupData data = new PipelineGroupData(new AzureLocation("eastus2"))
             {
-                ExtendedLocation = new ExtendedLocation(ExtendedLocationType.CustomLocation, "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation"),
+                ExtendedLocation = new ExtendedLocation()
+                {
+                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
+                },
                 Receivers =
 {
 new PipelineGroupReceiver(PipelineGroupReceiverType.Syslog,"syslog-receiver1")
@@ -455,7 +465,10 @@ Processors =
             string pipelineGroupName = "plGroup1";
             PipelineGroupData data = new PipelineGroupData(new AzureLocation("eastus2"))
             {
-                ExtendedLocation = new ExtendedLocation(ExtendedLocationType.CustomLocation, "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation"),
+                ExtendedLocation = new ExtendedLocation()
+                {
+                    Name = "/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/microsoft.extendedlocation/customlocations/myTestCustomLocation",
+                },
                 Receivers =
 {
 new PipelineGroupReceiver(PipelineGroupReceiverType.Syslog,"syslog-receiver1")

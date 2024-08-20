@@ -12,6 +12,7 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Monitor
                     {
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

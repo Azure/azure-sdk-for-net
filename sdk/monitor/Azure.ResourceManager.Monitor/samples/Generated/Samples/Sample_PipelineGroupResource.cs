@@ -136,10 +136,8 @@ BatchQueueSize = 100,
 },
 }
 },
-                Service = new ServiceUpdate()
-                {
-                    Pipelines =
-{
+                Service = new PipelineGroupService(new PipelineGroupServicePipeline[]
+            {
 new PipelineGroupServicePipeline("MyPipelineForLogs1",PipelineGroupServicePipelineType.Logs,new string[]
 {
 "syslog-receiver1"
@@ -152,8 +150,7 @@ Processors =
 {
 },
 }
-},
-                },
+            }),
             };
             ArmOperation<PipelineGroupResource> lro = await pipelineGroup.UpdateAsync(WaitUntil.Completed, patch);
             PipelineGroupResource result = lro.Value;

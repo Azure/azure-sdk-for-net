@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<PipelineGroupReceiver> receivers = default;
             IList<PipelineGroupProcessor> processors = default;
             IList<PipelineGroupExporter> exporters = default;
-            ServiceUpdate service = default;
+            PipelineGroupService service = default;
             IList<PipelineGroupNetworkingConfiguration> networkingConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             {
                                 continue;
                             }
-                            service = ServiceUpdate.DeserializeServiceUpdate(property0.Value, options);
+                            service = PipelineGroupService.DeserializePipelineGroupService(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("networkingConfigurations"u8))

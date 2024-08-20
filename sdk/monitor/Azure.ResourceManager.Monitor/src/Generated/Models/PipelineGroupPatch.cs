@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="service"> The service section for a given pipeline group instance. </param>
         /// <param name="networkingConfigurations"> Networking configurations for the pipeline group instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineGroupPatch(IDictionary<string, string> tags, int? replicas, IList<PipelineGroupReceiver> receivers, IList<PipelineGroupProcessor> processors, IList<PipelineGroupExporter> exporters, ServiceUpdate service, IList<PipelineGroupNetworkingConfiguration> networkingConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PipelineGroupPatch(IDictionary<string, string> tags, int? replicas, IList<PipelineGroupReceiver> receivers, IList<PipelineGroupProcessor> processors, IList<PipelineGroupExporter> exporters, PipelineGroupService service, IList<PipelineGroupNetworkingConfiguration> networkingConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Replicas = replicas;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The exporters specified for a pipeline group instance. </summary>
         public IList<PipelineGroupExporter> Exporters { get; }
         /// <summary> The service section for a given pipeline group instance. </summary>
-        public ServiceUpdate Service { get; set; }
+        public PipelineGroupService Service { get; set; }
         /// <summary> Networking configurations for the pipeline group instance. </summary>
         public IList<PipelineGroupNetworkingConfiguration> NetworkingConfigurations { get; }
     }
