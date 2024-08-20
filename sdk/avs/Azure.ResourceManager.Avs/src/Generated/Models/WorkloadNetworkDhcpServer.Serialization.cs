@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             string serverAddress = default;
-            long? leaseTime = default;
+            int? leaseTime = default;
             DhcpTypeEnum dhcpType = default;
             string displayName = default;
             IReadOnlyList<string> segments = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    leaseTime = property.Value.GetInt64();
+                    leaseTime = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("dhcpType"u8))

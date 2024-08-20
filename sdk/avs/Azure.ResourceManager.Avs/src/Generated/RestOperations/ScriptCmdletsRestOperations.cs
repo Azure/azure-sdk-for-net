@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Avs
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-03-01";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -76,15 +76,15 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List script cmdlet resources available for a private cloud to create a script execution resource on a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List ScriptCmdlet resources by ScriptPackage. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
+        /// <param name="scriptPackageName"> Name of the script package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="scriptPackageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScriptCmdletsList>> ListAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, CancellationToken cancellationToken = default)
+        public async Task<Response<ScriptCmdletListResult>> ListAsync(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ScriptCmdletsList value = default;
+                        ScriptCmdletListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScriptCmdletsList.DeserializeScriptCmdletsList(document.RootElement);
+                        value = ScriptCmdletListResult.DeserializeScriptCmdletListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -107,15 +107,15 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List script cmdlet resources available for a private cloud to create a script execution resource on a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> List ScriptCmdlet resources by ScriptPackage. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
+        /// <param name="scriptPackageName"> Name of the script package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="scriptPackageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScriptCmdletsList> List(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, CancellationToken cancellationToken = default)
+        public Response<ScriptCmdletListResult> List(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ScriptCmdletsList value = default;
+                        ScriptCmdletListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScriptCmdletsList.DeserializeScriptCmdletsList(document.RootElement);
+                        value = ScriptCmdletListResult.DeserializeScriptCmdletListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -180,12 +180,12 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> Return information about a script cmdlet resource in a specific package on a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a ScriptCmdlet. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
-        /// <param name="scriptCmdletName"> Name of the script cmdlet resource in the script package in the private cloud. </param>
+        /// <param name="scriptPackageName"> Name of the script package. </param>
+        /// <param name="scriptCmdletName"> Name of the script cmdlet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="scriptPackageName"/> or <paramref name="scriptCmdletName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="scriptPackageName"/> or <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> Return information about a script cmdlet resource in a specific package on a private cloud. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Get a ScriptCmdlet. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
-        /// <param name="scriptCmdletName"> Name of the script cmdlet resource in the script package in the private cloud. </param>
+        /// <param name="scriptPackageName"> Name of the script package. </param>
+        /// <param name="scriptCmdletName"> Name of the script cmdlet. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="scriptPackageName"/> or <paramref name="scriptCmdletName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="scriptPackageName"/> or <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -272,16 +272,16 @@ namespace Azure.ResourceManager.Avs
             return message;
         }
 
-        /// <summary> List script cmdlet resources available for a private cloud to create a script execution resource on a private cloud. </summary>
+        /// <summary> List ScriptCmdlet resources by ScriptPackage. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
+        /// <param name="scriptPackageName"> Name of the script package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="scriptPackageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScriptCmdletsList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, CancellationToken cancellationToken = default)
+        public async Task<Response<ScriptCmdletListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -295,9 +295,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ScriptCmdletsList value = default;
+                        ScriptCmdletListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ScriptCmdletsList.DeserializeScriptCmdletsList(document.RootElement);
+                        value = ScriptCmdletListResult.DeserializeScriptCmdletListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -305,16 +305,16 @@ namespace Azure.ResourceManager.Avs
             }
         }
 
-        /// <summary> List script cmdlet resources available for a private cloud to create a script execution resource on a private cloud. </summary>
+        /// <summary> List ScriptCmdlet resources by ScriptPackage. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateCloudName"> Name of the private cloud. </param>
-        /// <param name="scriptPackageName"> Name of the script package in the private cloud. </param>
+        /// <param name="scriptPackageName"> Name of the script package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="scriptPackageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/> or <paramref name="scriptPackageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScriptCmdletsList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, CancellationToken cancellationToken = default)
+        public Response<ScriptCmdletListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string privateCloudName, string scriptPackageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -328,9 +328,9 @@ namespace Azure.ResourceManager.Avs
             {
                 case 200:
                     {
-                        ScriptCmdletsList value = default;
+                        ScriptCmdletListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ScriptCmdletsList.DeserializeScriptCmdletsList(document.RootElement);
+                        value = ScriptCmdletListResult.DeserializeScriptCmdletListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

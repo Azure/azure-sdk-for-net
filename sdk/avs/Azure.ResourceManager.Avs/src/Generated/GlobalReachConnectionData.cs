@@ -62,11 +62,23 @@ namespace Azure.ResourceManager.Avs
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> The state of the  ExpressRoute Circuit Authorization provisioning. </param>
-        /// <param name="addressPrefix"> The network used for global reach carved out from the original network block provided for the private cloud. </param>
-        /// <param name="authorizationKey"> Authorization key from the peer express route used for the global reach connection. </param>
+        /// <param name="addressPrefix">
+        /// The network used for global reach carved out from the original network block
+        /// provided for the private cloud
+        /// </param>
+        /// <param name="authorizationKey">
+        /// Authorization key from the peer express route used for the global reach
+        /// connection
+        /// </param>
         /// <param name="circuitConnectionStatus"> The connection status of the global reach connection. </param>
-        /// <param name="peerExpressRouteCircuit"> Identifier of the ExpressRoute Circuit to peer with in the global reach connection. </param>
-        /// <param name="expressRouteId"> The ID of the Private Cloud's ExpressRoute Circuit that is participating in the global reach connection. </param>
+        /// <param name="peerExpressRouteCircuit">
+        /// Identifier of the ExpressRoute Circuit to peer with in the global reach
+        /// connection
+        /// </param>
+        /// <param name="expressRouteId">
+        /// The ID of the Private Cloud's ExpressRoute Circuit that is participating in the
+        /// global reach connection
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GlobalReachConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GlobalReachConnectionProvisioningState? provisioningState, string addressPrefix, string authorizationKey, GlobalReachConnectionStatus? circuitConnectionStatus, ResourceIdentifier peerExpressRouteCircuit, ResourceIdentifier expressRouteId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -81,15 +93,27 @@ namespace Azure.ResourceManager.Avs
 
         /// <summary> The state of the  ExpressRoute Circuit Authorization provisioning. </summary>
         public GlobalReachConnectionProvisioningState? ProvisioningState { get; }
-        /// <summary> The network used for global reach carved out from the original network block provided for the private cloud. </summary>
+        /// <summary>
+        /// The network used for global reach carved out from the original network block
+        /// provided for the private cloud
+        /// </summary>
         public string AddressPrefix { get; }
-        /// <summary> Authorization key from the peer express route used for the global reach connection. </summary>
+        /// <summary>
+        /// Authorization key from the peer express route used for the global reach
+        /// connection
+        /// </summary>
         public string AuthorizationKey { get; set; }
         /// <summary> The connection status of the global reach connection. </summary>
         public GlobalReachConnectionStatus? CircuitConnectionStatus { get; }
-        /// <summary> Identifier of the ExpressRoute Circuit to peer with in the global reach connection. </summary>
+        /// <summary>
+        /// Identifier of the ExpressRoute Circuit to peer with in the global reach
+        /// connection
+        /// </summary>
         public ResourceIdentifier PeerExpressRouteCircuit { get; set; }
-        /// <summary> The ID of the Private Cloud's ExpressRoute Circuit that is participating in the global reach connection. </summary>
+        /// <summary>
+        /// The ID of the Private Cloud's ExpressRoute Circuit that is participating in the
+        /// global reach connection
+        /// </summary>
         public ResourceIdentifier ExpressRouteId { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a WorkloadNetworkGateway along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkGatewayResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkGatewayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetWorkloadNetworkGateway method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkloadNetworkResource"/> using the GetWorkloadNetworkGateway method.
     /// </summary>
     public partial class WorkloadNetworkGatewayResource : ArmResource
     {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a gateway by id in a private cloud workload network.
+        /// Get a WorkloadNetworkGateway
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a gateway by id in a private cloud workload network.
+        /// Get a WorkloadNetworkGateway
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

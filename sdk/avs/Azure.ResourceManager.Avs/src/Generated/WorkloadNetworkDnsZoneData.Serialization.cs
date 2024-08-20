@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Avs
             IList<string> domain = default;
             IList<IPAddress> dnsServerIPs = default;
             IPAddress sourceIP = default;
-            long? dnsServices = default;
+            int? dnsServices = default;
             WorkloadNetworkDnsZoneProvisioningState? provisioningState = default;
             long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            dnsServices = property0.Value.GetInt64();
+                            dnsServices = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

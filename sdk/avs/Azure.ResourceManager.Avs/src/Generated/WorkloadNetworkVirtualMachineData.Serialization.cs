@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.Avs
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -103,6 +108,7 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            WorkloadNetworkProvisioningState? provisioningState = default;
             string displayName = default;
             WorkloadNetworkVmType? vmType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -142,6 +148,15 @@ namespace Azure.ResourceManager.Avs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new WorkloadNetworkProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
@@ -170,6 +185,7 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
+                provisioningState,
                 displayName,
                 vmType,
                 serializedAdditionalRawData);

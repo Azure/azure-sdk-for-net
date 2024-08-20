@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
@@ -49,6 +50,11 @@ namespace Azure.ResourceManager.Avs
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -112,6 +118,7 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            ScriptPackageProvisioningState? provisioningState = default;
             string description = default;
             string version = default;
             string company = default;
@@ -153,6 +160,15 @@ namespace Azure.ResourceManager.Avs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ScriptPackageProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
@@ -191,6 +207,7 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
+                provisioningState,
                 description,
                 version,
                 company,

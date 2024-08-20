@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a WorkloadNetworkSegment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkSegmentResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkSegmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetWorkloadNetworkSegment method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkloadNetworkResource"/> using the GetWorkloadNetworkSegment method.
     /// </summary>
     public partial class WorkloadNetworkSegmentResource : ArmResource
     {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a segment by id in a private cloud workload network.
+        /// Get a WorkloadNetworkSegment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a segment by id in a private cloud workload network.
+        /// Get a WorkloadNetworkSegment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Delete a segment by id in a private cloud workload network.
+        /// Delete a WorkloadNetworkSegment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Delete a segment by id in a private cloud workload network.
+        /// Delete a WorkloadNetworkSegment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update a segment by id in a private cloud workload network.
+        /// Update a WorkloadNetworkSegment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -265,7 +266,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -274,19 +275,19 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> NSX Segment. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WorkloadNetworkSegmentResource>> UpdateAsync(WaitUntil waitUntil, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<WorkloadNetworkSegmentResource>> UpdateAsync(WaitUntil waitUntil, WorkloadNetworkSegmentPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.Update");
             scope.Start();
             try
             {
-                var response = await _workloadNetworkSegmentWorkloadNetworksRestClient.UpdateSegmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentOperationSource(Client), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkSegmentWorkloadNetworksRestClient.CreateUpdateSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _workloadNetworkSegmentWorkloadNetworksRestClient.UpdateSegmentsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentOperationSource(Client), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkSegmentWorkloadNetworksRestClient.CreateUpdateSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -299,7 +300,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update a segment by id in a private cloud workload network.
+        /// Update a WorkloadNetworkSegment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,19 +321,19 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> NSX Segment. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WorkloadNetworkSegmentResource> Update(WaitUntil waitUntil, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<WorkloadNetworkSegmentResource> Update(WaitUntil waitUntil, WorkloadNetworkSegmentPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _workloadNetworkSegmentWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkSegmentResource.Update");
             scope.Start();
             try
             {
-                var response = _workloadNetworkSegmentWorkloadNetworksRestClient.UpdateSegments(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentOperationSource(Client), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkSegmentWorkloadNetworksRestClient.CreateUpdateSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _workloadNetworkSegmentWorkloadNetworksRestClient.UpdateSegments(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new AvsArmOperation<WorkloadNetworkSegmentResource>(new WorkloadNetworkSegmentOperationSource(Client), _workloadNetworkSegmentWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkSegmentWorkloadNetworksRestClient.CreateUpdateSegmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

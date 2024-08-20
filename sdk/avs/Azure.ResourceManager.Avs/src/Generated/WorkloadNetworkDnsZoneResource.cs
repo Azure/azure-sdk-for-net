@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.Avs.Models;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a WorkloadNetworkDnsZone along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkloadNetworkDnsZoneResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetWorkloadNetworkDnsZoneResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetWorkloadNetworkDnsZone method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkloadNetworkResource"/> using the GetWorkloadNetworkDnsZone method.
     /// </summary>
     public partial class WorkloadNetworkDnsZoneResource : ArmResource
     {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a DNS zone by id in a private cloud workload network.
+        /// Get a WorkloadNetworkDnsZone
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get a DNS zone by id in a private cloud workload network.
+        /// Get a WorkloadNetworkDnsZone
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Delete a DNS zone by id in a private cloud workload network.
+        /// Delete a WorkloadNetworkDnsZone
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +212,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Delete a DNS zone by id in a private cloud workload network.
+        /// Delete a WorkloadNetworkDnsZone
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -223,7 +224,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update a DNS zone by id in a private cloud workload network.
+        /// Update a WorkloadNetworkDnsZone
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -265,7 +266,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -274,19 +275,19 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> NSX DNS Zone. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WorkloadNetworkDnsZoneResource>> UpdateAsync(WaitUntil waitUntil, WorkloadNetworkDnsZoneData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<WorkloadNetworkDnsZoneResource>> UpdateAsync(WaitUntil waitUntil, WorkloadNetworkDnsZonePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.Update");
             scope.Start();
             try
             {
-                var response = await _workloadNetworkDnsZoneWorkloadNetworksRestClient.UpdateDnsZoneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(new WorkloadNetworkDnsZoneOperationSource(Client), _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateUpdateDnsZoneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _workloadNetworkDnsZoneWorkloadNetworksRestClient.UpdateDnsZoneAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(new WorkloadNetworkDnsZoneOperationSource(Client), _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateUpdateDnsZoneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -299,7 +300,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update a DNS zone by id in a private cloud workload network.
+        /// Update a WorkloadNetworkDnsZone
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -311,7 +312,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,19 +321,19 @@ namespace Azure.ResourceManager.Avs
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> NSX DNS Zone. </param>
+        /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WorkloadNetworkDnsZoneResource> Update(WaitUntil waitUntil, WorkloadNetworkDnsZoneData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<WorkloadNetworkDnsZoneResource> Update(WaitUntil waitUntil, WorkloadNetworkDnsZonePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDnsZoneResource.Update");
             scope.Start();
             try
             {
-                var response = _workloadNetworkDnsZoneWorkloadNetworksRestClient.UpdateDnsZone(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(new WorkloadNetworkDnsZoneOperationSource(Client), _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateUpdateDnsZoneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _workloadNetworkDnsZoneWorkloadNetworksRestClient.UpdateDnsZone(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new AvsArmOperation<WorkloadNetworkDnsZoneResource>(new WorkloadNetworkDnsZoneOperationSource(Client), _workloadNetworkDnsZoneWorkloadNetworksClientDiagnostics, Pipeline, _workloadNetworkDnsZoneWorkloadNetworksRestClient.CreateUpdateDnsZoneRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
