@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             DateTime startTime = DateTime.Now;
 
             // Poll the operation Staus with request ID for 3 minutes
-            while((DateTime.Now - startTime) < TimeSpan.FromMinutes(3))
+            while ((DateTime.Now - startTime) < TimeSpan.FromMinutes(3))
             {
                 // invoke the operation
                 GroupQuotaRequestStatusResource result = await groupQuotaRequestStatusResource.GetAsync();
@@ -227,6 +227,9 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         [TestCase]
         public async Task SetSubscriptionAllocationRequest()
         {
+            ArmClientOptions options = new ArmClientOptions();
+            options.Environment = new ArmEnvironment(new Uri("https://eastus2euap.management.azure.com"), "https://management.azure.com/");
+            var Client = new ArmClient(TestEnvironment.Credential, defaultSubscriptionId, options);
             // invoke the operation
             string groupQuotaName = "sdk-test-group-quota";
             string resourceProviderName = "Microsoft.Compute";
@@ -285,7 +288,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             // Poll the operation Staus with request ID for 3 minutes
             while ((DateTime.Now - startTime) < TimeSpan.FromMinutes(3))
             {
-                // invoke the operation
+                // invoke the operation to get based on requestId
                 QuotaAllocationRequestStatusResource result = await quotaAllocationStatusResource.GetAsync();
 
                 var provisioningState = result.Data.ProvisioningState.ToString();
@@ -308,7 +311,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             }
 
             // Delete the Subscription as part of test cleanup
-            await groupQuotaSubscriptionId.DeleteAsync(WaitUntil.Started);
+            await groupQuotaSubscriptionId.DeleteAsync(WaitUntil.Completed);
         }
 
         [TestCase]
