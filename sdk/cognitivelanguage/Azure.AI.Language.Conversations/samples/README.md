@@ -16,9 +16,9 @@ Conversation Analysis is a cloud-based conversational AI service that applies cu
 
 You can work with request and response content more easily by using our [Dynamic JSON](https://aka.ms/azsdk/net/dynamiccontent) feature. This is illustrated in the following samples:
 
-- [Analyze an utterance - Conversation project](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample1_AnalyzeConversation_ConversationPrediction.md)
-- [Analyze an utterance - Orchestration project](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample2_AnalyzeConversation_OrchestrationPrediction.md)
-- [Analyze an utterance in a different language](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample3_AnalyzeConversationWithLanguage.md)
-- [Analyze an utterance using extra options](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample4_AnalyzeConversationWithOptions.md)
-- [Analyze a conversation with Conversation PII](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample5_AnalyzeConversation_ConversationPii.md)
-- [Analyze a conversation with Conversation Summarization](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/Sample6_AnalyzeConversation_ConversationSummarization.md)
+- [Analyze an utterance - Conversation project](Sample1_AnalyzeConversation_ConversationPrediction.md)
+- [Analyze an utterance - Orchestration project](Sample2_AnalyzeConversation_OrchestrationPrediction.md)
+- [Analyze an utterance in a different language](hSample3_AnalyzeConversationWithLanguage.md)
+- [Analyze an utterance using extra options](Sample4_AnalyzeConversationWithOptions.md)
+- [Analyze a conversation with Conversation PII](Sample5_AnalyzeConversation_ConversationPii.md)
+- [Analyze a conversation with Conversation Summarization](Sample6_AnalyzeConversation_ConversationSummarization.md)
