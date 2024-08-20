@@ -22,7 +22,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTextTranslationBySourceAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationBySourceAsync
             try
@@ -49,7 +49,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTextTranslationAutoDetectAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationAutoDetectAsync
             try
@@ -75,7 +75,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetMultipleTextTranslationsOptionsAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetMultipleTextTranslationsOptionsAsync
             try
@@ -110,7 +110,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTextTranslationMatrixAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationMatrixAsync
             try
@@ -142,7 +142,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTextTranslationFormatAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationFormatAsync
             try
@@ -171,7 +171,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTextTranslationFilterAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationFilterAsync
             try
@@ -201,7 +201,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTextTranslationMarkupAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationMarkupAsync
             try
@@ -231,7 +231,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTextTranslationProfanityAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationProfanityAsync
             try
@@ -263,7 +263,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTextTranslationAlignmentAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationAlignmentAsync
             try
@@ -295,7 +295,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTextTranslationSentencesAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationSentencesAsync
             try
@@ -328,7 +328,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTextTranslationFallbackAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationFallbackAsync
             try
@@ -358,7 +358,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTranslationTextTransliteratedAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTranslationTextTransliteratedAsync
             try
@@ -391,7 +391,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public async Task GetTranslationTextTransliteratedOptionsAsync()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTranslationTextTransliteratedOptionsAsync
             try
