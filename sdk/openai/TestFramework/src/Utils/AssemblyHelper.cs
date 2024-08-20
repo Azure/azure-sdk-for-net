@@ -51,7 +51,7 @@ namespace OpenAI.TestFramework.Utils
         ///     &lt;_Parameter1&gt;SourcePath&lt;/_Parameter1&gt;
         ///     &lt;_Parameter2&gt;$(MSBuildProjectDirectory)&lt;/_Parameter2&gt;
         ///   &lt;/AssemblyAttribute&gt;
-        /// &lt;/ItemGroup>
+        /// &lt;/ItemGroup&gt;
         /// </code>
         /// </summary>
         /// <param name="assembly">The assembly whose source path we want to find.</param>
