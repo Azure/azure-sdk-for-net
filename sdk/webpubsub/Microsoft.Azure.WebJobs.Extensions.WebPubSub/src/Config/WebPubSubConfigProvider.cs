@@ -160,7 +160,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     new ConnectionStatesNewtonsoftConverter(),
                     new WebPubSubDataTypeJsonConverter(),
                     new WebPubSubEventTypeJsonConverter(),
-                    new WebPubSubTriggerAcceptedClientProtocolJsonConverter(),
+                    new WebPubSubTriggerAcceptedClientProtocolsJsonConverter(),
                 },
             };
         }

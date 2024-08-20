@@ -7,7 +7,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub;
 
-internal class WebPubSubTriggerAcceptedClientProtocolJsonConverter : JsonConverter<WebPubSubTriggerAcceptedClientProtocol>
+internal class WebPubSubTriggerAcceptedClientProtocolsJsonConverter : JsonConverter<WebPubSubTriggerAcceptedClientProtocols>
 {
     private static readonly JsonSerializer JsonSerializer = JsonSerializer.Create(new JsonSerializerSettings
     {
@@ -17,7 +17,7 @@ internal class WebPubSubTriggerAcceptedClientProtocolJsonConverter : JsonConvert
         }
     });
 
-    public override WebPubSubTriggerAcceptedClientProtocol ReadJson(JsonReader reader, Type objectType, WebPubSubTriggerAcceptedClientProtocol existingValue, bool hasExistingValue, JsonSerializer serializer) => JsonSerializer.Deserialize<WebPubSubTriggerAcceptedClientProtocol>(reader);
+    public override WebPubSubTriggerAcceptedClientProtocols ReadJson(JsonReader reader, Type objectType, WebPubSubTriggerAcceptedClientProtocols existingValue, bool hasExistingValue, JsonSerializer serializer) => JsonSerializer.Deserialize<WebPubSubTriggerAcceptedClientProtocols>(reader);
 
-    public override void WriteJson(JsonWriter writer, WebPubSubTriggerAcceptedClientProtocol value, JsonSerializer serializer) => JsonSerializer.Serialize(writer, value);
+    public override void WriteJson(JsonWriter writer, WebPubSubTriggerAcceptedClientProtocols value, JsonSerializer serializer) => JsonSerializer.Serialize(writer, value);
 }

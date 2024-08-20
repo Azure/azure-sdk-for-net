@@ -253,12 +253,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private bool TryResolveListener(WebPubSubConnectionContext context, out WebPubSubListener listener)
         {
             // Try to match a listener for specified client protocol
-            var key = Utilities.GetFunctionKey(context.Hub, context.EventType, context.EventName, (context is MqttConnectionContext ? WebPubSubTriggerAcceptedClientProtocol.Mqtt : WebPubSubTriggerAcceptedClientProtocol.WebPubSub));
+            var key = Utilities.GetFunctionKey(context.Hub, context.EventType, context.EventName, (context is MqttConnectionContext ? WebPubSubTriggerAcceptedClientProtocols.Mqtt : WebPubSubTriggerAcceptedClientProtocols.WebPubSub));
             if (_listeners.TryGetValue(key, out listener))
             {
                 return true;
             }
-            key = $"{context.Hub}.{context.EventType}.{context.EventName}.{WebPubSubTriggerAcceptedClientProtocol.All}"; // match all client protocols
+            key = $"{context.Hub}.{context.EventType}.{context.EventName}.{WebPubSubTriggerAcceptedClientProtocols.All}"; // match all client protocols
             if (_listeners.TryGetValue(key, out listener))
             {
                 return true;

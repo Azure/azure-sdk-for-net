@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using Microsoft.Azure.WebJobs.Description;
 using Microsoft.Azure.WebPubSub.Common;
 
@@ -27,7 +26,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <param name="connections">Connection strings of allowed upstreams for signature checks.</param>
         public WebPubSubTriggerAttribute(string hub, WebPubSubEventType eventType, string eventName, params string[] connections)
         {
-            Debugger.Launch();
             Hub = hub;
             EventName = eventName;
             EventType = eventType;
@@ -54,19 +52,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         public WebPubSubTriggerAttribute(WebPubSubEventType eventType, string eventName, params string[] connections)
             : this("", eventType, eventName, connections)
         {
-        }
-
-        /// <summary>
-        /// Attribute used to bind a parameter to an Azure Web PubSub, when an request is from Azure Web PubSub service.
-        /// </summary>
-        /// <param name="eventType">Target event name of the request.</param>
-        /// <param name="eventName">Target event type of the request.</param>
-        /// <param name="connections">Connection strings of allowed upstreams for signature checks.</param>
-        /// <param name="clientProtocol"></param>
-        public WebPubSubTriggerAttribute(WebPubSubEventType eventType, string eventName, WebPubSubTriggerAcceptedClientProtocol clientProtocol, params string[] connections)
-            : this("", eventType, eventName, connections)
-        {
-            ClientProtocols = clientProtocol;
         }
 
         /// <summary>
@@ -105,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <summary>
         /// Specifies which client protocol can trigger the Web PubSub trigger functions. By default, it accepts all client protocols.
         /// </summary>
-        public WebPubSubTriggerAcceptedClientProtocol ClientProtocols
+        public WebPubSubTriggerAcceptedClientProtocols ClientProtocols
         {
             get; set;
         }
