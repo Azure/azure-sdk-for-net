@@ -6,11 +6,11 @@
 
 ### Breaking Changes
 
-- Removed implicit cast from `string` to `ApiKeyCredential`.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+- Removed implicit cast from `string` to `ApiKeyCredential`.
 
 ## 1.1.0-beta.7 (2024-08-14)
 
