@@ -24,7 +24,7 @@ Install the Azure Document Intelligence client library for .NET with [NuGet][nug
 dotnet add package Azure.AI.DocumentIntelligence --prerelease
 ```
 
-> Note: This version of the client library defaults to the `2024-02-29-preview` version of the service.
+> Note: This version of the client library defaults to the `2024-07-31-preview` version of the service.
 
 ### Prerequisites
 

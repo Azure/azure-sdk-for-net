@@ -26,7 +26,7 @@ internal partial class AzureChatClient : ChatClient
         string deploymentName,
         Uri endpoint,
         AzureOpenAIClientOptions options)
-            : base(pipeline, model: deploymentName, endpoint, options)
+            : base(pipeline, model: deploymentName, endpoint, null)
     {
         options ??= new();
         _deploymentName = deploymentName;
