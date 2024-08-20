@@ -81,9 +81,8 @@ namespace Azure.Monitor.Query
             string authorizationScope = "";
             if (string.IsNullOrEmpty(options.Audience?.ToString()))
             {
-                options.Audience = endpoint.AbsoluteUri;
                 // Endpoint.AbsoluteUri includes an extra / so only adding one here
-                authorizationScope = $"{options.Audience}/.default";
+                authorizationScope = $"{endpoint.AbsoluteUri}/.default";
             }
             else if (endpoint.Host != new Uri(options.Audience.ToString()).Host)
             {
