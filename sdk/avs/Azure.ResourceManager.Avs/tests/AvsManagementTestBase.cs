@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Avs.Tests
         public const string PRIVATE_CLOUD_NAME = "avs-sdk-test";
         public const string CLUSTER1_NAME = "Cluster-1";
         public const string CLUSTER2_NAME = "Cluster-2";
+        public const string ISCSI_PATH_NAME = "iscsi-path";
         protected AvsManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
@@ -65,6 +66,13 @@ namespace Azure.ResourceManager.Avs.Tests
             AvsPrivateCloudClusterResource avsPrivateCloudCluster = Client.GetAvsPrivateCloudClusterResource(avsPrivateCloudClusterResourceId);
             avsPrivateCloudCluster = await avsPrivateCloudCluster.GetAsync();
             return avsPrivateCloudCluster;
+        }
+        protected async Task<IscsiPathResource> getIscsiPathResource() {
+            string subscriptionId = DefaultSubscription.Data.SubscriptionId;
+            ResourceIdentifier iscsiPathResourceId = IscsiPathResource.CreateResourceIdentifier(subscriptionId, RESOURCE_GROUP_NAME, PRIVATE_CLOUD_NAME);
+            IscsiPathResource iscsiPath = Client.GetIscsiPathResource(iscsiPathResourceId);
+            iscsiPath = await iscsiPath.GetAsync();
+            return iscsiPath;
         }
     }
 }
