@@ -26,7 +26,7 @@ namespace Microsoft.Azure.WebJobs.Samples
         #region Snippet:MqttConnectEventTriggerFunction
         [FunctionName("mqttConnect")]
         public static WebPubSubEventResponse Run(
-                [WebPubSubTrigger("hub", WebPubSubEventType.System, "connect", ClientProtocol = WebPubSubTriggerAcceptedClientProtocol.Mqtt)] MqttConnectEventRequest request,
+                [WebPubSubTrigger("hub", WebPubSubEventType.System, "connect", ClientProtocols = WebPubSubTriggerAcceptedClientProtocol.Mqtt)] MqttConnectEventRequest request,
                 ILogger log)
         {
             if (request.ConnectionContext.ConnectionId != "attacker")
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.WebJobs.Samples
         #region: Snippet:MqttDisconnectedEventTriggerFunction
         [FunctionName("mqttDisconnected")]
         public static void Run(
-        [WebPubSubTrigger("hub", WebPubSubEventType.System, "disconnected", ClientProtocol = WebPubSubTriggerAcceptedClientProtocol.Mqtt)] MqttDisconnectedEventRequest request,
+        [WebPubSubTrigger("hub", WebPubSubEventType.System, "disconnected", ClientProtocols = WebPubSubTriggerAcceptedClientProtocol.Mqtt)] MqttDisconnectedEventRequest request,
         ILogger log)
         {
         }

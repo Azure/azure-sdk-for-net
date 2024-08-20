@@ -68,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 throw new ArgumentException("Hub name should be configured in either attribute or appsettings.");
             }
-            var attributeName = Utilities.GetFunctionKey(hub, _attribute.EventType, _attribute.EventName, _attribute.ClientProtocol);
+            var attributeName = Utilities.GetFunctionKey(hub, _attribute.EventType, _attribute.EventName, _attribute.ClientProtocols);
             var listernerKey = attributeName;
 
             var validationOptions = _attribute.Connections != null ?
