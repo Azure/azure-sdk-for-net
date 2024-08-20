@@ -14,8 +14,6 @@
 - `ExcludeExtensions` property in `ComputeSecurityPostureReference` is replaced by `ExcludeExtensionNames` property which takes in a list of strings.
 - `IsVmAgentPlatformUpdatesEnabled` property in `WindowsConfiguration` class is now read-only.
 
-## 1.6.0-beta.1 (Not Released)
-
 ## 1.5.0 (2024-05-10)
 
 ### Features Added
