@@ -17,8 +17,7 @@ namespace Azure.Identity
 
         private readonly Uri _endpoint;
         private readonly string _identityHeaderValue;
-        private readonly string _clientId;
-        private readonly string _resourceId;
+        private ManagedIdentityId _managedIdentityId;
 
         public static ManagedIdentitySource TryCreate(ManagedIdentityClientOptions options)
         {
@@ -61,9 +60,8 @@ namespace Azure.Identity
         {
             _endpoint = endpoint;
             _identityHeaderValue = identityHeaderValue;
-            _clientId = options.ClientId;
-            _resourceId = options.ResourceIdentifier?.ToString();
-            if (!string.IsNullOrEmpty(options.ClientId) || null != options.ResourceIdentifier)
+            _managedIdentityId = options.ManagedIdentityId;
+            if (options.ManagedIdentityId._idType != ManagedIdentityIdType.SystemAssigned)
             {
                 AzureIdentityEventSource.Singleton.ServiceFabricManagedIdentityRuntimeConfigurationNotSupported();
             }
@@ -82,14 +80,18 @@ namespace Azure.Identity
             request.Uri.AppendQuery("api-version", ServiceFabricMsiApiVersion);
             request.Uri.AppendQuery("resource", resource);
 
-            if (!string.IsNullOrEmpty(_clientId))
+            string idQueryParam = _managedIdentityId?._idType switch
             {
-                request.Uri.AppendQuery(Constants.ManagedIdentityClientId, _clientId);
-            }
-            if (!string.IsNullOrEmpty(_resourceId))
+                ManagedIdentityIdType.ClientId => Constants.ManagedIdentityClientId,
+                ManagedIdentityIdType.ResourceId => Constants.ManagedIdentityResourceId,
+                _ => null
+            };
+
+            if (idQueryParam != null)
             {
-                request.Uri.AppendQuery(Constants.ManagedIdentityResourceId, _resourceId);
+                request.Uri.AppendQuery(idQueryParam, _managedIdentityId._userAssignedId);
             }
+
             return request;
         }
 

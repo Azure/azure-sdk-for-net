@@ -37,21 +37,21 @@ namespace Azure.Identity
         /// </summary>
         /// <param name="resourceIdentifier">The resource identifier of the user-assigned managed identity.</param>
         public static ManagedIdentityId FromUserAssignedResourceId(ResourceIdentifier resourceIdentifier) =>
-            new ManagedIdentityId(ManagedIdentityIdType.ClientId, resourceIdentifier.ToString());
+            new ManagedIdentityId(ManagedIdentityIdType.ResourceId, resourceIdentifier.ToString());
 
         /// <summary>
         /// Create an instance of <see cref="ManagedIdentityId"/> for a user assigned managed identity.
         /// </summary>
         /// <param name="objectId">The objectId of the user-assigned managed identity.</param>
         public static ManagedIdentityId FromUserAssignedObjectId(string objectId) =>
-            new ManagedIdentityId(ManagedIdentityIdType.ClientId, objectId);
+            new ManagedIdentityId(ManagedIdentityIdType.ObjectId, objectId);
+    }
 
-        internal enum ManagedIdentityIdType
-        {
-            SystemAssigned,
-            ClientId,
-            ResourceId,
-            ObjectId
-        }
+    internal enum ManagedIdentityIdType
+    {
+        SystemAssigned,
+        ClientId,
+        ResourceId,
+        ObjectId
     }
 }

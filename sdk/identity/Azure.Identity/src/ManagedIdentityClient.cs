@@ -28,38 +28,34 @@ namespace Azure.Identity
         }
 
         public ManagedIdentityClient(CredentialPipeline pipeline, string clientId = null)
-            : this(new ManagedIdentityClientOptions { Pipeline = pipeline, ClientId = clientId })
+            : this(new ManagedIdentityClientOptions { Pipeline = pipeline, ManagedIdentityId = string.IsNullOrEmpty(clientId) ? ManagedIdentityId.SystemAssigned : ManagedIdentityId.FromUserAssignedClientId(clientId) })
         {
         }
 
         public ManagedIdentityClient(CredentialPipeline pipeline, ResourceIdentifier resourceId)
-            : this(new ManagedIdentityClientOptions { Pipeline = pipeline, ResourceIdentifier = resourceId })
+            : this(new ManagedIdentityClientOptions { Pipeline = pipeline, ManagedIdentityId = ManagedIdentityId.FromUserAssignedResourceId(resourceId) })
         {
         }
 
         public ManagedIdentityClient(ManagedIdentityClientOptions options)
         {
-            if (options.ClientId != null && options.ResourceIdentifier != null)
-            {
-                throw new ArgumentException(
-                    $"{nameof(ManagedIdentityClientOptions)} cannot specify both {nameof(options.ResourceIdentifier)} and {nameof(options.ClientId)}.");
-            }
-
-            ClientId = string.IsNullOrEmpty(options.ClientId) ? null : options.ClientId;
-            ResourceIdentifier = string.IsNullOrEmpty(options.ResourceIdentifier) ? null : options.ResourceIdentifier;
+            ManagedIdentityId = options.ManagedIdentityId;
             Pipeline = options.Pipeline;
             _enableLegacyMI = options.EnableManagedIdentityLegacyBehavior;
             _isChainedCredential = options.Options?.IsChainedCredential ?? false;
             _msalManagedIdentityClient = new MsalManagedIdentityClient(options);
             _identitySource = new Lazy<ManagedIdentitySource>(() => SelectManagedIdentitySource(options, _enableLegacyMI, _msalManagedIdentityClient));
-            _msalConfidentialClient = new MsalConfidentialClient(Pipeline, "MANAGED-IDENTITY-RESOURCE-TENENT", ClientId ?? "SYSTEM-ASSIGNED-MANAGED-IDENTITY", AppTokenProviderImpl, options.Options);
+            _msalConfidentialClient = new MsalConfidentialClient(
+                Pipeline,
+                "MANAGED-IDENTITY-RESOURCE-TENENT",
+                options.ManagedIdentityId._idType != ManagedIdentityIdType.SystemAssigned ? options.ManagedIdentityId._userAssignedId : "SYSTEM-ASSIGNED-MANAGED-IDENTITY",
+                AppTokenProviderImpl,
+                options.Options);
         }
 
         internal CredentialPipeline Pipeline { get; }
 
-        internal protected string ClientId { get; }
-
-        internal ResourceIdentifier ResourceIdentifier { get; }
+        internal ManagedIdentityId ManagedIdentityId { get; }
 
         public async ValueTask<AccessToken> AuthenticateAsync(bool async, TokenRequestContext context, CancellationToken cancellationToken)
         {
@@ -79,7 +75,7 @@ namespace Azure.Identity
                 }
 
                 // ServiceFabric does not support specifying user-assigned managed identity by client ID or resource ID. The managed identity selected is based on the resource configuration.
-                if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ResourceIdentifier != null || ClientId != null))
+                if (availableSource == MSAL.ManagedIdentitySource.ServiceFabric && (ManagedIdentityId?._idType != ManagedIdentityIdType.SystemAssigned))
                 {
                     throw new AuthenticationFailedException(Constants.MiSeviceFabricNoUserAssignedIdentityMessage);
                 }
