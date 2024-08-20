@@ -86,7 +86,7 @@ namespace Azure.Monitor.Query
             }
             else if (endpoint.Host != new Uri(options.Audience.ToString()).Host)
             {
-                throw new InvalidOperationException("The endpoint URI and audience do not match. If setting the Audience to a value that is regionally specific, please use the LogsQueryClient(TokenCredential, LogsQueryClientOptions) constructor.");
+                throw new InvalidOperationException("The endpoint URI and audience do not match. If setting the Audience to a regionally specific value, please use the LogsQueryClient(TokenCredential, LogsQueryClientOptions) constructor.");
             }
             else
             {
