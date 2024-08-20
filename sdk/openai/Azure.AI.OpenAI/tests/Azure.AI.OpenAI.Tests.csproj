@@ -23,9 +23,13 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(ExternalOpenAILibrary)' != ''">
-    <Reference Include="Azure.Core.Slim" HintPath="$(ExternalAzureCoreLibrary)" Condition="'$(ExternalAzureCoreLibrary)' != ''" />
-    <Reference Include="OpenAI" HintPath="$(ExternalOpenAILibrary)" />
+  <ItemGroup>
+    <Reference Condition="'$(ExternalOpenAILibrary)' != ''"
+               Include="$([System.IO.Path]::GetFileName('$(ExternalOpenAILibrary)'))"
+               HintPath="$(ExternalOpenAILibrary)" />
+    <Reference Condition="'$(ExternalAzureCoreLibrary)' != ''"
+               Include="$([System.IO.Path]::GetFileName('$(ExternalAzureCoreLibrary)'))"
+               HintPath="$(ExternalAzureCoreLibrary)" />
   </ItemGroup>
 
   <ItemGroup>
