@@ -22,6 +22,8 @@ namespace Azure.Storage.Blobs
         private const string _operationName = nameof(BlobBaseClient) + "." + nameof(BlobBaseClient.DownloadTo);
         private const string _innerOperationName = nameof(BlobBaseClient) + "." + nameof(BlobBaseClient.DownloadStreaming);
 
+        private const int Crc64Len = Constants.StorageCrc64SizeInBytes;
+
         /// <summary>
         /// The client used to download the blob.
         /// </summary>
@@ -49,7 +51,7 @@ namespace Azure.Storage.Blobs
         private readonly StorageChecksumAlgorithm _validationAlgorithm;
         private readonly int _checksumSize;
         // TODO disabling master crc temporarily. segment CRCs still handled.
-        private bool UseMasterCrc => false; // _validationAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64;
+        private bool UseMasterCrc => _validationAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64;
         private StorageCrc64HashAlgorithm _masterCrcCalculator = null;
 
         /// <summary>
@@ -201,14 +203,13 @@ namespace Azure.Storage.Blobs
                 }
 
                 // Destination wrapped in master crc step if needed (must wait until after encryption wrap check)
-                Memory<byte> composedCrc = default;
+                byte[] composedCrcBuf = default;
                 if (UseMasterCrc)
                 {
                     _masterCrcCalculator = StorageCrc64HashAlgorithm.Create();
                     destination = ChecksumCalculatingStream.GetWriteStream(destination, _masterCrcCalculator.Append);
-                    disposables.Add(_arrayPool.RentAsMemoryDisposable(
-                        Constants.StorageCrc64SizeInBytes, out composedCrc));
-                    composedCrc.Span.Clear();
+                    disposables.Add(_arrayPool.RentDisposable(Crc64Len, out composedCrcBuf));
+                    composedCrcBuf.Clear();
                 }
 
                 // If the first segment was the entire blob, we'll copy that to
@@ -224,8 +225,8 @@ namespace Azure.Storage.Blobs
                 else
                 {
                     ContentRange recievedRange = ContentRange.Parse(initialResponse.Value.Details.ContentRange);
-                    initialLength = recievedRange.End.Value - recievedRange.Start.Value + 1;
-                    totalLength = recievedRange.Size.Value;
+                    initialLength = recievedRange.GetRangeLength();
+                    totalLength = recievedRange.TotalResourceLength.Value;
                 }
                 if (initialLength == totalLength)
                 {
@@ -252,15 +253,16 @@ namespace Azure.Storage.Blobs
                 }
                 else
                 {
-                    using (_arrayPool.RentAsMemoryDisposable(_checksumSize, out Memory<byte> partitionChecksum))
+                    using (_arrayPool.RentDisposable(_checksumSize, out byte[] partitionChecksum))
                     {
-                        await CopyToInternal(initialResponse, destination, partitionChecksum, async, cancellationToken).ConfigureAwait(false);
+                        await CopyToInternal(initialResponse, destination, new(partitionChecksum, 0, _checksumSize), async, cancellationToken).ConfigureAwait(false);
                         if (UseMasterCrc)
                         {
                             StorageCrc64Composer.Compose(
-                                (composedCrc.ToArray(), 0L),
-                                (partitionChecksum.ToArray(), initialResponse.Value.Details.ContentLength)
-                            ).CopyTo(composedCrc);
+                                (composedCrcBuf, 0L),
+                                (partitionChecksum, initialResponse.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
+                                    ?? initialResponse.Value.Details.ContentLength)
+                            ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
                         }
                     }
                 }
@@ -299,15 +301,16 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         Response<BlobDownloadStreamingResult> result = await responseValueTask.ConfigureAwait(false);
-                        using (_arrayPool.RentAsMemoryDisposable(_checksumSize, out Memory<byte> partitionChecksum))
+                        using (_arrayPool.RentDisposable(_checksumSize, out byte[] partitionChecksum))
                         {
-                            await CopyToInternal(result, destination, partitionChecksum, async, cancellationToken).ConfigureAwait(false);
+                            await CopyToInternal(result, destination, new(partitionChecksum, 0, _checksumSize), async, cancellationToken).ConfigureAwait(false);
                             if (UseMasterCrc)
                             {
                                 StorageCrc64Composer.Compose(
-                                    (composedCrc.ToArray(), 0L),
-                                    (partitionChecksum.ToArray(), result.Value.Details.ContentLength)
-                                ).CopyTo(composedCrc);
+                                    (composedCrcBuf, 0L),
+                                    (partitionChecksum, result.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
+                                    ?? result.Value.Details.ContentLength)
+                                ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
                             }
                         }
                     }
@@ -323,7 +326,7 @@ namespace Azure.Storage.Blobs
                 }
 #pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
 
-                await FinalizeDownloadInternal(destination, composedCrc, async, cancellationToken)
+                await FinalizeDownloadInternal(destination, composedCrcBuf?.AsMemory(0, Crc64Len) ?? default, async, cancellationToken)
                     .ConfigureAwait(false);
                 return initialResponse.GetRawResponse();
 
@@ -341,7 +344,7 @@ namespace Azure.Storage.Blobs
                     // CopyToAsync causes ConsumeQueuedTask to wait until the
                     // download is complete
 
-                    using (_arrayPool.RentAsMemoryDisposable(_checksumSize, out Memory<byte> partitionChecksum))
+                    using (_arrayPool.RentDisposable(_checksumSize, out byte[] partitionChecksum))
                     {
                         await CopyToInternal(
                             response,
@@ -350,13 +353,14 @@ namespace Azure.Storage.Blobs
                             async,
                             cancellationToken)
                             .ConfigureAwait(false);
-                            if (UseMasterCrc)
-                            {
-                                StorageCrc64Composer.Compose(
-                                    (composedCrc.ToArray(), 0L),
-                                    (partitionChecksum.ToArray(), response.Value.Details.ContentLength)
-                                ).CopyTo(composedCrc);
-                            }
+                        if (UseMasterCrc)
+                        {
+                            StorageCrc64Composer.Compose(
+                                (composedCrcBuf, 0L),
+                                (partitionChecksum, response.Value.Details.ContentRange.GetContentRangeLengthOrDefault()
+                                    ?? response.Value.Details.ContentLength)
+                            ).AsSpan(0, Crc64Len).CopyTo(composedCrcBuf);
+                        }
                     }
                 }
             }
@@ -392,7 +396,7 @@ namespace Azure.Storage.Blobs
 
         private async Task FinalizeDownloadInternal(
             Stream destination,
-            Memory<byte> composedCrc,
+            ReadOnlyMemory<byte> composedCrc,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -417,9 +421,8 @@ namespace Azure.Storage.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             // if structured message, this crc is validated in the decoding process. don't decode it here.
-            using IHasher hasher = response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader)
-                ? null
-                : ContentHasher.GetHasherFromAlgorithmId(_validationAlgorithm);
+            bool structuredMessage = response.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader);
+            using IHasher hasher = structuredMessage ? null : ContentHasher.GetHasherFromAlgorithmId(_validationAlgorithm);
             using Stream rawSource = response.Value.Content;
             using Stream source = hasher != null
                 ? ChecksumCalculatingStream.GetReadStream(rawSource, hasher.AppendHash)
@@ -431,16 +434,22 @@ namespace Azure.Storage.Blobs
                 cancellationToken)
                 .ConfigureAwait(false);
 
-            if (hasher != null)
+            // with structured message, the message integrity will already be validated,
+            // but we can still get the checksum out of the response object
+            if (structuredMessage)
+            {
+                response.Value.Details.ContentCrc?.CopyTo(checksumBuffer.Span);
+            }
+            else if (hasher != null)
             {
                 hasher.GetFinalHash(checksumBuffer.Span);
-                    (ReadOnlyMemory<byte> checksum, StorageChecksumAlgorithm _)
-                        = ContentHasher.GetResponseChecksumOrDefault(response.GetRawResponse());
-                    if (!checksumBuffer.Span.SequenceEqual(checksum.Span))
-                    {
-                        throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
-                    }
+                (ReadOnlyMemory<byte> checksum, StorageChecksumAlgorithm _)
+                    = ContentHasher.GetResponseChecksumOrDefault(response.GetRawResponse());
+                if (!checksumBuffer.Span.SequenceEqual(checksum.Span))
+                {
+                    throw Errors.HashMismatchOnStreamedDownload(response.Value.Details.ContentRange);
                 }
+            }
         }
 
         private IEnumerable<HttpRange> GetRanges(long initialLength, long totalLength)
