@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Dns.Models
                 provisioningState: provisioningState,
                 targetResource: targetResource,
                 trafficManagementProfile: new WritableSubResource(),
-                mxRecords:mxRecords,
+                mxRecords: mxRecords,
                 serializedAdditionalRawData: null);
         }
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Dns.Models
                 name: name,
                 resourceType: resourceType,
                 systemData: systemData,
-                etag:etag,
+                etag: etag,
                 metadata: metadata,
                 ttl: ttl,
                 fqdn: fqdn,
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Dns.Models
 
             return new DnsTxtRecordData(
                 id: id,
-                name:name,
+                name: name,
                 resourceType: resourceType,
                 systemData: systemData,
                 etag: etag,
@@ -357,6 +357,77 @@ namespace Azure.ResourceManager.Dns.Models
                 trafficManagementProfile: new WritableSubResource(),
                 txtRecords: txtRecords,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DnsRecordData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The etag of the record set. </param>
+        /// <param name="metadata"> The metadata attached to the record set. </param>
+        /// <param name="ttl"> The TTL (time-to-live) of the records in the record set. </param>
+        /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
+        /// <param name="provisioningState"> provisioning State of the record set. </param>
+        /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
+        /// <param name="trafficManagementProfile"> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </param>
+        /// <param name="aRecords"> The list of A records in the record set. </param>
+        /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
+        /// <param name="mxRecords"> The list of MX records in the record set. </param>
+        /// <param name="nsRecords"> The list of NS records in the record set. </param>
+        /// <param name="ptrRecords"> The list of PTR records in the record set. </param>
+        /// <param name="srvRecords"> The list of SRV records in the record set. </param>
+        /// <param name="txtRecords"> The list of TXT records in the record set. </param>
+        /// <param name="cname"> The canonical name for this CNAME record. </param>
+        /// <param name="soaRecordInfo"> The SOA record in the record set. </param>
+        /// <param name="caaRecords"> The list of CAA records in the record set. </param>
+        /// <param name="dsRecords"> The list of DS records in the record set. </param>
+        /// <param name="tlsaRecords"> The list of TLSA records in the record set. </param>
+        /// <param name="naptrRecords"> The list of NAPTR records in the record set. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        public static DnsRecordData DnsRecordData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, string provisioningState, WritableSubResource targetResource, WritableSubResource trafficManagementProfile, IList<DnsARecordInfo> aRecords, IList<DnsAaaaRecordInfo> aaaaRecords, IList<DnsMXRecordInfo> mxRecords, IList<DnsNSRecordInfo> nsRecords, IList<DnsPtrRecordInfo> ptrRecords, IList<DnsSrvRecordInfo> srvRecords, IList<DnsTxtRecordInfo> txtRecords, string cname, DnsSoaRecordInfo soaRecordInfo, IList<DnsCaaRecordInfo> caaRecords, IList<DnsDSRecordInfo> dsRecords, IList<DnsTlsaRecordInfo> tlsaRecords, IList<DnsNaptrRecordInfo> naptrRecords, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            metadata ??= new Dictionary<string, string>();
+            aRecords ??= new List<DnsARecordInfo>();
+            aaaaRecords ??= new List<DnsAaaaRecordInfo>();
+            mxRecords ??= new List<DnsMXRecordInfo>();
+            nsRecords ??= new List<DnsNSRecordInfo>();
+            ptrRecords ??= new List<DnsPtrRecordInfo>();
+            srvRecords ??= new List<DnsSrvRecordInfo>();
+            txtRecords ??= new List<DnsTxtRecordInfo>();
+            caaRecords ??= new List<DnsCaaRecordInfo>();
+            dsRecords ??= new List<DnsDSRecordInfo>();
+            tlsaRecords ??= new List<DnsTlsaRecordInfo>();
+            naptrRecords ??= new List<DnsNaptrRecordInfo>();
+            serializedAdditionalRawData ??= new Dictionary<string, BinaryData>();
+            DnsCnameRecordInfo cnameRecodrInfo = new DnsCnameRecordInfo() { Cname = cname };
+
+            return new DnsRecordData(
+                id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                etag: etag,
+                metadata: metadata,
+                ttl: ttl,
+                fqdn: fqdn,
+                provisioningState: provisioningState,
+                targetResource: targetResource,
+                trafficManagementProfile: trafficManagementProfile,
+                aRecords: aRecords,
+                aaaaRecords: aaaaRecords,
+                mxRecords: mxRecords,
+                nsRecords: nsRecords,
+                ptrRecords: ptrRecords,
+                srvRecords: srvRecords,
+                txtRecords: txtRecords,
+                cnameRecordInfo: cnameRecodrInfo,
+                soaRecordInfo: soaRecordInfo,
+                caaRecords: caaRecords,
+                dsRecords: dsRecords,
+                tlsaRecords: tlsaRecords,
+                naptrRecords: naptrRecords,
+                serializedAdditionalRawData: serializedAdditionalRawData);
         }
     }
 }

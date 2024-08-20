@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("snapshotName"u8);
                 writer.WriteStringValue(SnapshotName);
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupPolicyResourceId))
+            if (options.Format != "W" && Optional.IsDefined(BackupPolicyArmResourceId))
             {
                 writer.WritePropertyName("backupPolicyResourceId"u8);
-                writer.WriteStringValue(BackupPolicyResourceId);
+                writer.WriteStringValue(BackupPolicyArmResourceId);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetApp
             ResourceIdentifier volumeResourceId = default;
             bool? useExistingSnapshot = default;
             string snapshotName = default;
-            string backupPolicyResourceId = default;
+            ResourceIdentifier backupPolicyResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -261,7 +261,11 @@ namespace Azure.ResourceManager.NetApp
                         }
                         if (property0.NameEquals("backupPolicyResourceId"u8))
                         {
-                            backupPolicyResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backupPolicyResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

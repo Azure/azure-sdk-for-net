@@ -19,6 +19,11 @@
   "image": {
     "deployment": "dall-e-3"
   },
+  "rate_limited_chat": {
+    "endpoint": "https://Sanitized.openai.azure.com/",
+    "key": "Sanitized",
+    "deployment": "gpt-35-turbo-low-quota"
+  },
   "search": {
     "endpoint": "https://Sanitized.search.windows.net/",
     "key": "Sanitized",

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="switchDetails"> List of switch details for edge device. </param>
         /// <param name="hostNetwork"> HostNetwork config to deploy AzureStackHCI Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciNetworkProfile(IReadOnlyList<HciNicDetail> nicDetails, IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails, HciClusterHostNetwork hostNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciNetworkProfile(IReadOnlyList<HciNicDetail> nicDetails, IReadOnlyList<HciEdgeDeviceSwitchDetail> switchDetails, HciEdgeDeviceHostNetwork hostNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NicDetails = nicDetails;
             SwitchDetails = switchDetails;
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.Hci.Models
         public IReadOnlyList<HciEdgeDeviceSwitchDetail> SwitchDetails { get; }
         /// <summary> HostNetwork config to deploy AzureStackHCI Cluster. </summary>
         [WirePath("hostNetwork")]
-        public HciClusterHostNetwork HostNetwork { get; }
+        public HciEdgeDeviceHostNetwork HostNetwork { get; }
     }
 }

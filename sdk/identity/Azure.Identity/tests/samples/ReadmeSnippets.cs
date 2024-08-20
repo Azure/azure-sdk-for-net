@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Messaging.EventHubs.Producer;
 using Azure.Security.KeyVault.Secrets;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
@@ -19,19 +18,6 @@ namespace Azure.Identity.Samples
 
             // Create a secret client using the DefaultAzureCredential
             var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), new DefaultAzureCredential());
-
-            #endregion
-        }
-
-        [Test]
-        public void EnableInteractiveAuthentication()
-        {
-            #region Snippet:EnableInteractiveAuthentication
-
-            // the includeInteractiveCredentials constructor parameter can be used to enable interactive authentication
-            var credential = new DefaultAzureCredential(includeInteractiveCredentials: true);
-
-            var eventHubClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
 
             #endregion
         }
@@ -73,20 +59,6 @@ namespace Azure.Identity.Samples
             var blobClient = new BlobClient(
                 new Uri("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
                 credential);
-            #endregion
-        }
-
-        [Test]
-        public void CustomChainedTokenCredential()
-        {
-            #region Snippet:CustomChainedTokenCredential
-
-            // Authenticate using managed identity if it is available; otherwise use the Azure CLI to authenticate.
-
-            var credential = new ChainedTokenCredential(new ManagedIdentityCredential(), new AzureCliCredential());
-
-            var eventHubProducerClient = new EventHubProducerClient("myeventhub.eventhubs.windows.net", "myhubpath", credential);
-
             #endregion
         }
 

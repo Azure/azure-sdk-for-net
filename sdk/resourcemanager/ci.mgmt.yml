@@ -68,6 +68,7 @@ trigger:
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
     - sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
+    - sdk/devopsinfrastructure/Azure.ResourceManager.DevOpsInfrastructure
     - sdk/devspaces/Azure.ResourceManager.DevSpaces
     - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs
     - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
@@ -93,6 +94,7 @@ trigger:
     - sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
+    - sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
@@ -123,6 +125,7 @@ trigger:
     - sdk/migrationdiscoverysap/Azure.ResourceManager.MigrationDiscoverySap
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
+    - sdk/mongocluster/Azure.ResourceManager.MongoCluster
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
@@ -265,6 +268,7 @@ pr:
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
     - sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
+    - sdk/devopsinfrastructure/Azure.ResourceManager.DevOpsInfrastructure
     - sdk/devspaces/Azure.ResourceManager.DevSpaces
     - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs
     - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
@@ -290,6 +294,7 @@ pr:
     - sdk/hdinsightcontainers/Azure.ResourceManager.HDInsight.Containers
     - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
+    - sdk/healthdataaiservices/Azure.ResourceManager.HealthDataAIServices
     - sdk/hybridaks/Azure.ResourceManager.HybridContainerService
     - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
@@ -320,6 +325,7 @@ pr:
     - sdk/migrationdiscoverysap/Azure.ResourceManager.MigrationDiscoverySap
     - sdk/mixedreality/Azure.ResourceManager.MixedReality
     - sdk/mobilenetwork/Azure.ResourceManager.MobileNetwork
+    - sdk/mongocluster/Azure.ResourceManager.MongoCluster
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
