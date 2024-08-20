@@ -20,6 +20,7 @@
     <Compile Remove="Shared\ClientSideEncryptionTestExtensions.cs" />
     <Compile Remove="Shared\ObserveStructuredMessagePolicy.cs" />
     <Compile Remove="Shared\StorageTestBase.SasVersion.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\ObserveStructuredMessagePolicy.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\TransferValidationTestBase.cs" />
     <Compile Remove="AesGcmTests\*.cs" />
   </ItemGroup>

@@ -18,6 +18,7 @@
     <Compile Remove="$(AzureStorageSharedTestSources)\StorageTestBase.SasVersion.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\Sas\*.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\TransferValidationTestBase.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\ObserveStructuredMessagePolicy.cs" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
