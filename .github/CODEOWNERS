@@ -662,6 +662,9 @@
 # ServiceLabel: %Monitor - Exporter
 # ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
+# PRLabel: %Monitor - LiveMetrics
+/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar @xiang17
+
 # ServiceLabel: %Monitor - LiveMetrics
 # ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar @xiang17
 
