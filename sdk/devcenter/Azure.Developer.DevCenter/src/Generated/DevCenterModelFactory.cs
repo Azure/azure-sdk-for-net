@@ -28,117 +28,6 @@ namespace Azure.Developer.DevCenter.Models
             return new DevCenterProject(name, description, maxDevBoxesPerUser, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxPool"/>. </summary>
-        /// <param name="name"> Pool name. </param>
-        /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
-        /// <param name="osType"> The operating system type of Dev Boxes in this pool. </param>
-        /// <param name="hardwareProfile"> Hardware settings for the Dev Boxes created in this pool. </param>
-        /// <param name="hibernateSupport"> Indicates whether hibernate is enabled/disabled or unknown. </param>
-        /// <param name="storageProfile"> Storage settings for Dev Box created in this pool. </param>
-        /// <param name="imageReference"> Image settings for Dev Boxes create in this pool. </param>
-        /// <param name="localAdministratorStatus">
-        /// Indicates whether owners of Dev Boxes in this pool are local administrators on
-        /// the Dev Boxes.
-        /// </param>
-        /// <param name="stopOnDisconnect"> Stop on disconnect configuration settings for Dev Boxes created in this pool. </param>
-        /// <param name="healthStatus">
-        /// Overall health status of the Pool. Indicates whether or not the Pool is
-        /// available to create Dev Boxes.
-        /// </param>
-        /// <returns> A new <see cref="Models.DevBoxPool"/> instance for mocking. </returns>
-        public static DevBoxPool DevBoxPool(string name = null, AzureLocation location = default, DevBoxOSType? osType = null, DevBoxHardwareProfile hardwareProfile = null, HibernateSupport? hibernateSupport = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, LocalAdministratorStatus? localAdministratorStatus = null, StopOnDisconnectConfiguration stopOnDisconnect = null, PoolHealthStatus healthStatus = default)
-        {
-            return new DevBoxPool(
-                name,
-                location,
-                osType,
-                hardwareProfile,
-                hibernateSupport,
-                storageProfile,
-                imageReference,
-                localAdministratorStatus,
-                stopOnDisconnect,
-                healthStatus,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxHardwareProfile"/>. </summary>
-        /// <param name="skuName"> The name of the SKU. </param>
-        /// <param name="vcpUs"> The number of vCPUs available for the Dev Box. </param>
-        /// <param name="memoryGB"> The amount of memory available for the Dev Box. </param>
-        /// <returns> A new <see cref="Models.DevBoxHardwareProfile"/> instance for mocking. </returns>
-        public static DevBoxHardwareProfile DevBoxHardwareProfile(SkuName? skuName = null, int? vcpUs = null, int? memoryGB = null)
-        {
-            return new DevBoxHardwareProfile(skuName, vcpUs, memoryGB, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxStorageProfile"/>. </summary>
-        /// <param name="osDisk"> Settings for the operating system disk. </param>
-        /// <returns> A new <see cref="Models.DevBoxStorageProfile"/> instance for mocking. </returns>
-        public static DevBoxStorageProfile DevBoxStorageProfile(OSDisk osDisk = null)
-        {
-            return new DevBoxStorageProfile(osDisk, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OSDisk"/>. </summary>
-        /// <param name="diskSizeGB"> The size of the OS Disk in gigabytes. </param>
-        /// <returns> A new <see cref="Models.OSDisk"/> instance for mocking. </returns>
-        public static OSDisk OSDisk(int? diskSizeGB = null)
-        {
-            return new OSDisk(diskSizeGB, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxImageReference"/>. </summary>
-        /// <param name="name"> The name of the image used. </param>
-        /// <param name="version"> The version of the image. </param>
-        /// <param name="operatingSystem"> The operating system of the image. </param>
-        /// <param name="osBuildNumber"> The operating system build number of the image. </param>
-        /// <param name="publishedDate"> The datetime that the backing image version was published. </param>
-        /// <returns> A new <see cref="Models.DevBoxImageReference"/> instance for mocking. </returns>
-        public static DevBoxImageReference DevBoxImageReference(string name = null, string version = null, string operatingSystem = null, string osBuildNumber = null, DateTimeOffset? publishedDate = null)
-        {
-            return new DevBoxImageReference(
-                name,
-                version,
-                operatingSystem,
-                osBuildNumber,
-                publishedDate,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.StopOnDisconnectConfiguration"/>. </summary>
-        /// <param name="status">
-        /// Indicates whether the feature to stop the devbox on disconnect once the grace
-        /// period has lapsed is enabled.
-        /// </param>
-        /// <param name="gracePeriodMinutes">
-        /// The specified time in minutes to wait before stopping a Dev Box once disconnect
-        /// is detected.
-        /// </param>
-        /// <returns> A new <see cref="Models.StopOnDisconnectConfiguration"/> instance for mocking. </returns>
-        public static StopOnDisconnectConfiguration StopOnDisconnectConfiguration(StopOnDisconnectStatus status = default, int? gracePeriodMinutes = null)
-        {
-            return new StopOnDisconnectConfiguration(status, gracePeriodMinutes, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxSchedule"/>. </summary>
-        /// <param name="name"> Display name for the Schedule. </param>
-        /// <param name="scheduleType"> Supported type this scheduled task represents. </param>
-        /// <param name="scheduleFrequency"> The frequency of this scheduled task. </param>
-        /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
-        /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
-        /// <returns> A new <see cref="Models.DevBoxSchedule"/> instance for mocking. </returns>
-        public static DevBoxSchedule DevBoxSchedule(string name = null, ScheduleType scheduleType = default, ScheduleFrequency scheduleFrequency = default, string time = null, string timeZone = null)
-        {
-            return new DevBoxSchedule(
-                name,
-                scheduleType,
-                scheduleFrequency,
-                time,
-                timeZone,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.DevBox"/>. </summary>
         /// <param name="name"> Display name for the Dev Box. </param>
         /// <param name="projectName"> Name of the project this Dev Box belongs to. </param>
@@ -187,6 +76,117 @@ namespace Azure.Developer.DevCenter.Models
                 imageReference,
                 createdTime,
                 localAdministratorStatus,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevBoxHardwareProfile"/>. </summary>
+        /// <param name="skuName"> The name of the SKU. </param>
+        /// <param name="vcpUs"> The number of vCPUs available for the Dev Box. </param>
+        /// <param name="memoryGB"> The amount of memory available for the Dev Box. </param>
+        /// <returns> A new <see cref="Models.DevBoxHardwareProfile"/> instance for mocking. </returns>
+        public static DevBoxHardwareProfile DevBoxHardwareProfile(SkuName? skuName = null, int? vcpUs = null, int? memoryGB = null)
+        {
+            return new DevBoxHardwareProfile(skuName, vcpUs, memoryGB, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevBoxStorageProfile"/>. </summary>
+        /// <param name="osDisk"> Settings for the operating system disk. </param>
+        /// <returns> A new <see cref="Models.DevBoxStorageProfile"/> instance for mocking. </returns>
+        public static DevBoxStorageProfile DevBoxStorageProfile(OSDisk osDisk = null)
+        {
+            return new DevBoxStorageProfile(osDisk, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OSDisk"/>. </summary>
+        /// <param name="diskSizeGB"> The size of the OS Disk in gigabytes. </param>
+        /// <returns> A new <see cref="Models.OSDisk"/> instance for mocking. </returns>
+        public static OSDisk OSDisk(int? diskSizeGB = null)
+        {
+            return new OSDisk(diskSizeGB, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevBoxImageReference"/>. </summary>
+        /// <param name="name"> The name of the image used. </param>
+        /// <param name="version"> The version of the image. </param>
+        /// <param name="operatingSystem"> The operating system of the image. </param>
+        /// <param name="osBuildNumber"> The operating system build number of the image. </param>
+        /// <param name="publishedDate"> The datetime that the backing image version was published. </param>
+        /// <returns> A new <see cref="Models.DevBoxImageReference"/> instance for mocking. </returns>
+        public static DevBoxImageReference DevBoxImageReference(string name = null, string version = null, string operatingSystem = null, string osBuildNumber = null, DateTimeOffset? publishedDate = null)
+        {
+            return new DevBoxImageReference(
+                name,
+                version,
+                operatingSystem,
+                osBuildNumber,
+                publishedDate,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevBoxPool"/>. </summary>
+        /// <param name="name"> Pool name. </param>
+        /// <param name="location"> Azure region where Dev Boxes in the pool are located. </param>
+        /// <param name="osType"> The operating system type of Dev Boxes in this pool. </param>
+        /// <param name="hardwareProfile"> Hardware settings for the Dev Boxes created in this pool. </param>
+        /// <param name="hibernateSupport"> Indicates whether hibernate is enabled/disabled or unknown. </param>
+        /// <param name="storageProfile"> Storage settings for Dev Box created in this pool. </param>
+        /// <param name="imageReference"> Image settings for Dev Boxes create in this pool. </param>
+        /// <param name="localAdministratorStatus">
+        /// Indicates whether owners of Dev Boxes in this pool are local administrators on
+        /// the Dev Boxes.
+        /// </param>
+        /// <param name="stopOnDisconnect"> Stop on disconnect configuration settings for Dev Boxes created in this pool. </param>
+        /// <param name="healthStatus">
+        /// Overall health status of the Pool. Indicates whether or not the Pool is
+        /// available to create Dev Boxes.
+        /// </param>
+        /// <returns> A new <see cref="Models.DevBoxPool"/> instance for mocking. </returns>
+        public static DevBoxPool DevBoxPool(string name = null, AzureLocation location = default, DevBoxOSType? osType = null, DevBoxHardwareProfile hardwareProfile = null, HibernateSupport? hibernateSupport = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, LocalAdministratorStatus? localAdministratorStatus = null, StopOnDisconnectConfiguration stopOnDisconnect = null, PoolHealthStatus healthStatus = default)
+        {
+            return new DevBoxPool(
+                name,
+                location,
+                osType,
+                hardwareProfile,
+                hibernateSupport,
+                storageProfile,
+                imageReference,
+                localAdministratorStatus,
+                stopOnDisconnect,
+                healthStatus,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.StopOnDisconnectConfiguration"/>. </summary>
+        /// <param name="status">
+        /// Indicates whether the feature to stop the devbox on disconnect once the grace
+        /// period has lapsed is enabled.
+        /// </param>
+        /// <param name="gracePeriodMinutes">
+        /// The specified time in minutes to wait before stopping a Dev Box once disconnect
+        /// is detected.
+        /// </param>
+        /// <returns> A new <see cref="Models.StopOnDisconnectConfiguration"/> instance for mocking. </returns>
+        public static StopOnDisconnectConfiguration StopOnDisconnectConfiguration(StopOnDisconnectStatus status = default, int? gracePeriodMinutes = null)
+        {
+            return new StopOnDisconnectConfiguration(status, gracePeriodMinutes, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DevBoxSchedule"/>. </summary>
+        /// <param name="name"> Display name for the Schedule. </param>
+        /// <param name="scheduleType"> Supported type this scheduled task represents. </param>
+        /// <param name="scheduleFrequency"> The frequency of this scheduled task. </param>
+        /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
+        /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
+        /// <returns> A new <see cref="Models.DevBoxSchedule"/> instance for mocking. </returns>
+        public static DevBoxSchedule DevBoxSchedule(string name = null, ScheduleType scheduleType = default, ScheduleFrequency scheduleFrequency = default, string time = null, string timeZone = null)
+        {
+            return new DevBoxSchedule(
+                name,
+                scheduleType,
+                scheduleFrequency,
+                time,
+                timeZone,
                 serializedAdditionalRawData: null);
         }
 

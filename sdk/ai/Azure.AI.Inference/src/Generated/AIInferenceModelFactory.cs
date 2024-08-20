@@ -128,5 +128,42 @@ namespace Azure.AI.Inference
         {
             return new ModelInfo(modelName, modelType, modelProviderName, serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.StreamingChatCompletionsUpdate"/>. </summary>
+        /// <param name="id"> A unique identifier associated with this chat completions response. </param>
+        /// <param name="created">
+        /// The first timestamp associated with generation activity for this completions response,
+        /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
+        /// </param>
+        /// <param name="model"> The model used for the chat completion. </param>
+        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
+        /// <param name="choices">
+        /// An update to the collection of completion choices associated with this completions response.
+        /// Generally, `n` choices are generated per provided prompt with a default value of 1.
+        /// Token limits and other settings may limit the number of choices generated.
+        /// </param>
+        /// <returns> A new <see cref="Inference.StreamingChatCompletionsUpdate"/> instance for mocking. </returns>
+        public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id = null, DateTimeOffset created = default, string model = null, CompletionsUsage usage = null, IEnumerable<StreamingChatChoiceUpdate> choices = null)
+        {
+            choices ??= new List<StreamingChatChoiceUpdate>();
+
+            return new StreamingChatCompletionsUpdate(
+                id,
+                created,
+                model,
+                usage,
+                choices?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.StreamingChatChoiceUpdate"/>. </summary>
+        /// <param name="index"> The ordered index associated with this chat completions choice. </param>
+        /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
+        /// <param name="delta"> An update to the chat message for a given chat completions prompt. </param>
+        /// <returns> A new <see cref="Inference.StreamingChatChoiceUpdate"/> instance for mocking. </returns>
+        public static StreamingChatChoiceUpdate StreamingChatChoiceUpdate(int index = default, CompletionsFinishReason? finishReason = null, ChatResponseMessage delta = null)
+        {
+            return new StreamingChatChoiceUpdate(index, finishReason, delta, serializedAdditionalRawData: null);
+        }
     }
 }

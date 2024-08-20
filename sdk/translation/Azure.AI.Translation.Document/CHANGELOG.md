@@ -1,6 +1,5 @@
 # Release History
-
-## 2.0.0-beta.3 (Unreleased)
+## 2.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +8,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0 (2024-08-16)
+
+### Other Changes
+This is a GA release. No new features added.
 
 ## 2.0.0-beta.2 (2024-07-05)
 

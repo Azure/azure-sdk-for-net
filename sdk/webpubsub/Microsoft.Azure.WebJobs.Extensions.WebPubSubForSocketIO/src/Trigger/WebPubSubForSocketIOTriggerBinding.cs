@@ -63,12 +63,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                 {
                     if (triggerEvent.Request is not SocketIOMessageRequest eventReq)
                     {
-                        throw new ArgumentException();
+                        throw new InvalidDataException($"Expect incoming event to be {nameof(SocketIOMessageRequest)}, but it's {triggerEvent.Request.GetType()}");
                     }
 
                     if (eventReq.Parameters == null || eventReq.Parameters.Count != _attribute.ParameterNames.Length)
                     {
-                        throw new ArgumentException();
+                        throw new ArgumentException($"Parameter length of incoming data dismatch. Expected to be {_attribute.ParameterNames.Length}, but actually {eventReq.Parameters.Count}. Update the {nameof(SocketIOTriggerAttribute.ParameterNames)} to match the actual data");
                     }
 
                     // Add binding data for arguments
