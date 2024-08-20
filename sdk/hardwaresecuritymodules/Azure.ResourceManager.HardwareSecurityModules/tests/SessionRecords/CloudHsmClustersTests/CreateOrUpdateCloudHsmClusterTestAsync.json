@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867?api-version=2022-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f8915a40cba8858c75ede32daf067a56-785e8edc504571c0-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-8a0253911db303db2e86e27d5f2f8986-9b2e1e034d981087-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -15,50 +15,43 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "495",
+        "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:24:12 GMT",
+        "Date": "Tue, 20 Aug 2024 10:50:47 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "02337357-1380-4528-a178-8503bfec2944",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3747",
-        "x-ms-ratelimit-remaining-subscription-reads": "247",
-        "x-ms-request-id": "02337357-1380-4528-a178-8503bfec2944",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112412Z:02337357-1380-4528-a178-8503bfec2944",
-        "X-MSEdge-Ref": "Ref A: CE93BEA56C4946248358562CC34048D0 Ref B: AMS231020512021 Ref C: 2024-07-12T11:24:12Z"
+        "x-ms-correlation-request-id": "4b7d5acf-066b-4095-bc68-5108f5fc4893",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "4b7d5acf-066b-4095-bc68-5108f5fc4893",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105047Z:4b7d5acf-066b-4095-bc68-5108f5fc4893",
+        "X-MSEdge-Ref": "Ref A: 0843D01882B046A4A9471E9F11B00735 Ref B: LON601060102062 Ref C: 2024-08-20T10:50:47Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "57bbba8e-0656-4b61-973e-886add5718db",
+        "subscriptionId": "75e96d09-a291-40e1-a5e6-cda78233d867",
         "tenantId": "00000000-0000-0000-0000-000000000000",
-        "displayName": "Cloud HSM Test PPE Subscription 1",
+        "displayName": "susolank Projects",
         "state": "Enabled",
         "subscriptionPolicies": {
-          "locationPlacementId": "Public_2014-09-01",
-          "quotaId": "FreeTrial_2014-09-01",
-          "spendingLimit": "On"
-        },
-        "promotions": [
-          {
-            "category": "freetier",
-            "endDateTime": "2023-12-11T02:25:10.7355201Z"
-          }
-        ]
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db?api-version=2022-12-01",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867?api-version=2022-12-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-af5f468e2dfdc12ff73bb04203b39d9d-d9d1645f74074d0f-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-138eca2fb27d917f18427a801206e416-9b2cdd6ebf8dace0-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -66,52 +59,45 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "495",
+        "Content-Length": "397",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:24:12 GMT",
+        "Date": "Tue, 20 Aug 2024 10:50:49 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f0e33413-0bd8-49c6-b776-e58a082864c6",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3747",
-        "x-ms-ratelimit-remaining-subscription-reads": "247",
-        "x-ms-request-id": "f0e33413-0bd8-49c6-b776-e58a082864c6",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112412Z:f0e33413-0bd8-49c6-b776-e58a082864c6",
-        "X-MSEdge-Ref": "Ref A: 5100E9F1B70549A88B93187ECD141535 Ref B: AMS231020512021 Ref C: 2024-07-12T11:24:12Z"
+        "x-ms-correlation-request-id": "b13be96d-b081-49b9-9f12-b2af7fc51eb3",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "b13be96d-b081-49b9-9f12-b2af7fc51eb3",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105049Z:b13be96d-b081-49b9-9f12-b2af7fc51eb3",
+        "X-MSEdge-Ref": "Ref A: 1FE7C059DE6C49CDA6012F2D11B406E5 Ref B: LON601060102062 Ref C: 2024-08-20T10:50:49Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867",
         "authorizationSource": "RoleBased",
         "managedByTenants": [],
-        "subscriptionId": "57bbba8e-0656-4b61-973e-886add5718db",
+        "subscriptionId": "75e96d09-a291-40e1-a5e6-cda78233d867",
         "tenantId": "00000000-0000-0000-0000-000000000000",
-        "displayName": "Cloud HSM Test PPE Subscription 1",
+        "displayName": "susolank Projects",
         "state": "Enabled",
         "subscriptionPolicies": {
-          "locationPlacementId": "Public_2014-09-01",
-          "quotaId": "FreeTrial_2014-09-01",
-          "spendingLimit": "On"
-        },
-        "promotions": [
-          {
-            "category": "freetier",
-            "endDateTime": "2023-12-11T02:25:10.7355201Z"
-          }
-        ]
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourcegroups/chsmSdkTest12?api-version=2022-09-01",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourcegroups/chsmSdkTest3408?api-version=2022-09-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "21",
         "Content-Type": "application/json",
-        "traceparent": "00-2da24866d8192498a03957ef497ad541-a757298aa6c17bbd-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-49d04c3aaa502ff9503e87afef38606b-0f95ff64d5393d70-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -121,24 +107,23 @@
       "StatusCode": 201,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "223",
+        "Content-Length": "227",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:24:13 GMT",
+        "Date": "Tue, 20 Aug 2024 10:50:50 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "fdceb667-c3c3-4202-b67c-b50cdc6273df",
-        "x-ms-ratelimit-remaining-subscription-global-writes": "2999",
-        "x-ms-ratelimit-remaining-subscription-writes": "199",
-        "x-ms-request-id": "fdceb667-c3c3-4202-b67c-b50cdc6273df",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112413Z:fdceb667-c3c3-4202-b67c-b50cdc6273df",
-        "X-MSEdge-Ref": "Ref A: 8A5778C277974564AACDE292B4738588 Ref B: AMS231020512021 Ref C: 2024-07-12T11:24:12Z"
+        "x-ms-correlation-request-id": "dbb2e976-8d60-4aec-9f88-9b91b5273127",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "dbb2e976-8d60-4aec-9f88-9b91b5273127",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105051Z:dbb2e976-8d60-4aec-9f88-9b91b5273127",
+        "X-MSEdge-Ref": "Ref A: 1D94FFBBCCAB401A908ED021A030F786 Ref B: LON601060102062 Ref C: 2024-08-20T10:50:49Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12",
-        "name": "chsmSdkTest12",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408",
+        "name": "chsmSdkTest3408",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
         "properties": {
@@ -147,15 +132,15 @@
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "154",
+        "Content-Length": "144",
         "Content-Type": "application/json",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-0d604b58733a3efc-00",
-        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20240712.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-4f8c790323190ec5-00",
+        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20240820.1 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -171,32 +156,30 @@
           "Dept": "SDK Testing",
           "Env": "df"
         },
-        "location": "australiacentral"
+        "location": "ukwest"
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "818",
+        "Content-Length": "796",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:24:15 GMT",
+        "Date": "Tue, 20 Aug 2024 10:50:53 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1acb850d-5545-4fa4-b3d8-b40e2956a809",
-        "x-ms-operation-identifier": "appId=9648694c-13b7-43c0-b58e-1f20f6f97496,tenantId=69d5ff98-b5b1-4d5a-85ef-ea76382271e4,objectId=dfa7a944-54c7-4692-9cad-0944ede9761e/westeurope/9d5475d3-66a2-40de-adcf-af24e96362d9",
-        "x-ms-ratelimit-remaining-subscription-global-writes": "2998",
-        "x-ms-ratelimit-remaining-subscription-writes": "198",
-        "x-ms-request-id": "1acb850d-5545-4fa4-b3d8-b40e2956a809",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112415Z:1acb850d-5545-4fa4-b3d8-b40e2956a809",
-        "X-MSEdge-Ref": "Ref A: B7EC843563474D27AD0774D35F1FBF6D Ref B: AMS231020512021 Ref C: 2024-07-12T11:24:13Z"
+        "x-ms-correlation-request-id": "e41b8637-6356-4ced-8610-38624991b1fe",
+        "x-ms-ratelimit-remaining-subscription-writes": "1199",
+        "x-ms-request-id": "e41b8637-6356-4ced-8610-38624991b1fe",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105054Z:e41b8637-6356-4ced-8610-38624991b1fe",
+        "X-MSEdge-Ref": "Ref A: 24A4A9867E0E4CFBB3D58EBD7A7AC4C4 Ref B: LON601060102062 Ref C: 2024-08-20T10:50:51Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
@@ -217,21 +200,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-20cff527a985f977-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-d41506d4fd8bd5f1-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -239,26 +222,25 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "818",
+        "Content-Length": "796",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:24:16 GMT",
+        "Date": "Tue, 20 Aug 2024 10:50:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "86cced33-5891-4744-8192-730022bb3fdc",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3747",
-        "x-ms-ratelimit-remaining-subscription-reads": "247",
-        "x-ms-request-id": "86cced33-5891-4744-8192-730022bb3fdc",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112416Z:86cced33-5891-4744-8192-730022bb3fdc",
-        "X-MSEdge-Ref": "Ref A: A657CB6D8AD84D6FB2729E8D2145AAFA Ref B: AMS231020512021 Ref C: 2024-07-12T11:24:15Z"
+        "x-ms-correlation-request-id": "dfcac49d-68e9-4cb1-8514-48fcd9bee9fa",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "dfcac49d-68e9-4cb1-8514-48fcd9bee9fa",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105054Z:dfcac49d-68e9-4cb1-8514-48fcd9bee9fa",
+        "X-MSEdge-Ref": "Ref A: 7F16B6A937DB4C92B8E767704C578A89 Ref B: LON601060102062 Ref C: 2024-08-20T10:50:54Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
@@ -279,21 +261,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-74efe2e666a68117-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-a71b84f39644b23c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -301,95 +283,32 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "818",
+        "Content-Length": "811",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:24:17 GMT",
+        "Date": "Tue, 20 Aug 2024 10:50:55 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "02331169-1977-4f11-9875-44cf3915051a",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3747",
-        "x-ms-ratelimit-remaining-subscription-reads": "247",
-        "x-ms-request-id": "02331169-1977-4f11-9875-44cf3915051a",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112417Z:02331169-1977-4f11-9875-44cf3915051a",
-        "X-MSEdge-Ref": "Ref A: 3623ECC9F6244D9DADF86414ED5F91AC Ref B: AMS231020512021 Ref C: 2024-07-12T11:24:17Z"
+        "x-ms-correlation-request-id": "9924be29-8b02-4a13-89be-0458423336f1",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "9924be29-8b02-4a13-89be-0458423336f1",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105055Z:9924be29-8b02-4a13-89be-0458423336f1",
+        "X-MSEdge-Ref": "Ref A: 24F5648448014D8E8B963F8921E66967 Ref B: LON601060102062 Ref C: 2024-08-20T10:50:55Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": null,
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "fipsApprovedMode": false,
-          "activationState": "NotDefined",
-          "hsms": [],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
-          "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-b91324dda3eb8509-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "Sanitized",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "835",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:24:18 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "6f7c01a2-e34f-4e00-b5a5-3746f43956a1",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3748",
-        "x-ms-ratelimit-remaining-subscription-reads": "248",
-        "x-ms-request-id": "6f7c01a2-e34f-4e00-b5a5-3746f43956a1",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112418Z:6f7c01a2-e34f-4e00-b5a5-3746f43956a1",
-        "X-MSEdge-Ref": "Ref A: B64C87D7413345959622E1A13FCAC416 Ref B: AMS231020512021 Ref C: 2024-07-12T11:24:18Z"
-      },
-      "ResponseBody": {
-        "name": "sdkT8298",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "Unknown",
@@ -403,21 +322,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-f55b68a7731bfead-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-dfaed5459c6e336c-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -425,33 +344,32 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "835",
+        "Content-Length": "811",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:24:20 GMT",
+        "Date": "Tue, 20 Aug 2024 10:50:56 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0c2fa52f-f91b-4a0d-a5b3-70f632a6b5c7",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3747",
-        "x-ms-ratelimit-remaining-subscription-reads": "247",
-        "x-ms-request-id": "0c2fa52f-f91b-4a0d-a5b3-70f632a6b5c7",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112420Z:0c2fa52f-f91b-4a0d-a5b3-70f632a6b5c7",
-        "X-MSEdge-Ref": "Ref A: 0A655444A78E4B3082FB3E9A7A5AA31E Ref B: AMS231020512021 Ref C: 2024-07-12T11:24:20Z"
+        "x-ms-correlation-request-id": "72d41db1-d68c-4550-a610-9cdcff1c368b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "72d41db1-d68c-4550-a610-9cdcff1c368b",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105056Z:72d41db1-d68c-4550-a610-9cdcff1c368b",
+        "X-MSEdge-Ref": "Ref A: 14BC97C677DE4BE9A7193E167FA32E76 Ref B: LON601060102062 Ref C: 2024-08-20T10:50:56Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "Unknown",
@@ -465,21 +383,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-44278d821ec17f90-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-b073addec25d40e3-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -487,33 +405,32 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "835",
+        "Content-Length": "811",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:24:22 GMT",
+        "Date": "Tue, 20 Aug 2024 10:50:57 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "3d4be6d9-ddb2-4a02-8b3d-df9c621bcc80",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3746",
-        "x-ms-ratelimit-remaining-subscription-reads": "246",
-        "x-ms-request-id": "3d4be6d9-ddb2-4a02-8b3d-df9c621bcc80",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112422Z:3d4be6d9-ddb2-4a02-8b3d-df9c621bcc80",
-        "X-MSEdge-Ref": "Ref A: DDD7A4E3A66E4644B5B3BFCBF6298711 Ref B: AMS231020512021 Ref C: 2024-07-12T11:24:22Z"
+        "x-ms-correlation-request-id": "fbeca5e5-1fb0-456e-aafc-85f21b65bd50",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "fbeca5e5-1fb0-456e-aafc-85f21b65bd50",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105058Z:fbeca5e5-1fb0-456e-aafc-85f21b65bd50",
+        "X-MSEdge-Ref": "Ref A: 6DD723933C4648F19C46F4BF479A54E3 Ref B: LON601060102062 Ref C: 2024-08-20T10:50:57Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "Unknown",
@@ -527,21 +444,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-efd0be7b8ccb1247-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-317744f4a47c46e6-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -549,33 +466,32 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "835",
+        "Content-Length": "811",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:24:26 GMT",
+        "Date": "Tue, 20 Aug 2024 10:51:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "963a2d7c-38c7-4589-80ee-d05328702ca4",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "963a2d7c-38c7-4589-80ee-d05328702ca4",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112427Z:963a2d7c-38c7-4589-80ee-d05328702ca4",
-        "X-MSEdge-Ref": "Ref A: C6B7D05714804429887B57232EEBDF02 Ref B: AMS231020512021 Ref C: 2024-07-12T11:24:26Z"
+        "x-ms-correlation-request-id": "5dd8859f-7221-488c-9db1-4e90f7592135",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "5dd8859f-7221-488c-9db1-4e90f7592135",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105100Z:5dd8859f-7221-488c-9db1-4e90f7592135",
+        "X-MSEdge-Ref": "Ref A: EF9A5232E2E4464EA042C8743530BA1B Ref B: LON601060102062 Ref C: 2024-08-20T10:51:00Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "Unknown",
@@ -589,21 +505,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-dc7be822604f96b0-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-2a8167364014ee6a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -611,33 +527,32 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "835",
+        "Content-Length": "811",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:24:35 GMT",
+        "Date": "Tue, 20 Aug 2024 10:51:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1a4e0cc1-9e2f-4269-8397-58d04d1280de",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "1a4e0cc1-9e2f-4269-8397-58d04d1280de",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112435Z:1a4e0cc1-9e2f-4269-8397-58d04d1280de",
-        "X-MSEdge-Ref": "Ref A: 7248D043C75543DFA2E6F56CD191D41D Ref B: AMS231020512021 Ref C: 2024-07-12T11:24:35Z"
+        "x-ms-correlation-request-id": "172536fa-a799-449f-8566-c748be76616c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "172536fa-a799-449f-8566-c748be76616c",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105104Z:172536fa-a799-449f-8566-c748be76616c",
+        "X-MSEdge-Ref": "Ref A: F284E104385B465F91C915F866B5A059 Ref B: LON601060102062 Ref C: 2024-08-20T10:51:04Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "Unknown",
@@ -651,21 +566,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-b2b07688a7e646dc-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-9838fabb854ade21-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -673,33 +588,32 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "835",
+        "Content-Length": "811",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:24:51 GMT",
+        "Date": "Tue, 20 Aug 2024 10:51:12 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9cb3ccd0-be36-4a7f-b732-3b65900d0151",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "9cb3ccd0-be36-4a7f-b732-3b65900d0151",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112451Z:9cb3ccd0-be36-4a7f-b732-3b65900d0151",
-        "X-MSEdge-Ref": "Ref A: FF898FC438514BC8A752A17A70E79491 Ref B: AMS231020512021 Ref C: 2024-07-12T11:24:51Z"
+        "x-ms-correlation-request-id": "319bbaaa-8187-4b9a-b7aa-63b3b42ee9ca",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "319bbaaa-8187-4b9a-b7aa-63b3b42ee9ca",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105112Z:319bbaaa-8187-4b9a-b7aa-63b3b42ee9ca",
+        "X-MSEdge-Ref": "Ref A: 698317350E374C15B36892C02B6F0AF7 Ref B: LON601060102062 Ref C: 2024-08-20T10:51:12Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "Unknown",
@@ -713,21 +627,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-e1cf9da584ffaca1-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-5005a18eac6f7fbd-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -735,33 +649,32 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "835",
+        "Content-Length": "811",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:25:24 GMT",
+        "Date": "Tue, 20 Aug 2024 10:51:28 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "cad3a1d6-529c-4de4-9ab7-150bc3a7e520",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "cad3a1d6-529c-4de4-9ab7-150bc3a7e520",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112524Z:cad3a1d6-529c-4de4-9ab7-150bc3a7e520",
-        "X-MSEdge-Ref": "Ref A: 752EC601C2DA43719181222E8A81F210 Ref B: AMS231020512021 Ref C: 2024-07-12T11:25:23Z"
+        "x-ms-correlation-request-id": "dbb03e75-f27d-4fb6-bfc2-e17157bda165",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "dbb03e75-f27d-4fb6-bfc2-e17157bda165",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105128Z:dbb03e75-f27d-4fb6-bfc2-e17157bda165",
+        "X-MSEdge-Ref": "Ref A: A14F7130781D4E6B8716EAE509E3A5DC Ref B: LON601060102062 Ref C: 2024-08-20T10:51:28Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "Unknown",
@@ -775,21 +688,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-0a31b2e8b7dacd92-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-2588f993ce1d3807-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -797,33 +710,32 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "835",
+        "Content-Length": "811",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:25:56 GMT",
+        "Date": "Tue, 20 Aug 2024 10:52:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "1523ef00-dccb-45d1-8a15-cebc8ec1224f",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "1523ef00-dccb-45d1-8a15-cebc8ec1224f",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112556Z:1523ef00-dccb-45d1-8a15-cebc8ec1224f",
-        "X-MSEdge-Ref": "Ref A: C006830555D645D5A961A06986107912 Ref B: AMS231020512021 Ref C: 2024-07-12T11:25:56Z"
+        "x-ms-correlation-request-id": "bce51a45-1057-4beb-a754-8227b141e5a0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "bce51a45-1057-4beb-a754-8227b141e5a0",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105201Z:bce51a45-1057-4beb-a754-8227b141e5a0",
+        "X-MSEdge-Ref": "Ref A: 21F318FD9B4A47C2BB9D8C6022395191 Ref B: LON601060102062 Ref C: 2024-08-20T10:52:00Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "Unknown",
@@ -837,21 +749,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-49df2846f71a2b70-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-b11cfffac8acf1b7-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -859,47 +771,290 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1086",
+        "Content-Length": "811",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:26:28 GMT",
+        "Date": "Tue, 20 Aug 2024 10:52:33 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "3be7e92a-bae1-41e8-a11f-9e9c6b3dedd6",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "3be7e92a-bae1-41e8-a11f-9e9c6b3dedd6",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112629Z:3be7e92a-bae1-41e8-a11f-9e9c6b3dedd6",
-        "X-MSEdge-Ref": "Ref A: 807C8B27839B4A2C9F62DC5B45AC060C Ref B: AMS231020512021 Ref C: 2024-07-12T11:26:28Z"
+        "x-ms-correlation-request-id": "8bdd97ff-5216-48a6-9d57-414a92aeb434",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "8bdd97ff-5216-48a6-9d57-414a92aeb434",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105233Z:8bdd97ff-5216-48a6-9d57-414a92aeb434",
+        "X-MSEdge-Ref": "Ref A: 31B6F66A26EA4826B9AE84180C57372D Ref B: LON601060102062 Ref C: 2024-08-20T10:52:33Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
+          "autoGeneratedDomainNameLabelScope": "TenantReuse",
+          "fipsApprovedMode": false,
+          "activationState": "Unknown",
+          "hsms": [],
+          "privateEndpointConnections": [],
+          "publicNetworkAccess": "Disabled"
+        },
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-4686dcb01b7c0e25-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "811",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Aug 2024 10:53:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e9b46082-5b5f-447a-9c14-fa4540323eae",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "e9b46082-5b5f-447a-9c14-fa4540323eae",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105305Z:e9b46082-5b5f-447a-9c14-fa4540323eae",
+        "X-MSEdge-Ref": "Ref A: AF6F81EAA9D14B2C8596F5F24EE9063D Ref B: LON601060102062 Ref C: 2024-08-20T10:53:05Z"
+      },
+      "ResponseBody": {
+        "name": "sdkT9083",
+        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
+        "sku": {
+          "family": "B",
+          "name": "Standard_B1"
+        },
+        "properties": {
+          "provisioningState": "Provisioning",
+          "statusMessage": "Creating HSM cluster",
+          "autoGeneratedDomainNameLabelScope": "TenantReuse",
+          "fipsApprovedMode": false,
+          "activationState": "Unknown",
+          "hsms": [],
+          "privateEndpointConnections": [],
+          "publicNetworkAccess": "Disabled"
+        },
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-6ac404acaa9b065b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "811",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Aug 2024 10:53:37 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "a21700e6-f8ff-4afc-b6c0-3a06fdb59796",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "a21700e6-f8ff-4afc-b6c0-3a06fdb59796",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105337Z:a21700e6-f8ff-4afc-b6c0-3a06fdb59796",
+        "X-MSEdge-Ref": "Ref A: B8BCF041F0B24334A28E325F02A16C0C Ref B: LON601060102062 Ref C: 2024-08-20T10:53:37Z"
+      },
+      "ResponseBody": {
+        "name": "sdkT9083",
+        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
+        "sku": {
+          "family": "B",
+          "name": "Standard_B1"
+        },
+        "properties": {
+          "provisioningState": "Provisioning",
+          "statusMessage": "Creating HSM cluster",
+          "autoGeneratedDomainNameLabelScope": "TenantReuse",
+          "fipsApprovedMode": false,
+          "activationState": "Unknown",
+          "hsms": [],
+          "privateEndpointConnections": [],
+          "publicNetworkAccess": "Disabled"
+        },
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-17b72f060742cba5-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "811",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Aug 2024 10:54:10 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "e1cb84b7-753a-45e9-b9ff-330d0042aca7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "e1cb84b7-753a-45e9-b9ff-330d0042aca7",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105410Z:e1cb84b7-753a-45e9-b9ff-330d0042aca7",
+        "X-MSEdge-Ref": "Ref A: B82B9A7E0B2D45F18565883EDF82A8A8 Ref B: LON601060102062 Ref C: 2024-08-20T10:54:10Z"
+      },
+      "ResponseBody": {
+        "name": "sdkT9083",
+        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
+        "sku": {
+          "family": "B",
+          "name": "Standard_B1"
+        },
+        "properties": {
+          "provisioningState": "Provisioning",
+          "statusMessage": "Creating HSM cluster",
+          "autoGeneratedDomainNameLabelScope": "TenantReuse",
+          "fipsApprovedMode": false,
+          "activationState": "Unknown",
+          "hsms": [],
+          "privateEndpointConnections": [],
+          "publicNetworkAccess": "Disabled"
+        },
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-9ad503593dffe533-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1050",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Aug 2024 10:54:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "17659eaf-9c7c-405f-a6e4-e1d7e486531c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "17659eaf-9c7c-405f-a6e4-e1d7e486531c",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105442Z:17659eaf-9c7c-405f-a6e4-e1d7e486531c",
+        "X-MSEdge-Ref": "Ref A: 6A1F39F8EAF649829AD6D95440B2AD15 Ref B: LON601060102062 Ref C: 2024-08-20T10:54:42Z"
+      },
+      "ResponseBody": {
+        "name": "sdkT9083",
+        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
+        "sku": {
+          "family": "B",
+          "name": "Standard_B1"
+        },
+        "properties": {
+          "provisioningState": "Provisioning",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "Unknown",
           "hsms": [
             {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             }
           ],
@@ -912,21 +1067,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-f6ea70e91a52a17b-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-7f7ed9f526f79473-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -934,122 +1089,46 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1119",
+        "Content-Length": "1083",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:27:01 GMT",
+        "Date": "Tue, 20 Aug 2024 10:55:14 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "ff35e1e5-619f-4f9d-bc73-0478f0c4b013",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "ff35e1e5-619f-4f9d-bc73-0478f0c4b013",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112701Z:ff35e1e5-619f-4f9d-bc73-0478f0c4b013",
-        "X-MSEdge-Ref": "Ref A: 6184698485334FD59F2AFB7C349E324B Ref B: AMS231020512021 Ref C: 2024-07-12T11:27:01Z"
+        "x-ms-correlation-request-id": "f882f3ba-ae08-4d89-b0ba-cb8f6db9cf07",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "f882f3ba-ae08-4d89-b0ba-cb8f6db9cf07",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105514Z:f882f3ba-ae08-4d89-b0ba-cb8f6db9cf07",
+        "X-MSEdge-Ref": "Ref A: 83FFCE37207F43A0AFD7CE615660301C Ref B: LON601060102062 Ref C: 2024-08-20T10:55:14Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "Unknown",
           "hsms": [
             {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "InitialProvisioning"
             },
             {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "InitialProvisioning"
             },
             {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
-              "state": "InitialProvisioning"
-            }
-          ],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
-          "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-16f181bebfdb9414-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "Sanitized",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1113",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:27:33 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "57a0d11f-49e9-43e7-afd5-805acd704411",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "57a0d11f-49e9-43e7-afd5-805acd704411",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112733Z:57a0d11f-49e9-43e7-afd5-805acd704411",
-        "X-MSEdge-Ref": "Ref A: 69FA497FC5B24C10BA46044B6095508E Ref B: AMS231020512021 Ref C: 2024-07-12T11:27:33Z"
-      },
-      "ResponseBody": {
-        "name": "sdkT8298",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "fipsApprovedMode": false,
-          "activationState": "NotActivated",
-          "hsms": [
-            {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
-              "state": "InitialProvisioning"
-            },
-            {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "InitialProvisioning"
             }
           ],
@@ -1062,21 +1141,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-64a90bcaad3eeb01-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-20d47c0508f92a29-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1084,47 +1163,46 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1102",
+        "Content-Length": "1083",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:28:06 GMT",
+        "Date": "Tue, 20 Aug 2024 10:55:46 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f2b6b35c-3613-44f2-a4a7-55769d3e47fa",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "f2b6b35c-3613-44f2-a4a7-55769d3e47fa",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112806Z:f2b6b35c-3613-44f2-a4a7-55769d3e47fa",
-        "X-MSEdge-Ref": "Ref A: 93B504C9FFF2466B9444690605DBCD01 Ref B: AMS231020512021 Ref C: 2024-07-12T11:28:05Z"
+        "x-ms-correlation-request-id": "594e14e7-6d95-43df-8ba5-b461bb9991b2",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "594e14e7-6d95-43df-8ba5-b461bb9991b2",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105547Z:594e14e7-6d95-43df-8ba5-b461bb9991b2",
+        "X-MSEdge-Ref": "Ref A: B53E91DF467B484C9844F38D7FABC803 Ref B: LON601060102062 Ref C: 2024-08-20T10:55:46Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
-          "activationState": "NotActivated",
+          "activationState": "Unknown",
           "hsms": [
             {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
-              "state": "Starting"
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
+              "state": "InitialProvisioning"
             },
             {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
-              "state": "Starting"
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
+              "state": "InitialProvisioning"
             },
             {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "InitialProvisioning"
             }
           ],
@@ -1137,21 +1215,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-4e7e1e94c0fe406a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-59754dc613cb6f95-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1159,47 +1237,120 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1091",
+        "Content-Length": "1077",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:28:39 GMT",
+        "Date": "Tue, 20 Aug 2024 10:56:18 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "3861d5f9-15d1-4a06-ad35-a042433fcf4f",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "3861d5f9-15d1-4a06-ad35-a042433fcf4f",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112839Z:3861d5f9-15d1-4a06-ad35-a042433fcf4f",
-        "X-MSEdge-Ref": "Ref A: 60D3FFAAF86744D8AE2C88AABAA309A1 Ref B: AMS231020512021 Ref C: 2024-07-12T11:28:38Z"
+        "x-ms-correlation-request-id": "ba0e487e-2830-4be1-91e0-21b68b675825",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "ba0e487e-2830-4be1-91e0-21b68b675825",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105619Z:ba0e487e-2830-4be1-91e0-21b68b675825",
+        "X-MSEdge-Ref": "Ref A: 7B14C8F4135E4749A9CE58A30146E73A Ref B: LON601060102062 Ref C: 2024-08-20T10:56:19Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "NotActivated",
           "hsms": [
             {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
+              "state": "InitialProvisioning"
+            },
+            {
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
+              "state": "InitialProvisioning"
+            }
+          ],
+          "privateEndpointConnections": [],
+          "publicNetworkAccess": "Disabled"
+        },
+        "tags": {
+          "Dept": "SDK Testing",
+          "Env": "df"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-c7cdaec601478f2f-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1055",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Tue, 20 Aug 2024 10:56:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "2e77a8ea-7fe9-49c3-a071-8841df6a09c9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "2e77a8ea-7fe9-49c3-a071-8841df6a09c9",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105651Z:2e77a8ea-7fe9-49c3-a071-8841df6a09c9",
+        "X-MSEdge-Ref": "Ref A: 82CE9044596E4319B002764A87820F44 Ref B: LON601060102062 Ref C: 2024-08-20T10:56:51Z"
+      },
+      "ResponseBody": {
+        "name": "sdkT9083",
+        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
+        "sku": {
+          "family": "B",
+          "name": "Standard_B1"
+        },
+        "properties": {
+          "provisioningState": "Provisioning",
+          "statusMessage": "Creating HSM cluster",
+          "autoGeneratedDomainNameLabelScope": "TenantReuse",
+          "fipsApprovedMode": false,
+          "activationState": "NotActivated",
+          "hsms": [
+            {
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
+              "state": "Starting"
+            },
+            {
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             }
           ],
@@ -1212,21 +1363,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-00b9cb81f464d34a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-f21c0a1e46b59add-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1234,47 +1385,46 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1091",
+        "Content-Length": "1055",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:29:12 GMT",
+        "Date": "Tue, 20 Aug 2024 10:57:23 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "b8b1ea29-30c3-4ca4-bee4-04e692cc32e5",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "b8b1ea29-30c3-4ca4-bee4-04e692cc32e5",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112912Z:b8b1ea29-30c3-4ca4-bee4-04e692cc32e5",
-        "X-MSEdge-Ref": "Ref A: B3992787DF804BB0A9AD393E4619CEB7 Ref B: AMS231020512021 Ref C: 2024-07-12T11:29:11Z"
+        "x-ms-correlation-request-id": "7c49acb6-9521-4c44-a348-0048b7bc8823",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "7c49acb6-9521-4c44-a348-0048b7bc8823",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105723Z:7c49acb6-9521-4c44-a348-0048b7bc8823",
+        "X-MSEdge-Ref": "Ref A: 62F5BF435FBA4610B415A72D4C00FB26 Ref B: LON601060102062 Ref C: 2024-08-20T10:57:23Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "NotActivated",
           "hsms": [
             {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             }
           ],
@@ -1287,21 +1437,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-d48fb21a3ac0932c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-90ba6e2ffef1f2cb-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1309,47 +1459,46 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1091",
+        "Content-Length": "1055",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:29:45 GMT",
+        "Date": "Tue, 20 Aug 2024 10:57:55 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "99d82348-010a-4684-bbb1-74164b870d70",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "99d82348-010a-4684-bbb1-74164b870d70",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T112945Z:99d82348-010a-4684-bbb1-74164b870d70",
-        "X-MSEdge-Ref": "Ref A: CDCA1A887C7A4538BC4191F96C17A0C9 Ref B: AMS231020512021 Ref C: 2024-07-12T11:29:44Z"
+        "x-ms-correlation-request-id": "03421050-e667-4fa0-894c-7f4eb3731bc7",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "03421050-e667-4fa0-894c-7f4eb3731bc7",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105756Z:03421050-e667-4fa0-894c-7f4eb3731bc7",
+        "X-MSEdge-Ref": "Ref A: 9FD8891323274A199AA35F7C3F9CE7F6 Ref B: LON601060102062 Ref C: 2024-08-20T10:57:55Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "NotActivated",
           "hsms": [
             {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             }
           ],
@@ -1362,21 +1511,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-631f5006e185c561-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-72f5ec1830f0598a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1384,47 +1533,46 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1091",
+        "Content-Length": "1055",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:30:17 GMT",
+        "Date": "Tue, 20 Aug 2024 10:58:27 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "dfb67d16-ebbe-4bf9-9b66-8a5f5837fac1",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "dfb67d16-ebbe-4bf9-9b66-8a5f5837fac1",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T113018Z:dfb67d16-ebbe-4bf9-9b66-8a5f5837fac1",
-        "X-MSEdge-Ref": "Ref A: 3CA799392B5F46C0983274D2B0A3A38C Ref B: AMS231020512021 Ref C: 2024-07-12T11:30:17Z"
+        "x-ms-correlation-request-id": "1f62401e-dfb9-4bd1-88d7-0f62873c45b4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "1f62401e-dfb9-4bd1-88d7-0f62873c45b4",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105828Z:1f62401e-dfb9-4bd1-88d7-0f62873c45b4",
+        "X-MSEdge-Ref": "Ref A: B89D60B1C3234B41B297099080C3FC71 Ref B: LON601060102062 Ref C: 2024-08-20T10:58:28Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "NotActivated",
           "hsms": [
             {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             }
           ],
@@ -1437,21 +1585,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-82c7a4b14227bb0e-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-aa1495ec02e5aa56-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1459,47 +1607,46 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1091",
+        "Content-Length": "1055",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:30:50 GMT",
+        "Date": "Tue, 20 Aug 2024 10:59:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "897c0465-5003-4f25-abb1-5baf642ac70f",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "897c0465-5003-4f25-abb1-5baf642ac70f",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T113050Z:897c0465-5003-4f25-abb1-5baf642ac70f",
-        "X-MSEdge-Ref": "Ref A: E4B13B1D97874E438116AE024E84125D Ref B: AMS231020512021 Ref C: 2024-07-12T11:30:50Z"
+        "x-ms-correlation-request-id": "d90a47dc-c4d9-4a71-940b-0f8afd2a25cc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11997",
+        "x-ms-request-id": "d90a47dc-c4d9-4a71-940b-0f8afd2a25cc",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105900Z:d90a47dc-c4d9-4a71-940b-0f8afd2a25cc",
+        "X-MSEdge-Ref": "Ref A: AD10B431E6AF486B9586445EF5CBAF53 Ref B: LON601060102062 Ref C: 2024-08-20T10:59:00Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "NotActivated",
           "hsms": [
             {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             }
           ],
@@ -1512,21 +1659,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-7ccc8b79395fa4ac-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-285cc2ec539a1cff-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1534,47 +1681,46 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1091",
+        "Content-Length": "1055",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:31:23 GMT",
+        "Date": "Tue, 20 Aug 2024 10:59:32 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "d2c68a94-ffe1-4e6e-9544-9418471a9c0c",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "d2c68a94-ffe1-4e6e-9544-9418471a9c0c",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T113123Z:d2c68a94-ffe1-4e6e-9544-9418471a9c0c",
-        "X-MSEdge-Ref": "Ref A: 0DD3A3CD1A064328B2DFB690D9EAB74B Ref B: AMS231020512021 Ref C: 2024-07-12T11:31:23Z"
+        "x-ms-correlation-request-id": "569caa39-b422-485d-a7ad-d42014467c8f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "569caa39-b422-485d-a7ad-d42014467c8f",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T105932Z:569caa39-b422-485d-a7ad-d42014467c8f",
+        "X-MSEdge-Ref": "Ref A: 70F319FE73524FEE886FC63300D46E8F Ref B: LON601060102062 Ref C: 2024-08-20T10:59:32Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "NotActivated",
           "hsms": [
             {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             }
           ],
@@ -1587,21 +1733,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-caf41f35b6a0184a-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-f82fff1081f8045a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1609,47 +1755,46 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1091",
+        "Content-Length": "1055",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:31:56 GMT",
+        "Date": "Tue, 20 Aug 2024 11:00:04 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "471abba9-c083-40b2-b3ad-1b115fde80ce",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "471abba9-c083-40b2-b3ad-1b115fde80ce",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T113156Z:471abba9-c083-40b2-b3ad-1b115fde80ce",
-        "X-MSEdge-Ref": "Ref A: 2B81BBF195D346D894F86AF4D2F6AF59 Ref B: AMS231020512021 Ref C: 2024-07-12T11:31:56Z"
+        "x-ms-correlation-request-id": "6fd013e2-9e4e-4a97-816b-3ba782a76183",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "6fd013e2-9e4e-4a97-816b-3ba782a76183",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T110005Z:6fd013e2-9e4e-4a97-816b-3ba782a76183",
+        "X-MSEdge-Ref": "Ref A: 6F135C9F78264F478F049C27F6EB35BB Ref B: LON601060102062 Ref C: 2024-08-20T11:00:04Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
+          "statusMessage": "Creating HSM cluster",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "NotActivated",
           "hsms": [
             {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             },
             {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Starting"
             }
           ],
@@ -1662,21 +1807,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-8f97fbb10ea7803c-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-9ed1feaf307e580baf431e25a02c89a0-f425743f6738948a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1684,122 +1829,46 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1091",
+        "Content-Length": "1065",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:32:28 GMT",
+        "Date": "Tue, 20 Aug 2024 11:00:36 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "0a69bca0-2d4c-4fdc-932b-5ef95848e4af",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "0a69bca0-2d4c-4fdc-932b-5ef95848e4af",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T113228Z:0a69bca0-2d4c-4fdc-932b-5ef95848e4af",
-        "X-MSEdge-Ref": "Ref A: 0141796B7082415BA356A338FE8F0DC7 Ref B: AMS231020512021 Ref C: 2024-07-12T11:32:28Z"
+        "x-ms-correlation-request-id": "323ccdff-1c00-409d-95c4-4e360741ce3e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "323ccdff-1c00-409d-95c4-4e360741ce3e",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T110037Z:323ccdff-1c00-409d-95c4-4e360741ce3e",
+        "X-MSEdge-Ref": "Ref A: 04AFFE40980F49079D99AC33D68195D9 Ref B: LON601060102062 Ref C: 2024-08-20T11:00:37Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
-        "sku": {
-          "family": "B",
-          "name": "Standard_B1"
-        },
-        "properties": {
-          "provisioningState": "Provisioning",
-          "statusMessage": "Creating CloudHsm Pool",
-          "autoGeneratedDomainNameLabelScope": "TenantReuse",
-          "fipsApprovedMode": false,
-          "activationState": "NotActivated",
-          "hsms": [
-            {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
-              "state": "Starting"
-            },
-            {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
-              "state": "Starting"
-            }
-          ],
-          "privateEndpointConnections": [],
-          "publicNetworkAccess": "Disabled"
-        },
-        "tags": {
-          "Dept": "SDK Testing",
-          "Env": "df"
-        },
-        "systemData": {
-          "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
-          "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
-        }
-      }
-    },
-    {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
-      "RequestMethod": "GET",
-      "RequestHeaders": {
-        "Authorization": "Sanitized",
-        "traceparent": "00-79dc73d16695ac0839cd9e0b5ed51c38-1b1f54495b456964-00",
-        "User-Agent": "azsdk-net-ResourceManager/1.12.0 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "Sanitized",
-        "x-ms-return-client-request-id": "true"
-      },
-      "RequestBody": null,
-      "StatusCode": 200,
-      "ResponseHeaders": {
-        "Cache-Control": "no-cache",
-        "Content-Length": "1095",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:40:13 GMT",
-        "Expires": "-1",
-        "Pragma": "no-cache",
-        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
-        "X-Cache": "CONFIG_NOCACHE",
-        "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "405b4d6d-f170-469b-8625-fb7d30988b8a",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "405b4d6d-f170-469b-8625-fb7d30988b8a",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T114014Z:405b4d6d-f170-469b-8625-fb7d30988b8a",
-        "X-MSEdge-Ref": "Ref A: 0855180C33944BA1992B7C41333757F8 Ref B: AMS231032609051 Ref C: 2024-07-12T11:40:13Z"
-      },
-      "ResponseBody": {
-        "name": "sdkT8298",
-        "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Succeeded",
-          "statusMessage": "Pool Provisioning is successful.",
+          "statusMessage": "HSM cluster provisioning successful.",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "NotActivated",
           "hsms": [
             {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Started"
             },
             {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Started"
             },
             {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Started"
             }
           ],
@@ -1812,22 +1881,22 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-3de54177e7a551e50a2f1b92ed3a4584-f914d0b6825a6a67-00",
-        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20240712.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-4106ac084381f8c7ce1987cb913ffde3-c21caa334f0f15e4-00",
+        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20240820.1 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1835,47 +1904,46 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1095",
+        "Content-Length": "1065",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:40:14 GMT",
+        "Date": "Tue, 20 Aug 2024 11:00:37 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "9366a337-0e1e-41c8-9072-8ede5c20799a",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3748",
-        "x-ms-ratelimit-remaining-subscription-reads": "248",
-        "x-ms-request-id": "9366a337-0e1e-41c8-9072-8ede5c20799a",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T114014Z:9366a337-0e1e-41c8-9072-8ede5c20799a",
-        "X-MSEdge-Ref": "Ref A: 3B8A4C541D6942CF9FB6FD01300511C9 Ref B: AMS231032609051 Ref C: 2024-07-12T11:40:14Z"
+        "x-ms-correlation-request-id": "6cd1f477-a488-42a8-8908-3ce90deeacc9",
+        "x-ms-ratelimit-remaining-subscription-reads": "11999",
+        "x-ms-request-id": "6cd1f477-a488-42a8-8908-3ce90deeacc9",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T110037Z:6cd1f477-a488-42a8-8908-3ce90deeacc9",
+        "X-MSEdge-Ref": "Ref A: 18F0902ADA884E998006FCF36AD329EE Ref B: LON601060102062 Ref C: 2024-08-20T11:00:37Z"
       },
       "ResponseBody": {
-        "name": "sdkT8298",
+        "name": "sdkT9083",
         "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-        "location": "australiacentral",
-        "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+        "location": "ukwest",
+        "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
         "sku": {
           "family": "B",
           "name": "Standard_B1"
         },
         "properties": {
           "provisioningState": "Succeeded",
-          "statusMessage": "Pool Provisioning is successful.",
+          "statusMessage": "HSM cluster provisioning successful.",
           "autoGeneratedDomainNameLabelScope": "TenantReuse",
           "fipsApprovedMode": false,
           "activationState": "NotActivated",
           "hsms": [
             {
-              "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Started"
             },
             {
-              "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Started"
             },
             {
-              "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+              "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
               "state": "Started"
             }
           ],
@@ -1888,21 +1956,21 @@
         },
         "systemData": {
           "createdBy": "Sanitized",
-          "createdByType": "Application",
-          "createdAt": "2024-07-12T11:24:13.638Z",
+          "createdByType": "User",
+          "createdAt": "2024-08-20T10:50:52.754Z",
           "lastModifiedBy": "Sanitized",
-          "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+          "lastModifiedByType": "User",
+          "lastModifiedAt": "2024-08-20T10:50:52.754Z"
         }
       }
     },
     {
-      "RequestUri": "https://api-dogfood.resources.windows-int.net/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters?api-version=2024-06-30-preview",
+      "RequestUri": "https://management.azure.com/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters?api-version=2024-06-30-preview",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20240712.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "User-Agent": "azsdk-net-ResourceManager.HardwareSecurityModules/1.0.0-alpha.20240820.1 (.NET 6.0.33; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1910,49 +1978,48 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1107",
+        "Content-Length": "1077",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 12 Jul 2024 11:40:15 GMT",
+        "Date": "Tue, 20 Aug 2024 11:00:38 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "c73592f5-98fb-4d9a-82d8-3a7de6eca735",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "3749",
-        "x-ms-ratelimit-remaining-subscription-reads": "249",
-        "x-ms-request-id": "c73592f5-98fb-4d9a-82d8-3a7de6eca735",
-        "x-ms-routing-request-id": "WESTEUROPE:20240712T114015Z:c73592f5-98fb-4d9a-82d8-3a7de6eca735",
-        "X-MSEdge-Ref": "Ref A: D2B5AE4288C7442E842CD1B9190B57C5 Ref B: AMS231032609051 Ref C: 2024-07-12T11:40:14Z"
+        "x-ms-correlation-request-id": "d88ee71b-483b-45d4-9f4d-60ec0fb1b247",
+        "x-ms-ratelimit-remaining-subscription-reads": "11998",
+        "x-ms-request-id": "d88ee71b-483b-45d4-9f4d-60ec0fb1b247",
+        "x-ms-routing-request-id": "NORTHEUROPE:20240820T110038Z:d88ee71b-483b-45d4-9f4d-60ec0fb1b247",
+        "X-MSEdge-Ref": "Ref A: D1DACA855E7C48599CFC65E63320F60D Ref B: LON601060102062 Ref C: 2024-08-20T11:00:37Z"
       },
       "ResponseBody": {
         "value": [
           {
-            "name": "sdkT8298",
+            "name": "sdkT9083",
             "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
-            "location": "australiacentral",
-            "id": "/subscriptions/57bbba8e-0656-4b61-973e-886add5718db/resourceGroups/chsmSdkTest12/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT8298",
+            "location": "ukwest",
+            "id": "/subscriptions/75e96d09-a291-40e1-a5e6-cda78233d867/resourceGroups/chsmSdkTest3408/providers/Microsoft.HardwareSecurityModules/cloudHsmClusters/sdkT9083",
             "sku": {
               "family": "B",
               "name": "Standard_B1"
             },
             "properties": {
               "provisioningState": "Succeeded",
-              "statusMessage": "Pool Provisioning is successful.",
+              "statusMessage": "HSM cluster provisioning successful.",
               "autoGeneratedDomainNameLabelScope": "TenantReuse",
               "fipsApprovedMode": false,
               "activationState": "NotActivated",
               "hsms": [
                 {
-                  "fqdn": "hsm1.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+                  "fqdn": "hsm1.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
                   "state": "Started"
                 },
                 {
-                  "fqdn": "hsm2.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+                  "fqdn": "hsm2.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
                   "state": "Started"
                 },
                 {
-                  "fqdn": "hsm3.sdkt8298-b4gfaahcambsfgeb.cloudhsm.azure-int.net",
+                  "fqdn": "hsm3.sdkt9083-axecgcg2fhhwcre9.cloudhsm.azure.net",
                   "state": "Started"
                 }
               ],
@@ -1965,11 +2032,11 @@
             },
             "systemData": {
               "createdBy": "Sanitized",
-              "createdByType": "Application",
-              "createdAt": "2024-07-12T11:24:13.638Z",
+              "createdByType": "User",
+              "createdAt": "2024-08-20T10:50:52.754Z",
               "lastModifiedBy": "Sanitized",
-              "lastModifiedByType": "Application",
-              "lastModifiedAt": "2024-07-12T11:24:13.638Z"
+              "lastModifiedByType": "User",
+              "lastModifiedAt": "2024-08-20T10:50:52.754Z"
             }
           }
         ]
@@ -1977,12 +2044,8 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORITY_HOST": "https://login.windows-ppe.net/",
-    "CLIENT_ID": "9648694c-13b7-43c0-b58e-1f20f6f97496",
-    "RandomSeed": "187877217",
-    "RESOURCE_MANAGER_URL": "https://api-dogfood.resources.windows-int.net/",
-    "SERVICE_MANAGEMENT_URL": "https://management.core.windows.net/",
-    "SUBSCRIPTION_ID": "57bbba8e-0656-4b61-973e-886add5718db",
-    "TENANT_ID": "69d5ff98-b5b1-4d5a-85ef-ea76382271e4"
+    "RandomSeed": "524662924",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "75e96d09-a291-40e1-a5e6-cda78233d867"
   }
 }
