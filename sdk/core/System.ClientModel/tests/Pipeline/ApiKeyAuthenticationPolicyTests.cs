@@ -17,20 +17,6 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void CreateFromEnvironmentVariable()
-    {
-        string variableName = "TEST_KEY_NAME";
-        string variableValue = "test_key_value";
-        Environment.SetEnvironmentVariable(variableName, variableValue);
-
-        ApiKeyCredential credential = ApiKeyCredential.FromEnvironmentVariable(variableName);
-        Assert.That(credential, Is.Not.Null);
-
-        credential.Deconstruct(out string deconstructed);
-        Assert.That(deconstructed, Is.EqualTo(variableValue));
-    }
-
-    [Test]
     public async Task HeaderPolicySetsKey()
     {
         string keyValue = "test_key";

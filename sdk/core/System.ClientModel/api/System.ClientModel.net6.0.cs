@@ -4,7 +4,6 @@ namespace System.ClientModel
     {
         public ApiKeyCredential(string key) { }
         public void Deconstruct(out string key) { throw null; }
-        public static System.ClientModel.ApiKeyCredential FromEnvironmentVariable(string variable) { throw null; }
         public void Update(string key) { }
     }
     public abstract partial class AsyncCollectionResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.Security;
 using System.Threading;
 
 namespace System.ClientModel;
@@ -65,40 +64,5 @@ public class ApiKeyCredential
         Argument.AssertNotNullOrEmpty(key, nameof(key));
 
         Volatile.Write(ref _key, key);
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ApiKeyCredential"/> class
-    /// from the value stored in the specified environment variable.
-    /// </summary>
-    /// <param name="variable">
-    /// The name of the environment variable where the API key is stored.
-    /// </param>
-    /// <returns></returns>
-    /// <exception cref="System.ArgumentNullException">
-    /// Thrown when the <paramref name="variable"/> is null.
-    /// </exception>
-    /// <exception cref="System.ArgumentException">
-    /// Thrown when the <paramref name="variable"/> is empty.
-    /// </exception>
-    /// <exception cref="ArgumentException">
-    /// Thrown when the environment variable is not found.
-    /// </exception>
-    /// <exception cref="SecurityException">
-    /// Thrown when the caller does not have the required permission to perform
-    /// this operation.
-    /// </exception>
-    public static ApiKeyCredential FromEnvironmentVariable(string variable)
-    {
-        Argument.AssertNotNullOrEmpty(variable, nameof(variable));
-
-        string? key = Environment.GetEnvironmentVariable(variable);
-
-        if (string.IsNullOrEmpty(key))
-        {
-            throw new ArgumentException($"Environment variable '{variable}' not found.");
-        }
-
-        return new ApiKeyCredential(key);
     }
 }
