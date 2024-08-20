@@ -163,7 +163,6 @@ public class AzureTestEnvironment
          * - Check the "SourcePath" assembly metadata attribute value. All projects in the Azure C# repo automatically have this attribute
          *   added as part of the build "magic" (see {repo_root}\Directory.Build.Targets)
          * - Where the executing assembly is running from
-         * - Where the currently assembly is running from
          * 
          * Side note: an entirely different way to do this would be call: git rev-parse --show-toplevel
          */
