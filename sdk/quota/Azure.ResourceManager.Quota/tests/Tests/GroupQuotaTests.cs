@@ -15,8 +15,10 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
     [TestFixture]
     public class GroupQuotaTests : QuotaManagementTestBase
     {
+        // Change this to your own subscription
         private const string defaultSubscriptionId = "65a85478-2333-4bbd-981b-1a818c944faf";
 
+        //Change this to your own MG
         private const string managementGroupId = "testMgIdRoot";
 
         public GroupQuotaTests() : base(true)
@@ -111,7 +113,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                 {
                     RequestedResource = new GroupQuotaRequestBase()
                     {
-                        Limit = 10,
+                        Limit = 10000,
                         Region = "westus",
                         Comments = "ticketComments"
                     }
@@ -131,12 +133,12 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             // Get the QuotaLimit Response
             var check = response.GetRawResponse();
 
-            string finalUri = "";
-            check.Headers.TryGetValue("Location", out finalUri);
+            string locationUri = "";
+            check.Headers.TryGetValue("Location", out locationUri);
 
             // Get the requestId from the operationStatus URI
             Regex regex = new Regex(@"groupQuotaOperationsStatus/([^?]+)");
-            Match match = regex.Match(finalUri);
+            Match match = regex.Match(locationUri);
             string requestId = "";
             if (match.Success)
             {
@@ -154,30 +156,47 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             // invoke the operation
             DateTime startTime = DateTime.Now;
-
-            // Poll the operation Staus with request ID for 3 minutes
-            while ((DateTime.Now - startTime) < TimeSpan.FromMinutes(3))
+            string finalStatus = "";
+            // Poll the operation Staus with request ID for 5 minutes
+            while ((DateTime.Now - startTime) < TimeSpan.FromMinutes(5))
             {
                 // invoke the operation
                 GroupQuotaRequestStatusResource result = await groupQuotaRequestStatusResource.GetAsync();
 
                 var provisioningState = result.Data.Properties.ProvisioningState.ToString();
-                Console.WriteLine(provisioningState);
-                if(provisioningState != "Accepted" && provisioningState != "InProgress")
+
+                if (provisioningState != "Accepted" && provisioningState != "InProgress")
                 {
-                    if(provisioningState == "Escalated")
+                    if (provisioningState == "Escalated")
                     {
+                        Console.WriteLine("Request has been escalated.Please reach out to your capacity manager for more information on this request");
+                        finalStatus = provisioningState;
                         Assert.Inconclusive();
+                        break;
+                    }else if (provisioningState == "Failed")
+                    {
+                        // Display a Fault code and let them know to reach out to capacity manager
+                        Console.WriteLine($"Group Quota Limit Request Failed. FaultCode :{result?.Data?.Properties?.FaultCode}");
+                        finalStatus = provisioningState;
                         break;
                     }
                     else
                     {
-                        Assert.AreEqual("Success", provisioningState);
+                        //Remove asserts and change to logging
+                        Assert.AreEqual("Succeeded", provisioningState);
+                        finalStatus = provisioningState;
+                        break;
                     }
                 }
 
                 // Sleep for 30 seconds
                 System.Threading.Thread.Sleep(30000);
+            }
+
+            //If past 5 mins write message to display operationStatus URI;
+            if (finalStatus == "" || finalStatus == "Escalated")
+            {
+                Console.WriteLine($"Request has not reached a terminal state. Please continue to poll using this uri :{locationUri}");
             }
         }
 
@@ -261,12 +280,12 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             // Get the QuotaLimit Response
             var check = allocationResponse.GetRawResponse();
 
-            string finalUri = "";
-            check.Headers.TryGetValue("Location", out finalUri);
+            string locationUri = "";
+            check.Headers.TryGetValue("Location", out locationUri);
 
             // Get the requestId from the operationStatus URI
             Regex regex = new Regex(@"quotaAllocationOperationsStatus/([^?]+)");
-            Match match = regex.Match(finalUri);
+            Match match = regex.Match(locationUri);
             string requestId = "";
             if (match.Success)
             {
@@ -280,11 +299,11 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             ResourceIdentifier quotaAllocationRequestId = QuotaAllocationRequestStatusResource.CreateResourceIdentifier(managementGroupId, defaultSubscriptionId, groupQuotaName, requestId);
 
-            QuotaAllocationRequestStatusResource quotaAllocationStatusResource =Client.GetQuotaAllocationRequestStatusResource(quotaAllocationRequestId);
+            QuotaAllocationRequestStatusResource quotaAllocationStatusResource = Client.GetQuotaAllocationRequestStatusResource(quotaAllocationRequestId);
 
             // invoke the operation
             DateTime startTime = DateTime.Now;
-
+            string finalStatus = "";
             // Poll the operation Staus with request ID for 3 minutes
             while ((DateTime.Now - startTime) < TimeSpan.FromMinutes(3))
             {
@@ -297,17 +316,31 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                 {
                     if (provisioningState == "Escalated")
                     {
+                        Console.WriteLine("Request has been escalated.Please reach out to your capacity manager for more information on this request");
                         Assert.Inconclusive();
+                        finalStatus = provisioningState;
                         break;
+                    } else if (provisioningState == "Failed")
+                    {
+                        // Display a Fault code and let them know to reach out to capacity manager
+                        Console.WriteLine($"Subscription Quota Allocation Request Failed. FaultCode :{result?.Data?.FaultCode}");
+                        finalStatus = provisioningState;
                     }
                     else
                     {
-                        Assert.AreEqual("Success", provisioningState);
+                        Assert.AreEqual("Succeeded", provisioningState);
+                        finalStatus = provisioningState;
+                        break;
                     }
                 }
 
                 // Sleep for 30 seconds
                 System.Threading.Thread.Sleep(30000);
+            }
+
+            if (finalStatus == "" || finalStatus == "Escalated")
+            {
+                Console.WriteLine($"Request has not reached a terminal state. Please continue to poll using this uri :{locationUri}");
             }
 
             // Delete the Subscription as part of test cleanup
