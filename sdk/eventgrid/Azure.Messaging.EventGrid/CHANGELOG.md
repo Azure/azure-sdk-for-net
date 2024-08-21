@@ -1,14 +1,11 @@
 # Release History
 
-## 4.25.0-beta.1 (Unreleased)
+## 4.25.0 (2024-08-21)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `AccessTier` and `PreviousTier` properties to `StorageBlobTierChangedEventData` system event.
+- Added `AccessTier` to `StorageBlobCreatedEventData` system event.
 
 ## 4.24.1 (2024-07-16)
 
