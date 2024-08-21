@@ -116,7 +116,7 @@ Upload a directory.
 
 ```C# Snippet:SimpleDirectoryUpload_Shares
 DataTransfer folderTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromFile(sourceLocalDirectory),
+    sourceResource: files.FromDirectory(sourceLocalDirectory),
     destinationResource: shares.FromDirectory(destinationFolderUri));
 await folderTransfer.WaitForCompletionAsync();
 ```
