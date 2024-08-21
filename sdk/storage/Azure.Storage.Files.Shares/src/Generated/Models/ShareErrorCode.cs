@@ -30,6 +30,8 @@ namespace Azure.Storage.Files.Shares.Models
         private const string ConditionHeadersNotSupportedValue = "ConditionHeadersNotSupported";
         private const string ConditionNotMetValue = "ConditionNotMet";
         private const string EmptyMetadataKeyValue = "EmptyMetadataKey";
+        private const string FileShareProvisionedBandwidthDowngradeNotAllowedValue = "FileShareProvisionedBandwidthDowngradeNotAllowed";
+        private const string FileShareProvisionedIopsDowngradeNotAllowedValue = "FileShareProvisionedIopsDowngradeNotAllowed";
         private const string InsufficientAccountPermissionsValue = "InsufficientAccountPermissions";
         private const string InternalErrorValue = "InternalError";
         private const string InvalidAuthenticationInfoValue = "InvalidAuthenticationInfo";
@@ -106,6 +108,10 @@ namespace Azure.Storage.Files.Shares.Models
         public static ShareErrorCode ConditionNotMet { get; } = new ShareErrorCode(ConditionNotMetValue);
         /// <summary> EmptyMetadataKey. </summary>
         public static ShareErrorCode EmptyMetadataKey { get; } = new ShareErrorCode(EmptyMetadataKeyValue);
+        /// <summary> FileShareProvisionedBandwidthDowngradeNotAllowed. </summary>
+        public static ShareErrorCode FileShareProvisionedBandwidthDowngradeNotAllowed { get; } = new ShareErrorCode(FileShareProvisionedBandwidthDowngradeNotAllowedValue);
+        /// <summary> FileShareProvisionedIopsDowngradeNotAllowed. </summary>
+        public static ShareErrorCode FileShareProvisionedIopsDowngradeNotAllowed { get; } = new ShareErrorCode(FileShareProvisionedIopsDowngradeNotAllowedValue);
         /// <summary> InsufficientAccountPermissions. </summary>
         public static ShareErrorCode InsufficientAccountPermissions { get; } = new ShareErrorCode(InsufficientAccountPermissionsValue);
         /// <summary> InternalError. </summary>

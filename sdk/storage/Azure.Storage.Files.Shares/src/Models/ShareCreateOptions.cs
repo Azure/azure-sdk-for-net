@@ -64,5 +64,15 @@ namespace Azure.Storage.Files.Shares.Models
         ///  Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec.
         /// </summary>
         public long? PaidBurstingMaxBandwidthMibps { get; set; }
+
+        /// <summary>
+        /// Optional.  The provisioned IOPS of the share.  For SSD, min IOPS is 3,000 and max is 100,000.  For HDD, min IOPS is 500 and max is 50,000.
+        /// </summary>
+        public long? ProvisionedMaxIops { get; set; }
+
+        /// <summary>
+        /// Optional.   The provisioned throughput of the share.  For SSD, min throughput is 125 MiB/sec and max is 10,340 MiB/sec.  For HDD, min throughput is 60 MiB/sec and max is 5,125 MiB/sec.
+        /// </summary>
+        public long? ProvisionedMaxBandwidthMibps { get; set; }
     }
 }
