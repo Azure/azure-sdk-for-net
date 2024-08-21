@@ -3994,7 +3994,7 @@ EnableIPForwarding = true,
                     BaseRegularPriorityCount = 4,
                     RegularPriorityPercentageAboveBase = 50,
                 },
-                ComputeSkuProfile = new SkuProfile()
+                SkuProfile = new ComputeSkuProfile()
                 {
                     VmSizes =
 {
@@ -4009,7 +4009,7 @@ Name = "Standard_E16s_v5",
 Name = "Standard_D2s_v5",
 }
 },
-                    AllocationStrategy = AllocationStrategy.CapacityOptimized,
+                    AllocationStrategy = ComputeAllocationStrategy.CapacityOptimized,
                 },
             };
             ArmOperation<VirtualMachineScaleSetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineScaleSetName, data);

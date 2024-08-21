@@ -209,10 +209,10 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("zonalPlatformFaultDomainAlignMode"u8);
                 writer.WriteStringValue(ZonalPlatformFaultDomainAlignMode.Value.ToString());
             }
-            if (Optional.IsDefined(ComputeSkuProfile))
+            if (Optional.IsDefined(SkuProfile))
             {
                 writer.WritePropertyName("skuProfile"u8);
-                writer.WriteObjectValue(ComputeSkuProfile, options);
+                writer.WriteObjectValue(SkuProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Compute
             bool? constrainedMaximumCapacity = default;
             ResiliencyPolicy resiliencyPolicy = default;
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
-            SkuProfile skuProfile = default;
+            ComputeSkuProfile skuProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            skuProfile = SkuProfile.DeserializeSkuProfile(property0.Value, options);
+                            skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(property0.Value, options);
                             continue;
                         }
                     }

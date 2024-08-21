@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute.Models
             SpotRestorePolicy spotRestorePolicy = default;
             ResiliencyPolicy resiliencyPolicy = default;
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
-            SkuProfile skuProfile = default;
+            ComputeSkuProfile skuProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            skuProfile = SkuProfile.DeserializeSkuProfile(property0.Value, options);
+                            skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(property0.Value, options);
                             continue;
                         }
                     }

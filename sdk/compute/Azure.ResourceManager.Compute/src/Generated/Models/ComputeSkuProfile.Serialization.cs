@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class SkuProfile : IUtf8JsonSerializable, IJsonModel<SkuProfile>
+    public partial class ComputeSkuProfile : IUtf8JsonSerializable, IJsonModel<ComputeSkuProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkuProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSkuProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SkuProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ComputeSkuProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSkuProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeSkuProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        SkuProfile IJsonModel<SkuProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ComputeSkuProfile IJsonModel<ComputeSkuProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSkuProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeSkuProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSkuProfile(document.RootElement, options);
+            return DeserializeComputeSkuProfile(document.RootElement, options);
         }
 
-        internal static SkuProfile DeserializeSkuProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ComputeSkuProfile DeserializeComputeSkuProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IList<ComputeSkuProfileVmSize> vmSizes = default;
-            AllocationStrategy? allocationStrategy = default;
+            ComputeAllocationStrategy? allocationStrategy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    allocationStrategy = new AllocationStrategy(property.Value.GetString());
+                    allocationStrategy = new ComputeAllocationStrategy(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SkuProfile(vmSizes ?? new ChangeTrackingList<ComputeSkuProfileVmSize>(), allocationStrategy, serializedAdditionalRawData);
+            return new ComputeSkuProfile(vmSizes ?? new ChangeTrackingList<ComputeSkuProfileVmSize>(), allocationStrategy, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SkuProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ComputeSkuProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSkuProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeSkuProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SkuProfile IPersistableModel<SkuProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ComputeSkuProfile IPersistableModel<ComputeSkuProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SkuProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSkuProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSkuProfile(document.RootElement, options);
+                        return DeserializeComputeSkuProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeSkuProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SkuProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ComputeSkuProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
