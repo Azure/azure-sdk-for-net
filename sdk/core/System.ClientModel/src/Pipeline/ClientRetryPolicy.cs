@@ -39,6 +39,8 @@ public class ClientRetryPolicy : PipelinePolicy
         _initialDelay = DefaultInitialDelay;
     }
 
+    internal ClientModelLogMessages? LogMessages { get; set; } = null;
+
     /// <inheritdoc/>
     public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
         => ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).EnsureCompleted();
@@ -121,8 +123,7 @@ public class ClientRetryPolicy : PipelinePolicy
                 message.RetryCount++;
                 OnTryComplete(message);
 
-                // TODO - we need to pass the logging options to the retry policy
-                //LoggingHandler.LogRequestRetrying(_logger, message.LoggingCorrelationId, message.RetryCount, elapsed);
+                LogMessages?.RequestRetrying(message.LoggingCorrelationId ?? string.Empty, message.RetryCount, elapsed);
 
                 continue;
             }

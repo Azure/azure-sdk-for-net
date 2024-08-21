@@ -5,7 +5,9 @@ using System.ClientModel.Internal;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace System.ClientModel.Primitives;
 
@@ -132,6 +134,13 @@ public sealed partial class ClientPipeline
 
         // Add retry policy.
         policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
+
+        // TODO - experiment with other ways of doing this, leaving this for now
+        if (policies[index] is ClientRetryPolicy retryPolicy)
+        {
+            ILogger logger = options.LoggingOptions.LoggerFactory.CreateLogger("System.ClientModel.RetryPolicy");
+            retryPolicy.LogMessages = new ClientModelLogMessages(logger, new PipelineMessageSanitizer(options.LoggingOptions.AllowedQueryParameters.ToArray(), options.LoggingOptions.AllowedHeaderNames.ToArray()));
+        }
 
         // Per try policies come after the retry policy.
         perTryPolicies.CopyTo(policies.AsSpan(index));
