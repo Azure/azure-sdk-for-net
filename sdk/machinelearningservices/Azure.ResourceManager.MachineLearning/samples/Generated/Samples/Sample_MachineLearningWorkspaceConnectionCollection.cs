@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             // invoke the operation and iterate over the result
             string target = "www.facebook.com";
             string category = "ContainerRegistry";
-            await foreach (MachineLearningWorkspaceConnectionResource item in collection.GetAllAsync(target: target, category: category))
+            await foreach (MachineLearningWorkspaceConnectionResource item in collection.GetAllAsync(target: target, category: category, true))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="category"> Category of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningWorkspaceConnectionResource> GetAllAsync(string target = null, string category = null, CancellationToken cancellationToken = default) => GetAllAsync(target, category, null, cancellationToken);
+        public virtual AsyncPageable<MachineLearningWorkspaceConnectionResource> GetAllAsync(string target, string category, CancellationToken cancellationToken = default) => GetAllAsync(target, category, null, cancellationToken);
 
         /// <summary>
         /// Lists all the available machine learning workspaces connections under the specified workspace.
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="category"> Category of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningWorkspaceConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningWorkspaceConnectionResource> GetAll(string target = null, string category = null, CancellationToken cancellationToken = default) => GetAll(target, category, null, cancellationToken);
+        public virtual Pageable<MachineLearningWorkspaceConnectionResource> GetAll(string target, string category, CancellationToken cancellationToken = default) => GetAll(target, category, null, cancellationToken);
     }
 }
