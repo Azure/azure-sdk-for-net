@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 
-namespace Azure.Monitor.OpenTelemetry.CustomEvents
+namespace Azure.Monitor.OpenTelemetry.Events
 {
     /// <summary>
     /// Default logger for logging Application Insights custom events.

@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Monitor.OpenTelemetry.CustomEvents
+namespace Azure.Monitor.OpenTelemetry.Events
 {
     /// <summary>
     /// An interface for logging custom events telemetry.
