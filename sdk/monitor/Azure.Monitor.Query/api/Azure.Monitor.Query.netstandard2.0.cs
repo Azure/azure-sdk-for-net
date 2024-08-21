@@ -29,7 +29,9 @@ namespace Azure.Monitor.Query
         protected LogsQueryClient() { }
         public LogsQueryClient(Azure.Core.TokenCredential credential) { }
         public LogsQueryClient(Azure.Core.TokenCredential credential, Azure.Monitor.Query.LogsQueryClientOptions options) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public LogsQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public LogsQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.LogsQueryClientOptions options) { }
         public System.Uri Endpoint { get { throw null; } }
         public static string CreateQuery(System.FormattableString query) { throw null; }
