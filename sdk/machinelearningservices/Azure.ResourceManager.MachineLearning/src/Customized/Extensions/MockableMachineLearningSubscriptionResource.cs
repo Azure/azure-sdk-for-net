@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(string skip = null, CancellationToken cancellationToken = default)
         {
-            return GetMachineLearningWorkspacesAsync(skip, null, cancellationToken);
+            return GetMachineLearningWorkspacesAsync(null, skip, null, cancellationToken);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(string skip = null, CancellationToken cancellationToken = default)
         {
-            return GetMachineLearningWorkspaces(skip, null, cancellationToken);
+            return GetMachineLearningWorkspaces(null, skip, null, cancellationToken);
         }
     }
 }

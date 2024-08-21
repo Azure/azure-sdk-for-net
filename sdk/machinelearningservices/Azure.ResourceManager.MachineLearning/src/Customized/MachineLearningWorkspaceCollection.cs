@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<MachineLearningWorkspaceResource> GetAllAsync(string skip, CancellationToken cancellationToken)
-            => GetAllAsync(skip, null, cancellationToken);
+            => GetAllAsync(skip, null,null, cancellationToken);
 
         /// <summary>
         /// Lists all the available machine learning workspaces under the specified resource group.
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> A collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<MachineLearningWorkspaceResource> GetAll(string skip, CancellationToken cancellationToken)
-            => GetAll(skip, null, cancellationToken);
+            => GetAll(skip, null, null, cancellationToken);
     }
 }

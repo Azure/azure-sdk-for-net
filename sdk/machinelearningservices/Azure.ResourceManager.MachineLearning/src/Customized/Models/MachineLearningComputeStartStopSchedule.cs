@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Required if triggerType is Recurrence. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public MachineLearningRecurrenceTrigger Recurrence
+        public ComputeRecurrenceFrequency Recurrence
         {
             get
             {
-                return new MachineLearningRecurrenceTrigger(RecurrenceSchedule.Frequency.Value, RecurrenceSchedule.Interval.Value);
+                return new ComputeRecurrenceFrequency(RecurrenceSchedule.Frequency.Value.ToString());
             }
         }
         /// <summary> Required if triggerType is Cron. </summary>
