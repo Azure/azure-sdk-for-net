@@ -1,3 +1,15 @@
+namespace Azure.Monitor.OpenTelemetry.CustomEvents
+{
+    public sealed partial class CustomEventLogger : Azure.Monitor.OpenTelemetry.CustomEvents.ICustomEventLogger
+    {
+        public CustomEventLogger(Microsoft.Extensions.Logging.ILoggerFactory loggerFactory) { }
+        public void TrackEvent(string name, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.KeyValuePair<string, object?>>? attributes = null) { }
+    }
+    public partial interface ICustomEventLogger
+    {
+        void TrackEvent(string name, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.KeyValuePair<string, object?>>? attributes = null);
+    }
+}
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     public static partial class AzureMonitorExporterExtensions

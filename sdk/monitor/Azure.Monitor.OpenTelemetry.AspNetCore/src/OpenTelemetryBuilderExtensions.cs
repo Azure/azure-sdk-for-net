@@ -6,6 +6,7 @@ using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.CustomEvents;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Microsoft.Extensions.Configuration;
@@ -210,6 +211,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         options.ConnectionString = config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
                     }
                 });
+
+            // Enable custom events
+            builder.Services.AddSingleton<ICustomEventLogger, CustomEventLogger>();
 
             return builder;
         }
