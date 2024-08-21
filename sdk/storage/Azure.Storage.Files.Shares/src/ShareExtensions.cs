@@ -834,7 +834,11 @@ namespace Azure.Storage.Files.Shares
                 QuotaInGB = sharePropertiesInternal.Quota,
                 EnablePaidBursting = sharePropertiesInternal.PaidBurstingEnabled,
                 PaidBurstingMaxIops = sharePropertiesInternal.PaidBurstingMaxIops,
-                PaidBurstingMaxBandwidthMibps = sharePropertiesInternal.PaidBurstingMaxBandwidthMibps
+                PaidBurstingMaxBandwidthMibps = sharePropertiesInternal.PaidBurstingMaxBandwidthMibps,
+                IncludedBurstIops = sharePropertiesInternal.IncludedBurstIops,
+                MaxBurstCreditsForIops = sharePropertiesInternal.MaxBurstCreditsForIops,
+                NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeTime,
+                NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeTime,
             };
         }
 
