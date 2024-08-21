@@ -23,7 +23,7 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
         ClientPipeline pipeline,
         Uri endpoint,
         AzureOpenAIClientOptions options)
-            : base(pipeline, endpoint, options)
+            : base(pipeline, options)
     {
         options ??= new();
         _endpoint = endpoint;

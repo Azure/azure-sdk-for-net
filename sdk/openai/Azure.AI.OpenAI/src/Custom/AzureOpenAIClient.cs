@@ -39,8 +39,10 @@ namespace Azure.AI.OpenAI;
 /// <remarks>
 /// For scenario-specific operations, create a corresponding client using the matching method on this type, e.g. <see cref="GetChatClient(string)"/>.
 /// </remarks>
-public partial class AzureOpenAIClient : OpenAIClient
+public partial class AzureOpenAIClient
 {
+    public ClientPipeline Pipeline { get; }
+    private readonly Uri _endpoint;
     private readonly AzureOpenAIClientOptions _options;
 
     /// <summary>
@@ -145,8 +147,9 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// <param name="endpoint"> The endpoint to use. </param>
     /// <param name="options"> The additional client options to use. </param>
     protected AzureOpenAIClient(ClientPipeline pipeline, Uri endpoint, AzureOpenAIClientOptions options)
-        : base(pipeline, endpoint, options)
     {
+        Pipeline = pipeline;
+        _endpoint = endpoint;
         _options = options;
     }
 
@@ -161,16 +164,16 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// </summary>
     /// <returns> A new <see cref="AssistantClient"/> instance. </returns>
     [Experimental("OPENAI001")]
-    public override AssistantClient GetAssistantClient()
-        => new AzureAssistantClient(Pipeline, Endpoint, _options);
+    public AssistantClient GetAssistantClient()
+        => new AzureAssistantClient(Pipeline, _endpoint, _options);
 
     /// <summary>
     /// Gets a new <see cref="AudioClient"/> instance configured for audio operation use with the Azure OpenAI service.
     /// </summary>
     /// <param name="deploymentName"> The model deployment name to use for the new client's audio operations. </param>
     /// <returns> A new <see cref="AudioClient"/> instance. </returns>
-    public override AudioClient GetAudioClient(string deploymentName)
-        => new AzureAudioClient(Pipeline, deploymentName, Endpoint, _options);
+    public AudioClient GetAudioClient(string deploymentName)
+        => new AzureAudioClient(Pipeline, deploymentName, _endpoint, _options);
 
     /// <summary>
     /// Gets a new <see cref="BatchClient"/> instance configured for batch operation use with the Azure OpenAI service.
@@ -178,58 +181,58 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// <param name="deploymentName"> The model deployment name to use for the new client's audio operations. </param>
     /// <returns> A new <see cref="BatchClient"/> instance. </returns>
     public BatchClient GetBatchClient(string deploymentName)
-        => new AzureBatchClient(Pipeline, deploymentName, Endpoint, _options);
+        => new AzureBatchClient(Pipeline, deploymentName, _endpoint, _options);
 
     /// <remarks>
     /// This method is unsupported for Azure OpenAI. Please use the alternate <see cref="GetBatchClient(string)"/>
     /// method that accepts a model deployment name, instead.
     /// </remarks>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override BatchClient GetBatchClient() => GetBatchClient(deploymentName: null);
+    public BatchClient GetBatchClient() => GetBatchClient(deploymentName: null);
 
     /// <summary>
     /// Gets a new <see cref="ChatClient"/> instance configured for chat completion operation use with the Azure OpenAI service.
     /// </summary>
     /// <param name="deploymentName"> The model deployment name to use for the new client's chat completion operations. </param>
     /// <returns> A new <see cref="ChatClient"/> instance. </returns>
-    public override ChatClient GetChatClient(string deploymentName)
-        => new AzureChatClient(Pipeline, deploymentName, Endpoint, _options);
+    public ChatClient GetChatClient(string deploymentName)
+        => new AzureChatClient(Pipeline, deploymentName, _endpoint, _options);
 
     /// <summary>
     /// Gets a new <see cref="EmbeddingClient"/> instance configured for embedding operation use with the Azure OpenAI service.
     /// </summary>
     /// <param name="deploymentName"> The model deployment name to use for the new client's embedding operations. </param>
     /// <returns> A new <see cref="EmbeddingClient"/> instance. </returns>
-    public override EmbeddingClient GetEmbeddingClient(string deploymentName)
-        => new AzureEmbeddingClient(Pipeline, deploymentName, Endpoint, _options);
+    public EmbeddingClient GetEmbeddingClient(string deploymentName)
+        => new AzureEmbeddingClient(Pipeline, deploymentName, _endpoint, _options);
 
     /// <summary>
     /// Gets a new <see cref="FileClient"/> instance configured for file operation use with the Azure OpenAI service.
     /// </summary>
     /// <returns> A new <see cref="FileClient"/> instance. </returns>
-    public override FileClient GetFileClient()
-        => new AzureFileClient(Pipeline, Endpoint, _options);
+    public FileClient GetFileClient()
+        => new AzureFileClient(Pipeline, _endpoint, _options);
 
     /// <summary>
     /// Gets a new <see cref="FineTuningClient"/> instance configured for fine-tuning operation use with the Azure OpenAI service.
     /// </summary>
     /// <returns> A new <see cref="FineTuningClient"/> instance. </returns>
-    public override FineTuningClient GetFineTuningClient()
-        => new AzureFineTuningClient(Pipeline, Endpoint, _options);
+    public FineTuningClient GetFineTuningClient()
+        => new AzureFineTuningClient(Pipeline, _endpoint, _options);
 
     /// <summary>
     /// Gets a new <see cref="ImageClient"/> instance configured for image operation use with the Azure OpenAI service.
     /// </summary>
     /// <param name="deploymentName"> The model deployment name to use for the new client's image operations. </param>
     /// <returns> A new <see cref="ImageClient"/> instance. </returns>
-    public override ImageClient GetImageClient(string deploymentName)
-        => new AzureImageClient(Pipeline, deploymentName, Endpoint, _options);
+    public ImageClient GetImageClient(string deploymentName)
+        => new AzureImageClient(Pipeline, deploymentName, _endpoint, _options);
 
     /// <remarks>
     /// Model management operations are not supported with Azure OpenAI.
     /// </remarks>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ModelClient GetModelClient()
+    public ModelClient GetModelClient()
         => throw new NotSupportedException($"Azure OpenAI does not support the OpenAI model management API. Please "
             + "use the Azure AI Services Account Management API to interact with Azure OpenAI model deployments.");
 
@@ -237,7 +240,7 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// Moderation operations are not supported with Azure OpenAI.
     /// </remarks>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ModerationClient GetModerationClient(string _)
+    public ModerationClient GetModerationClient(string _)
         => throw new NotSupportedException($"Azure OpenAI does not support the OpenAI moderations API. Please refer "
             + "to the documentation on Microsoft's Responsible AI embedded content filters to learn more about Azure "
             + "OpenAI's content filter policies and content filter annotations.");
@@ -248,8 +251,8 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// </summary>
     /// <returns> A new <see cref="VectorStoreClient"/> instance. </returns>
     [Experimental("OPENAI001")]
-    public override VectorStoreClient GetVectorStoreClient()
-        => new AzureVectorStoreClient(Pipeline, Endpoint, _options);
+    public VectorStoreClient GetVectorStoreClient()
+        => new AzureVectorStoreClient(Pipeline, _endpoint, _options);
 
     private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AzureOpenAIClientOptions options)
         => ClientPipeline.Create(
@@ -274,7 +277,7 @@ public partial class AzureOpenAIClient : OpenAIClient
         return CreatePipeline(new AzureTokenAuthenticationPolicy(credential), options);
     }
 
-    internal static new ApiKeyCredential GetApiKey(ApiKeyCredential explicitCredential = null, bool requireExplicitCredential = false)
+    internal static ApiKeyCredential GetApiKey(ApiKeyCredential explicitCredential = null, bool requireExplicitCredential = false)
     {
         if (explicitCredential is not null)
         {
