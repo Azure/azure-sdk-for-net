@@ -9,7 +9,7 @@ using ClientModel.Tests.Mocks;
 using ClientModel.Tests.Paging;
 using NUnit.Framework;
 
-namespace System.ClientModel.Tests.Paging;
+namespace System.ClientModel.Tests.Results;
 
 /// <summary>
 /// Scenario tests for sync and async page collections.

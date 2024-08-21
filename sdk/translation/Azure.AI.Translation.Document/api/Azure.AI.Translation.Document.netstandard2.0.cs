@@ -32,6 +32,7 @@ namespace Azure.AI.Translation.Document
     public partial class DocumentTranslateContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Document.DocumentTranslateContent>
     {
         public DocumentTranslateContent(Azure.AI.Translation.Document.MultipartFormFileData document) { }
+        public DocumentTranslateContent(Azure.AI.Translation.Document.MultipartFormFileData document, System.Collections.Generic.IList<Azure.AI.Translation.Document.MultipartFormFileData> glossaries) { }
         public Azure.AI.Translation.Document.MultipartFormFileData MultipartDocument { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Document.MultipartFormFileData> MultipartGlossary { get { throw null; } }
         void global::System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Document.DocumentTranslateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

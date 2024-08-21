@@ -77,7 +77,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            CustomEntitiesResultWithDocumentDetectedLanguage results = default;
+            CustomEntitiesActionResult results = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextActionState status = default;
             string taskName = default;
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Text
             {
                 if (property.NameEquals("results"u8))
                 {
-                    results = CustomEntitiesResultWithDocumentDetectedLanguage.DeserializeCustomEntitiesResultWithDocumentDetectedLanguage(property.Value, options);
+                    results = CustomEntitiesActionResult.DeserializeCustomEntitiesActionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUpdateDateTime"u8))

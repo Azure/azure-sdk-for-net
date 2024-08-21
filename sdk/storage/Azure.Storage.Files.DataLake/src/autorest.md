@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/794c6178bc06c6c9dceb139e9f9d1b35b1a99701/specification/storage/data-plane/Azure.Storage.Files.DataLake/preview/2025-01-05/DataLakeStorage.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/5da3c08b92d05858b728b013b69502dc93485373/specification/storage/data-plane/Azure.Storage.Files.DataLake/stable/2023-05-03/DataLakeStorage.json
 generation1-convenience-client: true
 modelerfour:
     seal-single-value-enum-by-default: true
@@ -23,7 +23,7 @@ directive:
         if (property.includes('/{filesystem}/{path}'))
         {
             $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/FileSystem") && false == param['$ref'].endsWith("#/parameters/Path"))});
-        }
+        } 
         else if (property.includes('/{filesystem}'))
         {
             $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/FileSystem"))});
@@ -127,7 +127,7 @@ directive:
             }
             $[newName] = $[oldName];
             delete $[oldName];
-        }
+        } 
         else if (property.includes('/{filesystem}'))
         {
             var oldName = property;
