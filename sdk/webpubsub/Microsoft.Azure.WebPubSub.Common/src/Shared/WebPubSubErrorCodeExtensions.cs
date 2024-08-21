@@ -65,9 +65,9 @@ internal static class WebPubSubErrorCodeExtensions
             MqttV500ConnectReasonCode.QuotaExceeded => WebPubSubErrorCode.UserError,
             MqttV500ConnectReasonCode.RetainNotSupported => WebPubSubErrorCode.UserError,
             MqttV500ConnectReasonCode.QosNotSupported => WebPubSubErrorCode.UserError,
-            MqttV500ConnectReasonCode.UseAnotherServer => WebPubSubErrorCode.UserError,
 
             // Map to ServerError
+            MqttV500ConnectReasonCode.UseAnotherServer => WebPubSubErrorCode.ServerError,
             MqttV500ConnectReasonCode.ServerMoved => WebPubSubErrorCode.ServerError,
             MqttV500ConnectReasonCode.ServerUnavailable => WebPubSubErrorCode.ServerError,
             MqttV500ConnectReasonCode.ServerBusy => WebPubSubErrorCode.ServerError,

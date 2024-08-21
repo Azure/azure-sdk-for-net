@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host;
@@ -19,7 +18,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 
         public WebPubSubTriggerBindingProvider(IWebPubSubTriggerDispatcher dispatcher, INameResolver nameResolver, WebPubSubFunctionsOptions options, Exception webhookException)
         {
-            Debugger.Launch();
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
             _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
             _options = options ?? throw new ArgumentNullException(nameof(options));
@@ -32,7 +30,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 throw new ArgumentNullException(nameof(context));
             }
-            Debugger.Launch();
             var parameterInfo = context.Parameter;
             var attribute = parameterInfo.GetCustomAttribute<WebPubSubTriggerAttribute>(false);
             if (attribute == null)
