@@ -48,7 +48,68 @@ namespace Azure.Storage.Files.Shares.Models
             bool? enableSnapshotVirtualDirectoryAccess = default,
             bool? enablePaidBursting = default,
             long? paidBurstingMaxIops = default,
-            long? paidBustingMaxBandwidthMibps = default)
+            long? paidBustingMaxBandwidthMibps = default,
+            long? includedBurstIops = default,
+            long? maxBurstCreditsForIops = default,
+            DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default,
+            DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default)
+            => new ShareProperties()
+            {
+                AccessTier = accessTier,
+                LastModified = lastModified,
+                ProvisionedIops = provisionedIops,
+                ProvisionedIngressMBps = provisionedIngressMBps,
+                ProvisionedEgressMBps = provisionedEgressMBps,
+                NextAllowedQuotaDowngradeTime = nextAllowedQuotaDowngradeTime,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays,
+                ETag = eTag,
+                AccessTierChangeTime = accessTierChangeTime,
+                AccessTierTransitionState = accessTierTransitionState,
+                LeaseStatus = leaseStatus,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                QuotaInGB = quotaInGB,
+                Metadata = metadata,
+                Protocols = protocols,
+                RootSquash = rootSquash,
+                EnableSnapshotVirtualDirectoryAccess = enableSnapshotVirtualDirectoryAccess,
+                EnablePaidBursting = enablePaidBursting,
+                PaidBurstingMaxIops = paidBurstingMaxIops,
+                PaidBurstingMaxBandwidthMibps = paidBustingMaxBandwidthMibps,
+                IncludedBurstIops = includedBurstIops,
+                MaxBurstCreditsForIops = maxBurstCreditsForIops,
+                NextAllowedProvisionedIopsDowngradeTime = nextAllowedProvisionedIopsDowngradeTime,
+                NextAllowedProvisionedBandwidthDowngradeTime = nextAllowedProvisionedBandwidthDowngradeTime,
+            };
+
+        /// <summary>
+        /// Creates a new ShareProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ShareProperties ShareProperties(
+            string accessTier,
+            DateTimeOffset? lastModified,
+            int? provisionedIops,
+            int? provisionedIngressMBps,
+            int? provisionedEgressMBps,
+            DateTimeOffset? nextAllowedQuotaDowngradeTime,
+            DateTimeOffset? deletedOn,
+            int? remainingRetentionDays,
+            ETag? eTag,
+            DateTimeOffset? accessTierChangeTime,
+            string accessTierTransitionState,
+            ShareLeaseStatus? leaseStatus,
+            ShareLeaseState? leaseState,
+            ShareLeaseDuration? leaseDuration,
+            int? quotaInGB,
+            IDictionary<string, string> metadata,
+            ShareProtocols? protocols,
+            ShareRootSquash? rootSquash,
+            bool? enableSnapshotVirtualDirectoryAccess,
+            bool? enablePaidBursting,
+            long? paidBurstingMaxIops,
+            long? paidBustingMaxBandwidthMibps)
             => new ShareProperties()
             {
                 AccessTier = accessTier,
