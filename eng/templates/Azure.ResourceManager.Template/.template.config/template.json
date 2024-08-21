@@ -46,14 +46,6 @@
       "description": "The Azure provider name. ie. Microsoft.Network or Microsoft.Compute",
       "replaces": "ProviderFullName"
     },
-    "tagVersion": {
-      "type": "parameter",
-      "datatype":"text",
-      "isRequired": false,
-      "description": "The optional parameter specifies the tag in the README.MD. If empty, the default tag in the README.MD is used.",
-      "defaultValue": "",
-      "replaces": "SwaggerVersionTag"
-    },
     "TypeSpecDirectory": {
       "type": "parameter",
       "datatype":"text",
@@ -61,14 +53,6 @@
       "description": "TypeSpecDirectory under sdk/providername.",
       "defaultValue": "TypeSpecDirectory",
       "replaces": "TypeSpecDirectory"
-    },
-    "SpecOrg": {
-      "type": "parameter",
-      "datatype":"text",
-      "isRequired": false,
-      "description": "the organization name of Azure spec repo.",
-      "defaultValue": "Azure",
-      "replaces": "SpecOrg"
     },
     "CommitId": {
       "type": "parameter",
@@ -110,25 +94,6 @@
         "source": "name",
         "steps": [
           { "regex": "\\.", "replacement": "" }
-        ]
-      }
-    },
-    "tagPrefix": {
-      "type": "generated",
-      "generator": "switch",
-      "replaces": "tagPrefix",
-      "parameters": {
-        "evaluator": "MSBUILD",
-        "datatype": "string",
-        "cases": [
-          {
-            "condition": "('tagVersion' == '')",
-            "value": ""
-          },
-          {
-            "condition": "('tagVersion' != '')",
-            "value": "tag:"
-          }
         ]
       }
     }
