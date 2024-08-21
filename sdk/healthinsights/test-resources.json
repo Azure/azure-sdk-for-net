@@ -95,7 +95,7 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "[variables('authorizationApiVersion')]",
-            "name": "[guid(concat(variables('roleDefinitionId'), variables('textAnalyticsName')))]",
+            "name": "[guid(resourceGroup().id)]",
             "dependsOn": [
                   "[variables('textAnalyticsName')]"
               ],
