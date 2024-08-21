@@ -311,7 +311,6 @@ namespace Azure.AI.Vision.Face
             public static Azure.AI.Vision.Face.FaceAttributeType Exposure { get { throw null; } }
             public static Azure.AI.Vision.Face.FaceAttributeType Glasses { get { throw null; } }
             public static Azure.AI.Vision.Face.FaceAttributeType HeadPose { get { throw null; } }
-            public static Azure.AI.Vision.Face.FaceAttributeType Mask { get { throw null; } }
             public static Azure.AI.Vision.Face.FaceAttributeType Noise { get { throw null; } }
             public static Azure.AI.Vision.Face.FaceAttributeType Occlusion { get { throw null; } }
         }
