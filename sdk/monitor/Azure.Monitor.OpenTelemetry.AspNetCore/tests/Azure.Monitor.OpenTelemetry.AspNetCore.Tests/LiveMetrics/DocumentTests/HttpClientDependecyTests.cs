@@ -67,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             // ASSERT
             Assert.Equal("http://bing.com", dependencyDocument.CommandName);
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
-            Assert.Equal("GET /", dependencyDocument.Name);
+            Assert.Equal("TestActivityName", dependencyDocument.Name);
             Assert.Equal("200", dependencyDocument.ResultCode);
 
             VerifyCustomProperties(dependencyDocument);
@@ -122,7 +122,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             Assert.Equal(requestUrl, dependencyDocument.CommandName);
             Assert.Equal(DocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
-            Assert.Equal(successfulRequest ? "GET /" : "GET /Fail", dependencyDocument.Name);
+            Assert.Equal("GET", dependencyDocument.Name);
             Assert.Equal(successfulRequest ? "200" : "404", dependencyDocument.ResultCode);
 
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
