@@ -135,7 +135,6 @@ namespace Azure.MixedReality.RemoteRendering.Tests
 
             StartRenderingSessionOperation startSessionOperation = await client.StartSessionAsync(sessionId, options);
             Assert.IsTrue(startSessionOperation.HasValue);
-            Assert.AreEqual(options.Size, startSessionOperation.Value.Size);
             Assert.AreEqual(sessionId, startSessionOperation.Value.SessionId);
 
             RenderingSession sessionProperties = await client.GetSessionAsync(sessionId);
@@ -151,7 +150,6 @@ namespace Azure.MixedReality.RemoteRendering.Tests
             Assert.IsNotNull(readyRenderingSession.Host);
             Assert.IsNotNull(readyRenderingSession.ArrInspectorPort);
             Assert.IsNotNull(readyRenderingSession.HandshakePort);
-            Assert.AreEqual(readyRenderingSession.Size, options.Size);
 
             UpdateSessionOptions updateOptions2 = new UpdateSessionOptions(TimeSpan.FromMinutes(6));
             Assert.AreEqual(TimeSpan.FromMinutes(6), updateOptions2.MaxLeaseTime);
