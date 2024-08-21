@@ -20,29 +20,29 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Create an instance of <see cref="ManagedIdentityId"/> for a system assigned managed identity.
+        /// Create an instance of <see cref="ManagedIdentityId"/> for a system-assigned managed identity.
         /// </summary>
         public static ManagedIdentityId SystemAssigned =>
             new ManagedIdentityId(ManagedIdentityIdType.SystemAssigned);
 
         /// <summary>
-        /// Create an instance of <see cref="ManagedIdentityId"/> for a user assigned managed identity.
+        /// Create an instance of <see cref="ManagedIdentityId"/> for a user-assigned managed identity.
         /// </summary>
-        /// <param name="clientId">The clientId of the user-assigned managed identity.</param>
+        /// <param name="clientId">The client ID of the user-assigned managed identity.</param>
         public static ManagedIdentityId FromUserAssignedClientId(string clientId) =>
             new ManagedIdentityId(ManagedIdentityIdType.ClientId, clientId);
 
         /// <summary>
-        /// Create an instance of <see cref="ManagedIdentityId"/> for a user assigned managed identity.
+        /// Create an instance of <see cref="ManagedIdentityId"/> for a user-assigned managed identity.
         /// </summary>
         /// <param name="resourceIdentifier">The resource identifier of the user-assigned managed identity.</param>
         public static ManagedIdentityId FromUserAssignedResourceId(ResourceIdentifier resourceIdentifier) =>
             new ManagedIdentityId(ManagedIdentityIdType.ResourceId, resourceIdentifier.ToString());
 
         /// <summary>
-        /// Create an instance of <see cref="ManagedIdentityId"/> for a user assigned managed identity.
+        /// Create an instance of <see cref="ManagedIdentityId"/> for a user-assigned managed identity.
         /// </summary>
-        /// <param name="objectId">The objectId of the user-assigned managed identity.</param>
+        /// <param name="objectId">The object ID of the user-assigned managed identity.</param>
         public static ManagedIdentityId FromUserAssignedObjectId(string objectId) =>
             new ManagedIdentityId(ManagedIdentityIdType.ObjectId, objectId);
     }
