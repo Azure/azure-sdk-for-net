@@ -76,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else
                     {
-                        telemetryItem = new TelemetryItem("message", logRecord, resource, instrumentationKey);
+                        telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey);
                         telemetryItem.Data = new MonitorBase
                         {
                             BaseType = "MessageData",
