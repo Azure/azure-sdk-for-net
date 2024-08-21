@@ -330,7 +330,7 @@ namespace Microsoft.Azure.WebPubSub.Common
     public sealed partial class WebPubSubClientCertificate
     {
         public WebPubSubClientCertificate(string thumbprint) { }
-        public WebPubSubClientCertificate(string thumbprint, string content) { }
+        public WebPubSubClientCertificate(string thumbprint, string? content) { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="content")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("content")]
         public string? Content { get { throw null; } }
