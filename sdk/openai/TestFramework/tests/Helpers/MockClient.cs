@@ -63,52 +63,52 @@ public class MockClient
         throw new ArgumentException(message);
     }
 
-    public virtual AsyncResultCollection<int> ResultCollectionAsync(int num, int increment = 5)
+    public virtual AsyncCollectionResult<int> ResultCollectionAsync(int num, int increment = 5)
     {
         Interlocked.Increment(ref _asyncHit);
-        return new MockAsyncResultCollection<int>(() => EnumerateAsync(num, increment));
+        return new MockAsyncCollectionResult<int>(() => EnumerateAsync(num, increment));
     }
 
-    public virtual ResultCollection<int> ResultCollection(int num, int increment = 5)
+    public virtual CollectionResult<int> ResultCollection(int num, int increment = 5)
     {
         Interlocked.Increment(ref _syncHit);
-        return new MockResultCollection<int>(() => Enumerate(num, increment));
+        return new MockCollectionResult<int>(() => Enumerate(num, increment));
     }
 
-    public virtual AsyncResultCollection<int> FailResultCollectionAsync(string message)
+    public virtual AsyncCollectionResult<int> FailResultCollectionAsync(string message)
     {
         Interlocked.Increment(ref _asyncHit);
-        return new MockAsyncResultCollection<int>(() => FailEnumerateAsync(message));
+        return new MockAsyncCollectionResult<int>(() => FailEnumerateAsync(message));
     }
 
-    public virtual ResultCollection<int> FailResultCollection(string message)
+    public virtual CollectionResult<int> FailResultCollection(string message)
     {
         Interlocked.Increment(ref _syncHit);
-        return new MockResultCollection<int>(() => FailEnumerate(message));
+        return new MockCollectionResult<int>(() => FailEnumerate(message));
     }
 
-    public virtual AsyncPageableCollection<int> PageableCollectionAsync(int num, int increment)
+    public virtual AsyncPageCollection<int> PageableCollectionAsync(int num, int increment, int itemsPerPage)
     {
         Interlocked.Increment(ref _asyncHit);
-        return new MockAsyncPageableCollection<int>(() => EnumerateAsync(num, increment), new MockPipelineResponse());
+        return new MockAsyncPageCollection<int>(() => EnumerateAsync(num, increment), new MockPipelineResponse(), itemsPerPage);
     }
 
-    public virtual PageableCollection<int> PageableCollection(int num, int increment)
+    public virtual PageCollection<int> PageableCollection(int num, int increment, int itemsPerPage)
     {
         Interlocked.Increment(ref _syncHit);
-        return new MockPageableCollection<int>(() => Enumerate(num, increment), new MockPipelineResponse());
+        return new MockPageCollection<int>(() => Enumerate(num, increment), new MockPipelineResponse(), itemsPerPage);
     }
 
-    public virtual AsyncPageableCollection<int> FailPageableCollectionAsync(string message)
+    public virtual AsyncPageCollection<int> FailPageableCollectionAsync(string message)
     {
         Interlocked.Increment(ref _asyncHit);
-        return new MockAsyncPageableCollection<int>(() => FailEnumerateAsync(message), new MockPipelineResponse());
+        return new MockAsyncPageCollection<int>(() => FailEnumerateAsync(message), new MockPipelineResponse());
     }
 
-    public virtual PageableCollection<int> FailPageableCollection(string message)
+    public virtual PageCollection<int> FailPageableCollection(string message)
     {
         Interlocked.Increment(ref _syncHit);
-        return new MockPageableCollection<int>(() => FailEnumerate(message), new MockPipelineResponse());
+        return new MockPageCollection<int>(() => FailEnumerate(message), new MockPipelineResponse());
     }
 
     private async IAsyncEnumerable<int> EnumerateAsync(int num, int increment, [EnumeratorCancellation] CancellationToken token = default)

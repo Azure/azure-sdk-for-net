@@ -35,8 +35,10 @@ public class TestRecordingMismatchException : Exception
     {
     }
 
+#if !NET8_0_OR_GREATER
     /// <inheritdoc />
     protected TestRecordingMismatchException(SerializationInfo info, StreamingContext context) : base(info, context)
     {
     }
+#endif
 }

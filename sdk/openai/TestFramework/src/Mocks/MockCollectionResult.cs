@@ -10,17 +10,17 @@ namespace OpenAI.TestFramework.Mocks
     /// Represents a mock implementation of the <see cref="ResultCollection{TValue}"/> class.
     /// </summary>
     /// <typeparam name="TValue">The type of the values in the collection.</typeparam>
-    public class MockResultCollection<TValue> : ResultCollection<TValue>
+    public class MockCollectionResult<TValue> : CollectionResult<TValue>
     {
         private readonly Func<IEnumerable<TValue>> _enumerateFunc;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MockResultCollection{TValue}"/> class with the specified enumeration
+        /// Initializes a new instance of the <see cref="MockCollectionResult{TValue}"/> class with the specified enumeration
         /// function and optional pipeline response.
         /// </summary>
         /// <param name="enumerateFunc">The function used to enumerate the collection.</param>
         /// <param name="response">The pipeline response associated with the collection.</param>
-        public MockResultCollection(Func<IEnumerable<TValue>> enumerateFunc, PipelineResponse? response = null) :
+        public MockCollectionResult(Func<IEnumerable<TValue>> enumerateFunc, PipelineResponse? response = null) :
             base(response ?? new MockPipelineResponse())
         {
             _enumerateFunc = enumerateFunc ?? throw new ArgumentNullException(nameof(enumerateFunc));

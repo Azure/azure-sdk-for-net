@@ -6,7 +6,7 @@ using System.Runtime.ExceptionServices;
 namespace OpenAI.TestFramework.Adapters;
 
 /// <summary>
-/// Wraps an <see cref="IEnumerable{T}"/> as an <see cref="IAsyncEnumerable{T}"/>
+/// Wraps an <see cref="IEnumerator{T}"/> as an <see cref="IAsyncEnumerator{T}"/>
 /// </summary>
 /// <typeparam name="T">The type of items being enumerated.</typeparam>
 public class SyncToAsyncEnumerator<T> : IAsyncEnumerator<T>
