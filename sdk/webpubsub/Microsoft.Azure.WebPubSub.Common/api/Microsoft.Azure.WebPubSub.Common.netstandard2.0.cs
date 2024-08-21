@@ -149,16 +149,16 @@ namespace Microsoft.Azure.WebPubSub.Common
         public MqttConnectProperties(Microsoft.Azure.WebPubSub.Common.MqttProtocolVersion protocolVersion, string? username, string? password, System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? userProperties) { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="password")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("password")]
-        public string? Password { get { throw null; } }
+        public string? Password { get { throw null; } protected set { } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="protocolVersion")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("protocolVersion")]
-        public Microsoft.Azure.WebPubSub.Common.MqttProtocolVersion ProtocolVersion { get { throw null; } }
+        public Microsoft.Azure.WebPubSub.Common.MqttProtocolVersion ProtocolVersion { get { throw null; } protected set { } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="username")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("username")]
-        public string? Username { get { throw null; } }
+        public string? Username { get { throw null; } protected set { } }
         [System.Runtime.Serialization.DataMemberAttribute(Name="userProperties")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("userProperties")]
-        public System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? UserProperties { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Microsoft.Azure.WebPubSub.Common.MqttUserProperty>? UserProperties { get { throw null; } protected set { } }
     }
     [System.Runtime.Serialization.DataContractAttribute]
     public partial class MqttDisconnectedEventRequest : Microsoft.Azure.WebPubSub.Common.DisconnectedEventRequest
