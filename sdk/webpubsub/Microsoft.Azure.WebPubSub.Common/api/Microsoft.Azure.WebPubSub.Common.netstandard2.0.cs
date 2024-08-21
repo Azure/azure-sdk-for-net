@@ -329,12 +329,11 @@ namespace Microsoft.Azure.WebPubSub.Common
     [System.Runtime.Serialization.DataContractAttribute]
     public sealed partial class WebPubSubClientCertificate
     {
-        [System.ObsoleteAttribute("The 'content' field is not nullable. Keep this constructor for backward-compatibility only.")]
         public WebPubSubClientCertificate(string thumbprint) { }
         public WebPubSubClientCertificate(string thumbprint, string content) { }
         [System.Runtime.Serialization.DataMemberAttribute(Name="content")]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("content")]
-        public string Content { get { throw null; } }
+        public string? Content { get { throw null; } }
         [System.Runtime.Serialization.DataMemberAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("thumbprint")]
         public string Thumbprint { get { throw null; } }

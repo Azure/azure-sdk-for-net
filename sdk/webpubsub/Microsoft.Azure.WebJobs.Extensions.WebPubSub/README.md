@@ -124,7 +124,7 @@ public static class WebPubSubTriggerReturnValueFunction
 ```C# Snippet:MqttConnectEventTriggerFunction
 [FunctionName("mqttConnect")]
 public static WebPubSubEventResponse Run(
-        [WebPubSubTrigger("hub", WebPubSubEventType.System, "connect", ClientProtocol = WebPubSubTriggerClientProtocol.Mqtt)] MqttConnectEventRequest request,
+        [WebPubSubTrigger("hub", WebPubSubEventType.System, "connect", ClientProtocols = WebPubSubTriggerAcceptedClientProtocols.Mqtt)] MqttConnectEventRequest request,
         ILogger log)
 {
     if (request.ConnectionContext.ConnectionId != "attacker")

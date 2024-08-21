@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
@@ -31,17 +30,15 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// </summary>
         [JsonPropertyName(ContentProperty)]
         [DataMember(Name = ContentProperty)]
-        public string Content { get; }
+        public string? Content { get; }
 
         /// <summary>
         /// Create an instance of WebPubSubClientCertificate.
         /// </summary>
         /// <param name="thumbprint">The thumbprint of client cert.</param>
-        [Obsolete("The 'content' field is not nullable. Keep this constructor for backward-compatibility only.")]
         public WebPubSubClientCertificate(string thumbprint)
         {
             Thumbprint = thumbprint;
-            Content = "";
         }
 
         /// <summary>
