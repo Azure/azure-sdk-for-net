@@ -28,6 +28,11 @@ namespace Azure.Storage.Files.Shares.Models
         public string FilePermission { get; set; }
 
         /// <summary>
+        /// Format of File Permission.
+        /// </summary>
+        public FilePermissionFormat? PermissionFormat { get; set; }
+
+        /// <summary>
         /// Specifies the option to copy file security descriptor from source file or
         /// to set it using the value which is defined by the header value of FilePermission
         /// or FilePermissionKey.

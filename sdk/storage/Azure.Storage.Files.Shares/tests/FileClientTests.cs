@@ -1953,6 +1953,50 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [TestCase(null)]
+        [TestCase(FilePermissionFormat.Sddl)]
+        [TestCase(FilePermissionFormat.Binary)]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_01_05)]
+        public async Task StartCopyAsync_FilePermission_Format(FilePermissionFormat? filePermissionFormat)
+        {
+            // Arrange
+            await using DisposingFile testSource = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient source = testSource.File;
+            await using DisposingFile testDest = await SharesClientBuilder.GetTestFileAsync();
+            ShareFileClient dest = testSource.File;
+
+            var data = GetRandomBuffer(Constants.KB);
+            using (var stream = new MemoryStream(data))
+            {
+                await source.UploadRangeAsync(
+                    writeType: ShareFileRangeWriteType.Update,
+                    range: new HttpRange(0, Constants.KB),
+                    content: stream);
+            }
+            string filePermission;
+            if (filePermissionFormat == null || filePermissionFormat == FilePermissionFormat.Sddl)
+            {
+                filePermission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            }
+            else
+            {
+                filePermission = "AQAUhGwAAACIAAAAAAAAABQAAAACAFgAAwAAAAAAFAD/AR8AAQEAAAAAAAUSAAAAAAAYAP8BHwABAgAAAAAABSAAAAAgAgAAAAAkAKkAEgABBQAAAAAABRUAAABZUbgXZnJdJWRjOwuMmS4AAQUAAAAAAAUVAAAAoGXPfnhLm1/nfIdwr/1IAQEFAAAAAAAFFQAAAKBlz354S5tf53yHcAECAAA=";
+            }
+
+            ShareFileCopyOptions options = new ShareFileCopyOptions
+            {
+                FilePermission = filePermission,
+                PermissionFormat = filePermissionFormat,
+                FilePermissionCopyMode = PermissionCopyMode.Override
+            };
+
+            // Act
+            await dest.StartCopyAsync(
+                sourceUri: source.Uri,
+                options: options);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_06_08)]
         public async Task StartCopyAsync_ChangeTime()
         {
