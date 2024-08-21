@@ -273,7 +273,7 @@ rename-mapping:
   ProvisioningStatus: MachineLearningComputeProvisioningStatus
   ScheduleBase: MachineLearningScheduleBase
   ScheduleStatus: MachineLearningScheduleStatus
-  TriggerType: MachineLearningTriggerType
+  ComputeTriggerType: MachineLearningTriggerType
   RecurrenceTrigger: MachineLearningRecurrenceTrigger
   ConnectionCategory: MachineLearningConnectionCategory
   ContainerType: MachineLearningContainerType

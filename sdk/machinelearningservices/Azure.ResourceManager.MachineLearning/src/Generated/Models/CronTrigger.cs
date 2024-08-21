@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Argument.AssertNotNull(expression, nameof(expression));
 
             Expression = expression;
-            TriggerType = MachineLearningTriggerType.Cron;
+            TriggerType = TriggerType.Cron;
         }
 
         /// <summary> Initializes a new instance of <see cref="CronTrigger"/>. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// [Required] Specifies cron expression of schedule.
         /// The expression should follow NCronTab format.
         /// </param>
-        internal CronTrigger(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData, string expression) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
+        internal CronTrigger(string endTime, string startTime, string timeZone, TriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData, string expression) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
         {
             Expression = expression;
             TriggerType = triggerType;

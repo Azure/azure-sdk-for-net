@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="triggerType"> [Required]. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTriggerBase(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
+        internal UnknownTriggerBase(string endTime, string startTime, string timeZone, TriggerType triggerType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endTime, startTime, timeZone, triggerType, serializedAdditionalRawData)
         {
             TriggerType = triggerType;
         }

@@ -3488,24 +3488,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.ComputeStartStopRecurrenceSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ComputeTriggerType : System.IEquatable<Azure.ResourceManager.MachineLearning.Models.ComputeTriggerType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ComputeTriggerType(string value) { throw null; }
-        public static Azure.ResourceManager.MachineLearning.Models.ComputeTriggerType Cron { get { throw null; } }
-        public static Azure.ResourceManager.MachineLearning.Models.ComputeTriggerType Recurrence { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MachineLearning.Models.ComputeTriggerType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MachineLearning.Models.ComputeTriggerType left, Azure.ResourceManager.MachineLearning.Models.ComputeTriggerType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MachineLearning.Models.ComputeTriggerType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MachineLearning.Models.ComputeTriggerType left, Azure.ResourceManager.MachineLearning.Models.ComputeTriggerType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ComputeWeekDay : System.IEquatable<Azure.ResourceManager.MachineLearning.Models.ComputeWeekDay>
     {
         private readonly object _dummy;

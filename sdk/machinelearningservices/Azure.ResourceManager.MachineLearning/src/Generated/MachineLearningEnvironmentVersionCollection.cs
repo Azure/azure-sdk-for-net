@@ -244,7 +244,6 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-
         /// <summary>
         /// List versions.
         /// <list type="bullet">
