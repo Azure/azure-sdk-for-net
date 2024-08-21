@@ -13,6 +13,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// Represents the properties of an MQTT DISCONNECT packet.
 /// </summary>
 [DataContract]
+[JsonConverter(typeof(MqttDisconnectPacketPropertiesJsonConverter))]
 public class MqttDisconnectPacketProperties
 {
     internal const string CodeProperty = "code";

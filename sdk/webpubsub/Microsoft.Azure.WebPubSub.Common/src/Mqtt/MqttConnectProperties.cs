@@ -13,6 +13,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// The properties of the MQTT CONNECT packet.
 /// </summary>
 [DataContract]
+[JsonConverter(typeof(MqttConnectPropertiesJsonConverter))]
 public class MqttConnectProperties
 {
     internal const string ProtocolVersionProperty = "protocolVersion";
@@ -40,14 +41,14 @@ public class MqttConnectProperties
     /// </summary>
     [JsonPropertyName(ProtocolVersionProperty)]
     [DataMember(Name = ProtocolVersionProperty)]
-    public MqttProtocolVersion ProtocolVersion { get; }
+    public MqttProtocolVersion ProtocolVersion { get; protected set; }
 
     /// <summary>
     /// The username field in the MQTT CONNECT packet.
     /// </summary>
     [JsonPropertyName(UsernameProperty)]
     [DataMember(Name = UsernameProperty)]
-    public string? Username { get; }
+    public string? Username { get; protected set; }
 
     /// <summary>
     ///The password field in the MQTT CONNECT packet.
@@ -56,12 +57,12 @@ public class MqttConnectProperties
     /// </summary>
     [JsonPropertyName(PasswordProperty)]
     [DataMember(Name = PasswordProperty)]
-    public string? Password { get; }
+    public string? Password { get; protected set; }
 
     /// <summary>
     /// The user properties in the MQTT CONNECT packet.
     /// </summary>
     [JsonPropertyName(UserPropertiesProperty)]
     [DataMember(Name = UserPropertiesProperty)]
-    public IReadOnlyList<MqttUserProperty>? UserProperties { get; }
+    public IReadOnlyList<MqttUserProperty>? UserProperties { get; protected set; }
 }

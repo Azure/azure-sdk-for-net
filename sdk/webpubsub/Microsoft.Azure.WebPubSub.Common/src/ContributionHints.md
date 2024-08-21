@@ -26,3 +26,5 @@ sequenceDiagram
     H->>H: Serialize into HTTP response using System.Text.Json
     H->>W: Send HTTP Response
 ```
+
+Currently all the classes for CloudEvents requests have customized JSON converters or customized deserialization classes. This is because in .NET framework, `System.Text.Json` cannot support deserialization of classes without a pameterless constructor. Therefore we need to customize the deserialization of these classes.

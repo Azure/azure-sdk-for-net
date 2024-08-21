@@ -10,6 +10,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// A class representing a user property in MQTT.
 /// </summary>
 [DataContract]
+[JsonConverter(typeof(MqttUserPropertyJsonConverter))]
 public record MqttUserProperty
 {
     internal const string NamePropertyName = "name";

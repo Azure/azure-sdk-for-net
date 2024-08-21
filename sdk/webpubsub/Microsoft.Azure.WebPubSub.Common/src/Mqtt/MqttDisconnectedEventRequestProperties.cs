@@ -12,6 +12,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// Represents the properties of an MQTT disconnection event.
 /// </summary>
 [DataContract]
+[JsonConverter(typeof(MqttDisconnectedEventRequestPropertiesJsonConverter))]
 public class MqttDisconnectedEventRequestProperties
 {
     internal const string InitiatedByClientProperty = "initiatedByClient";
