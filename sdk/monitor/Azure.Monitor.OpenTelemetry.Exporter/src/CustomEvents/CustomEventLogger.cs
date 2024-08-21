@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace Azure.Monitor.OpenTelemetry.CustomEvents
 {
     /// <summary>
-    /// Default logger for logging custom events telemetry.
+    /// Default logger for logging Application Insights custom events.
     /// </summary>
     public sealed class CustomEventLogger : ICustomEventLogger
     {
@@ -20,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.CustomEvents
         private readonly ILogger _logger;
 
         /// <summary>
-        /// Custom events.
+        /// Creates an instance of CustomEventLogger to log custom events.
         /// </summary>
         /// <param name="loggerFactory">LoggerFactory instance for logging events.</param>
         /// <exception cref="ArgumentNullException"></exception>

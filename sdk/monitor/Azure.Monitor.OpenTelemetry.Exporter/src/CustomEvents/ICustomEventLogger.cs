@@ -11,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.CustomEvents
     public interface ICustomEventLogger
     {
         /// <summary>
-        /// Tracks custom events.
+        /// Tracks Application Insights custom events.
         /// </summary>
         /// <param name="name">Name of the CustomEvent.</param>
         /// <param name="attributes">Custom dimensions of the event.</param>
