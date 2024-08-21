@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.ComputeSchedule.csproj" />
-        <PackageReference Include="Azure.ResourceManager.Compute" />
+    <PackageReference Include="Azure.ResourceManager.Compute" />
   </ItemGroup>
   <ItemGroup>
    <ProjectReference Include="$(AzureCoreTestFramework)" />

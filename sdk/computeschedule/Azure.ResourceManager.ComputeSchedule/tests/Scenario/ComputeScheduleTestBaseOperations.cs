@@ -9,6 +9,7 @@ using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.ResourceManager.ComputeSchedule.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.ComputeSchedule.Tests
 {
@@ -221,12 +222,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             }
 
             return new Models.Resources(resourcesList);
-        }
-
-        private static SubscriptionResource GenerateSubscriptionResource(ArmClient client, string subid)
-        {
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subid);
-            return client.GetSubscriptionResource(subscriptionResourceId);
         }
     }
 }
