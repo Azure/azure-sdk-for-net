@@ -9,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using Azure.AI.OpenAI.Tests.Utils.Config;
-using OpenAI.TestFramework.Recording;
+using OpenAI.TestFramework;
 using OpenAI.TestFramework.Utils;
 
 namespace Azure.AI.OpenAI.Tests;

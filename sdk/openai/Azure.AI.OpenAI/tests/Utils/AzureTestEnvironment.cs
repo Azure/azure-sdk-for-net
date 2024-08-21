@@ -8,6 +8,7 @@ using System.Reflection;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
+using OpenAI.TestFramework;
 using OpenAI.TestFramework.Mocks;
 using OpenAI.TestFramework.Recording;
 using OpenAI.TestFramework.Utils;
