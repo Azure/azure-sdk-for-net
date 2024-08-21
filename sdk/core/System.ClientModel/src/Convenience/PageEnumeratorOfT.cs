@@ -10,12 +10,10 @@ namespace System.ClientModel.Primitives;
 internal class PageEnumerator<T> : PageEnumerator, IAsyncEnumerator<PageResult<T>>, IEnumerator<PageResult<T>>
 {
     private readonly PageableResult _subclient;
-    private readonly Func<ClientResult, PageResult<T>> _toPage;
 
-    public PageEnumerator(PageableResult subclient, Func<ClientResult, PageResult<T>> toPage) : base(subclient)
+    public PageEnumerator(PageableResult subclient)
     {
         _subclient = subclient;
-        _toPage = toPage;
     }
 
     public PageResult<T> GetCurrentPage()

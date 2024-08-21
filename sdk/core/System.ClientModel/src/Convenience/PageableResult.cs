@@ -17,17 +17,34 @@ public abstract class PageableResult : ClientResult
 
     public abstract bool HasNext(ClientResult result);
 
-    public AsyncPageCollection<T> ToAsyncPageCollection<T>(Func<ClientResult, PageResult<T>> toPage)
+    protected virtual bool TryGetPage<T>(ClientResult result, out PageResult<T>? page)
     {
-        PageEnumerator<T> enumerator = new(this, toPage);
+        page = default;
+        return false;
+    }
+
+    private PageResult<T> ToPage<T>(ClientResult result)
+    {
+        if (!TryGetPage(result, out PageResult<T>? page) || page is null)
+        {
+            throw new InvalidOperationException("Cannot convert result to PageResult<T>");
+        }
+
+        return page;
+    }
+
+    public AsyncPageCollection<T> ToAsyncPageCollection<T>()
+    {
+        PageEnumerator<T> enumerator = new(this, ToPage<T>);
         return new AsyncEnumeratorPageCollection<T>(enumerator);
     }
 
-    public PageCollection<T> ToPageCollection<T>(Func<ClientResult, PageResult<T>> toPage)
+    public PageCollection<T> ToPageCollection<T>()
     {
-        PageEnumerator<T> enumerator = new(this, toPage);
+        PageEnumerator<T> enumerator = new(this, ToPage<T>);
         return new EnumeratorPageCollection<T>(enumerator);
     }
+
     public async IAsyncEnumerable<ClientResult> ToAsyncEnumerable()
     {
         PageEnumerator enumerator = new(this);

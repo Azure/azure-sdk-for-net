@@ -35,7 +35,7 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             cancellationToken.ToRequestOptions());
-        return enumerator.ToAsyncPageCollection(enumerator.GetPageFromResult);
+        return enumerator.ToAsyncPageCollection<ValueItem>();
     }
 
     public virtual AsyncPageCollection<ValueItem> GetValuesAsync(
@@ -52,7 +52,7 @@ public class PagingClient
             token.PageSize,
             token.Offset,
             cancellationToken.ToRequestOptions());
-        return enumerator.ToAsyncPageCollection(enumerator.GetPageFromResult);
+        return enumerator.ToAsyncPageCollection<ValueItem>();
     }
 
     public virtual PageCollection<ValueItem> GetValues(
@@ -68,7 +68,7 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             cancellationToken.ToRequestOptions());
-        return enumerator.ToPageCollection(enumerator.GetPageFromResult);
+        return enumerator.ToPageCollection<ValueItem>();
     }
 
     public virtual PageCollection<ValueItem> GetValues(
@@ -85,7 +85,7 @@ public class PagingClient
             token.PageSize,
             token.Offset,
             cancellationToken.ToRequestOptions());
-        return enumerator.ToPageCollection(enumerator.GetPageFromResult);
+        return enumerator.ToPageCollection<ValueItem>();
     }
 
     public virtual IAsyncEnumerable<ClientResult> GetValuesAsync(
@@ -101,7 +101,7 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             options);
-        return enumerator.ToAsyncPageCollection(enumerator.GetPageFromResult);
+        return enumerator.ToAsyncPageCollection<ValueItem>();
     }
 
     public virtual IEnumerable<ClientResult> GetValues(
@@ -117,6 +117,6 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             options);
-        return enumerator.ToPageCollection(enumerator.GetPageFromResult);
+        return enumerator.ToPageCollection<ValueItem>();
     }
 }

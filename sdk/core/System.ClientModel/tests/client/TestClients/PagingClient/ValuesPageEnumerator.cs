@@ -45,6 +45,15 @@ internal class ValuesPageEnumerator : PageableResult //PageEnumerator<ValueItem>
         _options = options;
     }
 
+    protected override bool TryGetPage<T>(ClientResult result, out PageResult<T>? page)
+    {
+        if (typeof(T) is not typeof(ValueItem))
+        {
+
+        }
+
+    }
+
     public PageResult<ValueItem> GetPageFromResult(ClientResult result)
     {
         PipelineResponse response = result.GetRawResponse();
