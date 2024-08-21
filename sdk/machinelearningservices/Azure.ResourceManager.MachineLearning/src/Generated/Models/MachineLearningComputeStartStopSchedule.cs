@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="cronSchedule"> Required if triggerType is Cron. </param>
         /// <param name="schedule"> [Deprecated] Not used any more. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningComputeStartStopSchedule(string id, MachineLearningComputeProvisioningStatus? provisioningStatus, MachineLearningScheduleStatus? status, MachineLearningComputePowerAction? action, ComputeTriggerType? triggerType, ComputeStartStopRecurrenceSchedule recurrenceSchedule, ComputeStartStopCronSchedule cronSchedule, MachineLearningScheduleBase schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningComputeStartStopSchedule(string id, MachineLearningComputeProvisioningStatus? provisioningStatus, MachineLearningScheduleStatus? status, MachineLearningComputePowerAction? action, MachineLearningTriggerType? triggerType, ComputeStartStopRecurrenceSchedule recurrenceSchedule, ComputeStartStopCronSchedule cronSchedule, MachineLearningScheduleBase schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ProvisioningStatus = provisioningStatus;
             Status = status;
             Action = action;
-            ComputeTriggerType = triggerType;
+            TriggerType = triggerType;
             RecurrenceSchedule = recurrenceSchedule;
             CronSchedule = cronSchedule;
             Schedule = schedule;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> [Required] The compute power action. </summary>
         public MachineLearningComputePowerAction? Action { get; set; }
         /// <summary> [Required] The schedule trigger type. </summary>
-        public ComputeTriggerType? ComputeTriggerType { get; set; }
+        public MachineLearningTriggerType? TriggerType { get; set; }
         /// <summary> Required if triggerType is Recurrence. </summary>
         public ComputeStartStopRecurrenceSchedule RecurrenceSchedule { get; set; }
         /// <summary> Required if triggerType is Cron. </summary>

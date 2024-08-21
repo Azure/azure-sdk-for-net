@@ -20,16 +20,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> Trigger Type for backward compatibility. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public MachineLearningTriggerType? TriggerType
-        {
-            get
-            {
-                return new MachineLearningTriggerType(ComputeTriggerType.ToString());
-            }
-        }
-
         /// <summary> Required if triggerType is Cron. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public CronTrigger Cron
