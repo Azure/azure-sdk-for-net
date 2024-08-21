@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ProvisioningStatus = provisioningStatus;
             Status = status;
             Action = action;
-            TriggerType = triggerType;
+            ComputeTriggerType = triggerType;
             RecurrenceSchedule = recurrenceSchedule;
             CronSchedule = cronSchedule;
             Schedule = schedule;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> [Required] The compute power action. </summary>
         public MachineLearningComputePowerAction? Action { get; set; }
         /// <summary> [Required] The schedule trigger type. </summary>
-        public ComputeTriggerType? TriggerType { get; set; }
+        public ComputeTriggerType? ComputeTriggerType { get; set; }
         /// <summary> Required if triggerType is Recurrence. </summary>
         public ComputeStartStopRecurrenceSchedule RecurrenceSchedule { get; set; }
         /// <summary> Required if triggerType is Cron. </summary>

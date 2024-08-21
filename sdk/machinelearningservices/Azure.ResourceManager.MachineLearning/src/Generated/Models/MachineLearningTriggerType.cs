@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningTriggerType. </summary>
-    internal readonly partial struct MachineLearningTriggerType : IEquatable<MachineLearningTriggerType>
+    public readonly partial struct MachineLearningTriggerType : IEquatable<MachineLearningTriggerType>
     {
         private readonly string _value;
 
