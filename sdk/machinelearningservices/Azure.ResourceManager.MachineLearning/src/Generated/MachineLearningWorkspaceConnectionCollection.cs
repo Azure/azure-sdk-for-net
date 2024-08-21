@@ -487,17 +487,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<MachineLearningWorkspaceConnectionResource> IEnumerable<MachineLearningWorkspaceConnectionResource>.GetEnumerator()
         {
-            return GetAll(null, null, null, default).GetEnumerator();
+            return GetAll(null, null, true, default).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(null, null, null, default).GetEnumerator();
+            return GetAll(null, null, true, default).GetEnumerator();
         }
 
         IAsyncEnumerator<MachineLearningWorkspaceConnectionResource> IAsyncEnumerable<MachineLearningWorkspaceConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(null, null, null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(null, null, true, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
