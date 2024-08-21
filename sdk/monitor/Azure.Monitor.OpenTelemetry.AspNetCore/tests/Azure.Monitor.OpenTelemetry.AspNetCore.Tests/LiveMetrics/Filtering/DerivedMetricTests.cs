@@ -9,7 +9,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
     using Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering;
     using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
     using Xunit;
-    using AggregationType = Models.AggregationType;
     using RequestTelemetry = Azure.Monitor.OpenTelemetry.AspNetCore.Models.Request;
     using TelemetryType = Models.TelemetryType;
 
@@ -26,8 +25,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new[] { new FilterConjunctionGroupInfo(new List<FilterInfo> { filterInfo1, filterInfo2 }) },
                 projection: "Name",
-                aggregation: Models.AggregationType.Sum,
-                backEndAggregation: Models.AggregationType.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetryThatMustPass = new RequestTelemetry() { Name = "Both the words 'dog' and 'CAT' are here, which satisfies both filters" };
@@ -60,8 +59,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "Name",
-                aggregation: Models.AggregationType.Sum,
-                backEndAggregation: Models.AggregationType.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetryThatMustPass = new RequestTelemetry() { Name = "Both the words 'dog' and 'CAT' are here, which satisfies both filters" };
@@ -86,8 +85,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: null,
                 projection: "Name",
-                aggregation: Models.AggregationType.Sum,
-                backEndAggregation: Models.AggregationType.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetryThatMustPass = new RequestTelemetry() { Name = "Both the words 'dog' and 'CAT' are here, which satisfies both filters" };
@@ -121,8 +120,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                         new FilterConjunctionGroupInfo(new[] { filterInfoApple, filterInfoOrange })
                     },
                 projection: "Name",
-                aggregation: Models.AggregationType.Sum,
-                backEndAggregation: Models.AggregationType.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetryThatMustPass1 = new RequestTelemetry() { Name = "Both the words 'dog' and 'CAT' are here, which satisfies the first OR." };
@@ -167,8 +166,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "Id",
-                aggregation: Models.AggregationType.Sum,
-                backEndAggregation: Models.AggregationType.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetry = new DocumentMock() { Name = "1.23", Id = "5.67" };
@@ -179,7 +178,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
             double projection = metric.Project(telemetry);
 
             // ASSERT
-            Assert.Equal(Models.AggregationType.Sum, metric.AggregationType);
+            Assert.Equal(AggregationType.Sum, metric.AggregationType);
             Assert.Empty(errors);
             Assert.Equal(5.67d, projection);
         }
@@ -193,8 +192,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "CustomDimensions.Dimension1",
-                aggregation: Models.AggregationType.Sum,
-                backEndAggregation: Models.AggregationType.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetry = new DocumentMock(new List<KeyValuePairString>() { new("Dimension.1", "1.5") });
@@ -205,7 +204,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
             double projection = metric.Project(telemetry);
 
             // ASSERT
-            Assert.Equal(Models.AggregationType.Sum, metric.AggregationType);
+            Assert.Equal(AggregationType.Sum, metric.AggregationType);
             Assert.Empty(errors);
             Assert.Equal(1.5d, projection);
         }
@@ -219,8 +218,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "CustomMetrics.Metric1",
-                aggregation: Models.AggregationType.Sum,
-                backEndAggregation: Models.AggregationType.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetry = new DocumentMock() { Metrics = { ["Metric1"] = 1.75d } };
@@ -231,7 +230,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
             double projection = metric.Project(telemetry);
 
             // ASSERT
-            Assert.Equal(Models.AggregationType.Sum, metric.AggregationType);
+            Assert.Equal(AggregationType.Sum, metric.AggregationType);
             Assert.Empty(errors);
             Assert.Equal(1.75d, projection);
         }
@@ -245,8 +244,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "COUNT()",
-                aggregation: Models.AggregationType.Sum,
-                backEndAggregation: Models.AggregationType.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetry = new RequestTelemetry();
@@ -257,7 +256,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
             double projection = metric.Project(telemetry);
 
             // ASSERT
-            Assert.Equal(Models.AggregationType.Sum, metric.AggregationType);
+            Assert.Equal(AggregationType.Sum, metric.AggregationType);
             Assert.Empty(errors);
             Assert.Equal(1d, projection);
         }
@@ -271,8 +270,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "Duration",
-                aggregation: Models.AggregationType.Avg,
-                backEndAggregation: Models.AggregationType.Avg
+                aggregation: AggregationType.Avg,
+                backEndAggregation: AggregationType.Avg
             );
 
             var telemetry = new DocumentMock() { Duration = TimeSpan.FromMilliseconds(120) };
@@ -283,7 +282,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
             double projection = metric.Project(telemetry);
 
             // ASSERT
-            Assert.Equal(Models.AggregationType.Avg, metric.AggregationType);
+            Assert.Equal(AggregationType.Avg, metric.AggregationType);
             Assert.Empty(errors);
             Assert.Equal(120, projection);
         }
@@ -298,7 +297,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "Duration",
                 aggregation: AggregationType.Avg,
-                backEndAggregation: Models.AggregationType.Avg
+                backEndAggregation: AggregationType.Avg
             );
 
             var durationString = TimeSpan.FromMilliseconds(120).ToString();
@@ -326,8 +325,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new[] { new FilterConjunctionGroupInfo(new[] { filterInfo1, filterInfo2 }) },
                 projection: "Name",
-                aggregation: Models.AggregationType.Avg,
-                backEndAggregation: Models.AggregationType.Avg
+                aggregation: AggregationType.Avg,
+                backEndAggregation: AggregationType.Avg
             );
 
             // ACT
@@ -363,8 +362,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "NonExistentFieldName",
-                aggregation: Models.AggregationType.Sum,
-                backEndAggregation: Models.AggregationType.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             // ACT, ASSERT
@@ -381,8 +380,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "Id",
-                aggregation: Models.AggregationType.Sum,
-                backEndAggregation: Models.AggregationType.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             var telemetry = new DocumentMock() { Id = "NotDoubleValue" };
@@ -414,8 +413,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.Filtering
                 telemetryType: TelemetryType.Request.ToString(),
                 filterGroups: new FilterConjunctionGroupInfo[0],
                 projection: "*",
-                aggregation: Models.AggregationType.Sum,
-                backEndAggregation: Models.AggregationType.Sum
+                aggregation: AggregationType.Sum,
+                backEndAggregation: AggregationType.Sum
             );
 
             // ACT, ASSERT
