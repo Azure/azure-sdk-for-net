@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Information of a specific aggregation in the expansion result. </summary>
+    /// <summary>
+    /// Information of a specific aggregation in the expansion result.
+    /// Serialized Name: ExpansionResultAggregation
+    /// </summary>
     public partial class ExpansionResultAggregation
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExpansionResultAggregation"/>. </summary>
-        /// <param name="count"> Total number of aggregations of the given kind (and aggregationType if given) in the expansion result. </param>
-        /// <param name="entityKind"> The kind of the aggregated entity. </param>
+        /// <param name="count">
+        /// Total number of aggregations of the given kind (and aggregationType if given) in the expansion result.
+        /// Serialized Name: ExpansionResultAggregation.count
+        /// </param>
+        /// <param name="entityKind">
+        /// The kind of the aggregated entity.
+        /// Serialized Name: ExpansionResultAggregation.entityKind
+        /// </param>
         internal ExpansionResultAggregation(int count, SecurityInsightsEntityKind entityKind)
         {
             Count = count;
@@ -55,10 +64,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpansionResultAggregation"/>. </summary>
-        /// <param name="aggregationType"> The common type of the aggregation. (for e.g. entity field name). </param>
-        /// <param name="count"> Total number of aggregations of the given kind (and aggregationType if given) in the expansion result. </param>
-        /// <param name="displayName"> The display name of the aggregation by type. </param>
-        /// <param name="entityKind"> The kind of the aggregated entity. </param>
+        /// <param name="aggregationType">
+        /// The common type of the aggregation. (for e.g. entity field name)
+        /// Serialized Name: ExpansionResultAggregation.aggregationType
+        /// </param>
+        /// <param name="count">
+        /// Total number of aggregations of the given kind (and aggregationType if given) in the expansion result.
+        /// Serialized Name: ExpansionResultAggregation.count
+        /// </param>
+        /// <param name="displayName">
+        /// The display name of the aggregation by type.
+        /// Serialized Name: ExpansionResultAggregation.displayName
+        /// </param>
+        /// <param name="entityKind">
+        /// The kind of the aggregated entity.
+        /// Serialized Name: ExpansionResultAggregation.entityKind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExpansionResultAggregation(string aggregationType, int count, string displayName, SecurityInsightsEntityKind entityKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,13 +95,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> The common type of the aggregation. (for e.g. entity field name). </summary>
+        /// <summary>
+        /// The common type of the aggregation. (for e.g. entity field name)
+        /// Serialized Name: ExpansionResultAggregation.aggregationType
+        /// </summary>
         public string AggregationType { get; }
-        /// <summary> Total number of aggregations of the given kind (and aggregationType if given) in the expansion result. </summary>
+        /// <summary>
+        /// Total number of aggregations of the given kind (and aggregationType if given) in the expansion result.
+        /// Serialized Name: ExpansionResultAggregation.count
+        /// </summary>
         public int Count { get; }
-        /// <summary> The display name of the aggregation by type. </summary>
+        /// <summary>
+        /// The display name of the aggregation by type.
+        /// Serialized Name: ExpansionResultAggregation.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> The kind of the aggregated entity. </summary>
+        /// <summary>
+        /// The kind of the aggregated entity.
+        /// Serialized Name: ExpansionResultAggregation.entityKind
+        /// </summary>
         public SecurityInsightsEntityKind EntityKind { get; }
     }
 }

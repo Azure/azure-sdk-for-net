@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents Dynamics365 data connector. </summary>
+    /// <summary>
+    /// Represents Dynamics365 data connector.
+    /// Serialized Name: Dynamics365DataConnector
+    /// </summary>
     public partial class Dynamics365DataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="Dynamics365DataConnector"/>. </summary>
@@ -26,11 +29,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// The data connector kind
+        /// Serialized Name: DataConnector.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dynamics365CdsActivities"> Common Data Service data type connection. </param>
+        /// <param name="tenantId">
+        /// The tenant id to connect to, and get the data from.
+        /// Serialized Name: Dynamics365DataConnector.properties.tenantId
+        /// </param>
+        /// <param name="dynamics365CdsActivities">
+        /// Common Data Service data type connection.
+        /// Serialized Name: Dynamics365DataConnector.properties.dataTypes.dynamics365CdsActivities
+        /// </param>
         internal Dynamics365DataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, Dynamics365DataConnectorDataTypesDynamics365CdsActivities dynamics365CdsActivities) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
@@ -38,11 +53,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary> The tenant id to connect to, and get the data from. </summary>
+        /// <summary>
+        /// The tenant id to connect to, and get the data from.
+        /// Serialized Name: Dynamics365DataConnector.properties.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> Common Data Service data type connection. </summary>
+        /// <summary>
+        /// Common Data Service data type connection.
+        /// Serialized Name: Dynamics365DataConnector.properties.dataTypes.dynamics365CdsActivities
+        /// </summary>
         internal Dynamics365DataConnectorDataTypesDynamics365CdsActivities Dynamics365CdsActivities { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        /// <summary>
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </summary>
         public SecurityInsightsDataTypeConnectionState? Dynamics365CdsActivitiesState
         {
             get => Dynamics365CdsActivities is null ? default(SecurityInsightsDataTypeConnectionState?) : Dynamics365CdsActivities.State;

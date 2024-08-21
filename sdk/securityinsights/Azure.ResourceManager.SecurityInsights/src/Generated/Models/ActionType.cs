@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The type of the automation rule action. </summary>
+    /// <summary>
+    /// The type of the automation rule action.
+    /// Serialized Name: ActionType
+    /// </summary>
     internal readonly partial struct ActionType : IEquatable<ActionType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string RunPlaybookValue = "RunPlaybook";
         private const string AddIncidentTaskValue = "AddIncidentTask";
 
-        /// <summary> Modify an object's properties. </summary>
+        /// <summary>
+        /// Modify an object's properties
+        /// Serialized Name: ActionType.ModifyProperties
+        /// </summary>
         public static ActionType ModifyProperties { get; } = new ActionType(ModifyPropertiesValue);
-        /// <summary> Run a playbook on an object. </summary>
+        /// <summary>
+        /// Run a playbook on an object
+        /// Serialized Name: ActionType.RunPlaybook
+        /// </summary>
         public static ActionType RunPlaybook { get; } = new ActionType(RunPlaybookValue);
-        /// <summary> Add a task to an incident object. </summary>
+        /// <summary>
+        /// Add a task to an incident object
+        /// Serialized Name: ActionType.AddIncidentTask
+        /// </summary>
         public static ActionType AddIncidentTask { get; } = new ActionType(AddIncidentTaskValue);
         /// <summary> Determines if two <see cref="ActionType"/> values are the same. </summary>
         public static bool operator ==(ActionType left, ActionType right) => left.Equals(right);

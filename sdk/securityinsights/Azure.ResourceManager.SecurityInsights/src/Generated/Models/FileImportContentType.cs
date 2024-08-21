@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The content type of this file. </summary>
+    /// <summary>
+    /// The content type of this file.
+    /// Serialized Name: FileImportContentType
+    /// </summary>
     public readonly partial struct FileImportContentType : IEquatable<FileImportContentType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string StixIndicatorValue = "StixIndicator";
         private const string UnspecifiedValue = "Unspecified";
 
-        /// <summary> File containing records with the core fields of an indicator, plus the observables to construct the STIX pattern. </summary>
+        /// <summary>
+        /// File containing records with the core fields of an indicator, plus the observables to construct the STIX pattern.
+        /// Serialized Name: FileImportContentType.BasicIndicator
+        /// </summary>
         public static FileImportContentType BasicIndicator { get; } = new FileImportContentType(BasicIndicatorValue);
-        /// <summary> File containing STIX indicators. </summary>
+        /// <summary>
+        /// File containing STIX indicators.
+        /// Serialized Name: FileImportContentType.StixIndicator
+        /// </summary>
         public static FileImportContentType StixIndicator { get; } = new FileImportContentType(StixIndicatorValue);
-        /// <summary> File containing other records. </summary>
+        /// <summary>
+        /// File containing other records.
+        /// Serialized Name: FileImportContentType.Unspecified
+        /// </summary>
         public static FileImportContentType Unspecified { get; } = new FileImportContentType(UnspecifiedValue);
         /// <summary> Determines if two <see cref="FileImportContentType"/> values are the same. </summary>
         public static bool operator ==(FileImportContentType left, FileImportContentType right) => left.Equals(right);

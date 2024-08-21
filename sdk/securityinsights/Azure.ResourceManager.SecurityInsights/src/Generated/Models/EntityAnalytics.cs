@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Settings with single toggle. </summary>
+    /// <summary>
+    /// Settings with single toggle.
+    /// Serialized Name: EntityAnalytics
+    /// </summary>
     public partial class EntityAnalytics : SecurityInsightsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="EntityAnalytics"/>. </summary>
@@ -27,17 +30,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the setting. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// The kind of the setting
+        /// Serialized Name: Settings.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="entityProviders"> The relevant entity providers that are synced. </param>
+        /// <param name="entityProviders">
+        /// The relevant entity providers that are synced
+        /// Serialized Name: EntityAnalytics.properties.entityProviders
+        /// </param>
         internal EntityAnalytics(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<EntityProvider> entityProviders) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             EntityProviders = entityProviders;
             Kind = kind;
         }
 
-        /// <summary> The relevant entity providers that are synced. </summary>
+        /// <summary>
+        /// The relevant entity providers that are synced
+        /// Serialized Name: EntityAnalytics.properties.entityProviders
+        /// </summary>
         public IList<EntityProvider> EntityProviders { get; }
     }
 }

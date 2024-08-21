@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes the request body for triggering a playbook on an entity. </summary>
+    /// <summary>
+    /// Describes the request body for triggering a playbook on an entity.
+    /// Serialized Name: EntityManualTriggerRequestBody
+    /// </summary>
     public partial class EntityManualTriggerRequestBody
     {
         /// <summary>
@@ -46,9 +50,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EntityManualTriggerRequestBody"/>. </summary>
-        /// <param name="logicAppsResourceId"> The resource id of the playbook resource. </param>
+        /// <param name="logicAppsResourceId">
+        /// The resource id of the playbook resource.
+        /// Serialized Name: EntityManualTriggerRequestBody.logicAppsResourceId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logicAppsResourceId"/> is null. </exception>
-        public EntityManualTriggerRequestBody(string logicAppsResourceId)
+        public EntityManualTriggerRequestBody(ResourceIdentifier logicAppsResourceId)
         {
             Argument.AssertNotNull(logicAppsResourceId, nameof(logicAppsResourceId));
 
@@ -56,11 +63,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityManualTriggerRequestBody"/>. </summary>
-        /// <param name="incidentArmId"> Incident ARM id. </param>
-        /// <param name="tenantId"> The tenant id of the playbook resource. </param>
-        /// <param name="logicAppsResourceId"> The resource id of the playbook resource. </param>
+        /// <param name="incidentArmId">
+        /// Incident ARM id.
+        /// Serialized Name: EntityManualTriggerRequestBody.incidentArmId
+        /// </param>
+        /// <param name="tenantId">
+        /// The tenant id of the playbook resource.
+        /// Serialized Name: EntityManualTriggerRequestBody.tenantId
+        /// </param>
+        /// <param name="logicAppsResourceId">
+        /// The resource id of the playbook resource.
+        /// Serialized Name: EntityManualTriggerRequestBody.logicAppsResourceId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EntityManualTriggerRequestBody(string incidentArmId, Guid? tenantId, string logicAppsResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EntityManualTriggerRequestBody(ResourceIdentifier incidentArmId, Guid? tenantId, ResourceIdentifier logicAppsResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IncidentArmId = incidentArmId;
             TenantId = tenantId;
@@ -73,11 +89,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Incident ARM id. </summary>
-        public string IncidentArmId { get; set; }
-        /// <summary> The tenant id of the playbook resource. </summary>
+        /// <summary>
+        /// Incident ARM id.
+        /// Serialized Name: EntityManualTriggerRequestBody.incidentArmId
+        /// </summary>
+        public ResourceIdentifier IncidentArmId { get; set; }
+        /// <summary>
+        /// The tenant id of the playbook resource.
+        /// Serialized Name: EntityManualTriggerRequestBody.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> The resource id of the playbook resource. </summary>
-        public string LogicAppsResourceId { get; }
+        /// <summary>
+        /// The resource id of the playbook resource.
+        /// Serialized Name: EntityManualTriggerRequestBody.logicAppsResourceId
+        /// </summary>
+        public ResourceIdentifier LogicAppsResourceId { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The status of the hunt. </summary>
+    /// <summary>
+    /// The status of the hunt.
+    /// Serialized Name: Status
+    /// </summary>
     public readonly partial struct Status : IEquatable<Status>
     {
         private readonly string _value;
@@ -31,21 +34,45 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string FailedValue = "Failed";
         private const string InProgressValue = "InProgress";
 
-        /// <summary> New. </summary>
+        /// <summary>
+        /// New
+        /// Serialized Name: Status.New
+        /// </summary>
         public static Status New { get; } = new Status(NewValue);
-        /// <summary> Active. </summary>
+        /// <summary>
+        /// Active
+        /// Serialized Name: Status.Active
+        /// </summary>
         public static Status Active { get; } = new Status(ActiveValue);
-        /// <summary> Closed. </summary>
+        /// <summary>
+        /// Closed
+        /// Serialized Name: Status.Closed
+        /// </summary>
         public static Status Closed { get; } = new Status(ClosedValue);
-        /// <summary> Backlog. </summary>
+        /// <summary>
+        /// Backlog
+        /// Serialized Name: Status.Backlog
+        /// </summary>
         public static Status Backlog { get; } = new Status(BacklogValue);
-        /// <summary> Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: Status.Approved
+        /// </summary>
         public static Status Approved { get; } = new Status(ApprovedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: Status.Succeeded
+        /// </summary>
         public static Status Succeeded { get; } = new Status(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: Status.Failed
+        /// </summary>
         public static Status Failed { get; } = new Status(FailedValue);
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: Status.InProgress
+        /// </summary>
         public static Status InProgress { get; } = new Status(InProgressValue);
         /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>
         public static bool operator ==(Status left, Status right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Alert detail. </summary>
+    /// <summary>
+    /// Alert detail
+    /// Serialized Name: AlertDetail
+    /// </summary>
     public readonly partial struct SecurityInsightsAlertDetail : IEquatable<SecurityInsightsAlertDetail>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string DisplayNameValue = "DisplayName";
         private const string SeverityValue = "Severity";
 
-        /// <summary> Alert display name. </summary>
+        /// <summary>
+        /// Alert display name
+        /// Serialized Name: AlertDetail.DisplayName
+        /// </summary>
         public static SecurityInsightsAlertDetail DisplayName { get; } = new SecurityInsightsAlertDetail(DisplayNameValue);
-        /// <summary> Alert severity. </summary>
+        /// <summary>
+        /// Alert severity
+        /// Serialized Name: AlertDetail.Severity
+        /// </summary>
         public static SecurityInsightsAlertDetail Severity { get; } = new SecurityInsightsAlertDetail(SeverityValue);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertDetail"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertDetail left, SecurityInsightsAlertDetail right) => left.Equals(right);

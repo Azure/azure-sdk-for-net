@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents an ip entity. </summary>
+    /// <summary>
+    /// Represents an ip entity.
+    /// Serialized Name: IpEntity
+    /// </summary>
     public partial class SecurityInsightsIPEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIPEntity"/>. </summary>
@@ -29,13 +32,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="kind">
+        /// The kind of the entity.
+        /// Serialized Name: Entity.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="address"> The IP address as string, e.g. 127.0.0.1 (either in Ipv4 or Ipv6). </param>
-        /// <param name="location"> The geo-location context attached to the ip entity. </param>
-        /// <param name="threatIntelligence"> A list of TI contexts attached to the ip entity. </param>
+        /// <param name="additionalData">
+        /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: IpEntity.properties.additionalData
+        /// </param>
+        /// <param name="friendlyName">
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: IpEntity.properties.friendlyName
+        /// </param>
+        /// <param name="address">
+        /// The IP address as string, e.g. 127.0.0.1 (either in Ipv4 or Ipv6)
+        /// Serialized Name: IpEntity.properties.address
+        /// </param>
+        /// <param name="location">
+        /// The geo-location context attached to the ip entity
+        /// Serialized Name: IpEntity.properties.location
+        /// </param>
+        /// <param name="threatIntelligence">
+        /// A list of TI contexts attached to the ip entity.
+        /// Serialized Name: IpEntity.properties.threatIntelligence
+        /// </param>
         internal SecurityInsightsIPEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IPAddress address, SecurityInsightsIPEntityGeoLocation location, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -48,6 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: IpEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -77,13 +99,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        /// <summary>
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: IpEntity.properties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The IP address as string, e.g. 127.0.0.1 (either in Ipv4 or Ipv6). </summary>
+        /// <summary>
+        /// The IP address as string, e.g. 127.0.0.1 (either in Ipv4 or Ipv6)
+        /// Serialized Name: IpEntity.properties.address
+        /// </summary>
         public IPAddress Address { get; }
-        /// <summary> The geo-location context attached to the ip entity. </summary>
+        /// <summary>
+        /// The geo-location context attached to the ip entity
+        /// Serialized Name: IpEntity.properties.location
+        /// </summary>
         public SecurityInsightsIPEntityGeoLocation Location { get; }
-        /// <summary> A list of TI contexts attached to the ip entity. </summary>
+        /// <summary>
+        /// A list of TI contexts attached to the ip entity.
+        /// Serialized Name: IpEntity.properties.threatIntelligence
+        /// </summary>
         public IReadOnlyList<SecurityInsightsThreatIntelligence> ThreatIntelligence { get; }
     }
 }

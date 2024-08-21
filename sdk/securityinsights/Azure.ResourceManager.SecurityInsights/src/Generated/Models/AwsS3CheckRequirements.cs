@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Amazon Web Services S3 requirements check request. </summary>
+    /// <summary>
+    /// Amazon Web Services S3 requirements check request.
+    /// Serialized Name: AwsS3CheckRequirements
+    /// </summary>
     public partial class AwsS3CheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="AwsS3CheckRequirements"/>. </summary>
@@ -20,7 +23,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AwsS3CheckRequirements"/>. </summary>
-        /// <param name="kind"> Describes the kind of connector to be checked. </param>
+        /// <param name="kind">
+        /// Describes the kind of connector to be checked.
+        /// Serialized Name: DataConnectorsCheckRequirements.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AwsS3CheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {

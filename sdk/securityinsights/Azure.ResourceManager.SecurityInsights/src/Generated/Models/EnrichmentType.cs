@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The EnrichmentType. </summary>
+    /// <summary>
+    /// The EnrichmentType.
+    /// Serialized Name: EnrichmentType
+    /// </summary>
     public readonly partial struct EnrichmentType : IEquatable<EnrichmentType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string MainValue = "main";
 
-        /// <summary> main. </summary>
+        /// <summary>
+        /// main
+        /// Serialized Name: EnrichmentType.main
+        /// </summary>
         public static EnrichmentType Main { get; } = new EnrichmentType(MainValue);
         /// <summary> Determines if two <see cref="EnrichmentType"/> values are the same. </summary>
         public static bool operator ==(EnrichmentType left, EnrichmentType right) => left.Equals(right);

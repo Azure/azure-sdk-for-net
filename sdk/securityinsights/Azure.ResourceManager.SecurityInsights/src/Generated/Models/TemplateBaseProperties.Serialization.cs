@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string packageId = default;
             PackageKind? packageKind = default;
             string packageName = default;
-            Flag? isDeprecated = default;
+            MetadataFlag? isDeprecated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    isDeprecated = new Flag(property.Value.GetString());
+                    isDeprecated = new MetadataFlag(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

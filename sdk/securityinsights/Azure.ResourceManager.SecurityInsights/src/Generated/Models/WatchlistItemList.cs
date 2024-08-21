@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List all the watchlist items. </summary>
+    /// <summary>
+    /// List all the watchlist items.
+    /// Serialized Name: WatchlistItemList
+    /// </summary>
     internal partial class WatchlistItemList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WatchlistItemList"/>. </summary>
-        /// <param name="value"> Array of watchlist items. </param>
+        /// <param name="value">
+        /// Array of watchlist items.
+        /// Serialized Name: WatchlistItemList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WatchlistItemList(IEnumerable<SecurityInsightsWatchlistItemData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WatchlistItemList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of watchlist item. </param>
-        /// <param name="value"> Array of watchlist items. </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of watchlist item.
+        /// Serialized Name: WatchlistItemList.nextLink
+        /// </param>
+        /// <param name="value">
+        /// Array of watchlist items.
+        /// Serialized Name: WatchlistItemList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WatchlistItemList(string nextLink, IReadOnlyList<SecurityInsightsWatchlistItemData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> URL to fetch the next set of watchlist item. </summary>
+        /// <summary>
+        /// URL to fetch the next set of watchlist item.
+        /// Serialized Name: WatchlistItemList.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> Array of watchlist items. </summary>
+        /// <summary>
+        /// Array of watchlist items.
+        /// Serialized Name: WatchlistItemList.value
+        /// </summary>
         public IReadOnlyList<SecurityInsightsWatchlistItemData> Value { get; }
     }
 }

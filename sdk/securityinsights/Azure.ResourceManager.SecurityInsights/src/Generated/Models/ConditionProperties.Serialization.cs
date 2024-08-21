@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             string stixObjectType = default;
             IList<ConditionClause> clauses = default;
-            Connective? conditionConnective = default;
+            ClauseConnective? conditionConnective = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    conditionConnective = new Connective(property.Value.GetString());
+                    conditionConnective = new ClauseConnective(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

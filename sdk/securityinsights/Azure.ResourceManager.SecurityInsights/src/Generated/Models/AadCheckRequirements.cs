@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents AADIP (Azure Active Directory Identity Protection) requirements check request. </summary>
+    /// <summary>
+    /// Represents AADIP (Azure Active Directory Identity Protection) requirements check request.
+    /// Serialized Name: AADCheckRequirements
+    /// </summary>
     public partial class AadCheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="AadCheckRequirements"/>. </summary>
@@ -20,16 +23,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AadCheckRequirements"/>. </summary>
-        /// <param name="kind"> Describes the kind of connector to be checked. </param>
+        /// <param name="kind">
+        /// Describes the kind of connector to be checked.
+        /// Serialized Name: DataConnectorsCheckRequirements.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="tenantId">
+        /// The tenant id to connect to, and get the data from.
+        /// Serialized Name: AADCheckRequirements.properties.tenantId
+        /// </param>
         internal AadCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId) : base(kind, serializedAdditionalRawData)
         {
             TenantId = tenantId;
             Kind = kind;
         }
 
-        /// <summary> The tenant id to connect to, and get the data from. </summary>
+        /// <summary>
+        /// The tenant id to connect to, and get the data from.
+        /// Serialized Name: AADCheckRequirements.properties.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
     }
 }

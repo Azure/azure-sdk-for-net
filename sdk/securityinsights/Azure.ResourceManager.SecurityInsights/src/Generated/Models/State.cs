@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> State of recommendation. </summary>
+    /// <summary>
+    /// State of recommendation.
+    /// Serialized Name: State
+    /// </summary>
     public readonly partial struct State : IEquatable<State>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string CompletedByUserValue = "CompletedByUser";
         private const string CompletedBySystemValue = "CompletedBySystem";
 
-        /// <summary> Recommendation is active. </summary>
+        /// <summary>
+        /// Recommendation is active.
+        /// Serialized Name: State.Active
+        /// </summary>
         public static State Active { get; } = new State(ActiveValue);
-        /// <summary> Recommendation is in progress. </summary>
+        /// <summary>
+        /// Recommendation is in progress.
+        /// Serialized Name: State.InProgress
+        /// </summary>
         public static State InProgress { get; } = new State(InProgressValue);
-        /// <summary> Recommendation has been dismissed. </summary>
+        /// <summary>
+        /// Recommendation has been dismissed.
+        /// Serialized Name: State.Dismissed
+        /// </summary>
         public static State Dismissed { get; } = new State(DismissedValue);
-        /// <summary> Recommendation has been completed by user. </summary>
+        /// <summary>
+        /// Recommendation has been completed by user.
+        /// Serialized Name: State.CompletedByUser
+        /// </summary>
         public static State CompletedByUser { get; } = new State(CompletedByUserValue);
-        /// <summary> Recommendation has been completed by the system. </summary>
+        /// <summary>
+        /// Recommendation has been completed by the system.
+        /// Serialized Name: State.CompletedBySystem
+        /// </summary>
         public static State CompletedBySystem { get; } = new State(CompletedBySystemValue);
         /// <summary> Determines if two <see cref="State"/> values are the same. </summary>
         public static bool operator ==(State left, State right) => left.Equals(right);

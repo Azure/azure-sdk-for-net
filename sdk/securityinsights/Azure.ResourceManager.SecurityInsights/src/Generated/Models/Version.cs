@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The version of the source control. </summary>
+    /// <summary>
+    /// The version of the source control.
+    /// Serialized Name: Version
+    /// </summary>
     public readonly partial struct Version : IEquatable<Version>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string V1Value = "V1";
         private const string V2Value = "V2";
 
-        /// <summary> V1. </summary>
+        /// <summary>
+        /// V1
+        /// Serialized Name: Version.V1
+        /// </summary>
         public static Version V1 { get; } = new Version(V1Value);
-        /// <summary> V2. </summary>
+        /// <summary>
+        /// V2
+        /// Serialized Name: Version.V2
+        /// </summary>
         public static Version V2 { get; } = new Version(V2Value);
         /// <summary> Determines if two <see cref="Version"/> values are the same. </summary>
         public static bool operator ==(Version left, Version right) => left.Equals(right);

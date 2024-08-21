@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describe the request properties needed to successfully pull from the server. </summary>
+    /// <summary>
+    /// Describe the request properties needed to successfully pull from the server
+    /// Serialized Name: CodelessConnectorPollingRequestProperties
+    /// </summary>
     public partial class CodelessConnectorPollingRequestProperties
     {
         /// <summary>
@@ -46,10 +49,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingRequestProperties"/>. </summary>
-        /// <param name="apiEndpoint"> Describe the endpoint we should pull the data from. </param>
-        /// <param name="queryWindowInMin"> The window interval we will use the pull the data. </param>
-        /// <param name="httpMethod"> The http method type we will use in the poll request, GET or POST. </param>
-        /// <param name="queryTimeFormat"> The time format will be used the query events in a specific window. </param>
+        /// <param name="apiEndpoint">
+        /// Describe the endpoint we should pull the data from
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.apiEndpoint
+        /// </param>
+        /// <param name="queryWindowInMin">
+        /// The window interval we will use the pull the data
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.queryWindowInMin
+        /// </param>
+        /// <param name="httpMethod">
+        /// The http method type we will use in the poll request, GET or POST
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.httpMethod
+        /// </param>
+        /// <param name="queryTimeFormat">
+        /// The time format will be used the query events in a specific window
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.queryTimeFormat
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiEndpoint"/>, <paramref name="httpMethod"/> or <paramref name="queryTimeFormat"/> is null. </exception>
         public CodelessConnectorPollingRequestProperties(string apiEndpoint, int queryWindowInMin, string httpMethod, string queryTimeFormat)
         {
@@ -64,18 +79,54 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingRequestProperties"/>. </summary>
-        /// <param name="apiEndpoint"> Describe the endpoint we should pull the data from. </param>
-        /// <param name="rateLimitQps"> Defines the rate limit QPS. </param>
-        /// <param name="queryWindowInMin"> The window interval we will use the pull the data. </param>
-        /// <param name="httpMethod"> The http method type we will use in the poll request, GET or POST. </param>
-        /// <param name="queryTimeFormat"> The time format will be used the query events in a specific window. </param>
-        /// <param name="retryCount"> Describe the amount of time we should try and poll the data in case of failure. </param>
-        /// <param name="timeoutInSeconds"> The number of seconds we will consider as a request timeout. </param>
-        /// <param name="headers"> Describe the headers sent in the poll request. </param>
-        /// <param name="queryParameters"> Describe the query parameters sent in the poll request. </param>
-        /// <param name="queryParametersTemplate"> For advanced scenarios for example user name/password embedded in nested JSON payload. </param>
-        /// <param name="startTimeAttributeName"> This will be used the query events from a start of the time window. </param>
-        /// <param name="endTimeAttributeName"> This will be used the query events from the end of the time window. </param>
+        /// <param name="apiEndpoint">
+        /// Describe the endpoint we should pull the data from
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.apiEndpoint
+        /// </param>
+        /// <param name="rateLimitQps">
+        /// Defines the rate limit QPS
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.rateLimitQps
+        /// </param>
+        /// <param name="queryWindowInMin">
+        /// The window interval we will use the pull the data
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.queryWindowInMin
+        /// </param>
+        /// <param name="httpMethod">
+        /// The http method type we will use in the poll request, GET or POST
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.httpMethod
+        /// </param>
+        /// <param name="queryTimeFormat">
+        /// The time format will be used the query events in a specific window
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.queryTimeFormat
+        /// </param>
+        /// <param name="retryCount">
+        /// Describe the amount of time we should try and poll the data in case of failure
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.retryCount
+        /// </param>
+        /// <param name="timeoutInSeconds">
+        /// The number of seconds we will consider as a request timeout
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.timeoutInSeconds
+        /// </param>
+        /// <param name="headers">
+        /// Describe the headers sent in the poll request
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.headers
+        /// </param>
+        /// <param name="queryParameters">
+        /// Describe the query parameters sent in the poll request
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.queryParameters
+        /// </param>
+        /// <param name="queryParametersTemplate">
+        /// For advanced scenarios for example user name/password embedded in nested JSON payload
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.queryParametersTemplate
+        /// </param>
+        /// <param name="startTimeAttributeName">
+        /// This will be used the query events from a start of the time window
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.startTimeAttributeName
+        /// </param>
+        /// <param name="endTimeAttributeName">
+        /// This will be used the query events from the end of the time window
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.endTimeAttributeName
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CodelessConnectorPollingRequestProperties(string apiEndpoint, int? rateLimitQps, int queryWindowInMin, string httpMethod, string queryTimeFormat, int? retryCount, int? timeoutInSeconds, BinaryData headers, BinaryData queryParameters, string queryParametersTemplate, string startTimeAttributeName, string endTimeAttributeName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -99,22 +150,44 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Describe the endpoint we should pull the data from. </summary>
+        /// <summary>
+        /// Describe the endpoint we should pull the data from
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.apiEndpoint
+        /// </summary>
         public string ApiEndpoint { get; set; }
-        /// <summary> Defines the rate limit QPS. </summary>
+        /// <summary>
+        /// Defines the rate limit QPS
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.rateLimitQps
+        /// </summary>
         public int? RateLimitQps { get; set; }
-        /// <summary> The window interval we will use the pull the data. </summary>
+        /// <summary>
+        /// The window interval we will use the pull the data
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.queryWindowInMin
+        /// </summary>
         public int QueryWindowInMin { get; set; }
-        /// <summary> The http method type we will use in the poll request, GET or POST. </summary>
+        /// <summary>
+        /// The http method type we will use in the poll request, GET or POST
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.httpMethod
+        /// </summary>
         public string HttpMethod { get; set; }
-        /// <summary> The time format will be used the query events in a specific window. </summary>
+        /// <summary>
+        /// The time format will be used the query events in a specific window
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.queryTimeFormat
+        /// </summary>
         public string QueryTimeFormat { get; set; }
-        /// <summary> Describe the amount of time we should try and poll the data in case of failure. </summary>
+        /// <summary>
+        /// Describe the amount of time we should try and poll the data in case of failure
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.retryCount
+        /// </summary>
         public int? RetryCount { get; set; }
-        /// <summary> The number of seconds we will consider as a request timeout. </summary>
+        /// <summary>
+        /// The number of seconds we will consider as a request timeout
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.timeoutInSeconds
+        /// </summary>
         public int? TimeoutInSeconds { get; set; }
         /// <summary>
         /// Describe the headers sent in the poll request
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.headers
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -146,6 +219,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public BinaryData Headers { get; set; }
         /// <summary>
         /// Describe the query parameters sent in the poll request
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.queryParameters
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -175,11 +249,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public BinaryData QueryParameters { get; set; }
-        /// <summary> For advanced scenarios for example user name/password embedded in nested JSON payload. </summary>
+        /// <summary>
+        /// For advanced scenarios for example user name/password embedded in nested JSON payload
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.queryParametersTemplate
+        /// </summary>
         public string QueryParametersTemplate { get; set; }
-        /// <summary> This will be used the query events from a start of the time window. </summary>
+        /// <summary>
+        /// This will be used the query events from a start of the time window
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.startTimeAttributeName
+        /// </summary>
         public string StartTimeAttributeName { get; set; }
-        /// <summary> This will be used the query events from the end of the time window. </summary>
+        /// <summary>
+        /// This will be used the query events from the end of the time window
+        /// Serialized Name: CodelessConnectorPollingRequestProperties.endTimeAttributeName
+        /// </summary>
         public string EndTimeAttributeName { get; set; }
     }
 }

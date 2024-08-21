@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IList<CodelessUiConnectorConfigPropertiesSampleQueriesItem> sampleQueries = default;
             IList<CodelessUiConnectorConfigPropertiesDataTypesItem> dataTypes = default;
             IList<CodelessUiConnectorConfigPropertiesConnectivityCriteriaItem> connectivityCriteria = default;
-            Availability availability = default;
-            Permissions permissions = default;
+            ConnectorAvailability availability = default;
+            ConnectorPermissions permissions = default;
             IList<CodelessUiConnectorConfigPropertiesInstructionStepsItem> instructionSteps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("availability"u8))
                 {
-                    availability = Availability.DeserializeAvailability(property.Value, options);
+                    availability = ConnectorAvailability.DeserializeConnectorAvailability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("permissions"u8))
                 {
-                    permissions = Permissions.DeserializePermissions(property.Value, options);
+                    permissions = ConnectorPermissions.DeserializeConnectorPermissions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instructionSteps"u8))

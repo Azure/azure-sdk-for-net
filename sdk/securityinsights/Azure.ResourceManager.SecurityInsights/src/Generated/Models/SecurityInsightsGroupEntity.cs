@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a security group entity. </summary>
+    /// <summary>
+    /// Represents a security group entity.
+    /// Serialized Name: SecurityGroupEntity
+    /// </summary>
     public partial class SecurityInsightsGroupEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupEntity"/>. </summary>
@@ -27,13 +30,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="kind">
+        /// The kind of the entity.
+        /// Serialized Name: Entity.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="distinguishedName"> The group distinguished name. </param>
-        /// <param name="objectGuid"> A single-value attribute that is the unique identifier for the object, assigned by active directory. </param>
-        /// <param name="sid"> The SID attribute is a single-value attribute that specifies the security identifier (SID) of the group. </param>
+        /// <param name="additionalData">
+        /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: SecurityGroupEntity.properties.additionalData
+        /// </param>
+        /// <param name="friendlyName">
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: SecurityGroupEntity.properties.friendlyName
+        /// </param>
+        /// <param name="distinguishedName">
+        /// The group distinguished name
+        /// Serialized Name: SecurityGroupEntity.properties.distinguishedName
+        /// </param>
+        /// <param name="objectGuid">
+        /// A single-value attribute that is the unique identifier for the object, assigned by active directory.
+        /// Serialized Name: SecurityGroupEntity.properties.objectGuid
+        /// </param>
+        /// <param name="sid">
+        /// The SID attribute is a single-value attribute that specifies the security identifier (SID) of the group
+        /// Serialized Name: SecurityGroupEntity.properties.sid
+        /// </param>
         internal SecurityInsightsGroupEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string distinguishedName, Guid? objectGuid, string sid) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -46,6 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: SecurityGroupEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -75,13 +97,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        /// <summary>
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: SecurityGroupEntity.properties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The group distinguished name. </summary>
+        /// <summary>
+        /// The group distinguished name
+        /// Serialized Name: SecurityGroupEntity.properties.distinguishedName
+        /// </summary>
         public string DistinguishedName { get; }
-        /// <summary> A single-value attribute that is the unique identifier for the object, assigned by active directory. </summary>
+        /// <summary>
+        /// A single-value attribute that is the unique identifier for the object, assigned by active directory.
+        /// Serialized Name: SecurityGroupEntity.properties.objectGuid
+        /// </summary>
         public Guid? ObjectGuid { get; }
-        /// <summary> The SID attribute is a single-value attribute that specifies the security identifier (SID) of the group. </summary>
+        /// <summary>
+        /// The SID attribute is a single-value attribute that specifies the security identifier (SID) of the group
+        /// Serialized Name: SecurityGroupEntity.properties.sid
+        /// </summary>
         public string Sid { get; }
     }
 }

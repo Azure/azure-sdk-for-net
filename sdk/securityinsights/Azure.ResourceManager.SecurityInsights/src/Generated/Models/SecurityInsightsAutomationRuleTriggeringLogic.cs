@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes automation rule triggering logic. </summary>
+    /// <summary>
+    /// Describes automation rule triggering logic.
+    /// Serialized Name: AutomationRuleTriggeringLogic
+    /// </summary>
     public partial class SecurityInsightsAutomationRuleTriggeringLogic
     {
         /// <summary>
@@ -46,9 +49,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleTriggeringLogic"/>. </summary>
-        /// <param name="isEnabled"> Determines whether the automation rule is enabled or disabled. </param>
-        /// <param name="triggersOn"></param>
-        /// <param name="triggersWhen"></param>
+        /// <param name="isEnabled">
+        /// Determines whether the automation rule is enabled or disabled.
+        /// Serialized Name: AutomationRuleTriggeringLogic.isEnabled
+        /// </param>
+        /// <param name="triggersOn"> Serialized Name: AutomationRuleTriggeringLogic.triggersOn. </param>
+        /// <param name="triggersWhen"> Serialized Name: AutomationRuleTriggeringLogic.triggersWhen. </param>
         public SecurityInsightsAutomationRuleTriggeringLogic(bool isEnabled, TriggersOn triggersOn, TriggersWhen triggersWhen)
         {
             IsEnabled = isEnabled;
@@ -58,12 +64,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleTriggeringLogic"/>. </summary>
-        /// <param name="isEnabled"> Determines whether the automation rule is enabled or disabled. </param>
-        /// <param name="expireOn"> Determines when the automation rule should automatically expire and be disabled. </param>
-        /// <param name="triggersOn"></param>
-        /// <param name="triggersWhen"></param>
+        /// <param name="isEnabled">
+        /// Determines whether the automation rule is enabled or disabled.
+        /// Serialized Name: AutomationRuleTriggeringLogic.isEnabled
+        /// </param>
+        /// <param name="expireOn">
+        /// Determines when the automation rule should automatically expire and be disabled.
+        /// Serialized Name: AutomationRuleTriggeringLogic.expirationTimeUtc
+        /// </param>
+        /// <param name="triggersOn"> Serialized Name: AutomationRuleTriggeringLogic.triggersOn. </param>
+        /// <param name="triggersWhen"> Serialized Name: AutomationRuleTriggeringLogic.triggersWhen. </param>
         /// <param name="conditions">
         /// The conditions to evaluate to determine if the automation rule should be triggered on a given object.
+        /// Serialized Name: AutomationRuleTriggeringLogic.conditions
         /// Please note <see cref="SecurityInsightsAutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BooleanConditionProperties"/>, <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
         /// </param>
@@ -83,16 +96,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Determines whether the automation rule is enabled or disabled. </summary>
+        /// <summary>
+        /// Determines whether the automation rule is enabled or disabled.
+        /// Serialized Name: AutomationRuleTriggeringLogic.isEnabled
+        /// </summary>
         public bool IsEnabled { get; set; }
-        /// <summary> Determines when the automation rule should automatically expire and be disabled. </summary>
+        /// <summary>
+        /// Determines when the automation rule should automatically expire and be disabled.
+        /// Serialized Name: AutomationRuleTriggeringLogic.expirationTimeUtc
+        /// </summary>
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary> Gets or sets the triggers on. </summary>
+        /// <summary> Serialized Name: AutomationRuleTriggeringLogic.triggersOn. </summary>
         public TriggersOn TriggersOn { get; set; }
-        /// <summary> Gets or sets the triggers when. </summary>
+        /// <summary> Serialized Name: AutomationRuleTriggeringLogic.triggersWhen. </summary>
         public TriggersWhen TriggersWhen { get; set; }
         /// <summary>
         /// The conditions to evaluate to determine if the automation rule should be triggered on a given object.
+        /// Serialized Name: AutomationRuleTriggeringLogic.conditions
         /// Please note <see cref="SecurityInsightsAutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BooleanConditionProperties"/>, <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
         /// </summary>

@@ -14,6 +14,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Specific entity query that supports put requests.
+    /// Serialized Name: CustomEntityQuery
     /// Please note <see cref="EntityQueryCreateOrUpdateContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ActivityCustomEntityQuery"/>.
     /// </summary>
@@ -61,8 +62,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> the entity query kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// the entity query kind
+        /// Serialized Name: CustomEntityQuery.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityQueryCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomEntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,9 +78,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> the entity query kind. </summary>
+        /// <summary>
+        /// the entity query kind
+        /// Serialized Name: CustomEntityQuery.kind
+        /// </summary>
         internal CustomEntityQueryKind Kind { get; set; }
-        /// <summary> Etag of the azure resource. </summary>
+        /// <summary>
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

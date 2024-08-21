@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> ies for the solution content item. </summary>
+    /// <summary>
+    /// ies for the solution content item
+    /// Serialized Name: MetadataCategories
+    /// </summary>
     public partial class MetadataCategories
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetadataCategories"/>. </summary>
-        /// <param name="domains"> domain for the solution content item. </param>
-        /// <param name="verticals"> Industry verticals for the solution content item. </param>
+        /// <param name="domains">
+        /// domain for the solution content item
+        /// Serialized Name: MetadataCategories.domains
+        /// </param>
+        /// <param name="verticals">
+        /// Industry verticals for the solution content item
+        /// Serialized Name: MetadataCategories.verticals
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetadataCategories(IList<string> domains, IList<string> verticals, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +72,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> domain for the solution content item. </summary>
+        /// <summary>
+        /// domain for the solution content item
+        /// Serialized Name: MetadataCategories.domains
+        /// </summary>
         public IList<string> Domains { get; }
-        /// <summary> Industry verticals for the solution content item. </summary>
+        /// <summary>
+        /// Industry verticals for the solution content item
+        /// Serialized Name: MetadataCategories.verticals
+        /// </summary>
         public IList<string> Verticals { get; }
     }
 }

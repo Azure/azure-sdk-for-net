@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRuleBooleanCondition. </summary>
+    /// <summary>
+    /// The AutomationRuleBooleanCondition.
+    /// Serialized Name: AutomationRuleBooleanCondition
+    /// </summary>
     public partial class AutomationRuleBooleanCondition
     {
         /// <summary>
@@ -52,8 +55,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationRuleBooleanCondition"/>. </summary>
-        /// <param name="operator"></param>
+        /// <param name="operator"> Serialized Name: AutomationRuleBooleanCondition.operator. </param>
         /// <param name="innerConditions">
+        /// Serialized Name: AutomationRuleBooleanCondition.innerConditions
         /// Please note <see cref="SecurityInsightsAutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BooleanConditionProperties"/>, <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
         /// </param>
@@ -65,10 +69,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the operator. </summary>
+        /// <summary> Serialized Name: AutomationRuleBooleanCondition.operator. </summary>
         public AutomationRuleBooleanConditionSupportedOperator? Operator { get; set; }
         /// <summary>
-        /// Gets the inner conditions
+        /// Serialized Name: AutomationRuleBooleanCondition.innerConditions
         /// Please note <see cref="SecurityInsightsAutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BooleanConditionProperties"/>, <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
         /// </summary>

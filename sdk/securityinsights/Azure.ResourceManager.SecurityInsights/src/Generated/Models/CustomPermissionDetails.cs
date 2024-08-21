@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The Custom permissions required for the connector. </summary>
+    /// <summary>
+    /// The Custom permissions required for the connector.
+    /// Serialized Name: CustomPermissionDetails
+    /// </summary>
     public partial class CustomPermissionDetails
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CustomPermissionDetails"/>. </summary>
-        /// <param name="name"> Gets or sets the custom permissions name. </param>
-        /// <param name="description"> Gets or sets the custom permissions description. </param>
+        /// <param name="name">
+        /// Gets or sets the custom permissions name.
+        /// Serialized Name: CustomPermissionDetails.name
+        /// </param>
+        /// <param name="description">
+        /// Gets or sets the custom permissions description.
+        /// Serialized Name: CustomPermissionDetails.description
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="description"/> is null. </exception>
         public CustomPermissionDetails(string name, string description)
         {
@@ -59,8 +68,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomPermissionDetails"/>. </summary>
-        /// <param name="name"> Gets or sets the custom permissions name. </param>
-        /// <param name="description"> Gets or sets the custom permissions description. </param>
+        /// <param name="name">
+        /// Gets or sets the custom permissions name.
+        /// Serialized Name: CustomPermissionDetails.name
+        /// </param>
+        /// <param name="description">
+        /// Gets or sets the custom permissions description.
+        /// Serialized Name: CustomPermissionDetails.description
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomPermissionDetails(string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,9 +89,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Gets or sets the custom permissions name. </summary>
+        /// <summary>
+        /// Gets or sets the custom permissions name.
+        /// Serialized Name: CustomPermissionDetails.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the custom permissions description. </summary>
+        /// <summary>
+        /// Gets or sets the custom permissions description.
+        /// Serialized Name: CustomPermissionDetails.description
+        /// </summary>
         public string Description { get; set; }
     }
 }

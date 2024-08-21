@@ -255,10 +255,10 @@ namespace Azure.ResourceManager.SecurityInsights
             string contentProductId = default;
             PackageKind? contentKind = default;
             string contentSchemaVersion = default;
-            Flag? isNew = default;
-            Flag? isPreview = default;
-            Flag? isFeatured = default;
-            Flag? isDeprecated = default;
+            MetadataFlag? isNew = default;
+            MetadataFlag? isPreview = default;
+            MetadataFlag? isFeatured = default;
+            MetadataFlag? isDeprecated = default;
             string version = default;
             string displayName = default;
             string description = default;
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            isNew = new Flag(property0.Value.GetString());
+                            isNew = new MetadataFlag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("isPreview"u8))
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            isPreview = new Flag(property0.Value.GetString());
+                            isPreview = new MetadataFlag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("isFeatured"u8))
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            isFeatured = new Flag(property0.Value.GetString());
+                            isFeatured = new MetadataFlag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("isDeprecated"u8))
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            isDeprecated = new Flag(property0.Value.GetString());
+                            isDeprecated = new MetadataFlag(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("version"u8))

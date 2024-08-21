@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Mode? mode = default;
+            WorkspaceManagerConfigurationMode? mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            mode = new Mode(property0.Value.GetString());
+                            mode = new WorkspaceManagerConfigurationMode(property0.Value.GetString());
                             continue;
                         }
                     }

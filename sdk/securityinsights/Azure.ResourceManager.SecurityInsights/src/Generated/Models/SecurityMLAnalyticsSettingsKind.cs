@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The kind of security ML analytics settings. </summary>
+    /// <summary>
+    /// The kind of security ML analytics settings
+    /// Serialized Name: SecurityMLAnalyticsSettingsKind
+    /// </summary>
     internal readonly partial struct SecurityMLAnalyticsSettingsKind : IEquatable<SecurityMLAnalyticsSettingsKind>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string AnomalyValue = "Anomaly";
 
-        /// <summary> Anomaly. </summary>
+        /// <summary>
+        /// Anomaly
+        /// Serialized Name: SecurityMLAnalyticsSettingsKind.Anomaly
+        /// </summary>
         public static SecurityMLAnalyticsSettingsKind Anomaly { get; } = new SecurityMLAnalyticsSettingsKind(AnomalyValue);
         /// <summary> Determines if two <see cref="SecurityMLAnalyticsSettingsKind"/> values are the same. </summary>
         public static bool operator ==(SecurityMLAnalyticsSettingsKind left, SecurityMLAnalyticsSettingsKind right) => left.Equals(right);

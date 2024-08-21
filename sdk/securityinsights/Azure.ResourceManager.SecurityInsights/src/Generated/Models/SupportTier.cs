@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Type of support for content item. </summary>
+    /// <summary>
+    /// Type of support for content item
+    /// Serialized Name: SupportTier
+    /// </summary>
     public readonly partial struct SupportTier : IEquatable<SupportTier>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string PartnerValue = "Partner";
         private const string CommunityValue = "Community";
 
-        /// <summary> Microsoft. </summary>
+        /// <summary>
+        /// Microsoft
+        /// Serialized Name: SupportTier.Microsoft
+        /// </summary>
         public static SupportTier Microsoft { get; } = new SupportTier(MicrosoftValue);
-        /// <summary> Partner. </summary>
+        /// <summary>
+        /// Partner
+        /// Serialized Name: SupportTier.Partner
+        /// </summary>
         public static SupportTier Partner { get; } = new SupportTier(PartnerValue);
-        /// <summary> Community. </summary>
+        /// <summary>
+        /// Community
+        /// Serialized Name: SupportTier.Community
+        /// </summary>
         public static SupportTier Community { get; } = new SupportTier(CommunityValue);
         /// <summary> Determines if two <see cref="SupportTier"/> values are the same. </summary>
         public static bool operator ==(SupportTier left, SupportTier right) => left.Equals(right);

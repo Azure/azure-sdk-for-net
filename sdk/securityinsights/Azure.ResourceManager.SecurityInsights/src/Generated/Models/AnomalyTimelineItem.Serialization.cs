@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WritePropertyName("startTimeUtc"u8);
             writer.WriteStringValue(StartTimeUtc, "O");
             writer.WritePropertyName("timeGenerated"u8);
-            writer.WriteStringValue(TimeGenerated, "O");
+            writer.WriteStringValue(GeneratedOn, "O");
             if (Optional.IsDefined(Vendor))
             {
                 writer.WritePropertyName("vendor"u8);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            string azureResourceId = default;
+            ResourceIdentifier azureResourceId = default;
             string productName = default;
             string description = default;
             string displayName = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("azureResourceId"u8))
                 {
-                    azureResourceId = property.Value.GetString();
+                    azureResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("productName"u8))

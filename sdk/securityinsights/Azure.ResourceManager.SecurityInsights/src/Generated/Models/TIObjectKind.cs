@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The kind of the TI object. </summary>
+    /// <summary>
+    /// The kind of the TI object
+    /// Serialized Name: TIObjectKind
+    /// </summary>
     internal readonly partial struct TIObjectKind : IEquatable<TIObjectKind>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string RelationshipValue = "Relationship";
         private const string ThreatActorValue = "ThreatActor";
 
-        /// <summary> A TI object that represents an attack pattern. </summary>
+        /// <summary>
+        /// A TI object that represents an attack pattern.
+        /// Serialized Name: TIObjectKind.AttackPattern
+        /// </summary>
         public static TIObjectKind AttackPattern { get; } = new TIObjectKind(AttackPatternValue);
-        /// <summary> A TI object that represents an identity. </summary>
+        /// <summary>
+        /// A TI object that represents an identity.
+        /// Serialized Name: TIObjectKind.Identity
+        /// </summary>
         public static TIObjectKind Identity { get; } = new TIObjectKind(IdentityValue);
-        /// <summary> A TI object that represents an indicator. </summary>
+        /// <summary>
+        /// A TI object that represents an indicator.
+        /// Serialized Name: TIObjectKind.Indicator
+        /// </summary>
         public static TIObjectKind Indicator { get; } = new TIObjectKind(IndicatorValue);
-        /// <summary> A TI object that represents a relationship between two TI objects. </summary>
+        /// <summary>
+        /// A TI object that represents a relationship between two TI objects.
+        /// Serialized Name: TIObjectKind.Relationship
+        /// </summary>
         public static TIObjectKind Relationship { get; } = new TIObjectKind(RelationshipValue);
-        /// <summary> A TI object that represents a threat actor. </summary>
+        /// <summary>
+        /// A TI object that represents a threat actor.
+        /// Serialized Name: TIObjectKind.ThreatActor
+        /// </summary>
         public static TIObjectKind ThreatActor { get; } = new TIObjectKind(ThreatActorValue);
         /// <summary> Determines if two <see cref="TIObjectKind"/> values are the same. </summary>
         public static bool operator ==(TIObjectKind left, TIObjectKind right) => left.Equals(right);

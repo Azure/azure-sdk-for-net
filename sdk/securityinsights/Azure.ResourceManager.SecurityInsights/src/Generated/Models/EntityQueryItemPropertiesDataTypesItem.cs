@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The EntityQueryItemPropertiesDataTypesItem. </summary>
+    /// <summary>
+    /// The EntityQueryItemPropertiesDataTypesItem.
+    /// Serialized Name: EntityQueryItemPropertiesDataTypesItem
+    /// </summary>
     public partial class EntityQueryItemPropertiesDataTypesItem
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityQueryItemPropertiesDataTypesItem"/>. </summary>
-        /// <param name="dataType"> Data type name. </param>
+        /// <param name="dataType">
+        /// Data type name
+        /// Serialized Name: EntityQueryItemPropertiesDataTypesItem.dataType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityQueryItemPropertiesDataTypesItem(string dataType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Data type name. </summary>
+        /// <summary>
+        /// Data type name
+        /// Serialized Name: EntityQueryItemPropertiesDataTypesItem.dataType
+        /// </summary>
         public string DataType { get; }
     }
 }

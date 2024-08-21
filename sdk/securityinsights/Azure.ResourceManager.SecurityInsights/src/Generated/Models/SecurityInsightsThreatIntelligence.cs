@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> ThreatIntelligence property bag. </summary>
+    /// <summary>
+    /// ThreatIntelligence property bag.
+    /// Serialized Name: ThreatIntelligence
+    /// </summary>
     public partial class SecurityInsightsThreatIntelligence
     {
         /// <summary>
@@ -51,12 +54,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsThreatIntelligence"/>. </summary>
-        /// <param name="confidence"> Confidence (must be between 0 and 1). </param>
-        /// <param name="providerName"> Name of the provider from whom this Threat Intelligence information was received. </param>
-        /// <param name="reportLink"> Report link. </param>
-        /// <param name="threatDescription"> Threat description (free text). </param>
-        /// <param name="threatName"> Threat name (e.g. "Jedobot malware"). </param>
-        /// <param name="threatType"> Threat type (e.g. "Botnet"). </param>
+        /// <param name="confidence">
+        /// Confidence (must be between 0 and 1)
+        /// Serialized Name: ThreatIntelligence.confidence
+        /// </param>
+        /// <param name="providerName">
+        /// Name of the provider from whom this Threat Intelligence information was received
+        /// Serialized Name: ThreatIntelligence.providerName
+        /// </param>
+        /// <param name="reportLink">
+        /// Report link
+        /// Serialized Name: ThreatIntelligence.reportLink
+        /// </param>
+        /// <param name="threatDescription">
+        /// Threat description (free text)
+        /// Serialized Name: ThreatIntelligence.threatDescription
+        /// </param>
+        /// <param name="threatName">
+        /// Threat name (e.g. "Jedobot malware")
+        /// Serialized Name: ThreatIntelligence.threatName
+        /// </param>
+        /// <param name="threatType">
+        /// Threat type (e.g. "Botnet")
+        /// Serialized Name: ThreatIntelligence.threatType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsThreatIntelligence(double? confidence, string providerName, string reportLink, string threatDescription, string threatName, string threatType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,17 +90,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Confidence (must be between 0 and 1). </summary>
+        /// <summary>
+        /// Confidence (must be between 0 and 1)
+        /// Serialized Name: ThreatIntelligence.confidence
+        /// </summary>
         public double? Confidence { get; }
-        /// <summary> Name of the provider from whom this Threat Intelligence information was received. </summary>
+        /// <summary>
+        /// Name of the provider from whom this Threat Intelligence information was received
+        /// Serialized Name: ThreatIntelligence.providerName
+        /// </summary>
         public string ProviderName { get; }
-        /// <summary> Report link. </summary>
+        /// <summary>
+        /// Report link
+        /// Serialized Name: ThreatIntelligence.reportLink
+        /// </summary>
         public string ReportLink { get; }
-        /// <summary> Threat description (free text). </summary>
+        /// <summary>
+        /// Threat description (free text)
+        /// Serialized Name: ThreatIntelligence.threatDescription
+        /// </summary>
         public string ThreatDescription { get; }
-        /// <summary> Threat name (e.g. "Jedobot malware"). </summary>
+        /// <summary>
+        /// Threat name (e.g. "Jedobot malware")
+        /// Serialized Name: ThreatIntelligence.threatName
+        /// </summary>
         public string ThreatName { get; }
-        /// <summary> Threat type (e.g. "Botnet"). </summary>
+        /// <summary>
+        /// Threat type (e.g. "Botnet")
+        /// Serialized Name: ThreatIntelligence.threatType
+        /// </summary>
         public string ThreatType { get; }
     }
 }

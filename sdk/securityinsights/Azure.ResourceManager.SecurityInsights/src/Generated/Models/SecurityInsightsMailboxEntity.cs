@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a mailbox entity. </summary>
+    /// <summary>
+    /// Represents a mailbox entity.
+    /// Serialized Name: MailboxEntity
+    /// </summary>
     public partial class SecurityInsightsMailboxEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailboxEntity"/>. </summary>
@@ -27,14 +30,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="kind">
+        /// The kind of the entity.
+        /// Serialized Name: Entity.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="mailboxPrimaryAddress"> The mailbox's primary address. </param>
-        /// <param name="displayName"> The mailbox's display name. </param>
-        /// <param name="upn"> The mailbox's UPN. </param>
-        /// <param name="externalDirectoryObjectId"> The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side. </param>
+        /// <param name="additionalData">
+        /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: MailboxEntity.properties.additionalData
+        /// </param>
+        /// <param name="friendlyName">
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: MailboxEntity.properties.friendlyName
+        /// </param>
+        /// <param name="mailboxPrimaryAddress">
+        /// The mailbox's primary address
+        /// Serialized Name: MailboxEntity.properties.mailboxPrimaryAddress
+        /// </param>
+        /// <param name="displayName">
+        /// The mailbox's display name
+        /// Serialized Name: MailboxEntity.properties.displayName
+        /// </param>
+        /// <param name="upn">
+        /// The mailbox's UPN
+        /// Serialized Name: MailboxEntity.properties.upn
+        /// </param>
+        /// <param name="externalDirectoryObjectId">
+        /// The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side
+        /// Serialized Name: MailboxEntity.properties.externalDirectoryObjectId
+        /// </param>
         internal SecurityInsightsMailboxEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string mailboxPrimaryAddress, string displayName, string upn, Guid? externalDirectoryObjectId) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -48,6 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: MailboxEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -77,15 +102,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        /// <summary>
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: MailboxEntity.properties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The mailbox's primary address. </summary>
+        /// <summary>
+        /// The mailbox's primary address
+        /// Serialized Name: MailboxEntity.properties.mailboxPrimaryAddress
+        /// </summary>
         public string MailboxPrimaryAddress { get; }
-        /// <summary> The mailbox's display name. </summary>
+        /// <summary>
+        /// The mailbox's display name
+        /// Serialized Name: MailboxEntity.properties.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> The mailbox's UPN. </summary>
+        /// <summary>
+        /// The mailbox's UPN
+        /// Serialized Name: MailboxEntity.properties.upn
+        /// </summary>
         public string Upn { get; }
-        /// <summary> The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side. </summary>
+        /// <summary>
+        /// The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side
+        /// Serialized Name: MailboxEntity.properties.externalDirectoryObjectId
+        /// </summary>
         public Guid? ExternalDirectoryObjectId { get; }
     }
 }

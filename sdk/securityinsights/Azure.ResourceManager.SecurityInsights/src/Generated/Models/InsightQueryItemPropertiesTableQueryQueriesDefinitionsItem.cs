@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem. </summary>
+    /// <summary>
+    /// The InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem.
+    /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem
+    /// </summary>
     public partial class InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem
     {
         /// <summary>
@@ -52,10 +55,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem"/>. </summary>
-        /// <param name="filter"> Insight column header. </param>
-        /// <param name="summarize"> Insight column header. </param>
-        /// <param name="project"> Insight column header. </param>
-        /// <param name="linkColumnsDefinitions"> Insight column header. </param>
+        /// <param name="filter">
+        /// Insight column header.
+        /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem.filter
+        /// </param>
+        /// <param name="summarize">
+        /// Insight column header.
+        /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem.summarize
+        /// </param>
+        /// <param name="project">
+        /// Insight column header.
+        /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem.project
+        /// </param>
+        /// <param name="linkColumnsDefinitions">
+        /// Insight column header.
+        /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem.linkColumnsDefinitions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem(string filter, string summarize, string project, IReadOnlyList<InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem> linkColumnsDefinitions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,13 +81,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Insight column header. </summary>
+        /// <summary>
+        /// Insight column header.
+        /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem.filter
+        /// </summary>
         public string Filter { get; }
-        /// <summary> Insight column header. </summary>
+        /// <summary>
+        /// Insight column header.
+        /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem.summarize
+        /// </summary>
         public string Summarize { get; }
-        /// <summary> Insight column header. </summary>
+        /// <summary>
+        /// Insight column header.
+        /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem.project
+        /// </summary>
         public string Project { get; }
-        /// <summary> Insight column header. </summary>
+        /// <summary>
+        /// Insight column header.
+        /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem.linkColumnsDefinitions
+        /// </summary>
         public IReadOnlyList<InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem> LinkColumnsDefinitions { get; }
     }
 }

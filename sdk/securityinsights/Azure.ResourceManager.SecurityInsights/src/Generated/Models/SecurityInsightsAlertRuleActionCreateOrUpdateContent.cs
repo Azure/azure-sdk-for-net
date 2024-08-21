@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Action for alert rule. </summary>
+    /// <summary>
+    /// Action for alert rule.
+    /// Serialized Name: ActionRequest
+    /// </summary>
     public partial class SecurityInsightsAlertRuleActionCreateOrUpdateContent : ResourceData
     {
         /// <summary>
@@ -57,9 +60,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="logicAppResourceId"> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </param>
-        /// <param name="triggerUri"> Logic App Callback URL for this specific workflow. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="logicAppResourceId">
+        /// Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}.
+        /// Serialized Name: ActionRequest.properties.logicAppResourceId
+        /// </param>
+        /// <param name="triggerUri">
+        /// Logic App Callback URL for this specific workflow.
+        /// Serialized Name: ActionRequest.properties.triggerUri
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsAlertRuleActionCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier logicAppResourceId, Uri triggerUri, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,11 +81,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </summary>
+        /// <summary>
+        /// Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}.
+        /// Serialized Name: ActionRequest.properties.logicAppResourceId
+        /// </summary>
         public ResourceIdentifier LogicAppResourceId { get; set; }
-        /// <summary> Logic App Callback URL for this specific workflow. </summary>
+        /// <summary>
+        /// Logic App Callback URL for this specific workflow.
+        /// Serialized Name: ActionRequest.properties.triggerUri
+        /// </summary>
         public Uri TriggerUri { get; set; }
-        /// <summary> Etag of the azure resource. </summary>
+        /// <summary>
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents MicrosoftSecurityIncidentCreation rule. </summary>
+    /// <summary>
+    /// Represents MicrosoftSecurityIncidentCreation rule.
+    /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule
+    /// </summary>
     public partial class MicrosoftSecurityIncidentCreationAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>. </summary>
@@ -29,18 +32,51 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the alert rule. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// The kind of the alert rule
+        /// Serialized Name: AlertRule.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="displayNamesFilter"> the alerts' displayNames on which the cases will be generated. </param>
-        /// <param name="displayNamesExcludeFilter"> the alerts' displayNames on which the cases will not be generated. </param>
-        /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
-        /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
-        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
-        /// <param name="description"> The description of the alert rule. </param>
-        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
-        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
-        /// <param name="lastModifiedOn"> The last time that this alert has been modified. </param>
+        /// <param name="displayNamesFilter">
+        /// the alerts' displayNames on which the cases will be generated
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.displayNamesFilter
+        /// </param>
+        /// <param name="displayNamesExcludeFilter">
+        /// the alerts' displayNames on which the cases will not be generated
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.displayNamesExcludeFilter
+        /// </param>
+        /// <param name="productFilter">
+        /// The alerts' productName on which the cases will be generated
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.productFilter
+        /// </param>
+        /// <param name="severitiesFilter">
+        /// the alerts' severities on which the cases will be generated
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.severitiesFilter
+        /// </param>
+        /// <param name="alertRuleTemplateName">
+        /// The Name of the alert rule template used to create this rule.
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.alertRuleTemplateName
+        /// </param>
+        /// <param name="description">
+        /// The description of the alert rule.
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.description
+        /// </param>
+        /// <param name="displayName">
+        /// The display name for alerts created by this alert rule.
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.displayName
+        /// </param>
+        /// <param name="isEnabled">
+        /// Determines whether this alert rule is enabled or disabled.
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.enabled
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// The last time that this alert has been modified.
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.lastModifiedUtc
+        /// </param>
         internal MicrosoftSecurityIncidentCreationAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> displayNamesFilter, IList<string> displayNamesExcludeFilter, MicrosoftSecurityProductName? productFilter, IList<SecurityInsightsAlertSeverity> severitiesFilter, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             DisplayNamesFilter = displayNamesFilter;
@@ -55,23 +91,50 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary> the alerts' displayNames on which the cases will be generated. </summary>
+        /// <summary>
+        /// the alerts' displayNames on which the cases will be generated
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.displayNamesFilter
+        /// </summary>
         public IList<string> DisplayNamesFilter { get; }
-        /// <summary> the alerts' displayNames on which the cases will not be generated. </summary>
+        /// <summary>
+        /// the alerts' displayNames on which the cases will not be generated
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.displayNamesExcludeFilter
+        /// </summary>
         public IList<string> DisplayNamesExcludeFilter { get; }
-        /// <summary> The alerts' productName on which the cases will be generated. </summary>
+        /// <summary>
+        /// The alerts' productName on which the cases will be generated
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.productFilter
+        /// </summary>
         public MicrosoftSecurityProductName? ProductFilter { get; set; }
-        /// <summary> the alerts' severities on which the cases will be generated. </summary>
+        /// <summary>
+        /// the alerts' severities on which the cases will be generated
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.severitiesFilter
+        /// </summary>
         public IList<SecurityInsightsAlertSeverity> SeveritiesFilter { get; }
-        /// <summary> The Name of the alert rule template used to create this rule. </summary>
+        /// <summary>
+        /// The Name of the alert rule template used to create this rule.
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.alertRuleTemplateName
+        /// </summary>
         public string AlertRuleTemplateName { get; set; }
-        /// <summary> The description of the alert rule. </summary>
+        /// <summary>
+        /// The description of the alert rule.
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The display name for alerts created by this alert rule. </summary>
+        /// <summary>
+        /// The display name for alerts created by this alert rule.
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> Determines whether this alert rule is enabled or disabled. </summary>
+        /// <summary>
+        /// Determines whether this alert rule is enabled or disabled.
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> The last time that this alert has been modified. </summary>
+        /// <summary>
+        /// The last time that this alert has been modified.
+        /// Serialized Name: MicrosoftSecurityIncidentCreationAlertRule.properties.lastModifiedUtc
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
     }
 }

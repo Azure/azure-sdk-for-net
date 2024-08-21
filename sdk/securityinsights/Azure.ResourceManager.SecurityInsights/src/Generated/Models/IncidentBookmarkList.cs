@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List of incident bookmarks. </summary>
+    /// <summary>
+    /// List of incident bookmarks.
+    /// Serialized Name: IncidentBookmarkList
+    /// </summary>
     internal partial class IncidentBookmarkList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IncidentBookmarkList"/>. </summary>
-        /// <param name="value"> Array of incident bookmarks. </param>
+        /// <param name="value">
+        /// Array of incident bookmarks.
+        /// Serialized Name: IncidentBookmarkList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncidentBookmarkList(IEnumerable<SecurityInsightsHuntingBookmark> value)
         {
@@ -57,7 +63,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IncidentBookmarkList"/>. </summary>
-        /// <param name="value"> Array of incident bookmarks. </param>
+        /// <param name="value">
+        /// Array of incident bookmarks.
+        /// Serialized Name: IncidentBookmarkList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IncidentBookmarkList(IReadOnlyList<SecurityInsightsHuntingBookmark> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +79,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Array of incident bookmarks. </summary>
+        /// <summary>
+        /// Array of incident bookmarks.
+        /// Serialized Name: IncidentBookmarkList.value
+        /// </summary>
         public IReadOnlyList<SecurityInsightsHuntingBookmark> Value { get; }
     }
 }

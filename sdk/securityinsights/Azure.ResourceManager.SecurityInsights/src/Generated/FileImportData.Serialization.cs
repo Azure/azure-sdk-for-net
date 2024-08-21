@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedTimeUTC))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimeUTC"u8);
-                writer.WriteStringValue(CreatedTimeUTC.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorFile))
             {
@@ -110,15 +110,15 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("validRecordCount"u8);
                 writer.WriteNumberValue(ValidRecordCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FilesValidUntilTimeUTC))
+            if (options.Format != "W" && Optional.IsDefined(FilesValidUntil))
             {
                 writer.WritePropertyName("filesValidUntilTimeUTC"u8);
-                writer.WriteStringValue(FilesValidUntilTimeUTC.Value, "O");
+                writer.WriteStringValue(FilesValidUntil.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ImportValidUntilTimeUTC))
+            if (options.Format != "W" && Optional.IsDefined(ImportValidUntil))
             {
                 writer.WritePropertyName("importValidUntilTimeUTC"u8);
-                writer.WriteStringValue(ImportValidUntilTimeUTC.Value, "O");
+                writer.WriteStringValue(ImportValidUntil.Value, "O");
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

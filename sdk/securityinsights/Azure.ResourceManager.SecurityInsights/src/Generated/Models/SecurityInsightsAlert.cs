@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a security alert entity. </summary>
+    /// <summary>
+    /// Represents a security alert entity.
+    /// Serialized Name: SecurityAlert
+    /// </summary>
     public partial class SecurityInsightsAlert : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlert"/>. </summary>
@@ -31,35 +34,119 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="kind">
+        /// The kind of the entity.
+        /// Serialized Name: Entity.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="alertDisplayName"> The display name of the alert. </param>
-        /// <param name="alertType"> The type name of the alert. </param>
-        /// <param name="compromisedEntity"> Display name of the main entity being reported on. </param>
-        /// <param name="confidenceLevel"> The confidence level of this alert. </param>
-        /// <param name="confidenceReasons"> The confidence reasons. </param>
-        /// <param name="confidenceScore"> The confidence score of the alert. </param>
-        /// <param name="confidenceScoreStatus"> The confidence score calculation status, i.e. indicating if score calculation is pending for this alert, not applicable or final. </param>
-        /// <param name="description"> Alert description. </param>
-        /// <param name="endOn"> The impact end time of the alert (the time of the last event contributing to the alert). </param>
-        /// <param name="intent"> Holds the alert intent stage(s) mapping for this alert. </param>
-        /// <param name="providerAlertId"> The identifier of the alert inside the product which generated the alert. </param>
-        /// <param name="processingEndOn"> The time the alert was made available for consumption. </param>
-        /// <param name="productComponentName"> The name of a component inside the product which generated the alert. </param>
-        /// <param name="productName"> The name of the product which published this alert. </param>
-        /// <param name="productVersion"> The version of the product generating the alert. </param>
-        /// <param name="remediationSteps"> Manual action items to take to remediate the alert. </param>
-        /// <param name="severity"> The severity of the alert. </param>
-        /// <param name="startOn"> The impact start time of the alert (the time of the first event contributing to the alert). </param>
-        /// <param name="status"> The lifecycle status of the alert. </param>
-        /// <param name="systemAlertId"> Holds the product identifier of the alert for the product. </param>
-        /// <param name="tactics"> The tactics of the alert. </param>
-        /// <param name="alertGeneratedOn"> The time the alert was generated. </param>
-        /// <param name="vendorName"> The name of the vendor that raise the alert. </param>
-        /// <param name="alertLink"> The uri link of the alert. </param>
-        /// <param name="resourceIdentifiers"> The list of resource identifiers of the alert. </param>
+        /// <param name="additionalData">
+        /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: SecurityAlert.properties.additionalData
+        /// </param>
+        /// <param name="friendlyName">
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: SecurityAlert.properties.friendlyName
+        /// </param>
+        /// <param name="alertDisplayName">
+        /// The display name of the alert.
+        /// Serialized Name: SecurityAlert.properties.alertDisplayName
+        /// </param>
+        /// <param name="alertType">
+        /// The type name of the alert.
+        /// Serialized Name: SecurityAlert.properties.alertType
+        /// </param>
+        /// <param name="compromisedEntity">
+        /// Display name of the main entity being reported on.
+        /// Serialized Name: SecurityAlert.properties.compromisedEntity
+        /// </param>
+        /// <param name="confidenceLevel">
+        /// The confidence level of this alert.
+        /// Serialized Name: SecurityAlert.properties.confidenceLevel
+        /// </param>
+        /// <param name="confidenceReasons">
+        /// The confidence reasons
+        /// Serialized Name: SecurityAlert.properties.confidenceReasons
+        /// </param>
+        /// <param name="confidenceScore">
+        /// The confidence score of the alert.
+        /// Serialized Name: SecurityAlert.properties.confidenceScore
+        /// </param>
+        /// <param name="confidenceScoreStatus">
+        /// The confidence score calculation status, i.e. indicating if score calculation is pending for this alert, not applicable or final.
+        /// Serialized Name: SecurityAlert.properties.confidenceScoreStatus
+        /// </param>
+        /// <param name="description">
+        /// Alert description.
+        /// Serialized Name: SecurityAlert.properties.description
+        /// </param>
+        /// <param name="endOn">
+        /// The impact end time of the alert (the time of the last event contributing to the alert).
+        /// Serialized Name: SecurityAlert.properties.endTimeUtc
+        /// </param>
+        /// <param name="intent">
+        /// Holds the alert intent stage(s) mapping for this alert.
+        /// Serialized Name: SecurityAlert.properties.intent
+        /// </param>
+        /// <param name="providerAlertId">
+        /// The identifier of the alert inside the product which generated the alert.
+        /// Serialized Name: SecurityAlert.properties.providerAlertId
+        /// </param>
+        /// <param name="processingEndOn">
+        /// The time the alert was made available for consumption.
+        /// Serialized Name: SecurityAlert.properties.processingEndTime
+        /// </param>
+        /// <param name="productComponentName">
+        /// The name of a component inside the product which generated the alert.
+        /// Serialized Name: SecurityAlert.properties.productComponentName
+        /// </param>
+        /// <param name="productName">
+        /// The name of the product which published this alert.
+        /// Serialized Name: SecurityAlert.properties.productName
+        /// </param>
+        /// <param name="productVersion">
+        /// The version of the product generating the alert.
+        /// Serialized Name: SecurityAlert.properties.productVersion
+        /// </param>
+        /// <param name="remediationSteps">
+        /// Manual action items to take to remediate the alert.
+        /// Serialized Name: SecurityAlert.properties.remediationSteps
+        /// </param>
+        /// <param name="severity">
+        /// The severity of the alert
+        /// Serialized Name: SecurityAlert.properties.severity
+        /// </param>
+        /// <param name="startOn">
+        /// The impact start time of the alert (the time of the first event contributing to the alert).
+        /// Serialized Name: SecurityAlert.properties.startTimeUtc
+        /// </param>
+        /// <param name="status">
+        /// The lifecycle status of the alert.
+        /// Serialized Name: SecurityAlert.properties.status
+        /// </param>
+        /// <param name="systemAlertId">
+        /// Holds the product identifier of the alert for the product.
+        /// Serialized Name: SecurityAlert.properties.systemAlertId
+        /// </param>
+        /// <param name="tactics">
+        /// The tactics of the alert
+        /// Serialized Name: SecurityAlert.properties.tactics
+        /// </param>
+        /// <param name="alertGeneratedOn">
+        /// The time the alert was generated.
+        /// Serialized Name: SecurityAlert.properties.timeGenerated
+        /// </param>
+        /// <param name="vendorName">
+        /// The name of the vendor that raise the alert.
+        /// Serialized Name: SecurityAlert.properties.vendorName
+        /// </param>
+        /// <param name="alertLink">
+        /// The uri link of the alert.
+        /// Serialized Name: SecurityAlert.properties.alertLink
+        /// </param>
+        /// <param name="resourceIdentifiers">
+        /// The list of resource identifiers of the alert.
+        /// Serialized Name: SecurityAlert.properties.resourceIdentifiers
+        /// </param>
         internal SecurityInsightsAlert(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string alertDisplayName, string alertType, string compromisedEntity, SecurityInsightsAlertConfidenceLevel? confidenceLevel, IReadOnlyList<SecurityInsightsAlertConfidenceReason> confidenceReasons, double? confidenceScore, SecurityInsightsAlertConfidenceScoreStatus? confidenceScoreStatus, string description, DateTimeOffset? endOn, SecurityInsightsKillChainIntent? intent, string providerAlertId, DateTimeOffset? processingEndOn, string productComponentName, string productName, string productVersion, IReadOnlyList<string> remediationSteps, SecurityInsightsAlertSeverity? severity, DateTimeOffset? startOn, SecurityInsightsAlertStatus? status, string systemAlertId, IReadOnlyList<SecurityInsightsAttackTactic> tactics, DateTimeOffset? alertGeneratedOn, string vendorName, string alertLink, IReadOnlyList<BinaryData> resourceIdentifiers) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -94,6 +181,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: SecurityAlert.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -123,58 +211,134 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        /// <summary>
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: SecurityAlert.properties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The display name of the alert. </summary>
+        /// <summary>
+        /// The display name of the alert.
+        /// Serialized Name: SecurityAlert.properties.alertDisplayName
+        /// </summary>
         public string AlertDisplayName { get; }
-        /// <summary> The type name of the alert. </summary>
+        /// <summary>
+        /// The type name of the alert.
+        /// Serialized Name: SecurityAlert.properties.alertType
+        /// </summary>
         public string AlertType { get; }
-        /// <summary> Display name of the main entity being reported on. </summary>
+        /// <summary>
+        /// Display name of the main entity being reported on.
+        /// Serialized Name: SecurityAlert.properties.compromisedEntity
+        /// </summary>
         public string CompromisedEntity { get; }
-        /// <summary> The confidence level of this alert. </summary>
+        /// <summary>
+        /// The confidence level of this alert.
+        /// Serialized Name: SecurityAlert.properties.confidenceLevel
+        /// </summary>
         public SecurityInsightsAlertConfidenceLevel? ConfidenceLevel { get; }
-        /// <summary> The confidence reasons. </summary>
+        /// <summary>
+        /// The confidence reasons
+        /// Serialized Name: SecurityAlert.properties.confidenceReasons
+        /// </summary>
         public IReadOnlyList<SecurityInsightsAlertConfidenceReason> ConfidenceReasons { get; }
-        /// <summary> The confidence score of the alert. </summary>
+        /// <summary>
+        /// The confidence score of the alert.
+        /// Serialized Name: SecurityAlert.properties.confidenceScore
+        /// </summary>
         public double? ConfidenceScore { get; }
-        /// <summary> The confidence score calculation status, i.e. indicating if score calculation is pending for this alert, not applicable or final. </summary>
+        /// <summary>
+        /// The confidence score calculation status, i.e. indicating if score calculation is pending for this alert, not applicable or final.
+        /// Serialized Name: SecurityAlert.properties.confidenceScoreStatus
+        /// </summary>
         public SecurityInsightsAlertConfidenceScoreStatus? ConfidenceScoreStatus { get; }
-        /// <summary> Alert description. </summary>
+        /// <summary>
+        /// Alert description.
+        /// Serialized Name: SecurityAlert.properties.description
+        /// </summary>
         public string Description { get; }
-        /// <summary> The impact end time of the alert (the time of the last event contributing to the alert). </summary>
+        /// <summary>
+        /// The impact end time of the alert (the time of the last event contributing to the alert).
+        /// Serialized Name: SecurityAlert.properties.endTimeUtc
+        /// </summary>
         public DateTimeOffset? EndOn { get; }
-        /// <summary> Holds the alert intent stage(s) mapping for this alert. </summary>
+        /// <summary>
+        /// Holds the alert intent stage(s) mapping for this alert.
+        /// Serialized Name: SecurityAlert.properties.intent
+        /// </summary>
         public SecurityInsightsKillChainIntent? Intent { get; }
-        /// <summary> The identifier of the alert inside the product which generated the alert. </summary>
+        /// <summary>
+        /// The identifier of the alert inside the product which generated the alert.
+        /// Serialized Name: SecurityAlert.properties.providerAlertId
+        /// </summary>
         public string ProviderAlertId { get; }
-        /// <summary> The time the alert was made available for consumption. </summary>
+        /// <summary>
+        /// The time the alert was made available for consumption.
+        /// Serialized Name: SecurityAlert.properties.processingEndTime
+        /// </summary>
         public DateTimeOffset? ProcessingEndOn { get; }
-        /// <summary> The name of a component inside the product which generated the alert. </summary>
+        /// <summary>
+        /// The name of a component inside the product which generated the alert.
+        /// Serialized Name: SecurityAlert.properties.productComponentName
+        /// </summary>
         public string ProductComponentName { get; }
-        /// <summary> The name of the product which published this alert. </summary>
+        /// <summary>
+        /// The name of the product which published this alert.
+        /// Serialized Name: SecurityAlert.properties.productName
+        /// </summary>
         public string ProductName { get; }
-        /// <summary> The version of the product generating the alert. </summary>
+        /// <summary>
+        /// The version of the product generating the alert.
+        /// Serialized Name: SecurityAlert.properties.productVersion
+        /// </summary>
         public string ProductVersion { get; }
-        /// <summary> Manual action items to take to remediate the alert. </summary>
+        /// <summary>
+        /// Manual action items to take to remediate the alert.
+        /// Serialized Name: SecurityAlert.properties.remediationSteps
+        /// </summary>
         public IReadOnlyList<string> RemediationSteps { get; }
-        /// <summary> The severity of the alert. </summary>
+        /// <summary>
+        /// The severity of the alert
+        /// Serialized Name: SecurityAlert.properties.severity
+        /// </summary>
         public SecurityInsightsAlertSeverity? Severity { get; set; }
-        /// <summary> The impact start time of the alert (the time of the first event contributing to the alert). </summary>
+        /// <summary>
+        /// The impact start time of the alert (the time of the first event contributing to the alert).
+        /// Serialized Name: SecurityAlert.properties.startTimeUtc
+        /// </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary> The lifecycle status of the alert. </summary>
+        /// <summary>
+        /// The lifecycle status of the alert.
+        /// Serialized Name: SecurityAlert.properties.status
+        /// </summary>
         public SecurityInsightsAlertStatus? Status { get; }
-        /// <summary> Holds the product identifier of the alert for the product. </summary>
+        /// <summary>
+        /// Holds the product identifier of the alert for the product.
+        /// Serialized Name: SecurityAlert.properties.systemAlertId
+        /// </summary>
         public string SystemAlertId { get; }
-        /// <summary> The tactics of the alert. </summary>
+        /// <summary>
+        /// The tactics of the alert
+        /// Serialized Name: SecurityAlert.properties.tactics
+        /// </summary>
         public IReadOnlyList<SecurityInsightsAttackTactic> Tactics { get; }
-        /// <summary> The time the alert was generated. </summary>
+        /// <summary>
+        /// The time the alert was generated.
+        /// Serialized Name: SecurityAlert.properties.timeGenerated
+        /// </summary>
         public DateTimeOffset? AlertGeneratedOn { get; }
-        /// <summary> The name of the vendor that raise the alert. </summary>
+        /// <summary>
+        /// The name of the vendor that raise the alert.
+        /// Serialized Name: SecurityAlert.properties.vendorName
+        /// </summary>
         public string VendorName { get; }
-        /// <summary> The uri link of the alert. </summary>
+        /// <summary>
+        /// The uri link of the alert.
+        /// Serialized Name: SecurityAlert.properties.alertLink
+        /// </summary>
         public string AlertLink { get; }
         /// <summary>
         /// The list of resource identifiers of the alert.
+        /// Serialized Name: SecurityAlert.properties.resourceIdentifiers
         /// <para>
         /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

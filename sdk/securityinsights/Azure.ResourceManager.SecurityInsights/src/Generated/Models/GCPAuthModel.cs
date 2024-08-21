@@ -10,13 +10,25 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Model for API authentication for all GCP kind connectors. </summary>
+    /// <summary>
+    /// Model for API authentication for all GCP kind connectors.
+    /// Serialized Name: GCPAuthModel
+    /// </summary>
     public partial class GCPAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="GCPAuthModel"/>. </summary>
-        /// <param name="serviceAccountEmail"> GCP Service Account Email. </param>
-        /// <param name="projectNumber"> GCP Project Number. </param>
-        /// <param name="workloadIdentityProviderId"> GCP Workload Identity Provider ID. </param>
+        /// <param name="serviceAccountEmail">
+        /// GCP Service Account Email
+        /// Serialized Name: GCPAuthModel.serviceAccountEmail
+        /// </param>
+        /// <param name="projectNumber">
+        /// GCP Project Number
+        /// Serialized Name: GCPAuthModel.projectNumber
+        /// </param>
+        /// <param name="workloadIdentityProviderId">
+        /// GCP Workload Identity Provider ID
+        /// Serialized Name: GCPAuthModel.workloadIdentityProviderId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceAccountEmail"/>, <paramref name="projectNumber"/> or <paramref name="workloadIdentityProviderId"/> is null. </exception>
         public GCPAuthModel(string serviceAccountEmail, string projectNumber, string workloadIdentityProviderId)
         {
@@ -31,11 +43,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GCPAuthModel"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
+        /// <param name="authType">
+        /// The auth type
+        /// Serialized Name: CcpAuthConfig.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="serviceAccountEmail"> GCP Service Account Email. </param>
-        /// <param name="projectNumber"> GCP Project Number. </param>
-        /// <param name="workloadIdentityProviderId"> GCP Workload Identity Provider ID. </param>
+        /// <param name="serviceAccountEmail">
+        /// GCP Service Account Email
+        /// Serialized Name: GCPAuthModel.serviceAccountEmail
+        /// </param>
+        /// <param name="projectNumber">
+        /// GCP Project Number
+        /// Serialized Name: GCPAuthModel.projectNumber
+        /// </param>
+        /// <param name="workloadIdentityProviderId">
+        /// GCP Workload Identity Provider ID
+        /// Serialized Name: GCPAuthModel.workloadIdentityProviderId
+        /// </param>
         internal GCPAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string serviceAccountEmail, string projectNumber, string workloadIdentityProviderId) : base(authType, serializedAdditionalRawData)
         {
             ServiceAccountEmail = serviceAccountEmail;
@@ -49,11 +73,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> GCP Service Account Email. </summary>
+        /// <summary>
+        /// GCP Service Account Email
+        /// Serialized Name: GCPAuthModel.serviceAccountEmail
+        /// </summary>
         public string ServiceAccountEmail { get; set; }
-        /// <summary> GCP Project Number. </summary>
+        /// <summary>
+        /// GCP Project Number
+        /// Serialized Name: GCPAuthModel.projectNumber
+        /// </summary>
         public string ProjectNumber { get; set; }
-        /// <summary> GCP Workload Identity Provider ID. </summary>
+        /// <summary>
+        /// GCP Workload Identity Provider ID
+        /// Serialized Name: GCPAuthModel.workloadIdentityProviderId
+        /// </summary>
         public string WorkloadIdentityProviderId { get; set; }
     }
 }

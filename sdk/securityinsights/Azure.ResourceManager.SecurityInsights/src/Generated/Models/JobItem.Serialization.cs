@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             string resourceId = default;
             Status? status = default;
             DateTimeOffset? executionTime = default;
-            IList<Error> errors = default;
+            IList<PublicationFailedError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,10 +126,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    List<Error> array = new List<Error>();
+                    List<PublicationFailedError> array = new List<PublicationFailedError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Error.DeserializeError(item, options));
+                        array.Add(PublicationFailedError.DeserializePublicationFailedError(item, options));
                     }
                     errors = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new JobItem(resourceId, status, executionTime, errors ?? new ChangeTrackingList<Error>(), serializedAdditionalRawData);
+            return new JobItem(resourceId, status, executionTime, errors ?? new ChangeTrackingList<PublicationFailedError>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JobItem>.Write(ModelReaderWriterOptions options)

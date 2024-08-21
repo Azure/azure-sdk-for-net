@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Query results for table insights query. </summary>
+    /// <summary>
+    /// Query results for table insights query.
+    /// Serialized Name: InsightsTableResult
+    /// </summary>
     public partial class InsightsTableResult
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InsightsTableResult"/>. </summary>
-        /// <param name="columns"> Columns Metadata of the table. </param>
-        /// <param name="rows"> Rows data of the table. </param>
+        /// <param name="columns">
+        /// Columns Metadata of the table
+        /// Serialized Name: InsightsTableResult.columns
+        /// </param>
+        /// <param name="rows">
+        /// Rows data of the table
+        /// Serialized Name: InsightsTableResult.rows
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InsightsTableResult(IReadOnlyList<InsightsTableResultColumnsItem> columns, IReadOnlyList<IList<string>> rows, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +72,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Columns Metadata of the table. </summary>
+        /// <summary>
+        /// Columns Metadata of the table
+        /// Serialized Name: InsightsTableResult.columns
+        /// </summary>
         public IReadOnlyList<InsightsTableResultColumnsItem> Columns { get; }
-        /// <summary> Rows data of the table. </summary>
+        /// <summary>
+        /// Rows data of the table
+        /// Serialized Name: InsightsTableResult.rows
+        /// </summary>
         public IReadOnlyList<IList<string>> Rows { get; }
     }
 }

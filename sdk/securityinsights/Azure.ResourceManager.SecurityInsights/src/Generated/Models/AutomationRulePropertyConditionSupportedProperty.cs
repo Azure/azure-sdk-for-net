@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The property to evaluate in an automation rule property condition. </summary>
+    /// <summary>
+    /// The property to evaluate in an automation rule property condition.
+    /// Serialized Name: AutomationRulePropertyConditionSupportedProperty
+    /// </summary>
     public readonly partial struct AutomationRulePropertyConditionSupportedProperty : IEquatable<AutomationRulePropertyConditionSupportedProperty>
     {
         private readonly string _value;
@@ -81,121 +84,295 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string RegistryValueDataValue = "RegistryValueData";
         private const string UriValue = "Url";
 
-        /// <summary> The title of the incident. </summary>
+        /// <summary>
+        /// The title of the incident
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IncidentTitle
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentTitle { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentTitleValue);
-        /// <summary> The description of the incident. </summary>
+        /// <summary>
+        /// The description of the incident
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IncidentDescription
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentDescription { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentDescriptionValue);
-        /// <summary> The severity of the incident. </summary>
+        /// <summary>
+        /// The severity of the incident
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IncidentSeverity
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentSeverity { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentSeverityValue);
-        /// <summary> The status of the incident. </summary>
+        /// <summary>
+        /// The status of the incident
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IncidentStatus
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentStatus { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentStatusValue);
-        /// <summary> The related Analytic rule ids of the incident. </summary>
+        /// <summary>
+        /// The related Analytic rule ids of the incident
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IncidentRelatedAnalyticRuleIds
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentRelatedAnalyticRuleIds { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentRelatedAnalyticRuleIdsValue);
-        /// <summary> The tactics of the incident. </summary>
+        /// <summary>
+        /// The tactics of the incident
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IncidentTactics
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentTactics { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentTacticsValue);
-        /// <summary> The labels of the incident. </summary>
+        /// <summary>
+        /// The labels of the incident
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IncidentLabel
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentLabel { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentLabelValue);
-        /// <summary> The provider name of the incident. </summary>
+        /// <summary>
+        /// The provider name of the incident
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IncidentProviderName
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentProviderName { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentProviderNameValue);
-        /// <summary> The update source of the incident. </summary>
+        /// <summary>
+        /// The update source of the incident
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IncidentUpdatedBySource
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentUpdatedBySource { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentUpdatedBySourceValue);
-        /// <summary> The incident custom detail key. </summary>
+        /// <summary>
+        /// The incident custom detail key
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IncidentCustomDetailsKey
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentCustomDetailsKey { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentCustomDetailsKeyValue);
-        /// <summary> The incident custom detail value. </summary>
+        /// <summary>
+        /// The incident custom detail value
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IncidentCustomDetailsValue
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IncidentCustomDetailsValue { get; } = new AutomationRulePropertyConditionSupportedProperty(IncidentCustomDetailsValueValue);
-        /// <summary> The account Azure Active Directory tenant id. </summary>
+        /// <summary>
+        /// The account Azure Active Directory tenant id
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.AccountAadTenantId
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountAadTenantId { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountAadTenantIdValue);
-        /// <summary> The account Azure Active Directory user id. </summary>
+        /// <summary>
+        /// The account Azure Active Directory user id
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.AccountAadUserId
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountAadUserId { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountAadUserIdValue);
-        /// <summary> The account name. </summary>
+        /// <summary>
+        /// The account name
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.AccountName
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountName { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountNameValue);
-        /// <summary> The account NetBIOS domain name. </summary>
+        /// <summary>
+        /// The account NetBIOS domain name
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.AccountNTDomain
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountNTDomain { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountNTDomainValue);
-        /// <summary> The account Azure Active Directory Passport User ID. </summary>
+        /// <summary>
+        /// The account Azure Active Directory Passport User ID
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.AccountPUID
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountPuid { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountPuidValue);
-        /// <summary> The account security identifier. </summary>
+        /// <summary>
+        /// The account security identifier
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.AccountSid
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountSid { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountSidValue);
-        /// <summary> The account unique identifier. </summary>
+        /// <summary>
+        /// The account unique identifier
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.AccountObjectGuid
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountObjectGuid { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountObjectGuidValue);
-        /// <summary> The account user principal name suffix. </summary>
+        /// <summary>
+        /// The account user principal name suffix
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.AccountUPNSuffix
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty AccountUpnSuffix { get; } = new AutomationRulePropertyConditionSupportedProperty(AccountUpnSuffixValue);
-        /// <summary> The name of the product of the alert. </summary>
+        /// <summary>
+        /// The name of the product of the alert
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.AlertProductNames
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty AlertProductNames { get; } = new AutomationRulePropertyConditionSupportedProperty(AlertProductNamesValue);
-        /// <summary> The analytic rule ids of the alert. </summary>
+        /// <summary>
+        /// The analytic rule ids of the alert
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.AlertAnalyticRuleIds
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty AlertAnalyticRuleIds { get; } = new AutomationRulePropertyConditionSupportedProperty(AlertAnalyticRuleIdsValue);
-        /// <summary> The Azure resource id. </summary>
+        /// <summary>
+        /// The Azure resource id
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.AzureResourceResourceId
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty AzureResourceResourceId { get; } = new AutomationRulePropertyConditionSupportedProperty(AzureResourceResourceIdValue);
-        /// <summary> The Azure resource subscription id. </summary>
+        /// <summary>
+        /// The Azure resource subscription id
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.AzureResourceSubscriptionId
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty AzureResourceSubscriptionId { get; } = new AutomationRulePropertyConditionSupportedProperty(AzureResourceSubscriptionIdValue);
-        /// <summary> The cloud application identifier. </summary>
+        /// <summary>
+        /// The cloud application identifier
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.CloudApplicationAppId
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty CloudApplicationAppId { get; } = new AutomationRulePropertyConditionSupportedProperty(CloudApplicationAppIdValue);
-        /// <summary> The cloud application name. </summary>
+        /// <summary>
+        /// The cloud application name
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.CloudApplicationAppName
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty CloudApplicationAppName { get; } = new AutomationRulePropertyConditionSupportedProperty(CloudApplicationAppNameValue);
-        /// <summary> The dns record domain name. </summary>
+        /// <summary>
+        /// The dns record domain name
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.DNSDomainName
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty DnsDomainName { get; } = new AutomationRulePropertyConditionSupportedProperty(DnsDomainNameValue);
-        /// <summary> The file directory full path. </summary>
+        /// <summary>
+        /// The file directory full path
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.FileDirectory
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty FileDirectory { get; } = new AutomationRulePropertyConditionSupportedProperty(FileDirectoryValue);
-        /// <summary> The file name without path. </summary>
+        /// <summary>
+        /// The file name without path
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.FileName
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty FileName { get; } = new AutomationRulePropertyConditionSupportedProperty(FileNameValue);
-        /// <summary> The file hash value. </summary>
+        /// <summary>
+        /// The file hash value
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.FileHashValue
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty FileHashValue { get; } = new AutomationRulePropertyConditionSupportedProperty(FileHashValueValue);
-        /// <summary> The host Azure resource id. </summary>
+        /// <summary>
+        /// The host Azure resource id
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.HostAzureID
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty HostAzureId { get; } = new AutomationRulePropertyConditionSupportedProperty(HostAzureIdValue);
-        /// <summary> The host name without domain. </summary>
+        /// <summary>
+        /// The host name without domain
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.HostName
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty HostName { get; } = new AutomationRulePropertyConditionSupportedProperty(HostNameValue);
-        /// <summary> The host NetBIOS name. </summary>
+        /// <summary>
+        /// The host NetBIOS name
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.HostNetBiosName
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty HostNetBiosName { get; } = new AutomationRulePropertyConditionSupportedProperty(HostNetBiosNameValue);
-        /// <summary> The host NT domain. </summary>
+        /// <summary>
+        /// The host NT domain
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.HostNTDomain
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty HostNTDomain { get; } = new AutomationRulePropertyConditionSupportedProperty(HostNTDomainValue);
-        /// <summary> The host operating system. </summary>
+        /// <summary>
+        /// The host operating system
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.HostOSVersion
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty HostOSVersion { get; } = new AutomationRulePropertyConditionSupportedProperty(HostOSVersionValue);
-        /// <summary> "The IoT device id. </summary>
+        /// <summary>
+        /// "The IoT device id
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IoTDeviceId
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IotDeviceId { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceIdValue);
-        /// <summary> The IoT device name. </summary>
+        /// <summary>
+        /// The IoT device name
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IoTDeviceName
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IotDeviceName { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceNameValue);
-        /// <summary> The IoT device type. </summary>
+        /// <summary>
+        /// The IoT device type
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IoTDeviceType
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IotDeviceType { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceTypeValue);
-        /// <summary> The IoT device vendor. </summary>
+        /// <summary>
+        /// The IoT device vendor
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IoTDeviceVendor
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IotDeviceVendor { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceVendorValue);
-        /// <summary> The IoT device model. </summary>
+        /// <summary>
+        /// The IoT device model
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IoTDeviceModel
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IotDeviceModel { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceModelValue);
-        /// <summary> The IoT device operating system. </summary>
+        /// <summary>
+        /// The IoT device operating system
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IoTDeviceOperatingSystem
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IotDeviceOperatingSystem { get; } = new AutomationRulePropertyConditionSupportedProperty(IotDeviceOperatingSystemValue);
-        /// <summary> The IP address. </summary>
+        /// <summary>
+        /// The IP address
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.IPAddress
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty IPAddress { get; } = new AutomationRulePropertyConditionSupportedProperty(IPAddressValue);
-        /// <summary> The mailbox display name. </summary>
+        /// <summary>
+        /// The mailbox display name
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.MailboxDisplayName
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty MailboxDisplayName { get; } = new AutomationRulePropertyConditionSupportedProperty(MailboxDisplayNameValue);
-        /// <summary> The mailbox primary address. </summary>
+        /// <summary>
+        /// The mailbox primary address
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.MailboxPrimaryAddress
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty MailboxPrimaryAddress { get; } = new AutomationRulePropertyConditionSupportedProperty(MailboxPrimaryAddressValue);
-        /// <summary> The mailbox user principal name. </summary>
+        /// <summary>
+        /// The mailbox user principal name
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.MailboxUPN
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty MailboxUpn { get; } = new AutomationRulePropertyConditionSupportedProperty(MailboxUpnValue);
-        /// <summary> The mail message delivery action. </summary>
+        /// <summary>
+        /// The mail message delivery action
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.MailMessageDeliveryAction
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty MailMessageDeliveryAction { get; } = new AutomationRulePropertyConditionSupportedProperty(MailMessageDeliveryActionValue);
-        /// <summary> The mail message delivery location. </summary>
+        /// <summary>
+        /// The mail message delivery location
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.MailMessageDeliveryLocation
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty MailMessageDeliveryLocation { get; } = new AutomationRulePropertyConditionSupportedProperty(MailMessageDeliveryLocationValue);
-        /// <summary> The mail message recipient. </summary>
+        /// <summary>
+        /// The mail message recipient
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.MailMessageRecipient
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty MailMessageRecipient { get; } = new AutomationRulePropertyConditionSupportedProperty(MailMessageRecipientValue);
-        /// <summary> The mail message sender IP address. </summary>
+        /// <summary>
+        /// The mail message sender IP address
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.MailMessageSenderIP
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty MailMessageSenderIP { get; } = new AutomationRulePropertyConditionSupportedProperty(MailMessageSenderIPValue);
-        /// <summary> The mail message subject. </summary>
+        /// <summary>
+        /// The mail message subject
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.MailMessageSubject
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty MailMessageSubject { get; } = new AutomationRulePropertyConditionSupportedProperty(MailMessageSubjectValue);
-        /// <summary> The mail message P1 sender. </summary>
+        /// <summary>
+        /// The mail message P1 sender
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.MailMessageP1Sender
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty MailMessageP1Sender { get; } = new AutomationRulePropertyConditionSupportedProperty(MailMessageP1SenderValue);
-        /// <summary> The mail message P2 sender. </summary>
+        /// <summary>
+        /// The mail message P2 sender
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.MailMessageP2Sender
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty MailMessageP2Sender { get; } = new AutomationRulePropertyConditionSupportedProperty(MailMessageP2SenderValue);
-        /// <summary> The malware category. </summary>
+        /// <summary>
+        /// The malware category
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.MalwareCategory
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty MalwareCategory { get; } = new AutomationRulePropertyConditionSupportedProperty(MalwareCategoryValue);
-        /// <summary> The malware name. </summary>
+        /// <summary>
+        /// The malware name
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.MalwareName
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty MalwareName { get; } = new AutomationRulePropertyConditionSupportedProperty(MalwareNameValue);
-        /// <summary> The process execution command line. </summary>
+        /// <summary>
+        /// The process execution command line
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.ProcessCommandLine
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty ProcessCommandLine { get; } = new AutomationRulePropertyConditionSupportedProperty(ProcessCommandLineValue);
-        /// <summary> The process id. </summary>
+        /// <summary>
+        /// The process id
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.ProcessId
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty ProcessId { get; } = new AutomationRulePropertyConditionSupportedProperty(ProcessIdValue);
-        /// <summary> The registry key path. </summary>
+        /// <summary>
+        /// The registry key path
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.RegistryKey
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty RegistryKey { get; } = new AutomationRulePropertyConditionSupportedProperty(RegistryKeyValue);
-        /// <summary> The registry key value in string formatted representation. </summary>
+        /// <summary>
+        /// The registry key value in string formatted representation
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.RegistryValueData
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty RegistryValueData { get; } = new AutomationRulePropertyConditionSupportedProperty(RegistryValueDataValue);
-        /// <summary> The url. </summary>
+        /// <summary>
+        /// The url
+        /// Serialized Name: AutomationRulePropertyConditionSupportedProperty.Url
+        /// </summary>
         public static AutomationRulePropertyConditionSupportedProperty Uri { get; } = new AutomationRulePropertyConditionSupportedProperty(UriValue);
         /// <summary> Determines if two <see cref="AutomationRulePropertyConditionSupportedProperty"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyConditionSupportedProperty left, AutomationRulePropertyConditionSupportedProperty right) => left.Equals(right);

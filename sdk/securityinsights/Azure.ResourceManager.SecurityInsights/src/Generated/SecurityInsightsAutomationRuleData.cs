@@ -14,7 +14,11 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> A class representing the SecurityInsightsAutomationRule data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityInsightsAutomationRule data model.
+    /// The SecurityInsightsAutomationRule.
+    /// Serialized Name: AutomationRule
+    /// </summary>
     public partial class SecurityInsightsAutomationRuleData : ResourceData
     {
         /// <summary>
@@ -50,11 +54,21 @@ namespace Azure.ResourceManager.SecurityInsights
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleData"/>. </summary>
-        /// <param name="displayName"> The display name of the automation rule. </param>
-        /// <param name="order"> The order of execution of the automation rule. </param>
-        /// <param name="triggeringLogic"> Describes automation rule triggering logic. </param>
+        /// <param name="displayName">
+        /// The display name of the automation rule.
+        /// Serialized Name: AutomationRule.properties.displayName
+        /// </param>
+        /// <param name="order">
+        /// The order of execution of the automation rule.
+        /// Serialized Name: AutomationRule.properties.order
+        /// </param>
+        /// <param name="triggeringLogic">
+        /// Describes automation rule triggering logic.
+        /// Serialized Name: AutomationRule.properties.triggeringLogic
+        /// </param>
         /// <param name="actions">
         /// The actions to execute when the automation rule is triggered.
+        /// Serialized Name: AutomationRule.properties.actions
         /// Please note <see cref="SecurityInsightsAutomationRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutomationRuleAddIncidentTaskAction"/>, <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
         /// </param>
@@ -76,19 +90,44 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> The display name of the automation rule. </param>
-        /// <param name="order"> The order of execution of the automation rule. </param>
-        /// <param name="triggeringLogic"> Describes automation rule triggering logic. </param>
+        /// <param name="displayName">
+        /// The display name of the automation rule.
+        /// Serialized Name: AutomationRule.properties.displayName
+        /// </param>
+        /// <param name="order">
+        /// The order of execution of the automation rule.
+        /// Serialized Name: AutomationRule.properties.order
+        /// </param>
+        /// <param name="triggeringLogic">
+        /// Describes automation rule triggering logic.
+        /// Serialized Name: AutomationRule.properties.triggeringLogic
+        /// </param>
         /// <param name="actions">
         /// The actions to execute when the automation rule is triggered.
+        /// Serialized Name: AutomationRule.properties.actions
         /// Please note <see cref="SecurityInsightsAutomationRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutomationRuleAddIncidentTaskAction"/>, <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
         /// </param>
-        /// <param name="lastModifiedOn"> The last time the automation rule was updated. </param>
-        /// <param name="createdOn"> The time the automation rule was created. </param>
-        /// <param name="lastModifiedBy"> Information on the client (user or application) that made some action. </param>
-        /// <param name="createdBy"> Information on the client (user or application) that made some action. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="lastModifiedOn">
+        /// The last time the automation rule was updated.
+        /// Serialized Name: AutomationRule.properties.lastModifiedTimeUtc
+        /// </param>
+        /// <param name="createdOn">
+        /// The time the automation rule was created.
+        /// Serialized Name: AutomationRule.properties.createdTimeUtc
+        /// </param>
+        /// <param name="lastModifiedBy">
+        /// Information on the client (user or application) that made some action
+        /// Serialized Name: AutomationRule.properties.lastModifiedBy
+        /// </param>
+        /// <param name="createdBy">
+        /// Information on the client (user or application) that made some action
+        /// Serialized Name: AutomationRule.properties.createdBy
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsAutomationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, int order, SecurityInsightsAutomationRuleTriggeringLogic triggeringLogic, IList<SecurityInsightsAutomationRuleAction> actions, DateTimeOffset? lastModifiedOn, DateTimeOffset? createdOn, SecurityInsightsClientInfo lastModifiedBy, SecurityInsightsClientInfo createdBy, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -109,27 +148,52 @@ namespace Azure.ResourceManager.SecurityInsights
         {
         }
 
-        /// <summary> The display name of the automation rule. </summary>
+        /// <summary>
+        /// The display name of the automation rule.
+        /// Serialized Name: AutomationRule.properties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> The order of execution of the automation rule. </summary>
+        /// <summary>
+        /// The order of execution of the automation rule.
+        /// Serialized Name: AutomationRule.properties.order
+        /// </summary>
         public int Order { get; set; }
-        /// <summary> Describes automation rule triggering logic. </summary>
+        /// <summary>
+        /// Describes automation rule triggering logic.
+        /// Serialized Name: AutomationRule.properties.triggeringLogic
+        /// </summary>
         public SecurityInsightsAutomationRuleTriggeringLogic TriggeringLogic { get; set; }
         /// <summary>
         /// The actions to execute when the automation rule is triggered.
+        /// Serialized Name: AutomationRule.properties.actions
         /// Please note <see cref="SecurityInsightsAutomationRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutomationRuleAddIncidentTaskAction"/>, <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
         /// </summary>
         public IList<SecurityInsightsAutomationRuleAction> Actions { get; }
-        /// <summary> The last time the automation rule was updated. </summary>
+        /// <summary>
+        /// The last time the automation rule was updated.
+        /// Serialized Name: AutomationRule.properties.lastModifiedTimeUtc
+        /// </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> The time the automation rule was created. </summary>
+        /// <summary>
+        /// The time the automation rule was created.
+        /// Serialized Name: AutomationRule.properties.createdTimeUtc
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Information on the client (user or application) that made some action. </summary>
+        /// <summary>
+        /// Information on the client (user or application) that made some action
+        /// Serialized Name: AutomationRule.properties.lastModifiedBy
+        /// </summary>
         public SecurityInsightsClientInfo LastModifiedBy { get; }
-        /// <summary> Information on the client (user or application) that made some action. </summary>
+        /// <summary>
+        /// Information on the client (user or application) that made some action
+        /// Serialized Name: AutomationRule.properties.createdBy
+        /// </summary>
         public SecurityInsightsClientInfo CreatedBy { get; }
-        /// <summary> Etag of the azure resource. </summary>
+        /// <summary>
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> An individual contact associated with this domain. </summary>
+    /// <summary>
+    /// An individual contact associated with this domain
+    /// Serialized Name: EnrichmentDomainWhoisContact
+    /// </summary>
     public partial class EnrichmentDomainWhoisContact
     {
         /// <summary>
@@ -52,16 +55,46 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EnrichmentDomainWhoisContact"/>. </summary>
-        /// <param name="name"> The name of this contact. </param>
-        /// <param name="org"> The organization for this contact. </param>
-        /// <param name="street"> A list describing the street address for this contact. </param>
-        /// <param name="city"> The city for this contact. </param>
-        /// <param name="state"> The state for this contact. </param>
-        /// <param name="postal"> The postal code for this contact. </param>
-        /// <param name="country"> The country for this contact. </param>
-        /// <param name="phone"> The phone number for this contact. </param>
-        /// <param name="fax"> The fax number for this contact. </param>
-        /// <param name="email"> The email address for this contact. </param>
+        /// <param name="name">
+        /// The name of this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.name
+        /// </param>
+        /// <param name="org">
+        /// The organization for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.org
+        /// </param>
+        /// <param name="street">
+        /// A list describing the street address for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.street
+        /// </param>
+        /// <param name="city">
+        /// The city for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.city
+        /// </param>
+        /// <param name="state">
+        /// The state for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.state
+        /// </param>
+        /// <param name="postal">
+        /// The postal code for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.postal
+        /// </param>
+        /// <param name="country">
+        /// The country for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.country
+        /// </param>
+        /// <param name="phone">
+        /// The phone number for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.phone
+        /// </param>
+        /// <param name="fax">
+        /// The fax number for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.fax
+        /// </param>
+        /// <param name="email">
+        /// The email address for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.email
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EnrichmentDomainWhoisContact(string name, string org, IReadOnlyList<string> street, string city, string state, string postal, string country, string phone, string fax, string email, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,25 +111,55 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of this contact. </summary>
+        /// <summary>
+        /// The name of this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The organization for this contact. </summary>
+        /// <summary>
+        /// The organization for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.org
+        /// </summary>
         public string Org { get; }
-        /// <summary> A list describing the street address for this contact. </summary>
+        /// <summary>
+        /// A list describing the street address for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.street
+        /// </summary>
         public IReadOnlyList<string> Street { get; }
-        /// <summary> The city for this contact. </summary>
+        /// <summary>
+        /// The city for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.city
+        /// </summary>
         public string City { get; }
-        /// <summary> The state for this contact. </summary>
+        /// <summary>
+        /// The state for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.state
+        /// </summary>
         public string State { get; }
-        /// <summary> The postal code for this contact. </summary>
+        /// <summary>
+        /// The postal code for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.postal
+        /// </summary>
         public string Postal { get; }
-        /// <summary> The country for this contact. </summary>
+        /// <summary>
+        /// The country for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.country
+        /// </summary>
         public string Country { get; }
-        /// <summary> The phone number for this contact. </summary>
+        /// <summary>
+        /// The phone number for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.phone
+        /// </summary>
         public string Phone { get; }
-        /// <summary> The fax number for this contact. </summary>
+        /// <summary>
+        /// The fax number for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.fax
+        /// </summary>
         public string Fax { get; }
-        /// <summary> The email address for this contact. </summary>
+        /// <summary>
+        /// The email address for this contact
+        /// Serialized Name: EnrichmentDomainWhoisContact.email
+        /// </summary>
         public string Email { get; }
     }
 }

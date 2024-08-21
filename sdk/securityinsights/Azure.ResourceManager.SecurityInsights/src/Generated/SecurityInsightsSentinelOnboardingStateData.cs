@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsSentinelOnboardingState data model.
     /// Sentinel onboarding state
+    /// Serialized Name: SentinelOnboardingState
     /// </summary>
     public partial class SecurityInsightsSentinelOnboardingStateData : ResourceData
     {
@@ -60,8 +61,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="isCustomerManagedKeySet"> Flag that indicates the status of the CMK setting. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="isCustomerManagedKeySet">
+        /// Flag that indicates the status of the CMK setting
+        /// Serialized Name: SentinelOnboardingState.properties.customerManagedKey
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsSentinelOnboardingStateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isCustomerManagedKeySet, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -70,9 +77,15 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Flag that indicates the status of the CMK setting. </summary>
+        /// <summary>
+        /// Flag that indicates the status of the CMK setting
+        /// Serialized Name: SentinelOnboardingState.properties.customerManagedKey
+        /// </summary>
         public bool? IsCustomerManagedKeySet { get; set; }
-        /// <summary> Etag of the azure resource. </summary>
+        /// <summary>
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

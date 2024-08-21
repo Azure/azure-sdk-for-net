@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List of all the template. </summary>
+    /// <summary>
+    /// List of all the template.
+    /// Serialized Name: TemplateList
+    /// </summary>
     internal partial class TemplateList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TemplateList"/>. </summary>
-        /// <param name="value"> Array of templates. </param>
+        /// <param name="value">
+        /// Array of templates.
+        /// Serialized Name: TemplateList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TemplateList(IEnumerable<TemplateModelData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TemplateList"/>. </summary>
-        /// <param name="value"> Array of templates. </param>
-        /// <param name="nextLink"> URL to fetch the next page of template. </param>
+        /// <param name="value">
+        /// Array of templates.
+        /// Serialized Name: TemplateList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next page of template.
+        /// Serialized Name: TemplateList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TemplateList(IReadOnlyList<TemplateModelData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Array of templates. </summary>
+        /// <summary>
+        /// Array of templates.
+        /// Serialized Name: TemplateList.value
+        /// </summary>
         public IReadOnlyList<TemplateModelData> Value { get; }
-        /// <summary> URL to fetch the next page of template. </summary>
+        /// <summary>
+        /// URL to fetch the next page of template.
+        /// Serialized Name: TemplateList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

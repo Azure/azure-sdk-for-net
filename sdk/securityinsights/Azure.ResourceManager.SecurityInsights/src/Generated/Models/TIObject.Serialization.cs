@@ -166,11 +166,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AttackPattern": return AttackPattern.DeserializeAttackPattern(element, options);
-                    case "Identity": return Identity.DeserializeIdentity(element, options);
-                    case "Indicator": return Indicator.DeserializeIndicator(element, options);
-                    case "Relationship": return Relationship.DeserializeRelationship(element, options);
-                    case "ThreatActor": return ThreatActor.DeserializeThreatActor(element, options);
+                    case "AttackPattern": return TiObjectKindAttackPattern.DeserializeTiObjectKindAttackPattern(element, options);
+                    case "Identity": return TiObjectKindIdentity.DeserializeTiObjectKindIdentity(element, options);
+                    case "Indicator": return TiObjectKindIndicator.DeserializeTiObjectKindIndicator(element, options);
+                    case "Relationship": return TiObjectKindRelationship.DeserializeTiObjectKindRelationship(element, options);
+                    case "ThreatActor": return TiObjectKindThreatActor.DeserializeTiObjectKindThreatActor(element, options);
                 }
             }
             return UnknownTIObject.DeserializeUnknownTIObject(element, options);

@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="kind"> The entity template query kind we want to fetch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EntityQueryTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EntityQueryTemplateResource> GetAllAsync(Enum23? kind = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EntityQueryTemplateResource> GetAllAsync(Enum22? kind = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _entityQueryTemplateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kind);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entityQueryTemplateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kind);
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="kind"> The entity template query kind we want to fetch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EntityQueryTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EntityQueryTemplateResource> GetAll(Enum23? kind = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EntityQueryTemplateResource> GetAll(Enum22? kind = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _entityQueryTemplateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kind);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entityQueryTemplateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kind);

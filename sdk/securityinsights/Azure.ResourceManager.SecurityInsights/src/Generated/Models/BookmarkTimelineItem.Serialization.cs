@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            string azureResourceId = default;
+            ResourceIdentifier azureResourceId = default;
             string displayName = default;
             string notes = default;
             DateTimeOffset? endTimeUtc = default;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("azureResourceId"u8))
                 {
-                    azureResourceId = property.Value.GetString();
+                    azureResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayName"u8))

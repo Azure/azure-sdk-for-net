@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the FileImport data model.
     /// Represents a file import in Azure Security Insights.
+    /// Serialized Name: FileImport
     /// </summary>
     public partial class FileImportData : ResourceData
     {
@@ -62,25 +63,64 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="ingestionMode"> Describes how to ingest the records in the file. </param>
-        /// <param name="contentType"> The content type of this file. </param>
-        /// <param name="createdTimeUTC"> The time the file was imported. </param>
-        /// <param name="errorFile"> Represents the error file (if the import was ingested with errors or failed the validation). </param>
-        /// <param name="errorsPreview"> An ordered list of some of the errors that were encountered during validation. </param>
-        /// <param name="importFile"> Represents the imported file. </param>
-        /// <param name="ingestedRecordCount"> The number of records that have been successfully ingested. </param>
-        /// <param name="source"> The source for the data in the file. </param>
-        /// <param name="state"> The state of the file import. </param>
-        /// <param name="totalRecordCount"> The number of records in the file. </param>
-        /// <param name="validRecordCount"> The number of records that have passed validation. </param>
-        /// <param name="filesValidUntilTimeUTC"> The time the files associated with this import are deleted from the storage account. </param>
-        /// <param name="importValidUntilTimeUTC"> The time the file import record is soft deleted from the database and history. </param>
+        /// <param name="ingestionMode">
+        /// Describes how to ingest the records in the file.
+        /// Serialized Name: FileImport.properties.ingestionMode
+        /// </param>
+        /// <param name="contentType">
+        /// The content type of this file.
+        /// Serialized Name: FileImport.properties.contentType
+        /// </param>
+        /// <param name="createdOn">
+        /// The time the file was imported.
+        /// Serialized Name: FileImport.properties.createdTimeUTC
+        /// </param>
+        /// <param name="errorFile">
+        /// Represents the error file (if the import was ingested with errors or failed the validation).
+        /// Serialized Name: FileImport.properties.errorFile
+        /// </param>
+        /// <param name="errorsPreview">
+        /// An ordered list of some of the errors that were encountered during validation.
+        /// Serialized Name: FileImport.properties.errorsPreview
+        /// </param>
+        /// <param name="importFile">
+        /// Represents the imported file.
+        /// Serialized Name: FileImport.properties.importFile
+        /// </param>
+        /// <param name="ingestedRecordCount">
+        /// The number of records that have been successfully ingested.
+        /// Serialized Name: FileImport.properties.ingestedRecordCount
+        /// </param>
+        /// <param name="source">
+        /// The source for the data in the file.
+        /// Serialized Name: FileImport.properties.source
+        /// </param>
+        /// <param name="state">
+        /// The state of the file import.
+        /// Serialized Name: FileImport.properties.state
+        /// </param>
+        /// <param name="totalRecordCount">
+        /// The number of records in the file.
+        /// Serialized Name: FileImport.properties.totalRecordCount
+        /// </param>
+        /// <param name="validRecordCount">
+        /// The number of records that have passed validation.
+        /// Serialized Name: FileImport.properties.validRecordCount
+        /// </param>
+        /// <param name="filesValidUntil">
+        /// The time the files associated with this import are deleted from the storage account.
+        /// Serialized Name: FileImport.properties.filesValidUntilTimeUTC
+        /// </param>
+        /// <param name="importValidUntil">
+        /// The time the file import record is soft deleted from the database and history.
+        /// Serialized Name: FileImport.properties.importValidUntilTimeUTC
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileImportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IngestionMode? ingestionMode, FileImportContentType? contentType, DateTimeOffset? createdTimeUTC, FileMetadata errorFile, IReadOnlyList<ValidationError> errorsPreview, FileMetadata importFile, int? ingestedRecordCount, string source, FileImportState? state, int? totalRecordCount, int? validRecordCount, DateTimeOffset? filesValidUntilTimeUTC, DateTimeOffset? importValidUntilTimeUTC, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FileImportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IngestionMode? ingestionMode, FileImportContentType? contentType, DateTimeOffset? createdOn, FileMetadata errorFile, IReadOnlyList<ValidationError> errorsPreview, FileMetadata importFile, int? ingestedRecordCount, string source, FileImportState? state, int? totalRecordCount, int? validRecordCount, DateTimeOffset? filesValidUntil, DateTimeOffset? importValidUntil, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             IngestionMode = ingestionMode;
             ContentType = contentType;
-            CreatedTimeUTC = createdTimeUTC;
+            CreatedOn = createdOn;
             ErrorFile = errorFile;
             ErrorsPreview = errorsPreview;
             ImportFile = importFile;
@@ -89,36 +129,75 @@ namespace Azure.ResourceManager.SecurityInsights
             State = state;
             TotalRecordCount = totalRecordCount;
             ValidRecordCount = validRecordCount;
-            FilesValidUntilTimeUTC = filesValidUntilTimeUTC;
-            ImportValidUntilTimeUTC = importValidUntilTimeUTC;
+            FilesValidUntil = filesValidUntil;
+            ImportValidUntil = importValidUntil;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Describes how to ingest the records in the file. </summary>
+        /// <summary>
+        /// Describes how to ingest the records in the file.
+        /// Serialized Name: FileImport.properties.ingestionMode
+        /// </summary>
         public IngestionMode? IngestionMode { get; set; }
-        /// <summary> The content type of this file. </summary>
+        /// <summary>
+        /// The content type of this file.
+        /// Serialized Name: FileImport.properties.contentType
+        /// </summary>
         public FileImportContentType? ContentType { get; set; }
-        /// <summary> The time the file was imported. </summary>
-        public DateTimeOffset? CreatedTimeUTC { get; }
-        /// <summary> Represents the error file (if the import was ingested with errors or failed the validation). </summary>
+        /// <summary>
+        /// The time the file was imported.
+        /// Serialized Name: FileImport.properties.createdTimeUTC
+        /// </summary>
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary>
+        /// Represents the error file (if the import was ingested with errors or failed the validation).
+        /// Serialized Name: FileImport.properties.errorFile
+        /// </summary>
         public FileMetadata ErrorFile { get; }
-        /// <summary> An ordered list of some of the errors that were encountered during validation. </summary>
+        /// <summary>
+        /// An ordered list of some of the errors that were encountered during validation.
+        /// Serialized Name: FileImport.properties.errorsPreview
+        /// </summary>
         public IReadOnlyList<ValidationError> ErrorsPreview { get; }
-        /// <summary> Represents the imported file. </summary>
+        /// <summary>
+        /// Represents the imported file.
+        /// Serialized Name: FileImport.properties.importFile
+        /// </summary>
         public FileMetadata ImportFile { get; set; }
-        /// <summary> The number of records that have been successfully ingested. </summary>
+        /// <summary>
+        /// The number of records that have been successfully ingested.
+        /// Serialized Name: FileImport.properties.ingestedRecordCount
+        /// </summary>
         public int? IngestedRecordCount { get; }
-        /// <summary> The source for the data in the file. </summary>
+        /// <summary>
+        /// The source for the data in the file.
+        /// Serialized Name: FileImport.properties.source
+        /// </summary>
         public string Source { get; set; }
-        /// <summary> The state of the file import. </summary>
+        /// <summary>
+        /// The state of the file import.
+        /// Serialized Name: FileImport.properties.state
+        /// </summary>
         public FileImportState? State { get; }
-        /// <summary> The number of records in the file. </summary>
+        /// <summary>
+        /// The number of records in the file.
+        /// Serialized Name: FileImport.properties.totalRecordCount
+        /// </summary>
         public int? TotalRecordCount { get; }
-        /// <summary> The number of records that have passed validation. </summary>
+        /// <summary>
+        /// The number of records that have passed validation.
+        /// Serialized Name: FileImport.properties.validRecordCount
+        /// </summary>
         public int? ValidRecordCount { get; }
-        /// <summary> The time the files associated with this import are deleted from the storage account. </summary>
-        public DateTimeOffset? FilesValidUntilTimeUTC { get; }
-        /// <summary> The time the file import record is soft deleted from the database and history. </summary>
-        public DateTimeOffset? ImportValidUntilTimeUTC { get; }
+        /// <summary>
+        /// The time the files associated with this import are deleted from the storage account.
+        /// Serialized Name: FileImport.properties.filesValidUntilTimeUTC
+        /// </summary>
+        public DateTimeOffset? FilesValidUntil { get; }
+        /// <summary>
+        /// The time the file import record is soft deleted from the database and history.
+        /// Serialized Name: FileImport.properties.importValidUntilTimeUTC
+        /// </summary>
+        public DateTimeOffset? ImportValidUntil { get; }
     }
 }

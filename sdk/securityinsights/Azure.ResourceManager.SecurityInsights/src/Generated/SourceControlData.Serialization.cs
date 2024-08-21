@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.SecurityInsights
             string description = default;
             RepoType repoType = default;
             IList<Models.ContentType> contentTypes = default;
-            Repository repository = default;
+            SourceControlRepository repository = default;
             ServicePrincipal servicePrincipal = default;
             RepositoryAccess repositoryAccess = default;
             RepositoryResourceInfo repositoryResourceInfo = default;
-            DeploymentInfo lastDeploymentInfo = default;
+            SourceControlDeploymentInfo lastDeploymentInfo = default;
             PullRequestInfo pullRequest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.SecurityInsights
                         }
                         if (property0.NameEquals("repository"u8))
                         {
-                            repository = Repository.DeserializeRepository(property0.Value, options);
+                            repository = SourceControlRepository.DeserializeSourceControlRepository(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipal"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            lastDeploymentInfo = DeploymentInfo.DeserializeDeploymentInfo(property0.Value, options);
+                            lastDeploymentInfo = SourceControlDeploymentInfo.DeserializeSourceControlDeploymentInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("pullRequest"u8))

@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List all the actions. </summary>
+    /// <summary>
+    /// List all the actions.
+    /// Serialized Name: ActionsList
+    /// </summary>
     internal partial class ActionsList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ActionsList"/>. </summary>
-        /// <param name="value"> Array of actions. </param>
+        /// <param name="value">
+        /// Array of actions.
+        /// Serialized Name: ActionsList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ActionsList(IEnumerable<SecurityInsightsAlertRuleActionData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ActionsList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of actions. </param>
-        /// <param name="value"> Array of actions. </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of actions.
+        /// Serialized Name: ActionsList.nextLink
+        /// </param>
+        /// <param name="value">
+        /// Array of actions.
+        /// Serialized Name: ActionsList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ActionsList(string nextLink, IReadOnlyList<SecurityInsightsAlertRuleActionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> URL to fetch the next set of actions. </summary>
+        /// <summary>
+        /// URL to fetch the next set of actions.
+        /// Serialized Name: ActionsList.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> Array of actions. </summary>
+        /// <summary>
+        /// Array of actions.
+        /// Serialized Name: ActionsList.value
+        /// </summary>
         public IReadOnlyList<SecurityInsightsAlertRuleActionData> Value { get; }
     }
 }

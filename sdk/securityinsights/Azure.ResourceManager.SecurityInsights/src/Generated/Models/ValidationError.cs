@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes an error encountered in the file during validation. </summary>
+    /// <summary>
+    /// Describes an error encountered in the file during validation.
+    /// Serialized Name: ValidationError
+    /// </summary>
     public partial class ValidationError
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidationError"/>. </summary>
-        /// <param name="recordIndex"> The number of the record that has the error. </param>
-        /// <param name="errorMessages"> A list of descriptions of the error. </param>
+        /// <param name="recordIndex">
+        /// The number of the record that has the error.
+        /// Serialized Name: ValidationError.recordIndex
+        /// </param>
+        /// <param name="errorMessages">
+        /// A list of descriptions of the error.
+        /// Serialized Name: ValidationError.errorMessages
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ValidationError(int? recordIndex, IReadOnlyList<string> errorMessages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The number of the record that has the error. </summary>
+        /// <summary>
+        /// The number of the record that has the error.
+        /// Serialized Name: ValidationError.recordIndex
+        /// </summary>
         public int? RecordIndex { get; }
-        /// <summary> A list of descriptions of the error. </summary>
+        /// <summary>
+        /// A list of descriptions of the error.
+        /// Serialized Name: ValidationError.errorMessages
+        /// </summary>
         public IReadOnlyList<string> ErrorMessages { get; }
     }
 }

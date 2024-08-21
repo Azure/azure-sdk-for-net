@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The ManualTriggerRequestBody. </summary>
+    /// <summary>
+    /// The ManualTriggerRequestBody.
+    /// Serialized Name: ManualTriggerRequestBody
+    /// </summary>
     public partial class ManualTriggerRequestBody
     {
         /// <summary>
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManualTriggerRequestBody"/>. </summary>
-        /// <param name="logicAppsResourceId"></param>
+        /// <param name="logicAppsResourceId"> Serialized Name: ManualTriggerRequestBody.logicAppsResourceId. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logicAppsResourceId"/> is null. </exception>
         public ManualTriggerRequestBody(string logicAppsResourceId)
         {
@@ -56,8 +59,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManualTriggerRequestBody"/>. </summary>
-        /// <param name="tenantId"></param>
-        /// <param name="logicAppsResourceId"></param>
+        /// <param name="tenantId"> Serialized Name: ManualTriggerRequestBody.tenantId. </param>
+        /// <param name="logicAppsResourceId"> Serialized Name: ManualTriggerRequestBody.logicAppsResourceId. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManualTriggerRequestBody(Guid? tenantId, string logicAppsResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,9 +74,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Gets or sets the tenant id. </summary>
+        /// <summary> Serialized Name: ManualTriggerRequestBody.tenantId. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> Gets the logic apps resource id. </summary>
+        /// <summary> Serialized Name: ManualTriggerRequestBody.logicAppsResourceId. </summary>
         public string LogicAppsResourceId { get; }
     }
 }

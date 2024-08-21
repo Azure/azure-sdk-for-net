@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The insight table query. </summary>
+    /// <summary>
+    /// The insight table query.
+    /// Serialized Name: InsightQueryItemPropertiesTableQuery
+    /// </summary>
     public partial class InsightQueryItemPropertiesTableQuery
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InsightQueryItemPropertiesTableQuery"/>. </summary>
-        /// <param name="columnsDefinitions"> List of insight column definitions. </param>
-        /// <param name="queriesDefinitions"> List of insight queries definitions. </param>
+        /// <param name="columnsDefinitions">
+        /// List of insight column definitions.
+        /// Serialized Name: InsightQueryItemPropertiesTableQuery.columnsDefinitions
+        /// </param>
+        /// <param name="queriesDefinitions">
+        /// List of insight queries definitions.
+        /// Serialized Name: InsightQueryItemPropertiesTableQuery.queriesDefinitions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InsightQueryItemPropertiesTableQuery(IReadOnlyList<InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem> columnsDefinitions, IReadOnlyList<InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem> queriesDefinitions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,9 +72,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of insight column definitions. </summary>
+        /// <summary>
+        /// List of insight column definitions.
+        /// Serialized Name: InsightQueryItemPropertiesTableQuery.columnsDefinitions
+        /// </summary>
         public IReadOnlyList<InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem> ColumnsDefinitions { get; }
-        /// <summary> List of insight queries definitions. </summary>
+        /// <summary>
+        /// List of insight queries definitions.
+        /// Serialized Name: InsightQueryItemPropertiesTableQuery.queriesDefinitions
+        /// </summary>
         public IReadOnlyList<InsightQueryItemPropertiesTableQueryQueriesDefinitionsItem> QueriesDefinitions { get; }
     }
 }

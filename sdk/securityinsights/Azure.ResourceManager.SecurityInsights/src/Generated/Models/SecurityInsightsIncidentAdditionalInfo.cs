@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Incident additional data property bag. </summary>
+    /// <summary>
+    /// Incident additional data property bag.
+    /// Serialized Name: IncidentAdditionalData
+    /// </summary>
     public partial class SecurityInsightsIncidentAdditionalInfo
     {
         /// <summary>
@@ -54,13 +57,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentAdditionalInfo"/>. </summary>
-        /// <param name="alertsCount"> The number of alerts in the incident. </param>
-        /// <param name="bookmarksCount"> The number of bookmarks in the incident. </param>
-        /// <param name="commentsCount"> The number of comments in the incident. </param>
-        /// <param name="alertProductNames"> List of product names of alerts in the incident. </param>
-        /// <param name="tactics"> The tactics associated with incident. </param>
-        /// <param name="techniques"> The techniques associated with incident's tactics. </param>
-        /// <param name="providerIncidentUri"> The provider incident url to the incident in Microsoft 365 Defender portal. </param>
+        /// <param name="alertsCount">
+        /// The number of alerts in the incident
+        /// Serialized Name: IncidentAdditionalData.alertsCount
+        /// </param>
+        /// <param name="bookmarksCount">
+        /// The number of bookmarks in the incident
+        /// Serialized Name: IncidentAdditionalData.bookmarksCount
+        /// </param>
+        /// <param name="commentsCount">
+        /// The number of comments in the incident
+        /// Serialized Name: IncidentAdditionalData.commentsCount
+        /// </param>
+        /// <param name="alertProductNames">
+        /// List of product names of alerts in the incident
+        /// Serialized Name: IncidentAdditionalData.alertProductNames
+        /// </param>
+        /// <param name="tactics">
+        /// The tactics associated with incident
+        /// Serialized Name: IncidentAdditionalData.tactics
+        /// </param>
+        /// <param name="techniques">
+        /// The techniques associated with incident's tactics
+        /// Serialized Name: IncidentAdditionalData.techniques
+        /// </param>
+        /// <param name="providerIncidentUri">
+        /// The provider incident url to the incident in Microsoft 365 Defender portal
+        /// Serialized Name: IncidentAdditionalData.providerIncidentUrl
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IReadOnlyList<string> alertProductNames, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IReadOnlyList<string> techniques, Uri providerIncidentUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,19 +98,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The number of alerts in the incident. </summary>
+        /// <summary>
+        /// The number of alerts in the incident
+        /// Serialized Name: IncidentAdditionalData.alertsCount
+        /// </summary>
         public int? AlertsCount { get; }
-        /// <summary> The number of bookmarks in the incident. </summary>
+        /// <summary>
+        /// The number of bookmarks in the incident
+        /// Serialized Name: IncidentAdditionalData.bookmarksCount
+        /// </summary>
         public int? BookmarksCount { get; }
-        /// <summary> The number of comments in the incident. </summary>
+        /// <summary>
+        /// The number of comments in the incident
+        /// Serialized Name: IncidentAdditionalData.commentsCount
+        /// </summary>
         public int? CommentsCount { get; }
-        /// <summary> List of product names of alerts in the incident. </summary>
+        /// <summary>
+        /// List of product names of alerts in the incident
+        /// Serialized Name: IncidentAdditionalData.alertProductNames
+        /// </summary>
         public IReadOnlyList<string> AlertProductNames { get; }
-        /// <summary> The tactics associated with incident. </summary>
+        /// <summary>
+        /// The tactics associated with incident
+        /// Serialized Name: IncidentAdditionalData.tactics
+        /// </summary>
         public IReadOnlyList<SecurityInsightsAttackTactic> Tactics { get; }
-        /// <summary> The techniques associated with incident's tactics. </summary>
+        /// <summary>
+        /// The techniques associated with incident's tactics
+        /// Serialized Name: IncidentAdditionalData.techniques
+        /// </summary>
         public IReadOnlyList<string> Techniques { get; }
-        /// <summary> The provider incident url to the incident in Microsoft 365 Defender portal. </summary>
+        /// <summary>
+        /// The provider incident url to the incident in Microsoft 365 Defender portal
+        /// Serialized Name: IncidentAdditionalData.providerIncidentUrl
+        /// </summary>
         public Uri ProviderIncidentUri { get; }
     }
 }

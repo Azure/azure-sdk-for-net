@@ -7,26 +7,56 @@
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The delivery location of this mail message like Inbox, JunkFolder etc. </summary>
+    /// <summary>
+    /// The delivery location of this mail message like Inbox, JunkFolder etc
+    /// Serialized Name: DeliveryLocation
+    /// </summary>
     public enum SecurityInsightsMailMessageDeliveryLocation
     {
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: DeliveryLocation.Unknown
+        /// </summary>
         Unknown,
-        /// <summary> Inbox. </summary>
+        /// <summary>
+        /// Inbox
+        /// Serialized Name: DeliveryLocation.Inbox
+        /// </summary>
         Inbox,
-        /// <summary> JunkFolder. </summary>
+        /// <summary>
+        /// JunkFolder
+        /// Serialized Name: DeliveryLocation.JunkFolder
+        /// </summary>
         JunkFolder,
-        /// <summary> DeletedFolder. </summary>
+        /// <summary>
+        /// DeletedFolder
+        /// Serialized Name: DeliveryLocation.DeletedFolder
+        /// </summary>
         DeletedFolder,
-        /// <summary> Quarantine. </summary>
+        /// <summary>
+        /// Quarantine
+        /// Serialized Name: DeliveryLocation.Quarantine
+        /// </summary>
         Quarantine,
-        /// <summary> External. </summary>
+        /// <summary>
+        /// External
+        /// Serialized Name: DeliveryLocation.External
+        /// </summary>
         External,
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: DeliveryLocation.Failed
+        /// </summary>
         Failed,
-        /// <summary> Dropped. </summary>
+        /// <summary>
+        /// Dropped
+        /// Serialized Name: DeliveryLocation.Dropped
+        /// </summary>
         Dropped,
-        /// <summary> Forwarded. </summary>
+        /// <summary>
+        /// Forwarded
+        /// Serialized Name: DeliveryLocation.Forwarded
+        /// </summary>
         Forwarded
     }
 }

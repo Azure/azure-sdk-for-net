@@ -10,17 +10,26 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Common Data Service data type connection. </summary>
+    /// <summary>
+    /// Common Data Service data type connection.
+    /// Serialized Name: Dynamics365DataConnectorDataTypesDynamics365CdsActivities
+    /// </summary>
     internal partial class Dynamics365DataConnectorDataTypesDynamics365CdsActivities : DataConnectorDataTypeCommon
     {
         /// <summary> Initializes a new instance of <see cref="Dynamics365DataConnectorDataTypesDynamics365CdsActivities"/>. </summary>
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
+        /// <param name="state">
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </param>
         public Dynamics365DataConnectorDataTypesDynamics365CdsActivities(SecurityInsightsDataTypeConnectionState state) : base(state)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="Dynamics365DataConnectorDataTypesDynamics365CdsActivities"/>. </summary>
-        /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
+        /// <param name="state">
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Dynamics365DataConnectorDataTypesDynamics365CdsActivities(SecurityInsightsDataTypeConnectionState state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
         {

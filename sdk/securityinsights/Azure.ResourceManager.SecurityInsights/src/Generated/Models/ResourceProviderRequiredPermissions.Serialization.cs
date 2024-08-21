@@ -26,25 +26,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Read))
+            if (Optional.IsDefined(IsReadAction))
             {
                 writer.WritePropertyName("read"u8);
-                writer.WriteBooleanValue(Read.Value);
+                writer.WriteBooleanValue(IsReadAction.Value);
             }
-            if (Optional.IsDefined(Write))
+            if (Optional.IsDefined(IsWriteAction))
             {
                 writer.WritePropertyName("write"u8);
-                writer.WriteBooleanValue(Write.Value);
+                writer.WriteBooleanValue(IsWriteAction.Value);
             }
-            if (Optional.IsDefined(Delete))
+            if (Optional.IsDefined(IsDeleteAction))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteBooleanValue(Delete.Value);
+                writer.WriteBooleanValue(IsDeleteAction.Value);
             }
-            if (Optional.IsDefined(Action))
+            if (Optional.IsDefined(IsCustomAction))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteBooleanValue(Action.Value);
+                writer.WriteBooleanValue(IsCustomAction.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

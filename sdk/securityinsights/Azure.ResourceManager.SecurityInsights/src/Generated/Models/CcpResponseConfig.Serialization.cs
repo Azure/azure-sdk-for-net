@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     writer.WriteNull("hasCsvHeader");
                 }
             }
-            if (Optional.IsDefined(ConvertChildPropertiesToArray))
+            if (Optional.IsDefined(IsConvertChildPropertiesToArray))
             {
-                if (ConvertChildPropertiesToArray != null)
+                if (IsConvertChildPropertiesToArray != null)
                 {
                     writer.WritePropertyName("convertChildPropertiesToArray"u8);
-                    writer.WriteBooleanValue(ConvertChildPropertiesToArray.Value);
+                    writer.WriteBooleanValue(IsConvertChildPropertiesToArray.Value);
                 }
                 else
                 {

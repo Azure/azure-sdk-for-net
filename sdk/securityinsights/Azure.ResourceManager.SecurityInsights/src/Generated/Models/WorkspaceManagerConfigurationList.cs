@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List all the workspace manager configurations for the workspace. </summary>
+    /// <summary>
+    /// List all the workspace manager configurations for the workspace.
+    /// Serialized Name: WorkspaceManagerConfigurationList
+    /// </summary>
     internal partial class WorkspaceManagerConfigurationList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerConfigurationList"/>. </summary>
-        /// <param name="value"> Array of workspace manager configurations. </param>
+        /// <param name="value">
+        /// Array of workspace manager configurations.
+        /// Serialized Name: WorkspaceManagerConfigurationList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WorkspaceManagerConfigurationList(IEnumerable<WorkspaceManagerConfigurationData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerConfigurationList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of workspace manager configurations. </param>
-        /// <param name="value"> Array of workspace manager configurations. </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of workspace manager configurations.
+        /// Serialized Name: WorkspaceManagerConfigurationList.nextLink
+        /// </param>
+        /// <param name="value">
+        /// Array of workspace manager configurations.
+        /// Serialized Name: WorkspaceManagerConfigurationList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkspaceManagerConfigurationList(string nextLink, IReadOnlyList<WorkspaceManagerConfigurationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> URL to fetch the next set of workspace manager configurations. </summary>
+        /// <summary>
+        /// URL to fetch the next set of workspace manager configurations.
+        /// Serialized Name: WorkspaceManagerConfigurationList.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> Array of workspace manager configurations. </summary>
+        /// <summary>
+        /// Array of workspace manager configurations.
+        /// Serialized Name: WorkspaceManagerConfigurationList.value
+        /// </summary>
         public IReadOnlyList<WorkspaceManagerConfigurationData> Value { get; }
     }
 }

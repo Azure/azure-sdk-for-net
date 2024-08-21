@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="kind"> The entity query kind we want to fetch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EntityQueryResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<EntityQueryResource> GetAllAsync(Enum21? kind = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EntityQueryResource> GetAllAsync(EntityQueryKind? kind = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _entityQueryRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kind);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entityQueryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kind);
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="kind"> The entity query kind we want to fetch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EntityQueryResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<EntityQueryResource> GetAll(Enum21? kind = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EntityQueryResource> GetAll(EntityQueryKind? kind = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _entityQueryRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kind);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entityQueryRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, kind);

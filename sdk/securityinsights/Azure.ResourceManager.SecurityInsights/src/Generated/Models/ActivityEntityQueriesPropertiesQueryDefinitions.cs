@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The Activity query definitions. </summary>
+    /// <summary>
+    /// The Activity query definitions
+    /// Serialized Name: ActivityEntityQueriesPropertiesQueryDefinitions
+    /// </summary>
     internal partial class ActivityEntityQueriesPropertiesQueryDefinitions
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ActivityEntityQueriesPropertiesQueryDefinitions"/>. </summary>
-        /// <param name="query"> The Activity query to run on a given entity. </param>
+        /// <param name="query">
+        /// The Activity query to run on a given entity
+        /// Serialized Name: ActivityEntityQueriesPropertiesQueryDefinitions.query
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ActivityEntityQueriesPropertiesQueryDefinitions(string query, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Activity query to run on a given entity. </summary>
+        /// <summary>
+        /// The Activity query to run on a given entity
+        /// Serialized Name: ActivityEntityQueriesPropertiesQueryDefinitions.query
+        /// </summary>
         public string Query { get; set; }
     }
 }

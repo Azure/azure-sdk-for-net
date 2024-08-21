@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a query to run on the TI objects in the workspace. </summary>
+    /// <summary>
+    /// Represents a query to run on the TI objects in the workspace.
+    /// Serialized Name: ThreatIntelligenceQuery
+    /// </summary>
     public partial class ThreatIntelligenceQuery
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceQuery"/>. </summary>
-        /// <param name="condition"> Represents a condition used to query for TI objects. </param>
-        /// <param name="sortBy"> Specifies how to sort the query results. </param>
-        /// <param name="maxPageSize"> Represents the maximum size of the page that will be returned from the query API. </param>
-        /// <param name="minPageSize"> Represents the minimum size of the page that will be returned from the query API. </param>
+        /// <param name="condition">
+        /// Represents a condition used to query for TI objects.
+        /// Serialized Name: ThreatIntelligenceQuery.condition
+        /// </param>
+        /// <param name="sortBy">
+        /// Specifies how to sort the query results.
+        /// Serialized Name: ThreatIntelligenceQuery.sortBy
+        /// </param>
+        /// <param name="maxPageSize">
+        /// Represents the maximum size of the page that will be returned from the query API.
+        /// Serialized Name: ThreatIntelligenceQuery.maxPageSize
+        /// </param>
+        /// <param name="minPageSize">
+        /// Represents the minimum size of the page that will be returned from the query API.
+        /// Serialized Name: ThreatIntelligenceQuery.minPageSize
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceQuery(QueryCondition condition, QuerySortBy sortBy, int? maxPageSize, int? minPageSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +80,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Represents a condition used to query for TI objects. </summary>
+        /// <summary>
+        /// Represents a condition used to query for TI objects.
+        /// Serialized Name: ThreatIntelligenceQuery.condition
+        /// </summary>
         public QueryCondition Condition { get; set; }
-        /// <summary> Specifies how to sort the query results. </summary>
+        /// <summary>
+        /// Specifies how to sort the query results.
+        /// Serialized Name: ThreatIntelligenceQuery.sortBy
+        /// </summary>
         public QuerySortBy SortBy { get; set; }
-        /// <summary> Represents the maximum size of the page that will be returned from the query API. </summary>
+        /// <summary>
+        /// Represents the maximum size of the page that will be returned from the query API.
+        /// Serialized Name: ThreatIntelligenceQuery.maxPageSize
+        /// </summary>
         public int? MaxPageSize { get; set; }
-        /// <summary> Represents the minimum size of the page that will be returned from the query API. </summary>
+        /// <summary>
+        /// Represents the minimum size of the page that will be returned from the query API.
+        /// Serialized Name: ThreatIntelligenceQuery.minPageSize
+        /// </summary>
         public int? MinPageSize { get; set; }
     }
 }

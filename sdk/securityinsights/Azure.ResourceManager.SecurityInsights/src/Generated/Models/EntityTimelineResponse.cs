@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The entity timeline result operation response. </summary>
+    /// <summary>
+    /// The entity timeline result operation response.
+    /// Serialized Name: EntityTimelineResponse
+    /// </summary>
     internal partial class EntityTimelineResponse
     {
         /// <summary>
@@ -52,9 +55,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityTimelineResponse"/>. </summary>
-        /// <param name="metaData"> The metadata from the timeline operation results. </param>
+        /// <param name="metaData">
+        /// The metadata from the timeline operation results.
+        /// Serialized Name: EntityTimelineResponse.metaData
+        /// </param>
         /// <param name="value">
         /// The timeline result values.
+        /// Serialized Name: EntityTimelineResponse.value
         /// Please note <see cref="EntityTimelineItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ActivityTimelineItem"/>, <see cref="AnomalyTimelineItem"/>, <see cref="BookmarkTimelineItem"/> and <see cref="SecurityAlertTimelineItem"/>.
         /// </param>
@@ -66,10 +73,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The metadata from the timeline operation results. </summary>
+        /// <summary>
+        /// The metadata from the timeline operation results.
+        /// Serialized Name: EntityTimelineResponse.metaData
+        /// </summary>
         public TimelineResultsMetadata MetaData { get; }
         /// <summary>
         /// The timeline result values.
+        /// Serialized Name: EntityTimelineResponse.value
         /// Please note <see cref="EntityTimelineItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ActivityTimelineItem"/>, <see cref="AnomalyTimelineItem"/>, <see cref="BookmarkTimelineItem"/> and <see cref="SecurityAlertTimelineItem"/>.
         /// </summary>

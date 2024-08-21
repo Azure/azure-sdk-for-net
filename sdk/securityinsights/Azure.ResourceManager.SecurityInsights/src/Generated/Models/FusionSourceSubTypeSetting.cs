@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a supported source subtype configuration under a source signal in Fusion detection. </summary>
+    /// <summary>
+    /// Represents a supported source subtype configuration under a source signal in Fusion detection.
+    /// Serialized Name: FusionSourceSubTypeSetting
+    /// </summary>
     public partial class FusionSourceSubTypeSetting
     {
         /// <summary>
@@ -46,29 +49,50 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FusionSourceSubTypeSetting"/>. </summary>
-        /// <param name="enabled"> Determines whether this source subtype under source signal is enabled or disabled in Fusion detection. </param>
-        /// <param name="sourceSubTypeName"> The Name of the source subtype under a given source signal in Fusion detection. Refer to Fusion alert rule template for supported values. </param>
-        /// <param name="severityFilters"> Severity configuration for a source subtype consumed in fusion detection. </param>
+        /// <param name="isEnabled">
+        /// Determines whether this source subtype under source signal is enabled or disabled in Fusion detection.
+        /// Serialized Name: FusionSourceSubTypeSetting.enabled
+        /// </param>
+        /// <param name="sourceSubTypeName">
+        /// The Name of the source subtype under a given source signal in Fusion detection. Refer to Fusion alert rule template for supported values.
+        /// Serialized Name: FusionSourceSubTypeSetting.sourceSubTypeName
+        /// </param>
+        /// <param name="severityFilters">
+        /// Severity configuration for a source subtype consumed in fusion detection.
+        /// Serialized Name: FusionSourceSubTypeSetting.severityFilters
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceSubTypeName"/> or <paramref name="severityFilters"/> is null. </exception>
-        public FusionSourceSubTypeSetting(bool enabled, string sourceSubTypeName, FusionSubTypeSeverityFilter severityFilters)
+        public FusionSourceSubTypeSetting(bool isEnabled, string sourceSubTypeName, FusionSubTypeSeverityFilter severityFilters)
         {
             Argument.AssertNotNull(sourceSubTypeName, nameof(sourceSubTypeName));
             Argument.AssertNotNull(severityFilters, nameof(severityFilters));
 
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             SourceSubTypeName = sourceSubTypeName;
             SeverityFilters = severityFilters;
         }
 
         /// <summary> Initializes a new instance of <see cref="FusionSourceSubTypeSetting"/>. </summary>
-        /// <param name="enabled"> Determines whether this source subtype under source signal is enabled or disabled in Fusion detection. </param>
-        /// <param name="sourceSubTypeName"> The Name of the source subtype under a given source signal in Fusion detection. Refer to Fusion alert rule template for supported values. </param>
-        /// <param name="sourceSubTypeDisplayName"> The display name of source subtype under a source signal consumed in Fusion detection. </param>
-        /// <param name="severityFilters"> Severity configuration for a source subtype consumed in fusion detection. </param>
+        /// <param name="isEnabled">
+        /// Determines whether this source subtype under source signal is enabled or disabled in Fusion detection.
+        /// Serialized Name: FusionSourceSubTypeSetting.enabled
+        /// </param>
+        /// <param name="sourceSubTypeName">
+        /// The Name of the source subtype under a given source signal in Fusion detection. Refer to Fusion alert rule template for supported values.
+        /// Serialized Name: FusionSourceSubTypeSetting.sourceSubTypeName
+        /// </param>
+        /// <param name="sourceSubTypeDisplayName">
+        /// The display name of source subtype under a source signal consumed in Fusion detection.
+        /// Serialized Name: FusionSourceSubTypeSetting.sourceSubTypeDisplayName
+        /// </param>
+        /// <param name="severityFilters">
+        /// Severity configuration for a source subtype consumed in fusion detection.
+        /// Serialized Name: FusionSourceSubTypeSetting.severityFilters
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FusionSourceSubTypeSetting(bool enabled, string sourceSubTypeName, string sourceSubTypeDisplayName, FusionSubTypeSeverityFilter severityFilters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FusionSourceSubTypeSetting(bool isEnabled, string sourceSubTypeName, string sourceSubTypeDisplayName, FusionSubTypeSeverityFilter severityFilters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             SourceSubTypeName = sourceSubTypeName;
             SourceSubTypeDisplayName = sourceSubTypeDisplayName;
             SeverityFilters = severityFilters;
@@ -80,13 +104,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Determines whether this source subtype under source signal is enabled or disabled in Fusion detection. </summary>
-        public bool Enabled { get; set; }
-        /// <summary> The Name of the source subtype under a given source signal in Fusion detection. Refer to Fusion alert rule template for supported values. </summary>
+        /// <summary>
+        /// Determines whether this source subtype under source signal is enabled or disabled in Fusion detection.
+        /// Serialized Name: FusionSourceSubTypeSetting.enabled
+        /// </summary>
+        public bool IsEnabled { get; set; }
+        /// <summary>
+        /// The Name of the source subtype under a given source signal in Fusion detection. Refer to Fusion alert rule template for supported values.
+        /// Serialized Name: FusionSourceSubTypeSetting.sourceSubTypeName
+        /// </summary>
         public string SourceSubTypeName { get; set; }
-        /// <summary> The display name of source subtype under a source signal consumed in Fusion detection. </summary>
+        /// <summary>
+        /// The display name of source subtype under a source signal consumed in Fusion detection.
+        /// Serialized Name: FusionSourceSubTypeSetting.sourceSubTypeDisplayName
+        /// </summary>
         public string SourceSubTypeDisplayName { get; }
-        /// <summary> Severity configuration for a source subtype consumed in fusion detection. </summary>
+        /// <summary>
+        /// Severity configuration for a source subtype consumed in fusion detection.
+        /// Serialized Name: FusionSourceSubTypeSetting.severityFilters
+        /// </summary>
         public FusionSubTypeSeverityFilter SeverityFilters { get; set; }
     }
 }

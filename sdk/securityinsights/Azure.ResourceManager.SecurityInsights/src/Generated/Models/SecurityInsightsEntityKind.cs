@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The kind of the entity. </summary>
+    /// <summary>
+    /// The kind of the entity
+    /// Serialized Name: EntityKindEnum
+    /// </summary>
     public readonly partial struct SecurityInsightsEntityKind : IEquatable<SecurityInsightsEntityKind>
     {
         private readonly string _value;
@@ -45,49 +48,115 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string SubmissionMailValue = "SubmissionMail";
         private const string NicValue = "Nic";
 
-        /// <summary> Entity represents account in the system. </summary>
+        /// <summary>
+        /// Entity represents account in the system.
+        /// Serialized Name: EntityKindEnum.Account
+        /// </summary>
         public static SecurityInsightsEntityKind Account { get; } = new SecurityInsightsEntityKind(AccountValue);
-        /// <summary> Entity represents host in the system. </summary>
+        /// <summary>
+        /// Entity represents host in the system.
+        /// Serialized Name: EntityKindEnum.Host
+        /// </summary>
         public static SecurityInsightsEntityKind Host { get; } = new SecurityInsightsEntityKind(HostValue);
-        /// <summary> Entity represents file in the system. </summary>
+        /// <summary>
+        /// Entity represents file in the system.
+        /// Serialized Name: EntityKindEnum.File
+        /// </summary>
         public static SecurityInsightsEntityKind File { get; } = new SecurityInsightsEntityKind(FileValue);
-        /// <summary> Entity represents azure resource in the system. </summary>
+        /// <summary>
+        /// Entity represents azure resource in the system.
+        /// Serialized Name: EntityKindEnum.AzureResource
+        /// </summary>
         public static SecurityInsightsEntityKind AzureResource { get; } = new SecurityInsightsEntityKind(AzureResourceValue);
-        /// <summary> Entity represents cloud application in the system. </summary>
+        /// <summary>
+        /// Entity represents cloud application in the system.
+        /// Serialized Name: EntityKindEnum.CloudApplication
+        /// </summary>
         public static SecurityInsightsEntityKind CloudApplication { get; } = new SecurityInsightsEntityKind(CloudApplicationValue);
-        /// <summary> Entity represents dns resolution in the system. </summary>
+        /// <summary>
+        /// Entity represents dns resolution in the system.
+        /// Serialized Name: EntityKindEnum.DnsResolution
+        /// </summary>
         public static SecurityInsightsEntityKind DnsResolution { get; } = new SecurityInsightsEntityKind(DnsResolutionValue);
-        /// <summary> Entity represents file hash in the system. </summary>
+        /// <summary>
+        /// Entity represents file hash in the system.
+        /// Serialized Name: EntityKindEnum.FileHash
+        /// </summary>
         public static SecurityInsightsEntityKind FileHash { get; } = new SecurityInsightsEntityKind(FileHashValue);
-        /// <summary> Entity represents ip in the system. </summary>
+        /// <summary>
+        /// Entity represents ip in the system.
+        /// Serialized Name: EntityKindEnum.Ip
+        /// </summary>
         public static SecurityInsightsEntityKind IP { get; } = new SecurityInsightsEntityKind(IPValue);
-        /// <summary> Entity represents malware in the system. </summary>
+        /// <summary>
+        /// Entity represents malware in the system.
+        /// Serialized Name: EntityKindEnum.Malware
+        /// </summary>
         public static SecurityInsightsEntityKind Malware { get; } = new SecurityInsightsEntityKind(MalwareValue);
-        /// <summary> Entity represents process in the system. </summary>
+        /// <summary>
+        /// Entity represents process in the system.
+        /// Serialized Name: EntityKindEnum.Process
+        /// </summary>
         public static SecurityInsightsEntityKind Process { get; } = new SecurityInsightsEntityKind(ProcessValue);
-        /// <summary> Entity represents registry key in the system. </summary>
+        /// <summary>
+        /// Entity represents registry key in the system.
+        /// Serialized Name: EntityKindEnum.RegistryKey
+        /// </summary>
         public static SecurityInsightsEntityKind RegistryKey { get; } = new SecurityInsightsEntityKind(RegistryKeyValue);
-        /// <summary> Entity represents registry value in the system. </summary>
+        /// <summary>
+        /// Entity represents registry value in the system.
+        /// Serialized Name: EntityKindEnum.RegistryValue
+        /// </summary>
         public static SecurityInsightsEntityKind RegistryValue { get; } = new SecurityInsightsEntityKind(RegistryValueValue);
-        /// <summary> Entity represents security group in the system. </summary>
+        /// <summary>
+        /// Entity represents security group in the system.
+        /// Serialized Name: EntityKindEnum.SecurityGroup
+        /// </summary>
         public static SecurityInsightsEntityKind SecurityGroup { get; } = new SecurityInsightsEntityKind(SecurityGroupValue);
-        /// <summary> Entity represents url in the system. </summary>
+        /// <summary>
+        /// Entity represents url in the system.
+        /// Serialized Name: EntityKindEnum.Url
+        /// </summary>
         public static SecurityInsightsEntityKind Uri { get; } = new SecurityInsightsEntityKind(UriValue);
-        /// <summary> Entity represents IoT device in the system. </summary>
+        /// <summary>
+        /// Entity represents IoT device in the system.
+        /// Serialized Name: EntityKindEnum.IoTDevice
+        /// </summary>
         public static SecurityInsightsEntityKind IotDevice { get; } = new SecurityInsightsEntityKind(IotDeviceValue);
-        /// <summary> Entity represents security alert in the system. </summary>
+        /// <summary>
+        /// Entity represents security alert in the system.
+        /// Serialized Name: EntityKindEnum.SecurityAlert
+        /// </summary>
         public static SecurityInsightsEntityKind SecurityAlert { get; } = new SecurityInsightsEntityKind(SecurityAlertValue);
-        /// <summary> Entity represents bookmark in the system. </summary>
+        /// <summary>
+        /// Entity represents bookmark in the system.
+        /// Serialized Name: EntityKindEnum.Bookmark
+        /// </summary>
         public static SecurityInsightsEntityKind Bookmark { get; } = new SecurityInsightsEntityKind(BookmarkValue);
-        /// <summary> Entity represents mail cluster in the system. </summary>
+        /// <summary>
+        /// Entity represents mail cluster in the system.
+        /// Serialized Name: EntityKindEnum.MailCluster
+        /// </summary>
         public static SecurityInsightsEntityKind MailCluster { get; } = new SecurityInsightsEntityKind(MailClusterValue);
-        /// <summary> Entity represents mail message in the system. </summary>
+        /// <summary>
+        /// Entity represents mail message in the system.
+        /// Serialized Name: EntityKindEnum.MailMessage
+        /// </summary>
         public static SecurityInsightsEntityKind MailMessage { get; } = new SecurityInsightsEntityKind(MailMessageValue);
-        /// <summary> Entity represents mailbox in the system. </summary>
+        /// <summary>
+        /// Entity represents mailbox in the system.
+        /// Serialized Name: EntityKindEnum.Mailbox
+        /// </summary>
         public static SecurityInsightsEntityKind Mailbox { get; } = new SecurityInsightsEntityKind(MailboxValue);
-        /// <summary> Entity represents submission mail in the system. </summary>
+        /// <summary>
+        /// Entity represents submission mail in the system.
+        /// Serialized Name: EntityKindEnum.SubmissionMail
+        /// </summary>
         public static SecurityInsightsEntityKind SubmissionMail { get; } = new SecurityInsightsEntityKind(SubmissionMailValue);
-        /// <summary> Entity represents network interface in the system. </summary>
+        /// <summary>
+        /// Entity represents network interface in the system.
+        /// Serialized Name: EntityKindEnum.Nic
+        /// </summary>
         public static SecurityInsightsEntityKind Nic { get; } = new SecurityInsightsEntityKind(NicValue);
         /// <summary> Determines if two <see cref="SecurityInsightsEntityKind"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsEntityKind left, SecurityInsightsEntityKind right) => left.Equals(right);

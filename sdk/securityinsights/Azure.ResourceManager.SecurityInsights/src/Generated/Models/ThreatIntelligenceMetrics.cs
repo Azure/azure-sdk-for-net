@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Threat intelligence metrics. </summary>
+    /// <summary>
+    /// Threat intelligence metrics.
+    /// Serialized Name: ThreatIntelligenceMetrics
+    /// </summary>
     public partial class ThreatIntelligenceMetrics
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceMetrics"/>. </summary>
-        /// <param name="properties"> Threat intelligence metrics. </param>
+        /// <param name="properties">
+        /// Threat intelligence metrics.
+        /// Serialized Name: ThreatIntelligenceMetrics.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceMetrics(ThreatIntelligenceMetric properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Threat intelligence metrics. </summary>
+        /// <summary>
+        /// Threat intelligence metrics.
+        /// Serialized Name: ThreatIntelligenceMetrics.properties
+        /// </summary>
         public ThreatIntelligenceMetric Properties { get; }
     }
 }

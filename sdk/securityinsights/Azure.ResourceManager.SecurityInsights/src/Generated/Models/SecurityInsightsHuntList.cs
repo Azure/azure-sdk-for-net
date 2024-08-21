@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List all the hunts. </summary>
+    /// <summary>
+    /// List all the hunts.
+    /// Serialized Name: HuntList
+    /// </summary>
     internal partial class SecurityInsightsHuntList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntList"/>. </summary>
-        /// <param name="value"> Array of hunts. </param>
+        /// <param name="value">
+        /// Array of hunts.
+        /// Serialized Name: HuntList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SecurityInsightsHuntList(IEnumerable<SecurityInsightsHuntData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of hunts. </param>
-        /// <param name="value"> Array of hunts. </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of hunts.
+        /// Serialized Name: HuntList.nextLink
+        /// </param>
+        /// <param name="value">
+        /// Array of hunts.
+        /// Serialized Name: HuntList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsHuntList(string nextLink, IReadOnlyList<SecurityInsightsHuntData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> URL to fetch the next set of hunts. </summary>
+        /// <summary>
+        /// URL to fetch the next set of hunts.
+        /// Serialized Name: HuntList.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> Array of hunts. </summary>
+        /// <summary>
+        /// Array of hunts.
+        /// Serialized Name: HuntList.value
+        /// </summary>
         public IReadOnlyList<SecurityInsightsHuntData> Value { get; }
     }
 }

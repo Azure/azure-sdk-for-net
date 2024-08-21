@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 switch (discriminator.GetString())
                 {
-                    case "Anomalies": return Anomalies.DeserializeAnomalies(element, options);
+                    case "Anomalies": return SecurityInsightsSettingAnomaliesKind.DeserializeSecurityInsightsSettingAnomaliesKind(element, options);
                     case "EntityAnalytics": return EntityAnalytics.DeserializeEntityAnalytics(element, options);
                     case "EyesOn": return EyesOn.DeserializeEyesOn(element, options);
                     case "Ueba": return Ueba.DeserializeUeba(element, options);

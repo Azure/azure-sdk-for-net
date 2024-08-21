@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a query to run on the TI objects in the workspace. </summary>
+    /// <summary>
+    /// Represents a query to run on the TI objects in the workspace.
+    /// Serialized Name: ThreatIntelligenceCountQuery
+    /// </summary>
     public partial class ThreatIntelligenceCountQuery
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceCountQuery"/>. </summary>
-        /// <param name="condition"> Represents a condition used to query for TI objects. </param>
+        /// <param name="condition">
+        /// Represents a condition used to query for TI objects.
+        /// Serialized Name: ThreatIntelligenceCountQuery.properties.condition
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceCountQuery(ConditionProperties condition, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Represents a condition used to query for TI objects. </summary>
+        /// <summary>
+        /// Represents a condition used to query for TI objects.
+        /// Serialized Name: ThreatIntelligenceCountQuery.properties.condition
+        /// </summary>
         public ConditionProperties Condition { get; set; }
     }
 }

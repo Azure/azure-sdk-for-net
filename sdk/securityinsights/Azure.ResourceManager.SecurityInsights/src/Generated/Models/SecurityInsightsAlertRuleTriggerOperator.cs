@@ -7,16 +7,31 @@
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The operation against the threshold that triggers alert rule. </summary>
+    /// <summary>
+    /// The operation against the threshold that triggers alert rule.
+    /// Serialized Name: TriggerOperator
+    /// </summary>
     public enum SecurityInsightsAlertRuleTriggerOperator
     {
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: TriggerOperator.GreaterThan
+        /// </summary>
         GreaterThan,
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: TriggerOperator.LessThan
+        /// </summary>
         LessThan,
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: TriggerOperator.Equal
+        /// </summary>
         Equal,
-        /// <summary> NotEqual. </summary>
+        /// <summary>
+        /// NotEqual
+        /// Serialized Name: TriggerOperator.NotEqual
+        /// </summary>
         NotEqual
     }
 }

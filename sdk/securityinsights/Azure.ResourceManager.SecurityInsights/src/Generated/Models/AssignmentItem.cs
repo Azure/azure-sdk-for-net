@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> An entity describing a content item. </summary>
+    /// <summary>
+    /// An entity describing a content item.
+    /// Serialized Name: AssignmentItem
+    /// </summary>
     public partial class AssignmentItem
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AssignmentItem"/>. </summary>
-        /// <param name="resourceId"> The resource id of the content item. </param>
+        /// <param name="resourceId">
+        /// The resource id of the content item
+        /// Serialized Name: AssignmentItem.resourceId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AssignmentItem(string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource id of the content item. </summary>
+        /// <summary>
+        /// The resource id of the content item
+        /// Serialized Name: AssignmentItem.resourceId
+        /// </summary>
         public string ResourceId { get; set; }
     }
 }

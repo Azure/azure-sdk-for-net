@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsWatchlist data model.
     /// Represents a Watchlist in Azure Security Insights.
+    /// Serialized Name: Watchlist
     /// </summary>
     public partial class SecurityInsightsWatchlistData : ResourceData
     {
@@ -62,28 +63,94 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="watchlistId"> The id (a Guid) of the watchlist. </param>
-        /// <param name="displayName"> The display name of the watchlist. </param>
-        /// <param name="provider"> The provider of the watchlist. </param>
-        /// <param name="sourceString"> The filename of the watchlist, called 'source'. </param>
-        /// <param name="sourceType"> The sourceType of the watchlist. </param>
-        /// <param name="createdOn"> The time the watchlist was created. </param>
-        /// <param name="updatedOn"> The last time the watchlist was updated. </param>
-        /// <param name="createdBy"> Describes a user that created the watchlist. </param>
-        /// <param name="updatedBy"> Describes a user that updated the watchlist. </param>
-        /// <param name="description"> A description of the watchlist. </param>
-        /// <param name="watchlistType"> The type of the watchlist. </param>
-        /// <param name="watchlistAlias"> The alias of the watchlist. </param>
-        /// <param name="isDeleted"> A flag that indicates if the watchlist is deleted or not. </param>
-        /// <param name="labels"> List of labels relevant to this watchlist. </param>
-        /// <param name="defaultDuration"> The default duration of a watchlist (in ISO 8601 duration format). </param>
-        /// <param name="tenantId"> The tenantId where the watchlist belongs to. </param>
-        /// <param name="numberOfLinesToSkip"> The number of lines in a csv/tsv content to skip before the header. </param>
-        /// <param name="rawContent"> The raw content that represents to watchlist items to create. In case of csv/tsv content type, it's the content of the file that will parsed by the endpoint. </param>
-        /// <param name="itemsSearchKey"> The search key is used to optimize query performance when using watchlists for joins with other data. For example, enable a column with IP addresses to be the designated SearchKey field, then use this field as the key field when joining to other event data by IP address. </param>
-        /// <param name="contentType"> The content type of the raw content. Example : text/csv or text/tsv. </param>
-        /// <param name="uploadStatus"> The status of the Watchlist upload : New, InProgress or Complete. Pls note : When a Watchlist upload status is equal to InProgress, the Watchlist cannot be deleted. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="watchlistId">
+        /// The id (a Guid) of the watchlist
+        /// Serialized Name: Watchlist.properties.watchlistId
+        /// </param>
+        /// <param name="displayName">
+        /// The display name of the watchlist
+        /// Serialized Name: Watchlist.properties.displayName
+        /// </param>
+        /// <param name="provider">
+        /// The provider of the watchlist
+        /// Serialized Name: Watchlist.properties.provider
+        /// </param>
+        /// <param name="sourceString">
+        /// The filename of the watchlist, called 'source'
+        /// Serialized Name: Watchlist.properties.source
+        /// </param>
+        /// <param name="sourceType">
+        /// The sourceType of the watchlist
+        /// Serialized Name: Watchlist.properties.sourceType
+        /// </param>
+        /// <param name="createdOn">
+        /// The time the watchlist was created
+        /// Serialized Name: Watchlist.properties.created
+        /// </param>
+        /// <param name="updatedOn">
+        /// The last time the watchlist was updated
+        /// Serialized Name: Watchlist.properties.updated
+        /// </param>
+        /// <param name="createdBy">
+        /// Describes a user that created the watchlist
+        /// Serialized Name: Watchlist.properties.createdBy
+        /// </param>
+        /// <param name="updatedBy">
+        /// Describes a user that updated the watchlist
+        /// Serialized Name: Watchlist.properties.updatedBy
+        /// </param>
+        /// <param name="description">
+        /// A description of the watchlist
+        /// Serialized Name: Watchlist.properties.description
+        /// </param>
+        /// <param name="watchlistType">
+        /// The type of the watchlist
+        /// Serialized Name: Watchlist.properties.watchlistType
+        /// </param>
+        /// <param name="watchlistAlias">
+        /// The alias of the watchlist
+        /// Serialized Name: Watchlist.properties.watchlistAlias
+        /// </param>
+        /// <param name="isDeleted">
+        /// A flag that indicates if the watchlist is deleted or not
+        /// Serialized Name: Watchlist.properties.isDeleted
+        /// </param>
+        /// <param name="labels">
+        /// List of labels relevant to this watchlist
+        /// Serialized Name: Watchlist.properties.labels
+        /// </param>
+        /// <param name="defaultDuration">
+        /// The default duration of a watchlist (in ISO 8601 duration format)
+        /// Serialized Name: Watchlist.properties.defaultDuration
+        /// </param>
+        /// <param name="tenantId">
+        /// The tenantId where the watchlist belongs to
+        /// Serialized Name: Watchlist.properties.tenantId
+        /// </param>
+        /// <param name="numberOfLinesToSkip">
+        /// The number of lines in a csv/tsv content to skip before the header
+        /// Serialized Name: Watchlist.properties.numberOfLinesToSkip
+        /// </param>
+        /// <param name="rawContent">
+        /// The raw content that represents to watchlist items to create. In case of csv/tsv content type, it's the content of the file that will parsed by the endpoint
+        /// Serialized Name: Watchlist.properties.rawContent
+        /// </param>
+        /// <param name="itemsSearchKey">
+        /// The search key is used to optimize query performance when using watchlists for joins with other data. For example, enable a column with IP addresses to be the designated SearchKey field, then use this field as the key field when joining to other event data by IP address.
+        /// Serialized Name: Watchlist.properties.itemsSearchKey
+        /// </param>
+        /// <param name="contentType">
+        /// The content type of the raw content. Example : text/csv or text/tsv
+        /// Serialized Name: Watchlist.properties.contentType
+        /// </param>
+        /// <param name="uploadStatus">
+        /// The status of the Watchlist upload : New, InProgress or Complete. Pls note : When a Watchlist upload status is equal to InProgress, the Watchlist cannot be deleted
+        /// Serialized Name: Watchlist.properties.uploadStatus
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsWatchlistData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? watchlistId, string displayName, string provider, string sourceString, SourceType? sourceType, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, SecurityInsightsUserInfo createdBy, SecurityInsightsUserInfo updatedBy, string description, string watchlistType, string watchlistAlias, bool? isDeleted, IList<string> labels, TimeSpan? defaultDuration, Guid? tenantId, int? numberOfLinesToSkip, string rawContent, string itemsSearchKey, string contentType, string uploadStatus, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -112,49 +179,115 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The id (a Guid) of the watchlist. </summary>
+        /// <summary>
+        /// The id (a Guid) of the watchlist
+        /// Serialized Name: Watchlist.properties.watchlistId
+        /// </summary>
         public Guid? WatchlistId { get; set; }
-        /// <summary> The display name of the watchlist. </summary>
+        /// <summary>
+        /// The display name of the watchlist
+        /// Serialized Name: Watchlist.properties.displayName
+        /// </summary>
         public string DisplayName { get; set; }
-        /// <summary> The provider of the watchlist. </summary>
+        /// <summary>
+        /// The provider of the watchlist
+        /// Serialized Name: Watchlist.properties.provider
+        /// </summary>
         public string Provider { get; set; }
-        /// <summary> The filename of the watchlist, called 'source'. </summary>
+        /// <summary>
+        /// The filename of the watchlist, called 'source'
+        /// Serialized Name: Watchlist.properties.source
+        /// </summary>
         public string SourceString { get; set; }
-        /// <summary> The sourceType of the watchlist. </summary>
+        /// <summary>
+        /// The sourceType of the watchlist
+        /// Serialized Name: Watchlist.properties.sourceType
+        /// </summary>
         public SourceType? SourceType { get; set; }
-        /// <summary> The time the watchlist was created. </summary>
+        /// <summary>
+        /// The time the watchlist was created
+        /// Serialized Name: Watchlist.properties.created
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> The last time the watchlist was updated. </summary>
+        /// <summary>
+        /// The last time the watchlist was updated
+        /// Serialized Name: Watchlist.properties.updated
+        /// </summary>
         public DateTimeOffset? UpdatedOn { get; set; }
-        /// <summary> Describes a user that created the watchlist. </summary>
+        /// <summary>
+        /// Describes a user that created the watchlist
+        /// Serialized Name: Watchlist.properties.createdBy
+        /// </summary>
         public SecurityInsightsUserInfo CreatedBy { get; set; }
-        /// <summary> Describes a user that updated the watchlist. </summary>
+        /// <summary>
+        /// Describes a user that updated the watchlist
+        /// Serialized Name: Watchlist.properties.updatedBy
+        /// </summary>
         public SecurityInsightsUserInfo UpdatedBy { get; set; }
-        /// <summary> A description of the watchlist. </summary>
+        /// <summary>
+        /// A description of the watchlist
+        /// Serialized Name: Watchlist.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The type of the watchlist. </summary>
+        /// <summary>
+        /// The type of the watchlist
+        /// Serialized Name: Watchlist.properties.watchlistType
+        /// </summary>
         public string WatchlistType { get; set; }
-        /// <summary> The alias of the watchlist. </summary>
+        /// <summary>
+        /// The alias of the watchlist
+        /// Serialized Name: Watchlist.properties.watchlistAlias
+        /// </summary>
         public string WatchlistAlias { get; set; }
-        /// <summary> A flag that indicates if the watchlist is deleted or not. </summary>
+        /// <summary>
+        /// A flag that indicates if the watchlist is deleted or not
+        /// Serialized Name: Watchlist.properties.isDeleted
+        /// </summary>
         public bool? IsDeleted { get; set; }
-        /// <summary> List of labels relevant to this watchlist. </summary>
+        /// <summary>
+        /// List of labels relevant to this watchlist
+        /// Serialized Name: Watchlist.properties.labels
+        /// </summary>
         public IList<string> Labels { get; }
-        /// <summary> The default duration of a watchlist (in ISO 8601 duration format). </summary>
+        /// <summary>
+        /// The default duration of a watchlist (in ISO 8601 duration format)
+        /// Serialized Name: Watchlist.properties.defaultDuration
+        /// </summary>
         public TimeSpan? DefaultDuration { get; set; }
-        /// <summary> The tenantId where the watchlist belongs to. </summary>
+        /// <summary>
+        /// The tenantId where the watchlist belongs to
+        /// Serialized Name: Watchlist.properties.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> The number of lines in a csv/tsv content to skip before the header. </summary>
+        /// <summary>
+        /// The number of lines in a csv/tsv content to skip before the header
+        /// Serialized Name: Watchlist.properties.numberOfLinesToSkip
+        /// </summary>
         public int? NumberOfLinesToSkip { get; set; }
-        /// <summary> The raw content that represents to watchlist items to create. In case of csv/tsv content type, it's the content of the file that will parsed by the endpoint. </summary>
+        /// <summary>
+        /// The raw content that represents to watchlist items to create. In case of csv/tsv content type, it's the content of the file that will parsed by the endpoint
+        /// Serialized Name: Watchlist.properties.rawContent
+        /// </summary>
         public string RawContent { get; set; }
-        /// <summary> The search key is used to optimize query performance when using watchlists for joins with other data. For example, enable a column with IP addresses to be the designated SearchKey field, then use this field as the key field when joining to other event data by IP address. </summary>
+        /// <summary>
+        /// The search key is used to optimize query performance when using watchlists for joins with other data. For example, enable a column with IP addresses to be the designated SearchKey field, then use this field as the key field when joining to other event data by IP address.
+        /// Serialized Name: Watchlist.properties.itemsSearchKey
+        /// </summary>
         public string ItemsSearchKey { get; set; }
-        /// <summary> The content type of the raw content. Example : text/csv or text/tsv. </summary>
+        /// <summary>
+        /// The content type of the raw content. Example : text/csv or text/tsv
+        /// Serialized Name: Watchlist.properties.contentType
+        /// </summary>
         public string ContentType { get; set; }
-        /// <summary> The status of the Watchlist upload : New, InProgress or Complete. Pls note : When a Watchlist upload status is equal to InProgress, the Watchlist cannot be deleted. </summary>
+        /// <summary>
+        /// The status of the Watchlist upload : New, InProgress or Complete. Pls note : When a Watchlist upload status is equal to InProgress, the Watchlist cannot be deleted
+        /// Serialized Name: Watchlist.properties.uploadStatus
+        /// </summary>
         public string UploadStatus { get; set; }
-        /// <summary> Etag of the azure resource. </summary>
+        /// <summary>
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

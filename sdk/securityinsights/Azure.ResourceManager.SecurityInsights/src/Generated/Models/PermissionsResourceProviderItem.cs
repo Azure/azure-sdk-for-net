@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The PermissionsResourceProviderItem. </summary>
+    /// <summary>
+    /// The PermissionsResourceProviderItem.
+    /// Serialized Name: PermissionsResourceProviderItem
+    /// </summary>
     public partial class PermissionsResourceProviderItem : ResourceProvider
     {
         /// <summary> Initializes a new instance of <see cref="PermissionsResourceProviderItem"/>. </summary>
@@ -19,11 +22,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PermissionsResourceProviderItem"/>. </summary>
-        /// <param name="provider"> Provider name. </param>
-        /// <param name="permissionsDisplayText"> Permission description text. </param>
-        /// <param name="providerDisplayName"> Permission provider display name. </param>
-        /// <param name="scope"> Permission provider scope. </param>
-        /// <param name="requiredPermissions"> Required permissions for the connector. </param>
+        /// <param name="provider">
+        /// Provider name
+        /// Serialized Name: ResourceProvider.provider
+        /// </param>
+        /// <param name="permissionsDisplayText">
+        /// Permission description text
+        /// Serialized Name: ResourceProvider.permissionsDisplayText
+        /// </param>
+        /// <param name="providerDisplayName">
+        /// Permission provider display name
+        /// Serialized Name: ResourceProvider.providerDisplayName
+        /// </param>
+        /// <param name="scope">
+        /// Permission provider scope
+        /// Serialized Name: ResourceProvider.scope
+        /// </param>
+        /// <param name="requiredPermissions">
+        /// Required permissions for the connector
+        /// Serialized Name: ResourceProvider.requiredPermissions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PermissionsResourceProviderItem(ProviderName? provider, string permissionsDisplayText, string providerDisplayName, PermissionProviderScope? scope, RequiredPermissions requiredPermissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(provider, permissionsDisplayText, providerDisplayName, scope, requiredPermissions, serializedAdditionalRawData)
         {

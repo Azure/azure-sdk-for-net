@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The type of repository. </summary>
+    /// <summary>
+    /// The type of repository.
+    /// Serialized Name: WarningCode
+    /// </summary>
     public readonly partial struct WarningCode : IEquatable<WarningCode>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string SourceControlWarningDeleteRoleAssignmentValue = "SourceControlWarning_DeleteRoleAssignment";
         private const string SourceControlDeletedWithWarningsValue = "SourceControl_DeletedWithWarnings";
 
-        /// <summary> SourceControlWarning_DeleteServicePrincipal. </summary>
+        /// <summary>
+        /// SourceControlWarning_DeleteServicePrincipal
+        /// Serialized Name: WarningCode.SourceControlWarning_DeleteServicePrincipal
+        /// </summary>
         public static WarningCode SourceControlWarningDeleteServicePrincipal { get; } = new WarningCode(SourceControlWarningDeleteServicePrincipalValue);
-        /// <summary> SourceControlWarning_DeletePipelineFromAzureDevOps. </summary>
+        /// <summary>
+        /// SourceControlWarning_DeletePipelineFromAzureDevOps
+        /// Serialized Name: WarningCode.SourceControlWarning_DeletePipelineFromAzureDevOps
+        /// </summary>
         public static WarningCode SourceControlWarningDeletePipelineFromAzureDevOps { get; } = new WarningCode(SourceControlWarningDeletePipelineFromAzureDevOpsValue);
-        /// <summary> SourceControlWarning_DeleteWorkflowAndSecretFromGitHub. </summary>
+        /// <summary>
+        /// SourceControlWarning_DeleteWorkflowAndSecretFromGitHub
+        /// Serialized Name: WarningCode.SourceControlWarning_DeleteWorkflowAndSecretFromGitHub
+        /// </summary>
         public static WarningCode SourceControlWarningDeleteWorkflowAndSecretFromGitHub { get; } = new WarningCode(SourceControlWarningDeleteWorkflowAndSecretFromGitHubValue);
-        /// <summary> SourceControlWarning_DeleteRoleAssignment. </summary>
+        /// <summary>
+        /// SourceControlWarning_DeleteRoleAssignment
+        /// Serialized Name: WarningCode.SourceControlWarning_DeleteRoleAssignment
+        /// </summary>
         public static WarningCode SourceControlWarningDeleteRoleAssignment { get; } = new WarningCode(SourceControlWarningDeleteRoleAssignmentValue);
-        /// <summary> SourceControl_DeletedWithWarnings. </summary>
+        /// <summary>
+        /// SourceControl_DeletedWithWarnings
+        /// Serialized Name: WarningCode.SourceControl_DeletedWithWarnings
+        /// </summary>
         public static WarningCode SourceControlDeletedWithWarnings { get; } = new WarningCode(SourceControlDeletedWithWarningsValue);
         /// <summary> Determines if two <see cref="WarningCode"/> values are the same. </summary>
         public static bool operator ==(WarningCode left, WarningCode right) => left.Equals(right);

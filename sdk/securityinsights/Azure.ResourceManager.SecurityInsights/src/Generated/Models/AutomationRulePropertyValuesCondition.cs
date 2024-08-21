@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRulePropertyValuesCondition. </summary>
+    /// <summary>
+    /// The AutomationRulePropertyValuesCondition.
+    /// Serialized Name: AutomationRulePropertyValuesCondition
+    /// </summary>
     public partial class AutomationRulePropertyValuesCondition
     {
         /// <summary>
@@ -52,9 +55,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyValuesCondition"/>. </summary>
-        /// <param name="propertyName"> The property to evaluate in an automation rule property condition. </param>
-        /// <param name="operator"></param>
-        /// <param name="propertyValues"></param>
+        /// <param name="propertyName">
+        /// The property to evaluate in an automation rule property condition.
+        /// Serialized Name: AutomationRulePropertyValuesCondition.propertyName
+        /// </param>
+        /// <param name="operator"> Serialized Name: AutomationRulePropertyValuesCondition.operator. </param>
+        /// <param name="propertyValues"> Serialized Name: AutomationRulePropertyValuesCondition.propertyValues. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutomationRulePropertyValuesCondition(AutomationRulePropertyConditionSupportedProperty? propertyName, AutomationRulePropertyConditionSupportedOperator? @operator, IList<string> propertyValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,11 +70,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The property to evaluate in an automation rule property condition. </summary>
+        /// <summary>
+        /// The property to evaluate in an automation rule property condition.
+        /// Serialized Name: AutomationRulePropertyValuesCondition.propertyName
+        /// </summary>
         public AutomationRulePropertyConditionSupportedProperty? PropertyName { get; set; }
-        /// <summary> Gets or sets the operator. </summary>
+        /// <summary> Serialized Name: AutomationRulePropertyValuesCondition.operator. </summary>
         public AutomationRulePropertyConditionSupportedOperator? Operator { get; set; }
-        /// <summary> Gets the property values. </summary>
+        /// <summary> Serialized Name: AutomationRulePropertyValuesCondition.propertyValues. </summary>
         public IList<string> PropertyValues { get; }
     }
 }

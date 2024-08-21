@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The TriggersOn. </summary>
+    /// <summary>
+    /// The TriggersOn.
+    /// Serialized Name: TriggersOn
+    /// </summary>
     public readonly partial struct TriggersOn : IEquatable<TriggersOn>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string IncidentsValue = "Incidents";
         private const string AlertsValue = "Alerts";
 
-        /// <summary> Trigger on Incidents. </summary>
+        /// <summary>
+        /// Trigger on Incidents
+        /// Serialized Name: TriggersOn.Incidents
+        /// </summary>
         public static TriggersOn Incidents { get; } = new TriggersOn(IncidentsValue);
-        /// <summary> Trigger on Alerts. </summary>
+        /// <summary>
+        /// Trigger on Alerts
+        /// Serialized Name: TriggersOn.Alerts
+        /// </summary>
         public static TriggersOn Alerts { get; } = new TriggersOn(AlertsValue);
         /// <summary> Determines if two <see cref="TriggersOn"/> values are the same. </summary>
         public static bool operator ==(TriggersOn left, TriggersOn right) => left.Equals(right);

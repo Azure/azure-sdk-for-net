@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Grouping configuration property bag. </summary>
+    /// <summary>
+    /// Grouping configuration property bag.
+    /// Serialized Name: GroupingConfiguration
+    /// </summary>
     public partial class SecurityInsightsGroupingConfiguration
     {
         /// <summary>
@@ -46,10 +49,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupingConfiguration"/>. </summary>
-        /// <param name="isEnabled"> Grouping enabled. </param>
-        /// <param name="isClosedIncidentReopened"> Re-open closed matching incidents. </param>
-        /// <param name="lookbackDuration"> Limit the group to alerts created within the lookback duration (in ISO 8601 duration format). </param>
-        /// <param name="matchingMethod"> Grouping matching method. When method is Selected at least one of groupByEntities, groupByAlertDetails, groupByCustomDetails must be provided and not empty. </param>
+        /// <param name="isEnabled">
+        /// Grouping enabled
+        /// Serialized Name: GroupingConfiguration.enabled
+        /// </param>
+        /// <param name="isClosedIncidentReopened">
+        /// Re-open closed matching incidents
+        /// Serialized Name: GroupingConfiguration.reopenClosedIncident
+        /// </param>
+        /// <param name="lookbackDuration">
+        /// Limit the group to alerts created within the lookback duration (in ISO 8601 duration format)
+        /// Serialized Name: GroupingConfiguration.lookbackDuration
+        /// </param>
+        /// <param name="matchingMethod">
+        /// Grouping matching method. When method is Selected at least one of groupByEntities, groupByAlertDetails, groupByCustomDetails must be provided and not empty.
+        /// Serialized Name: GroupingConfiguration.matchingMethod
+        /// </param>
         public SecurityInsightsGroupingConfiguration(bool isEnabled, bool isClosedIncidentReopened, TimeSpan lookbackDuration, SecurityInsightsGroupingMatchingMethod matchingMethod)
         {
             IsEnabled = isEnabled;
@@ -62,13 +77,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupingConfiguration"/>. </summary>
-        /// <param name="isEnabled"> Grouping enabled. </param>
-        /// <param name="isClosedIncidentReopened"> Re-open closed matching incidents. </param>
-        /// <param name="lookbackDuration"> Limit the group to alerts created within the lookback duration (in ISO 8601 duration format). </param>
-        /// <param name="matchingMethod"> Grouping matching method. When method is Selected at least one of groupByEntities, groupByAlertDetails, groupByCustomDetails must be provided and not empty. </param>
-        /// <param name="groupByEntities"> A list of entity types to group by (when matchingMethod is Selected). Only entities defined in the current alert rule may be used. </param>
-        /// <param name="groupByAlertDetails"> A list of alert details to group by (when matchingMethod is Selected). </param>
-        /// <param name="groupByCustomDetails"> A list of custom details keys to group by (when matchingMethod is Selected). Only keys defined in the current alert rule may be used. </param>
+        /// <param name="isEnabled">
+        /// Grouping enabled
+        /// Serialized Name: GroupingConfiguration.enabled
+        /// </param>
+        /// <param name="isClosedIncidentReopened">
+        /// Re-open closed matching incidents
+        /// Serialized Name: GroupingConfiguration.reopenClosedIncident
+        /// </param>
+        /// <param name="lookbackDuration">
+        /// Limit the group to alerts created within the lookback duration (in ISO 8601 duration format)
+        /// Serialized Name: GroupingConfiguration.lookbackDuration
+        /// </param>
+        /// <param name="matchingMethod">
+        /// Grouping matching method. When method is Selected at least one of groupByEntities, groupByAlertDetails, groupByCustomDetails must be provided and not empty.
+        /// Serialized Name: GroupingConfiguration.matchingMethod
+        /// </param>
+        /// <param name="groupByEntities">
+        /// A list of entity types to group by (when matchingMethod is Selected). Only entities defined in the current alert rule may be used.
+        /// Serialized Name: GroupingConfiguration.groupByEntities
+        /// </param>
+        /// <param name="groupByAlertDetails">
+        /// A list of alert details to group by (when matchingMethod is Selected)
+        /// Serialized Name: GroupingConfiguration.groupByAlertDetails
+        /// </param>
+        /// <param name="groupByCustomDetails">
+        /// A list of custom details keys to group by (when matchingMethod is Selected). Only keys defined in the current alert rule may be used.
+        /// Serialized Name: GroupingConfiguration.groupByCustomDetails
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsGroupingConfiguration(bool isEnabled, bool isClosedIncidentReopened, TimeSpan lookbackDuration, SecurityInsightsGroupingMatchingMethod matchingMethod, IList<SecurityInsightsAlertRuleEntityMappingType> groupByEntities, IList<SecurityInsightsAlertDetail> groupByAlertDetails, IList<string> groupByCustomDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -87,19 +123,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Grouping enabled. </summary>
+        /// <summary>
+        /// Grouping enabled
+        /// Serialized Name: GroupingConfiguration.enabled
+        /// </summary>
         public bool IsEnabled { get; set; }
-        /// <summary> Re-open closed matching incidents. </summary>
+        /// <summary>
+        /// Re-open closed matching incidents
+        /// Serialized Name: GroupingConfiguration.reopenClosedIncident
+        /// </summary>
         public bool IsClosedIncidentReopened { get; set; }
-        /// <summary> Limit the group to alerts created within the lookback duration (in ISO 8601 duration format). </summary>
+        /// <summary>
+        /// Limit the group to alerts created within the lookback duration (in ISO 8601 duration format)
+        /// Serialized Name: GroupingConfiguration.lookbackDuration
+        /// </summary>
         public TimeSpan LookbackDuration { get; set; }
-        /// <summary> Grouping matching method. When method is Selected at least one of groupByEntities, groupByAlertDetails, groupByCustomDetails must be provided and not empty. </summary>
+        /// <summary>
+        /// Grouping matching method. When method is Selected at least one of groupByEntities, groupByAlertDetails, groupByCustomDetails must be provided and not empty.
+        /// Serialized Name: GroupingConfiguration.matchingMethod
+        /// </summary>
         public SecurityInsightsGroupingMatchingMethod MatchingMethod { get; set; }
-        /// <summary> A list of entity types to group by (when matchingMethod is Selected). Only entities defined in the current alert rule may be used. </summary>
+        /// <summary>
+        /// A list of entity types to group by (when matchingMethod is Selected). Only entities defined in the current alert rule may be used.
+        /// Serialized Name: GroupingConfiguration.groupByEntities
+        /// </summary>
         public IList<SecurityInsightsAlertRuleEntityMappingType> GroupByEntities { get; }
-        /// <summary> A list of alert details to group by (when matchingMethod is Selected). </summary>
+        /// <summary>
+        /// A list of alert details to group by (when matchingMethod is Selected)
+        /// Serialized Name: GroupingConfiguration.groupByAlertDetails
+        /// </summary>
         public IList<SecurityInsightsAlertDetail> GroupByAlertDetails { get; }
-        /// <summary> A list of custom details keys to group by (when matchingMethod is Selected). Only keys defined in the current alert rule may be used. </summary>
+        /// <summary>
+        /// A list of custom details keys to group by (when matchingMethod is Selected). Only keys defined in the current alert rule may be used.
+        /// Serialized Name: GroupingConfiguration.groupByCustomDetails
+        /// </summary>
         public IList<string> GroupByCustomDetails { get; }
     }
 }

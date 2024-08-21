@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Setting for the connector check connectivity. </summary>
+    /// <summary>
+    /// Setting for the connector check connectivity
+    /// Serialized Name: ConnectivityCriteria
+    /// </summary>
     public partial class ConnectivityCriteria
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityCriteria"/>. </summary>
-        /// <param name="connectivityType"> type of connectivity. </param>
-        /// <param name="value"> Queries for checking connectivity. </param>
+        /// <param name="connectivityType">
+        /// type of connectivity
+        /// Serialized Name: ConnectivityCriteria.type
+        /// </param>
+        /// <param name="value">
+        /// Queries for checking connectivity
+        /// Serialized Name: ConnectivityCriteria.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectivityCriteria(ConnectivityType? connectivityType, IList<string> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> type of connectivity. </summary>
+        /// <summary>
+        /// type of connectivity
+        /// Serialized Name: ConnectivityCriteria.type
+        /// </summary>
         public ConnectivityType? ConnectivityType { get; set; }
-        /// <summary> Queries for checking connectivity. </summary>
+        /// <summary>
+        /// Queries for checking connectivity
+        /// Serialized Name: ConnectivityCriteria.value
+        /// </summary>
         public IList<string> Value { get; }
     }
 }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the WorkspaceManagerAssignment data model.
     /// The workspace manager assignment
+    /// Serialized Name: WorkspaceManagerAssignment
     /// </summary>
     public partial class WorkspaceManagerAssignmentData : ResourceData
     {
@@ -62,11 +63,26 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="targetResourceName"> The resource name of the workspace manager group targeted by the workspace manager assignment. </param>
-        /// <param name="lastJobEndOn"> The time the last job associated to this assignment ended at. </param>
-        /// <param name="lastJobProvisioningState"> State of the last job associated to this assignment. </param>
-        /// <param name="items"> List of resources included in this workspace manager assignment. </param>
-        /// <param name="etag"> Resource Etag. </param>
+        /// <param name="targetResourceName">
+        /// The resource name of the workspace manager group targeted by the workspace manager assignment
+        /// Serialized Name: WorkspaceManagerAssignment.properties.targetResourceName
+        /// </param>
+        /// <param name="lastJobEndOn">
+        /// The time the last job associated to this assignment ended at
+        /// Serialized Name: WorkspaceManagerAssignment.properties.lastJobEndTime
+        /// </param>
+        /// <param name="lastJobProvisioningState">
+        /// State of the last job associated to this assignment
+        /// Serialized Name: WorkspaceManagerAssignment.properties.lastJobProvisioningState
+        /// </param>
+        /// <param name="items">
+        /// List of resources included in this workspace manager assignment
+        /// Serialized Name: WorkspaceManagerAssignment.properties.items
+        /// </param>
+        /// <param name="etag">
+        /// Resource Etag.
+        /// Serialized Name: AzureEntityResource.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkspaceManagerAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string targetResourceName, DateTimeOffset? lastJobEndOn, ProvisioningState? lastJobProvisioningState, IList<AssignmentItem> items, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -78,15 +94,30 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource name of the workspace manager group targeted by the workspace manager assignment. </summary>
+        /// <summary>
+        /// The resource name of the workspace manager group targeted by the workspace manager assignment
+        /// Serialized Name: WorkspaceManagerAssignment.properties.targetResourceName
+        /// </summary>
         public string TargetResourceName { get; set; }
-        /// <summary> The time the last job associated to this assignment ended at. </summary>
+        /// <summary>
+        /// The time the last job associated to this assignment ended at
+        /// Serialized Name: WorkspaceManagerAssignment.properties.lastJobEndTime
+        /// </summary>
         public DateTimeOffset? LastJobEndOn { get; }
-        /// <summary> State of the last job associated to this assignment. </summary>
+        /// <summary>
+        /// State of the last job associated to this assignment
+        /// Serialized Name: WorkspaceManagerAssignment.properties.lastJobProvisioningState
+        /// </summary>
         public ProvisioningState? LastJobProvisioningState { get; }
-        /// <summary> List of resources included in this workspace manager assignment. </summary>
+        /// <summary>
+        /// List of resources included in this workspace manager assignment
+        /// Serialized Name: WorkspaceManagerAssignment.properties.items
+        /// </summary>
         public IList<AssignmentItem> Items { get; }
-        /// <summary> Resource Etag. </summary>
+        /// <summary>
+        /// Resource Etag.
+        /// Serialized Name: AzureEntityResource.etag
+        /// </summary>
         public ETag? ETag { get; }
     }
 }

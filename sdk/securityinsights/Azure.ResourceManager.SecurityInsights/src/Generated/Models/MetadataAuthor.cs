@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Publisher or creator of the content item. </summary>
+    /// <summary>
+    /// Publisher or creator of the content item.
+    /// Serialized Name: MetadataAuthor
+    /// </summary>
     public partial class MetadataAuthor
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetadataAuthor"/>. </summary>
-        /// <param name="name"> Name of the author. Company or person. </param>
-        /// <param name="email"> Email of author contact. </param>
-        /// <param name="link"> Link for author/vendor page. </param>
+        /// <param name="name">
+        /// Name of the author. Company or person.
+        /// Serialized Name: MetadataAuthor.name
+        /// </param>
+        /// <param name="email">
+        /// Email of author contact
+        /// Serialized Name: MetadataAuthor.email
+        /// </param>
+        /// <param name="link">
+        /// Link for author/vendor page
+        /// Serialized Name: MetadataAuthor.link
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetadataAuthor(string name, string email, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the author. Company or person. </summary>
+        /// <summary>
+        /// Name of the author. Company or person.
+        /// Serialized Name: MetadataAuthor.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Email of author contact. </summary>
+        /// <summary>
+        /// Email of author contact
+        /// Serialized Name: MetadataAuthor.email
+        /// </summary>
         public string Email { get; set; }
-        /// <summary> Link for author/vendor page. </summary>
+        /// <summary>
+        /// Link for author/vendor page
+        /// Serialized Name: MetadataAuthor.link
+        /// </summary>
         public string Link { get; set; }
     }
 }

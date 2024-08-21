@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Reevaluate response object. </summary>
+    /// <summary>
+    /// Reevaluate response object.
+    /// Serialized Name: ReevaluateResponse
+    /// </summary>
     public partial class ReevaluateResult
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ReevaluateResult"/>. </summary>
-        /// <param name="lastEvaluatedTimeUtc"> The time stamp (UTC) when the recommendation was last evaluated. </param>
+        /// <param name="lastEvaluatedTimeUtc">
+        /// The time stamp (UTC) when the recommendation was last evaluated.
+        /// Serialized Name: ReevaluateResponse.lastEvaluatedTimeUtc
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ReevaluateResult(DateTimeOffset? lastEvaluatedTimeUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The time stamp (UTC) when the recommendation was last evaluated. </summary>
+        /// <summary>
+        /// The time stamp (UTC) when the recommendation was last evaluated.
+        /// Serialized Name: ReevaluateResponse.lastEvaluatedTimeUtc
+        /// </summary>
         public DateTimeOffset? LastEvaluatedTimeUtc { get; }
     }
 }

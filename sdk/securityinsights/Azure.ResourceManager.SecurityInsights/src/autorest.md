@@ -17,6 +17,9 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
+mgmt-debug: 
+ show-serialized-names: true
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}: SecurityInsightsThreatIntelligenceIndicator
   # Added these relation resource due to new added type in 2024-01-01-preview version
@@ -221,6 +224,8 @@ rename-mapping:
   HuntList: SecurityInsightsHuntList
   HuntComment: SecurityInsightsHuntComment
   HuntRelation: SecurityInsightsHuntRelation
+  HuntRelation.properties.relatedResourceId: -|arm-id
+  HuntOwner: SecurityInsightsHuntOwner
   Job: AssignmentJob
   Recommendation: SecurityInsightsRecommendation
   ActivityCustomEntityQuery.properties.enabled: IsEnabled
@@ -228,7 +233,57 @@ rename-mapping:
   Settings: SecurityInsightsSettings
   SettingList: SecurityInsightsSettingList
   Anomalies: SecurityInsightsSettingAnomaliesKind
-  Anomalies.properties.enabled: IsEnabled
+  AnomalyTimelineItem.azureResourceId: -|arm-id
+  AnomalyTimelineItem.timeGenerated: GeneratedOn
+  Availability: ConnectorAvailability
+  AvailabilityStatus: ConnectorAvailabilityStatus
+  BookmarkTimelineItem.azureResourceId: -|arm-id
+  CcpResponseConfig.convertChildPropertiesToArray: IsConvertChildPropertiesToArray
+  Connective: ClauseConnective
+  Customs: CustomsPermission
+  CustomsPermission: CustomsPermissionProperties
+  Deployment: SourceControlDeployment
+  DeploymentFetchStatus: SourceControlDeploymentFetchStatus
+  DeploymentInfo: SourceControlDeploymentInfo
+  DeploymentResult: SourceControlDeploymentResult
+  DeploymentState: SourceControlDeploymentState
+  EntityGetInsightsParameters.addDefaultExtendedTimeRange: IsDefaultExtendedTimeRangeAdded
+  EntityManualTriggerRequestBody.incidentArmId:  -|arm-id
+  EntityManualTriggerRequestBody.logicAppsResourceId:  -|arm-id
+  Error: PublicationFailedError
+  Flag: MetadataFlag
+  FusionSourceSettings.enabled: IsEnabled
+  FusionSourceSubTypeSetting.enabled: IsEnabled
+  FusionSubTypeSeverityFiltersItem.enabled: IsEnabled
+  Identity: TiObjectKindIdentity
+  Indicator: TiObjectKindIndicator
+  AttackPattern: TiObjectKindAttackPattern
+  Relationship: TiObjectKindRelationship
+  ThreatActor: TiObjectKindThreatActor
+  MLBehaviorAnalyticsAlertRule.properties.enabled: IsEnabled
+  Mode: WorkspaceManagerConfigurationMode
+  Operator: ConditionClauseOperator
+  Permissions: ConnectorPermissions
+  # Not working, check if we still need this.
+  # ProductTemplateModelCollectionGetAllOptions.count: ReturnOnlyObjectCount
+  Repo: SourceControlRepo
+  Repository: SourceControlRepository
+  RequiredPermissions.action: IsCustomAction
+  RequiredPermissions.delete: IsDeleteAction
+  RequiredPermissions.read: IsReadAction
+  RequiredPermissions.write: IsWriteAction
+  ResourceProviderRequiredPermissions.action: IsCustomAction
+  ResourceProviderRequiredPermissions.delete: IsDeleteAction
+  ResourceProviderRequiredPermissions.read: IsReadAction
+  ResourceProviderRequiredPermissions.write: IsWriteAction
+  FileImport.properties.createdTimeUTC: CreatedOn
+  FileImport.properties.filesValidUntilTimeUTC: FilesValidUntil
+  FileImport.properties.importValidUntilTimeUTC: ImportValidUntil
+  IncidentTask.properties.createdTimeUtc: CreatedOn
+  IncidentTask.properties.lastModifiedTimeUtc: LastModifiedOn
+  Recommendation.properties.creationTimeUtc: CreatedOn
+  Recommendation.properties.lastEvaluatedTimeUtc: LastEvaluatedOn
+  Recommendation.properties.lastModifiedTimeUtc: LastModifiedOn
   # Added property renaming due to api compat check with property breaking chang to dictionary type in 2024-01-01-preview version
   WatchlistItem.properties.itemsKeyValue: ItemsKeyValueDictionary
   WatchlistItem.properties.entityMapping: EntityMappingDictionary
@@ -363,5 +418,20 @@ directive:
           {
             "$ref": "../../../common/2.0/types.json#/parameters/ODataOrderBy"
           }
-        ]
+        ];
+  # Add this because lack of x-ms-enum value
+  - from: EntityQueries.json
+    where: $.parameters
+    transform: >
+      $.EntityQueryKind["x-ms-enum"] = {
+        "modelAsString": true,
+        "name": "EntityQueryKind",
+        "values": [
+          {
+            "value": "Expansion"
+          },
+          {
+            "value": "Activity"
+          }
+        ]};
 ```

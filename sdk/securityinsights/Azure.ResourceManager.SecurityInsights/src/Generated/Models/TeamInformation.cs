@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes team information. </summary>
+    /// <summary>
+    /// Describes team information
+    /// Serialized Name: TeamInformation
+    /// </summary>
     public partial class TeamInformation
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TeamInformation"/>. </summary>
-        /// <param name="teamId"> Team ID. </param>
-        /// <param name="primaryChannelUri"> The primary channel URL of the team. </param>
-        /// <param name="teamCreationTimeUtc"> The time the team was created. </param>
-        /// <param name="name"> The name of the team. </param>
-        /// <param name="description"> The description of the team. </param>
+        /// <param name="teamId">
+        /// Team ID
+        /// Serialized Name: TeamInformation.teamId
+        /// </param>
+        /// <param name="primaryChannelUri">
+        /// The primary channel URL of the team
+        /// Serialized Name: TeamInformation.primaryChannelUrl
+        /// </param>
+        /// <param name="teamCreationTimeUtc">
+        /// The time the team was created
+        /// Serialized Name: TeamInformation.teamCreationTimeUtc
+        /// </param>
+        /// <param name="name">
+        /// The name of the team
+        /// Serialized Name: TeamInformation.name
+        /// </param>
+        /// <param name="description">
+        /// The description of the team
+        /// Serialized Name: TeamInformation.description
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TeamInformation(string teamId, Uri primaryChannelUri, DateTimeOffset? teamCreationTimeUtc, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,15 +85,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Team ID. </summary>
+        /// <summary>
+        /// Team ID
+        /// Serialized Name: TeamInformation.teamId
+        /// </summary>
         public string TeamId { get; }
-        /// <summary> The primary channel URL of the team. </summary>
+        /// <summary>
+        /// The primary channel URL of the team
+        /// Serialized Name: TeamInformation.primaryChannelUrl
+        /// </summary>
         public Uri PrimaryChannelUri { get; }
-        /// <summary> The time the team was created. </summary>
+        /// <summary>
+        /// The time the team was created
+        /// Serialized Name: TeamInformation.teamCreationTimeUtc
+        /// </summary>
         public DateTimeOffset? TeamCreationTimeUtc { get; }
-        /// <summary> The name of the team. </summary>
+        /// <summary>
+        /// The name of the team
+        /// Serialized Name: TeamInformation.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The description of the team. </summary>
+        /// <summary>
+        /// The description of the team
+        /// Serialized Name: TeamInformation.description
+        /// </summary>
         public string Description { get; }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("sourceSubTypeName"u8);
             writer.WriteStringValue(SourceSubTypeName);
             if (options.Format != "W" && Optional.IsDefined(SourceSubTypeDisplayName))

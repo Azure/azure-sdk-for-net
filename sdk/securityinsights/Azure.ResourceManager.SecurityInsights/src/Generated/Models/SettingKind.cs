@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The kind of the setting. </summary>
+    /// <summary>
+    /// The kind of the setting
+    /// Serialized Name: SettingKind
+    /// </summary>
     internal readonly partial struct SettingKind : IEquatable<SettingKind>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string EntityAnalyticsValue = "EntityAnalytics";
         private const string UebaValue = "Ueba";
 
-        /// <summary> Anomalies. </summary>
+        /// <summary>
+        /// Anomalies
+        /// Serialized Name: SettingKind.Anomalies
+        /// </summary>
         public static SettingKind Anomalies { get; } = new SettingKind(AnomaliesValue);
-        /// <summary> EyesOn. </summary>
+        /// <summary>
+        /// EyesOn
+        /// Serialized Name: SettingKind.EyesOn
+        /// </summary>
         public static SettingKind EyesOn { get; } = new SettingKind(EyesOnValue);
-        /// <summary> EntityAnalytics. </summary>
+        /// <summary>
+        /// EntityAnalytics
+        /// Serialized Name: SettingKind.EntityAnalytics
+        /// </summary>
         public static SettingKind EntityAnalytics { get; } = new SettingKind(EntityAnalyticsValue);
-        /// <summary> Ueba. </summary>
+        /// <summary>
+        /// Ueba
+        /// Serialized Name: SettingKind.Ueba
+        /// </summary>
         public static SettingKind Ueba { get; } = new SettingKind(UebaValue);
         /// <summary> Determines if two <see cref="SettingKind"/> values are the same. </summary>
         public static bool operator ==(SettingKind left, SettingKind right) => left.Equals(right);

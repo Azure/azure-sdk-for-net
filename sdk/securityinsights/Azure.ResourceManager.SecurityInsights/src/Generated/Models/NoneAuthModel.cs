@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Model for API authentication with no authentication method - public API. </summary>
+    /// <summary>
+    /// Model for API authentication with no authentication method - public API.
+    /// Serialized Name: NoneAuthModel
+    /// </summary>
     public partial class NoneAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="NoneAuthModel"/>. </summary>
@@ -20,7 +23,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NoneAuthModel"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
+        /// <param name="authType">
+        /// The auth type
+        /// Serialized Name: CcpAuthConfig.type
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NoneAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(authType, serializedAdditionalRawData)
         {

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a supported source signal configuration in Fusion detection. </summary>
+    /// <summary>
+    /// Represents a supported source signal configuration in Fusion detection.
+    /// Serialized Name: FusionSourceSettings
+    /// </summary>
     public partial class FusionSourceSettings
     {
         /// <summary>
@@ -46,26 +49,41 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FusionSourceSettings"/>. </summary>
-        /// <param name="enabled"> Determines whether this source signal is enabled or disabled in Fusion detection. </param>
-        /// <param name="sourceName"> Name of the Fusion source signal. Refer to Fusion alert rule template for supported values. </param>
+        /// <param name="isEnabled">
+        /// Determines whether this source signal is enabled or disabled in Fusion detection.
+        /// Serialized Name: FusionSourceSettings.enabled
+        /// </param>
+        /// <param name="sourceName">
+        /// Name of the Fusion source signal. Refer to Fusion alert rule template for supported values.
+        /// Serialized Name: FusionSourceSettings.sourceName
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        public FusionSourceSettings(bool enabled, string sourceName)
+        public FusionSourceSettings(bool isEnabled, string sourceName)
         {
             Argument.AssertNotNull(sourceName, nameof(sourceName));
 
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             SourceName = sourceName;
             SourceSubTypes = new ChangeTrackingList<FusionSourceSubTypeSetting>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FusionSourceSettings"/>. </summary>
-        /// <param name="enabled"> Determines whether this source signal is enabled or disabled in Fusion detection. </param>
-        /// <param name="sourceName"> Name of the Fusion source signal. Refer to Fusion alert rule template for supported values. </param>
-        /// <param name="sourceSubTypes"> Configuration for all source subtypes under this source signal consumed in fusion detection. </param>
+        /// <param name="isEnabled">
+        /// Determines whether this source signal is enabled or disabled in Fusion detection.
+        /// Serialized Name: FusionSourceSettings.enabled
+        /// </param>
+        /// <param name="sourceName">
+        /// Name of the Fusion source signal. Refer to Fusion alert rule template for supported values.
+        /// Serialized Name: FusionSourceSettings.sourceName
+        /// </param>
+        /// <param name="sourceSubTypes">
+        /// Configuration for all source subtypes under this source signal consumed in fusion detection.
+        /// Serialized Name: FusionSourceSettings.sourceSubTypes
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FusionSourceSettings(bool enabled, string sourceName, IList<FusionSourceSubTypeSetting> sourceSubTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FusionSourceSettings(bool isEnabled, string sourceName, IList<FusionSourceSubTypeSetting> sourceSubTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             SourceName = sourceName;
             SourceSubTypes = sourceSubTypes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -76,11 +94,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Determines whether this source signal is enabled or disabled in Fusion detection. </summary>
-        public bool Enabled { get; set; }
-        /// <summary> Name of the Fusion source signal. Refer to Fusion alert rule template for supported values. </summary>
+        /// <summary>
+        /// Determines whether this source signal is enabled or disabled in Fusion detection.
+        /// Serialized Name: FusionSourceSettings.enabled
+        /// </summary>
+        public bool IsEnabled { get; set; }
+        /// <summary>
+        /// Name of the Fusion source signal. Refer to Fusion alert rule template for supported values.
+        /// Serialized Name: FusionSourceSettings.sourceName
+        /// </summary>
         public string SourceName { get; set; }
-        /// <summary> Configuration for all source subtypes under this source signal consumed in fusion detection. </summary>
+        /// <summary>
+        /// Configuration for all source subtypes under this source signal consumed in fusion detection.
+        /// Serialized Name: FusionSourceSettings.sourceSubTypes
+        /// </summary>
         public IList<FusionSourceSubTypeSetting> SourceSubTypes { get; }
     }
 }

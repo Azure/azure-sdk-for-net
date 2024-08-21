@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List of the Sentinel onboarding states. </summary>
+    /// <summary>
+    /// List of the Sentinel onboarding states
+    /// Serialized Name: SentinelOnboardingStatesList
+    /// </summary>
     internal partial class SentinelOnboardingStatesList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SentinelOnboardingStatesList"/>. </summary>
-        /// <param name="value"> Array of Sentinel onboarding states. </param>
+        /// <param name="value">
+        /// Array of Sentinel onboarding states
+        /// Serialized Name: SentinelOnboardingStatesList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SentinelOnboardingStatesList(IEnumerable<SecurityInsightsSentinelOnboardingStateData> value)
         {
@@ -57,7 +63,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SentinelOnboardingStatesList"/>. </summary>
-        /// <param name="value"> Array of Sentinel onboarding states. </param>
+        /// <param name="value">
+        /// Array of Sentinel onboarding states
+        /// Serialized Name: SentinelOnboardingStatesList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SentinelOnboardingStatesList(IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +79,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Array of Sentinel onboarding states. </summary>
+        /// <summary>
+        /// Array of Sentinel onboarding states
+        /// Serialized Name: SentinelOnboardingStatesList.value
+        /// </summary>
         public IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> Value { get; }
     }
 }

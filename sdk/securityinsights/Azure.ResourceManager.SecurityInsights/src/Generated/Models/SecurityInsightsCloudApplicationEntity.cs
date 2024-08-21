@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents a cloud application entity. </summary>
+    /// <summary>
+    /// Represents a cloud application entity.
+    /// Serialized Name: CloudApplicationEntity
+    /// </summary>
     public partial class SecurityInsightsCloudApplicationEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsCloudApplicationEntity"/>. </summary>
@@ -27,13 +30,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="kind">
+        /// The kind of the entity.
+        /// Serialized Name: Entity.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="appId"> The technical identifier of the application. </param>
-        /// <param name="appName"> The name of the related cloud application. </param>
-        /// <param name="instanceName"> The user defined instance name of the cloud application. It is often used to distinguish between several applications of the same type that a customer has. </param>
+        /// <param name="additionalData">
+        /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: CloudApplicationEntity.properties.additionalData
+        /// </param>
+        /// <param name="friendlyName">
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: CloudApplicationEntity.properties.friendlyName
+        /// </param>
+        /// <param name="appId">
+        /// The technical identifier of the application.
+        /// Serialized Name: CloudApplicationEntity.properties.appId
+        /// </param>
+        /// <param name="appName">
+        /// The name of the related cloud application.
+        /// Serialized Name: CloudApplicationEntity.properties.appName
+        /// </param>
+        /// <param name="instanceName">
+        /// The user defined instance name of the cloud application. It is often used to distinguish between several applications of the same type that a customer has.
+        /// Serialized Name: CloudApplicationEntity.properties.instanceName
+        /// </param>
         internal SecurityInsightsCloudApplicationEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, int? appId, string appName, string instanceName) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -46,6 +67,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
+        /// Serialized Name: CloudApplicationEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -75,13 +97,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        /// <summary>
+        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
+        /// Serialized Name: CloudApplicationEntity.properties.friendlyName
+        /// </summary>
         public string FriendlyName { get; }
-        /// <summary> The technical identifier of the application. </summary>
+        /// <summary>
+        /// The technical identifier of the application.
+        /// Serialized Name: CloudApplicationEntity.properties.appId
+        /// </summary>
         public int? AppId { get; }
-        /// <summary> The name of the related cloud application. </summary>
+        /// <summary>
+        /// The name of the related cloud application.
+        /// Serialized Name: CloudApplicationEntity.properties.appName
+        /// </summary>
         public string AppName { get; }
-        /// <summary> The user defined instance name of the cloud application. It is often used to distinguish between several applications of the same type that a customer has. </summary>
+        /// <summary>
+        /// The user defined instance name of the cloud application. It is often used to distinguish between several applications of the same type that a customer has.
+        /// Serialized Name: CloudApplicationEntity.properties.instanceName
+        /// </summary>
         public string InstanceName { get; }
     }
 }

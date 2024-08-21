@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Warning response structure. </summary>
+    /// <summary>
+    /// Warning response structure.
+    /// Serialized Name: Warning
+    /// </summary>
     public partial class Warning
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Warning"/>. </summary>
-        /// <param name="warningValue"> Warning data. </param>
+        /// <param name="warningValue">
+        /// Warning data.
+        /// Serialized Name: Warning.warning
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Warning(WarningBody warningValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Warning data. </summary>
+        /// <summary>
+        /// Warning data.
+        /// Serialized Name: Warning.warning
+        /// </summary>
         public WarningBody WarningValue { get; }
     }
 }

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SecurityInsightsKind? kind = default;
             string version = default;
             string name = default;
-            Operator? @operator = default;
+            ConditionClauseOperator? @operator = default;
             IList<MetadataDependencies> criteria = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    @operator = new Operator(property.Value.GetString());
+                    @operator = new ConditionClauseOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("criteria"u8))

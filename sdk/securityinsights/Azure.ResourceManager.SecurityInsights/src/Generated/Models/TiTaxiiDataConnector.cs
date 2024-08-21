@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Data connector to pull Threat intelligence data from TAXII 2.0/2.1 server. </summary>
+    /// <summary>
+    /// Data connector to pull Threat intelligence data from TAXII 2.0/2.1 server
+    /// Serialized Name: TiTaxiiDataConnector
+    /// </summary>
     public partial class TiTaxiiDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="TiTaxiiDataConnector"/>. </summary>
@@ -26,19 +29,55 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// The data connector kind
+        /// Serialized Name: DataConnector.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="workspaceId"> The workspace id. </param>
-        /// <param name="friendlyName"> The friendly name for the TAXII server. </param>
-        /// <param name="taxiiServer"> The API root for the TAXII server. </param>
-        /// <param name="collectionId"> The collection id of the TAXII server. </param>
-        /// <param name="userName"> The userName for the TAXII server. </param>
-        /// <param name="password"> The password for the TAXII server. </param>
-        /// <param name="taxiiLookbackPeriod"> The lookback period for the TAXII server. </param>
-        /// <param name="pollingFrequency"> The polling frequency for the TAXII server. </param>
-        /// <param name="taxiiClient"> Data type for TAXII connector. </param>
+        /// <param name="tenantId">
+        /// The tenant id to connect to, and get the data from.
+        /// Serialized Name: TiTaxiiDataConnector.properties.tenantId
+        /// </param>
+        /// <param name="workspaceId">
+        /// The workspace id.
+        /// Serialized Name: TiTaxiiDataConnector.properties.workspaceId
+        /// </param>
+        /// <param name="friendlyName">
+        /// The friendly name for the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.friendlyName
+        /// </param>
+        /// <param name="taxiiServer">
+        /// The API root for the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.taxiiServer
+        /// </param>
+        /// <param name="collectionId">
+        /// The collection id of the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.collectionId
+        /// </param>
+        /// <param name="userName">
+        /// The userName for the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.userName
+        /// </param>
+        /// <param name="password">
+        /// The password for the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.password
+        /// </param>
+        /// <param name="taxiiLookbackPeriod">
+        /// The lookback period for the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.taxiiLookbackPeriod
+        /// </param>
+        /// <param name="pollingFrequency">
+        /// The polling frequency for the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.pollingFrequency
+        /// </param>
+        /// <param name="taxiiClient">
+        /// Data type for TAXII connector.
+        /// Serialized Name: TiTaxiiDataConnector.properties.dataTypes.taxiiClient
+        /// </param>
         internal TiTaxiiDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, string workspaceId, string friendlyName, string taxiiServer, string collectionId, string userName, string password, DateTimeOffset? taxiiLookbackPeriod, PollingFrequency? pollingFrequency, TiTaxiiDataConnectorDataTypes taxiiClient) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
@@ -54,27 +93,60 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary> The tenant id to connect to, and get the data from. </summary>
+        /// <summary>
+        /// The tenant id to connect to, and get the data from.
+        /// Serialized Name: TiTaxiiDataConnector.properties.tenantId
+        /// </summary>
         public Guid? TenantId { get; set; }
-        /// <summary> The workspace id. </summary>
+        /// <summary>
+        /// The workspace id.
+        /// Serialized Name: TiTaxiiDataConnector.properties.workspaceId
+        /// </summary>
         public string WorkspaceId { get; set; }
-        /// <summary> The friendly name for the TAXII server. </summary>
+        /// <summary>
+        /// The friendly name for the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.friendlyName
+        /// </summary>
         public string FriendlyName { get; set; }
-        /// <summary> The API root for the TAXII server. </summary>
+        /// <summary>
+        /// The API root for the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.taxiiServer
+        /// </summary>
         public string TaxiiServer { get; set; }
-        /// <summary> The collection id of the TAXII server. </summary>
+        /// <summary>
+        /// The collection id of the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.collectionId
+        /// </summary>
         public string CollectionId { get; set; }
-        /// <summary> The userName for the TAXII server. </summary>
+        /// <summary>
+        /// The userName for the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.userName
+        /// </summary>
         public string UserName { get; set; }
-        /// <summary> The password for the TAXII server. </summary>
+        /// <summary>
+        /// The password for the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.password
+        /// </summary>
         public string Password { get; set; }
-        /// <summary> The lookback period for the TAXII server. </summary>
+        /// <summary>
+        /// The lookback period for the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.taxiiLookbackPeriod
+        /// </summary>
         public DateTimeOffset? TaxiiLookbackPeriod { get; set; }
-        /// <summary> The polling frequency for the TAXII server. </summary>
+        /// <summary>
+        /// The polling frequency for the TAXII server.
+        /// Serialized Name: TiTaxiiDataConnector.properties.pollingFrequency
+        /// </summary>
         public PollingFrequency? PollingFrequency { get; set; }
-        /// <summary> Data type for TAXII connector. </summary>
+        /// <summary>
+        /// Data type for TAXII connector.
+        /// Serialized Name: TiTaxiiDataConnector.properties.dataTypes.taxiiClient
+        /// </summary>
         internal TiTaxiiDataConnectorDataTypes TaxiiClient { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        /// <summary>
+        /// Describe whether this data type connection is enabled or not.
+        /// Serialized Name: DataConnectorDataTypeCommon.state
+        /// </summary>
         public SecurityInsightsDataTypeConnectionState? TaxiiClientState
         {
             get => TaxiiClient is null ? default(SecurityInsightsDataTypeConnectionState?) : TaxiiClient.State;

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Config to describe the polling config for API poller connector. </summary>
+    /// <summary>
+    /// Config to describe the polling config for API poller connector
+    /// Serialized Name: CodelessConnectorPollingConfigProperties
+    /// </summary>
     public partial class CodelessConnectorPollingConfigProperties
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingConfigProperties"/>. </summary>
-        /// <param name="auth"> Describe the authentication type of the poller. </param>
-        /// <param name="request"> Describe the poll request config parameters of the poller. </param>
+        /// <param name="auth">
+        /// Describe the authentication type of the poller
+        /// Serialized Name: CodelessConnectorPollingConfigProperties.auth
+        /// </param>
+        /// <param name="request">
+        /// Describe the poll request config parameters of the poller
+        /// Serialized Name: CodelessConnectorPollingConfigProperties.request
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="auth"/> or <paramref name="request"/> is null. </exception>
         public CodelessConnectorPollingConfigProperties(CodelessConnectorPollingAuthProperties auth, CodelessConnectorPollingRequestProperties request)
         {
@@ -59,11 +68,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingConfigProperties"/>. </summary>
-        /// <param name="isActive"> The poller active status. </param>
-        /// <param name="auth"> Describe the authentication type of the poller. </param>
-        /// <param name="request"> Describe the poll request config parameters of the poller. </param>
-        /// <param name="paging"> Describe the poll request paging config of the poller. </param>
-        /// <param name="response"> Describe the response config parameters of the poller. </param>
+        /// <param name="isActive">
+        /// The poller active status
+        /// Serialized Name: CodelessConnectorPollingConfigProperties.isActive
+        /// </param>
+        /// <param name="auth">
+        /// Describe the authentication type of the poller
+        /// Serialized Name: CodelessConnectorPollingConfigProperties.auth
+        /// </param>
+        /// <param name="request">
+        /// Describe the poll request config parameters of the poller
+        /// Serialized Name: CodelessConnectorPollingConfigProperties.request
+        /// </param>
+        /// <param name="paging">
+        /// Describe the poll request paging config of the poller
+        /// Serialized Name: CodelessConnectorPollingConfigProperties.paging
+        /// </param>
+        /// <param name="response">
+        /// Describe the response config parameters of the poller
+        /// Serialized Name: CodelessConnectorPollingConfigProperties.response
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CodelessConnectorPollingConfigProperties(bool? isActive, CodelessConnectorPollingAuthProperties auth, CodelessConnectorPollingRequestProperties request, CodelessConnectorPollingPagingProperties paging, CodelessConnectorPollingResponseProperties response, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,15 +104,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> The poller active status. </summary>
+        /// <summary>
+        /// The poller active status
+        /// Serialized Name: CodelessConnectorPollingConfigProperties.isActive
+        /// </summary>
         public bool? IsActive { get; set; }
-        /// <summary> Describe the authentication type of the poller. </summary>
+        /// <summary>
+        /// Describe the authentication type of the poller
+        /// Serialized Name: CodelessConnectorPollingConfigProperties.auth
+        /// </summary>
         public CodelessConnectorPollingAuthProperties Auth { get; set; }
-        /// <summary> Describe the poll request config parameters of the poller. </summary>
+        /// <summary>
+        /// Describe the poll request config parameters of the poller
+        /// Serialized Name: CodelessConnectorPollingConfigProperties.request
+        /// </summary>
         public CodelessConnectorPollingRequestProperties Request { get; set; }
-        /// <summary> Describe the poll request paging config of the poller. </summary>
+        /// <summary>
+        /// Describe the poll request paging config of the poller
+        /// Serialized Name: CodelessConnectorPollingConfigProperties.paging
+        /// </summary>
         public CodelessConnectorPollingPagingProperties Paging { get; set; }
-        /// <summary> Describe the response config parameters of the poller. </summary>
+        /// <summary>
+        /// Describe the response config parameters of the poller
+        /// Serialized Name: CodelessConnectorPollingConfigProperties.response
+        /// </summary>
         public CodelessConnectorPollingResponseProperties Response { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The SecurityInsightsIncidentActionConfiguration. </summary>
+    /// <summary>
+    /// The SecurityInsightsIncidentActionConfiguration.
+    /// Serialized Name: IncidentPropertiesAction
+    /// </summary>
     public partial class SecurityInsightsIncidentActionConfiguration
     {
         /// <summary>
@@ -52,13 +55,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentActionConfiguration"/>. </summary>
-        /// <param name="severity"> The severity of the incident. </param>
-        /// <param name="status"> The status of the incident. </param>
-        /// <param name="classification"> The reason the incident was closed. </param>
-        /// <param name="classificationReason"> The classification reason the incident was closed with. </param>
-        /// <param name="classificationComment"> Describes the reason the incident was closed. </param>
-        /// <param name="owner"> Information on the user an incident is assigned to. </param>
-        /// <param name="labels"> List of labels to add to the incident. </param>
+        /// <param name="severity">
+        /// The severity of the incident
+        /// Serialized Name: IncidentPropertiesAction.severity
+        /// </param>
+        /// <param name="status">
+        /// The status of the incident
+        /// Serialized Name: IncidentPropertiesAction.status
+        /// </param>
+        /// <param name="classification">
+        /// The reason the incident was closed
+        /// Serialized Name: IncidentPropertiesAction.classification
+        /// </param>
+        /// <param name="classificationReason">
+        /// The classification reason the incident was closed with
+        /// Serialized Name: IncidentPropertiesAction.classificationReason
+        /// </param>
+        /// <param name="classificationComment">
+        /// Describes the reason the incident was closed.
+        /// Serialized Name: IncidentPropertiesAction.classificationComment
+        /// </param>
+        /// <param name="owner">
+        /// Information on the user an incident is assigned to
+        /// Serialized Name: IncidentPropertiesAction.owner
+        /// </param>
+        /// <param name="labels">
+        /// List of labels to add to the incident.
+        /// Serialized Name: IncidentPropertiesAction.labels
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsIncidentActionConfiguration(SecurityInsightsIncidentSeverity? severity, SecurityInsightsIncidentStatus? status, SecurityInsightsIncidentClassification? classification, SecurityInsightsIncidentClassificationReason? classificationReason, string classificationComment, SecurityInsightsIncidentOwnerInfo owner, IList<SecurityInsightsIncidentLabel> labels, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,19 +96,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The severity of the incident. </summary>
+        /// <summary>
+        /// The severity of the incident
+        /// Serialized Name: IncidentPropertiesAction.severity
+        /// </summary>
         public SecurityInsightsIncidentSeverity? Severity { get; set; }
-        /// <summary> The status of the incident. </summary>
+        /// <summary>
+        /// The status of the incident
+        /// Serialized Name: IncidentPropertiesAction.status
+        /// </summary>
         public SecurityInsightsIncidentStatus? Status { get; set; }
-        /// <summary> The reason the incident was closed. </summary>
+        /// <summary>
+        /// The reason the incident was closed
+        /// Serialized Name: IncidentPropertiesAction.classification
+        /// </summary>
         public SecurityInsightsIncidentClassification? Classification { get; set; }
-        /// <summary> The classification reason the incident was closed with. </summary>
+        /// <summary>
+        /// The classification reason the incident was closed with
+        /// Serialized Name: IncidentPropertiesAction.classificationReason
+        /// </summary>
         public SecurityInsightsIncidentClassificationReason? ClassificationReason { get; set; }
-        /// <summary> Describes the reason the incident was closed. </summary>
+        /// <summary>
+        /// Describes the reason the incident was closed.
+        /// Serialized Name: IncidentPropertiesAction.classificationComment
+        /// </summary>
         public string ClassificationComment { get; set; }
-        /// <summary> Information on the user an incident is assigned to. </summary>
+        /// <summary>
+        /// Information on the user an incident is assigned to
+        /// Serialized Name: IncidentPropertiesAction.owner
+        /// </summary>
         public SecurityInsightsIncidentOwnerInfo Owner { get; set; }
-        /// <summary> List of labels to add to the incident. </summary>
+        /// <summary>
+        /// List of labels to add to the incident.
+        /// Serialized Name: IncidentPropertiesAction.labels
+        /// </summary>
         public IList<SecurityInsightsIncidentLabel> Labels { get; }
     }
 }

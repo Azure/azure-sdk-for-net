@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The kind of the entity query template. </summary>
+    /// <summary>
+    /// The kind of the entity query template.
+    /// Serialized Name: EntityQueryTemplateKind
+    /// </summary>
     internal readonly partial struct EntityQueryTemplateKind : IEquatable<EntityQueryTemplateKind>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string ActivityValue = "Activity";
 
-        /// <summary> Activity. </summary>
+        /// <summary>
+        /// Activity
+        /// Serialized Name: EntityQueryTemplateKind.Activity
+        /// </summary>
         public static EntityQueryTemplateKind Activity { get; } = new EntityQueryTemplateKind(ActivityValue);
         /// <summary> Determines if two <see cref="EntityQueryTemplateKind"/> values are the same. </summary>
         public static bool operator ==(EntityQueryTemplateKind left, EntityQueryTemplateKind right) => left.Equals(right);

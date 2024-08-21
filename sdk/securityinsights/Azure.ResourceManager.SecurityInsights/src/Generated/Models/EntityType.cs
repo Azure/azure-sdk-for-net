@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The type of the entity. </summary>
+    /// <summary>
+    /// The type of the entity
+    /// Serialized Name: EntityType
+    /// </summary>
     public readonly partial struct EntityType : IEquatable<EntityType>
     {
         private readonly string _value;
@@ -45,49 +48,115 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string SubmissionMailValue = "SubmissionMail";
         private const string NicValue = "Nic";
 
-        /// <summary> Entity represents account in the system. </summary>
+        /// <summary>
+        /// Entity represents account in the system.
+        /// Serialized Name: EntityType.Account
+        /// </summary>
         public static EntityType Account { get; } = new EntityType(AccountValue);
-        /// <summary> Entity represents host in the system. </summary>
+        /// <summary>
+        /// Entity represents host in the system.
+        /// Serialized Name: EntityType.Host
+        /// </summary>
         public static EntityType Host { get; } = new EntityType(HostValue);
-        /// <summary> Entity represents file in the system. </summary>
+        /// <summary>
+        /// Entity represents file in the system.
+        /// Serialized Name: EntityType.File
+        /// </summary>
         public static EntityType File { get; } = new EntityType(FileValue);
-        /// <summary> Entity represents azure resource in the system. </summary>
+        /// <summary>
+        /// Entity represents azure resource in the system.
+        /// Serialized Name: EntityType.AzureResource
+        /// </summary>
         public static EntityType AzureResource { get; } = new EntityType(AzureResourceValue);
-        /// <summary> Entity represents cloud application in the system. </summary>
+        /// <summary>
+        /// Entity represents cloud application in the system.
+        /// Serialized Name: EntityType.CloudApplication
+        /// </summary>
         public static EntityType CloudApplication { get; } = new EntityType(CloudApplicationValue);
-        /// <summary> Entity represents dns in the system. </summary>
+        /// <summary>
+        /// Entity represents dns in the system.
+        /// Serialized Name: EntityType.DNS
+        /// </summary>
         public static EntityType Dns { get; } = new EntityType(DnsValue);
-        /// <summary> Entity represents file hash in the system. </summary>
+        /// <summary>
+        /// Entity represents file hash in the system.
+        /// Serialized Name: EntityType.FileHash
+        /// </summary>
         public static EntityType FileHash { get; } = new EntityType(FileHashValue);
-        /// <summary> Entity represents ip in the system. </summary>
+        /// <summary>
+        /// Entity represents ip in the system.
+        /// Serialized Name: EntityType.IP
+        /// </summary>
         public static EntityType IP { get; } = new EntityType(IPValue);
-        /// <summary> Entity represents malware in the system. </summary>
+        /// <summary>
+        /// Entity represents malware in the system.
+        /// Serialized Name: EntityType.Malware
+        /// </summary>
         public static EntityType Malware { get; } = new EntityType(MalwareValue);
-        /// <summary> Entity represents process in the system. </summary>
+        /// <summary>
+        /// Entity represents process in the system.
+        /// Serialized Name: EntityType.Process
+        /// </summary>
         public static EntityType Process { get; } = new EntityType(ProcessValue);
-        /// <summary> Entity represents registry key in the system. </summary>
+        /// <summary>
+        /// Entity represents registry key in the system.
+        /// Serialized Name: EntityType.RegistryKey
+        /// </summary>
         public static EntityType RegistryKey { get; } = new EntityType(RegistryKeyValue);
-        /// <summary> Entity represents registry value in the system. </summary>
+        /// <summary>
+        /// Entity represents registry value in the system.
+        /// Serialized Name: EntityType.RegistryValue
+        /// </summary>
         public static EntityType RegistryValue { get; } = new EntityType(RegistryValueValue);
-        /// <summary> Entity represents security group in the system. </summary>
+        /// <summary>
+        /// Entity represents security group in the system.
+        /// Serialized Name: EntityType.SecurityGroup
+        /// </summary>
         public static EntityType SecurityGroup { get; } = new EntityType(SecurityGroupValue);
-        /// <summary> Entity represents url in the system. </summary>
+        /// <summary>
+        /// Entity represents url in the system.
+        /// Serialized Name: EntityType.URL
+        /// </summary>
         public static EntityType URL { get; } = new EntityType(URLValue);
-        /// <summary> Entity represents IoT device in the system. </summary>
+        /// <summary>
+        /// Entity represents IoT device in the system.
+        /// Serialized Name: EntityType.IoTDevice
+        /// </summary>
         public static EntityType IotDevice { get; } = new EntityType(IotDeviceValue);
-        /// <summary> Entity represents security alert in the system. </summary>
+        /// <summary>
+        /// Entity represents security alert in the system.
+        /// Serialized Name: EntityType.SecurityAlert
+        /// </summary>
         public static EntityType SecurityAlert { get; } = new EntityType(SecurityAlertValue);
-        /// <summary> Entity represents HuntingBookmark in the system. </summary>
+        /// <summary>
+        /// Entity represents HuntingBookmark in the system.
+        /// Serialized Name: EntityType.HuntingBookmark
+        /// </summary>
         public static EntityType HuntingBookmark { get; } = new EntityType(HuntingBookmarkValue);
-        /// <summary> Entity represents mail cluster in the system. </summary>
+        /// <summary>
+        /// Entity represents mail cluster in the system.
+        /// Serialized Name: EntityType.MailCluster
+        /// </summary>
         public static EntityType MailCluster { get; } = new EntityType(MailClusterValue);
-        /// <summary> Entity represents mail message in the system. </summary>
+        /// <summary>
+        /// Entity represents mail message in the system.
+        /// Serialized Name: EntityType.MailMessage
+        /// </summary>
         public static EntityType MailMessage { get; } = new EntityType(MailMessageValue);
-        /// <summary> Entity represents mailbox in the system. </summary>
+        /// <summary>
+        /// Entity represents mailbox in the system.
+        /// Serialized Name: EntityType.Mailbox
+        /// </summary>
         public static EntityType Mailbox { get; } = new EntityType(MailboxValue);
-        /// <summary> Entity represents submission mail in the system. </summary>
+        /// <summary>
+        /// Entity represents submission mail in the system.
+        /// Serialized Name: EntityType.SubmissionMail
+        /// </summary>
         public static EntityType SubmissionMail { get; } = new EntityType(SubmissionMailValue);
-        /// <summary> Entity represents network interface in the system. </summary>
+        /// <summary>
+        /// Entity represents network interface in the system.
+        /// Serialized Name: EntityType.Nic
+        /// </summary>
         public static EntityType Nic { get; } = new EntityType(NicValue);
         /// <summary> Determines if two <see cref="EntityType"/> values are the same. </summary>
         public static bool operator ==(EntityType left, EntityType right) => left.Equals(right);

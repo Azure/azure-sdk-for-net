@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRulesList. </summary>
+    /// <summary>
+    /// The AutomationRulesList.
+    /// Serialized Name: AutomationRulesList
+    /// </summary>
     internal partial class AutomationRulesList
     {
         /// <summary>
@@ -52,8 +55,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationRulesList"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
+        /// <param name="value"> Serialized Name: AutomationRulesList.value. </param>
+        /// <param name="nextLink"> Serialized Name: AutomationRulesList.nextLink. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutomationRulesList(IReadOnlyList<SecurityInsightsAutomationRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +65,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: AutomationRulesList.value. </summary>
         public IReadOnlyList<SecurityInsightsAutomationRuleData> Value { get; }
-        /// <summary> Gets the next link. </summary>
+        /// <summary> Serialized Name: AutomationRulesList.nextLink. </summary>
         public string NextLink { get; }
     }
 }

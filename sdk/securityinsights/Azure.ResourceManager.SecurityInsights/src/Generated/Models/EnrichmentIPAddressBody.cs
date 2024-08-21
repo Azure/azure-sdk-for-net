@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> IP address (v4 or v6) to be enriched. </summary>
+    /// <summary>
+    /// IP address (v4 or v6) to be enriched
+    /// Serialized Name: EnrichmentIpAddressBody
+    /// </summary>
     public partial class EnrichmentIPAddressBody
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EnrichmentIPAddressBody"/>. </summary>
-        /// <param name="ipAddress"> The dotted-decimal or colon-separated string representation of the IP address. </param>
+        /// <param name="ipAddress">
+        /// The dotted-decimal or colon-separated string representation of the IP address
+        /// Serialized Name: EnrichmentIpAddressBody.ipAddress
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EnrichmentIPAddressBody(string ipAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The dotted-decimal or colon-separated string representation of the IP address. </summary>
+        /// <summary>
+        /// The dotted-decimal or colon-separated string representation of the IP address
+        /// Serialized Name: EnrichmentIpAddressBody.ipAddress
+        /// </summary>
         public string IPAddress { get; set; }
     }
 }

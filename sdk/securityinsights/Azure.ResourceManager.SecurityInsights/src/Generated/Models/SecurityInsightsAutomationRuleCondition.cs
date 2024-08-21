@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Describes an automation rule condition.
+    /// Serialized Name: AutomationRuleCondition
     /// Please note <see cref="SecurityInsightsAutomationRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BooleanConditionProperties"/>, <see cref="SecurityInsightsPropertyConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/> and <see cref="SecurityInsightsPropertyChangedConditionProperties"/>.
     /// </summary>
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAutomationRuleCondition"/>. </summary>
-        /// <param name="conditionType"></param>
+        /// <param name="conditionType"> Serialized Name: AutomationRuleCondition.conditionType. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsAutomationRuleCondition(ConditionType conditionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the condition type. </summary>
+        /// <summary> Serialized Name: AutomationRuleCondition.conditionType. </summary>
         internal ConditionType ConditionType { get; set; }
     }
 }

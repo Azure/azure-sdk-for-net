@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List of all the office365 consents. </summary>
+    /// <summary>
+    /// List of all the office365 consents.
+    /// Serialized Name: OfficeConsentList
+    /// </summary>
     internal partial class OfficeConsentList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OfficeConsentList"/>. </summary>
-        /// <param name="value"> Array of the consents. </param>
+        /// <param name="value">
+        /// Array of the consents.
+        /// Serialized Name: OfficeConsentList.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OfficeConsentList(IEnumerable<OfficeConsentData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OfficeConsentList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of office consents. </param>
-        /// <param name="value"> Array of the consents. </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of office consents.
+        /// Serialized Name: OfficeConsentList.nextLink
+        /// </param>
+        /// <param name="value">
+        /// Array of the consents.
+        /// Serialized Name: OfficeConsentList.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OfficeConsentList(string nextLink, IReadOnlyList<OfficeConsentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> URL to fetch the next set of office consents. </summary>
+        /// <summary>
+        /// URL to fetch the next set of office consents.
+        /// Serialized Name: OfficeConsentList.nextLink
+        /// </summary>
         public string NextLink { get; }
-        /// <summary> Array of the consents. </summary>
+        /// <summary>
+        /// Array of the consents.
+        /// Serialized Name: OfficeConsentList.value
+        /// </summary>
         public IReadOnlyList<OfficeConsentData> Value { get; }
     }
 }

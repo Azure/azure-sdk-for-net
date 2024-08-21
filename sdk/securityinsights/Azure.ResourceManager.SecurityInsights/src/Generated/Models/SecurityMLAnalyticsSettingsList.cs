@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> List all the SecurityMLAnalyticsSettings. </summary>
+    /// <summary>
+    /// List all the SecurityMLAnalyticsSettings
+    /// Serialized Name: SecurityMLAnalyticsSettingsList
+    /// </summary>
     internal partial class SecurityMLAnalyticsSettingsList
     {
         /// <summary>
@@ -49,6 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingsList"/>. </summary>
         /// <param name="value">
         /// Array of SecurityMLAnalyticsSettings
+        /// Serialized Name: SecurityMLAnalyticsSettingsList.value
         /// Please note <see cref="SecurityMLAnalyticsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AnomalySecurityMLAnalyticsSettings"/>.
         /// </param>
@@ -61,9 +65,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingsList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of SecurityMLAnalyticsSettings. </param>
+        /// <param name="nextLink">
+        /// URL to fetch the next set of SecurityMLAnalyticsSettings.
+        /// Serialized Name: SecurityMLAnalyticsSettingsList.nextLink
+        /// </param>
         /// <param name="value">
         /// Array of SecurityMLAnalyticsSettings
+        /// Serialized Name: SecurityMLAnalyticsSettingsList.value
         /// Please note <see cref="SecurityMLAnalyticsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AnomalySecurityMLAnalyticsSettings"/>.
         /// </param>
@@ -80,10 +88,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> URL to fetch the next set of SecurityMLAnalyticsSettings. </summary>
+        /// <summary>
+        /// URL to fetch the next set of SecurityMLAnalyticsSettings.
+        /// Serialized Name: SecurityMLAnalyticsSettingsList.nextLink
+        /// </summary>
         public string NextLink { get; }
         /// <summary>
         /// Array of SecurityMLAnalyticsSettings
+        /// Serialized Name: SecurityMLAnalyticsSettingsList.value
         /// Please note <see cref="SecurityMLAnalyticsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AnomalySecurityMLAnalyticsSettings"/>.
         /// </summary>

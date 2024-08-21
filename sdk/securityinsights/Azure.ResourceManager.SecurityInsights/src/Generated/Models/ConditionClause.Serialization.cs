@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Connective? clauseConnective = default;
+            ClauseConnective? clauseConnective = default;
             string field = default;
-            Operator @operator = default;
+            ConditionClauseOperator @operator = default;
             IList<string> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    clauseConnective = new Connective(property.Value.GetString());
+                    clauseConnective = new ClauseConnective(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("field"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (property.NameEquals("operator"u8))
                 {
-                    @operator = new Operator(property.Value.GetString());
+                    @operator = new ConditionClauseOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("values"u8))

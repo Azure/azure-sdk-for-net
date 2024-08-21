@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Represents IoT requirements check request. </summary>
+    /// <summary>
+    /// Represents IoT requirements check request.
+    /// Serialized Name: IoTCheckRequirements
+    /// </summary>
     public partial class IotCheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="IotCheckRequirements"/>. </summary>
@@ -20,16 +23,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IotCheckRequirements"/>. </summary>
-        /// <param name="kind"> Describes the kind of connector to be checked. </param>
+        /// <param name="kind">
+        /// Describes the kind of connector to be checked.
+        /// Serialized Name: DataConnectorsCheckRequirements.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="subscriptionId"> The subscription id to connect to, and get the data from. </param>
+        /// <param name="subscriptionId">
+        /// The subscription id to connect to, and get the data from.
+        /// Serialized Name: IoTCheckRequirements.properties.subscriptionId
+        /// </param>
         internal IotCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string subscriptionId) : base(kind, serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             Kind = kind;
         }
 
-        /// <summary> The subscription id to connect to, and get the data from. </summary>
+        /// <summary>
+        /// The subscription id to connect to, and get the data from.
+        /// Serialized Name: IoTCheckRequirements.properties.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; set; }
     }
 }

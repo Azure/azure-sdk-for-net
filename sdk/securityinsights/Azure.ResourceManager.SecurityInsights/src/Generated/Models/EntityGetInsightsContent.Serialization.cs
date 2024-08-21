@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndOn, "O");
-            if (Optional.IsDefined(AddDefaultExtendedTimeRange))
+            if (Optional.IsDefined(IsDefaultExtendedTimeRangeAdded))
             {
                 writer.WritePropertyName("addDefaultExtendedTimeRange"u8);
-                writer.WriteBooleanValue(AddDefaultExtendedTimeRange.Value);
+                writer.WriteBooleanValue(IsDefaultExtendedTimeRangeAdded.Value);
             }
             if (Optional.IsCollectionDefined(InsightQueryIds))
             {

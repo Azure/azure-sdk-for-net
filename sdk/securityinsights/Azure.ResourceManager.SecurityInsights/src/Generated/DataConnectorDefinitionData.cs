@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights
     /// A class representing the DataConnectorDefinition data model.
     /// An Azure resource, which encapsulate the entire info requires to display a data connector page in Azure portal,
     /// and the info required to define data connections.
+    /// Serialized Name: DataConnectorDefinition
     /// Please note <see cref="DataConnectorDefinitionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CustomizableConnectorDefinitionData"/>.
     /// </summary>
@@ -64,8 +65,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="kind">
+        /// The data connector kind
+        /// Serialized Name: DataConnectorDefinition.kind
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataConnectorDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorDefinitionKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -74,9 +81,15 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The data connector kind. </summary>
+        /// <summary>
+        /// The data connector kind
+        /// Serialized Name: DataConnectorDefinition.kind
+        /// </summary>
         internal DataConnectorDefinitionKind Kind { get; set; }
-        /// <summary> Etag of the azure resource. </summary>
+        /// <summary>
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }

@@ -2398,14 +2398,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="repositoryAccess"> The repository access credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repositoryAccess"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Repo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Repo> GetRepositoriesSourceControlsAsync(RepositoryAccessProperties repositoryAccess, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SourceControlRepo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SourceControlRepo> GetRepositoriesSourceControlsAsync(RepositoryAccessProperties repositoryAccess, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(repositoryAccess, nameof(repositoryAccess));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlRestClient.CreateListRepositoriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, repositoryAccess);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlRestClient.CreateListRepositoriesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, repositoryAccess);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Repo.DeserializeRepo(e), _sourceControlClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetRepositoriesSourceControls", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SourceControlRepo.DeserializeSourceControlRepo(e), _sourceControlClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetRepositoriesSourceControls", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2428,14 +2428,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="repositoryAccess"> The repository access credentials. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repositoryAccess"/> is null. </exception>
-        /// <returns> A collection of <see cref="Repo"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Repo> GetRepositoriesSourceControls(RepositoryAccessProperties repositoryAccess, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SourceControlRepo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SourceControlRepo> GetRepositoriesSourceControls(RepositoryAccessProperties repositoryAccess, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(repositoryAccess, nameof(repositoryAccess));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlRestClient.CreateListRepositoriesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, repositoryAccess);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlRestClient.CreateListRepositoriesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, repositoryAccess);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Repo.DeserializeRepo(e), _sourceControlClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetRepositoriesSourceControls", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SourceControlRepo.DeserializeSourceControlRepo(e), _sourceControlClientDiagnostics, Pipeline, "OperationalInsightsWorkspaceSecurityInsightsResource.GetRepositoriesSourceControls", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

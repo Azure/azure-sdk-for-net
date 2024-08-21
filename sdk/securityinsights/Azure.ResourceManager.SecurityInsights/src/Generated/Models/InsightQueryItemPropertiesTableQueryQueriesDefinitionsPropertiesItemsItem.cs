@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem. </summary>
+    /// <summary>
+    /// The InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem.
+    /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem
+    /// </summary>
     public partial class InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem"/>. </summary>
-        /// <param name="projectedName"> Insight Link Definition Projected Name. </param>
-        /// <param name="query"> Insight Link Definition Query. </param>
+        /// <param name="projectedName">
+        /// Insight Link Definition Projected Name.
+        /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem.projectedName
+        /// </param>
+        /// <param name="query">
+        /// Insight Link Definition Query.
+        /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem.Query
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem(string projectedName, string query, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Insight Link Definition Projected Name. </summary>
+        /// <summary>
+        /// Insight Link Definition Projected Name.
+        /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem.projectedName
+        /// </summary>
         public string ProjectedName { get; }
-        /// <summary> Insight Link Definition Query. </summary>
+        /// <summary>
+        /// Insight Link Definition Query.
+        /// Serialized Name: InsightQueryItemPropertiesTableQueryQueriesDefinitionsPropertiesItemsItem.Query
+        /// </summary>
         public string Query { get; }
     }
 }

@@ -13,7 +13,11 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> A class representing the IncidentTask data model. </summary>
+    /// <summary>
+    /// A class representing the IncidentTask data model.
+    /// The IncidentTask.
+    /// Serialized Name: IncidentTask
+    /// </summary>
     public partial class IncidentTaskData : ResourceData
     {
         /// <summary>
@@ -49,8 +53,11 @@ namespace Azure.ResourceManager.SecurityInsights
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="IncidentTaskData"/>. </summary>
-        /// <param name="title"> The title of the task. </param>
-        /// <param name="status"></param>
+        /// <param name="title">
+        /// The title of the task
+        /// Serialized Name: IncidentTask.properties.title
+        /// </param>
+        /// <param name="status"> Serialized Name: IncidentTask.properties.status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="title"/> is null. </exception>
         public IncidentTaskData(string title, IncidentTaskStatus status)
         {
@@ -65,22 +72,43 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="title"> The title of the task. </param>
-        /// <param name="description"> The description of the task. </param>
-        /// <param name="status"></param>
-        /// <param name="createdTimeUtc"> The time the task was created. </param>
-        /// <param name="lastModifiedTimeUtc"> The last time the task was updated. </param>
-        /// <param name="createdBy"> Information on the client (user or application) that made some action. </param>
-        /// <param name="lastModifiedBy"> Information on the client (user or application) that made some action. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="title">
+        /// The title of the task
+        /// Serialized Name: IncidentTask.properties.title
+        /// </param>
+        /// <param name="description">
+        /// The description of the task
+        /// Serialized Name: IncidentTask.properties.description
+        /// </param>
+        /// <param name="status"> Serialized Name: IncidentTask.properties.status. </param>
+        /// <param name="createdOn">
+        /// The time the task was created
+        /// Serialized Name: IncidentTask.properties.createdTimeUtc
+        /// </param>
+        /// <param name="lastModifiedOn">
+        /// The last time the task was updated
+        /// Serialized Name: IncidentTask.properties.lastModifiedTimeUtc
+        /// </param>
+        /// <param name="createdBy">
+        /// Information on the client (user or application) that made some action
+        /// Serialized Name: IncidentTask.properties.createdBy
+        /// </param>
+        /// <param name="lastModifiedBy">
+        /// Information on the client (user or application) that made some action
+        /// Serialized Name: IncidentTask.properties.lastModifiedBy
+        /// </param>
+        /// <param name="etag">
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IncidentTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, IncidentTaskStatus status, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastModifiedTimeUtc, SecurityInsightsClientInfo createdBy, SecurityInsightsClientInfo lastModifiedBy, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal IncidentTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, IncidentTaskStatus status, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, SecurityInsightsClientInfo createdBy, SecurityInsightsClientInfo lastModifiedBy, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Title = title;
             Description = description;
             Status = status;
-            CreatedTimeUtc = createdTimeUtc;
-            LastModifiedTimeUtc = lastModifiedTimeUtc;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
             CreatedBy = createdBy;
             LastModifiedBy = lastModifiedBy;
             ETag = etag;
@@ -92,21 +120,42 @@ namespace Azure.ResourceManager.SecurityInsights
         {
         }
 
-        /// <summary> The title of the task. </summary>
+        /// <summary>
+        /// The title of the task
+        /// Serialized Name: IncidentTask.properties.title
+        /// </summary>
         public string Title { get; set; }
-        /// <summary> The description of the task. </summary>
+        /// <summary>
+        /// The description of the task
+        /// Serialized Name: IncidentTask.properties.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> Gets or sets the status. </summary>
+        /// <summary> Serialized Name: IncidentTask.properties.status. </summary>
         public IncidentTaskStatus Status { get; set; }
-        /// <summary> The time the task was created. </summary>
-        public DateTimeOffset? CreatedTimeUtc { get; }
-        /// <summary> The last time the task was updated. </summary>
-        public DateTimeOffset? LastModifiedTimeUtc { get; }
-        /// <summary> Information on the client (user or application) that made some action. </summary>
+        /// <summary>
+        /// The time the task was created
+        /// Serialized Name: IncidentTask.properties.createdTimeUtc
+        /// </summary>
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary>
+        /// The last time the task was updated
+        /// Serialized Name: IncidentTask.properties.lastModifiedTimeUtc
+        /// </summary>
+        public DateTimeOffset? LastModifiedOn { get; }
+        /// <summary>
+        /// Information on the client (user or application) that made some action
+        /// Serialized Name: IncidentTask.properties.createdBy
+        /// </summary>
         public SecurityInsightsClientInfo CreatedBy { get; set; }
-        /// <summary> Information on the client (user or application) that made some action. </summary>
+        /// <summary>
+        /// Information on the client (user or application) that made some action
+        /// Serialized Name: IncidentTask.properties.lastModifiedBy
+        /// </summary>
         public SecurityInsightsClientInfo LastModifiedBy { get; set; }
-        /// <summary> Etag of the azure resource. </summary>
+        /// <summary>
+        /// Etag of the azure resource
+        /// Serialized Name: ResourceWithEtag.etag
+        /// </summary>
         public ETag? ETag { get; set; }
     }
 }
