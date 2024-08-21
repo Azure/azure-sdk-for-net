@@ -43,5 +43,5 @@ From here, it is possible to get the resource groups from the retrieved subscrip
 ResourceGroupCollection resourceGroups = subscription.GetResourceGroups();
 ```
 
-## Next stepts
+## Next steps
 Take a look at the [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/Sample2_ManagingResourceGroups.md) samples.

@@ -1,14 +1,8 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
+## 1.5.0 (2024-08-21)
 ### Bugs Fixed
-
-### Other Changes
+- Fix bug in `LogsQueryClient` that defaulted to `Azure.PublicCloud`. `Audience` is now determined from the `endpoint` parameter.
 
 ## 1.4.0 (2024-06-12)
 

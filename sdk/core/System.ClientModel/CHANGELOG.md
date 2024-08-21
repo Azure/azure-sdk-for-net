@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.6 (Unreleased)
+## 1.1.0-beta.8 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,30 @@
 
 ### Bugs Fixed
 
-- Added support for delaying retrying a request until after the interval specified on a response `Retry-After` header.
+### Other Changes
+
+- Removed implicit cast from `string` to `ApiKeyCredential`.
+
+## 1.1.0-beta.7 (2024-08-14)
+
+### Features Added
+
+- Added `JsonModelConverter` to allow integration with System.Text.Json.
 
 ### Other Changes
+
+- Removed `ReturnWhen` enum in favor of using bool `waitUntilCompleted` parameter in third-party client LRO method signatures.
+- Added abstract `UpdateStatus` method to `OperationResult`.
+
+## 1.1.0-beta.6 (2024-08-01)
+
+### Features Added
+
+- Added `OperationResult` and `ReturnWhen` types to support long-running operations.
+
+### Bugs Fixed
+
+- Added support for delaying retrying a request until after the interval specified on a response `Retry-After` header.
 
 ## 1.1.0-beta.5 (2024-07-11)
 

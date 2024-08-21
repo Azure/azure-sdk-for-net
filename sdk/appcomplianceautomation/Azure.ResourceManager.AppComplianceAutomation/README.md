@@ -19,7 +19,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure AppComplianceAutomation management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.AppComplianceAutomation --prerelease
+dotnet add package Azure.ResourceManager.AppComplianceAutomation
 ```
 
 ### Prerequisites

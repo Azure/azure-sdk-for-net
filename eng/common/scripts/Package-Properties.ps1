@@ -15,6 +15,7 @@ class PackageProps
     [boolean]$IsNewSdk
     [string]$ArtifactName
     [string]$ReleaseStatus
+    [string[]]$DependentPackages
 
     PackageProps([string]$name, [string]$version, [string]$directoryPath, [string]$serviceDirectory)
     {
@@ -55,7 +56,7 @@ class PackageProps
             if ($changeLogEntry -and $changeLogEntry.ReleaseStatus)
             {
               $this.ReleaseStatus = $changeLogEntry.ReleaseStatus.Trim().Trim("()")
-            } 
+            }
         }
         else
         {
@@ -101,7 +102,7 @@ function Get-PkgProperties
         return $pkgProps[0]
     }
 
-    LogError "Failed to retrive Properties for [$PackageName]"
+    LogError "Failed to retrieve Properties for [$PackageName]"
     return $null
 }
 
@@ -112,17 +113,32 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     $diff = Get-Content $InputDiffJson | ConvertFrom-Json
     $targetedFiles = $diff.ChangedFiles
 
-    foreach($pkg in $allPackageProperties)
+    $dependentPackagesForInclusion = @()
+    $lookup = @{}
+
+    foreach ($pkg in $allPackageProperties)
     {
         $pkgDirectory = Resolve-Path "$($pkg.DirectoryPath)"
+        $lookupKey = ($pkg.DirectoryPath).Replace($RepoRoot, "").SubString(1)
+        $lookup[$lookupKey] = $pkg
 
-        foreach($file in $targetedFiles)
+        foreach ($file in $targetedFiles)
         {
             $filePath = Resolve-Path (Join-Path $RepoRoot $file)
             $shouldInclude = $filePath -like "$pkgDirectory*"
             if ($shouldInclude) {
                 $packagesWithChanges += $pkg
+
+                if ($pkg.DependentPackages) {
+                    $dependentPackagesForInclusion += $pkg.DependentPackages
+                }
             }
+        }
+    }
+
+    foreach ($addition in $dependentPackagesForInclusion) {
+        if ($lookup[$addition]) {
+            $packagesWithChanges += $lookup[$addition]
         }
     }
 

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
@@ -107,6 +109,16 @@ namespace Azure.ResourceManager.Hci
                 }
 #endif
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DefaultExtensions))
+            {
+                writer.WritePropertyName("defaultExtensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in DefaultExtensions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -159,6 +171,7 @@ namespace Azure.ResourceManager.Hci
             ArcSettingAggregateState? aggregateState = default;
             IReadOnlyList<PerNodeArcState> perNodeDetails = default;
             BinaryData connectivityProperties = default;
+            IReadOnlyList<ArcDefaultExtensionDetails> defaultExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -278,6 +291,20 @@ namespace Azure.ResourceManager.Hci
                             connectivityProperties = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("defaultExtensions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ArcDefaultExtensionDetails> array = new List<ArcDefaultExtensionDetails>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ArcDefaultExtensionDetails.DeserializeArcDefaultExtensionDetails(item, options));
+                            }
+                            defaultExtensions = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -301,7 +328,253 @@ namespace Azure.ResourceManager.Hci
                 aggregateState,
                 perNodeDetails ?? new ChangeTrackingList<PerNodeArcState>(),
                 connectivityProperties,
+                defaultExtensions ?? new ChangeTrackingList<ArcDefaultExtensionDetails>(),
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
+                {
+                    builder.Append("  systemData: ");
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcInstanceResourceGroup), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    arcInstanceResourceGroup: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArcInstanceResourceGroup))
+                {
+                    builder.Append("    arcInstanceResourceGroup: ");
+                    if (ArcInstanceResourceGroup.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ArcInstanceResourceGroup}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ArcInstanceResourceGroup}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcApplicationClientId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    arcApplicationClientId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArcApplicationClientId))
+                {
+                    builder.Append("    arcApplicationClientId: ");
+                    builder.AppendLine($"'{ArcApplicationClientId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcApplicationTenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    arcApplicationTenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArcApplicationTenantId))
+                {
+                    builder.Append("    arcApplicationTenantId: ");
+                    builder.AppendLine($"'{ArcApplicationTenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcServicePrincipalObjectId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    arcServicePrincipalObjectId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArcServicePrincipalObjectId))
+                {
+                    builder.Append("    arcServicePrincipalObjectId: ");
+                    builder.AppendLine($"'{ArcServicePrincipalObjectId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcApplicationObjectId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    arcApplicationObjectId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArcApplicationObjectId))
+                {
+                    builder.Append("    arcApplicationObjectId: ");
+                    builder.AppendLine($"'{ArcApplicationObjectId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregateState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    aggregateState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AggregateState))
+                {
+                    builder.Append("    aggregateState: ");
+                    builder.AppendLine($"'{AggregateState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PerNodeDetails), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    perNodeDetails: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PerNodeDetails))
+                {
+                    if (PerNodeDetails.Any())
+                    {
+                        builder.Append("    perNodeDetails: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PerNodeDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    perNodeDetails: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectivityProperties), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    connectivityProperties: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectivityProperties))
+                {
+                    builder.Append("    connectivityProperties: ");
+                    builder.AppendLine($"'{ConnectivityProperties.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultExtensions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    defaultExtensions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DefaultExtensions))
+                {
+                    if (DefaultExtensions.Any())
+                    {
+                        builder.Append("    defaultExtensions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DefaultExtensions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    defaultExtensions: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ArcSettingData>.Write(ModelReaderWriterOptions options)
@@ -312,6 +585,8 @@ namespace Azure.ResourceManager.Hci
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArcSettingData)} does not support writing '{options.Format}' format.");
             }

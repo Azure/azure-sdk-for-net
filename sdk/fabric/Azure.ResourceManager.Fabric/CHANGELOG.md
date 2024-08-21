@@ -1,5 +1,23 @@
 # Release History
 
+## 1.0.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.2 (2024-08-14)
+
+### Breaking Changes
+
+- Adjusted `properties` to be a required parameter in `FabricCapacityData` constructor.
+- `FabricExtensions.CheckNameAvailabilityFabricCapacity` renamed to `FabricExtensions.CheckFabricCapacityNameAvailability`.
+- The type of `location` parameter in `FabricExtensions.CheckFabricCapacityNameAvailability` changed from `string` to `AzureLocation`.
+
 ## 1.0.0-beta.1 (2024-07-25)
 
 ### Features Added
