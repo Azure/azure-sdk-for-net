@@ -16,22 +16,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// Additional parameters for GetRemoteDesktop operation.
+    /// Additional parameters for Deallocate operation.
     /// </summary>
-    public partial class ComputeNodeGetRemoteDesktopOptions
+    public partial class ComputeNodeDeallocateOptions
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ComputeNodeGetRemoteDesktopOptions class.
+        /// Initializes a new instance of the ComputeNodeDeallocateOptions
+        /// class.
         /// </summary>
-        public ComputeNodeGetRemoteDesktopOptions()
+        public ComputeNodeDeallocateOptions()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ComputeNodeGetRemoteDesktopOptions class.
+        /// Initializes a new instance of the ComputeNodeDeallocateOptions
+        /// class.
         /// </summary>
         /// <param name="timeout">The maximum time that the server can spend
         /// processing the request, in seconds. The default is 30 seconds. If
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="ocpDate">The time the request was issued. Client
         /// libraries typically set this to the current system clock time; set
         /// it explicitly if you are calling the REST API directly.</param>
-        public ComputeNodeGetRemoteDesktopOptions(int? timeout = default(int?), System.Guid? clientRequestId = default(System.Guid?), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?))
+        public ComputeNodeDeallocateOptions(int? timeout = default(int?), System.Guid? clientRequestId = default(System.Guid?), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?))
         {
             Timeout = timeout;
             ClientRequestId = clientRequestId;
