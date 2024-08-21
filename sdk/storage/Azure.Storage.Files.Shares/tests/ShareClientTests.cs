@@ -1916,6 +1916,32 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_01_05)]
+        public async Task SetPropertiesAsync_ProvisionedBilling()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareSetPropertiesOptions setPropertiesOptions = new ShareSetPropertiesOptions
+            {
+                ProvisionedMaxIops = 3000,
+                ProvisionedMaxBandwidthMibps = 125
+            };
+
+            // Act
+            await test.Share.SetPropertiesAsync(setPropertiesOptions);
+
+            // Assert
+            Response<ShareProperties> response = await test.Share.GetPropertiesAsync();
+            Assert.AreEqual(3000, response.Value.PaidBurstingMaxIops);
+            Assert.AreEqual(125, response.Value.ProvisionedBandwidthMiBps);
+            Assert.IsNotNull(response.Value.IncludedBurstIops);
+            Assert.IsNotNull(response.Value.MaxBurstCreditsForIops);
+            Assert.IsNotNull(response.Value.NextAllowedProvisionedIopsDowngradeTime);
+            Assert.IsNotNull(response.Value.NextAllowedProvisionedBandwidthDowngradeTime);
+        }
+
+        [RecordedTest]
         public async Task SetQuotaAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
