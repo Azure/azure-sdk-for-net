@@ -176,3 +176,6 @@ artifacts
 
 # Temporary typespec folders for typespec generation
 TempTypeSpecFiles/
+
+# Common toolchain intermediate files
+temp
