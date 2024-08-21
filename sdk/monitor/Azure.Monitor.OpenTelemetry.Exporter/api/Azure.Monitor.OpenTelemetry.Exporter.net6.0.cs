@@ -1,4 +1,4 @@
-namespace Azure.Monitor.OpenTelemetry.CustomEvents
+namespace Azure.Monitor.OpenTelemetry.Events
 {
     public sealed partial class CustomEventLogger : Azure.Monitor.OpenTelemetry.CustomEvents.ICustomEventLogger
     {
