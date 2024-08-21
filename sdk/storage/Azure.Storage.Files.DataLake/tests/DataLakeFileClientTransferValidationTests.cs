@@ -34,10 +34,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             StorageChecksumAlgorithm uploadAlgorithm = StorageChecksumAlgorithm.None,
             StorageChecksumAlgorithm downloadAlgorithm = StorageChecksumAlgorithm.None)
         {
-            var disposingFileSystem = await ClientBuilder.GetNewFileSystem(
-                service: service,
-                fileSystemName: containerName,
-                publicAccessType: PublicAccessType.None);
+            var disposingFileSystem = await ClientBuilder.GetNewFileSystem(service: service, fileSystemName: containerName);
 
             disposingFileSystem.FileSystem.ClientConfiguration.TransferValidation.Upload.ChecksumAlgorithm = uploadAlgorithm;
             disposingFileSystem.FileSystem.ClientConfiguration.TransferValidation.Download.ChecksumAlgorithm = downloadAlgorithm;

@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c8eee2dfa99d517e12e6ac8c96b14b707bb3c8eb/specification/storage/data-plane/Microsoft.FileStorage/stable/2025-01-05/file.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/98b600498947073c18c2ac5eb7c3c658db5a1a59/specification/storage/data-plane/Microsoft.FileStorage/stable/2024-11-04/file.json
 generation1-convenience-client: true
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
@@ -25,7 +25,7 @@ directive:
         if (property.includes('/{shareName}/{directory}/{fileName}'))
         {
             $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ShareName") && false == param['$ref'].endsWith("#/parameters/DirectoryPath") && false == param['$ref'].endsWith("#/parameters/FilePath"))});
-        }
+        } 
         else if (property.includes('/{shareName}/{directory}'))
         {
             $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/ShareName") && false == param['$ref'].endsWith("#/parameters/DirectoryPath"))});
@@ -46,7 +46,7 @@ directive:
     $.Metrics.type = "object";
 ```
 
-### Times aren't required
+### Times aren't required 
 ``` yaml
 directive:
 - from: swagger-document
