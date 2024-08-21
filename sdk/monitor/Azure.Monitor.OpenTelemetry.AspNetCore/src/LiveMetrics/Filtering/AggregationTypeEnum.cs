@@ -3,7 +3,7 @@
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
 {
-    internal enum AggregationType
+    internal enum AggregationTypeEnum
     {
         Avg = 0,
 

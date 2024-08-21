@@ -7,7 +7,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using Azure.Monitor.OpenTelemetry.Exporter.Internals;
     using Azure.Monitor.OpenTelemetry.AspNetCore.Models;
 
     using ExceptionDocument = Models.Exception;
@@ -41,7 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
         #endregion
 
         #region Metadata used by other components
-        private readonly List<Tuple<string, Models.AggregationType?>> telemetryMetadata = new List<Tuple<string, Models.AggregationType?>>();
+        private readonly List<Tuple<string, AggregationType?>> telemetryMetadata = new List<Tuple<string, AggregationType?>>();
         #endregion
 
         public CollectionConfiguration(
@@ -110,7 +109,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.LiveMetrics.Filtering
         /// <summary>
         /// Gets Telemetry types only. Used by QuickPulseTelemetryProcessor.
         /// </summary>
-        public IEnumerable<Tuple<string, Models.AggregationType?>> TelemetryMetadata => this.telemetryMetadata;
+        public IEnumerable<Tuple<string, AggregationType?>> TelemetryMetadata => this.telemetryMetadata;
 
         /// <summary>
         /// Gets document streams. Telemetry items are provided by QuickPulseTelemetryProcessor.

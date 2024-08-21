@@ -194,8 +194,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
             Dictionary<string, AccumulatedValues> metricAccumulators = new();
 
             // prepare the accumulators based on the collection configuration
-            IEnumerable<Tuple<string, Models.AggregationType?>> allMetrics = collectionConfiguration.TelemetryMetadata;
-            foreach (Tuple<string, Models.AggregationType?> metricId in allMetrics)
+            IEnumerable<Tuple<string, AggregationType?>> allMetrics = collectionConfiguration.TelemetryMetadata;
+            foreach (Tuple<string, AggregationType?> metricId in allMetrics)
             {
                 var derivedMetricInfoAggregation = metricId.Item2;
                 if (!derivedMetricInfoAggregation.HasValue)
@@ -203,7 +203,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.LiveMetrics
                     continue;
                 }
 
-                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out AspNetCore.LiveMetrics.Filtering.AggregationType aggregationType))
+                if (Enum.TryParse(derivedMetricInfoAggregation.ToString(), out AspNetCore.LiveMetrics.Filtering.AggregationTypeEnum aggregationType))
                 {
                     var accumulatedValues = new AccumulatedValues(metricId.Item1, aggregationType);
 
