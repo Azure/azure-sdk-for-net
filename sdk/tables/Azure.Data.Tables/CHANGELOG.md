@@ -3,7 +3,7 @@
 ## 12.9.1 (Unreleased)
 
 ### Bugs Fixed
-- Fixed an issue that prevented use of stored access policy based SaS Uris by adding a parameterless constructor to `TableSasBuilder`. The resulting builder can then be modified to include the stored access policy identifier or any other details. 
+- Fixed an issue that prevented use of stored access policy based SaS Uris by adding a parameterless constructor to `TableSasBuilder`. The resulting builder can then be modified to include the stored access policy identifier or any other details.
 
 ## 12.9.0 (2024-07-22)
 
