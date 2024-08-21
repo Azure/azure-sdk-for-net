@@ -8,8 +8,15 @@ using System.Threading.Tasks;
 namespace System.ClientModel.Primitives;
 
 #pragma warning disable CS1591
-public abstract class PageEnumerator : IAsyncEnumerator<ClientResult>, IEnumerator<ClientResult>
+internal class PageEnumerator : IAsyncEnumerator<ClientResult>, IEnumerator<ClientResult>
 {
+    private readonly PageableResult _subclient;
+
+    public PageEnumerator(PageableResult subclient)
+    {
+        _subclient = subclient;
+    }
+
     private ClientResult? _current;
     private bool _hasNext = true;
 
@@ -31,16 +38,6 @@ public abstract class PageEnumerator : IAsyncEnumerator<ClientResult>, IEnumerat
         }
     }
 
-    public abstract Task<ClientResult> GetFirstAsync();
-
-    public abstract ClientResult GetFirst();
-
-    public abstract Task<ClientResult> GetNextAsync(ClientResult result);
-
-    public abstract ClientResult GetNext(ClientResult result);
-
-    public abstract bool HasNext(ClientResult result);
-
     object IEnumerator.Current => ((IEnumerator<ClientResult>)this).Current;
 
     public bool MoveNext()
@@ -52,14 +49,15 @@ public abstract class PageEnumerator : IAsyncEnumerator<ClientResult>, IEnumerat
 
         if (_current == null)
         {
-            _current = GetFirst();
+            // TODO: figure out RequestOptions
+            _current = _subclient.GetNextPage(null, null!);
         }
         else
         {
-            _current = GetNext(_current);
+            _current = _subclient.GetNextPage(_current, null!);
         }
 
-        _hasNext = HasNext(_current);
+        _hasNext = _subclient.HasNext(_current);
         return true;
     }
 
@@ -76,16 +74,17 @@ public abstract class PageEnumerator : IAsyncEnumerator<ClientResult>, IEnumerat
 
         if (_current == null)
         {
-            _current = await GetFirstAsync().ConfigureAwait(false);
+            _current = await _subclient.GetNextPageAsync(null, null!).ConfigureAwait(false);
         }
         else
         {
-            _current = await GetNextAsync(_current).ConfigureAwait(false);
+            _current = await _subclient.GetNextPageAsync(_current, null!).ConfigureAwait(false);
         }
 
-        _hasNext = HasNext(_current);
+        _hasNext = _subclient.HasNext(_current);
         return true;
     }
 
     ValueTask IAsyncDisposable.DisposeAsync() => default;
 }
+#pragma warning restore CS1591

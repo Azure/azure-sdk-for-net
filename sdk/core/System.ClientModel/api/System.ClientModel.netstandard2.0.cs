@@ -16,8 +16,6 @@ namespace System.ClientModel
     public abstract partial class AsyncPageCollection<T> : System.Collections.Generic.IAsyncEnumerable<System.ClientModel.PageResult<T>>
     {
         protected AsyncPageCollection() { }
-        public static System.ClientModel.AsyncPageCollection<T> FromEnumerator(System.ClientModel.Primitives.PageEnumerator<T> enumerator) { throw null; }
-        public static System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> FromEnumeratorAsync(System.ClientModel.Primitives.PageEnumerator enumerator) { throw null; }
         public System.Collections.Generic.IAsyncEnumerable<T> GetAllValuesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerator<System.ClientModel.PageResult<T>> GetAsyncEnumeratorCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetCurrentPageAsync() { throw null; }
@@ -76,8 +74,6 @@ namespace System.ClientModel
     public abstract partial class PageCollection<T> : System.Collections.Generic.IEnumerable<System.ClientModel.PageResult<T>>, System.Collections.IEnumerable
     {
         protected PageCollection() { }
-        public static System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> FromEnumerator(System.ClientModel.Primitives.PageEnumerator enumerator) { throw null; }
-        public static System.ClientModel.PageCollection<T> FromEnumerator(System.ClientModel.Primitives.PageEnumerator<T> enumerator) { throw null; }
         public System.Collections.Generic.IEnumerable<T> GetAllValues() { throw null; }
         public System.ClientModel.PageResult<T> GetCurrentPage() { throw null; }
         protected abstract System.ClientModel.PageResult<T> GetCurrentPageCore();
@@ -203,32 +199,16 @@ namespace System.ClientModel.Primitives
         public virtual void WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public virtual System.Threading.Tasks.ValueTask WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public abstract partial class PageEnumerator : System.Collections.Generic.IAsyncEnumerator<System.ClientModel.ClientResult>, System.Collections.Generic.IEnumerator<System.ClientModel.ClientResult>, System.Collections.IEnumerator, System.IAsyncDisposable, System.IDisposable
+    public abstract partial class PageableResult : System.ClientModel.ClientResult
     {
-        protected PageEnumerator() { }
-        public System.ClientModel.ClientResult Current { get { throw null; } }
-        object System.Collections.IEnumerator.Current { get { throw null; } }
-        public abstract System.ClientModel.ClientResult GetFirst();
-        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetFirstAsync();
-        public abstract System.ClientModel.ClientResult GetNext(System.ClientModel.ClientResult result);
-        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetNextAsync(System.ClientModel.ClientResult result);
+        protected PageableResult() { }
+        public abstract System.ClientModel.ClientResult GetNextPage(System.ClientModel.ClientResult? result, System.ClientModel.Primitives.RequestOptions options);
+        public abstract System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetNextPageAsync(System.ClientModel.ClientResult? result, System.ClientModel.Primitives.RequestOptions options);
         public abstract bool HasNext(System.ClientModel.ClientResult result);
-        public bool MoveNext() { throw null; }
-        public System.Threading.Tasks.ValueTask<bool> MoveNextAsync() { throw null; }
-        void System.Collections.IEnumerator.Reset() { }
-        System.Threading.Tasks.ValueTask System.IAsyncDisposable.DisposeAsync() { throw null; }
-        void System.IDisposable.Dispose() { }
-        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> ToAsyncResultCollection() { throw null; }
-        public System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> ToResultCollection() { throw null; }
-    }
-    public abstract partial class PageEnumerator<T> : System.ClientModel.Primitives.PageEnumerator, System.Collections.Generic.IAsyncEnumerator<System.ClientModel.PageResult<T>>, System.Collections.Generic.IEnumerator<System.ClientModel.PageResult<T>>, System.Collections.IEnumerator, System.IAsyncDisposable, System.IDisposable
-    {
-        protected PageEnumerator() { }
-        System.ClientModel.PageResult<T> System.Collections.Generic.IAsyncEnumerator<System.ClientModel.PageResult<T>>.Current { get { throw null; } }
-        System.ClientModel.PageResult<T> System.Collections.Generic.IEnumerator<System.ClientModel.PageResult<T>>.Current { get { throw null; } }
-        public System.ClientModel.PageResult<T> GetCurrentPage() { throw null; }
-        public System.Threading.Tasks.Task<System.ClientModel.PageResult<T>> GetCurrentPageAsync() { throw null; }
-        public abstract System.ClientModel.PageResult<T> GetPageFromResult(System.ClientModel.ClientResult result);
+        public System.Collections.Generic.IAsyncEnumerable<System.ClientModel.ClientResult> ToAsyncEnumerable() { throw null; }
+        public System.ClientModel.AsyncPageCollection<T> ToAsyncPageCollection<T>(System.Func<System.ClientModel.ClientResult, System.ClientModel.PageResult<T>> toPage) { throw null; }
+        public System.Collections.Generic.IEnumerable<System.ClientModel.ClientResult> ToEnumerable() { throw null; }
+        public System.ClientModel.PageCollection<T> ToPageCollection<T>(System.Func<System.ClientModel.ClientResult, System.ClientModel.PageResult<T>> toPage) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute

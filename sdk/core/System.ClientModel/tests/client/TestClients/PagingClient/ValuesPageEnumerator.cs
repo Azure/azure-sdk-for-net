@@ -11,7 +11,7 @@ namespace ClientModel.Tests.Paging;
 
 // Mocks a page enumerator a client would evolve to for paged endpoints when
 // the client adds convenience methods.
-internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
+internal class ValuesPageEnumerator : PageableResult //PageEnumerator<ValueItem>
 {
     private readonly ClientPipeline _pipeline;
     private readonly Uri _endpoint;
@@ -45,7 +45,7 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
         _options = options;
     }
 
-    public override PageResult<ValueItem> GetPageFromResult(ClientResult result)
+    public PageResult<ValueItem> GetPageFromResult(ClientResult result)
     {
         PipelineResponse response = result.GetRawResponse();
         ValueItemPage pageModel = ValueItemPage.FromJson(response.Content);
@@ -56,7 +56,31 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
         return PageResult<ValueItem>.Create(pageModel.Values, pageToken, nextPageToken, response);
     }
 
-    public override ClientResult GetFirst()
+    public override ClientResult GetNextPage(ClientResult? result, RequestOptions options)
+    {
+        if (result is null)
+        {
+            return GetFirst(options);
+        }
+        else
+        {
+            return GetNext(result, options);
+        }
+    }
+
+    public override Task<ClientResult> GetNextPageAsync(ClientResult? result, RequestOptions options)
+    {
+        if (result is null)
+        {
+            return GetFirstAsync(options);
+        }
+        else
+        {
+            return GetNextAsync(result, options);
+        }
+    }
+
+    private ClientResult GetFirst(RequestOptions options)
     {
         ClientResult result = GetValuesPage(_order, _pageSize, _offset);
 
@@ -65,7 +89,7 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
         return result;
     }
 
-    public override async Task<ClientResult> GetFirstAsync()
+    private async Task<ClientResult> GetFirstAsync(RequestOptions options)
     {
         ClientResult result = await GetValuesPageAsync(_order, _pageSize, _offset).ConfigureAwait(false);
 
@@ -74,7 +98,7 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
         return result;
     }
 
-    public override ClientResult GetNext(ClientResult result)
+    private ClientResult GetNext(ClientResult result, RequestOptions options)
     {
         _offset = _nextOffset;
 
@@ -85,7 +109,7 @@ internal class ValuesPageEnumerator : PageEnumerator<ValueItem>
         return pageResult;
     }
 
-    public override async Task<ClientResult> GetNextAsync(ClientResult result)
+    private async Task<ClientResult> GetNextAsync(ClientResult result, RequestOptions options)
     {
         _offset = _nextOffset;
 

@@ -27,14 +27,14 @@ public class PagingProtocolClient
         int? offset,
         RequestOptions? options = default)
     {
-        PageEnumerator enumerator = new ValuesPageResultEnumerator(
+        PageableResult enumerator = new ValuesPageResultEnumerator(
             _pipeline,
             _endpoint,
             order,
             pageSize,
             offset,
             options);
-        return enumerator.ToAsyncResultCollection();
+        return enumerator.ToAsyncEnumerable();
     }
 
     public virtual IEnumerable<ClientResult> GetValues(
@@ -43,13 +43,13 @@ public class PagingProtocolClient
         int? offset,
         RequestOptions? options = default)
     {
-        PageEnumerator enumerator = new ValuesPageResultEnumerator(
+        PageableResult enumerator = new ValuesPageResultEnumerator(
             _pipeline,
             _endpoint,
             order,
             pageSize,
             offset,
             options);
-        return enumerator.ToResultCollection();
+        return enumerator.ToEnumerable();
     }
 }

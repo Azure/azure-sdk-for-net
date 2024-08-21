@@ -11,7 +11,7 @@ namespace ClientModel.Tests.Paging;
 
 // Mocks a page result enumerator a client would have for paged endpoints when
 // those endpoints only have protocol methods on the client.
-internal class ValuesPageResultEnumerator : PageEnumerator
+internal class ValuesPageResultEnumerator : PageableResult
 {
     private readonly ClientPipeline _pipeline;
     private readonly Uri _endpoint;
@@ -45,7 +45,36 @@ internal class ValuesPageResultEnumerator : PageEnumerator
         _options = options;
     }
 
-    public override ClientResult GetFirst()
+    public override ClientResult GetNextPage(ClientResult? result, RequestOptions options)
+    {
+        if (result is null)
+        {
+            return GetFirst(options);
+        }
+        else
+        {
+            return GetNext(result, options);
+        }
+    }
+
+    public override Task<ClientResult> GetNextPageAsync(ClientResult? result, RequestOptions options)
+    {
+        if (result is null)
+        {
+            return GetFirstAsync(options);
+        }
+        else
+        {
+            return GetNextAsync(result, options);
+        }
+    }
+
+    public override bool HasNext(ClientResult result)
+    {
+        return _nextOffset < MockPagingData.Count;
+    }
+
+    private ClientResult GetFirst(RequestOptions options)
     {
         ClientResult result = GetValuesPage(_order, _pageSize, _offset);
 
@@ -54,7 +83,7 @@ internal class ValuesPageResultEnumerator : PageEnumerator
         return result;
     }
 
-    public override async Task<ClientResult> GetFirstAsync()
+    private async Task<ClientResult> GetFirstAsync(RequestOptions options)
     {
         ClientResult result = await GetValuesPageAsync(_order, _pageSize, _offset).ConfigureAwait(false);
 
@@ -63,7 +92,7 @@ internal class ValuesPageResultEnumerator : PageEnumerator
         return result;
     }
 
-    public override ClientResult GetNext(ClientResult result)
+    private ClientResult GetNext(ClientResult result, RequestOptions options)
     {
         _offset = _nextOffset;
 
@@ -74,7 +103,7 @@ internal class ValuesPageResultEnumerator : PageEnumerator
         return pageResult;
     }
 
-    public override async Task<ClientResult> GetNextAsync(ClientResult result)
+    private async Task<ClientResult> GetNextAsync(ClientResult result, RequestOptions options)
     {
         _offset = _nextOffset;
 
@@ -83,11 +112,6 @@ internal class ValuesPageResultEnumerator : PageEnumerator
         _nextOffset = GetNextOffset(_offset, _pageSize);
 
         return pageResult;
-    }
-
-    public override bool HasNext(ClientResult result)
-    {
-        return _nextOffset < MockPagingData.Count;
     }
 
     // In a real client implementation, these would be the generated protocol

@@ -35,7 +35,7 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             cancellationToken.ToRequestOptions());
-        return AsyncPageCollection<ValueItem>.FromEnumerator(enumerator);
+        return enumerator.ToAsyncPageCollection(enumerator.GetPageFromResult);
     }
 
     public virtual AsyncPageCollection<ValueItem> GetValuesAsync(
@@ -52,7 +52,7 @@ public class PagingClient
             token.PageSize,
             token.Offset,
             cancellationToken.ToRequestOptions());
-        return AsyncPageCollection<ValueItem>.FromEnumerator(enumerator);
+        return enumerator.ToAsyncPageCollection(enumerator.GetPageFromResult);
     }
 
     public virtual PageCollection<ValueItem> GetValues(
@@ -68,7 +68,7 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             cancellationToken.ToRequestOptions());
-        return PageCollection<ValueItem>.FromEnumerator(enumerator);
+        return enumerator.ToPageCollection(enumerator.GetPageFromResult);
     }
 
     public virtual PageCollection<ValueItem> GetValues(
@@ -85,7 +85,7 @@ public class PagingClient
             token.PageSize,
             token.Offset,
             cancellationToken.ToRequestOptions());
-        return PageCollection<ValueItem>.FromEnumerator(enumerator);
+        return enumerator.ToPageCollection(enumerator.GetPageFromResult);
     }
 
     public virtual IAsyncEnumerable<ClientResult> GetValuesAsync(
@@ -101,7 +101,7 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             options);
-        return AsyncPageCollection<ValueItem>.FromEnumerator(enumerator);
+        return enumerator.ToAsyncPageCollection(enumerator.GetPageFromResult);
     }
 
     public virtual IEnumerable<ClientResult> GetValues(
@@ -117,6 +117,6 @@ public class PagingClient
             pageSize: pageSize,
             offset: offset,
             options);
-        return PageCollection<ValueItem>.FromEnumerator(enumerator);
+        return enumerator.ToPageCollection(enumerator.GetPageFromResult);
     }
 }
