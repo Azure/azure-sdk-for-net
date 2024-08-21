@@ -7,10 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Maps.Common;
+using Azure.Maps.Weather.Models;
 
 namespace Azure.Maps.Weather
 {
@@ -19,75 +21,130 @@ namespace Azure.Maps.Weather
     public partial class MapsWeatherClient
     {
         private const string AuthorizationHeader = "subscription-key";
-        private readonly AzureKeyCredential _keyCredential;
+        // private readonly AzureKeyCredential _keyCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://atlas.microsoft.com/.default" };
-        private readonly TokenCredential _tokenCredential;
+        // private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
-        private readonly Uri _endpoint;
-        private readonly string _clientId;
-        private readonly string _apiVersion;
+        // private readonly Uri _endpoint;
+        // private readonly string _clientId;
+        // private readonly string _apiVersion;
 
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal WeatherRestClient restClient { get; }
+        /// <summary> The _clientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics _clientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of WeatherClient for mocking. </summary>
+        /// <summary> Initializes a new instance of MapsWeatherClient. </summary>
         protected MapsWeatherClient()
         {
+            _clientDiagnostics = null;
+            _pipeline = null;
+            restClient = null;
         }
 
-        /// <summary> Initializes a new instance of WeatherClient. </summary>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public MapsWeatherClient(AzureKeyCredential credential) : this(new Uri("https://atlas.microsoft.com"), credential, new WeatherClientOptions())
+        /// <summary> Initializes a new instance of MapsWeatherClient. </summary>
+        /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Render Service. </param>
+        public MapsWeatherClient(AzureKeyCredential credential)
         {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            var options = new MapsWeatherClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
+            restClient = new WeatherRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of WeatherClient. </summary>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public MapsWeatherClient(TokenCredential credential) : this(new Uri("https://atlas.microsoft.com"), credential, new WeatherClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of WeatherClient. </summary>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <summary> Initializes a new instance of MapsWeatherClient. </summary>
+        /// <param name="credential"> Shared key credential used to authenticate to an Azure Maps Render Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public MapsWeatherClient(Uri endpoint, AzureKeyCredential credential, WeatherClientOptions options)
+        public MapsWeatherClient(AzureKeyCredential credential, MapsWeatherClientOptions options)
         {
-            Common.Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Common.Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new WeatherClientOptions();
+            Argument.AssertNotNull(credential, nameof(credential));
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _clientId = options.ClientId;
-            _apiVersion = options.Version;
+            var endpoint = options.Endpoint ?? new Uri("https://atlas.microsoft.com");
+            options ??= new MapsWeatherClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, "subscription-key"));
+            restClient = new WeatherRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
         }
 
-        /// <summary> Initializes a new instance of WeatherClient. </summary>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public MapsWeatherClient(Uri endpoint, TokenCredential credential, WeatherClientOptions options)
+        /// <summary> Initializes a new instance of MapsWeatherClient. </summary>
+        /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        public MapsWeatherClient(TokenCredential credential, string clientId)
         {
-            Common.Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Common.Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new WeatherClientOptions();
+            Argument.AssertNotNull(credential, nameof(credential));
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _clientId = options.ClientId;
-            _apiVersion = options.Version;
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            var options = new MapsWeatherClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://atlas.microsoft.com/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
+            restClient = new WeatherRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsWeatherClient. </summary>
+        /// <param name="credential"> A credential used to authenticate to an Azure Maps Render Service. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public MapsWeatherClient(TokenCredential credential, string clientId, MapsWeatherClientOptions options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = options.Endpoint ?? new Uri("https://atlas.microsoft.com");
+            options ??= new MapsWeatherClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            string[] scopes = { "https://atlas.microsoft.com/.default" };
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes), new AzureKeyCredentialPolicy(new AzureKeyCredential(clientId), "x-ms-client-id"));
+            restClient = new WeatherRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsWeatherClient. </summary>
+        /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
+        /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
+        public MapsWeatherClient(AzureSasCredential credential)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            var options = new MapsWeatherClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
+            restClient = new WeatherRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsWeatherClient. </summary>
+        /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
+        /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public MapsWeatherClient(AzureSasCredential credential, MapsWeatherClientOptions options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = options.Endpoint;
+            options ??= new MapsWeatherClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
+            restClient = new WeatherRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsWeatherClient. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> server parameter. </param>
+        /// <param name="clientId"> Specifies which account is intended for usage in conjunction with the Microsoft Entra ID security model.  It represents a unique ID for the Azure Maps account and can be retrieved from the Azure Maps management  plane Account API. To use Microsoft Entra ID security in Azure Maps see the following <see href="https://aka.ms/amauthdetails">articles</see> for guidance. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/> or <paramref name="pipeline"/> is null. </exception>
+        internal MapsWeatherClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string clientId = null, MapsWeatherClientOptions.ServiceVersion apiVersion = MapsWeatherClientOptions.LatestVersion)
+        {
+            var options = new MapsWeatherClientOptions(apiVersion);
+            restClient = new WeatherRestClient(clientDiagnostics, pipeline, endpoint, clientId, options.Version);
+            _clientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
         }
 
         /// <summary>
@@ -121,23 +178,21 @@ namespace Azure.Maps.Weather
         ///
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetHourlyForecastAsync(string,IEnumerable{double},string,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetHourlyForecastAsync(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
+        public virtual async Task<Response<HourlyForecastResult>> GetHourlyForecastAsync(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetHourlyForecast");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetHourlyForecast");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetHourlyForecastRequest(format, coordinates, unit, duration, language, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetHourlyForecastAsync(format, coordinates, unit, duration, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -177,23 +232,21 @@ namespace Azure.Maps.Weather
         ///
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetHourlyForecast(string,IEnumerable{double},string,int?,string,RequestContext)']/*" />
-        public virtual Response GetHourlyForecast(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
+        public virtual Response<HourlyForecastResult> GetHourlyForecast(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetHourlyForecast");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetHourlyForecast");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetHourlyForecastRequest(format, coordinates, unit, duration, language, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetHourlyForecast(format, coordinates, unit, duration, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -229,23 +282,21 @@ namespace Azure.Maps.Weather
         ///
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetMinuteForecastAsync(string,IEnumerable{double},int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetMinuteForecastAsync(string format, IEnumerable<double> coordinates, int? interval, string language, RequestContext context)
+        public virtual async Task<Response<MinuteForecastResult>> GetMinuteForecastAsync(string format, IEnumerable<double> coordinates, int? interval, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetMinuteForecast");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetMinuteForecast");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetMinuteForecastRequest(format, coordinates, interval, language, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetMinuteForecastAsync(format, coordinates, interval, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -281,23 +332,21 @@ namespace Azure.Maps.Weather
         ///
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetMinuteForecast(string,IEnumerable{double},int?,string,RequestContext)']/*" />
-        public virtual Response GetMinuteForecast(string format, IEnumerable<double> coordinates, int? interval, string language, RequestContext context)
+        public virtual Response<MinuteForecastResult> GetMinuteForecast(string format, IEnumerable<double> coordinates, int? interval, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetMinuteForecast");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetMinuteForecast");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetMinuteForecastRequest(format, coordinates, interval, language, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetMinuteForecast(format, coordinates, interval, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -335,23 +384,21 @@ namespace Azure.Maps.Weather
         ///
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetQuarterDayForecastAsync(string,IEnumerable{double},string,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetQuarterDayForecastAsync(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
+        public virtual async Task<Response<QuarterDayForecastResult>> GetQuarterDayForecastAsync(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetQuarterDayForecast");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetQuarterDayForecast");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetQuarterDayForecastRequest(format, coordinates, unit, duration, language, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetQuarterDayForecastAsync(format, coordinates, unit, duration, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -389,23 +436,21 @@ namespace Azure.Maps.Weather
         ///
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetQuarterDayForecast(string,IEnumerable{double},string,int?,string,RequestContext)']/*" />
-        public virtual Response GetQuarterDayForecast(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
+        public virtual Response<QuarterDayForecastResult> GetQuarterDayForecast(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetQuarterDayForecast");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetQuarterDayForecast");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetQuarterDayForecastRequest(format, coordinates, unit, duration, language, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetQuarterDayForecast(format, coordinates, unit, duration, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -447,23 +492,21 @@ namespace Azure.Maps.Weather
         ///
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetCurrentConditionsAsync(string,IEnumerable{double},string,string,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetCurrentConditionsAsync(string format, IEnumerable<double> coordinates, string unit, string details, int? duration, string language, RequestContext context)
+        public virtual async Task<Response<CurrentConditionsResult>> GetCurrentConditionsAsync(string format, IEnumerable<double> coordinates, string unit, string details, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetCurrentConditions");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetCurrentConditions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCurrentConditionsRequest(format, coordinates, unit, details, duration, language, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetCurrentConditionsAsync(format, coordinates, unit, details, duration, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -505,23 +548,21 @@ namespace Azure.Maps.Weather
         ///
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetCurrentConditions(string,IEnumerable{double},string,string,int?,string,RequestContext)']/*" />
-        public virtual Response GetCurrentConditions(string format, IEnumerable<double> coordinates, string unit, string details, int? duration, string language, RequestContext context)
+        public virtual Response<CurrentConditionsResult> GetCurrentConditions(string format, IEnumerable<double> coordinates, string unit, string details, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetCurrentConditions");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetCurrentConditions");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCurrentConditionsRequest(format, coordinates, unit, details, duration, language, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetCurrentConditions(format, coordinates, unit, details, duration, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -560,23 +601,21 @@ namespace Azure.Maps.Weather
         ///
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetDailyForecastAsync(string,IEnumerable{double},string,int?,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDailyForecastAsync(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
+        public virtual async Task<Response<DailyForecastResult>> GetDailyForecastAsync(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDailyForecast");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyForecast");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDailyForecastRequest(format, coordinates, unit, duration, language, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetDailyForecastAsync(format, coordinates, unit, duration, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -615,23 +654,21 @@ namespace Azure.Maps.Weather
         ///
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetDailyForecast(string,IEnumerable{double},string,int?,string,RequestContext)']/*" />
-        public virtual Response GetDailyForecast(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
+        public virtual Response<DailyForecastResult> GetDailyForecast(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDailyForecast");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyForecast");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDailyForecastRequest(format, coordinates, unit, duration, language, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetDailyForecast(format, coordinates, unit, duration, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -666,23 +703,21 @@ namespace Azure.Maps.Weather
         ///
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="query"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetWeatherAlongRouteAsync(string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetWeatherAlongRouteAsync(string format, string query, string language, RequestContext context)
+        public virtual async Task<Response<WeatherAlongRouteResult>> GetWeatherAlongRouteAsync(string format, string query, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(query, nameof(query));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetWeatherAlongRoute");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetWeatherAlongRoute");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetWeatherAlongRouteRequest(format, query, language, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetWeatherAlongRouteAsync(format, query, language, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -717,23 +752,21 @@ namespace Azure.Maps.Weather
         ///
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="query"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetWeatherAlongRoute(string,string,string,RequestContext)']/*" />
-        public virtual Response GetWeatherAlongRoute(string format, string query, string language, RequestContext context)
+        public virtual Response<WeatherAlongRouteResult> GetWeatherAlongRoute(string format, string query, string language, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(query, nameof(query));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetWeatherAlongRoute");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetWeatherAlongRoute");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetWeatherAlongRouteRequest(format, query, language, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetWeatherAlongRoute(format, query, language, cancellationToken);
             }
             catch (Exception e)
             {
@@ -768,23 +801,21 @@ namespace Azure.Maps.Weather
         ///   * `true` - Returns full details. By default all details are returned.
         ///   * `false` - Returns a truncated version of the alerts data, which excludes the area-specific full description of alert details (`alertDetails`).
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetSevereWeatherAlertsAsync(string,IEnumerable{double},string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSevereWeatherAlertsAsync(string format, IEnumerable<double> coordinates, string language, string details, RequestContext context)
+        public virtual async Task<Response<SevereWeatherAlertsResult>> GetSevereWeatherAlertsAsync(string format, IEnumerable<double> coordinates, string language, string details, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetSevereWeatherAlerts");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetSevereWeatherAlerts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSevereWeatherAlertsRequest(format, coordinates, language, details, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetSevereWeatherAlertsAsync(format, coordinates, language, details, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -819,23 +850,21 @@ namespace Azure.Maps.Weather
         ///   * `true` - Returns full details. By default all details are returned.
         ///   * `false` - Returns a truncated version of the alerts data, which excludes the area-specific full description of alert details (`alertDetails`).
         /// </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetSevereWeatherAlerts(string,IEnumerable{double},string,string,RequestContext)']/*" />
-        public virtual Response GetSevereWeatherAlerts(string format, IEnumerable<double> coordinates, string language, string details, RequestContext context)
+        public virtual Response<SevereWeatherAlertsResult> GetSevereWeatherAlerts(string format, IEnumerable<double> coordinates, string language, string details, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetSevereWeatherAlerts");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetSevereWeatherAlerts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSevereWeatherAlertsRequest(format, coordinates, language, details, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetSevereWeatherAlerts(format, coordinates, language, details, cancellationToken);
             }
             catch (Exception e)
             {
@@ -874,23 +903,21 @@ namespace Azure.Maps.Weather
         /// </param>
         /// <param name="indexId"> Numeric index identifier that can be used for restricting returned results to the corresponding index type. Cannot be paired with `indexGroupId`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#index-ids-and-index-groups-ids) for details and to see the supported indices. </param>
         /// <param name="indexGroupId"> Numeric index group identifier that can be used for restricting returned results to the corresponding subset of indices (index group). Cannot be paired with `indexId`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#index-ids-and-index-groups-ids) for details and to see the supported index groups. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetDailyIndicesAsync(string,IEnumerable{double},string,int?,int?,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetDailyIndicesAsync(string format, IEnumerable<double> coordinates, string language, int? duration, int? indexId, int? indexGroupId, RequestContext context)
+        public virtual async Task<Response<DailyIndicesResult>> GetDailyIndicesAsync(string format, IEnumerable<double> coordinates, string language, int? duration, int? indexId, int? indexGroupId, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDailyIndices");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyIndices");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDailyIndicesRequest(format, coordinates, language, duration, indexId, indexGroupId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetDailyIndicesAsync(format, coordinates, language, duration, indexId, indexGroupId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -929,23 +956,21 @@ namespace Azure.Maps.Weather
         /// </param>
         /// <param name="indexId"> Numeric index identifier that can be used for restricting returned results to the corresponding index type. Cannot be paired with `indexGroupId`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#index-ids-and-index-groups-ids) for details and to see the supported indices. </param>
         /// <param name="indexGroupId"> Numeric index group identifier that can be used for restricting returned results to the corresponding subset of indices (index group). Cannot be paired with `indexId`. Please refer to [Weather services in Azure Maps](/azure/azure-maps/weather-services-concepts#index-ids-and-index-groups-ids) for details and to see the supported index groups. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetDailyIndices(string,IEnumerable{double},string,int?,int?,int?,RequestContext)']/*" />
-        public virtual Response GetDailyIndices(string format, IEnumerable<double> coordinates, string language, int? duration, int? indexId, int? indexGroupId, RequestContext context)
+        public virtual Response<DailyIndicesResult> GetDailyIndices(string format, IEnumerable<double> coordinates, string language, int? duration, int? indexId, int? indexGroupId, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDailyIndices");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyIndices");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDailyIndicesRequest(format, coordinates, language, duration, indexId, indexGroupId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetDailyIndices(format, coordinates, language, duration, indexId, indexGroupId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -965,22 +990,20 @@ namespace Azure.Maps.Weather
         /// </list>
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetTropicalStormActiveAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetTropicalStormActiveAsync(string format, RequestContext context)
+        public virtual async Task<Response<ActiveStormResult>> GetTropicalStormActiveAsync(string format, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetTropicalStormActive");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetTropicalStormActive");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTropicalStormActiveRequest(format, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetTropicalStormActiveAsync(format, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1000,22 +1023,20 @@ namespace Azure.Maps.Weather
         /// </list>
         /// </summary>
         /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is "json". Allowed values: "json". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetTropicalStormActive(string,RequestContext)']/*" />
-        public virtual Response GetTropicalStormActive(string format, RequestContext context)
+        public virtual Response<ActiveStormResult> GetTropicalStormActive(string format, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetTropicalStormActive");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetTropicalStormActive");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTropicalStormActiveRequest(format, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetTropicalStormActive(format, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1038,22 +1059,20 @@ namespace Azure.Maps.Weather
         /// <param name="year"> Year of the cyclone(s). </param>
         /// <param name="basinId"> Basin identifier. Allowed values: "AL" | "EP" | "SI" | "NI" | "CP" | "NP" | "SP". </param>
         /// <param name="governmentStormId"> Government storm Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='SearchTropicalStormAsync(string,int,string,int?,RequestContext)']/*" />
-        public virtual async Task<Response> SearchTropicalStormAsync(string format, int year, string basinId, int? governmentStormId, RequestContext context)
+        public virtual async Task<Response<StormSearchResult>> GetTropicalStormSearchAsync(string format, int year, string basinId, int? governmentStormId, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.SearchTropicalStorm");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.SearchTropicalStorm");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchTropicalStormRequest(format, year, basinId, governmentStormId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetTropicalStormSearchAsync(format, year, basinId, governmentStormId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1076,22 +1095,20 @@ namespace Azure.Maps.Weather
         /// <param name="year"> Year of the cyclone(s). </param>
         /// <param name="basinId"> Basin identifier. Allowed values: "AL" | "EP" | "SI" | "NI" | "CP" | "NP" | "SP". </param>
         /// <param name="governmentStormId"> Government storm Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='SearchTropicalStorm(string,int,string,int?,RequestContext)']/*" />
-        public virtual Response SearchTropicalStorm(string format, int year, string basinId, int? governmentStormId, RequestContext context)
+        public virtual Response<StormSearchResult> GetTropicalStormSearch(string format, int year, string basinId, int? governmentStormId, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.SearchTropicalStorm");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.SearchTropicalStorm");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchTropicalStormRequest(format, year, basinId, governmentStormId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetTropicalStormSearch(format, year, basinId, governmentStormId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1118,23 +1135,21 @@ namespace Azure.Maps.Weather
         /// <param name="includeDetails"> When true, wind radii summary data is included in the response. </param>
         /// <param name="includeGeometricDetails"> When true, wind radii summary data and geoJSON details are included in the response. </param>
         /// <param name="includeWindowGeometry"> When true, window geometry data (geoJSON) is included in the response. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="basinId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetTropicalStormForecastAsync(string,int,string,int,string,bool?,bool?,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetTropicalStormForecastAsync(string format, int year, string basinId, int governmentStormId, string unit, bool? includeDetails, bool? includeGeometricDetails, bool? includeWindowGeometry, RequestContext context)
+        public virtual async Task<Response<StormForecastResult>> GetTropicalStormForecastAsync(string format, int year, string basinId, int governmentStormId, string unit, bool? includeDetails, bool? includeGeometricDetails, bool? includeWindowGeometry, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(basinId, nameof(basinId));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetTropicalStormForecast");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetTropicalStormForecast");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTropicalStormForecastRequest(format, year, basinId, governmentStormId, unit, includeDetails, includeGeometricDetails, includeWindowGeometry, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetTropicalStormForecastAsync(format, year, basinId, governmentStormId, unit, includeDetails, includeGeometricDetails, includeWindowGeometry, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1161,23 +1176,21 @@ namespace Azure.Maps.Weather
         /// <param name="includeDetails"> When true, wind radii summary data is included in the response. </param>
         /// <param name="includeGeometricDetails"> When true, wind radii summary data and geoJSON details are included in the response. </param>
         /// <param name="includeWindowGeometry"> When true, window geometry data (geoJSON) is included in the response. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="basinId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetTropicalStormForecast(string,int,string,int,string,bool?,bool?,bool?,RequestContext)']/*" />
-        public virtual Response GetTropicalStormForecast(string format, int year, string basinId, int governmentStormId, string unit, bool? includeDetails, bool? includeGeometricDetails, bool? includeWindowGeometry, RequestContext context)
+        public virtual Response<StormForecastResult> GetTropicalStormForecast(string format, int year, string basinId, int governmentStormId, string unit, bool? includeDetails, bool? includeGeometricDetails, bool? includeWindowGeometry, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(basinId, nameof(basinId));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetTropicalStormForecast");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetTropicalStormForecast");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTropicalStormForecastRequest(format, year, basinId, governmentStormId, unit, includeDetails, includeGeometricDetails, includeWindowGeometry, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetTropicalStormForecast(format, year, basinId, governmentStormId, unit, includeDetails, includeGeometricDetails, includeWindowGeometry, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1204,23 +1217,21 @@ namespace Azure.Maps.Weather
         /// <param name="includeGeometricDetails"> When true, wind radii summary data and geoJSON details are included in the response. </param>
         /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
         /// <param name="includeCurrentStorm"> When true, return the current storm location. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="basinId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetTropicalStormLocationsAsync(string,int,string,int,bool?,bool?,string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetTropicalStormLocationsAsync(string format, int year, string basinId, int governmentStormId, bool? includeDetails, bool? includeGeometricDetails, string unit, bool? includeCurrentStorm, RequestContext context)
+        public virtual async Task<Response<StormLocationsResult>> GetTropicalStormLocationsAsync(string format, int year, string basinId, int governmentStormId, bool? includeDetails, bool? includeGeometricDetails, string unit, bool? includeCurrentStorm, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(basinId, nameof(basinId));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetTropicalStormLocations");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetTropicalStormLocations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTropicalStormLocationsRequest(format, year, basinId, governmentStormId, includeDetails, includeGeometricDetails, unit, includeCurrentStorm, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetTropicalStormLocationsAsync(format, year, basinId, governmentStormId, includeDetails, includeGeometricDetails, unit, includeCurrentStorm, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1247,23 +1258,21 @@ namespace Azure.Maps.Weather
         /// <param name="includeGeometricDetails"> When true, wind radii summary data and geoJSON details are included in the response. </param>
         /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
         /// <param name="includeCurrentStorm"> When true, return the current storm location. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="basinId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetTropicalStormLocations(string,int,string,int,bool?,bool?,string,bool?,RequestContext)']/*" />
-        public virtual Response GetTropicalStormLocations(string format, int year, string basinId, int governmentStormId, bool? includeDetails, bool? includeGeometricDetails, string unit, bool? includeCurrentStorm, RequestContext context)
+        public virtual Response<StormLocationsResult> GetTropicalStormLocations(string format, int year, string basinId, int governmentStormId, bool? includeDetails, bool? includeGeometricDetails, string unit, bool? includeCurrentStorm, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(basinId, nameof(basinId));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetTropicalStormLocations");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetTropicalStormLocations");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTropicalStormLocationsRequest(format, year, basinId, governmentStormId, includeDetails, includeGeometricDetails, unit, includeCurrentStorm, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetTropicalStormLocations(format, year, basinId, governmentStormId, includeDetails, includeGeometricDetails, unit, includeCurrentStorm, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1294,23 +1303,21 @@ namespace Azure.Maps.Weather
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="includePollutantDetails"> Boolean value that returns detailed information about each pollutant. By default is True. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetCurrentAirQualityAsync(string,IEnumerable{double},string,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetCurrentAirQualityAsync(string format, IEnumerable<double> coordinates, string language, bool? includePollutantDetails, RequestContext context)
+        public virtual async Task<Response<AirQualityResult>> GetCurrentAirQualityAsync(string format, IEnumerable<double> coordinates, string language, bool? includePollutantDetails, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetCurrentAirQuality");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetCurrentAirQuality");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCurrentAirQualityRequest(format, coordinates, language, includePollutantDetails, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetCurrentAirQualityAsync(format, coordinates, language, includePollutantDetails, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1341,23 +1348,21 @@ namespace Azure.Maps.Weather
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="includePollutantDetails"> Boolean value that returns detailed information about each pollutant. By default is True. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetCurrentAirQuality(string,IEnumerable{double},string,bool?,RequestContext)']/*" />
-        public virtual Response GetCurrentAirQuality(string format, IEnumerable<double> coordinates, string language, bool? includePollutantDetails, RequestContext context)
+        public virtual Response<AirQualityResult> GetCurrentAirQuality(string format, IEnumerable<double> coordinates, string language, bool? includePollutantDetails, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetCurrentAirQuality");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetCurrentAirQuality");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCurrentAirQualityRequest(format, coordinates, language, includePollutantDetails, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetCurrentAirQuality(format, coordinates, language, includePollutantDetails, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1388,23 +1393,21 @@ namespace Azure.Maps.Weather
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="duration"> Specifies for how many days from now we would like to know about the air quality. Available values are 1, 2, 3, 4, 5, 6, and 7. Default value is 1. Allowed values: "1" | "2" | "3" | "4" | "5" | "6" | "7". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetAirQualityDailyForecastsAsync(string,IEnumerable{double},string,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetAirQualityDailyForecastsAsync(string format, IEnumerable<double> coordinates, string language, int? duration, RequestContext context)
+        public virtual async Task<Response<DailyAirQualityForecastResult>> GetAirQualityDailyForecastsAsync(string format, IEnumerable<double> coordinates, string language, int? duration, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetAirQualityDailyForecasts");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetAirQualityDailyForecasts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAirQualityDailyForecastsRequest(format, coordinates, language, duration, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetAirQualityDailyForecastsAsync(format, coordinates, language, duration, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1435,23 +1438,21 @@ namespace Azure.Maps.Weather
         /// Please refer to [Supported Languages](https://docs.microsoft.com/azure/azure-maps/supported-languages) for details.
         /// </param>
         /// <param name="duration"> Specifies for how many days from now we would like to know about the air quality. Available values are 1, 2, 3, 4, 5, 6, and 7. Default value is 1. Allowed values: "1" | "2" | "3" | "4" | "5" | "6" | "7". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetAirQualityDailyForecasts(string,IEnumerable{double},string,int?,RequestContext)']/*" />
-        public virtual Response GetAirQualityDailyForecasts(string format, IEnumerable<double> coordinates, string language, int? duration, RequestContext context)
+        public virtual Response<DailyAirQualityForecastResult> GetAirQualityDailyForecasts(string format, IEnumerable<double> coordinates, string language, int? duration, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetAirQualityDailyForecasts");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetAirQualityDailyForecasts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAirQualityDailyForecastsRequest(format, coordinates, language, duration, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetAirQualityDailyForecasts(format, coordinates, language, duration, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1483,23 +1484,21 @@ namespace Azure.Maps.Weather
         /// </param>
         /// <param name="duration"> Specifies for how many hours from now we would like to know about the air quality. Available values are 1, 12, 24, 48, 72, 96. Default value is 1 hour. Allowed values: "1" | "12" | "24" | "48" | "72" | "96". </param>
         /// <param name="includePollutantDetails"> Boolean value that returns detailed information about each pollutant. By default is True. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetAirQualityHourlyForecastsAsync(string,IEnumerable{double},string,int?,bool?,RequestContext)']/*" />
-        public virtual async Task<Response> GetAirQualityHourlyForecastsAsync(string format, IEnumerable<double> coordinates, string language, int? duration, bool? includePollutantDetails, RequestContext context)
+        public virtual async Task<Response<AirQualityResult>> GetAirQualityHourlyForecastsAsync(string format, IEnumerable<double> coordinates, string language, int? duration, bool? includePollutantDetails, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetAirQualityHourlyForecasts");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetAirQualityHourlyForecasts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAirQualityHourlyForecastsRequest(format, coordinates, language, duration, includePollutantDetails, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetAirQualityHourlyForecastsAsync(format, coordinates, language, duration, includePollutantDetails, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1531,23 +1530,21 @@ namespace Azure.Maps.Weather
         /// </param>
         /// <param name="duration"> Specifies for how many hours from now we would like to know about the air quality. Available values are 1, 12, 24, 48, 72, 96. Default value is 1 hour. Allowed values: "1" | "12" | "24" | "48" | "72" | "96". </param>
         /// <param name="includePollutantDetails"> Boolean value that returns detailed information about each pollutant. By default is True. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetAirQualityHourlyForecasts(string,IEnumerable{double},string,int?,bool?,RequestContext)']/*" />
-        public virtual Response GetAirQualityHourlyForecasts(string format, IEnumerable<double> coordinates, string language, int? duration, bool? includePollutantDetails, RequestContext context)
+        public virtual Response<AirQualityResult> GetAirQualityHourlyForecasts(string format, IEnumerable<double> coordinates, string language, int? duration, bool? includePollutantDetails, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetAirQualityHourlyForecasts");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetAirQualityHourlyForecasts");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAirQualityHourlyForecastsRequest(format, coordinates, language, duration, includePollutantDetails, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetAirQualityHourlyForecasts(format, coordinates, language, duration, includePollutantDetails, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1575,23 +1572,21 @@ namespace Azure.Maps.Weather
         /// <param name="startDate"> Start date in ISO 8601 format, for example, 2019-10-27. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
         /// <param name="endDate"> End date in ISO 8601 format, for example, 2019-10-28. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
         /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetDailyHistoricalActualsAsync(string,IEnumerable{double},DateTimeOffset,DateTimeOffset,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDailyHistoricalActualsAsync(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
+        public virtual async Task<Response<DailyHistoricalActualsResult>> GetDailyHistoricalActualsAsync(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalActuals");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalActuals");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDailyHistoricalActualsRequest(format, coordinates, startDate, endDate, unit, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetDailyHistoricalActualsAsync(format, coordinates, startDate, endDate, unit, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1619,23 +1614,21 @@ namespace Azure.Maps.Weather
         /// <param name="startDate"> Start date in ISO 8601 format, for example, 2019-10-27. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
         /// <param name="endDate"> End date in ISO 8601 format, for example, 2019-10-28. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
         /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetDailyHistoricalActuals(string,IEnumerable{double},DateTimeOffset,DateTimeOffset,string,RequestContext)']/*" />
-        public virtual Response GetDailyHistoricalActuals(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
+        public virtual Response<DailyHistoricalActualsResult> GetDailyHistoricalActuals(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalActuals");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalActuals");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDailyHistoricalActualsRequest(format, coordinates, startDate, endDate, unit, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetDailyHistoricalActuals(format, coordinates, startDate, endDate, unit, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1663,23 +1656,21 @@ namespace Azure.Maps.Weather
         /// <param name="startDate"> Start date in ISO 8601 format, for example, 2019-10-27. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
         /// <param name="endDate"> End date in ISO 8601 format, for example, 2019-10-28. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
         /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetDailyHistoricalRecordsAsync(string,IEnumerable{double},DateTimeOffset,DateTimeOffset,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDailyHistoricalRecordsAsync(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
+        public virtual async Task<Response<DailyHistoricalRecordsResult>> GetDailyHistoricalRecordsAsync(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalRecords");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalRecords");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDailyHistoricalRecordsRequest(format, coordinates, startDate, endDate, unit, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetDailyHistoricalRecordsAsync(format, coordinates, startDate, endDate, unit, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1707,23 +1698,21 @@ namespace Azure.Maps.Weather
         /// <param name="startDate"> Start date in ISO 8601 format, for example, 2019-10-27. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
         /// <param name="endDate"> End date in ISO 8601 format, for example, 2019-10-28. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
         /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetDailyHistoricalRecords(string,IEnumerable{double},DateTimeOffset,DateTimeOffset,string,RequestContext)']/*" />
-        public virtual Response GetDailyHistoricalRecords(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
+        public virtual Response<DailyHistoricalRecordsResult> GetDailyHistoricalRecords(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalRecords");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalRecords");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDailyHistoricalRecordsRequest(format, coordinates, startDate, endDate, unit, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetDailyHistoricalRecords(format, coordinates, startDate, endDate, unit, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1751,23 +1740,21 @@ namespace Azure.Maps.Weather
         /// <param name="startDate"> Start date in ISO 8601 format, for example, 2019-10-27. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
         /// <param name="endDate"> End date in ISO 8601 format, for example, 2019-10-28. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
         /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetDailyHistoricalNormalsAsync(string,IEnumerable{double},DateTimeOffset,DateTimeOffset,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDailyHistoricalNormalsAsync(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
+        public virtual async Task<Response<DailyHistoricalNormalsResult>> GetDailyHistoricalNormalsAsync(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalNormals");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalNormals");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDailyHistoricalNormalsRequest(format, coordinates, startDate, endDate, unit, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await restClient.GetDailyHistoricalNormalsAsync(format, coordinates, startDate, endDate, unit, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1795,23 +1782,21 @@ namespace Azure.Maps.Weather
         /// <param name="startDate"> Start date in ISO 8601 format, for example, 2019-10-27. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
         /// <param name="endDate"> End date in ISO 8601 format, for example, 2019-10-28. The date range supported is 1 to 31 calendar days, so be sure to specify a startDate and endDate that does not exceed a maximum of 31 days (i.e.: startDate=2012-01-01&amp;endDate=2012-01-31). </param>
         /// <param name="unit"> Specifies to return the data in either metric units or imperial units. Default value is metric. Allowed values: "metric" | "imperial". </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/> or <paramref name="coordinates"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/WeatherClient.xml" path="doc/members/member[@name='GetDailyHistoricalNormals(string,IEnumerable{double},DateTimeOffset,DateTimeOffset,string,RequestContext)']/*" />
-        public virtual Response GetDailyHistoricalNormals(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
+        public virtual Response<DailyHistoricalNormalsResult> GetDailyHistoricalNormals(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, CancellationToken cancellationToken = default)
         {
             Common.Argument.AssertNotNullOrEmpty(format, nameof(format));
             Common.Argument.AssertNotNull(coordinates, nameof(coordinates));
 
-            using var scope = ClientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalNormals");
+            using var scope = _clientDiagnostics.CreateScope("WeatherClient.GetDailyHistoricalNormals");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDailyHistoricalNormalsRequest(format, coordinates, startDate, endDate, unit, context);
-                return _pipeline.ProcessMessage(message, context);
+                return restClient.GetDailyHistoricalNormals(format, coordinates, startDate, endDate, unit, cancellationToken);
             }
             catch (Exception e)
             {
@@ -1820,583 +1805,583 @@ namespace Azure.Maps.Weather
             }
         }
 
-        internal HttpMessage CreateGetHourlyForecastRequest(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/forecast/hourly/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (unit != null)
-            {
-                uri.AppendQuery("unit", unit, true);
-            }
-            if (duration != null)
-            {
-                uri.AppendQuery("duration", duration.Value, true);
-            }
-            if (language != null)
-            {
-                uri.AppendQuery("language", language, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetHourlyForecastRequest(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/forecast/hourly/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (unit != null)
+        //     {
+        //         uri.AppendQuery("unit", unit, true);
+        //     }
+        //     if (duration != null)
+        //     {
+        //         uri.AppendQuery("duration", duration.Value, true);
+        //     }
+        //     if (language != null)
+        //     {
+        //         uri.AppendQuery("language", language, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetMinuteForecastRequest(string format, IEnumerable<double> coordinates, int? interval, string language, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/forecast/minute/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (interval != null)
-            {
-                uri.AppendQuery("interval", interval.Value, true);
-            }
-            if (language != null)
-            {
-                uri.AppendQuery("language", language, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetMinuteForecastRequest(string format, IEnumerable<double> coordinates, int? interval, string language, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/forecast/minute/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (interval != null)
+        //     {
+        //         uri.AppendQuery("interval", interval.Value, true);
+        //     }
+        //     if (language != null)
+        //     {
+        //         uri.AppendQuery("language", language, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetQuarterDayForecastRequest(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/forecast/quarterDay/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (unit != null)
-            {
-                uri.AppendQuery("unit", unit, true);
-            }
-            if (duration != null)
-            {
-                uri.AppendQuery("duration", duration.Value, true);
-            }
-            if (language != null)
-            {
-                uri.AppendQuery("language", language, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetQuarterDayForecastRequest(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/forecast/quarterDay/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (unit != null)
+        //     {
+        //         uri.AppendQuery("unit", unit, true);
+        //     }
+        //     if (duration != null)
+        //     {
+        //         uri.AppendQuery("duration", duration.Value, true);
+        //     }
+        //     if (language != null)
+        //     {
+        //         uri.AppendQuery("language", language, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetCurrentConditionsRequest(string format, IEnumerable<double> coordinates, string unit, string details, int? duration, string language, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/currentConditions/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (unit != null)
-            {
-                uri.AppendQuery("unit", unit, true);
-            }
-            if (details != null)
-            {
-                uri.AppendQuery("details", details, true);
-            }
-            if (duration != null)
-            {
-                uri.AppendQuery("duration", duration.Value, true);
-            }
-            if (language != null)
-            {
-                uri.AppendQuery("language", language, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetCurrentConditionsRequest(string format, IEnumerable<double> coordinates, string unit, string details, int? duration, string language, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/currentConditions/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (unit != null)
+        //     {
+        //         uri.AppendQuery("unit", unit, true);
+        //     }
+        //     if (details != null)
+        //     {
+        //         uri.AppendQuery("details", details, true);
+        //     }
+        //     if (duration != null)
+        //     {
+        //         uri.AppendQuery("duration", duration.Value, true);
+        //     }
+        //     if (language != null)
+        //     {
+        //         uri.AppendQuery("language", language, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetDailyForecastRequest(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/forecast/daily/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (unit != null)
-            {
-                uri.AppendQuery("unit", unit, true);
-            }
-            if (duration != null)
-            {
-                uri.AppendQuery("duration", duration.Value, true);
-            }
-            if (language != null)
-            {
-                uri.AppendQuery("language", language, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetDailyForecastRequest(string format, IEnumerable<double> coordinates, string unit, int? duration, string language, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/forecast/daily/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (unit != null)
+        //     {
+        //         uri.AppendQuery("unit", unit, true);
+        //     }
+        //     if (duration != null)
+        //     {
+        //         uri.AppendQuery("duration", duration.Value, true);
+        //     }
+        //     if (language != null)
+        //     {
+        //         uri.AppendQuery("language", language, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetWeatherAlongRouteRequest(string format, string query, string language, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/route/", false);
-            uri.AppendPath(format, true);
-            uri.AppendQuery("query", query, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (language != null)
-            {
-                uri.AppendQuery("language", language, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetWeatherAlongRouteRequest(string format, string query, string language, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/route/", false);
+        //     uri.AppendPath(format, true);
+        //     uri.AppendQuery("query", query, true);
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (language != null)
+        //     {
+        //         uri.AppendQuery("language", language, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetSevereWeatherAlertsRequest(string format, IEnumerable<double> coordinates, string language, string details, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/severe/alerts/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (language != null)
-            {
-                uri.AppendQuery("language", language, true);
-            }
-            if (details != null)
-            {
-                uri.AppendQuery("details", details, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetSevereWeatherAlertsRequest(string format, IEnumerable<double> coordinates, string language, string details, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/severe/alerts/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (language != null)
+        //     {
+        //         uri.AppendQuery("language", language, true);
+        //     }
+        //     if (details != null)
+        //     {
+        //         uri.AppendQuery("details", details, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetDailyIndicesRequest(string format, IEnumerable<double> coordinates, string language, int? duration, int? indexId, int? indexGroupId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/indices/daily/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (language != null)
-            {
-                uri.AppendQuery("language", language, true);
-            }
-            if (duration != null)
-            {
-                uri.AppendQuery("duration", duration.Value, true);
-            }
-            if (indexId != null)
-            {
-                uri.AppendQuery("indexId", indexId.Value, true);
-            }
-            if (indexGroupId != null)
-            {
-                uri.AppendQuery("indexGroupId", indexGroupId.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetDailyIndicesRequest(string format, IEnumerable<double> coordinates, string language, int? duration, int? indexId, int? indexGroupId, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/indices/daily/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (language != null)
+        //     {
+        //         uri.AppendQuery("language", language, true);
+        //     }
+        //     if (duration != null)
+        //     {
+        //         uri.AppendQuery("duration", duration.Value, true);
+        //     }
+        //     if (indexId != null)
+        //     {
+        //         uri.AppendQuery("indexId", indexId.Value, true);
+        //     }
+        //     if (indexGroupId != null)
+        //     {
+        //         uri.AppendQuery("indexGroupId", indexGroupId.Value, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetTropicalStormActiveRequest(string format, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/tropical/storms/active/", false);
-            uri.AppendPath(format, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetTropicalStormActiveRequest(string format, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/tropical/storms/active/", false);
+        //     uri.AppendPath(format, true);
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateSearchTropicalStormRequest(string format, int year, string basinId, int? governmentStormId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/tropical/storms/", false);
-            uri.AppendPath(format, true);
-            uri.AppendQuery("year", year, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (basinId != null)
-            {
-                uri.AppendQuery("basinId", basinId, true);
-            }
-            if (governmentStormId != null)
-            {
-                uri.AppendQuery("govId", governmentStormId.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateSearchTropicalStormRequest(string format, int year, string basinId, int? governmentStormId, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/tropical/storms/", false);
+        //     uri.AppendPath(format, true);
+        //     uri.AppendQuery("year", year, true);
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (basinId != null)
+        //     {
+        //         uri.AppendQuery("basinId", basinId, true);
+        //     }
+        //     if (governmentStormId != null)
+        //     {
+        //         uri.AppendQuery("govId", governmentStormId.Value, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetTropicalStormForecastRequest(string format, int year, string basinId, int governmentStormId, string unit, bool? includeDetails, bool? includeGeometricDetails, bool? includeWindowGeometry, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/tropical/storms/forecasts/", false);
-            uri.AppendPath(format, true);
-            uri.AppendQuery("year", year, true);
-            uri.AppendQuery("basinId", basinId, true);
-            uri.AppendQuery("govId", governmentStormId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (unit != null)
-            {
-                uri.AppendQuery("unit", unit, true);
-            }
-            if (includeDetails != null)
-            {
-                uri.AppendQuery("details", includeDetails.Value, true);
-            }
-            if (includeGeometricDetails != null)
-            {
-                uri.AppendQuery("radiiGeometry", includeGeometricDetails.Value, true);
-            }
-            if (includeWindowGeometry != null)
-            {
-                uri.AppendQuery("windowGeometry", includeWindowGeometry.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetTropicalStormForecastRequest(string format, int year, string basinId, int governmentStormId, string unit, bool? includeDetails, bool? includeGeometricDetails, bool? includeWindowGeometry, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/tropical/storms/forecasts/", false);
+        //     uri.AppendPath(format, true);
+        //     uri.AppendQuery("year", year, true);
+        //     uri.AppendQuery("basinId", basinId, true);
+        //     uri.AppendQuery("govId", governmentStormId, true);
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (unit != null)
+        //     {
+        //         uri.AppendQuery("unit", unit, true);
+        //     }
+        //     if (includeDetails != null)
+        //     {
+        //         uri.AppendQuery("details", includeDetails.Value, true);
+        //     }
+        //     if (includeGeometricDetails != null)
+        //     {
+        //         uri.AppendQuery("radiiGeometry", includeGeometricDetails.Value, true);
+        //     }
+        //     if (includeWindowGeometry != null)
+        //     {
+        //         uri.AppendQuery("windowGeometry", includeWindowGeometry.Value, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetTropicalStormLocationsRequest(string format, int year, string basinId, int governmentStormId, bool? includeDetails, bool? includeGeometricDetails, string unit, bool? includeCurrentStorm, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/tropical/storms/locations/", false);
-            uri.AppendPath(format, true);
-            uri.AppendQuery("year", year, true);
-            uri.AppendQuery("basinId", basinId, true);
-            uri.AppendQuery("govId", governmentStormId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (includeDetails != null)
-            {
-                uri.AppendQuery("details", includeDetails.Value, true);
-            }
-            if (includeGeometricDetails != null)
-            {
-                uri.AppendQuery("radiiGeometry", includeGeometricDetails.Value, true);
-            }
-            if (unit != null)
-            {
-                uri.AppendQuery("unit", unit, true);
-            }
-            if (includeCurrentStorm != null)
-            {
-                uri.AppendQuery("current", includeCurrentStorm.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetTropicalStormLocationsRequest(string format, int year, string basinId, int governmentStormId, bool? includeDetails, bool? includeGeometricDetails, string unit, bool? includeCurrentStorm, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/tropical/storms/locations/", false);
+        //     uri.AppendPath(format, true);
+        //     uri.AppendQuery("year", year, true);
+        //     uri.AppendQuery("basinId", basinId, true);
+        //     uri.AppendQuery("govId", governmentStormId, true);
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (includeDetails != null)
+        //     {
+        //         uri.AppendQuery("details", includeDetails.Value, true);
+        //     }
+        //     if (includeGeometricDetails != null)
+        //     {
+        //         uri.AppendQuery("radiiGeometry", includeGeometricDetails.Value, true);
+        //     }
+        //     if (unit != null)
+        //     {
+        //         uri.AppendQuery("unit", unit, true);
+        //     }
+        //     if (includeCurrentStorm != null)
+        //     {
+        //         uri.AppendQuery("current", includeCurrentStorm.Value, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetCurrentAirQualityRequest(string format, IEnumerable<double> coordinates, string language, bool? includePollutantDetails, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/airQuality/current/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (language != null)
-            {
-                uri.AppendQuery("language", language, true);
-            }
-            if (includePollutantDetails != null)
-            {
-                uri.AppendQuery("pollutants", includePollutantDetails.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetCurrentAirQualityRequest(string format, IEnumerable<double> coordinates, string language, bool? includePollutantDetails, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/airQuality/current/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (language != null)
+        //     {
+        //         uri.AppendQuery("language", language, true);
+        //     }
+        //     if (includePollutantDetails != null)
+        //     {
+        //         uri.AppendQuery("pollutants", includePollutantDetails.Value, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetAirQualityDailyForecastsRequest(string format, IEnumerable<double> coordinates, string language, int? duration, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/airQuality/forecasts/daily/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (language != null)
-            {
-                uri.AppendQuery("language", language, true);
-            }
-            if (duration != null)
-            {
-                uri.AppendQuery("duration", duration.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetAirQualityDailyForecastsRequest(string format, IEnumerable<double> coordinates, string language, int? duration, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/airQuality/forecasts/daily/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (language != null)
+        //     {
+        //         uri.AppendQuery("language", language, true);
+        //     }
+        //     if (duration != null)
+        //     {
+        //         uri.AppendQuery("duration", duration.Value, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetAirQualityHourlyForecastsRequest(string format, IEnumerable<double> coordinates, string language, int? duration, bool? includePollutantDetails, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/airQuality/forecasts/hourly/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (language != null)
-            {
-                uri.AppendQuery("language", language, true);
-            }
-            if (duration != null)
-            {
-                uri.AppendQuery("duration", duration.Value, true);
-            }
-            if (includePollutantDetails != null)
-            {
-                uri.AppendQuery("pollutants", includePollutantDetails.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetAirQualityHourlyForecastsRequest(string format, IEnumerable<double> coordinates, string language, int? duration, bool? includePollutantDetails, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/airQuality/forecasts/hourly/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (language != null)
+        //     {
+        //         uri.AppendQuery("language", language, true);
+        //     }
+        //     if (duration != null)
+        //     {
+        //         uri.AppendQuery("duration", duration.Value, true);
+        //     }
+        //     if (includePollutantDetails != null)
+        //     {
+        //         uri.AppendQuery("pollutants", includePollutantDetails.Value, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetDailyHistoricalActualsRequest(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/historical/actuals/daily/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("startDate", startDate, "D", true);
-            uri.AppendQuery("endDate", endDate, "D", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (unit != null)
-            {
-                uri.AppendQuery("unit", unit, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetDailyHistoricalActualsRequest(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/historical/actuals/daily/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("startDate", startDate, "D", true);
+        //     uri.AppendQuery("endDate", endDate, "D", true);
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (unit != null)
+        //     {
+        //         uri.AppendQuery("unit", unit, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetDailyHistoricalRecordsRequest(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/historical/records/daily/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("startDate", startDate, "D", true);
-            uri.AppendQuery("endDate", endDate, "D", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (unit != null)
-            {
-                uri.AppendQuery("unit", unit, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetDailyHistoricalRecordsRequest(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/historical/records/daily/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("startDate", startDate, "D", true);
+        //     uri.AppendQuery("endDate", endDate, "D", true);
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (unit != null)
+        //     {
+        //         uri.AppendQuery("unit", unit, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        internal HttpMessage CreateGetDailyHistoricalNormalsRequest(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/weather/historical/normals/daily/", false);
-            uri.AppendPath(format, true);
-            if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("query", coordinates, ",", true);
-            }
-            uri.AppendQuery("startDate", startDate, "D", true);
-            uri.AppendQuery("endDate", endDate, "D", true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (unit != null)
-            {
-                uri.AppendQuery("unit", unit, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (_clientId != null)
-            {
-                request.Headers.Add("x-ms-client-id", _clientId);
-            }
-            return message;
-        }
+        // internal HttpMessage CreateGetDailyHistoricalNormalsRequest(string format, IEnumerable<double> coordinates, DateTimeOffset startDate, DateTimeOffset endDate, string unit, RequestContext context)
+        // {
+        //     var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+        //     var request = message.Request;
+        //     request.Method = RequestMethod.Get;
+        //     var uri = new RawRequestUriBuilder();
+        //     uri.Reset(_endpoint);
+        //     uri.AppendPath("/weather/historical/normals/daily/", false);
+        //     uri.AppendPath(format, true);
+        //     if (coordinates != null && !(coordinates is Common.ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
+        //     {
+        //         uri.AppendQueryDelimited("query", coordinates, ",", true);
+        //     }
+        //     uri.AppendQuery("startDate", startDate, "D", true);
+        //     uri.AppendQuery("endDate", endDate, "D", true);
+        //     uri.AppendQuery("api-version", _apiVersion, true);
+        //     if (unit != null)
+        //     {
+        //         uri.AppendQuery("unit", unit, true);
+        //     }
+        //     request.Uri = uri;
+        //     request.Headers.Add("Accept", "application/json");
+        //     if (_clientId != null)
+        //     {
+        //         request.Headers.Add("x-ms-client-id", _clientId);
+        //     }
+        //     return message;
+        // }
 
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        // private static ResponseClassifier _responseClassifier200;
+        // private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }
