@@ -68,7 +68,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     CustomMultiLabelClassificationOperationResult customClassificationResult = (CustomMultiLabelClassificationOperationResult)analyzeTextLROResult;
 
                     // View the classifications recognized in the input documents.
-                    foreach (ClassificationDocumentResultWithDetectedLanguage customClassificationDocument in customClassificationResult.Results.Documents)
+                    foreach (ClassificationActionResult customClassificationDocument in customClassificationResult.Results.Documents)
                     {
                         Console.WriteLine($"Result for document with Id = \"{customClassificationDocument.Id}\":");
                         Console.WriteLine($"  Recognized {customClassificationDocument.Class.Count} classifications:");

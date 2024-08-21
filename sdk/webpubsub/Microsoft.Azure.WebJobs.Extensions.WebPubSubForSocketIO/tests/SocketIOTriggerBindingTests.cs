@@ -176,7 +176,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var triggerEvent = new SocketIOTriggerEvent
             {
                 ConnectionContext = new SocketIOSocketContext(WebPubSubEventType.User, "target", "testchat", "conn1", "ns", "sid", "signature", "origin", null),
-                Request = new SocketIOMessageRequest("ns", "sid", "payload", new object[] { "param1", 2 })
+                Request = new SocketIOMessageRequest("ns", "sid", "payload", "ev", new object[] { "param1", 2 })
             };
 
             var triggerData = await binding.BindAsync(triggerEvent, null);
@@ -252,6 +252,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
                     "namespace",
                     "socketId",
                     "payload",
+                    "ev",
                     new[] { "arg1", "arg2"}),
             };
         }

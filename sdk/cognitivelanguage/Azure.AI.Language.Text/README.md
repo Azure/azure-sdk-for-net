@@ -26,6 +26,10 @@ Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 dotnet add package Azure.AI.Language.Text --prerelease
 ```
 
+|SDK version  |Supported API version of service
+|-------------|-----------------------------------------------------
+|1.0.0-beta.1 | 2022-05-01, 2023-04-01, 2023-11-15-preview (default)
+
 ### Prerequisites
 
 * An [Azure subscription][azure_sub].
@@ -44,6 +48,10 @@ Alternatively, use the [Azure CLI][azure_cli] snippet below to get the API key f
 ```PowerShell
 az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
 ```
+
+#### Migrating from Azure.Ai.TextAnalytics
+
+Check the [migration guide][source_migration] for more information on migrating from Azure.AI.TextAnalytics to Azure.AI.Language.Text.
 
 #### Create a TextAnalysisClient
 
@@ -107,6 +115,8 @@ var client = new TextAnalysisClient(endpoint, credential, options);
 When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
 
 Always ensure that the chosen API version is fully supported and operational for your specific use case and that it aligns with the service's versioning policy.
+
+If you do not select an api version we will default to the latest version available, which has the possibility of being a preview version.
 
 ## Key concepts
 
@@ -253,9 +263,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_identity_install]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#install-the-package
 [custom_domain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Text/samples
+[source_migration]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text/MigrationGuide.md
 [source_root]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text/src
-[package]: https://www.nuget.org/packages/ <!-- need to update link when nuget published -->
-[text_refdocs]: https://learn.microsoft.com/dotnet/ <!-- need to update link when docs are published -->
+[package]: https://www.nuget.org/packages/
+[text_refdocs]: https://learn.microsoft.com/dotnet/
 [text_docs]: https://docs.microsoft.com/azure/cognitive-services/text-analytics/
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [textanalysisclient_class]: https://github.com/azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Text/src/TextAnalysisClient.cs
