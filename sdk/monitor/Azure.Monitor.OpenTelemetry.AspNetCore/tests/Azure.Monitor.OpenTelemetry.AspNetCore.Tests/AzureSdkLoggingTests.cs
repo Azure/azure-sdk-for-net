@@ -169,6 +169,42 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             await AssertContentContains(transport.Requests.Single(), "TestWarningEvent: hello", LogLevel.Warning);
         }
 
+        [Fact]
+        public async Task SettingCustomLoggingFilterResetsDefaultWarningLevel()
+        {
+            var builder = WebApplication.CreateBuilder();
+            // Even when a single custom filter is set, it should reset the default warning level.
+            builder.Logging.AddFilter("Azure.One", LogLevel.Information);
+
+            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
+            SetUpOTelAndLogging(builder, transport, LogLevel.Information);
+
+            using var app = builder.Build();
+            await app.StartAsync();
+
+            // Azure-One is added as a logging filter, the default warning level is reset.
+            // Informational-level logs from Azure-One sources are collected.
+            using TestEventSource source1 = new TestEventSource("Azure-One");
+            Assert.True(source1.IsEnabled());
+
+            source1.LogMessage("hello one", LogLevel.Information);
+            WaitForRequest(transport);
+            Assert.Single(transport.Requests);
+            await AssertContentContains(transport.Requests.Single(), "TestInfoEvent: hello one", LogLevel.Information);
+            transport.Requests.Clear();
+
+            // Azure-Two is not part of the logging filter.
+            // Since the logging filter is customized for the Azure SDK, the default warning level is reset.
+            // Informational-level logs from Azure-Two sources are collected.
+            using TestEventSource source2 = new TestEventSource("Azure-Two");
+            Assert.True(source2.IsEnabled());
+
+            source2.LogMessage("hello two", LogLevel.Information);
+            WaitForRequest(transport);
+            Assert.Single(transport.Requests);
+            await AssertContentContains(transport.Requests.Single(), "TestInfoEvent: hello two", LogLevel.Information);
+        }
+
         private IEnumerable<MockRequest> WaitForRequest(MockTransport transport, Func<MockRequest, bool>? filter = null)
         {
             filter = filter ?? (_ => true);
