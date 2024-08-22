@@ -24,7 +24,7 @@
   via `Microsoft.Extensions.Logging`. For more information, refer to [Logging
   with the Azure SDK for
   .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging).
-  ([#](https://github.com/Azure/azure-sdk-for-net/pull/))
+  ([#45649](https://github.com/Azure/azure-sdk-for-net/pull/45649))
 
 ## 1.3.0-beta.1 (2024-07-12)
 
