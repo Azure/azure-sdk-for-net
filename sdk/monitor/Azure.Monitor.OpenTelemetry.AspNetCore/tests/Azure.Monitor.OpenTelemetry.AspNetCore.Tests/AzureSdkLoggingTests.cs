@@ -205,6 +205,32 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             await AssertContentContains(transport.Requests.Single(), "TestInfoEvent: hello two", LogLevel.Information);
         }
 
+        [Fact]
+        public async Task CustomLoggingFilterOverridesDefaultWarningAndCapturesErrorLogs()
+        {
+            var builder = WebApplication.CreateBuilder();
+            // Even when a single custom filter is set, it should reset the default warning level.
+            builder.Logging.AddFilter("Azure.Test", LogLevel.Error);
+
+            var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
+            SetUpOTelAndLogging(builder, transport, LogLevel.Information);
+
+            using var app = builder.Build();
+            await app.StartAsync();
+
+            using TestEventSource source = new TestEventSource("Azure-Test");
+            Assert.True(source.IsEnabled());
+
+            // Only log level with errors should be captured as it is set in the logging filter.
+            source.LogMessage("Hello Information", LogLevel.Information);
+            source.LogMessage("Hello Debug", LogLevel.Debug);
+            source.LogMessage("Hello Warning", LogLevel.Warning);
+            source.LogMessage("Hello Error", LogLevel.Error);
+            WaitForRequest(transport);
+            Assert.Single(transport.Requests);
+            await AssertContentContains(transport.Requests.Single(), "TestErrorEvent: Hello Error", LogLevel.Error);
+        }
+
         private IEnumerable<MockRequest> WaitForRequest(MockTransport transport, Func<MockRequest, bool>? filter = null)
         {
             filter = filter ?? (_ => true);
@@ -297,10 +323,19 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 WriteEvent(3, message);
             }
 
+            [Event(4, Level = EventLevel.Error, Message = "TestErrorEvent: {0}")]
+            public void LogTestErrorEvent(string message)
+            {
+                WriteEvent(4, message);
+            }
+
             public void LogMessage(string message, LogLevel level)
             {
                 switch (level)
                 {
+                    case LogLevel.Error:
+                        LogTestErrorEvent(message);
+                        break;
                     case LogLevel.Warning:
                         LogTestWarningEvent(message);
                         break;
