@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> API Operation Update Contract details. </summary>
-    public partial class OperationUpdateContract
+    public partial class ApiOperationPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OperationUpdateContract"/>. </summary>
-        public OperationUpdateContract()
+        /// <summary> Initializes a new instance of <see cref="ApiOperationPatch"/>. </summary>
+        public ApiOperationPatch()
         {
             TemplateParameters = new ChangeTrackingList<ParameterContract>();
             Responses = new ChangeTrackingList<ResponseContract>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationUpdateContract"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiOperationPatch"/>. </summary>
         /// <param name="templateParameters"> Collection of URL template parameters. </param>
         /// <param name="description"> Description of the operation. May include HTML formatting tags. </param>
         /// <param name="request"> An entity containing request details. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
         /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationUpdateContract(IList<ParameterContract> templateParameters, string description, RequestContract request, IList<ResponseContract> responses, string policies, string displayName, string method, string uriTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiOperationPatch(IList<ParameterContract> templateParameters, string description, RequestContract request, IList<ResponseContract> responses, string policies, string displayName, string method, string uriTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TemplateParameters = templateParameters;
             Description = description;

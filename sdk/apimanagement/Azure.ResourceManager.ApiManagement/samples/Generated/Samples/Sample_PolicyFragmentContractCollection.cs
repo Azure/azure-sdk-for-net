@@ -13,7 +13,7 @@ using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
-    public partial class Sample_ServicePolicyFragmentCollection
+    public partial class Sample_PolicyFragmentContractCollection
     {
         // ApiManagementListPolicyFragments
         [NUnit.Framework.Test]
@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServicePolicyFragmentResource
-            ServicePolicyFragmentCollection collection = apiManagementService.GetServicePolicyFragments();
+            // get the collection of this PolicyFragmentContractResource
+            PolicyFragmentContractCollection collection = apiManagementService.GetPolicyFragmentContracts();
 
             // invoke the operation and iterate over the result
-            await foreach (ServicePolicyFragmentResource item in collection.GetAllAsync())
+            await foreach (PolicyFragmentContractResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementPolicyFragmentData resourceData = item.Data;
+                PolicyFragmentContractData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServicePolicyFragmentResource
-            ServicePolicyFragmentCollection collection = apiManagementService.GetServicePolicyFragments();
+            // get the collection of this PolicyFragmentContractResource
+            PolicyFragmentContractCollection collection = apiManagementService.GetPolicyFragmentContracts();
 
             // invoke the operation
             string id = "policyFragment1";
-            ServicePolicyFragmentResource result = await collection.GetAsync(id);
+            PolicyFragmentContractResource result = await collection.GetAsync(id);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementPolicyFragmentData resourceData = result.Data;
+            PolicyFragmentContractData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServicePolicyFragmentResource
-            ServicePolicyFragmentCollection collection = apiManagementService.GetServicePolicyFragments();
+            // get the collection of this PolicyFragmentContractResource
+            PolicyFragmentContractCollection collection = apiManagementService.GetPolicyFragmentContracts();
 
             // invoke the operation
             string id = "policyFragment1";
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServicePolicyFragmentResource
-            ServicePolicyFragmentCollection collection = apiManagementService.GetServicePolicyFragments();
+            // get the collection of this PolicyFragmentContractResource
+            PolicyFragmentContractCollection collection = apiManagementService.GetPolicyFragmentContracts();
 
             // invoke the operation
             string id = "policyFragment1";
-            NullableResponse<ServicePolicyFragmentResource> response = await collection.GetIfExistsAsync(id);
-            ServicePolicyFragmentResource result = response.HasValue ? response.Value : null;
+            NullableResponse<PolicyFragmentContractResource> response = await collection.GetIfExistsAsync(id);
+            PolicyFragmentContractResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementPolicyFragmentData resourceData = result.Data;
+                PolicyFragmentContractData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -182,17 +182,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServicePolicyFragmentResource
-            ServicePolicyFragmentCollection collection = apiManagementService.GetServicePolicyFragments();
+            // get the collection of this PolicyFragmentContractResource
+            PolicyFragmentContractCollection collection = apiManagementService.GetPolicyFragmentContracts();
 
             // invoke the operation
             string id = "policyFragment1";
             PolicyFragmentContentFormat? format = PolicyFragmentContentFormat.Rawxml;
-            ServicePolicyFragmentResource result = await collection.GetAsync(id, format: format);
+            PolicyFragmentContractResource result = await collection.GetAsync(id, format: format);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementPolicyFragmentData resourceData = result.Data;
+            PolicyFragmentContractData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -218,8 +218,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServicePolicyFragmentResource
-            ServicePolicyFragmentCollection collection = apiManagementService.GetServicePolicyFragments();
+            // get the collection of this PolicyFragmentContractResource
+            PolicyFragmentContractCollection collection = apiManagementService.GetPolicyFragmentContracts();
 
             // invoke the operation
             string id = "policyFragment1";
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServicePolicyFragmentResource
-            ServicePolicyFragmentCollection collection = apiManagementService.GetServicePolicyFragments();
+            // get the collection of this PolicyFragmentContractResource
+            PolicyFragmentContractCollection collection = apiManagementService.GetPolicyFragmentContracts();
 
             // invoke the operation
             string id = "policyFragment1";
             PolicyFragmentContentFormat? format = PolicyFragmentContentFormat.Rawxml;
-            NullableResponse<ServicePolicyFragmentResource> response = await collection.GetIfExistsAsync(id, format: format);
-            ServicePolicyFragmentResource result = response.HasValue ? response.Value : null;
+            NullableResponse<PolicyFragmentContractResource> response = await collection.GetIfExistsAsync(id, format: format);
+            PolicyFragmentContractResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ApiManagementPolicyFragmentData resourceData = result.Data;
+                PolicyFragmentContractData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -294,23 +294,23 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServicePolicyFragmentResource
-            ServicePolicyFragmentCollection collection = apiManagementService.GetServicePolicyFragments();
+            // get the collection of this PolicyFragmentContractResource
+            PolicyFragmentContractCollection collection = apiManagementService.GetPolicyFragmentContracts();
 
             // invoke the operation
             string id = "policyFragment1";
-            ApiManagementPolicyFragmentData data = new ApiManagementPolicyFragmentData()
+            PolicyFragmentContractData data = new PolicyFragmentContractData()
             {
                 Value = "<fragment><json-to-xml apply=\"always\" consider-accept-header=\"false\" /></fragment>",
                 Description = "A policy fragment example",
                 Format = PolicyFragmentContentFormat.Xml,
             };
-            ArmOperation<ServicePolicyFragmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, id, data);
-            ServicePolicyFragmentResource result = lro.Value;
+            ArmOperation<PolicyFragmentContractResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, id, data);
+            PolicyFragmentContractResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ApiManagementPolicyFragmentData resourceData = result.Data;
+            PolicyFragmentContractData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

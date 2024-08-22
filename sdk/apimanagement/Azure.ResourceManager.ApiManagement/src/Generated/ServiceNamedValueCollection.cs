@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="namedValueId"> Identifier of the NamedValue. </param>
-        /// <param name="namedValueCreateContract"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> or <paramref name="namedValueCreateContract"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceNamedValueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namedValueId, NamedValueCreateContract namedValueCreateContract, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServiceNamedValueResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string namedValueId, ApiManagementNamedValueCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namedValueId, nameof(namedValueId));
-            Argument.AssertNotNull(namedValueCreateContract, nameof(namedValueCreateContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceNamedValueNamedValueClientDiagnostics.CreateScope("ServiceNamedValueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceNamedValueNamedValueRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, namedValueCreateContract, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ServiceNamedValueResource>(new ServiceNamedValueOperationSource(Client), _serviceNamedValueNamedValueClientDiagnostics, Pipeline, _serviceNamedValueNamedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, namedValueCreateContract, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _serviceNamedValueNamedValueRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ServiceNamedValueResource>(new ServiceNamedValueOperationSource(Client), _serviceNamedValueNamedValueClientDiagnostics, Pipeline, _serviceNamedValueNamedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,22 +125,22 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="namedValueId"> Identifier of the NamedValue. </param>
-        /// <param name="namedValueCreateContract"> Create parameters. </param>
+        /// <param name="content"> Create parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> or <paramref name="namedValueCreateContract"/> is null. </exception>
-        public virtual ArmOperation<ServiceNamedValueResource> CreateOrUpdate(WaitUntil waitUntil, string namedValueId, NamedValueCreateContract namedValueCreateContract, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ServiceNamedValueResource> CreateOrUpdate(WaitUntil waitUntil, string namedValueId, ApiManagementNamedValueCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(namedValueId, nameof(namedValueId));
-            Argument.AssertNotNull(namedValueCreateContract, nameof(namedValueCreateContract));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceNamedValueNamedValueClientDiagnostics.CreateScope("ServiceNamedValueCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceNamedValueNamedValueRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, namedValueCreateContract, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ServiceNamedValueResource>(new ServiceNamedValueOperationSource(Client), _serviceNamedValueNamedValueClientDiagnostics, Pipeline, _serviceNamedValueNamedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, namedValueCreateContract, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _serviceNamedValueNamedValueRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch, cancellationToken);
+                var operation = new ApiManagementArmOperation<ServiceNamedValueResource>(new ServiceNamedValueOperationSource(Client), _serviceNamedValueNamedValueClientDiagnostics, Pipeline, _serviceNamedValueNamedValueRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, namedValueId, content, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

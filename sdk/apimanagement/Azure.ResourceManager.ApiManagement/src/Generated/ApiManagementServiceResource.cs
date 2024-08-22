@@ -1524,11 +1524,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementOpenIdConnectProviders().Get(openId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServicePolicyFragmentResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ServicePolicyFragmentResources and their operations over a ServicePolicyFragmentResource. </returns>
-        public virtual ServicePolicyFragmentCollection GetServicePolicyFragments()
+        /// <summary> Gets a collection of PolicyFragmentContractResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of PolicyFragmentContractResources and their operations over a PolicyFragmentContractResource. </returns>
+        public virtual PolicyFragmentContractCollection GetPolicyFragmentContracts()
         {
-            return GetCachedClient(client => new ServicePolicyFragmentCollection(client, Id));
+            return GetCachedClient(client => new PolicyFragmentContractCollection(client, Id));
         }
 
         /// <summary>
@@ -1548,7 +1548,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// <description><see cref="PolicyFragmentContractResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1558,9 +1558,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServicePolicyFragmentResource>> GetServicePolicyFragmentAsync(string id, PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyFragmentContractResource>> GetPolicyFragmentContractAsync(string id, PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
         {
-            return await GetServicePolicyFragments().GetAsync(id, format, cancellationToken).ConfigureAwait(false);
+            return await GetPolicyFragmentContracts().GetAsync(id, format, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1580,7 +1580,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// <description><see cref="PolicyFragmentContractResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1590,9 +1590,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServicePolicyFragmentResource> GetServicePolicyFragment(string id, PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<PolicyFragmentContractResource> GetPolicyFragmentContract(string id, PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
         {
-            return GetServicePolicyFragments().Get(id, format, cancellationToken);
+            return GetPolicyFragmentContracts().Get(id, format, cancellationToken);
         }
 
         /// <summary> Gets a collection of PortalConfigContractResources in the ApiManagementService. </summary>

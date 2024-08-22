@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ServiceWorkspacePolicyFragmentResource : IJsonModel<PolicyFragmentContractData>
+    public partial class PolicyFragmentContractResource : IJsonModel<PolicyFragmentContractData>
     {
         void IJsonModel<PolicyFragmentContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicyFragmentContractData>)Data).Write(writer, options);
 

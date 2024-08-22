@@ -2014,7 +2014,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NamedValueCreateContract"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ApiManagementNamedValueCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2024,12 +2024,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
         /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="keyVault"> KeyVault location details of the namedValue. </param>
-        /// <returns> A new <see cref="Models.NamedValueCreateContract"/> instance for mocking. </returns>
-        public static NamedValueCreateContract NamedValueCreateContract(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> tags = null, bool? isSecret = null, string displayName = null, string value = null, KeyVaultContractCreateProperties keyVault = null)
+        /// <returns> A new <see cref="Models.ApiManagementNamedValueCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static ApiManagementNamedValueCreateOrUpdateContent ApiManagementNamedValueCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> tags = null, bool? isSecret = null, string displayName = null, string value = null, KeyVaultContractCreateProperties keyVault = null)
         {
             tags ??= new List<string>();
 
-            return new NamedValueCreateContract(
+            return new ApiManagementNamedValueCreateOrUpdateContent(
                 id,
                 name,
                 resourceType,
@@ -2238,7 +2238,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiManagement.ApiManagementPolicyFragmentData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagement.PolicyFragmentContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2246,10 +2246,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="value"> Contents of the policy fragment. </param>
         /// <param name="description"> Policy fragment description. </param>
         /// <param name="format"> Format of the policy fragment content. </param>
-        /// <returns> A new <see cref="ApiManagement.ApiManagementPolicyFragmentData"/> instance for mocking. </returns>
-        public static ApiManagementPolicyFragmentData ApiManagementPolicyFragmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, PolicyFragmentContentFormat? format = null)
+        /// <returns> A new <see cref="ApiManagement.PolicyFragmentContractData"/> instance for mocking. </returns>
+        public static PolicyFragmentContractData PolicyFragmentContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string description = null, PolicyFragmentContentFormat? format = null)
         {
-            return new ApiManagementPolicyFragmentData(
+            return new PolicyFragmentContractData(
                 id,
                 name,
                 resourceType,

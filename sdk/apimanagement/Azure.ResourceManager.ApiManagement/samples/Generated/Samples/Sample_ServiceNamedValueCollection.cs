@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string namedValueId = "testprop2";
-            NamedValueCreateContract namedValueCreateContract = new NamedValueCreateContract()
+            ApiManagementNamedValueCreateOrUpdateContent content = new ApiManagementNamedValueCreateOrUpdateContent()
             {
                 Tags =
 {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 DisplayName = "prop3name",
                 Value = "propValue",
             };
-            ArmOperation<ServiceNamedValueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, namedValueId, namedValueCreateContract);
+            ArmOperation<ServiceNamedValueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, namedValueId, content);
             ServiceNamedValueResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string namedValueId = "testprop6";
-            NamedValueCreateContract namedValueCreateContract = new NamedValueCreateContract()
+            ApiManagementNamedValueCreateOrUpdateContent content = new ApiManagementNamedValueCreateOrUpdateContent()
             {
                 Tags =
 {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                     IdentityClientId = "ceaa6b06-c00f-43ef-99ac-f53d1fe876a0",
                 },
             };
-            ArmOperation<ServiceNamedValueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, namedValueId, namedValueCreateContract);
+            ArmOperation<ServiceNamedValueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, namedValueId, content);
             ServiceNamedValueResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

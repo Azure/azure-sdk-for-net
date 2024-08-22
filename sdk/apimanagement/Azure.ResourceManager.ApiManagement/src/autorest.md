@@ -300,7 +300,8 @@ rename-mapping:
   GroupCreateParameters: ApiManagementGroupCreateOrUpdateContent
   GroupUpdateParameters: ApiManagementGroupPatch
   ApiVersionSetUpdateParameters: ApiVersionSetPatch
-  # PolicyFragmentContract: ApiManagementPolicyFragment
+  OperationUpdateContract: ApiOperationPatch
+  NamedValueCreateContract: ApiManagementNamedValueCreateOrUpdateContent
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'

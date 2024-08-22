@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class OperationUpdateContract : IUtf8JsonSerializable, IJsonModel<OperationUpdateContract>
+    public partial class ApiOperationPatch : IUtf8JsonSerializable, IJsonModel<ApiOperationPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationUpdateContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiOperationPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OperationUpdateContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiOperationPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiOperationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationUpdateContract)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -97,19 +97,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        OperationUpdateContract IJsonModel<OperationUpdateContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiOperationPatch IJsonModel<ApiOperationPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiOperationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationUpdateContract)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOperationUpdateContract(document.RootElement, options);
+            return DeserializeApiOperationPatch(document.RootElement, options);
         }
 
-        internal static OperationUpdateContract DeserializeOperationUpdateContract(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiOperationPatch DeserializeApiOperationPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OperationUpdateContract(
+            return new ApiOperationPatch(
                 templateParameters ?? new ChangeTrackingList<ParameterContract>(),
                 description,
                 request,
@@ -221,35 +221,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OperationUpdateContract>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiOperationPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiOperationPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationUpdateContract)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OperationUpdateContract IPersistableModel<OperationUpdateContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiOperationPatch IPersistableModel<ApiOperationPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiOperationPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeOperationUpdateContract(document.RootElement, options);
+                        return DeserializeApiOperationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationUpdateContract)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiOperationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OperationUpdateContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiOperationPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

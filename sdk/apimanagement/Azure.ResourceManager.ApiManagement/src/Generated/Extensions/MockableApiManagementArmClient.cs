@@ -719,15 +719,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServicePolicyFragmentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServicePolicyFragmentResource.CreateResourceIdentifier" /> to create a <see cref="ServicePolicyFragmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PolicyFragmentContractResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PolicyFragmentContractResource.CreateResourceIdentifier" /> to create a <see cref="PolicyFragmentContractResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServicePolicyFragmentResource"/> object. </returns>
-        public virtual ServicePolicyFragmentResource GetServicePolicyFragmentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PolicyFragmentContractResource"/> object. </returns>
+        public virtual PolicyFragmentContractResource GetPolicyFragmentContractResource(ResourceIdentifier id)
         {
-            ServicePolicyFragmentResource.ValidateResourceId(id);
-            return new ServicePolicyFragmentResource(Client, id);
+            PolicyFragmentContractResource.ValidateResourceId(id);
+            return new PolicyFragmentContractResource(Client, id);
         }
 
         /// <summary>

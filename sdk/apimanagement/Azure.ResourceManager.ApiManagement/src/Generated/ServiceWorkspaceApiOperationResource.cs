@@ -350,18 +350,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="operationUpdateContract"> API Operation Update parameters. </param>
+        /// <param name="patch"> API Operation Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationUpdateContract"/> is null. </exception>
-        public virtual async Task<Response<ServiceWorkspaceApiOperationResource>> UpdateAsync(ETag ifMatch, OperationUpdateContract operationUpdateContract, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ServiceWorkspaceApiOperationResource>> UpdateAsync(ETag ifMatch, ApiOperationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operationUpdateContract, nameof(operationUpdateContract));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceWorkspaceApiOperationWorkspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceApiOperationWorkspaceApiOperationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, operationUpdateContract, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceWorkspaceApiOperationWorkspaceApiOperationRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServiceWorkspaceApiOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -393,18 +393,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="operationUpdateContract"> API Operation Update parameters. </param>
+        /// <param name="patch"> API Operation Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationUpdateContract"/> is null. </exception>
-        public virtual Response<ServiceWorkspaceApiOperationResource> Update(ETag ifMatch, OperationUpdateContract operationUpdateContract, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ServiceWorkspaceApiOperationResource> Update(ETag ifMatch, ApiOperationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(operationUpdateContract, nameof(operationUpdateContract));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceWorkspaceApiOperationWorkspaceApiOperationClientDiagnostics.CreateScope("ServiceWorkspaceApiOperationResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceApiOperationWorkspaceApiOperationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, operationUpdateContract, cancellationToken);
+                var response = _serviceWorkspaceApiOperationWorkspaceApiOperationRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
                 return Response.FromValue(new ServiceWorkspaceApiOperationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

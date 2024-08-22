@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            OperationUpdateContract operationUpdateContract = new OperationUpdateContract()
+            ApiOperationPatch patch = new ApiOperationPatch()
             {
                 TemplateParameters =
 {
@@ -152,7 +152,7 @@ Headers =
                 Method = "GET",
                 UriTemplate = "/resource",
             };
-            ServiceWorkspaceApiOperationResource result = await serviceWorkspaceApiOperation.UpdateAsync(ifMatch, operationUpdateContract);
+            ServiceWorkspaceApiOperationResource result = await serviceWorkspaceApiOperation.UpdateAsync(ifMatch, patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

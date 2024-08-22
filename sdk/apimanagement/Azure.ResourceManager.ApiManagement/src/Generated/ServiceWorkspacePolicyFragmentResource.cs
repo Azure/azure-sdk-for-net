@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentClientDiagnostics;
         private readonly WorkspacePolicyFragmentRestOperations _serviceWorkspacePolicyFragmentWorkspacePolicyFragmentRestClient;
-        private readonly ApiManagementPolicyFragmentData _data;
+        private readonly PolicyFragmentContractData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/workspaces/policyFragments";
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref="ServiceWorkspacePolicyFragmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceWorkspacePolicyFragmentResource(ArmClient client, ApiManagementPolicyFragmentData data) : this(client, data.Id)
+        internal ServiceWorkspacePolicyFragmentResource(ArmClient client, PolicyFragmentContractData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ApiManagementPolicyFragmentData Data
+        public virtual PolicyFragmentContractData Data
         {
             get
             {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceWorkspacePolicyFragmentResource>> UpdateAsync(WaitUntil waitUntil, ApiManagementPolicyFragmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServiceWorkspacePolicyFragmentResource>> UpdateAsync(WaitUntil waitUntil, PolicyFragmentContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServiceWorkspacePolicyFragmentResource> Update(WaitUntil waitUntil, ApiManagementPolicyFragmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServiceWorkspacePolicyFragmentResource> Update(WaitUntil waitUntil, PolicyFragmentContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

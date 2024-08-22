@@ -8,24 +8,24 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ApiManagement.Models
+namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class NamedValueCreateContract : IUtf8JsonSerializable, IJsonModel<NamedValueCreateContract>
+    public partial class PolicyFragmentContractData : IUtf8JsonSerializable, IJsonModel<PolicyFragmentContractData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamedValueCreateContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyFragmentContractData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NamedValueCreateContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PolicyFragmentContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamedValueCreateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyFragmentContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamedValueCreateContract)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyFragmentContractData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,35 +51,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartArray();
-                foreach (var item in Tags)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsSecret))
-            {
-                writer.WritePropertyName("secret"u8);
-                writer.WriteBooleanValue(IsSecret.Value);
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (Optional.IsDefined(KeyVault))
+            if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("keyVault"u8);
-                writer.WriteObjectValue(KeyVault, options);
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Format))
+            {
+                writer.WritePropertyName("format"u8);
+                writer.WriteStringValue(Format.Value.ToString());
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -100,19 +85,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        NamedValueCreateContract IJsonModel<NamedValueCreateContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PolicyFragmentContractData IJsonModel<PolicyFragmentContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamedValueCreateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyFragmentContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamedValueCreateContract)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyFragmentContractData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNamedValueCreateContract(document.RootElement, options);
+            return DeserializePolicyFragmentContractData(document.RootElement, options);
         }
 
-        internal static NamedValueCreateContract DeserializeNamedValueCreateContract(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PolicyFragmentContractData DeserializePolicyFragmentContractData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -124,11 +109,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<string> tags = default;
-            bool? secret = default;
-            string displayName = default;
             string value = default;
-            KeyVaultContractCreateProperties keyVault = default;
+            string description = default;
+            PolicyFragmentContentFormat? format = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,46 +149,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("tags"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            tags = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("secret"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            secret = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
                         if (property0.NameEquals("value"u8))
                         {
                             value = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("keyVault"u8))
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("format"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            keyVault = KeyVaultContractCreateProperties.DeserializeKeyVaultContractCreateProperties(property0.Value, options);
+                            format = new PolicyFragmentContentFormat(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -217,16 +177,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NamedValueCreateContract(
+            return new PolicyFragmentContractData(
                 id,
                 name,
                 type,
                 systemData,
-                tags ?? new ChangeTrackingList<string>(),
-                secret,
-                displayName,
                 value,
-                keyVault,
+                description,
+                format,
                 serializedAdditionalRawData);
         }
 
@@ -296,81 +254,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    tags: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tags))
-                {
-                    if (Tags.Any())
-                    {
-                        builder.Append("    tags: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Tags)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSecret), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    secret: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsSecret))
-                {
-                    builder.Append("    secret: ");
-                    var boolValue = IsSecret.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    displayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DisplayName))
-                {
-                    builder.Append("    displayName: ");
-                    if (DisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DisplayName}'");
-                    }
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -394,18 +277,41 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVault), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    keyVault: ");
+                builder.Append("    description: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(KeyVault))
+                if (Optional.IsDefined(Description))
                 {
-                    builder.Append("    keyVault: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, KeyVault, options, 4, false, "    keyVault: ");
+                    builder.Append("    description: ");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Description}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Format), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    format: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Format))
+                {
+                    builder.Append("    format: ");
+                    builder.AppendLine($"'{Format.Value.ToString()}'");
                 }
             }
 
@@ -414,9 +320,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NamedValueCreateContract>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PolicyFragmentContractData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamedValueCreateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyFragmentContractData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -425,26 +331,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NamedValueCreateContract)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyFragmentContractData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NamedValueCreateContract IPersistableModel<NamedValueCreateContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PolicyFragmentContractData IPersistableModel<PolicyFragmentContractData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamedValueCreateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyFragmentContractData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNamedValueCreateContract(document.RootElement, options);
+                        return DeserializePolicyFragmentContractData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NamedValueCreateContract)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyFragmentContractData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NamedValueCreateContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PolicyFragmentContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

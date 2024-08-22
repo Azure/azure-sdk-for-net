@@ -17,14 +17,14 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing a ServicePolicyFragment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServicePolicyFragmentResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetServicePolicyFragmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetServicePolicyFragment method.
+    /// A Class representing a PolicyFragmentContract along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PolicyFragmentContractResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPolicyFragmentContractResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetPolicyFragmentContract method.
     /// </summary>
-    public partial class ServicePolicyFragmentResource : ArmResource
+    public partial class PolicyFragmentContractResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ServicePolicyFragmentResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PolicyFragmentContractResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="serviceName"> The serviceName. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.ApiManagement
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _servicePolicyFragmentPolicyFragmentClientDiagnostics;
-        private readonly PolicyFragmentRestOperations _servicePolicyFragmentPolicyFragmentRestClient;
-        private readonly ApiManagementPolicyFragmentData _data;
+        private readonly ClientDiagnostics _policyFragmentContractPolicyFragmentClientDiagnostics;
+        private readonly PolicyFragmentRestOperations _policyFragmentContractPolicyFragmentRestClient;
+        private readonly PolicyFragmentContractData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/policyFragments";
 
-        /// <summary> Initializes a new instance of the <see cref="ServicePolicyFragmentResource"/> class for mocking. </summary>
-        protected ServicePolicyFragmentResource()
+        /// <summary> Initializes a new instance of the <see cref="PolicyFragmentContractResource"/> class for mocking. </summary>
+        protected PolicyFragmentContractResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServicePolicyFragmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyFragmentContractResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServicePolicyFragmentResource(ArmClient client, ApiManagementPolicyFragmentData data) : this(client, data.Id)
+        internal PolicyFragmentContractResource(ArmClient client, PolicyFragmentContractData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServicePolicyFragmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyFragmentContractResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServicePolicyFragmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PolicyFragmentContractResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _servicePolicyFragmentPolicyFragmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string servicePolicyFragmentPolicyFragmentApiVersion);
-            _servicePolicyFragmentPolicyFragmentRestClient = new PolicyFragmentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, servicePolicyFragmentPolicyFragmentApiVersion);
+            _policyFragmentContractPolicyFragmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string policyFragmentContractPolicyFragmentApiVersion);
+            _policyFragmentContractPolicyFragmentRestClient = new PolicyFragmentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policyFragmentContractPolicyFragmentApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ApiManagementPolicyFragmentData Data
+        public virtual PolicyFragmentContractData Data
         {
             get
             {
@@ -107,22 +107,22 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// <description><see cref="PolicyFragmentContractResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="format"> Policy fragment content format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServicePolicyFragmentResource>> GetAsync(PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyFragmentContractResource>> GetAsync(PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _servicePolicyFragmentPolicyFragmentClientDiagnostics.CreateScope("ServicePolicyFragmentResource.Get");
+            using var scope = _policyFragmentContractPolicyFragmentClientDiagnostics.CreateScope("PolicyFragmentContractResource.Get");
             scope.Start();
             try
             {
-                var response = await _servicePolicyFragmentPolicyFragmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, format, cancellationToken).ConfigureAwait(false);
+                var response = await _policyFragmentContractPolicyFragmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, format, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServicePolicyFragmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyFragmentContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,22 +148,22 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// <description><see cref="PolicyFragmentContractResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="format"> Policy fragment content format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServicePolicyFragmentResource> Get(PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
+        public virtual Response<PolicyFragmentContractResource> Get(PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _servicePolicyFragmentPolicyFragmentClientDiagnostics.CreateScope("ServicePolicyFragmentResource.Get");
+            using var scope = _policyFragmentContractPolicyFragmentClientDiagnostics.CreateScope("PolicyFragmentContractResource.Get");
             scope.Start();
             try
             {
-                var response = _servicePolicyFragmentPolicyFragmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, format, cancellationToken);
+                var response = _policyFragmentContractPolicyFragmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, format, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServicePolicyFragmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyFragmentContractResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// <description><see cref="PolicyFragmentContractResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,12 +198,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _servicePolicyFragmentPolicyFragmentClientDiagnostics.CreateScope("ServicePolicyFragmentResource.Delete");
+            using var scope = _policyFragmentContractPolicyFragmentClientDiagnostics.CreateScope("PolicyFragmentContractResource.Delete");
             scope.Start();
             try
             {
-                var response = await _servicePolicyFragmentPolicyFragmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var uri = _servicePolicyFragmentPolicyFragmentRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
+                var response = await _policyFragmentContractPolicyFragmentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var uri = _policyFragmentContractPolicyFragmentRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// <description><see cref="PolicyFragmentContractResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,12 +243,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _servicePolicyFragmentPolicyFragmentClientDiagnostics.CreateScope("ServicePolicyFragmentResource.Delete");
+            using var scope = _policyFragmentContractPolicyFragmentClientDiagnostics.CreateScope("PolicyFragmentContractResource.Delete");
             scope.Start();
             try
             {
-                var response = _servicePolicyFragmentPolicyFragmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
-                var uri = _servicePolicyFragmentPolicyFragmentRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
+                var response = _policyFragmentContractPolicyFragmentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var uri = _policyFragmentContractPolicyFragmentRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// <description><see cref="PolicyFragmentContractResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,16 +288,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServicePolicyFragmentResource>> UpdateAsync(WaitUntil waitUntil, ApiManagementPolicyFragmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PolicyFragmentContractResource>> UpdateAsync(WaitUntil waitUntil, PolicyFragmentContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _servicePolicyFragmentPolicyFragmentClientDiagnostics.CreateScope("ServicePolicyFragmentResource.Update");
+            using var scope = _policyFragmentContractPolicyFragmentClientDiagnostics.CreateScope("PolicyFragmentContractResource.Update");
             scope.Start();
             try
             {
-                var response = await _servicePolicyFragmentPolicyFragmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ServicePolicyFragmentResource>(new ServicePolicyFragmentOperationSource(Client), _servicePolicyFragmentPolicyFragmentClientDiagnostics, Pipeline, _servicePolicyFragmentPolicyFragmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _policyFragmentContractPolicyFragmentRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<PolicyFragmentContractResource>(new PolicyFragmentContractOperationSource(Client), _policyFragmentContractPolicyFragmentClientDiagnostics, Pipeline, _policyFragmentContractPolicyFragmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// <description><see cref="PolicyFragmentContractResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -335,16 +335,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServicePolicyFragmentResource> Update(WaitUntil waitUntil, ApiManagementPolicyFragmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PolicyFragmentContractResource> Update(WaitUntil waitUntil, PolicyFragmentContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _servicePolicyFragmentPolicyFragmentClientDiagnostics.CreateScope("ServicePolicyFragmentResource.Update");
+            using var scope = _policyFragmentContractPolicyFragmentClientDiagnostics.CreateScope("PolicyFragmentContractResource.Update");
             scope.Start();
             try
             {
-                var response = _servicePolicyFragmentPolicyFragmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ServicePolicyFragmentResource>(new ServicePolicyFragmentOperationSource(Client), _servicePolicyFragmentPolicyFragmentClientDiagnostics, Pipeline, _servicePolicyFragmentPolicyFragmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _policyFragmentContractPolicyFragmentRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var operation = new ApiManagementArmOperation<PolicyFragmentContractResource>(new PolicyFragmentContractOperationSource(Client), _policyFragmentContractPolicyFragmentClientDiagnostics, Pipeline, _policyFragmentContractPolicyFragmentRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// <description><see cref="PolicyFragmentContractResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,8 +383,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ResourceCollectionValueItem"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceCollectionValueItem> GetReferencesAsync(int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _servicePolicyFragmentPolicyFragmentRestClient.CreateListReferencesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ResourceCollectionValueItem.DeserializeResourceCollectionValueItem(e), _servicePolicyFragmentPolicyFragmentClientDiagnostics, Pipeline, "ServicePolicyFragmentResource.GetReferences", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyFragmentContractPolicyFragmentRestClient.CreateListReferencesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ResourceCollectionValueItem.DeserializeResourceCollectionValueItem(e), _policyFragmentContractPolicyFragmentClientDiagnostics, Pipeline, "PolicyFragmentContractResource.GetReferences", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// <description><see cref="PolicyFragmentContractResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,8 +414,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ResourceCollectionValueItem"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceCollectionValueItem> GetReferences(int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _servicePolicyFragmentPolicyFragmentRestClient.CreateListReferencesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ResourceCollectionValueItem.DeserializeResourceCollectionValueItem(e), _servicePolicyFragmentPolicyFragmentClientDiagnostics, Pipeline, "ServicePolicyFragmentResource.GetReferences", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _policyFragmentContractPolicyFragmentRestClient.CreateListReferencesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, top, skip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ResourceCollectionValueItem.DeserializeResourceCollectionValueItem(e), _policyFragmentContractPolicyFragmentClientDiagnostics, Pipeline, "PolicyFragmentContractResource.GetReferences", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -435,18 +435,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// <description><see cref="PolicyFragmentContractResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _servicePolicyFragmentPolicyFragmentClientDiagnostics.CreateScope("ServicePolicyFragmentResource.GetEntityTag");
+            using var scope = _policyFragmentContractPolicyFragmentClientDiagnostics.CreateScope("PolicyFragmentContractResource.GetEntityTag");
             scope.Start();
             try
             {
-                var response = await _servicePolicyFragmentPolicyFragmentRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _policyFragmentContractPolicyFragmentRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -473,18 +473,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServicePolicyFragmentResource"/></description>
+        /// <description><see cref="PolicyFragmentContractResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
         {
-            using var scope = _servicePolicyFragmentPolicyFragmentClientDiagnostics.CreateScope("ServicePolicyFragmentResource.GetEntityTag");
+            using var scope = _policyFragmentContractPolicyFragmentClientDiagnostics.CreateScope("PolicyFragmentContractResource.GetEntityTag");
             scope.Start();
             try
             {
-                var response = _servicePolicyFragmentPolicyFragmentRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _policyFragmentContractPolicyFragmentRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
