@@ -62,6 +62,22 @@
       "defaultValue": "CommitId",
       "replaces": "CommitId"
     },
+    "ChangeLogH2Title": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": false,
+      "description": "the H2 title of Changelog",
+      "defaultValue": "1.0.0-beta.1 (Unreleased)",
+      "replaces": "ChangeLogH2Title"
+    },
+    "ChangeLogSdkDescription": {
+      "type": "parameter",
+      "datatype":"text",
+      "isRequired": false,
+      "description": "Sdk description",
+      "defaultValue": "",
+      "replaces": "ChangeLogSdkDescription"
+    },
     "includeCI": {
       "type": "parameter",
       "datatype": "bool",
