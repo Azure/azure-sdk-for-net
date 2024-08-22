@@ -40,22 +40,22 @@ extends:
               - script: |
                   npm ci
                 displayName: "Install packages"
-                workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-net/azure-plugin
+                workingDirectory: $(Build.SourcesDirectory)/azure-plugin
               - script: |
                   npm ls -a
                 displayName: "List packages"
-                workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-net/azure-plugin
+                workingDirectory: $(Build.SourcesDirectory)/azure-plugin
               - script: |
                   npm run prettier
                 displayName: "Emitter format check"
-                workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-net/azure-plugin/emitter
+                workingDirectory: $(Build.SourcesDirectory)/azure-plugin/emitter
               - script: |
                   npm run lint
                 displayName: "Emitter linter check"
-                workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-net/azure-plugin/emitter
+                workingDirectory: $(Build.SourcesDirectory)/azure-plugin/emitter
               - task: Npm@1
                 displayName: 'Build TypeSpec csharp emitter and generator'
                 inputs:
                   command: custom
                   customCommand: run build
-                  workingDir: $(Build.SourcesDirectory)/azure-sdk-for-net/azure-plugin
+                  workingDir: $(Build.SourcesDirectory)/azure-plugin
