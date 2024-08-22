@@ -6,11 +6,11 @@
 
 ### Breaking Changes
 
-- Removed the `PopTokenRequestContext` type and added the proof of posession related properties to `TokenRequestContext` in Azure.Core.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+- Removed the `PopTokenRequestContext` type and added the proof of posession related properties to `TokenRequestContext` in Azure.Core.
 
 ## 0.1.0-preview.34 (2024-06-06)
 
