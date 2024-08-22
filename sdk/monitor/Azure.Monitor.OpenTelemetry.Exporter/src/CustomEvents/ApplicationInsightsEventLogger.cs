@@ -33,6 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Events
             _logger = loggerFactory.CreateLogger(EventLoggerName);
         }
 
+        // TODO: Follow up to check if nullables are ok.
         /// <inheritdoc/>
         public void TrackEvent(string name, IReadOnlyList<KeyValuePair<string, object?>>? attributes = null)
         {
