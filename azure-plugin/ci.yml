@@ -15,6 +15,10 @@ extends:
   parameters:
     stages:
       - stage: 'Build'
+        pool:
+          name: $(WINDOWSPOOL)
+          image: $(WINDOWSVMIMAGE)
+          os: windows
         jobs:
           - job: Build
             timeoutInMinutes: 120
