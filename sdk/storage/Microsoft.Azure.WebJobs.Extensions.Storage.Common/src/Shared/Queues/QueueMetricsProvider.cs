@@ -52,6 +52,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                     _logger.LogWarning($"Error querying for queue scale status: {ex.Message}");
                 }
             }
+            catch (Exception ex)
+            {
+                _logger.LogWarning($"Fatal error querying for queue scale status: {ex.Message}");
+            }
+
             return 0;
         }
 
@@ -98,6 +103,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                     // and scale in
                     _logger.LogWarning($"Error querying for queue scale status: {ex.Message}");
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning($"Fatal error querying for queue scale status: {ex.Message}");
             }
 
             return new QueueTriggerMetrics
