@@ -37,8 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Events
         /// <inheritdoc/>
         public void TrackEvent(string name, IReadOnlyList<KeyValuePair<string, object?>>? attributes = null)
         {
-            // Setting the loglevel to critical to ensure events are not filtered.
-            _logger.Log(LogLevel.Critical, eventId: new EventId(1, name), attributes, exception: null, formatter: s_formatter);
+            _logger.Log(LogLevel.Information, eventId: new EventId(1, name), attributes, exception: null, formatter: s_formatter);
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     public static class OpenTelemetryBuilderExtensions
     {
         private const string SqlClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.SqlClient";
+        private const string EventLoggerName = "Azure.Monitor.OpenTelemetry.CustomEvents";
 
         /// <summary>
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
@@ -212,8 +213,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     }
                 });
 
-            // Enable custom events
+            // Enable custom events and set filter to enable collection.
             builder.Services.AddSingleton<IApplicationInsightsEventLogger, ApplicationInsightsEventLogger>();
+            builder.Services.AddLogging(o => o.AddFilter(EventLoggerName, LogLevel.Information));
 
             return builder;
         }
