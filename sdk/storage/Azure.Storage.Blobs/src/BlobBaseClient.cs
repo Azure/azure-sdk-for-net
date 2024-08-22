@@ -6865,10 +6865,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateUserDelegationSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey) =>
-            GenerateUserDelegationSasUriInternal(permissions, expiresOn, userDelegationKey, out _);
+            GenerateUserDelegationSasUri(permissions, expiresOn, userDelegationKey, out _);
 
         /// <summary>
-        /// The <see cref="GenerateUserDelegationSasUriInternal(BlobSasPermissions, DateTimeOffset, UserDelegationKey, out string)"/>
+        /// The <see cref="GenerateUserDelegationSasUri(BlobSasPermissions, DateTimeOffset, UserDelegationKey, out string)"/>
         /// returns a <see cref="Uri"/> representing a Blob Service
         /// Shared Access Signature (SAS) Uri based on the Client properties
         /// and parameters passed. The SAS is signed by the user delegation key
@@ -6901,8 +6901,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
-        internal virtual Uri GenerateUserDelegationSasUriInternal(BlobSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey, out string stringToSign) =>
-            GenerateUserDelegationSasUriInternal(new BlobSasBuilder(permissions, expiresOn) { BlobContainerName = Name }, userDelegationKey, out stringToSign);
+        public virtual Uri GenerateUserDelegationSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey, out string stringToSign) =>
+            GenerateUserDelegationSasUri(new BlobSasBuilder(permissions, expiresOn) { BlobContainerName = Name }, userDelegationKey, out stringToSign);
 
         /// <summary>
         /// The <see cref="GenerateUserDelegationSasUri(BlobSasBuilder, UserDelegationKey)"/>
@@ -6930,10 +6930,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateUserDelegationSasUri(BlobSasBuilder builder, UserDelegationKey userDelegationKey) =>
-            GenerateUserDelegationSasUriInternal(builder, userDelegationKey, out _);
+            GenerateUserDelegationSasUri(builder, userDelegationKey, out _);
 
         /// <summary>
-        /// The <see cref="GenerateUserDelegationSasUriInternal(BlobSasBuilder, UserDelegationKey, out string)"/>
+        /// The <see cref="GenerateUserDelegationSasUri(BlobSasBuilder, UserDelegationKey, out string)"/>
         /// returns a <see cref="Uri"/> representing a Blob Service
         /// Shared Access Signature (SAS) Uri based on the Client properties
         /// and builder passed. The SAS is signed by the user delegation key
@@ -6961,7 +6961,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
-        internal virtual Uri GenerateUserDelegationSasUriInternal(BlobSasBuilder builder, UserDelegationKey userDelegationKey, out string stringToSign)
+        public virtual Uri GenerateUserDelegationSasUri(BlobSasBuilder builder, UserDelegationKey userDelegationKey, out string stringToSign)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
             userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));
