@@ -137,7 +137,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     {
         AssistantClient client = GetTestClient();
         string modelName = client.DeploymentOrThrow();
-        FunctionToolDefinition getWeatherTool = new("get_current_weather", "Gets the user's current weather");
+        FunctionToolDefinition getWeatherTool = new("get_current_weather") { Description = "Gets the user's current weather" };
         Assistant assistant = await client.CreateAssistantAsync(modelName, new()
         {
             Tools = { getWeatherTool }

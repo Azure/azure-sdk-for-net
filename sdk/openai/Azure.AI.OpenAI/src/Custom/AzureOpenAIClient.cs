@@ -72,7 +72,6 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// </remarks>
     /// <param name="endpoint"> The Azure OpenAI resource endpoint to use. This should not include model deployment or operation information. For example: <c>https://my-resource.openai.azure.com</c>. </param>
     /// <param name="credential"> The API key to authenticate with the service. </param>
-    /// <param name="options"> The options to configure the client. </param>
     public AzureOpenAIClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureOpenAIClientOptions())
     {
     }
@@ -143,7 +142,7 @@ public partial class AzureOpenAIClient : OpenAIClient
     /// Example: <c>https://my-resource.openai.azure.com</c>
     /// </para>
     /// </param>
-    /// <param name="credential"> The API key to use when authenticating with the provided endpoint. </para>
+    /// <param name="credential"> The API key to use when authenticating with the provided endpoint. </param>
     /// <param name="options"> The scenario-independent options to use. </param>
     public AzureOpenAIClient(Uri endpoint, TokenCredential credential, AzureOpenAIClientOptions options = null)
         : this(CreatePipeline(credential, options), endpoint, options)
