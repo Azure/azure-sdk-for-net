@@ -12,6 +12,7 @@ namespace Azure.Monitor.OpenTelemetry.Events
     /// </summary>
     public sealed class ApplicationInsightsEventLogger : IApplicationInsightsEventLogger
     {
+        private const string EventLoggerName = "Azure.Monitor.OpenTelemetry.CustomEvents";
         private static readonly Func<IReadOnlyList<KeyValuePair<string, object?>>?, Exception?, string> s_formatter = (state, ex) =>
         {
             return "CustomEvent";
@@ -29,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.Events
             if (loggerFactory == null)
                 throw new ArgumentNullException(nameof(loggerFactory));
 
-            _logger = loggerFactory.CreateLogger("Azure.Monitor.OpenTelemetry.CustomEvents");
+            _logger = loggerFactory.CreateLogger(EventLoggerName);
         }
 
         /// <inheritdoc/>
