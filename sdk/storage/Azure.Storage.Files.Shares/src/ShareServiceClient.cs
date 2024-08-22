@@ -12,6 +12,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Azure.Storage.Files.Shares
 {
@@ -1380,6 +1381,114 @@ namespace Azure.Storage.Files.Shares
                     }
 
                     return Response.FromValue(shareClient, response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(ShareServiceClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion
+
+        #region GetServiceUsage
+        /// <summary>
+        /// The <see cref="GetServiceUsage"/> operation gets the usage
+        /// stats for the storage account in question.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareServiceUsageProperties}"/> describing the using of this storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ShareServiceUsageProperties> GetServiceUsage(
+            CancellationToken cancellationToken = default) =>
+            GetServiceUsageInternal(
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetServiceUsageAsync"/> operation gets the usage
+        /// stats for the storage account in question.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareServiceUsageProperties}"/> describing the using of this storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ShareServiceUsageProperties>> GetServiceUsageAsync(
+            CancellationToken cancellationToken = default) =>
+            await GetServiceUsageInternal(
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetServiceUsageInternal"/> operation gets the usage
+        /// stats for the storage account in question.
+        /// </summary>
+        /// <param name="async">
+        /// Whether to invoke the operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ShareServiceUsageProperties}"/> describing the using of this storage account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        private async Task<Response<ShareServiceUsageProperties>> GetServiceUsageInternal(
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareServiceClient)))
+            {
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(ShareServiceClient)}.{nameof(GetServiceUsage)}");
+
+                scope.Start();
+
+                try
+                {
+                    ResponseWithHeaders<ShareServiceUsageProperties, ServiceGetServiceUsageHeaders> response;
+
+                    if (async)
+                    {
+                        response = await ServiceRestClient.GetServiceUsageAsync(
+                            cancellationToken: cancellationToken)
+                            .ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        response = ServiceRestClient.GetServiceUsage(
+                            cancellationToken: cancellationToken);
+                    }
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
                 }
                 catch (Exception ex)
                 {

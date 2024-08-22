@@ -193,6 +193,80 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
+        internal HttpMessage CreateGetServiceUsageRequest(int? timeout)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "usage", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
+            request.Headers.Add("Accept", "application/xml");
+            return message;
+        }
+
+        /// <summary> Gets usage information about the storage account in question. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<ShareServiceUsageProperties, ServiceGetServiceUsageHeaders>> GetServiceUsageAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetServiceUsageRequest(timeout);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new ServiceGetServiceUsageHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ShareServiceUsageProperties value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("ShareServiceUsageProperties") is XElement shareServiceUsagePropertiesElement)
+                        {
+                            value = ShareServiceUsageProperties.DeserializeShareServiceUsageProperties(shareServiceUsagePropertiesElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets usage information about the storage account in question. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<ShareServiceUsageProperties, ServiceGetServiceUsageHeaders> GetServiceUsage(int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            using var message = CreateGetServiceUsageRequest(timeout);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new ServiceGetServiceUsageHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ShareServiceUsageProperties value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("ShareServiceUsageProperties") is XElement shareServiceUsagePropertiesElement)
+                        {
+                            value = ShareServiceUsageProperties.DeserializeShareServiceUsageProperties(shareServiceUsagePropertiesElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListSharesSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<ListSharesIncludeType> include, int? timeout)
         {
             var message = _pipeline.CreateMessage();

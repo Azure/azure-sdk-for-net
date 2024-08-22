@@ -529,8 +529,70 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual(ShareErrorCode.ShareNotFound.ToString(), e.ErrorCode));
         }
 
-        #region GenerateSasTests
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_01_05)]
+        public async Task GetServiceUseageAsync()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+
+            // Act
+            Response<ShareServiceUsageProperties> response = await service.GetServiceUsageAsync();
+
+            // Assert
+            Assert.IsNotNull(response.Value.AccountLimits.MaxFileShares);
+            Assert.IsNotNull(response.Value.AccountLimits.MaxProvisionedStorageGiB);
+            Assert.IsNotNull(response.Value.AccountLimits.MaxProvisionedIops);
+            Assert.IsNotNull(response.Value.AccountLimits.MaxProvisionedBandwidthMiBPerSec);
+
+            Assert.IsNotNull(response.Value.ShareLimits.MinProvisionedStorageGiB);
+            Assert.IsNotNull(response.Value.ShareLimits.MaxProvisionedStorageGiB);
+            Assert.IsNotNull(response.Value.ShareLimits.MinProvisionedIops);
+            Assert.IsNotNull(response.Value.ShareLimits.MaxProvisionedIops);
+            Assert.IsNotNull(response.Value.ShareLimits.MinProvisionedBandwidthMiBPerSec);
+            Assert.IsNotNull(response.Value.ShareLimits.MaxProvisionedBandwidthMiBPerSec);
+
+            Assert.IsNotNull(response.Value.ShareRecomendations.BaseIops);
+            Assert.IsNotNull(response.Value.ShareRecomendations.IOScalar);
+            Assert.IsNotNull(response.Value.ShareRecomendations.BaseBandwidthMiBPerSec);
+            Assert.IsNotNull(response.Value.ShareRecomendations.BandwidthScalar);
+
+            Assert.IsNotNull(response.Value.BurstingConstants.BurstFloorIops);
+            Assert.IsNotNull(response.Value.BurstingConstants.BurstIOScalar);
+            Assert.IsNotNull(response.Value.BurstingConstants.BurstTimeframeSeconds);
+
+            Assert.IsNotNull(response.Value.AccountUsage.LiveShares.FileShareCount);
+            Assert.IsNotNull(response.Value.AccountUsage.LiveShares.ProvisionedStorageGiB);
+            Assert.IsNotNull(response.Value.AccountUsage.LiveShares.ProvisionedIops);
+            Assert.IsNotNull(response.Value.AccountUsage.LiveShares.ProvisionedBandwidthMiBPerSec);
+
+            Assert.IsNotNull(response.Value.AccountUsage.SoftDeletedShares.FileShareCount);
+            Assert.IsNotNull(response.Value.AccountUsage.SoftDeletedShares.ProvisionedStorageGiB);
+            Assert.IsNotNull(response.Value.AccountUsage.SoftDeletedShares.ProvisionedIops);
+            Assert.IsNotNull(response.Value.AccountUsage.SoftDeletedShares.ProvisionedBandwidthMiBPerSec);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_01_05)]
+        public async Task GetServiceUseageAsync_Error()
+        {
+            // Arrange
+            ShareServiceClient service = InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(TestConfigDefault.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(
+                        TestConfigDefault.AccountName,
+                        TestConstants.InvalidAccountKey),
+                    GetOptions()));
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                service.GetServiceUsageAsync(),
+                e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
+        }
+
+            #region GenerateSasTests
+            [RecordedTest]
         public void CanGenerateSas_ClientConstructors()
         {
             // Arrange
