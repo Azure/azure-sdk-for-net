@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ApiManagementListApiIssues()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementListApiIssues.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementListApiIssues.json
             // this example is just showing the usage of "ApiIssue_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApiResource created on azure
-            // for more information of creating ApiResource, please refer to the document of ApiResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this ServiceApiResource created on azure
+            // for more information of creating ServiceApiResource, please refer to the document of ServiceApiResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d1f7558aa04f15146d9d8a";
-            ResourceIdentifier apiResourceId = ApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
-            ApiResource api = client.GetApiResource(apiResourceId);
+            ResourceIdentifier serviceApiResourceId = ServiceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
+            ServiceApiResource serviceApi = client.GetServiceApiResource(serviceApiResourceId);
 
             // get the collection of this ApiIssueResource
-            ApiIssueCollection collection = api.GetApiIssues();
+            ApiIssueCollection collection = serviceApi.GetApiIssues();
 
             // invoke the operation and iterate over the result
             await foreach (ApiIssueResource item in collection.GetAllAsync())
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ApiManagementGetApiIssue()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementGetApiIssue.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiIssue.json
             // this example is just showing the usage of "ApiIssue_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApiResource created on azure
-            // for more information of creating ApiResource, please refer to the document of ApiResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this ServiceApiResource created on azure
+            // for more information of creating ServiceApiResource, please refer to the document of ServiceApiResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d2ef278aa04f0888cba3f3";
-            ResourceIdentifier apiResourceId = ApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
-            ApiResource api = client.GetApiResource(apiResourceId);
+            ResourceIdentifier serviceApiResourceId = ServiceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
+            ServiceApiResource serviceApi = client.GetServiceApiResource(serviceApiResourceId);
 
             // get the collection of this ApiIssueResource
-            ApiIssueCollection collection = api.GetApiIssues();
+            ApiIssueCollection collection = serviceApi.GetApiIssues();
 
             // invoke the operation
             string issueId = "57d2ef278aa04f0ad01d6cdc";
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ApiManagementGetApiIssue()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementGetApiIssue.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiIssue.json
             // this example is just showing the usage of "ApiIssue_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApiResource created on azure
-            // for more information of creating ApiResource, please refer to the document of ApiResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this ServiceApiResource created on azure
+            // for more information of creating ServiceApiResource, please refer to the document of ServiceApiResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d2ef278aa04f0888cba3f3";
-            ResourceIdentifier apiResourceId = ApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
-            ApiResource api = client.GetApiResource(apiResourceId);
+            ResourceIdentifier serviceApiResourceId = ServiceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
+            ServiceApiResource serviceApi = client.GetServiceApiResource(serviceApiResourceId);
 
             // get the collection of this ApiIssueResource
-            ApiIssueCollection collection = api.GetApiIssues();
+            ApiIssueCollection collection = serviceApi.GetApiIssues();
 
             // invoke the operation
             string issueId = "57d2ef278aa04f0ad01d6cdc";
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_ApiManagementGetApiIssue()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementGetApiIssue.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiIssue.json
             // this example is just showing the usage of "ApiIssue_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,17 +134,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApiResource created on azure
-            // for more information of creating ApiResource, please refer to the document of ApiResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this ServiceApiResource created on azure
+            // for more information of creating ServiceApiResource, please refer to the document of ServiceApiResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d2ef278aa04f0888cba3f3";
-            ResourceIdentifier apiResourceId = ApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
-            ApiResource api = client.GetApiResource(apiResourceId);
+            ResourceIdentifier serviceApiResourceId = ServiceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
+            ServiceApiResource serviceApi = client.GetServiceApiResource(serviceApiResourceId);
 
             // get the collection of this ApiIssueResource
-            ApiIssueCollection collection = api.GetApiIssues();
+            ApiIssueCollection collection = serviceApi.GetApiIssues();
 
             // invoke the operation
             string issueId = "57d2ef278aa04f0ad01d6cdc";
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ApiManagementCreateApiIssue()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/stable/2022-08-01/examples/ApiManagementCreateApiIssue.json
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiIssue.json
             // this example is just showing the usage of "ApiIssue_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,17 +178,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ApiResource created on azure
-            // for more information of creating ApiResource, please refer to the document of ApiResource
-            string subscriptionId = "subid";
+            // this example assumes you already have this ServiceApiResource created on azure
+            // for more information of creating ServiceApiResource, please refer to the document of ServiceApiResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d1f7558aa04f15146d9d8a";
-            ResourceIdentifier apiResourceId = ApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
-            ApiResource api = client.GetApiResource(apiResourceId);
+            ResourceIdentifier serviceApiResourceId = ServiceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
+            ServiceApiResource serviceApi = client.GetServiceApiResource(serviceApiResourceId);
 
             // get the collection of this ApiIssueResource
-            ApiIssueCollection collection = api.GetApiIssues();
+            ApiIssueCollection collection = serviceApi.GetApiIssues();
 
             // invoke the operation
             string issueId = "57d2ef278aa04f0ad01d6cdc";
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 State = IssueState.Open,
                 Title = "New API issue",
                 Description = "New API issue description",
-                UserId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/users/1"),
+                UserId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/users/1"),
             };
             ArmOperation<ApiIssueResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, issueId, data);
             ApiIssueResource result = lro.Value;

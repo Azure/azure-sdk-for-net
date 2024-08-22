@@ -9,7 +9,7 @@ csharp: true
 library-name: ApiManagement
 namespace: Azure.ResourceManager.ApiManagement
 require: https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/apimanagement/resource-manager/readme.md
-tag: package-2022-08
+tag: package-preview-2023-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -289,6 +289,7 @@ rename-mapping:
   AuthorizationConfirmConsentCodeRequestContract: AuthorizationConfirmConsentCodeContent
   AuthorizationLoginRequestContract: AuthorizationLoginContent
   AuthorizationLoginResponseContract: AuthorizationLoginResult
+  SubscriptionCreateParameters: SubscriptionCreateContent
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'

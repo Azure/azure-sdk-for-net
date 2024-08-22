@@ -188,6 +188,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (Optional.IsDefined(ConfigurationApi))
+            {
+                writer.WritePropertyName("configurationApi"u8);
+                writer.WriteObjectValue(ConfigurationApi, options);
+            }
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
@@ -279,6 +284,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("platformVersion"u8);
                 writer.WriteStringValue(PlatformVersion.Value.ToString());
             }
+            if (Optional.IsDefined(LegacyPortalStatus))
+            {
+                writer.WritePropertyName("legacyPortalStatus"u8);
+                writer.WriteStringValue(LegacyPortalStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(DeveloperPortalStatus))
+            {
+                writer.WritePropertyName("developerPortalStatus"u8);
+                writer.WriteStringValue(DeveloperPortalStatus.Value.ToString());
+            }
             if (Optional.IsDefined(PublisherEmail))
             {
                 writer.WritePropertyName("publisherEmail"u8);
@@ -352,6 +367,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IReadOnlyList<IPAddress> privateIPAddresses = default;
             ResourceIdentifier publicIPAddressId = default;
             PublicNetworkAccess? publicNetworkAccess = default;
+            ConfigurationApi configurationApi = default;
             VirtualNetworkConfiguration virtualNetworkConfiguration = default;
             IList<AdditionalLocation> additionalLocations = default;
             IDictionary<string, string> customProperties = default;
@@ -365,6 +381,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             bool? restore = default;
             IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default;
             PlatformVersion? platformVersion = default;
+            LegacyPortalStatus? legacyPortalStatus = default;
+            DeveloperPortalStatus? developerPortalStatus = default;
             string publisherEmail = default;
             string publisherName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -611,6 +629,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("configurationApi"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            configurationApi = ConfigurationApi.DeserializeConfigurationApi(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("virtualNetworkConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -753,6 +780,24 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             platformVersion = new PlatformVersion(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("legacyPortalStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            legacyPortalStatus = new LegacyPortalStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("developerPortalStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            developerPortalStatus = new DeveloperPortalStatus(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("publisherEmail"u8))
                         {
                             publisherEmail = property0.Value.GetString();
@@ -796,6 +841,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 privateIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 publicIPAddressId,
                 publicNetworkAccess,
+                configurationApi,
                 virtualNetworkConfiguration,
                 additionalLocations ?? new ChangeTrackingList<AdditionalLocation>(),
                 customProperties ?? new ChangeTrackingDictionary<string, string>(),
@@ -809,6 +855,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 restore,
                 privateEndpointConnections ?? new ChangeTrackingList<RemotePrivateEndpointConnectionWrapper>(),
                 platformVersion,
+                legacyPortalStatus,
+                developerPortalStatus,
                 publisherEmail,
                 publisherName,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
@@ -1283,6 +1331,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("LegacyApi", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    configurationApi: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      configurationApi: {");
+                builder.Append("        legacyApi: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ConfigurationApi))
+                {
+                    builder.Append("    configurationApi: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ConfigurationApi, options, 4, false, "    configurationApi: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkConfiguration), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -1550,6 +1618,36 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     builder.Append("    platformVersion: ");
                     builder.AppendLine($"'{PlatformVersion.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LegacyPortalStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    legacyPortalStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LegacyPortalStatus))
+                {
+                    builder.Append("    legacyPortalStatus: ");
+                    builder.AppendLine($"'{LegacyPortalStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeveloperPortalStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    developerPortalStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeveloperPortalStatus))
+                {
+                    builder.Append("    developerPortalStatus: ");
+                    builder.AppendLine($"'{DeveloperPortalStatus.Value.ToString()}'");
                 }
             }
 
