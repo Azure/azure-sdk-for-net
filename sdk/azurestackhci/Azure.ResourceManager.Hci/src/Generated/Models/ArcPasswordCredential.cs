@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Gets the secret text. </summary>
+        [WirePath("secretText")]
         public string SecretText { get; }
         /// <summary> Gets the key id. </summary>
+        [WirePath("keyId")]
         public string KeyId { get; }
         /// <summary> Gets the start on. </summary>
+        [WirePath("startDateTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> Gets the end on. </summary>
+        [WirePath("endDateTime")]
         public DateTimeOffset? EndOn { get; }
     }
 }

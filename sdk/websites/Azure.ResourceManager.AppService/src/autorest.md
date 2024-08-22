@@ -136,6 +136,10 @@ override-operation-name:
   WebApps_ListPremierAddOnsSlot: GetAllPremierAddOnSlotData
   WebApps_ListRelayServiceConnectionsSlot: GetAllRelayServiceConnectionSlotData
   WebApps_ListSiteBackupsSlot: GetAllSiteBackupSlotData
+  WebApps_ListInstanceProcessThreads: GetSiteInstanceProcessThreads
+  WebApps_ListProcessThreads: GetSiteProcessThreads
+  WebApps_ListProcessThreadsSlot: GetSiteSlotProcessThreads
+  WebApps_ListInstanceProcessThreadsSlot: GetSiteSlotInstanceProcessThreads
 
 no-property-type-replacement:
 - ApiManagementConfig
@@ -602,6 +606,10 @@ rename-mapping:
   VnetValidationFailureDetails: VirtualNetworkValidationFailureDetails
   VnetValidationTestFailure: VirtualNetworkValidationTestFailure
   KeyInfoProperties: WebAppKeyInfoProperties
+  ProcessThreadInfo: WebAppProcessThreadInfo
+  ProcessThreadProperties: WebAppProcessThreadProperties
+  ProcessThreadProperties.href: -|uri
+  ProcessInfo.properties.threads: ProcessThreads
   # All `Collection` models for pageable operation should be renamed to `ListResult`, https://github.com/Azure/autorest.csharp/issues/2756
   DomainCollection: AppServiceDomainListResult
   IdentifierCollection: AppServiceIdentifierListResult
@@ -641,7 +649,7 @@ rename-mapping:
   PrivateEndpointConnectionCollection: RemotePrivateEndpointConnectionListResult
   ProcessInfoCollection: ProcessInfoListResult
   ProcessModuleInfoCollection: ProcessModuleInfoListResult
-  ProcessThreadInfoCollection: ProcessThreadInfoListResult
+  ProcessThreadInfoCollection: WebAppProcessThreadInfoListResult
   PublicCertificateCollection: PublicCertificateListResult
   PublishingCredentialsPoliciesCollection: PublishingCredentialsPoliciesListResult
   RecommendationCollection: AppServiceRecommendationListResult
@@ -1002,5 +1010,45 @@ directive:
         $.items = {
             "$ref": "#/definitions/DayOfWeek",
             "description": "The days of the week."
+          };
+  # Fix https://github.com/Azure/azure-sdk-for-net/issues/39126, fix the `ProcessThreadInfo` definition based on the return result 
+  - from: WebApps.json
+    where: $.definitions
+    transform: >
+        $.ProcessThreadProperties = {
+            "description": "Process Thread properties.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "int32",
+                "description": "Thread ID.",
+                "type": "integer",
+                "readOnly": true
+              },
+              "href": {
+                "description": "HRef URI.",
+                "type": "string"
+              },
+              "state": {
+                "description": "Thread state.",
+                "type": "string"
+              }
+            }
+          };
+  - from: WebApps.json
+    where: $.definitions.ProcessThreadInfo
+    transform: >
+        $.properties = {
+            "properties": {
+              "$ref": "#/definitions/ProcessThreadProperties",
+              "description": "ProcessThreadInfo resource specific properties",
+              "type": "object"
+            }
+          };
+  - from: WebApps.json
+    where: $.definitions.ProcessInfo
+    transform: >
+        $.properties.properties.properties.threads.items = {
+            "$ref": "#/definitions/ProcessThreadProperties"
           };
 ```

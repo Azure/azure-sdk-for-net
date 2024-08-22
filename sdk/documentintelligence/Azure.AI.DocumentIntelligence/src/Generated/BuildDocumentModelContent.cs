@@ -71,8 +71,10 @@ namespace Azure.AI.DocumentIntelligence
         /// azureBlobSource or azureBlobFileListSource must be specified.
         /// </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <param name="maxTrainingHours"> Max number of V100-equivalent GPU hours to use for model training.  Default=0.5. </param>
+        /// <param name="allowOverwrite"> Allow overwriting an existing model with the same name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BuildDocumentModelContent(string modelId, string description, DocumentBuildMode buildMode, AzureBlobContentSource azureBlobSource, AzureBlobFileListContentSource azureBlobFileListSource, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BuildDocumentModelContent(string modelId, string description, DocumentBuildMode buildMode, AzureBlobContentSource azureBlobSource, AzureBlobFileListContentSource azureBlobFileListSource, IDictionary<string, string> tags, float? maxTrainingHours, bool? allowOverwrite, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelId = modelId;
             Description = description;
@@ -80,6 +82,8 @@ namespace Azure.AI.DocumentIntelligence
             AzureBlobSource = azureBlobSource;
             AzureBlobFileListSource = azureBlobFileListSource;
             Tags = tags;
+            MaxTrainingHours = maxTrainingHours;
+            AllowOverwrite = allowOverwrite;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -106,5 +110,9 @@ namespace Azure.AI.DocumentIntelligence
         public AzureBlobFileListContentSource AzureBlobFileListSource { get; set; }
         /// <summary> List of key-value tag attributes associated with the document model. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Max number of V100-equivalent GPU hours to use for model training.  Default=0.5. </summary>
+        public float? MaxTrainingHours { get; set; }
+        /// <summary> Allow overwriting an existing model with the same name. </summary>
+        public bool? AllowOverwrite { get; set; }
     }
 }

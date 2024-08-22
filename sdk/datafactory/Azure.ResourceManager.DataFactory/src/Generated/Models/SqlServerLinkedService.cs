@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="SqlServerLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
+        /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -52,7 +53,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password"> The on-premises Windows authentication password. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="alwaysEncryptedSettings"> Sql always encrypted properties. </param>
-        internal SqlServerLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> encrypt, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<string> hostNameInCertificate, DataFactoryElement<string> applicationIntent, DataFactoryElement<int> connectTimeout, DataFactoryElement<int> connectRetryCount, DataFactoryElement<int> connectRetryInterval, DataFactoryElement<int> loadBalanceTimeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> integratedSecurity, DataFactoryElement<string> failoverPartner, DataFactoryElement<int> maxPoolSize, DataFactoryElement<int> minPoolSize, DataFactoryElement<bool> multipleActiveResultSets, DataFactoryElement<bool> multiSubnetFailover, DataFactoryElement<int> packetSize, DataFactoryElement<bool> pooling, DataFactoryElement<string> connectionString, SqlServerAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal SqlServerLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> server, DataFactoryElement<string> database, DataFactoryElement<string> encrypt, DataFactoryElement<bool> trustServerCertificate, DataFactoryElement<string> hostNameInCertificate, DataFactoryElement<string> applicationIntent, DataFactoryElement<int> connectTimeout, DataFactoryElement<int> connectRetryCount, DataFactoryElement<int> connectRetryInterval, DataFactoryElement<int> loadBalanceTimeout, DataFactoryElement<int> commandTimeout, DataFactoryElement<bool> integratedSecurity, DataFactoryElement<string> failoverPartner, DataFactoryElement<int> maxPoolSize, DataFactoryElement<int> minPoolSize, DataFactoryElement<bool> multipleActiveResultSets, DataFactoryElement<bool> multiSubnetFailover, DataFactoryElement<int> packetSize, DataFactoryElement<bool> pooling, DataFactoryElement<string> connectionString, SqlServerAuthenticationType? authenticationType, DataFactoryElement<string> userName, DataFactorySecret password, string encryptedCredential, SqlAlwaysEncryptedProperties alwaysEncryptedSettings, DataFactoryCredentialReference credential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             Server = server;
             Database = database;
@@ -79,6 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
             EncryptedCredential = encryptedCredential;
             AlwaysEncryptedSettings = alwaysEncryptedSettings;
+            Credential = credential;
             LinkedServiceType = linkedServiceType ?? "SqlServer";
         }
 
@@ -132,5 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string EncryptedCredential { get; set; }
         /// <summary> Sql always encrypted properties. </summary>
         public SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public DataFactoryCredentialReference Credential { get; set; }
     }
 }

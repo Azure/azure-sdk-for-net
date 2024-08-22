@@ -21,7 +21,7 @@ internal partial class AzureAssistantClient : AssistantClient
         ClientPipeline pipeline,
         Uri endpoint,
         AzureOpenAIClientOptions options)
-            : base(pipeline, endpoint, options)
+            : base(pipeline, endpoint, null)
     {
         options ??= new();
         _endpoint = endpoint;

@@ -203,6 +203,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     {
                         config[EnvironmentVariableConstants.HTTPCLIENT_DISABLE_URL_QUERY_REDACTION] = Boolean.TrueString;
                     }
+
+                    // If connection string is not set in the options, try to get it from configuration.
+                    if (string.IsNullOrWhiteSpace(options.ConnectionString) && config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING] != null)
+                    {
+                        options.ConnectionString = config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
+                    }
                 });
 
             return builder;
