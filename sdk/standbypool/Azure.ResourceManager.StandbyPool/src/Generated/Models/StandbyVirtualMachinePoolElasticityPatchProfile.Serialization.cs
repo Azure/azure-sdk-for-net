@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    internal partial class StandbyVirtualMachinePoolElasticityPatchProfile : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachinePoolElasticityPatchProfile>
+    public partial class StandbyVirtualMachinePoolElasticityPatchProfile : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachinePoolElasticityPatchProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachinePoolElasticityPatchProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 writer.WritePropertyName("maxReadyCapacity"u8);
                 writer.WriteNumberValue(MaxReadyCapacity.Value);
+            }
+            if (Optional.IsDefined(MinReadyCapacity))
+            {
+                writer.WritePropertyName("minReadyCapacity"u8);
+                writer.WriteNumberValue(MinReadyCapacity.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,6 +75,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 return null;
             }
             long? maxReadyCapacity = default;
+            long? minReadyCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,13 +89,22 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     maxReadyCapacity = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("minReadyCapacity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minReadyCapacity = property.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StandbyVirtualMachinePoolElasticityPatchProfile(maxReadyCapacity, serializedAdditionalRawData);
+            return new StandbyVirtualMachinePoolElasticityPatchProfile(maxReadyCapacity, minReadyCapacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StandbyVirtualMachinePoolElasticityPatchProfile>.Write(ModelReaderWriterOptions options)

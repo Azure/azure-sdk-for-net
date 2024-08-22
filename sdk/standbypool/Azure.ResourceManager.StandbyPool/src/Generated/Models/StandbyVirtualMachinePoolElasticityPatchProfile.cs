@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.StandbyPool.Models
 {
     /// <summary> Details of the elasticity profile. </summary>
-    internal partial class StandbyVirtualMachinePoolElasticityPatchProfile
+    public partial class StandbyVirtualMachinePoolElasticityPatchProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,15 +51,19 @@ namespace Azure.ResourceManager.StandbyPool.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StandbyVirtualMachinePoolElasticityPatchProfile"/>. </summary>
-        /// <param name="maxReadyCapacity"> Specifies maximum number of virtual machines in the standby virtual machine pool. </param>
+        /// <param name="maxReadyCapacity"> Specifies the maximum number of virtual machines in the standby virtual machine pool. </param>
+        /// <param name="minReadyCapacity"> Specifies the desired minimum number of virtual machines in the standby virtual machine pool. MinReadyCapacity cannot exceed MaxReadyCapacity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyVirtualMachinePoolElasticityPatchProfile(long? maxReadyCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyVirtualMachinePoolElasticityPatchProfile(long? maxReadyCapacity, long? minReadyCapacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxReadyCapacity = maxReadyCapacity;
+            MinReadyCapacity = minReadyCapacity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies maximum number of virtual machines in the standby virtual machine pool. </summary>
+        /// <summary> Specifies the maximum number of virtual machines in the standby virtual machine pool. </summary>
         public long? MaxReadyCapacity { get; set; }
+        /// <summary> Specifies the desired minimum number of virtual machines in the standby virtual machine pool. MinReadyCapacity cannot exceed MaxReadyCapacity. </summary>
+        public long? MinReadyCapacity { get; set; }
     }
 }

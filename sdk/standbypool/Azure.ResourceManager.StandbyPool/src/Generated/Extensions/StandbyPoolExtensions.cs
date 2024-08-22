@@ -71,6 +71,44 @@ namespace Azure.ResourceManager.StandbyPool
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="StandbyContainerGroupPoolRuntimeViewResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StandbyContainerGroupPoolRuntimeViewResource.CreateResourceIdentifier" /> to create a <see cref="StandbyContainerGroupPoolRuntimeViewResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolArmClient.GetStandbyContainerGroupPoolRuntimeViewResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> object. </returns>
+        public static StandbyContainerGroupPoolRuntimeViewResource GetStandbyContainerGroupPoolRuntimeViewResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableStandbyPoolArmClient(client).GetStandbyContainerGroupPoolRuntimeViewResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StandbyVirtualMachinePoolRuntimeViewResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StandbyVirtualMachinePoolRuntimeViewResource.CreateResourceIdentifier" /> to create a <see cref="StandbyVirtualMachinePoolRuntimeViewResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableStandbyPoolArmClient.GetStandbyVirtualMachinePoolRuntimeViewResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StandbyVirtualMachinePoolRuntimeViewResource"/> object. </returns>
+        public static StandbyVirtualMachinePoolRuntimeViewResource GetStandbyVirtualMachinePoolRuntimeViewResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableStandbyPoolArmClient(client).GetStandbyVirtualMachinePoolRuntimeViewResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="StandbyVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StandbyVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="StandbyVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -119,7 +157,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,7 +195,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +250,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,7 +288,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -288,7 +326,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -324,7 +362,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,7 +398,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -396,7 +434,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2024-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
