@@ -1,0 +1,54 @@
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - azure-plugin
+  
+extends:
+  template: /eng/pipelines/templates/stages/1es-redirect.yml
+  stages:
+    - stage: 'Build'
+      jobs:
+        - job: Build
+          timeoutInMinutes: 120
+          steps:
+            - checkout: self
+              fetchDepth: 1
+            - task: UseDotNet@2
+              displayName: 'Use .NET Core SDK'
+              retryCountOnTaskFailure: 3
+              inputs:
+                useGlobalJson: true
+                performMultiLevelLookup: true
+            - task: NodeTool@0
+              displayName: "Install Node 18.x"
+              inputs:
+                versionSpec: '18.x'
+            - script: |
+                npm ci
+              displayName: "Install packages"
+              workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-net/azure-plugin
+            - script: |
+                npm ls -a
+              displayName: "List packages"
+              workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-net/azure-plugin
+            - script: |
+                npm run prettier
+              displayName: "Emitter format check"
+              workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-net/azure-plugin/emitter
+            - script: |
+                npm run lint
+              displayName: "Emitter linter check"
+              workingDirectory: $(Build.SourcesDirectory)/azure-sdk-for-net/azure-plugin/emitter
+            - task: Npm@1
+              displayName: 'Build TypeSpec csharp emitter and generator'
+              inputs:
+                command: custom
+                customCommand: run build
+                workingDir: $(Build.SourcesDirectory)/azure-sdk-for-net/azure-plugin
