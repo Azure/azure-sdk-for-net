@@ -42,7 +42,7 @@ Following parameter is available
 
 
 ### Next Step
-1. Inspect `src\autorest.md` to ensure the REST Api path is valid
+1. Inspect `tsp-location.yaml` to ensure the REST Api path is valid
 2. Run `dotnet build` to ensure empty project builds successfully.
 3. Run `dotnet build /t:GenerateCode` to generate C# code and ensure no fatal errors.
 4. Run `dotnet build` to ensure now generated project builds successfully.
