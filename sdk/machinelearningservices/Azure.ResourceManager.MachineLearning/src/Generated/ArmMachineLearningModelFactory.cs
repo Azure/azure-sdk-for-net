@@ -2748,20 +2748,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="Models.OSPatchingStatus"/>. </summary>
         /// <param name="patchStatus"> The os patching status. </param>
-        /// <param name="latestPatchTime"> Time of the latest os patching. </param>
+        /// <param name="latestPatchOn"> Time of the latest os patching. </param>
         /// <param name="rebootPending"> Specifies whether this compute instance is pending for reboot to finish os patching. </param>
-        /// <param name="scheduledRebootTime"> Time of scheduled reboot. </param>
+        /// <param name="scheduledRebootOn"> Time of scheduled reboot. </param>
         /// <param name="osPatchingErrors"> Collection of errors encountered when doing os patching. </param>
         /// <returns> A new <see cref="Models.OSPatchingStatus"/> instance for mocking. </returns>
-        public static OSPatchingStatus OSPatchingStatus(PatchStatus? patchStatus = null, string latestPatchTime = null, bool? rebootPending = null, string scheduledRebootTime = null, IEnumerable<MachineLearningError> osPatchingErrors = null)
+        public static OSPatchingStatus OSPatchingStatus(PatchStatus? patchStatus = null, DateTimeOffset? latestPatchOn = null, bool? rebootPending = null, DateTimeOffset? scheduledRebootOn = null, IEnumerable<MachineLearningError> osPatchingErrors = null)
         {
             osPatchingErrors ??= new List<MachineLearningError>();
 
             return new OSPatchingStatus(
                 patchStatus,
-                latestPatchTime,
+                latestPatchOn,
                 rebootPending,
-                scheduledRebootTime,
+                scheduledRebootOn,
                 osPatchingErrors?.ToList(),
                 serializedAdditionalRawData: null);
         }

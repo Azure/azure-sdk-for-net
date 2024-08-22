@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("serverlessComputeCustomSubnet"u8);
                 writer.WriteStringValue(ServerlessComputeCustomSubnet);
             }
-            if (Optional.IsDefined(ServerlessComputeNoPublicIP))
+            if (Optional.IsDefined(HasNoPublicIP))
             {
                 writer.WritePropertyName("serverlessComputeNoPublicIP"u8);
-                writer.WriteBooleanValue(ServerlessComputeNoPublicIP.Value);
+                writer.WriteBooleanValue(HasNoPublicIP.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

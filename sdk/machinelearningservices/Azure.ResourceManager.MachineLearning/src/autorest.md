@@ -518,6 +518,9 @@ rename-mapping:
   StatusMessageLevel: JobStatusMessageLevel
   ImageType.azureml: AzureML
   ProtectionLevel: IntellectualProtectionLevel
+  OsPatchingStatus.latestPatchTime: -|date-time
+  OsPatchingStatus.scheduledRebootTime: -|date-time
+  ServerlessComputeSettings.serverlessComputeNoPublicIP : HasNoPublicIP
 
 suppress-abstract-base-class:
 - MachineLearningJobProperties

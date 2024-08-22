@@ -53,18 +53,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="ServerlessComputeSettings"/>. </summary>
         /// <param name="serverlessComputeCustomSubnet"> The resource ID of an existing virtual network subnet in which serverless compute nodes should be deployed. </param>
-        /// <param name="serverlessComputeNoPublicIP"> The flag to signal if serverless compute nodes deployed in custom vNet would have no public IP addresses for a workspace with private endpoint. </param>
+        /// <param name="hasNoPublicIP"> The flag to signal if serverless compute nodes deployed in custom vNet would have no public IP addresses for a workspace with private endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerlessComputeSettings(ResourceIdentifier serverlessComputeCustomSubnet, bool? serverlessComputeNoPublicIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerlessComputeSettings(ResourceIdentifier serverlessComputeCustomSubnet, bool? hasNoPublicIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServerlessComputeCustomSubnet = serverlessComputeCustomSubnet;
-            ServerlessComputeNoPublicIP = serverlessComputeNoPublicIP;
+            HasNoPublicIP = hasNoPublicIP;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource ID of an existing virtual network subnet in which serverless compute nodes should be deployed. </summary>
         public ResourceIdentifier ServerlessComputeCustomSubnet { get; set; }
         /// <summary> The flag to signal if serverless compute nodes deployed in custom vNet would have no public IP addresses for a workspace with private endpoint. </summary>
-        public bool? ServerlessComputeNoPublicIP { get; set; }
+        public bool? HasNoPublicIP { get; set; }
     }
 }

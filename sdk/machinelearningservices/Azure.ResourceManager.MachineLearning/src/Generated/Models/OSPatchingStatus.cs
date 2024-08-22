@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="OSPatchingStatus"/>. </summary>
         /// <param name="patchStatus"> The os patching status. </param>
-        /// <param name="latestPatchTime"> Time of the latest os patching. </param>
+        /// <param name="latestPatchOn"> Time of the latest os patching. </param>
         /// <param name="rebootPending"> Specifies whether this compute instance is pending for reboot to finish os patching. </param>
-        /// <param name="scheduledRebootTime"> Time of scheduled reboot. </param>
+        /// <param name="scheduledRebootOn"> Time of scheduled reboot. </param>
         /// <param name="osPatchingErrors"> Collection of errors encountered when doing os patching. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OSPatchingStatus(PatchStatus? patchStatus, string latestPatchTime, bool? rebootPending, string scheduledRebootTime, IReadOnlyList<MachineLearningError> osPatchingErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OSPatchingStatus(PatchStatus? patchStatus, DateTimeOffset? latestPatchOn, bool? rebootPending, DateTimeOffset? scheduledRebootOn, IReadOnlyList<MachineLearningError> osPatchingErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PatchStatus = patchStatus;
-            LatestPatchTime = latestPatchTime;
+            LatestPatchOn = latestPatchOn;
             RebootPending = rebootPending;
-            ScheduledRebootTime = scheduledRebootTime;
+            ScheduledRebootOn = scheduledRebootOn;
             OSPatchingErrors = osPatchingErrors;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The os patching status. </summary>
         public PatchStatus? PatchStatus { get; }
         /// <summary> Time of the latest os patching. </summary>
-        public string LatestPatchTime { get; }
+        public DateTimeOffset? LatestPatchOn { get; }
         /// <summary> Specifies whether this compute instance is pending for reboot to finish os patching. </summary>
         public bool? RebootPending { get; }
         /// <summary> Time of scheduled reboot. </summary>
-        public string ScheduledRebootTime { get; }
+        public DateTimeOffset? ScheduledRebootOn { get; }
         /// <summary> Collection of errors encountered when doing os patching. </summary>
         public IReadOnlyList<MachineLearningError> OSPatchingErrors { get; }
     }

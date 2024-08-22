@@ -31,20 +31,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("patchStatus"u8);
                 writer.WriteStringValue(PatchStatus.Value.ToString());
             }
-            if (Optional.IsDefined(LatestPatchTime))
+            if (Optional.IsDefined(LatestPatchOn))
             {
                 writer.WritePropertyName("latestPatchTime"u8);
-                writer.WriteStringValue(LatestPatchTime);
+                writer.WriteStringValue(LatestPatchOn.Value, "O");
             }
             if (Optional.IsDefined(RebootPending))
             {
                 writer.WritePropertyName("rebootPending"u8);
                 writer.WriteBooleanValue(RebootPending.Value);
             }
-            if (Optional.IsDefined(ScheduledRebootTime))
+            if (Optional.IsDefined(ScheduledRebootOn))
             {
                 writer.WritePropertyName("scheduledRebootTime"u8);
-                writer.WriteStringValue(ScheduledRebootTime);
+                writer.WriteStringValue(ScheduledRebootOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(OSPatchingErrors))
             {
@@ -102,9 +102,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             PatchStatus? patchStatus = default;
-            string latestPatchTime = default;
+            DateTimeOffset? latestPatchTime = default;
             bool? rebootPending = default;
-            string scheduledRebootTime = default;
+            DateTimeOffset? scheduledRebootTime = default;
             IReadOnlyList<MachineLearningError> osPatchingErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -121,7 +121,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("latestPatchTime"u8))
                 {
-                    latestPatchTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    latestPatchTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("rebootPending"u8))
@@ -135,7 +139,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("scheduledRebootTime"u8))
                 {
-                    scheduledRebootTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledRebootTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("osPatchingErrors"u8))
