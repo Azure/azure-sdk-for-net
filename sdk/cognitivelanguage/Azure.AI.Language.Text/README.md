@@ -23,7 +23,7 @@ Text Analytics is part of the Azure Cognitive Service for Language, a cloud-base
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.AI.Language.Text
+dotnet add package Azure.AI.Language.Text --prerelease
 ```
 
 ### Prerequisites

@@ -74,7 +74,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a access token from Azure PowerShell, using the access token to authenticate. This method id called by Azure SDK clients.
+        /// Obtains an access token from Azure PowerShell, using the access token to authenticate. This method is called by Azure SDK clients.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -86,7 +86,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a access token from Azure PowerShell, using the access token to authenticate. This method id called by Azure SDK clients.
+        /// Obtains an access token from Azure PowerShell, using the access token to authenticate. This method is called by Azure SDK clients.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
