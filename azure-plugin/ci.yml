@@ -13,7 +13,6 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
-    displayName: 'Azure CSharp Plugin'
     stages:
       - stage: 'Build'
         jobs:
