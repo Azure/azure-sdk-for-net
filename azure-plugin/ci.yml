@@ -16,8 +16,8 @@ extends:
     stages:
       - stage: 'Build'
         pool:
-          name: $(WINDOWSPOOL)
-          image: $(WINDOWSVMIMAGE)
+          name: azsdk-pool-mms-win-2022-general
+          image: azsdk-pool-mms-win-2022-1espt
           os: windows
         jobs:
           - job: Build
