@@ -19,6 +19,5 @@ public class AzurePlugin : ClientModelPlugin
 
     public override void Configure()
     {
-        AddVisitor(new AzureVisitor());
     }
 }
