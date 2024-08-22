@@ -23,8 +23,10 @@ extends:
           - job: Build
             timeoutInMinutes: 120
             steps:
-              - checkout: self
-                fetchDepth: 1
+              - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+                parameters:
+                  Paths:
+                    - azure-plugin
               - task: UseDotNet@2
                 displayName: 'Use .NET Core SDK'
                 retryCountOnTaskFailure: 3
