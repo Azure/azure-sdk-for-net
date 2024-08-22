@@ -418,8 +418,8 @@ namespace Azure.Data.Tables.Sas
     }
     public partial class TableSasBuilder
     {
+        public TableSasBuilder() { }
         public TableSasBuilder(string tableName, Azure.Data.Tables.Sas.TableSasPermissions permissions, System.DateTimeOffset expiresOn) { }
-        public TableSasBuilder(string tableName, string identifier) { }
         public TableSasBuilder(string tableName, string rawPermissions, System.DateTimeOffset expiresOn) { }
         public TableSasBuilder(System.Uri sasUri) { }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }

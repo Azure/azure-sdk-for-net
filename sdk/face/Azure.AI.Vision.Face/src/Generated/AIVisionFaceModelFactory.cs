@@ -277,50 +277,24 @@ namespace Azure.AI.Vision.Face
             return new FaceGroupingResult(groups?.ToList(), messyGroup?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Face.CreateLivenessWithVerifySessionResult"/>. </summary>
-        /// <param name="sessionId"> The unique session ID of the created session. It will expire 48 hours after it was created or may be deleted sooner using the corresponding Session DELETE operation. </param>
-        /// <param name="authToken"> Bearer token to provide authentication for the Vision SDK running on a client application. This Bearer token has limited permissions to perform only the required action and expires after the TTL time. It is also auditable. </param>
-        /// <param name="verifyImage"> The detail of face for verification. </param>
-        /// <returns> A new <see cref="Face.CreateLivenessWithVerifySessionResult"/> instance for mocking. </returns>
-        public static CreateLivenessWithVerifySessionResult CreateLivenessWithVerifySessionResult(string sessionId = null, string authToken = null, LivenessWithVerifyImage verifyImage = null)
-        {
-            return new CreateLivenessWithVerifySessionResult(sessionId, authToken, verifyImage, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Face.LivenessWithVerifyImage"/>. </summary>
-        /// <param name="faceRectangle"> The face region where the comparison image's classification was made. </param>
-        /// <param name="qualityForRecognition"> Quality of face image for recognition. </param>
-        /// <returns> A new <see cref="Face.LivenessWithVerifyImage"/> instance for mocking. </returns>
-        public static LivenessWithVerifyImage LivenessWithVerifyImage(FaceRectangle faceRectangle = null, QualityForRecognition qualityForRecognition = default)
-        {
-            return new LivenessWithVerifyImage(faceRectangle, qualityForRecognition, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Face.CreateLivenessSessionContent"/>. </summary>
-        /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
-        /// <param name="sendResultsToClient"> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </param>
-        /// <param name="deviceCorrelationIdSetInClient"> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </param>
+        /// <summary> Initializes a new instance of <see cref="Face.LivenessSessionItem"/>. </summary>
+        /// <param name="id"> The unique ID to reference this session. </param>
+        /// <param name="createdDateTime"> DateTime when this session was created. </param>
+        /// <param name="sessionStartDateTime"> DateTime when this session was started by the client. </param>
+        /// <param name="sessionExpired"> Whether or not the session is expired. </param>
         /// <param name="deviceCorrelationId"> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </param>
         /// <param name="authTokenTimeToLiveInSeconds"> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </param>
-        /// <returns> A new <see cref="Face.CreateLivenessSessionContent"/> instance for mocking. </returns>
-        public static CreateLivenessSessionContent CreateLivenessSessionContent(LivenessOperationMode livenessOperationMode = default, bool? sendResultsToClient = null, bool? deviceCorrelationIdSetInClient = null, string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = null)
+        /// <returns> A new <see cref="Face.LivenessSessionItem"/> instance for mocking. </returns>
+        public static LivenessSessionItem LivenessSessionItem(string id = null, DateTimeOffset createdDateTime = default, DateTimeOffset? sessionStartDateTime = null, bool sessionExpired = default, string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = null)
         {
-            return new CreateLivenessSessionContent(
-                livenessOperationMode,
-                sendResultsToClient,
-                deviceCorrelationIdSetInClient,
+            return new LivenessSessionItem(
+                id,
+                createdDateTime,
+                sessionStartDateTime,
+                sessionExpired,
                 deviceCorrelationId,
                 authTokenTimeToLiveInSeconds,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Face.CreateLivenessSessionResult"/>. </summary>
-        /// <param name="sessionId"> The unique session ID of the created session. It will expire 48 hours after it was created or may be deleted sooner using the corresponding Session DELETE operation. </param>
-        /// <param name="authToken"> Bearer token to provide authentication for the Vision SDK running on a client application. This Bearer token has limited permissions to perform only the required action and expires after the TTL time. It is also auditable. </param>
-        /// <returns> A new <see cref="Face.CreateLivenessSessionResult"/> instance for mocking. </returns>
-        public static CreateLivenessSessionResult CreateLivenessSessionResult(string sessionId = null, string authToken = null)
-        {
-            return new CreateLivenessSessionResult(sessionId, authToken, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Face.LivenessSession"/>. </summary>
@@ -434,24 +408,40 @@ namespace Azure.AI.Vision.Face
             return new LivenessWithVerifyOutputs(verifyImage, matchConfidence, isIdentical, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Face.LivenessSessionItem"/>. </summary>
-        /// <param name="id"> The unique ID to reference this session. </param>
-        /// <param name="createdDateTime"> DateTime when this session was created. </param>
-        /// <param name="sessionStartDateTime"> DateTime when this session was started by the client. </param>
-        /// <param name="sessionExpired"> Whether or not the session is expired. </param>
+        /// <summary> Initializes a new instance of <see cref="Face.LivenessWithVerifyImage"/>. </summary>
+        /// <param name="faceRectangle"> The face region where the comparison image's classification was made. </param>
+        /// <param name="qualityForRecognition"> Quality of face image for recognition. </param>
+        /// <returns> A new <see cref="Face.LivenessWithVerifyImage"/> instance for mocking. </returns>
+        public static LivenessWithVerifyImage LivenessWithVerifyImage(FaceRectangle faceRectangle = null, QualityForRecognition qualityForRecognition = default)
+        {
+            return new LivenessWithVerifyImage(faceRectangle, qualityForRecognition, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Face.CreateLivenessSessionContent"/>. </summary>
+        /// <param name="livenessOperationMode"> Type of liveness mode the client should follow. </param>
+        /// <param name="sendResultsToClient"> Whether or not to allow a '200 - Success' response body to be sent to the client, which may be undesirable for security reasons. Default is false, clients will receive a '204 - NoContent' empty body response. Regardless of selection, calling Session GetResult will always contain a response body enabling business logic to be implemented. </param>
+        /// <param name="deviceCorrelationIdSetInClient"> Whether or not to allow client to set their own 'deviceCorrelationId' via the Vision SDK. Default is false, and 'deviceCorrelationId' must be set in this request body. </param>
         /// <param name="deviceCorrelationId"> Unique Guid per each end-user device. This is to provide rate limiting and anti-hammering. If 'deviceCorrelationIdSetInClient' is true in this request, this 'deviceCorrelationId' must be null. </param>
         /// <param name="authTokenTimeToLiveInSeconds"> Seconds the session should last for. Range is 60 to 86400 seconds. Default value is 600. </param>
-        /// <returns> A new <see cref="Face.LivenessSessionItem"/> instance for mocking. </returns>
-        public static LivenessSessionItem LivenessSessionItem(string id = null, DateTimeOffset createdDateTime = default, DateTimeOffset? sessionStartDateTime = null, bool sessionExpired = default, string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = null)
+        /// <returns> A new <see cref="Face.CreateLivenessSessionContent"/> instance for mocking. </returns>
+        public static CreateLivenessSessionContent CreateLivenessSessionContent(LivenessOperationMode livenessOperationMode = default, bool? sendResultsToClient = null, bool? deviceCorrelationIdSetInClient = null, string deviceCorrelationId = null, int? authTokenTimeToLiveInSeconds = null)
         {
-            return new LivenessSessionItem(
-                id,
-                createdDateTime,
-                sessionStartDateTime,
-                sessionExpired,
+            return new CreateLivenessSessionContent(
+                livenessOperationMode,
+                sendResultsToClient,
+                deviceCorrelationIdSetInClient,
                 deviceCorrelationId,
                 authTokenTimeToLiveInSeconds,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Face.CreateLivenessSessionResult"/>. </summary>
+        /// <param name="sessionId"> The unique session ID of the created session. It will expire 48 hours after it was created or may be deleted sooner using the corresponding Session DELETE operation. </param>
+        /// <param name="authToken"> Bearer token to provide authentication for the Vision SDK running on a client application. This Bearer token has limited permissions to perform only the required action and expires after the TTL time. It is also auditable. </param>
+        /// <returns> A new <see cref="Face.CreateLivenessSessionResult"/> instance for mocking. </returns>
+        public static CreateLivenessSessionResult CreateLivenessSessionResult(string sessionId = null, string authToken = null)
+        {
+            return new CreateLivenessSessionResult(sessionId, authToken, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Face.LivenessWithVerifySession"/>. </summary>
@@ -476,6 +466,16 @@ namespace Azure.AI.Vision.Face
                 status,
                 result,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Face.CreateLivenessWithVerifySessionResult"/>. </summary>
+        /// <param name="sessionId"> The unique session ID of the created session. It will expire 48 hours after it was created or may be deleted sooner using the corresponding Session DELETE operation. </param>
+        /// <param name="authToken"> Bearer token to provide authentication for the Vision SDK running on a client application. This Bearer token has limited permissions to perform only the required action and expires after the TTL time. It is also auditable. </param>
+        /// <param name="verifyImage"> The detail of face for verification. </param>
+        /// <returns> A new <see cref="Face.CreateLivenessWithVerifySessionResult"/> instance for mocking. </returns>
+        public static CreateLivenessWithVerifySessionResult CreateLivenessWithVerifySessionResult(string sessionId = null, string authToken = null, LivenessWithVerifyImage verifyImage = null)
+        {
+            return new CreateLivenessWithVerifySessionResult(sessionId, authToken, verifyImage, serializedAdditionalRawData: null);
         }
     }
 }
