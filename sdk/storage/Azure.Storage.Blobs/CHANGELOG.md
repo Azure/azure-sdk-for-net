@@ -3,6 +3,7 @@
 ## 12.22.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added GenerateUserDelegationSasUri() for Blobs and BlobContainers
 
 ### Breaking Changes
 
