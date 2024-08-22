@@ -779,7 +779,7 @@ namespace Azure.Core
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims) { throw null; }
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId) { throw null; }
         public TokenRequestContext(string[] scopes, string? parentRequestId, string? claims, string? tenantId, bool isCaeEnabled) { throw null; }
-        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null, bool isCaeEnabled = false, bool isProofOfPossessionEnabled = false, string? proofOfPossessionNonce = null, Azure.Core.Request? request = null) { throw null; }
+        public TokenRequestContext(string[] scopes, string? parentRequestId = null, string? claims = null, string? tenantId = null, bool isCaeEnabled = false, bool isProofOfPossessionEnabled = false, string? proofOfPossessionNonce = null, System.Uri? requestUri = null, string? requestMethod = null) { throw null; }
         public string? Claims { get { throw null; } }
         public bool IsCaeEnabled { get { throw null; } }
         public bool IsProofOfPossessionEnabled { get { throw null; } }
