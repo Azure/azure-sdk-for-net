@@ -210,7 +210,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         {
             var builder = WebApplication.CreateBuilder();
             // Even when a single custom filter is set, it should reset the default warning level.
-            builder.Logging.AddFilter("Azure.Test", LogLevel.Error);
+            builder.Logging.AddFilter("Azure.One", LogLevel.Error);
 
             var transport = new MockTransport(_ => new MockResponse(200).SetContent("ok"));
             SetUpOTelAndLogging(builder, transport, LogLevel.Information);
@@ -218,17 +218,27 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             using var app = builder.Build();
             await app.StartAsync();
 
-            using TestEventSource source = new TestEventSource("Azure-Test");
-            Assert.True(source.IsEnabled());
+            using TestEventSource source1 = new TestEventSource("Azure-One");
+            Assert.True(source1.IsEnabled());
 
             // Only log level with errors should be captured as it is set in the logging filter.
-            source.LogMessage("Hello Information", LogLevel.Information);
-            source.LogMessage("Hello Debug", LogLevel.Debug);
-            source.LogMessage("Hello Warning", LogLevel.Warning);
-            source.LogMessage("Hello Error", LogLevel.Error);
+            source1.LogMessage("Hello Information", LogLevel.Information);
+            source1.LogMessage("Hello Debug", LogLevel.Debug);
+            source1.LogMessage("Hello Warning", LogLevel.Warning);
+            source1.LogMessage("Hello Error", LogLevel.Error);
             WaitForRequest(transport);
             Assert.Single(transport.Requests);
             await AssertContentContains(transport.Requests.Single(), "TestErrorEvent: Hello Error", LogLevel.Error);
+
+            // Azure-Two is not part of the logging filter, it should capture all logs.
+            using TestEventSource source2 = new TestEventSource("Azure-Two");
+            Assert.True(source2.IsEnabled());
+            transport.Requests.Clear();
+
+            source2.LogMessage("hello two", LogLevel.Information);
+            WaitForRequest(transport);
+            Assert.Single(transport.Requests);
+            await AssertContentContains(transport.Requests.Single(), "TestInfoEvent: hello two", LogLevel.Information);
         }
 
         private IEnumerable<MockRequest> WaitForRequest(MockTransport transport, Func<MockRequest, bool>? filter = null)
