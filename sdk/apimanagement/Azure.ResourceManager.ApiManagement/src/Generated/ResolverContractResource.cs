@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// A Class representing a ResolverContract along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResolverContractResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetResolverContractResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceApiResource"/> using the GetResolverContract method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiResource"/> using the GetResolverContract method.
     /// </summary>
     public partial class ResolverContractResource : ArmResource
     {

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="ApiTagDescriptionResource"/> and their operations.
-    /// Each <see cref="ApiTagDescriptionResource"/> in the collection will belong to the same instance of <see cref="ServiceApiResource"/>.
-    /// To get an <see cref="ApiTagDescriptionCollection"/> instance call the GetApiTagDescriptions method from an instance of <see cref="ServiceApiResource"/>.
+    /// Each <see cref="ApiTagDescriptionResource"/> in the collection will belong to the same instance of <see cref="ApiResource"/>.
+    /// To get an <see cref="ApiTagDescriptionCollection"/> instance call the GetApiTagDescriptions method from an instance of <see cref="ApiResource"/>.
     /// </summary>
     public partial class ApiTagDescriptionCollection : ArmCollection, IEnumerable<ApiTagDescriptionResource>, IAsyncEnumerable<ApiTagDescriptionResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServiceApiResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceApiResource.ResourceType), nameof(id));
+            if (id.ResourceType != ApiResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiResource.ResourceType), nameof(id));
         }
 
         /// <summary>

@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _apiManagementServiceClientDiagnostics;
         private readonly ApiManagementServiceRestOperations _apiManagementServiceRestClient;
-        private readonly ClientDiagnostics _serviceApiApiClientDiagnostics;
-        private readonly ApiRestOperations _serviceApiApiRestClient;
+        private readonly ClientDiagnostics _apiClientDiagnostics;
+        private readonly ApiRestOperations _apiRestClient;
         private readonly ClientDiagnostics _defaultClientDiagnostics;
         private readonly ApiManagementRestOperations _defaultRestClient;
         private readonly ClientDiagnostics _contentTypeClientDiagnostics;
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ApiManagement
             _apiManagementServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string apiManagementServiceApiVersion);
             _apiManagementServiceRestClient = new ApiManagementServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion);
-            _serviceApiApiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceApiResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceApiResource.ResourceType, out string serviceApiApiApiVersion);
-            _serviceApiApiRestClient = new ApiRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceApiApiApiVersion);
+            _apiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApiResource.ResourceType, out string apiApiVersion);
+            _apiRestClient = new ApiRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiApiVersion);
             _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _defaultRestClient = new ApiManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _contentTypeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ServiceApiResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ServiceApiResources and their operations over a ServiceApiResource. </returns>
-        public virtual ServiceApiCollection GetServiceApis()
+        /// <summary> Gets a collection of ApiResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiResources and their operations over a ApiResource. </returns>
+        public virtual ApiCollection GetApis()
         {
-            return GetCachedClient(client => new ServiceApiCollection(client, Id));
+            return GetCachedClient(client => new ApiCollection(client, Id));
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceApiResource"/></description>
+        /// <description><see cref="ApiResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceApiResource>> GetServiceApiAsync(string apiId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiResource>> GetApiAsync(string apiId, CancellationToken cancellationToken = default)
         {
-            return await GetServiceApis().GetAsync(apiId, cancellationToken).ConfigureAwait(false);
+            return await GetApis().GetAsync(apiId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceApiResource"/></description>
+        /// <description><see cref="ApiResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceApiResource> GetServiceApi(string apiId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiResource> GetApi(string apiId, CancellationToken cancellationToken = default)
         {
-            return GetServiceApis().Get(apiId, cancellationToken);
+            return GetApis().Get(apiId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementPolicyResources in the ApiManagementService. </summary>
@@ -501,11 +501,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementIssues().Get(issueId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceApiVersionSetResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ServiceApiVersionSetResources and their operations over a ServiceApiVersionSetResource. </returns>
-        public virtual ServiceApiVersionSetCollection GetServiceApiVersionSets()
+        /// <summary> Gets a collection of ApiVersionSetResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiVersionSetResources and their operations over a ApiVersionSetResource. </returns>
+        public virtual ApiVersionSetCollection GetApiVersionSets()
         {
-            return GetCachedClient(client => new ServiceApiVersionSetCollection(client, Id));
+            return GetCachedClient(client => new ApiVersionSetCollection(client, Id));
         }
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceApiVersionSetResource"/></description>
+        /// <description><see cref="ApiVersionSetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -534,9 +534,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceApiVersionSetResource>> GetServiceApiVersionSetAsync(string versionSetId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiVersionSetResource>> GetApiVersionSetAsync(string versionSetId, CancellationToken cancellationToken = default)
         {
-            return await GetServiceApiVersionSets().GetAsync(versionSetId, cancellationToken).ConfigureAwait(false);
+            return await GetApiVersionSets().GetAsync(versionSetId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceApiVersionSetResource"/></description>
+        /// <description><see cref="ApiVersionSetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -565,9 +565,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="versionSetId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceApiVersionSetResource> GetServiceApiVersionSet(string versionSetId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiVersionSetResource> GetApiVersionSet(string versionSetId, CancellationToken cancellationToken = default)
         {
-            return GetServiceApiVersionSets().Get(versionSetId, cancellationToken);
+            return GetApiVersionSets().Get(versionSetId, cancellationToken);
         }
 
         /// <summary> Gets a collection of AuthorizationProviderContractResources in the ApiManagementService. </summary>
@@ -1118,11 +1118,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementGateways().Get(gatewayId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceGroupResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ServiceGroupResources and their operations over a ServiceGroupResource. </returns>
-        public virtual ServiceGroupCollection GetServiceGroups()
+        /// <summary> Gets a collection of ApiManagementGroupResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementGroupResources and their operations over a ApiManagementGroupResource. </returns>
+        public virtual ApiManagementGroupCollection GetApiManagementGroups()
         {
-            return GetCachedClient(client => new ServiceGroupCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -1142,7 +1142,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
+        /// <description><see cref="ApiManagementGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1151,9 +1151,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceGroupResource>> GetServiceGroupAsync(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementGroupResource>> GetApiManagementGroupAsync(string groupId, CancellationToken cancellationToken = default)
         {
-            return await GetServiceGroups().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementGroups().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceGroupResource"/></description>
+        /// <description><see cref="ApiManagementGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1182,9 +1182,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceGroupResource> GetServiceGroup(string groupId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementGroupResource> GetApiManagementGroup(string groupId, CancellationToken cancellationToken = default)
         {
-            return GetServiceGroups().Get(groupId, cancellationToken);
+            return GetApiManagementGroups().Get(groupId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementIdentityProviderResources in the ApiManagementService. </summary>
@@ -1321,11 +1321,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementLoggers().Get(loggerId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceNamedValueResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ServiceNamedValueResources and their operations over a ServiceNamedValueResource. </returns>
-        public virtual ServiceNamedValueCollection GetServiceNamedValues()
+        /// <summary> Gets a collection of ApiManagementNamedValueResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementNamedValueResources and their operations over a ApiManagementNamedValueResource. </returns>
+        public virtual ApiManagementNamedValueCollection GetApiManagementNamedValues()
         {
-            return GetCachedClient(client => new ServiceNamedValueCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementNamedValueCollection(client, Id));
         }
 
         /// <summary>
@@ -1345,7 +1345,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceNamedValueResource"/></description>
+        /// <description><see cref="ApiManagementNamedValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1354,9 +1354,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceNamedValueResource>> GetServiceNamedValueAsync(string namedValueId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementNamedValueResource>> GetApiManagementNamedValueAsync(string namedValueId, CancellationToken cancellationToken = default)
         {
-            return await GetServiceNamedValues().GetAsync(namedValueId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementNamedValues().GetAsync(namedValueId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1376,7 +1376,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceNamedValueResource"/></description>
+        /// <description><see cref="ApiManagementNamedValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1385,45 +1385,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="namedValueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="namedValueId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceNamedValueResource> GetServiceNamedValue(string namedValueId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementNamedValueResource> GetApiManagementNamedValue(string namedValueId, CancellationToken cancellationToken = default)
         {
-            return GetServiceNamedValues().Get(namedValueId, cancellationToken);
+            return GetApiManagementNamedValues().Get(namedValueId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceNotificationResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ServiceNotificationResources and their operations over a ServiceNotificationResource. </returns>
-        public virtual ServiceNotificationCollection GetServiceNotifications()
+        /// <summary> Gets a collection of ApiManagementNotificationResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementNotificationResources and their operations over a ApiManagementNotificationResource. </returns>
+        public virtual ApiManagementNotificationCollection GetApiManagementNotifications()
         {
-            return GetCachedClient(client => new ServiceNotificationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the Notification specified by its identifier.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Notification_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceNotificationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="notificationName"> Notification Name Identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceNotificationResource>> GetServiceNotificationAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
-        {
-            return await GetServiceNotifications().GetAsync(notificationName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new ApiManagementNotificationCollection(client, Id));
         }
 
         /// <summary>
@@ -1443,16 +1414,45 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceNotificationResource"/></description>
+        /// <description><see cref="ApiManagementNotificationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="notificationName"> Notification Name Identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServiceNotificationResource> GetServiceNotification(NotificationName notificationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementNotificationResource>> GetApiManagementNotificationAsync(NotificationName notificationName, CancellationToken cancellationToken = default)
         {
-            return GetServiceNotifications().Get(notificationName, cancellationToken);
+            return await GetApiManagementNotifications().GetAsync(notificationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the Notification specified by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Notification_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementNotificationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationName"> Notification Name Identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ApiManagementNotificationResource> GetApiManagementNotification(NotificationName notificationName, CancellationToken cancellationToken = default)
+        {
+            return GetApiManagementNotifications().Get(notificationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementOpenIdConnectProviderResources in the ApiManagementService. </summary>
@@ -1961,11 +1961,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementProducts().Get(productId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceSchemaResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ServiceSchemaResources and their operations over a ServiceSchemaResource. </returns>
-        public virtual ServiceSchemaCollection GetServiceSchemas()
+        /// <summary> Gets a collection of ApiManagementGlobalSchemaResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementGlobalSchemaResources and their operations over a ApiManagementGlobalSchemaResource. </returns>
+        public virtual ApiManagementGlobalSchemaCollection GetApiManagementGlobalSchemas()
         {
-            return GetCachedClient(client => new ServiceSchemaCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementGlobalSchemaCollection(client, Id));
         }
 
         /// <summary>
@@ -1985,7 +1985,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceSchemaResource"/></description>
+        /// <description><see cref="ApiManagementGlobalSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1994,9 +1994,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceSchemaResource>> GetServiceSchemaAsync(string schemaId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementGlobalSchemaResource>> GetApiManagementGlobalSchemaAsync(string schemaId, CancellationToken cancellationToken = default)
         {
-            return await GetServiceSchemas().GetAsync(schemaId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementGlobalSchemas().GetAsync(schemaId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2016,7 +2016,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceSchemaResource"/></description>
+        /// <description><see cref="ApiManagementGlobalSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2025,9 +2025,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="schemaId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="schemaId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceSchemaResource> GetServiceSchema(string schemaId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementGlobalSchemaResource> GetApiManagementGlobalSchema(string schemaId, CancellationToken cancellationToken = default)
         {
-            return GetServiceSchemas().Get(schemaId, cancellationToken);
+            return GetApiManagementGlobalSchemas().Get(schemaId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementTenantSettingResources in the ApiManagementService. </summary>
@@ -2640,7 +2640,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceApiResource"/></description>
+        /// <description><see cref="ApiResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2652,9 +2652,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TagResourceContractDetails> GetApisByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceApiApiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceApiApiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _serviceApiApiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2674,7 +2674,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceApiResource"/></description>
+        /// <description><see cref="ApiResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2686,9 +2686,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TagResourceContractDetails> GetApisByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedApis = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceApiApiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceApiApiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _serviceApiApiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

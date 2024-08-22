@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceApiResource created on azure
-            // for more information of creating ServiceApiResource, please refer to the document of ServiceApiResource
+            // this example assumes you already have this ApiResource created on azure
+            // for more information of creating ApiResource, please refer to the document of ApiResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d2ef278aa04f0888cba3f3";
-            ResourceIdentifier serviceApiResourceId = ServiceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
-            ServiceApiResource serviceApi = client.GetServiceApiResource(serviceApiResourceId);
+            ResourceIdentifier apiResourceId = ApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
+            ApiResource api = client.GetApiResource(apiResourceId);
 
             // get the collection of this ResolverContractResource
-            ResolverContractCollection collection = serviceApi.GetResolverContracts();
+            ResolverContractCollection collection = api.GetResolverContracts();
 
             // invoke the operation and iterate over the result
             await foreach (ResolverContractResource item in collection.GetAllAsync())
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceApiResource created on azure
-            // for more information of creating ServiceApiResource, please refer to the document of ServiceApiResource
+            // this example assumes you already have this ApiResource created on azure
+            // for more information of creating ApiResource, please refer to the document of ApiResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d2ef278aa04f0888cba3f3";
-            ResourceIdentifier serviceApiResourceId = ServiceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
-            ServiceApiResource serviceApi = client.GetServiceApiResource(serviceApiResourceId);
+            ResourceIdentifier apiResourceId = ApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
+            ApiResource api = client.GetApiResource(apiResourceId);
 
             // get the collection of this ResolverContractResource
-            ResolverContractCollection collection = serviceApi.GetResolverContracts();
+            ResolverContractCollection collection = api.GetResolverContracts();
 
             // invoke the operation
             string resolverId = "57d2ef278aa04f0ad01d6cdc";
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceApiResource created on azure
-            // for more information of creating ServiceApiResource, please refer to the document of ServiceApiResource
+            // this example assumes you already have this ApiResource created on azure
+            // for more information of creating ApiResource, please refer to the document of ApiResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d2ef278aa04f0888cba3f3";
-            ResourceIdentifier serviceApiResourceId = ServiceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
-            ServiceApiResource serviceApi = client.GetServiceApiResource(serviceApiResourceId);
+            ResourceIdentifier apiResourceId = ApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
+            ApiResource api = client.GetApiResource(apiResourceId);
 
             // get the collection of this ResolverContractResource
-            ResolverContractCollection collection = serviceApi.GetResolverContracts();
+            ResolverContractCollection collection = api.GetResolverContracts();
 
             // invoke the operation
             string resolverId = "57d2ef278aa04f0ad01d6cdc";
@@ -133,17 +133,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceApiResource created on azure
-            // for more information of creating ServiceApiResource, please refer to the document of ServiceApiResource
+            // this example assumes you already have this ApiResource created on azure
+            // for more information of creating ApiResource, please refer to the document of ApiResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d2ef278aa04f0888cba3f3";
-            ResourceIdentifier serviceApiResourceId = ServiceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
-            ServiceApiResource serviceApi = client.GetServiceApiResource(serviceApiResourceId);
+            ResourceIdentifier apiResourceId = ApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
+            ApiResource api = client.GetApiResource(apiResourceId);
 
             // get the collection of this ResolverContractResource
-            ResolverContractCollection collection = serviceApi.GetResolverContracts();
+            ResolverContractCollection collection = api.GetResolverContracts();
 
             // invoke the operation
             string resolverId = "57d2ef278aa04f0ad01d6cdc";
@@ -177,17 +177,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceApiResource created on azure
-            // for more information of creating ServiceApiResource, please refer to the document of ServiceApiResource
+            // this example assumes you already have this ApiResource created on azure
+            // for more information of creating ApiResource, please refer to the document of ApiResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "someAPI";
-            ResourceIdentifier serviceApiResourceId = ServiceApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
-            ServiceApiResource serviceApi = client.GetServiceApiResource(serviceApiResourceId);
+            ResourceIdentifier apiResourceId = ApiResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId);
+            ApiResource api = client.GetApiResource(apiResourceId);
 
             // get the collection of this ResolverContractResource
-            ResolverContractCollection collection = serviceApi.GetResolverContracts();
+            ResolverContractCollection collection = api.GetResolverContracts();
 
             // invoke the operation
             string resolverId = "newResolver";

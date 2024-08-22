@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceApiOperationResource created on azure
-            // for more information of creating ServiceApiOperationResource, please refer to the document of ServiceApiOperationResource
+            // this example assumes you already have this ApiOperationResource created on azure
+            // for more information of creating ApiOperationResource, please refer to the document of ApiOperationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "57d2ef278aa04f0888cba3f3";
             string operationId = "57d2ef278aa04f0888cba3f6";
-            ResourceIdentifier serviceApiOperationResourceId = ServiceApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
-            ServiceApiOperationResource serviceApiOperation = client.GetServiceApiOperationResource(serviceApiOperationResourceId);
+            ResourceIdentifier apiOperationResourceId = ApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
+            ApiOperationResource apiOperation = client.GetApiOperationResource(apiOperationResourceId);
 
             // get the collection of this ApiOperationTagResource
-            ApiOperationTagCollection collection = serviceApiOperation.GetApiOperationTags();
+            ApiOperationTagCollection collection = apiOperation.GetApiOperationTags();
 
             // invoke the operation and iterate over the result
             await foreach (ApiOperationTagResource item in collection.GetAllAsync())
@@ -66,18 +66,18 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceApiOperationResource created on azure
-            // for more information of creating ServiceApiOperationResource, please refer to the document of ServiceApiOperationResource
+            // this example assumes you already have this ApiOperationResource created on azure
+            // for more information of creating ApiOperationResource, please refer to the document of ApiOperationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "59d6bb8f1f7fab13dc67ec9b";
             string operationId = "59d6bb8f1f7fab13dc67ec9a";
-            ResourceIdentifier serviceApiOperationResourceId = ServiceApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
-            ServiceApiOperationResource serviceApiOperation = client.GetServiceApiOperationResource(serviceApiOperationResourceId);
+            ResourceIdentifier apiOperationResourceId = ApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
+            ApiOperationResource apiOperation = client.GetApiOperationResource(apiOperationResourceId);
 
             // get the collection of this ApiOperationTagResource
-            ApiOperationTagCollection collection = serviceApiOperation.GetApiOperationTags();
+            ApiOperationTagCollection collection = apiOperation.GetApiOperationTags();
 
             // invoke the operation
             string tagId = "59306a29e4bbd510dc24e5f9";
@@ -103,18 +103,18 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceApiOperationResource created on azure
-            // for more information of creating ServiceApiOperationResource, please refer to the document of ServiceApiOperationResource
+            // this example assumes you already have this ApiOperationResource created on azure
+            // for more information of creating ApiOperationResource, please refer to the document of ApiOperationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "59d6bb8f1f7fab13dc67ec9b";
             string operationId = "59d6bb8f1f7fab13dc67ec9a";
-            ResourceIdentifier serviceApiOperationResourceId = ServiceApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
-            ServiceApiOperationResource serviceApiOperation = client.GetServiceApiOperationResource(serviceApiOperationResourceId);
+            ResourceIdentifier apiOperationResourceId = ApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
+            ApiOperationResource apiOperation = client.GetApiOperationResource(apiOperationResourceId);
 
             // get the collection of this ApiOperationTagResource
-            ApiOperationTagCollection collection = serviceApiOperation.GetApiOperationTags();
+            ApiOperationTagCollection collection = apiOperation.GetApiOperationTags();
 
             // invoke the operation
             string tagId = "59306a29e4bbd510dc24e5f9";
@@ -136,18 +136,18 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceApiOperationResource created on azure
-            // for more information of creating ServiceApiOperationResource, please refer to the document of ServiceApiOperationResource
+            // this example assumes you already have this ApiOperationResource created on azure
+            // for more information of creating ApiOperationResource, please refer to the document of ApiOperationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "59d6bb8f1f7fab13dc67ec9b";
             string operationId = "59d6bb8f1f7fab13dc67ec9a";
-            ResourceIdentifier serviceApiOperationResourceId = ServiceApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
-            ServiceApiOperationResource serviceApiOperation = client.GetServiceApiOperationResource(serviceApiOperationResourceId);
+            ResourceIdentifier apiOperationResourceId = ApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
+            ApiOperationResource apiOperation = client.GetApiOperationResource(apiOperationResourceId);
 
             // get the collection of this ApiOperationTagResource
-            ApiOperationTagCollection collection = serviceApiOperation.GetApiOperationTags();
+            ApiOperationTagCollection collection = apiOperation.GetApiOperationTags();
 
             // invoke the operation
             string tagId = "59306a29e4bbd510dc24e5f9";
@@ -181,18 +181,18 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceApiOperationResource created on azure
-            // for more information of creating ServiceApiOperationResource, please refer to the document of ServiceApiOperationResource
+            // this example assumes you already have this ApiOperationResource created on azure
+            // for more information of creating ApiOperationResource, please refer to the document of ApiOperationResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string apiId = "5931a75ae4bbd512a88c680b";
             string operationId = "5931a75ae4bbd512a88c680a";
-            ResourceIdentifier serviceApiOperationResourceId = ServiceApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
-            ServiceApiOperationResource serviceApiOperation = client.GetServiceApiOperationResource(serviceApiOperationResourceId);
+            ResourceIdentifier apiOperationResourceId = ApiOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, operationId);
+            ApiOperationResource apiOperation = client.GetApiOperationResource(apiOperationResourceId);
 
             // get the collection of this ApiOperationTagResource
-            ApiOperationTagCollection collection = serviceApiOperation.GetApiOperationTags();
+            ApiOperationTagCollection collection = apiOperation.GetApiOperationTags();
 
             // invoke the operation
             string tagId = "tagId1";

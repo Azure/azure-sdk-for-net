@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="ResolverContractResource"/> and their operations.
-    /// Each <see cref="ResolverContractResource"/> in the collection will belong to the same instance of <see cref="ServiceApiResource"/>.
-    /// To get a <see cref="ResolverContractCollection"/> instance call the GetResolverContracts method from an instance of <see cref="ServiceApiResource"/>.
+    /// Each <see cref="ResolverContractResource"/> in the collection will belong to the same instance of <see cref="ApiResource"/>.
+    /// To get a <see cref="ResolverContractCollection"/> instance call the GetResolverContracts method from an instance of <see cref="ApiResource"/>.
     /// </summary>
     public partial class ResolverContractCollection : ArmCollection, IEnumerable<ResolverContractResource>, IAsyncEnumerable<ResolverContractResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServiceApiResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceApiResource.ResourceType), nameof(id));
+            if (id.ResourceType != ApiResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiResource.ResourceType), nameof(id));
         }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// A Class representing an ApiDiagnostic along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiDiagnosticResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetApiDiagnosticResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceApiResource"/> using the GetApiDiagnostic method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiResource"/> using the GetApiDiagnostic method.
     /// </summary>
     public partial class ApiDiagnosticResource : ArmResource
     {

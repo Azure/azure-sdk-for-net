@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// A Class representing an ApiIssue along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiIssueResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetApiIssueResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceApiResource"/> using the GetApiIssue method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiResource"/> using the GetApiIssue method.
     /// </summary>
     public partial class ApiIssueResource : ArmResource
     {

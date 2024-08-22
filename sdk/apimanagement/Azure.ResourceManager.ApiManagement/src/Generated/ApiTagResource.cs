@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// A Class representing an ApiTag along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiTagResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetApiTagResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceApiResource"/> using the GetApiTag method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiResource"/> using the GetApiTag method.
     /// </summary>
     public partial class ApiTagResource : ArmResource
     {
