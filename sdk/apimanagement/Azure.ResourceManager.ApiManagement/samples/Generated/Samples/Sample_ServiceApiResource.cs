@@ -131,13 +131,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            ApiUpdateContract apiUpdateContract = new ApiUpdateContract()
+            ApiPatch patch = new ApiPatch()
             {
                 DisplayName = "Echo API New",
                 ServiceLink = "http://echoapi.cloudapp.net/api2",
                 Path = "newecho",
             };
-            ServiceApiResource result = await serviceApi.UpdateAsync(ifMatch, apiUpdateContract);
+            ServiceApiResource result = await serviceApi.UpdateAsync(ifMatch, patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

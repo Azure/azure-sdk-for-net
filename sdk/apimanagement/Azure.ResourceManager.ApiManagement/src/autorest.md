@@ -50,6 +50,8 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/policies/{policyId}: ApiManagementProductPolicy
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/tags/{tagId}: ApiManagementProductTag
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/users/{userId}/subscriptions/{sid}: ApiManagementUserSubscription
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}: ApiManagementProduct
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyFragments/{id}: PolicyFragmentContract
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -281,15 +283,24 @@ rename-mapping:
   ApiRevisionContract.privateUrl: privateUrlString
   ApiContract.properties.termsOfServiceUrl: termsOfServiceLink
   ApiContract.properties.serviceUrl: serviceLink
+  ApiUpdateContract: ApiPatch
   ApiUpdateContract.properties.termsOfServiceUrl: termsOfServiceLink
   ApiUpdateContract.properties.serviceUrl: serviceLink
+  ApiCreateOrUpdateParameter: ApiCreateOrUpdateContent
   ApiCreateOrUpdateParameter.properties.termsOfServiceUrl: termsOfServiceLink
   ApiCreateOrUpdateParameter.properties.serviceUrl: serviceLink
   ApiEntityBaseContract.termsOfServiceUrl: termsOfServiceLink
   AuthorizationConfirmConsentCodeRequestContract: AuthorizationConfirmConsentCodeContent
   AuthorizationLoginRequestContract: AuthorizationLoginContent
   AuthorizationLoginResponseContract: AuthorizationLoginResult
-  SubscriptionCreateParameters: SubscriptionCreateContent
+  SubscriptionCreateParameters: ApiManagementSubscriptionCreateOrUpdateContent
+  SubscriptionUpdateParameters: ApiManagementSubscriptionPatch
+  ProductUpdateParameters: ApiManagementProductPatch
+  NamedValueUpdateParameters: ApiManagementNamedValuePatch
+  GroupCreateParameters: ApiManagementGroupCreateOrUpdateContent
+  GroupUpdateParameters: ApiManagementGroupPatch
+  ApiVersionSetUpdateParameters: ApiVersionSetPatch
+  # PolicyFragmentContract: ApiManagementPolicyFragment
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'

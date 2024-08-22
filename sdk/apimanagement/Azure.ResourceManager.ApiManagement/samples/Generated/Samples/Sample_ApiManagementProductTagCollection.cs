@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceProductResource created on azure
-            // for more information of creating ServiceProductResource, please refer to the document of ServiceProductResource
+            // this example assumes you already have this ApiManagementProductResource created on azure
+            // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string productId = "57d2ef278aa04f0888cba3f1";
-            ResourceIdentifier serviceProductResourceId = ServiceProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
-            ServiceProductResource serviceProduct = client.GetServiceProductResource(serviceProductResourceId);
+            ResourceIdentifier apiManagementProductResourceId = ApiManagementProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
+            ApiManagementProductResource apiManagementProduct = client.GetApiManagementProductResource(apiManagementProductResourceId);
 
             // get the collection of this ApiManagementProductTagResource
-            ApiManagementProductTagCollection collection = serviceProduct.GetApiManagementProductTags();
+            ApiManagementProductTagCollection collection = apiManagementProduct.GetApiManagementProductTags();
 
             // invoke the operation and iterate over the result
             await foreach (ApiManagementProductTagResource item in collection.GetAllAsync())
@@ -65,17 +65,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceProductResource created on azure
-            // for more information of creating ServiceProductResource, please refer to the document of ServiceProductResource
+            // this example assumes you already have this ApiManagementProductResource created on azure
+            // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string productId = "59d6bb8f1f7fab13dc67ec9b";
-            ResourceIdentifier serviceProductResourceId = ServiceProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
-            ServiceProductResource serviceProduct = client.GetServiceProductResource(serviceProductResourceId);
+            ResourceIdentifier apiManagementProductResourceId = ApiManagementProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
+            ApiManagementProductResource apiManagementProduct = client.GetApiManagementProductResource(apiManagementProductResourceId);
 
             // get the collection of this ApiManagementProductTagResource
-            ApiManagementProductTagCollection collection = serviceProduct.GetApiManagementProductTags();
+            ApiManagementProductTagCollection collection = apiManagementProduct.GetApiManagementProductTags();
 
             // invoke the operation
             string tagId = "59306a29e4bbd510dc24e5f9";
@@ -101,17 +101,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceProductResource created on azure
-            // for more information of creating ServiceProductResource, please refer to the document of ServiceProductResource
+            // this example assumes you already have this ApiManagementProductResource created on azure
+            // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string productId = "59d6bb8f1f7fab13dc67ec9b";
-            ResourceIdentifier serviceProductResourceId = ServiceProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
-            ServiceProductResource serviceProduct = client.GetServiceProductResource(serviceProductResourceId);
+            ResourceIdentifier apiManagementProductResourceId = ApiManagementProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
+            ApiManagementProductResource apiManagementProduct = client.GetApiManagementProductResource(apiManagementProductResourceId);
 
             // get the collection of this ApiManagementProductTagResource
-            ApiManagementProductTagCollection collection = serviceProduct.GetApiManagementProductTags();
+            ApiManagementProductTagCollection collection = apiManagementProduct.GetApiManagementProductTags();
 
             // invoke the operation
             string tagId = "59306a29e4bbd510dc24e5f9";
@@ -133,17 +133,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceProductResource created on azure
-            // for more information of creating ServiceProductResource, please refer to the document of ServiceProductResource
+            // this example assumes you already have this ApiManagementProductResource created on azure
+            // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string productId = "59d6bb8f1f7fab13dc67ec9b";
-            ResourceIdentifier serviceProductResourceId = ServiceProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
-            ServiceProductResource serviceProduct = client.GetServiceProductResource(serviceProductResourceId);
+            ResourceIdentifier apiManagementProductResourceId = ApiManagementProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
+            ApiManagementProductResource apiManagementProduct = client.GetApiManagementProductResource(apiManagementProductResourceId);
 
             // get the collection of this ApiManagementProductTagResource
-            ApiManagementProductTagCollection collection = serviceProduct.GetApiManagementProductTags();
+            ApiManagementProductTagCollection collection = apiManagementProduct.GetApiManagementProductTags();
 
             // invoke the operation
             string tagId = "59306a29e4bbd510dc24e5f9";
@@ -177,17 +177,17 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ServiceProductResource created on azure
-            // for more information of creating ServiceProductResource, please refer to the document of ServiceProductResource
+            // this example assumes you already have this ApiManagementProductResource created on azure
+            // for more information of creating ApiManagementProductResource, please refer to the document of ApiManagementProductResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
             string productId = "5931a75ae4bbd512a88c680b";
-            ResourceIdentifier serviceProductResourceId = ServiceProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
-            ServiceProductResource serviceProduct = client.GetServiceProductResource(serviceProductResourceId);
+            ResourceIdentifier apiManagementProductResourceId = ApiManagementProductResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, productId);
+            ApiManagementProductResource apiManagementProduct = client.GetApiManagementProductResource(apiManagementProductResourceId);
 
             // get the collection of this ApiManagementProductTagResource
-            ApiManagementProductTagCollection collection = serviceProduct.GetApiManagementProductTags();
+            ApiManagementProductTagCollection collection = apiManagementProduct.GetApiManagementProductTags();
 
             // invoke the operation
             string tagId = "tagId1";

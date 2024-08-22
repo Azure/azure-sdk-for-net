@@ -281,18 +281,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="apiVersionSetUpdateParameters"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersionSetUpdateParameters"/> is null. </exception>
-        public virtual async Task<Response<ServiceApiVersionSetResource>> UpdateAsync(ETag ifMatch, ApiVersionSetUpdateParameters apiVersionSetUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ServiceApiVersionSetResource>> UpdateAsync(ETag ifMatch, ApiVersionSetPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(apiVersionSetUpdateParameters, nameof(apiVersionSetUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceApiVersionSetApiVersionSetClientDiagnostics.CreateScope("ServiceApiVersionSetResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceApiVersionSetApiVersionSetRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, apiVersionSetUpdateParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceApiVersionSetApiVersionSetRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServiceApiVersionSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -324,18 +324,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="apiVersionSetUpdateParameters"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersionSetUpdateParameters"/> is null. </exception>
-        public virtual Response<ServiceApiVersionSetResource> Update(ETag ifMatch, ApiVersionSetUpdateParameters apiVersionSetUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ServiceApiVersionSetResource> Update(ETag ifMatch, ApiVersionSetPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(apiVersionSetUpdateParameters, nameof(apiVersionSetUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceApiVersionSetApiVersionSetClientDiagnostics.CreateScope("ServiceApiVersionSetResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceApiVersionSetApiVersionSetRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, apiVersionSetUpdateParameters, cancellationToken);
+                var response = _serviceApiVersionSetApiVersionSetRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
                 return Response.FromValue(new ServiceApiVersionSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

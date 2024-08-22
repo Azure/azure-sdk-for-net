@@ -16,16 +16,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class PolicyFragmentContractData : IUtf8JsonSerializable, IJsonModel<PolicyFragmentContractData>
+    public partial class ApiManagementPolicyFragmentData : IUtf8JsonSerializable, IJsonModel<ApiManagementPolicyFragmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyFragmentContractData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementPolicyFragmentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PolicyFragmentContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementPolicyFragmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyFragmentContractData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementPolicyFragmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyFragmentContractData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementPolicyFragmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,19 +85,19 @@ namespace Azure.ResourceManager.ApiManagement
             writer.WriteEndObject();
         }
 
-        PolicyFragmentContractData IJsonModel<PolicyFragmentContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiManagementPolicyFragmentData IJsonModel<ApiManagementPolicyFragmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyFragmentContractData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementPolicyFragmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyFragmentContractData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementPolicyFragmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePolicyFragmentContractData(document.RootElement, options);
+            return DeserializeApiManagementPolicyFragmentData(document.RootElement, options);
         }
 
-        internal static PolicyFragmentContractData DeserializePolicyFragmentContractData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiManagementPolicyFragmentData DeserializeApiManagementPolicyFragmentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PolicyFragmentContractData(
+            return new ApiManagementPolicyFragmentData(
                 id,
                 name,
                 type,
@@ -320,9 +320,9 @@ namespace Azure.ResourceManager.ApiManagement
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<PolicyFragmentContractData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiManagementPolicyFragmentData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyFragmentContractData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementPolicyFragmentData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -331,26 +331,26 @@ namespace Azure.ResourceManager.ApiManagement
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyFragmentContractData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementPolicyFragmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PolicyFragmentContractData IPersistableModel<PolicyFragmentContractData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiManagementPolicyFragmentData IPersistableModel<ApiManagementPolicyFragmentData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyFragmentContractData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementPolicyFragmentData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePolicyFragmentContractData(document.RootElement, options);
+                        return DeserializeApiManagementPolicyFragmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyFragmentContractData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementPolicyFragmentData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PolicyFragmentContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementPolicyFragmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

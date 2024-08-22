@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing the PolicyFragmentContract data model.
+    /// A class representing the ApiManagementPolicyFragment data model.
     /// Policy fragment contract details.
     /// </summary>
-    public partial class PolicyFragmentContractData : ResourceData
+    public partial class ApiManagementPolicyFragmentData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PolicyFragmentContractData"/>. </summary>
-        public PolicyFragmentContractData()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPolicyFragmentData"/>. </summary>
+        public ApiManagementPolicyFragmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PolicyFragmentContractData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementPolicyFragmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="description"> Policy fragment description. </param>
         /// <param name="format"> Format of the policy fragment content. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyFragmentContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string description, PolicyFragmentContentFormat? format, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementPolicyFragmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, string description, PolicyFragmentContentFormat? format, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Value = value;
             Description = description;

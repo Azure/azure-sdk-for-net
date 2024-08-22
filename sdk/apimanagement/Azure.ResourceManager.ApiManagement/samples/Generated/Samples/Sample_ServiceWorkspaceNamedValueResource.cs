@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            NamedValueUpdateParameters namedValueUpdateParameters = new NamedValueUpdateParameters()
+            ApiManagementNamedValuePatch patch = new ApiManagementNamedValuePatch()
             {
                 Tags =
 {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
                 DisplayName = "prop3name",
                 Value = "propValue",
             };
-            ArmOperation<ServiceWorkspaceNamedValueResource> lro = await serviceWorkspaceNamedValue.UpdateAsync(WaitUntil.Completed, ifMatch, namedValueUpdateParameters);
+            ArmOperation<ServiceWorkspaceNamedValueResource> lro = await serviceWorkspaceNamedValue.UpdateAsync(WaitUntil.Completed, ifMatch, patch);
             ServiceWorkspaceNamedValueResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

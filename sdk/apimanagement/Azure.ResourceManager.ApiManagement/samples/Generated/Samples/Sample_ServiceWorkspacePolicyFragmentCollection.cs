@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PolicyFragmentContractData resourceData = item.Data;
+                ApiManagementPolicyFragmentData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PolicyFragmentContractData resourceData = result.Data;
+            ApiManagementPolicyFragmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PolicyFragmentContractData resourceData = result.Data;
+                ApiManagementPolicyFragmentData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PolicyFragmentContractData resourceData = result.Data;
+            ApiManagementPolicyFragmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                PolicyFragmentContractData resourceData = result.Data;
+                ApiManagementPolicyFragmentData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string id = "policyFragment1";
-            PolicyFragmentContractData data = new PolicyFragmentContractData()
+            ApiManagementPolicyFragmentData data = new ApiManagementPolicyFragmentData()
             {
                 Value = "<fragment><json-to-xml apply=\"always\" consider-accept-header=\"false\" /></fragment>",
                 Description = "A policy fragment example",
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            PolicyFragmentContractData resourceData = result.Data;
+            ApiManagementPolicyFragmentData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class SubscriptionUpdateParameters : IUtf8JsonSerializable, IJsonModel<SubscriptionUpdateParameters>
+    public partial class ApiManagementSubscriptionPatch : IUtf8JsonSerializable, IJsonModel<ApiManagementSubscriptionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionUpdateParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementSubscriptionPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SubscriptionUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementSubscriptionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionUpdateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementSubscriptionPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        SubscriptionUpdateParameters IJsonModel<SubscriptionUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiManagementSubscriptionPatch IJsonModel<ApiManagementSubscriptionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionUpdateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementSubscriptionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubscriptionUpdateParameters(document.RootElement, options);
+            return DeserializeApiManagementSubscriptionPatch(document.RootElement, options);
         }
 
-        internal static SubscriptionUpdateParameters DeserializeSubscriptionUpdateParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiManagementSubscriptionPatch DeserializeApiManagementSubscriptionPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SubscriptionUpdateParameters(
+            return new ApiManagementSubscriptionPatch(
                 ownerId,
                 scope,
                 expirationDate,
@@ -213,35 +213,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SubscriptionUpdateParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiManagementSubscriptionPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionUpdateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementSubscriptionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SubscriptionUpdateParameters IPersistableModel<SubscriptionUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiManagementSubscriptionPatch IPersistableModel<ApiManagementSubscriptionPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSubscriptionUpdateParameters(document.RootElement, options);
+                        return DeserializeApiManagementSubscriptionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionUpdateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementSubscriptionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SubscriptionUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementSubscriptionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

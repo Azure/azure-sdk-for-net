@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class NamedValueUpdateParameters : IUtf8JsonSerializable, IJsonModel<NamedValueUpdateParameters>
+    public partial class ApiManagementNamedValuePatch : IUtf8JsonSerializable, IJsonModel<ApiManagementNamedValuePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamedValueUpdateParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementNamedValuePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NamedValueUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementNamedValuePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamedValueUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementNamedValuePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamedValueUpdateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementNamedValuePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,19 +77,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        NamedValueUpdateParameters IJsonModel<NamedValueUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiManagementNamedValuePatch IJsonModel<ApiManagementNamedValuePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamedValueUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementNamedValuePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamedValueUpdateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementNamedValuePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNamedValueUpdateParameters(document.RootElement, options);
+            return DeserializeApiManagementNamedValuePatch(document.RootElement, options);
         }
 
-        internal static NamedValueUpdateParameters DeserializeNamedValueUpdateParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiManagementNamedValuePatch DeserializeApiManagementNamedValuePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NamedValueUpdateParameters(
+            return new ApiManagementNamedValuePatch(
                 tags ?? new ChangeTrackingList<string>(),
                 secret,
                 displayName,
@@ -175,35 +175,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NamedValueUpdateParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiManagementNamedValuePatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamedValueUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementNamedValuePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NamedValueUpdateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementNamedValuePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NamedValueUpdateParameters IPersistableModel<NamedValueUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiManagementNamedValuePatch IPersistableModel<ApiManagementNamedValuePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamedValueUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementNamedValuePatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNamedValueUpdateParameters(document.RootElement, options);
+                        return DeserializeApiManagementNamedValuePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NamedValueUpdateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementNamedValuePatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NamedValueUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementNamedValuePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

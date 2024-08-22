@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ProductUpdateParameters : IUtf8JsonSerializable, IJsonModel<ProductUpdateParameters>
+    public partial class ApiManagementProductPatch : IUtf8JsonSerializable, IJsonModel<ApiManagementProductPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductUpdateParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementProductPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ProductUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementProductPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductUpdateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementProductPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,19 +82,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        ProductUpdateParameters IJsonModel<ProductUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiManagementProductPatch IJsonModel<ApiManagementProductPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProductUpdateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementProductPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProductUpdateParameters(document.RootElement, options);
+            return DeserializeApiManagementProductPatch(document.RootElement, options);
         }
 
-        internal static ProductUpdateParameters DeserializeProductUpdateParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiManagementProductPatch DeserializeApiManagementProductPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProductUpdateParameters(
+            return new ApiManagementProductPatch(
                 description,
                 terms,
                 subscriptionRequired,
@@ -193,35 +193,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ProductUpdateParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiManagementProductPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProductUpdateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementProductPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ProductUpdateParameters IPersistableModel<ProductUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiManagementProductPatch IPersistableModel<ApiManagementProductPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProductUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProductUpdateParameters(document.RootElement, options);
+                        return DeserializeApiManagementProductPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProductUpdateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementProductPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProductUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementProductPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

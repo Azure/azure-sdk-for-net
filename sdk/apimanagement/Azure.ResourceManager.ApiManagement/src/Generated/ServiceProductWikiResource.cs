@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// A Class representing a ServiceProductWiki along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceProductWikiResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetServiceProductWikiResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceProductResource"/> using the GetServiceProductWiki method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementProductResource"/> using the GetServiceProductWiki method.
     /// </summary>
     public partial class ServiceProductWikiResource : ArmResource
     {

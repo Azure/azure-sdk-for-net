@@ -11,16 +11,16 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ServicePolicyFragmentResource : IJsonModel<PolicyFragmentContractData>
+    public partial class ServicePolicyFragmentResource : IJsonModel<ApiManagementPolicyFragmentData>
     {
-        void IJsonModel<PolicyFragmentContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PolicyFragmentContractData>)Data).Write(writer, options);
+        void IJsonModel<ApiManagementPolicyFragmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPolicyFragmentData>)Data).Write(writer, options);
 
-        PolicyFragmentContractData IJsonModel<PolicyFragmentContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PolicyFragmentContractData>)Data).Create(ref reader, options);
+        ApiManagementPolicyFragmentData IJsonModel<ApiManagementPolicyFragmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiManagementPolicyFragmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PolicyFragmentContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ApiManagementPolicyFragmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PolicyFragmentContractData IPersistableModel<PolicyFragmentContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PolicyFragmentContractData>(data, options);
+        ApiManagementPolicyFragmentData IPersistableModel<ApiManagementPolicyFragmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiManagementPolicyFragmentData>(data, options);
 
-        string IPersistableModel<PolicyFragmentContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PolicyFragmentContractData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiManagementPolicyFragmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiManagementPolicyFragmentData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServicePolicyFragmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string id, PolicyFragmentContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ServicePolicyFragmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string id, ApiManagementPolicyFragmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(data, nameof(data));
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServicePolicyFragmentResource> CreateOrUpdate(WaitUntil waitUntil, string id, PolicyFragmentContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ServicePolicyFragmentResource> CreateOrUpdate(WaitUntil waitUntil, string id, ApiManagementPolicyFragmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(data, nameof(data));
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _servicePolicyFragmentPolicyFragmentRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _servicePolicyFragmentPolicyFragmentRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServicePolicyFragmentResource(Client, PolicyFragmentContractData.DeserializePolicyFragmentContractData(e)), _servicePolicyFragmentPolicyFragmentClientDiagnostics, Pipeline, "ServicePolicyFragmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServicePolicyFragmentResource(Client, ApiManagementPolicyFragmentData.DeserializeApiManagementPolicyFragmentData(e)), _servicePolicyFragmentPolicyFragmentClientDiagnostics, Pipeline, "ServicePolicyFragmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _servicePolicyFragmentPolicyFragmentRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _servicePolicyFragmentPolicyFragmentRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, orderBy, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServicePolicyFragmentResource(Client, PolicyFragmentContractData.DeserializePolicyFragmentContractData(e)), _servicePolicyFragmentPolicyFragmentClientDiagnostics, Pipeline, "ServicePolicyFragmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServicePolicyFragmentResource(Client, ApiManagementPolicyFragmentData.DeserializeApiManagementPolicyFragmentData(e)), _servicePolicyFragmentPolicyFragmentClientDiagnostics, Pipeline, "ServicePolicyFragmentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

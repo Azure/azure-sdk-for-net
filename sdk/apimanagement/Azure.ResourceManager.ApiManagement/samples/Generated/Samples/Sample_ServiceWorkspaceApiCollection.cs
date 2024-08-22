@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string apiId = "tempgroup";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Description = "apidescription5200",
                 AuthenticationSettings = new AuthenticationSettingsContract()
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
 },
             };
-            ArmOperation<ServiceWorkspaceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceWorkspaceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceWorkspaceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

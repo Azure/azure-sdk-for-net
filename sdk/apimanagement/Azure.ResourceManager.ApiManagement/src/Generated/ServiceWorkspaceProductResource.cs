@@ -489,18 +489,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="productUpdateParameters"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="productUpdateParameters"/> is null. </exception>
-        public virtual async Task<Response<ServiceWorkspaceProductResource>> UpdateAsync(ETag ifMatch, ProductUpdateParameters productUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ServiceWorkspaceProductResource>> UpdateAsync(ETag ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(productUpdateParameters, nameof(productUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceWorkspaceProductWorkspaceProductClientDiagnostics.CreateScope("ServiceWorkspaceProductResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceProductWorkspaceProductRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, productUpdateParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceWorkspaceProductWorkspaceProductRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServiceWorkspaceProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -532,18 +532,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="productUpdateParameters"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="productUpdateParameters"/> is null. </exception>
-        public virtual Response<ServiceWorkspaceProductResource> Update(ETag ifMatch, ProductUpdateParameters productUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ServiceWorkspaceProductResource> Update(ETag ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(productUpdateParameters, nameof(productUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceWorkspaceProductWorkspaceProductClientDiagnostics.CreateScope("ServiceWorkspaceProductResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceProductWorkspaceProductRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, productUpdateParameters, cancellationToken);
+                var response = _serviceWorkspaceProductWorkspaceProductRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
                 return Response.FromValue(new ServiceWorkspaceProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

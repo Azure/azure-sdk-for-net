@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiCreateOrUpdateParameter : IUtf8JsonSerializable, IJsonModel<ApiCreateOrUpdateParameter>
+    public partial class ApiCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<ApiCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCreateOrUpdateParameter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ApiCreateOrUpdateParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCreateOrUpdateParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiCreateOrUpdateParameter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -182,19 +182,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        ApiCreateOrUpdateParameter IJsonModel<ApiCreateOrUpdateParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiCreateOrUpdateContent IJsonModel<ApiCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCreateOrUpdateParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiCreateOrUpdateParameter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiCreateOrUpdateParameter(document.RootElement, options);
+            return DeserializeApiCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static ApiCreateOrUpdateParameter DeserializeApiCreateOrUpdateParameter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiCreateOrUpdateContent DeserializeApiCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApiCreateOrUpdateParameter(
+            return new ApiCreateOrUpdateContent(
                 description,
                 authenticationSettings,
                 subscriptionKeyParameterNames,
@@ -479,35 +479,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ApiCreateOrUpdateParameter>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCreateOrUpdateParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiCreateOrUpdateParameter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ApiCreateOrUpdateParameter IPersistableModel<ApiCreateOrUpdateParameter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiCreateOrUpdateContent IPersistableModel<ApiCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiCreateOrUpdateParameter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeApiCreateOrUpdateParameter(document.RootElement, options);
+                        return DeserializeApiCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiCreateOrUpdateParameter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ApiCreateOrUpdateParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

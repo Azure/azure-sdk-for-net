@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string apiId = "tempgroup";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Description = "apidescription5200",
                 AuthenticationSettings = new AuthenticationSettingsContract()
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
 },
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -356,7 +356,7 @@ ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
 
             // invoke the operation
             string apiId = "echo-api2";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Description = "Copy of Existing Echo Api including Operations.",
                 IsCurrent = true,
@@ -370,7 +370,7 @@ ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
 ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 },
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -406,7 +406,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "echoapiv3";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Description = "Create Echo API into a new Version using Existing Version Set and Copy all Operations.",
                 ApiVersion = "v4",
@@ -422,7 +422,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 },
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -458,14 +458,14 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "echo-api;rev=3";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 ApiRevisionDescription = "Creating a Revision of an existing API",
                 SourceApiId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.ApiManagement/service/apimService1/apis/echo-api"),
                 ServiceLink = "http://echoapi.cloudapp.net/apiv3",
                 Path = "echo",
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -501,14 +501,14 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "apidocs";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 ServiceLink = "http://petstore.swagger.wordnik.com/api",
                 Path = "petstoreapi123",
                 Value = "http://apimpimportviaurl.azurewebsites.net/api/apidocs/",
                 Format = new ContentFormat("swagger-link"),
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -544,13 +544,13 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "petstore";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Path = "petstore",
                 Value = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml",
                 Format = ContentFormat.OpenApiLink,
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -586,14 +586,14 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "petstore";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Path = "petstore",
                 Value = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml",
                 Format = ContentFormat.OpenApiLink,
                 TranslateRequiredQueryParametersConduct = TranslateRequiredQueryParametersConduct.Template,
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -629,13 +629,13 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "petstore";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Path = "petstore",
                 Value = "http://petstore.swagger.io/v2/swagger.json",
                 Format = ContentFormat.SwaggerLinkJson,
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -671,13 +671,13 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "petstore";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Path = "collector",
                 Value = "https://developer.cisco.com/media/wae-release-6-2-api-reference/wae-collector-rest-api/application.wadl",
                 Format = ContentFormat.WadlLinkJson,
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -713,7 +713,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "tempgroup";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Description = "apidescription5200",
                 AuthenticationSettings = new AuthenticationSettingsContract()
@@ -744,7 +744,7 @@ Scope = "oauth2scope2581",
 ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
 },
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -780,7 +780,7 @@ ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
 
             // invoke the operation
             string apiId = "tempgroup";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Description = "apidescription5200",
                 AuthenticationSettings = new AuthenticationSettingsContract()
@@ -817,7 +817,7 @@ BearerTokenSendingMethod.AuthorizationHeader
 ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
 },
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -853,7 +853,7 @@ ApiOperationInvokableProtocol.Https,ApiOperationInvokableProtocol.Http
 
             // invoke the operation
             string apiId = "tempgroup";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Description = "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
                 AuthenticationSettings = new AuthenticationSettingsContract()
@@ -880,7 +880,7 @@ BearerTokenSendingMethod.AuthorizationHeader
 ApiOperationInvokableProtocol.Https
 },
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -916,7 +916,7 @@ ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "tempgroup";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Description = "apidescription5200",
                 ApiType = ApiType.GraphQL,
@@ -928,7 +928,7 @@ ApiOperationInvokableProtocol.Https
 ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 },
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -964,7 +964,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "tempgroup";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Description = "apidescription5200",
                 ApiType = ApiType.Odata,
@@ -978,7 +978,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
                 Value = "https://services.odata.org/TripPinWebApiService/$metadata",
                 Format = ContentFormat.OdataLink,
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -1014,7 +1014,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "soapApi";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Path = "currency",
                 Value = "http://www.webservicex.net/CurrencyConvertor.asmx?WSDL",
@@ -1026,7 +1026,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
                 },
                 SoapApiType = SoapApiType.SoapPassThrough,
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -1062,7 +1062,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "soapApi";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Path = "currency",
                 Value = "http://www.webservicex.net/CurrencyConvertor.asmx?WSDL",
@@ -1073,7 +1073,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
                     WsdlEndpointName = "CurrencyConvertorSoap",
                 },
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -1109,7 +1109,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 
             // invoke the operation
             string apiId = "tempgroup";
-            ApiCreateOrUpdateParameter apiCreateOrUpdateParameter = new ApiCreateOrUpdateParameter()
+            ApiCreateOrUpdateContent content = new ApiCreateOrUpdateContent()
             {
                 Description = "apidescription5200",
                 ApiType = ApiType.WebSocket,
@@ -1121,7 +1121,7 @@ ApiOperationInvokableProtocol.Http,ApiOperationInvokableProtocol.Https
 ApiOperationInvokableProtocol.Wss,ApiOperationInvokableProtocol.Ws
 },
             };
-            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, apiCreateOrUpdateParameter);
+            ArmOperation<ServiceApiResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, apiId, content);
             ServiceApiResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="ServiceProductApiLinkResource"/> and their operations.
-    /// Each <see cref="ServiceProductApiLinkResource"/> in the collection will belong to the same instance of <see cref="ServiceProductResource"/>.
-    /// To get a <see cref="ServiceProductApiLinkCollection"/> instance call the GetServiceProductApiLinks method from an instance of <see cref="ServiceProductResource"/>.
+    /// Each <see cref="ServiceProductApiLinkResource"/> in the collection will belong to the same instance of <see cref="ApiManagementProductResource"/>.
+    /// To get a <see cref="ServiceProductApiLinkCollection"/> instance call the GetServiceProductApiLinks method from an instance of <see cref="ApiManagementProductResource"/>.
     /// </summary>
     public partial class ServiceProductApiLinkCollection : ArmCollection, IEnumerable<ServiceProductApiLinkResource>, IAsyncEnumerable<ServiceProductApiLinkResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ServiceProductResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServiceProductResource.ResourceType), nameof(id));
+            if (id.ResourceType != ApiManagementProductResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApiManagementProductResource.ResourceType), nameof(id));
         }
 
         /// <summary>

@@ -17,14 +17,14 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A Class representing a ServiceProduct along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceProductResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetServiceProductResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetServiceProduct method.
+    /// A Class representing an ApiManagementProduct along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApiManagementProductResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetApiManagementProductResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource"/> using the GetApiManagementProduct method.
     /// </summary>
-    public partial class ServiceProductResource : ArmResource
+    public partial class ApiManagementProductResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ServiceProductResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ApiManagementProductResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="serviceName"> The serviceName. </param>
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.ApiManagement
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _serviceProductProductClientDiagnostics;
-        private readonly ProductRestOperations _serviceProductProductRestClient;
+        private readonly ClientDiagnostics _apiManagementProductProductClientDiagnostics;
+        private readonly ProductRestOperations _apiManagementProductProductRestClient;
         private readonly ClientDiagnostics _productApiClientDiagnostics;
         private readonly ProductApiRestOperations _productApiRestClient;
         private readonly ClientDiagnostics _productGroupClientDiagnostics;
@@ -48,28 +48,28 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/products";
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceProductResource"/> class for mocking. </summary>
-        protected ServiceProductResource()
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementProductResource"/> class for mocking. </summary>
+        protected ApiManagementProductResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceProductResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementProductResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceProductResource(ArmClient client, ApiManagementProductData data) : this(client, data.Id)
+        internal ApiManagementProductResource(ArmClient client, ApiManagementProductData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceProductResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ApiManagementProductResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ServiceProductResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ApiManagementProductResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceProductProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string serviceProductProductApiVersion);
-            _serviceProductProductRestClient = new ProductRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceProductProductApiVersion);
+            _apiManagementProductProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiManagementProductProductApiVersion);
+            _apiManagementProductProductRestClient = new ProductRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementProductProductApiVersion);
             _productApiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _productApiRestClient = new ProductApiRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _productGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ApiManagement
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ApiManagementProductPolicyResources in the ServiceProduct. </summary>
+        /// <summary> Gets a collection of ApiManagementProductPolicyResources in the ApiManagementProduct. </summary>
         /// <returns> An object representing collection of ApiManagementProductPolicyResources and their operations over a ApiManagementProductPolicyResource. </returns>
         public virtual ApiManagementProductPolicyCollection GetApiManagementProductPolicies()
         {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementProductPolicies().Get(policyId, format, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ApiManagementProductTagResources in the ServiceProduct. </summary>
+        /// <summary> Gets a collection of ApiManagementProductTagResources in the ApiManagementProduct. </summary>
         /// <returns> An object representing collection of ApiManagementProductTagResources and their operations over a ApiManagementProductTagResource. </returns>
         public virtual ApiManagementProductTagCollection GetApiManagementProductTags()
         {
@@ -238,14 +238,14 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementProductTags().Get(tagId, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a ServiceProductWikiResource along with the instance operations that can be performed on it in the ServiceProduct. </summary>
+        /// <summary> Gets an object representing a ServiceProductWikiResource along with the instance operations that can be performed on it in the ApiManagementProduct. </summary>
         /// <returns> Returns a <see cref="ServiceProductWikiResource"/> object. </returns>
         public virtual ServiceProductWikiResource GetServiceProductWiki()
         {
             return new ServiceProductWikiResource(Client, Id.AppendChildResource("wikis", "default"));
         }
 
-        /// <summary> Gets a collection of ServiceProductApiLinkResources in the ServiceProduct. </summary>
+        /// <summary> Gets a collection of ServiceProductApiLinkResources in the ApiManagementProduct. </summary>
         /// <returns> An object representing collection of ServiceProductApiLinkResources and their operations over a ServiceProductApiLinkResource. </returns>
         public virtual ServiceProductApiLinkCollection GetServiceProductApiLinks()
         {
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ApiManagement
             return GetServiceProductApiLinks().Get(apiLinkId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceProductGroupLinkResources in the ServiceProduct. </summary>
+        /// <summary> Gets a collection of ServiceProductGroupLinkResources in the ApiManagementProduct. </summary>
         /// <returns> An object representing collection of ServiceProductGroupLinkResources and their operations over a ServiceProductGroupLinkResource. </returns>
         public virtual ServiceProductGroupLinkCollection GetServiceProductGroupLinks()
         {
@@ -400,21 +400,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceProductResource"/></description>
+        /// <description><see cref="ApiManagementProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceProductResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementProductResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceProductProductClientDiagnostics.CreateScope("ServiceProductResource.Get");
+            using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductResource.Get");
             scope.Start();
             try
             {
-                var response = await _serviceProductProductRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementProductProductRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceProductResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -440,21 +440,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceProductResource"/></description>
+        /// <description><see cref="ApiManagementProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceProductResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementProductResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceProductProductClientDiagnostics.CreateScope("ServiceProductResource.Get");
+            using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductResource.Get");
             scope.Start();
             try
             {
-                var response = _serviceProductProductRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _apiManagementProductProductRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceProductResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ApiManagementProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceProductResource"/></description>
+        /// <description><see cref="ApiManagementProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -490,12 +490,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, bool? deleteSubscriptions = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceProductProductClientDiagnostics.CreateScope("ServiceProductResource.Delete");
+            using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductResource.Delete");
             scope.Start();
             try
             {
-                var response = await _serviceProductProductRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, cancellationToken).ConfigureAwait(false);
-                var uri = _serviceProductProductRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions);
+                var response = await _apiManagementProductProductRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, cancellationToken).ConfigureAwait(false);
+                var uri = _apiManagementProductProductRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceProductResource"/></description>
+        /// <description><see cref="ApiManagementProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -536,12 +536,12 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, bool? deleteSubscriptions = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceProductProductClientDiagnostics.CreateScope("ServiceProductResource.Delete");
+            using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductResource.Delete");
             scope.Start();
             try
             {
-                var response = _serviceProductProductRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, cancellationToken);
-                var uri = _serviceProductProductRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions);
+                var response = _apiManagementProductProductRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions, cancellationToken);
+                var uri = _apiManagementProductProductRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, deleteSubscriptions);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new ApiManagementArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -572,24 +572,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceProductResource"/></description>
+        /// <description><see cref="ApiManagementProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="productUpdateParameters"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="productUpdateParameters"/> is null. </exception>
-        public virtual async Task<Response<ServiceProductResource>> UpdateAsync(ETag ifMatch, ProductUpdateParameters productUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ApiManagementProductResource>> UpdateAsync(ETag ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(productUpdateParameters, nameof(productUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _serviceProductProductClientDiagnostics.CreateScope("ServiceProductResource.Update");
+            using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceProductProductRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, productUpdateParameters, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ServiceProductResource(Client, response.Value), response.GetRawResponse());
+                var response = await _apiManagementProductProductRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new ApiManagementProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -615,24 +615,24 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceProductResource"/></description>
+        /// <description><see cref="ApiManagementProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="productUpdateParameters"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="productUpdateParameters"/> is null. </exception>
-        public virtual Response<ServiceProductResource> Update(ETag ifMatch, ProductUpdateParameters productUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ApiManagementProductResource> Update(ETag ifMatch, ApiManagementProductPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(productUpdateParameters, nameof(productUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _serviceProductProductClientDiagnostics.CreateScope("ServiceProductResource.Update");
+            using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceProductProductRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, productUpdateParameters, cancellationToken);
-                return Response.FromValue(new ServiceProductResource(Client, response.Value), response.GetRawResponse());
+                var response = _apiManagementProductProductRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
+                return Response.FromValue(new ApiManagementProductResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _productApiRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _productApiRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductApiData.DeserializeProductApiData(e), _productApiClientDiagnostics, Pipeline, "ServiceProductResource.GetProductApis", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductApiData.DeserializeProductApiData(e), _productApiClientDiagnostics, Pipeline, "ApiManagementProductResource.GetProductApis", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _productApiRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _productApiRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductApiData.DeserializeProductApiData(e), _productApiClientDiagnostics, Pipeline, "ServiceProductResource.GetProductApis", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductApiData.DeserializeProductApiData(e), _productApiClientDiagnostics, Pipeline, "ApiManagementProductResource.GetProductApis", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
-            using var scope = _productApiClientDiagnostics.CreateScope("ServiceProductResource.CheckProductApiEntityExists");
+            using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.CheckProductApiEntityExists");
             scope.Start();
             try
             {
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
-            using var scope = _productApiClientDiagnostics.CreateScope("ServiceProductResource.CheckProductApiEntityExists");
+            using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.CheckProductApiEntityExists");
             scope.Start();
             try
             {
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
-            using var scope = _productApiClientDiagnostics.CreateScope("ServiceProductResource.CreateOrUpdateProductApi");
+            using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.CreateOrUpdateProductApi");
             scope.Start();
             try
             {
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
-            using var scope = _productApiClientDiagnostics.CreateScope("ServiceProductResource.CreateOrUpdateProductApi");
+            using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.CreateOrUpdateProductApi");
             scope.Start();
             try
             {
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
-            using var scope = _productApiClientDiagnostics.CreateScope("ServiceProductResource.DeleteProductApi");
+            using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.DeleteProductApi");
             scope.Start();
             try
             {
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
 
-            using var scope = _productApiClientDiagnostics.CreateScope("ServiceProductResource.DeleteProductApi");
+            using var scope = _productApiClientDiagnostics.CreateScope("ApiManagementProductResource.DeleteProductApi");
             scope.Start();
             try
             {
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _productGroupRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _productGroupRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductGroupData.DeserializeProductGroupData(e), _productGroupClientDiagnostics, Pipeline, "ServiceProductResource.GetProductGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductGroupData.DeserializeProductGroupData(e), _productGroupClientDiagnostics, Pipeline, "ApiManagementProductResource.GetProductGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _productGroupRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _productGroupRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductGroupData.DeserializeProductGroupData(e), _productGroupClientDiagnostics, Pipeline, "ServiceProductResource.GetProductGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductGroupData.DeserializeProductGroupData(e), _productGroupClientDiagnostics, Pipeline, "ApiManagementProductResource.GetProductGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1016,7 +1016,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _productGroupClientDiagnostics.CreateScope("ServiceProductResource.CheckProductGroupEntityExists");
+            using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.CheckProductGroupEntityExists");
             scope.Start();
             try
             {
@@ -1055,7 +1055,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _productGroupClientDiagnostics.CreateScope("ServiceProductResource.CheckProductGroupEntityExists");
+            using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.CheckProductGroupEntityExists");
             scope.Start();
             try
             {
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _productGroupClientDiagnostics.CreateScope("ServiceProductResource.CreateOrUpdateProductGroup");
+            using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.CreateOrUpdateProductGroup");
             scope.Start();
             try
             {
@@ -1133,7 +1133,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _productGroupClientDiagnostics.CreateScope("ServiceProductResource.CreateOrUpdateProductGroup");
+            using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.CreateOrUpdateProductGroup");
             scope.Start();
             try
             {
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _productGroupClientDiagnostics.CreateScope("ServiceProductResource.DeleteProductGroup");
+            using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.DeleteProductGroup");
             scope.Start();
             try
             {
@@ -1211,7 +1211,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _productGroupClientDiagnostics.CreateScope("ServiceProductResource.DeleteProductGroup");
+            using var scope = _productGroupClientDiagnostics.CreateScope("ApiManagementProductResource.DeleteProductGroup");
             scope.Start();
             try
             {
@@ -1226,64 +1226,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists the collection of subscriptions to the specified product.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/subscriptions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductSubscriptions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| user | expand |     |     |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionContractData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionContractData> GetAllProductSubscriptionDataAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _productSubscriptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _productSubscriptionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SubscriptionContractData.DeserializeSubscriptionContractData(e), _productSubscriptionsClientDiagnostics, Pipeline, "ServiceProductResource.GetAllProductSubscriptionData", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the collection of subscriptions to the specified product.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/subscriptions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProductSubscriptions_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| stateComment | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| ownerId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| scope | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| userId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| productId | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| state | filter | eq |     |&lt;/br&gt;| user | expand |     |     |&lt;/br&gt;. </param>
-        /// <param name="top"> Number of records to return. </param>
-        /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionContractData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionContractData> GetAllProductSubscriptionData(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _productSubscriptionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _productSubscriptionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SubscriptionContractData.DeserializeSubscriptionContractData(e), _productSubscriptionsClientDiagnostics, Pipeline, "ServiceProductResource.GetAllProductSubscriptionData", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Gets the entity state (Etag) version of the product specified by its identifier.
         /// <list type="bullet">
         /// <item>
@@ -1300,18 +1242,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceProductResource"/></description>
+        /// <description><see cref="ApiManagementProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceProductProductClientDiagnostics.CreateScope("ServiceProductResource.GetEntityTag");
+            using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductResource.GetEntityTag");
             scope.Start();
             try
             {
-                var response = await _serviceProductProductRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _apiManagementProductProductRestClient.GetEntityTagAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1338,18 +1280,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceProductResource"/></description>
+        /// <description><see cref="ApiManagementProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceProductProductClientDiagnostics.CreateScope("ServiceProductResource.GetEntityTag");
+            using var scope = _apiManagementProductProductClientDiagnostics.CreateScope("ApiManagementProductResource.GetEntityTag");
             scope.Start();
             try
             {
-                var response = _serviceProductProductRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _apiManagementProductProductRestClient.GetEntityTag(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

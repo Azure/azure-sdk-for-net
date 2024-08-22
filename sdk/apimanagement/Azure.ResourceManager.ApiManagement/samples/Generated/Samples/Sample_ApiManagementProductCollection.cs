@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.ApiManagement.Samples
 {
-    public partial class Sample_ServiceProductCollection
+    public partial class Sample_ApiManagementProductCollection
     {
         // ApiManagementListProducts
         [NUnit.Framework.Test]
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceProductResource
-            ServiceProductCollection collection = apiManagementService.GetServiceProducts();
+            // get the collection of this ApiManagementProductResource
+            ApiManagementProductCollection collection = apiManagementService.GetApiManagementProducts();
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceProductResource item in collection.GetAllAsync())
+            await foreach (ApiManagementProductResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceProductResource
-            ServiceProductCollection collection = apiManagementService.GetServiceProducts();
+            // get the collection of this ApiManagementProductResource
+            ApiManagementProductCollection collection = apiManagementService.GetApiManagementProducts();
 
             // invoke the operation
             string productId = "unlimited";
-            ServiceProductResource result = await collection.GetAsync(productId);
+            ApiManagementProductResource result = await collection.GetAsync(productId);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceProductResource
-            ServiceProductCollection collection = apiManagementService.GetServiceProducts();
+            // get the collection of this ApiManagementProductResource
+            ApiManagementProductCollection collection = apiManagementService.GetApiManagementProducts();
 
             // invoke the operation
             string productId = "unlimited";
@@ -138,13 +138,13 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceProductResource
-            ServiceProductCollection collection = apiManagementService.GetServiceProducts();
+            // get the collection of this ApiManagementProductResource
+            ApiManagementProductCollection collection = apiManagementService.GetApiManagementProducts();
 
             // invoke the operation
             string productId = "unlimited";
-            NullableResponse<ServiceProductResource> response = await collection.GetIfExistsAsync(productId);
-            ServiceProductResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ApiManagementProductResource> response = await collection.GetIfExistsAsync(productId);
+            ApiManagementProductResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -181,8 +181,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ResourceIdentifier apiManagementServiceResourceId = ApiManagementServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
-            // get the collection of this ServiceProductResource
-            ServiceProductCollection collection = apiManagementService.GetServiceProducts();
+            // get the collection of this ApiManagementProductResource
+            ApiManagementProductCollection collection = apiManagementService.GetApiManagementProducts();
 
             // invoke the operation
             string productId = "testproduct";
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 DisplayName = "Test Template ProductName 4",
             };
-            ArmOperation<ServiceProductResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, productId, data);
-            ServiceProductResource result = lro.Value;
+            ArmOperation<ApiManagementProductResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, productId, data);
+            ApiManagementProductResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

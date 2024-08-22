@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            GroupUpdateParameters groupUpdateParameters = new GroupUpdateParameters()
+            ApiManagementGroupPatch patch = new ApiManagementGroupPatch()
             {
                 DisplayName = "temp group",
             };
-            ServiceGroupResource result = await serviceGroup.UpdateAsync(ifMatch, groupUpdateParameters);
+            ServiceGroupResource result = await serviceGroup.UpdateAsync(ifMatch, patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

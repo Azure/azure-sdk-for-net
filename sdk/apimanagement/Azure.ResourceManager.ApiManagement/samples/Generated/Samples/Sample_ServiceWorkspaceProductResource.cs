@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            ProductUpdateParameters productUpdateParameters = new ProductUpdateParameters()
+            ApiManagementProductPatch patch = new ApiManagementProductPatch()
             {
                 DisplayName = "Test Template ProductName 4",
             };
-            ServiceWorkspaceProductResource result = await serviceWorkspaceProduct.UpdateAsync(ifMatch, productUpdateParameters);
+            ServiceWorkspaceProductResource result = await serviceWorkspaceProduct.UpdateAsync(ifMatch, patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

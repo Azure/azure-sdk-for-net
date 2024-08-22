@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiVersionSetUpdateParameters : IUtf8JsonSerializable, IJsonModel<ApiVersionSetUpdateParameters>
+    public partial class ApiVersionSetPatch : IUtf8JsonSerializable, IJsonModel<ApiVersionSetPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiVersionSetUpdateParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiVersionSetPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ApiVersionSetUpdateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiVersionSetPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiVersionSetUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiVersionSetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiVersionSetUpdateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiVersionSetPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        ApiVersionSetUpdateParameters IJsonModel<ApiVersionSetUpdateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiVersionSetPatch IJsonModel<ApiVersionSetPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiVersionSetUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiVersionSetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiVersionSetUpdateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiVersionSetPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiVersionSetUpdateParameters(document.RootElement, options);
+            return DeserializeApiVersionSetPatch(document.RootElement, options);
         }
 
-        internal static ApiVersionSetUpdateParameters DeserializeApiVersionSetUpdateParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiVersionSetPatch DeserializeApiVersionSetPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApiVersionSetUpdateParameters(
+            return new ApiVersionSetPatch(
                 description,
                 versionQueryName,
                 versionHeaderName,
@@ -157,35 +157,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ApiVersionSetUpdateParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiVersionSetPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiVersionSetUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiVersionSetPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiVersionSetUpdateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiVersionSetPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ApiVersionSetUpdateParameters IPersistableModel<ApiVersionSetUpdateParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiVersionSetPatch IPersistableModel<ApiVersionSetPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiVersionSetUpdateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiVersionSetPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeApiVersionSetUpdateParameters(document.RootElement, options);
+                        return DeserializeApiVersionSetPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiVersionSetUpdateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiVersionSetPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ApiVersionSetUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiVersionSetPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

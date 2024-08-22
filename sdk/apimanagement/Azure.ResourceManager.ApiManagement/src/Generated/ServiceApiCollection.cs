@@ -75,22 +75,22 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="apiCreateOrUpdateParameter"> Create or update parameters. </param>
+        /// <param name="content"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> or <paramref name="apiCreateOrUpdateParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceApiResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string apiId, ApiCreateOrUpdateParameter apiCreateOrUpdateParameter, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServiceApiResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string apiId, ApiCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNull(apiCreateOrUpdateParameter, nameof(apiCreateOrUpdateParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceApiApiClientDiagnostics.CreateScope("ServiceApiCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _serviceApiApiRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, apiCreateOrUpdateParameter, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ServiceApiResource>(new ServiceApiOperationSource(Client), _serviceApiApiClientDiagnostics, Pipeline, _serviceApiApiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, apiCreateOrUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _serviceApiApiRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ServiceApiResource>(new ServiceApiOperationSource(Client), _serviceApiApiClientDiagnostics, Pipeline, _serviceApiApiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,22 +125,22 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="apiId"> API revision identifier. Must be unique in the current API Management service instance. Non-current revision has ;rev=n as a suffix where n is the revision number. </param>
-        /// <param name="apiCreateOrUpdateParameter"> Create or update parameters. </param>
+        /// <param name="content"> Create or update parameters. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="apiId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> or <paramref name="apiCreateOrUpdateParameter"/> is null. </exception>
-        public virtual ArmOperation<ServiceApiResource> CreateOrUpdate(WaitUntil waitUntil, string apiId, ApiCreateOrUpdateParameter apiCreateOrUpdateParameter, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="apiId"/> or <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<ServiceApiResource> CreateOrUpdate(WaitUntil waitUntil, string apiId, ApiCreateOrUpdateContent content, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
-            Argument.AssertNotNull(apiCreateOrUpdateParameter, nameof(apiCreateOrUpdateParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _serviceApiApiClientDiagnostics.CreateScope("ServiceApiCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _serviceApiApiRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, apiCreateOrUpdateParameter, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ServiceApiResource>(new ServiceApiOperationSource(Client), _serviceApiApiClientDiagnostics, Pipeline, _serviceApiApiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, apiCreateOrUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _serviceApiApiRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch, cancellationToken);
+                var operation = new ApiManagementArmOperation<ServiceApiResource>(new ServiceApiOperationSource(Client), _serviceApiApiClientDiagnostics, Pipeline, _serviceApiApiRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, apiId, content, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

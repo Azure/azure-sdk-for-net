@@ -283,19 +283,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="namedValueUpdateParameters"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namedValueUpdateParameters"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceWorkspaceNamedValueResource>> UpdateAsync(WaitUntil waitUntil, ETag ifMatch, NamedValueUpdateParameters namedValueUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServiceWorkspaceNamedValueResource>> UpdateAsync(WaitUntil waitUntil, ETag ifMatch, ApiManagementNamedValuePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(namedValueUpdateParameters, nameof(namedValueUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceWorkspaceNamedValueWorkspaceNamedValueClientDiagnostics.CreateScope("ServiceWorkspaceNamedValueResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceNamedValueWorkspaceNamedValueRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, namedValueUpdateParameters, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ServiceWorkspaceNamedValueResource>(new ServiceWorkspaceNamedValueOperationSource(Client), _serviceWorkspaceNamedValueWorkspaceNamedValueClientDiagnostics, Pipeline, _serviceWorkspaceNamedValueWorkspaceNamedValueRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, namedValueUpdateParameters).Request, response, OperationFinalStateVia.Location);
+                var response = await _serviceWorkspaceNamedValueWorkspaceNamedValueRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new ApiManagementArmOperation<ServiceWorkspaceNamedValueResource>(new ServiceWorkspaceNamedValueOperationSource(Client), _serviceWorkspaceNamedValueWorkspaceNamedValueClientDiagnostics, Pipeline, _serviceWorkspaceNamedValueWorkspaceNamedValueRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -330,19 +330,19 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="namedValueUpdateParameters"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namedValueUpdateParameters"/> is null. </exception>
-        public virtual ArmOperation<ServiceWorkspaceNamedValueResource> Update(WaitUntil waitUntil, ETag ifMatch, NamedValueUpdateParameters namedValueUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<ServiceWorkspaceNamedValueResource> Update(WaitUntil waitUntil, ETag ifMatch, ApiManagementNamedValuePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(namedValueUpdateParameters, nameof(namedValueUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceWorkspaceNamedValueWorkspaceNamedValueClientDiagnostics.CreateScope("ServiceWorkspaceNamedValueResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceNamedValueWorkspaceNamedValueRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, namedValueUpdateParameters, cancellationToken);
-                var operation = new ApiManagementArmOperation<ServiceWorkspaceNamedValueResource>(new ServiceWorkspaceNamedValueOperationSource(Client), _serviceWorkspaceNamedValueWorkspaceNamedValueClientDiagnostics, Pipeline, _serviceWorkspaceNamedValueWorkspaceNamedValueRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, namedValueUpdateParameters).Request, response, OperationFinalStateVia.Location);
+                var response = _serviceWorkspaceNamedValueWorkspaceNamedValueRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
+                var operation = new ApiManagementArmOperation<ServiceWorkspaceNamedValueResource>(new ServiceWorkspaceNamedValueOperationSource(Client), _serviceWorkspaceNamedValueWorkspaceNamedValueClientDiagnostics, Pipeline, _serviceWorkspaceNamedValueWorkspaceNamedValueRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

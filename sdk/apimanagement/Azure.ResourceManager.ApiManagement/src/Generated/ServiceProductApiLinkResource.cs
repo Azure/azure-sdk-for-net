@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// A Class representing a ServiceProductApiLink along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceProductApiLinkResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetServiceProductApiLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ServiceProductResource"/> using the GetServiceProductApiLink method.
+    /// Otherwise you can get one from its parent resource <see cref="ApiManagementProductResource"/> using the GetServiceProductApiLink method.
     /// </summary>
     public partial class ServiceProductApiLinkResource : ArmResource
     {

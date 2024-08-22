@@ -287,18 +287,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="groupUpdateParameters"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupUpdateParameters"/> is null. </exception>
-        public virtual async Task<Response<ServiceWorkspaceGroupResource>> UpdateAsync(ETag ifMatch, GroupUpdateParameters groupUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ServiceWorkspaceGroupResource>> UpdateAsync(ETag ifMatch, ApiManagementGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(groupUpdateParameters, nameof(groupUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceWorkspaceGroupWorkspaceGroupClientDiagnostics.CreateScope("ServiceWorkspaceGroupResource.Update");
             scope.Start();
             try
             {
-                var response = await _serviceWorkspaceGroupWorkspaceGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, groupUpdateParameters, cancellationToken).ConfigureAwait(false);
+                var response = await _serviceWorkspaceGroupWorkspaceGroupRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ServiceWorkspaceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -330,18 +330,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="groupUpdateParameters"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupUpdateParameters"/> is null. </exception>
-        public virtual Response<ServiceWorkspaceGroupResource> Update(ETag ifMatch, GroupUpdateParameters groupUpdateParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ServiceWorkspaceGroupResource> Update(ETag ifMatch, ApiManagementGroupPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(groupUpdateParameters, nameof(groupUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _serviceWorkspaceGroupWorkspaceGroupClientDiagnostics.CreateScope("ServiceWorkspaceGroupResource.Update");
             scope.Start();
             try
             {
-                var response = _serviceWorkspaceGroupWorkspaceGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, groupUpdateParameters, cancellationToken);
+                var response = _serviceWorkspaceGroupWorkspaceGroupRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ifMatch, patch, cancellationToken);
                 return Response.FromValue(new ServiceWorkspaceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class SubscriptionCreateContent : IUtf8JsonSerializable, IJsonModel<SubscriptionCreateContent>
+    public partial class ApiManagementSubscriptionCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<ApiManagementSubscriptionCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionCreateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementSubscriptionCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SubscriptionCreateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementSubscriptionCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionCreateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionCreateContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementSubscriptionCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,19 +82,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        SubscriptionCreateContent IJsonModel<SubscriptionCreateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiManagementSubscriptionCreateOrUpdateContent IJsonModel<ApiManagementSubscriptionCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionCreateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionCreateContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementSubscriptionCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubscriptionCreateContent(document.RootElement, options);
+            return DeserializeApiManagementSubscriptionCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static SubscriptionCreateContent DeserializeSubscriptionCreateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiManagementSubscriptionCreateOrUpdateContent DeserializeApiManagementSubscriptionCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SubscriptionCreateContent(
+            return new ApiManagementSubscriptionCreateOrUpdateContent(
                 ownerId,
                 scope,
                 displayName,
@@ -185,35 +185,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SubscriptionCreateContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiManagementSubscriptionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionCreateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionCreateContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementSubscriptionCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SubscriptionCreateContent IPersistableModel<SubscriptionCreateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiManagementSubscriptionCreateOrUpdateContent IPersistableModel<ApiManagementSubscriptionCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionCreateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementSubscriptionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSubscriptionCreateContent(document.RootElement, options);
+                        return DeserializeApiManagementSubscriptionCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionCreateContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementSubscriptionCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SubscriptionCreateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementSubscriptionCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

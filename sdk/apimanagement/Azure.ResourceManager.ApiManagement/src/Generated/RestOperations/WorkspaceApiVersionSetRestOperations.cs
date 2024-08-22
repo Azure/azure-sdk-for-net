@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string versionSetId, ETag ifMatch, ApiVersionSetUpdateParameters apiVersionSetUpdateParameters)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string versionSetId, ETag ifMatch, ApiVersionSetPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ApiManagement
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string versionSetId, ETag ifMatch, ApiVersionSetUpdateParameters apiVersionSetUpdateParameters)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string versionSetId, ETag ifMatch, ApiVersionSetPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ApiManagement
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(apiVersionSetUpdateParameters, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -572,20 +572,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="apiVersionSetUpdateParameters"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="versionSetId"/> or <paramref name="apiVersionSetUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="versionSetId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiVersionSetData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string versionSetId, ETag ifMatch, ApiVersionSetUpdateParameters apiVersionSetUpdateParameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiVersionSetData>> UpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string versionSetId, ETag ifMatch, ApiVersionSetPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
-            Argument.AssertNotNull(apiVersionSetUpdateParameters, nameof(apiVersionSetUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, versionSetId, ifMatch, apiVersionSetUpdateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, versionSetId, ifMatch, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -608,20 +608,20 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="versionSetId"> Api Version Set identifier. Must be unique in the current API Management service instance. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="apiVersionSetUpdateParameters"> Update parameters. </param>
+        /// <param name="patch"> Update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="versionSetId"/> or <paramref name="apiVersionSetUpdateParameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/>, <paramref name="versionSetId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceId"/> or <paramref name="versionSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiVersionSetData> Update(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string versionSetId, ETag ifMatch, ApiVersionSetUpdateParameters apiVersionSetUpdateParameters, CancellationToken cancellationToken = default)
+        public Response<ApiVersionSetData> Update(string subscriptionId, string resourceGroupName, string serviceName, string workspaceId, string versionSetId, ETag ifMatch, ApiVersionSetPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
             Argument.AssertNotNullOrEmpty(workspaceId, nameof(workspaceId));
             Argument.AssertNotNullOrEmpty(versionSetId, nameof(versionSetId));
-            Argument.AssertNotNull(apiVersionSetUpdateParameters, nameof(apiVersionSetUpdateParameters));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, versionSetId, ifMatch, apiVersionSetUpdateParameters);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, serviceName, workspaceId, versionSetId, ifMatch, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

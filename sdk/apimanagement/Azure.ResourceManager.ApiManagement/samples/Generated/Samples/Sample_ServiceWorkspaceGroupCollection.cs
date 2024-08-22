@@ -192,11 +192,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string groupId = "tempgroup";
-            GroupCreateParameters groupCreateParameters = new GroupCreateParameters()
+            ApiManagementGroupCreateOrUpdateContent content = new ApiManagementGroupCreateOrUpdateContent()
             {
                 DisplayName = "temp group",
             };
-            ArmOperation<ServiceWorkspaceGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupId, groupCreateParameters);
+            ArmOperation<ServiceWorkspaceGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupId, content);
             ServiceWorkspaceGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -233,14 +233,14 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             string groupId = "aadGroup";
-            GroupCreateParameters groupCreateParameters = new GroupCreateParameters()
+            ApiManagementGroupCreateOrUpdateContent content = new ApiManagementGroupCreateOrUpdateContent()
             {
                 DisplayName = "NewGroup (samiraad.onmicrosoft.com)",
                 Description = "new group to test",
-                ApiManagementGroupType = ApiManagementGroupType.External,
+                GroupType = ApiManagementGroupType.External,
                 ExternalId = "aad://samiraad.onmicrosoft.com/groups/83cf2753-5831-4675-bc0e-2f8dc067c58d",
             };
-            ArmOperation<ServiceWorkspaceGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupId, groupCreateParameters);
+            ArmOperation<ServiceWorkspaceGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupId, content);
             ServiceWorkspaceGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

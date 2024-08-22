@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly PolicyDescriptionRestOperations _policyDescriptionRestClient;
         private readonly ClientDiagnostics _apiManagementServicePortalSettingsClientDiagnostics;
         private readonly PortalSettingsRestOperations _apiManagementServicePortalSettingsRestClient;
-        private readonly ClientDiagnostics _serviceProductProductClientDiagnostics;
-        private readonly ProductRestOperations _serviceProductProductRestClient;
+        private readonly ClientDiagnostics _apiManagementProductProductClientDiagnostics;
+        private readonly ProductRestOperations _apiManagementProductProductRestClient;
         private readonly ClientDiagnostics _quotaByCounterKeysClientDiagnostics;
         private readonly QuotaByCounterKeysRestOperations _quotaByCounterKeysRestClient;
         private readonly ClientDiagnostics _quotaByPeriodKeysClientDiagnostics;
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.ApiManagement
             _apiManagementServicePortalSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string apiManagementServicePortalSettingsApiVersion);
             _apiManagementServicePortalSettingsRestClient = new PortalSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServicePortalSettingsApiVersion);
-            _serviceProductProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ServiceProductResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceProductResource.ResourceType, out string serviceProductProductApiVersion);
-            _serviceProductProductRestClient = new ProductRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceProductProductApiVersion);
+            _apiManagementProductProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementProductResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ApiManagementProductResource.ResourceType, out string apiManagementProductProductApiVersion);
+            _apiManagementProductProductRestClient = new ProductRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementProductProductApiVersion);
             _quotaByCounterKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _quotaByCounterKeysRestClient = new QuotaByCounterKeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _quotaByPeriodKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -1892,11 +1892,11 @@ namespace Azure.ResourceManager.ApiManagement
             return GetApiManagementPrivateLinkResources().Get(privateLinkSubResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceProductResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ServiceProductResources and their operations over a ServiceProductResource. </returns>
-        public virtual ServiceProductCollection GetServiceProducts()
+        /// <summary> Gets a collection of ApiManagementProductResources in the ApiManagementService. </summary>
+        /// <returns> An object representing collection of ApiManagementProductResources and their operations over a ApiManagementProductResource. </returns>
+        public virtual ApiManagementProductCollection GetApiManagementProducts()
         {
-            return GetCachedClient(client => new ServiceProductCollection(client, Id));
+            return GetCachedClient(client => new ApiManagementProductCollection(client, Id));
         }
 
         /// <summary>
@@ -1916,7 +1916,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceProductResource"/></description>
+        /// <description><see cref="ApiManagementProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1925,9 +1925,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceProductResource>> GetServiceProductAsync(string productId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiManagementProductResource>> GetApiManagementProductAsync(string productId, CancellationToken cancellationToken = default)
         {
-            return await GetServiceProducts().GetAsync(productId, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementProducts().GetAsync(productId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1947,7 +1947,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceProductResource"/></description>
+        /// <description><see cref="ApiManagementProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1956,9 +1956,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="productId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="productId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceProductResource> GetServiceProduct(string productId, CancellationToken cancellationToken = default)
+        public virtual Response<ApiManagementProductResource> GetApiManagementProduct(string productId, CancellationToken cancellationToken = default)
         {
-            return GetServiceProducts().Get(productId, cancellationToken);
+            return GetApiManagementProducts().Get(productId, cancellationToken);
         }
 
         /// <summary> Gets a collection of ServiceSchemaResources in the ApiManagementService. </summary>
@@ -4240,7 +4240,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceProductResource"/></description>
+        /// <description><see cref="ApiManagementProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4252,9 +4252,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TagResourceContractDetails> GetProductsByTagsAsync(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedProducts = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceProductProductRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _serviceProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementProductProductRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -4274,7 +4274,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceProductResource"/></description>
+        /// <description><see cref="ApiManagementProductResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4286,9 +4286,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="TagResourceContractDetails"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TagResourceContractDetails> GetProductsByTags(string filter = null, int? top = null, int? skip = null, bool? includeNotTaggedProducts = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceProductProductRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _serviceProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementProductProductRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TagResourceContractDetails.DeserializeTagResourceContractDetails(e), _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

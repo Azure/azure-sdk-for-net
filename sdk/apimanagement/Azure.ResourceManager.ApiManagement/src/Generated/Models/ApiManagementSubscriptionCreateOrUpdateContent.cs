@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Subscription create details. </summary>
-    public partial class SubscriptionCreateContent
+    public partial class ApiManagementSubscriptionCreateOrUpdateContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionCreateContent"/>. </summary>
-        public SubscriptionCreateContent()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionCreateOrUpdateContent"/>. </summary>
+        public ApiManagementSubscriptionCreateOrUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionCreateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionCreateOrUpdateContent"/>. </summary>
         /// <param name="ownerId"> User (user id path) for whom subscription is being created in form /users/{userId}. </param>
         /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
         /// <param name="displayName"> Subscription name. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="state"> Initial subscription state. If no value is specified, subscription is created with Submitted state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </param>
         /// <param name="allowTracing"> Determines whether tracing can be enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionCreateContent(string ownerId, string scope, string displayName, string primaryKey, string secondaryKey, SubscriptionState? state, bool? allowTracing, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementSubscriptionCreateOrUpdateContent(string ownerId, string scope, string displayName, string primaryKey, string secondaryKey, SubscriptionState? state, bool? allowTracing, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OwnerId = ownerId;
             Scope = scope;

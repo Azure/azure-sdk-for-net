@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.ApiManagement
         ServicePolicyFragmentResource IOperationSource<ServicePolicyFragmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PolicyFragmentContractData.DeserializePolicyFragmentContractData(document.RootElement);
+            var data = ApiManagementPolicyFragmentData.DeserializeApiManagementPolicyFragmentData(document.RootElement);
             return new ServicePolicyFragmentResource(_client, data);
         }
 
         async ValueTask<ServicePolicyFragmentResource> IOperationSource<ServicePolicyFragmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PolicyFragmentContractData.DeserializePolicyFragmentContractData(document.RootElement);
+            var data = ApiManagementPolicyFragmentData.DeserializeApiManagementPolicyFragmentData(document.RootElement);
             return new ServicePolicyFragmentResource(_client, data);
         }
     }

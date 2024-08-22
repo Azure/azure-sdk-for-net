@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> API update contract details. </summary>
-    public partial class ApiUpdateContract
+    /// <summary> API Create or Update Parameters. </summary>
+    public partial class ApiCreateOrUpdateContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ApiUpdateContract"/>. </summary>
-        public ApiUpdateContract()
+        /// <summary> Initializes a new instance of <see cref="ApiCreateOrUpdateContent"/>. </summary>
+        public ApiCreateOrUpdateContent()
         {
             Protocols = new ChangeTrackingList<ApiOperationInvokableProtocol>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiUpdateContract"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCreateOrUpdateContent"/>. </summary>
         /// <param name="description"> Description of the API. May include HTML formatting tags. </param>
         /// <param name="authenticationSettings"> Collection of authentication settings included into this API. </param>
         /// <param name="subscriptionKeyParameterNames"> Protocols over which API is made available. </param>
@@ -68,12 +68,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="termsOfServiceLink"> A URL to the Terms of Service for the API. MUST be in the format of a URL. </param>
         /// <param name="contact"> Contact information for the API. </param>
         /// <param name="license"> License information for the API. </param>
-        /// <param name="displayName"> API name. </param>
-        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. </param>
+        /// <param name="sourceApiId"> API identifier of the source API. </param>
+        /// <param name="displayName"> API name. Must be 1 to 300 characters long. </param>
+        /// <param name="serviceLink"> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </param>
         /// <param name="path"> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </param>
         /// <param name="protocols"> Describes on which protocols the operations in this API can be invoked. </param>
+        /// <param name="apiVersionSet"> Version set details. </param>
+        /// <param name="value"> Content value when Importing an API. </param>
+        /// <param name="format"> Format of the Content in which the API is getting imported. New formats can be added in the future. </param>
+        /// <param name="wsdlSelector"> Criteria to limit import of WSDL to a subset of the document. </param>
+        /// <param name="soapApiType">
+        /// Type of API to create.
+        ///  * `http` creates a REST API
+        ///  * `soap` creates a SOAP pass-through API
+        ///  * `websocket` creates websocket API
+        ///  * `graphql` creates GraphQL API.
+        ///  New types can be added in the future.
+        /// </param>
+        /// <param name="translateRequiredQueryParametersConduct"> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiUpdateContract(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiCreateOrUpdateContent(string description, AuthenticationSettingsContract authenticationSettings, SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames, ApiType? apiType, string apiRevision, string apiVersion, bool? isCurrent, bool? isOnline, string apiRevisionDescription, string apiVersionDescription, ResourceIdentifier apiVersionSetId, bool? isSubscriptionRequired, string termsOfServiceLink, ApiContactInformation contact, ApiLicenseInformation license, ResourceIdentifier sourceApiId, string displayName, string serviceLink, string path, IList<ApiOperationInvokableProtocol> protocols, ApiVersionSetContractDetails apiVersionSet, string value, ContentFormat? format, ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector, SoapApiType? soapApiType, TranslateRequiredQueryParametersConduct? translateRequiredQueryParametersConduct, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -90,10 +104,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             TermsOfServiceLink = termsOfServiceLink;
             Contact = contact;
             License = license;
+            SourceApiId = sourceApiId;
             DisplayName = displayName;
             ServiceLink = serviceLink;
             Path = path;
             Protocols = protocols;
+            ApiVersionSet = apiVersionSet;
+            Value = value;
+            Format = format;
+            WsdlSelector = wsdlSelector;
+            SoapApiType = soapApiType;
+            TranslateRequiredQueryParametersConduct = translateRequiredQueryParametersConduct;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -142,10 +163,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> License information for the API. </summary>
         [WirePath("properties.license")]
         public ApiLicenseInformation License { get; set; }
-        /// <summary> API name. </summary>
+        /// <summary> API identifier of the source API. </summary>
+        [WirePath("properties.sourceApiId")]
+        public ResourceIdentifier SourceApiId { get; set; }
+        /// <summary> API name. Must be 1 to 300 characters long. </summary>
         [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary> Absolute URL of the backend service implementing this API. </summary>
+        /// <summary> Absolute URL of the backend service implementing this API. Cannot be more than 2000 characters long. </summary>
         [WirePath("properties.serviceUrl")]
         public string ServiceLink { get; set; }
         /// <summary> Relative URL uniquely identifying this API and all of its resource paths within the API Management service instance. It is appended to the API endpoint base URL specified during the service instance creation to form a public URL for this API. </summary>
@@ -154,5 +178,30 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Describes on which protocols the operations in this API can be invoked. </summary>
         [WirePath("properties.protocols")]
         public IList<ApiOperationInvokableProtocol> Protocols { get; }
+        /// <summary> Version set details. </summary>
+        [WirePath("properties.apiVersionSet")]
+        public ApiVersionSetContractDetails ApiVersionSet { get; set; }
+        /// <summary> Content value when Importing an API. </summary>
+        [WirePath("properties.value")]
+        public string Value { get; set; }
+        /// <summary> Format of the Content in which the API is getting imported. New formats can be added in the future. </summary>
+        [WirePath("properties.format")]
+        public ContentFormat? Format { get; set; }
+        /// <summary> Criteria to limit import of WSDL to a subset of the document. </summary>
+        [WirePath("properties.wsdlSelector")]
+        public ApiCreateOrUpdatePropertiesWsdlSelector WsdlSelector { get; set; }
+        /// <summary>
+        /// Type of API to create.
+        ///  * `http` creates a REST API
+        ///  * `soap` creates a SOAP pass-through API
+        ///  * `websocket` creates websocket API
+        ///  * `graphql` creates GraphQL API.
+        ///  New types can be added in the future.
+        /// </summary>
+        [WirePath("properties.apiType")]
+        public SoapApiType? SoapApiType { get; set; }
+        /// <summary> Strategy of translating required query parameters to template ones. By default has value 'template'. Possible values: 'template', 'query'. </summary>
+        [WirePath("properties.translateRequiredQueryParameters")]
+        public TranslateRequiredQueryParametersConduct? TranslateRequiredQueryParametersConduct { get; set; }
     }
 }

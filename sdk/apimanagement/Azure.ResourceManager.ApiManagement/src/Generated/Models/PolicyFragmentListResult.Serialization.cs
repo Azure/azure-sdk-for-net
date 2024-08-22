@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            IReadOnlyList<PolicyFragmentContractData> value = default;
+            IReadOnlyList<ApiManagementPolicyFragmentData> value = default;
             long? count = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    List<PolicyFragmentContractData> array = new List<PolicyFragmentContractData>();
+                    List<ApiManagementPolicyFragmentData> array = new List<ApiManagementPolicyFragmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyFragmentContractData.DeserializePolicyFragmentContractData(item, options));
+                        array.Add(ApiManagementPolicyFragmentData.DeserializeApiManagementPolicyFragmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PolicyFragmentListResult(value ?? new ChangeTrackingList<PolicyFragmentContractData>(), count, nextLink, serializedAdditionalRawData);
+            return new PolicyFragmentListResult(value ?? new ChangeTrackingList<ApiManagementPolicyFragmentData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

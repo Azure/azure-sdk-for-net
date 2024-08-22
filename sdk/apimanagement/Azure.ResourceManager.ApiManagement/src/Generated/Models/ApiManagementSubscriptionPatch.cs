@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Subscription update details. </summary>
-    public partial class SubscriptionUpdateParameters
+    public partial class ApiManagementSubscriptionPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionUpdateParameters"/>. </summary>
-        public SubscriptionUpdateParameters()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionPatch"/>. </summary>
+        public ApiManagementSubscriptionPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionPatch"/>. </summary>
         /// <param name="ownerId"> User identifier path: /users/{userId}. </param>
         /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
         /// <param name="expireOn"> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="stateComment"> Comments describing subscription state change by the administrator when the state is changed to the 'rejected'. </param>
         /// <param name="allowTracing"> Determines whether tracing can be enabled. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionUpdateParameters(string ownerId, string scope, DateTimeOffset? expireOn, string displayName, string primaryKey, string secondaryKey, SubscriptionState? state, string stateComment, bool? allowTracing, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementSubscriptionPatch(string ownerId, string scope, DateTimeOffset? expireOn, string displayName, string primaryKey, string secondaryKey, SubscriptionState? state, string stateComment, bool? allowTracing, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OwnerId = ownerId;
             Scope = scope;

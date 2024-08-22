@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
             // invoke the operation
             ETag ifMatch = new ETag("*");
-            SubscriptionUpdateParameters subscriptionUpdateParameters = new SubscriptionUpdateParameters()
+            ApiManagementSubscriptionPatch patch = new ApiManagementSubscriptionPatch()
             {
                 DisplayName = "testsub",
             };
-            ApiManagementSubscriptionResource result = await apiManagementSubscription.UpdateAsync(ifMatch, subscriptionUpdateParameters);
+            ApiManagementSubscriptionResource result = await apiManagementSubscription.UpdateAsync(ifMatch, patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Product Update parameters. </summary>
-    public partial class ProductUpdateParameters
+    public partial class ApiManagementProductPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProductUpdateParameters"/>. </summary>
-        public ProductUpdateParameters()
+        /// <summary> Initializes a new instance of <see cref="ApiManagementProductPatch"/>. </summary>
+        public ApiManagementProductPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProductUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiManagementProductPatch"/>. </summary>
         /// <param name="description"> Product description. May include HTML formatting tags. </param>
         /// <param name="terms"> Product terms of use. Developers trying to subscribe to the product will be presented and required to accept these terms before they can complete the subscription process. </param>
         /// <param name="isSubscriptionRequired"> Whether a product subscription is required for accessing APIs included in this product. If true, the product is referred to as "protected" and a valid subscription key is required for a request to an API included in the product to succeed. If false, the product is referred to as "open" and requests to an API included in the product can be made without a subscription key. If property is omitted when creating a new product it's value is assumed to be true. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="state"> whether product is published or not. Published products are discoverable by users of developer portal. Non published products are visible only to administrators. Default state of Product is notPublished. </param>
         /// <param name="displayName"> Product name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductUpdateParameters(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, ApiManagementProductState? state, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementProductPatch(string description, string terms, bool? isSubscriptionRequired, bool? isApprovalRequired, int? subscriptionsLimit, ApiManagementProductState? state, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             Terms = terms;

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="PolicyFragmentListResult"/>. </summary>
         internal PolicyFragmentListResult()
         {
-            Value = new ChangeTrackingList<PolicyFragmentContractData>();
+            Value = new ChangeTrackingList<ApiManagementPolicyFragmentData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyFragmentListResult"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="count"> Total record count number. </param>
         /// <param name="nextLink"> Next page link if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyFragmentListResult(IReadOnlyList<PolicyFragmentContractData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PolicyFragmentListResult(IReadOnlyList<ApiManagementPolicyFragmentData> value, long? count, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Count = count;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Policy fragment contract value. </summary>
-        public IReadOnlyList<PolicyFragmentContractData> Value { get; }
+        public IReadOnlyList<ApiManagementPolicyFragmentData> Value { get; }
         /// <summary> Total record count number. </summary>
         public long? Count { get; }
         /// <summary> Next page link if any. </summary>

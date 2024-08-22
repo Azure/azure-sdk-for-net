@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiUpdateContract : IUtf8JsonSerializable, IJsonModel<ApiUpdateContract>
+    public partial class ApiPatch : IUtf8JsonSerializable, IJsonModel<ApiPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiUpdateContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ApiUpdateContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiUpdateContract)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -147,19 +147,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        ApiUpdateContract IJsonModel<ApiUpdateContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiPatch IJsonModel<ApiPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiUpdateContract)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiUpdateContract(document.RootElement, options);
+            return DeserializeApiPatch(document.RootElement, options);
         }
 
-        internal static ApiUpdateContract DeserializeApiUpdateContract(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiPatch DeserializeApiPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApiUpdateContract(
+            return new ApiPatch(
                 description,
                 authenticationSettings,
                 subscriptionKeyParameterNames,
@@ -371,35 +371,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ApiUpdateContract>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiUpdateContract)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ApiUpdateContract IPersistableModel<ApiUpdateContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiPatch IPersistableModel<ApiPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiUpdateContract>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeApiUpdateContract(document.RootElement, options);
+                        return DeserializeApiPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiUpdateContract)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ApiUpdateContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

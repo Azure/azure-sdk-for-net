@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class GroupCreateParameters : IUtf8JsonSerializable, IJsonModel<GroupCreateParameters>
+    public partial class ApiManagementGroupCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<ApiManagementGroupCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GroupCreateParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementGroupCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<GroupCreateParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiManagementGroupCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GroupCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGroupCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupCreateParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementGroupCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ApiManagementGroupType))
+            if (Optional.IsDefined(GroupType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ApiManagementGroupType.Value.ToSerialString());
+                writer.WriteStringValue(GroupType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExternalId))
             {
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteEndObject();
         }
 
-        GroupCreateParameters IJsonModel<GroupCreateParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ApiManagementGroupCreateOrUpdateContent IJsonModel<ApiManagementGroupCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GroupCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGroupCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupCreateParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementGroupCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGroupCreateParameters(document.RootElement, options);
+            return DeserializeApiManagementGroupCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static GroupCreateParameters DeserializeGroupCreateParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ApiManagementGroupCreateOrUpdateContent DeserializeApiManagementGroupCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -137,38 +137,38 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GroupCreateParameters(displayName, description, type, externalId, serializedAdditionalRawData);
+            return new ApiManagementGroupCreateOrUpdateContent(displayName, description, type, externalId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<GroupCreateParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ApiManagementGroupCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GroupCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGroupCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GroupCreateParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementGroupCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        GroupCreateParameters IPersistableModel<GroupCreateParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ApiManagementGroupCreateOrUpdateContent IPersistableModel<ApiManagementGroupCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GroupCreateParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementGroupCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeGroupCreateParameters(document.RootElement, options);
+                        return DeserializeApiManagementGroupCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GroupCreateParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementGroupCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<GroupCreateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiManagementGroupCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
