@@ -6,10 +6,11 @@ This sample demonstrates how to extract key phrases from one or more documents.
 
 To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
-```C# Snippet:CreateTextClient
+```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
+var client = new TextAnalysisClient(endpoint, credential, options);
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -60,7 +61,7 @@ AnalyzeTextInput body = new TextKeyPhraseExtractionInput()
 Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
 AnalyzeTextKeyPhraseResult keyPhraseTaskResult = (AnalyzeTextKeyPhraseResult)response.Value;
 
-foreach (KeyPhrasesDocumentResultWithDetectedLanguage kpeResult in keyPhraseTaskResult.Results.Documents)
+foreach (KeyPhrasesActionResult kpeResult in keyPhraseTaskResult.Results.Documents)
 {
     Console.WriteLine($"Result for document with Id = \"{kpeResult.Id}\":");
     foreach (string keyPhrase in kpeResult.KeyPhrases)

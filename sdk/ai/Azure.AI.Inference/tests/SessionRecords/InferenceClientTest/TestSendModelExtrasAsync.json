@@ -1,0 +1,119 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "142",
+        "Content-Type": "application/json",
+        "extra-parameters": "pass-through",
+        "traceparent": "00-202c7d2fc210423bc6440ab7cb40f6f4-c2b5a3dca55169b4-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240730.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "How many feet are in a mile?",
+            "role": "user"
+          }
+        ],
+        "foo": "bar"
+      },
+      "StatusCode": 422,
+      "ResponseHeaders": {
+        "azureml-model-group": "offer-mistral-bundled-paygo",
+        "azureml-model-session": "dep-eus-mis-bundle-240705001",
+        "Content-Length": "113",
+        "Content-Type": "application/json",
+        "Date": "Thu, 01 Aug 2024 23:10:57 GMT",
+        "ms-azureml-model-error-reason": "model_error",
+        "ms-azureml-model-error-statuscode": "422",
+        "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "X-Request-ID": "0ed923a1-f871-4e0a-a79a-db19bfb7019b"
+      },
+      "ResponseBody": {
+        "detail": [
+          {
+            "type": "extra_forbidden",
+            "loc": [
+              "body",
+              "foo"
+            ],
+            "msg": "Extra inputs are not permitted",
+            "input": "bar"
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com/chat/completions?api-version=2024-05-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "142",
+        "Content-Type": "application/json",
+        "extra-parameters": "pass-through",
+        "traceparent": "00-09ff3ac60bdb9c39b7823565158f4a0b-7a409bcb379712c7-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240730.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "messages": [
+          {
+            "content": "You are a helpful assistant.",
+            "role": "system"
+          },
+          {
+            "content": "How many feet are in a mile?",
+            "role": "user"
+          }
+        ],
+        "foo": "bar"
+      },
+      "StatusCode": 422,
+      "ResponseHeaders": {
+        "azureml-model-group": "offer-mistral-bundled-paygo",
+        "azureml-model-session": "dep-eus-mis-bundle-240705002",
+        "Content-Length": "113",
+        "Content-Type": "application/json",
+        "Date": "Thu, 01 Aug 2024 23:10:57 GMT",
+        "ms-azureml-model-error-reason": "model_error",
+        "ms-azureml-model-error-statuscode": "422",
+        "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-rai-invoked": "true",
+        "X-Request-ID": "7b3db70c-885d-4c47-90d7-6f982962586b"
+      },
+      "ResponseBody": {
+        "detail": [
+          {
+            "type": "extra_forbidden",
+            "loc": [
+              "body",
+              "foo"
+            ],
+            "msg": "Extra inputs are not permitted",
+            "input": "bar"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
+    "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
+    "RandomSeed": "1120324444"
+  }
+}

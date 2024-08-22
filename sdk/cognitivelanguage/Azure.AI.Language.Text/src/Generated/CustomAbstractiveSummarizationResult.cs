@@ -52,7 +52,7 @@ namespace Azure.AI.Language.Text
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="documents"/>, <paramref name="errors"/>, <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        internal CustomAbstractiveSummarizationResult(IEnumerable<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents, IEnumerable<DocumentError> errors, string projectName, string deploymentName)
+        internal CustomAbstractiveSummarizationResult(IEnumerable<AbstractiveSummaryActionResult> documents, IEnumerable<DocumentError> errors, string projectName, string deploymentName)
         {
             Argument.AssertNotNull(documents, nameof(documents));
             Argument.AssertNotNull(errors, nameof(errors));
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Text
         /// <param name="projectName"> This field indicates the project name for the model. </param>
         /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomAbstractiveSummarizationResult(IReadOnlyList<AbstractiveSummaryDocumentResultWithDetectedLanguage> documents, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomAbstractiveSummarizationResult(IReadOnlyList<AbstractiveSummaryActionResult> documents, IReadOnlyList<DocumentError> errors, RequestStatistics statistics, string projectName, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Documents = documents;
             Errors = errors;
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Response by document. </summary>
-        public IReadOnlyList<AbstractiveSummaryDocumentResultWithDetectedLanguage> Documents { get; }
+        public IReadOnlyList<AbstractiveSummaryActionResult> Documents { get; }
         /// <summary> Errors by document id. </summary>
         public IReadOnlyList<DocumentError> Errors { get; }
         /// <summary> if showStats=true was specified in the request this field will contain information about the request payload. </summary>

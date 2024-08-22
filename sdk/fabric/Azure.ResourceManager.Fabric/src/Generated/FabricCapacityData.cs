@@ -53,12 +53,15 @@ namespace Azure.ResourceManager.Fabric
 
         /// <summary> Initializes a new instance of <see cref="FabricCapacityData"/>. </summary>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="sku"> The SKU details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public FabricCapacityData(AzureLocation location, FabricSku sku) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> or <paramref name="sku"/> is null. </exception>
+        public FabricCapacityData(AzureLocation location, FabricCapacityProperties properties, FabricSku sku) : base(location)
         {
+            Argument.AssertNotNull(properties, nameof(properties));
             Argument.AssertNotNull(sku, nameof(sku));
 
+            Properties = properties;
             Sku = sku;
         }
 

@@ -62,7 +62,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
             AnalyzeTextKeyPhraseResult keyPhraseTaskResult = (AnalyzeTextKeyPhraseResult)response.Value;
 
-            foreach (KeyPhrasesDocumentResultWithDetectedLanguage kpeResult in keyPhraseTaskResult.Results.Documents)
+            foreach (KeyPhrasesActionResult kpeResult in keyPhraseTaskResult.Results.Documents)
             {
                 Console.WriteLine($"Result for document with Id = \"{kpeResult.Id}\":");
                 foreach (string keyPhrase in kpeResult.KeyPhrases)

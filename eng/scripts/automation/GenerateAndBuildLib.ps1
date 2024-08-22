@@ -608,7 +608,7 @@ Invoke-GenerateAndBuildSDK -readmeAbsolutePath <path-to-readme> -sdkRootPath <pa
 
 #>
 
-$DotNetSupportChannelLink = "https://teams.microsoft.com/l/channel/19%3A7b87fb348f224b37b6206fa9d89a105b%40thread.skype/Language%20-%20DotNet?groupId=3e17dcb0-4257-4a30-b843-77f47f1d4121&tenantId="
+$DotNetSupportChannelLink = "https://aka.ms/azsdk/donet-teams-channel"
 function Invoke-GenerateAndBuildSDK () {
     param(
         [string]$readmeAbsolutePath,
@@ -639,7 +639,7 @@ function Invoke-GenerateAndBuildSDK () {
         if ( !$?) {
             Write-Host "[ERROR] Failed to create sdk project folder.service:$service,package:$package,"
             Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile.exit code: $?."
-            Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+            Write-Host "[ERROR] Please review the detail errors for potential fixes."
             Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             exit 1
         }
@@ -672,7 +672,7 @@ function Invoke-GenerateAndBuildSDK () {
             if ( !$? ) {
                 Write-Host "[ERROR] Failed to create sdk project folder.service:$service,namespace:$namespace,"
                 Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile,autorestConfigYaml:$autorestConfigYaml.exit code: $?."
-                Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+                Write-Host "[ERROR] Please review the detail errors for potential fixes."
                 Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 exit 1
             }
@@ -701,7 +701,7 @@ function Invoke-GenerateAndBuildSDK () {
                         if ( !$? ) {
                             Write-Host "[ERROR] Failed to create sdk project folder.service:$service,namespace:$folder,"
                             Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile. exit code: $?."
-                            Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+                            Write-Host "[ERROR] Please review the detail errors for potential fixes."
                             Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                             exit 1
                         }
@@ -763,7 +763,7 @@ function GeneratePackage()
         }
         if ( !$?) {
             Write-Host "[ERROR] Failed to generate sdk for package:$packageName. Exit code: $?."
-            Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+            Write-Host "[ERROR] Please review the detail errors for potential fixes."
             Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             $result = "failed"
             $isGenerateSuccess = $false
@@ -776,7 +776,7 @@ function GeneratePackage()
         dotnet build $srcPath /p:RunApiCompat=$false
         if ( !$?) {
             Write-Host "[ERROR] Failed to build the sdk project: $packageName for service: $service. Exit code: $?."
-            Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+            Write-Host "[ERROR] Please review the detail errors for potential fixes."
             Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             $result = "failed"
         } else {
@@ -787,7 +787,7 @@ function GeneratePackage()
             dotnet build /p:Scope=$service /p:Project=$packageName /p:RunApiCompat=$false $serviceProjFilePath
             if ( !$? ) {
                 Write-Host "[ERROR] Failed to build sdk solution:$packageName. Exit code: $?."
-                Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+                Write-Host "[ERROR] Please review the detail errors for potential fixes."
                 Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
             }
@@ -796,7 +796,7 @@ function GeneratePackage()
             dotnet pack $srcPath /p:RunApiCompat=$false
             if ( !$? ) {
                 Write-Host "[ERROR] Failed to pack the sdk package: $packageName for service: $service. Exit code: $?."
-                Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+                Write-Host "[ERROR] Please review the detail errors for potential fixes."
                 Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
             } else {
@@ -812,7 +812,7 @@ function GeneratePackage()
                     $artifactsPath = (Join-Path "artifacts" "packages" "Release" $packageName)
                     if (-not (Test-Path $artifactsPath)) {
                         Write-Host "[ERROR] Artifact folder not found for $artifactsPath."
-                        Write-Host "[ERROR] Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
+                        Write-Host "[ERROR] Please review the detail errors for potential fixes."
                         Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                     }
                     else {
@@ -821,8 +821,8 @@ function GeneratePackage()
                 }
                 $apiViewArtifact = ""
                 if ( $artifacts.count -eq 0) {
-                    Write-Host "[ERROR] Failed to generate sdk artifact. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
-                    Write-Host "[ERROR] If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                    Write-Host "[ERROR] Failed to generate sdk artifact. Please review the detail errors for potential fixes."
+                    Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 } else {
                     $apiViewArtifact = $artifacts[0]
                 }
@@ -841,8 +841,8 @@ function GeneratePackage()
             Write-Host "Start to export api for $service"
             & $sdkRootPath/eng/scripts/Export-API.ps1 $service
             if ( !$? ) {
-                Write-Host "[ERROR] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes. For guidance, visit https://aka.ms/azsdk/sdk-automation-faq ."
-                Write-Host "[ERROR] If the issue persists after re-running, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                Write-Host "[ERROR] Failed to export api for sdk. exit code: $?. Please review the detail errors for potential fixes."
+                Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 $result = "failed"
             }
             # breaking change validation

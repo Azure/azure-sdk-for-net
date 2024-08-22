@@ -15,7 +15,16 @@
   `APPLICATIONINSIGHTS_CONNECTION_STRING` is present in `IConfiguration`.
   ([#45292](https://github.com/Azure/azure-sdk-for-net/pull/45292))
 
+* Fixed a bug where LiveMetrics displays "UNKNOWN_INSTANCE" and "UNKNOWN_NAME" for "server name" and "role name" respectively.
+  ([#45433](https://github.com/Azure/azure-sdk-for-net/pull/45433))
+
 ### Other Changes
+
+* Updated log collection to default to Warning level and above for Azure SDKs
+  via `Microsoft.Extensions.Logging`. For more information, refer to [Logging
+  with the Azure SDK for
+  .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging).
+  ([#45649](https://github.com/Azure/azure-sdk-for-net/pull/45649))
 
 ## 1.3.0-beta.1 (2024-07-12)
 

@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
+            if (Optional.IsDefined(LinkedServiceVersion))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(LinkedServiceVersion);
+            }
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -56,6 +58,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WritePropertyName("obsoleteVersion"u8);
                 writer.WriteStringValue(ObsoleteVersion.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(HaUpgradesAvailable))
+            {
+                writer.WritePropertyName("haUpgradesAvailable"u8);
+                writer.WriteStartArray();
+                foreach (var item in HaUpgradesAvailable)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -100,6 +112,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             string maximumPlatformSoftwareVersion = default;
             MobileNetworkRecommendedVersion? recommendedVersion = default;
             MobileNetworkObsoleteVersion? obsoleteVersion = default;
+            IList<string> haUpgradesAvailable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,6 +163,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     obsoleteVersion = new MobileNetworkObsoleteVersion(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("haUpgradesAvailable"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    haUpgradesAvailable = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -163,7 +190,165 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 maximumPlatformSoftwareVersion,
                 recommendedVersion,
                 obsoleteVersion,
+                haUpgradesAvailable ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PlatformType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  platformType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PlatformType))
+                {
+                    builder.Append("  platformType: ");
+                    builder.AppendLine($"'{PlatformType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VersionState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  versionState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VersionState))
+                {
+                    builder.Append("  versionState: ");
+                    builder.AppendLine($"'{VersionState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumPlatformSoftwareVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minimumPlatformSoftwareVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinimumPlatformSoftwareVersion))
+                {
+                    builder.Append("  minimumPlatformSoftwareVersion: ");
+                    if (MinimumPlatformSoftwareVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MinimumPlatformSoftwareVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MinimumPlatformSoftwareVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumPlatformSoftwareVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maximumPlatformSoftwareVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaximumPlatformSoftwareVersion))
+                {
+                    builder.Append("  maximumPlatformSoftwareVersion: ");
+                    if (MaximumPlatformSoftwareVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaximumPlatformSoftwareVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaximumPlatformSoftwareVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecommendedVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  recommendedVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecommendedVersion))
+                {
+                    builder.Append("  recommendedVersion: ");
+                    builder.AppendLine($"'{RecommendedVersion.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObsoleteVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  obsoleteVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ObsoleteVersion))
+                {
+                    builder.Append("  obsoleteVersion: ");
+                    builder.AppendLine($"'{ObsoleteVersion.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HaUpgradesAvailable), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  haUpgradesAvailable: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(HaUpgradesAvailable))
+                {
+                    if (HaUpgradesAvailable.Any())
+                    {
+                        builder.Append("  haUpgradesAvailable: ");
+                        builder.AppendLine("[");
+                        foreach (var item in HaUpgradesAvailable)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MobileNetworkPlatform>.Write(ModelReaderWriterOptions options)
@@ -174,6 +359,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MobileNetworkPlatform)} does not support writing '{options.Format}' format.");
             }

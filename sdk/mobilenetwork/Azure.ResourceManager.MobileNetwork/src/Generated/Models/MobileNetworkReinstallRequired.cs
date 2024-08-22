@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Whether a reinstall of the packet core is required to pick up the latest configuration changes. </summary>
+    /// <summary>
+    /// Whether a reinstall of the packet core is required to pick up the latest configuration changes.
+    /// Serialized Name: ReinstallRequired
+    /// </summary>
     public readonly partial struct MobileNetworkReinstallRequired : IEquatable<MobileNetworkReinstallRequired>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string RequiredValue = "Required";
         private const string NotRequiredValue = "NotRequired";
 
-        /// <summary> A reinstall of the packet core is required. </summary>
+        /// <summary>
+        /// A reinstall of the packet core is required.
+        /// Serialized Name: ReinstallRequired.Required
+        /// </summary>
         public static MobileNetworkReinstallRequired Required { get; } = new MobileNetworkReinstallRequired(RequiredValue);
-        /// <summary> A reinstall of the packet core is not required. </summary>
+        /// <summary>
+        /// A reinstall of the packet core is not required.
+        /// Serialized Name: ReinstallRequired.NotRequired
+        /// </summary>
         public static MobileNetworkReinstallRequired NotRequired { get; } = new MobileNetworkReinstallRequired(NotRequiredValue);
         /// <summary> Determines if two <see cref="MobileNetworkReinstallRequired"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkReinstallRequired left, MobileNetworkReinstallRequired right) => left.Equals(right);

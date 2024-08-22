@@ -6,10 +6,11 @@ This sample demonstrates how to analyze the sentiment in one or more documents.
 
 To create a new `TextAnalysisClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
-```C# Snippet:CreateTextClient
+```C# Snippet:CreateTextAnalysisClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+TextAnalysisClientOptions options = new TextAnalysisClientOptions(TextAnalysisClientOptions.ServiceVersion.V2023_04_01);
+var client = new TextAnalysisClient(endpoint, credential, options);
 ```
 
 The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -53,7 +54,7 @@ try
     Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(body);
     AnalyzeTextSentimentResult AnalyzeTextSentimentResult = (AnalyzeTextSentimentResult)response.Value;
 
-    foreach (SentimentDocumentResultWithDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in AnalyzeTextSentimentResult.Results.Documents)
+    foreach (SentimentActionResult sentimentResponseWithDocumentDetectedLanguage in AnalyzeTextSentimentResult.Results.Documents)
     {
         Console.WriteLine($"Document {sentimentResponseWithDocumentDetectedLanguage.Id} sentiment is {sentimentResponseWithDocumentDetectedLanguage.Sentiment} with: ");
         Console.WriteLine($"  Positive confidence score: {sentimentResponseWithDocumentDetectedLanguage.ConfidenceScores.Positive}");
@@ -168,7 +169,7 @@ Implementation for calculating complaints:
 private Dictionary<string, int> GetComplaints(AnalyzeTextSentimentResult reviews)
 {
     Dictionary<string, int> complaints = new();
-    foreach (SentimentDocumentResultWithDetectedLanguage sentimentResponseWithDocumentDetectedLanguage in reviews.Results.Documents)
+    foreach (SentimentActionResult sentimentResponseWithDocumentDetectedLanguage in reviews.Results.Documents)
     {
         foreach (SentenceSentiment sentence in sentimentResponseWithDocumentDetectedLanguage.Sentences)
         {

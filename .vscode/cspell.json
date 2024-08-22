@@ -210,7 +210,11 @@
       "words": [
         "cref",
         "imds",
-        "IMDS"
+        "IMDS",
+        "Wdac",
+        "Adou",
+        "Drtm",
+        "Hvci"
       ]
     },
     {
@@ -404,6 +408,13 @@
       "filename": "**/sdk/datadog/**/*.cs",
       "words": [
         "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/devopsinfrastructure/**/*.cs",
+      "words": [
+        "Reimage",
+        "Reimaging"
       ]
     },
     {
