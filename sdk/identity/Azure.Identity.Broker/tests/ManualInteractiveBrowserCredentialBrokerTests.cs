@@ -111,7 +111,7 @@ namespace Azure.Identity.Broker.Tests
             request.Method = RequestMethod.Get;
             request.Uri.Reset(resourceUri);
 
-            var popContext = new TokenRequestContext(scopes, proofOfPossessionNonce: nonce, request: request);
+            var popContext = new TokenRequestContext(scopes, proofOfPossessionNonce: nonce, requestUri: request.Uri.ToUri(), requestMethod: request.Method.ToString());
             // this should pop browser amd validate the AuthenticateAsync path.
             var record = await credential.AuthenticateAsync(popContext).ConfigureAwait(false);
             credential.Record = record;

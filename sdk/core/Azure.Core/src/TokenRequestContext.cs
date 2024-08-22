@@ -83,8 +83,9 @@ namespace Azure.Core
         /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
         /// <param name="isProofOfPossessionEnabled">Indicates whether to enable Proof of Possession (PoP) for the requested token.</param>
         /// <param name="proofOfPossessionNonce">The nonce value required for PoP token requests.</param>
-        /// <param name="request">The request to be authorized with a PoP token.</param>
-        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false, bool isProofOfPossessionEnabled = false, string? proofOfPossessionNonce = default, Request? request = default)
+        /// <param name="requestUri">The resource request Uri to be authorized with a PoP token.</param>
+        /// <param name="requestMethod">The HTTP request method name of the resource request (e.g. GET, POST, etc.).</param>
+        public TokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false, bool isProofOfPossessionEnabled = false, string? proofOfPossessionNonce = default, Uri? requestUri = default, string? requestMethod = default)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
@@ -93,8 +94,8 @@ namespace Azure.Core
             IsCaeEnabled = isCaeEnabled;
             ProofOfPossessionNonce = proofOfPossessionNonce;
             IsProofOfPossessionEnabled = isProofOfPossessionEnabled;
-            _uri = request?.Uri.ToUri();
-            _method = request is null ? null : new(request.Method.ToString());
+            _uri = requestUri;
+            _method = requestMethod is null ? null : new(requestMethod);
         }
 
         /// <summary>

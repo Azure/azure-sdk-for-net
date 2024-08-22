@@ -153,7 +153,7 @@ namespace Azure.Identity.Broker.Tests
             if (_popNonce != null)
             {
                 // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
-                var context = new TokenRequestContext(_scopes, parentRequestId: message.Request.ClientRequestId, isProofOfPossessionEnabled: true, proofOfPossessionNonce: _popNonce, request: message.Request);
+                var context = new TokenRequestContext(_scopes, parentRequestId: message.Request.ClientRequestId, isProofOfPossessionEnabled: true, proofOfPossessionNonce: _popNonce, requestUri: message.Request.Uri.ToUri(), requestMethod: message.Request.Method.ToString());
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -174,7 +174,7 @@ namespace Azure.Identity.Broker.Tests
             {
                 return false;
             }
-            var context = new TokenRequestContext(_scopes, parentRequestId: message.Request.ClientRequestId, isProofOfPossessionEnabled: true, proofOfPossessionNonce: _popNonce, request: message.Request);
+            var context = new TokenRequestContext(_scopes, parentRequestId: message.Request.ClientRequestId, isProofOfPossessionEnabled: true, proofOfPossessionNonce: _popNonce, requestUri: message.Request.Uri.ToUri(), requestMethod: message.Request.Method.ToString());
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);

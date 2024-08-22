@@ -27,7 +27,7 @@ namespace Azure
             };
             request.Uri.Reset(new Uri("http://example.com"));
 
-            var context = new TokenRequestContext(scopes, parentRequestId, claims, tenantId, isCaeEnabled, isProofOfPossessionEnabled, proofOfPossessionNonce, request);
+            var context = new TokenRequestContext(scopes, parentRequestId, claims, tenantId, isCaeEnabled, isProofOfPossessionEnabled, proofOfPossessionNonce, request.Uri.ToUri(), request.Method.ToString());
 
             Assert.AreEqual(scopes, context.Scopes);
             Assert.AreEqual(parentRequestId, context.ParentRequestId);
