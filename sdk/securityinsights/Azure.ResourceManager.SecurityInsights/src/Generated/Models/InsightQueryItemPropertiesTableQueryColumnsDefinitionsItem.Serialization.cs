@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("outputType"u8);
                 writer.WriteStringValue(OutputType.Value.ToString());
             }
-            if (Optional.IsDefined(SupportDeepLink))
+            if (Optional.IsDefined(IsDeepLinkSupported))
             {
                 writer.WritePropertyName("supportDeepLink"u8);
-                writer.WriteBooleanValue(SupportDeepLink.Value);
+                writer.WriteBooleanValue(IsDeepLinkSupported.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

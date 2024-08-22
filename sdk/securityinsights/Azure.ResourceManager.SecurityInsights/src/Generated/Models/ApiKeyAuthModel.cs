@@ -10,21 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Model for authentication with the API Key. Will result in additional header on the request (default behavior) to the remote server: 'ApiKeyName: ApiKeyIdentifier ApiKey'. If 'IsApiKeyInPostPayload' is true it will send it in the body of the request and not the header.
-    /// Serialized Name: ApiKeyAuthModel
-    /// </summary>
+    /// <summary> Model for authentication with the API Key. Will result in additional header on the request (default behavior) to the remote server: 'ApiKeyName: ApiKeyIdentifier ApiKey'. If 'IsApiKeyInPostPayload' is true it will send it in the body of the request and not the header. </summary>
     public partial class ApiKeyAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="ApiKeyAuthModel"/>. </summary>
-        /// <param name="apiKey">
-        /// API Key for the user secret key credential
-        /// Serialized Name: ApiKeyAuthModel.apiKey
-        /// </param>
-        /// <param name="apiKeyName">
-        /// API Key name
-        /// Serialized Name: ApiKeyAuthModel.apiKeyName
-        /// </param>
+        /// <param name="apiKey"> API Key for the user secret key credential. </param>
+        /// <param name="apiKeyName"> API Key name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiKey"/> or <paramref name="apiKeyName"/> is null. </exception>
         public ApiKeyAuthModel(string apiKey, string apiKeyName)
         {
@@ -37,27 +28,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiKeyAuthModel"/>. </summary>
-        /// <param name="authType">
-        /// The auth type
-        /// Serialized Name: CcpAuthConfig.type
-        /// </param>
+        /// <param name="authType"> The auth type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="apiKey">
-        /// API Key for the user secret key credential
-        /// Serialized Name: ApiKeyAuthModel.apiKey
-        /// </param>
-        /// <param name="apiKeyName">
-        /// API Key name
-        /// Serialized Name: ApiKeyAuthModel.apiKeyName
-        /// </param>
-        /// <param name="apiKeyIdentifier">
-        /// API Key Identifier
-        /// Serialized Name: ApiKeyAuthModel.apiKeyIdentifier
-        /// </param>
-        /// <param name="isApiKeyInPostPayload">
-        /// Flag to indicate if API key is set in HTTP POST payload
-        /// Serialized Name: ApiKeyAuthModel.isApiKeyInPostPayload
-        /// </param>
+        /// <param name="apiKey"> API Key for the user secret key credential. </param>
+        /// <param name="apiKeyName"> API Key name. </param>
+        /// <param name="apiKeyIdentifier"> API Key Identifier. </param>
+        /// <param name="isApiKeyInPostPayload"> Flag to indicate if API key is set in HTTP POST payload. </param>
         internal ApiKeyAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string apiKey, string apiKeyName, string apiKeyIdentifier, bool? isApiKeyInPostPayload) : base(authType, serializedAdditionalRawData)
         {
             ApiKey = apiKey;
@@ -72,25 +48,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// API Key for the user secret key credential
-        /// Serialized Name: ApiKeyAuthModel.apiKey
-        /// </summary>
+        /// <summary> API Key for the user secret key credential. </summary>
         public string ApiKey { get; set; }
-        /// <summary>
-        /// API Key name
-        /// Serialized Name: ApiKeyAuthModel.apiKeyName
-        /// </summary>
+        /// <summary> API Key name. </summary>
         public string ApiKeyName { get; set; }
-        /// <summary>
-        /// API Key Identifier
-        /// Serialized Name: ApiKeyAuthModel.apiKeyIdentifier
-        /// </summary>
+        /// <summary> API Key Identifier. </summary>
         public string ApiKeyIdentifier { get; set; }
-        /// <summary>
-        /// Flag to indicate if API key is set in HTTP POST payload
-        /// Serialized Name: ApiKeyAuthModel.isApiKeyInPostPayload
-        /// </summary>
+        /// <summary> Flag to indicate if API key is set in HTTP POST payload. </summary>
         public bool? IsApiKeyInPostPayload { get; set; }
     }
 }

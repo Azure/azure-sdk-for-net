@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List all the source controls.
-    /// Serialized Name: SourceControlList
-    /// </summary>
+    /// <summary> List all the source controls. </summary>
     internal partial class SourceControlList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SourceControlList"/>. </summary>
-        /// <param name="value">
-        /// Array of source controls.
-        /// Serialized Name: SourceControlList.value
-        /// </param>
+        /// <param name="value"> Array of source controls. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SourceControlList(IEnumerable<SourceControlData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SourceControlList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of source controls.
-        /// Serialized Name: SourceControlList.nextLink
-        /// </param>
-        /// <param name="value">
-        /// Array of source controls.
-        /// Serialized Name: SourceControlList.value
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of source controls. </param>
+        /// <param name="value"> Array of source controls. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SourceControlList(string nextLink, IReadOnlyList<SourceControlData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of source controls.
-        /// Serialized Name: SourceControlList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of source controls. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Array of source controls.
-        /// Serialized Name: SourceControlList.value
-        /// </summary>
+        /// <summary> Array of source controls. </summary>
         public IReadOnlyList<SourceControlData> Value { get; }
     }
 }

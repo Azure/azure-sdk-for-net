@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Optional.IsDefined(EndTimeUtc))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndTimeUtc.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (Optional.IsDefined(StartTimeUtc))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartTimeUtc.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(EventOn))
             {

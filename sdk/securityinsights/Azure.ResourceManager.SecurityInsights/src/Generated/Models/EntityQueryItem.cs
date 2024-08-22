@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// An abstract Query item for entity
-    /// Serialized Name: EntityQueryItem
     /// Please note <see cref="EntityQueryItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="InsightQueryItem"/>.
     /// </summary>
@@ -62,10 +61,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the entity query
-        /// Serialized Name: EntityQueryItem.kind
-        /// </param>
+        /// <param name="kind"> The kind of the entity query. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityQueryItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,10 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The kind of the entity query
-        /// Serialized Name: EntityQueryItem.kind
-        /// </summary>
+        /// <summary> The kind of the entity query. </summary>
         internal EntityQueryKind Kind { get; set; }
     }
 }

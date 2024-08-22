@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The kind of content the metadata is for.
-    /// Serialized Name: Kind
-    /// </summary>
+    /// <summary> The kind of content the metadata is for. </summary>
     public readonly partial struct SecurityInsightsKind : IEquatable<SecurityInsightsKind>
     {
         private readonly string _value;
@@ -43,90 +40,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string LogicAppsCustomConnectorValue = "LogicAppsCustomConnector";
         private const string AutomationRuleValue = "AutomationRule";
 
-        /// <summary>
-        /// DataConnector
-        /// Serialized Name: Kind.DataConnector
-        /// </summary>
+        /// <summary> DataConnector. </summary>
         public static SecurityInsightsKind DataConnector { get; } = new SecurityInsightsKind(DataConnectorValue);
-        /// <summary>
-        /// DataType
-        /// Serialized Name: Kind.DataType
-        /// </summary>
+        /// <summary> DataType. </summary>
         public static SecurityInsightsKind DataType { get; } = new SecurityInsightsKind(DataTypeValue);
-        /// <summary>
-        /// Workbook
-        /// Serialized Name: Kind.Workbook
-        /// </summary>
+        /// <summary> Workbook. </summary>
         public static SecurityInsightsKind Workbook { get; } = new SecurityInsightsKind(WorkbookValue);
-        /// <summary>
-        /// WorkbookTemplate
-        /// Serialized Name: Kind.WorkbookTemplate
-        /// </summary>
+        /// <summary> WorkbookTemplate. </summary>
         public static SecurityInsightsKind WorkbookTemplate { get; } = new SecurityInsightsKind(WorkbookTemplateValue);
-        /// <summary>
-        /// Playbook
-        /// Serialized Name: Kind.Playbook
-        /// </summary>
+        /// <summary> Playbook. </summary>
         public static SecurityInsightsKind Playbook { get; } = new SecurityInsightsKind(PlaybookValue);
-        /// <summary>
-        /// PlaybookTemplate
-        /// Serialized Name: Kind.PlaybookTemplate
-        /// </summary>
+        /// <summary> PlaybookTemplate. </summary>
         public static SecurityInsightsKind PlaybookTemplate { get; } = new SecurityInsightsKind(PlaybookTemplateValue);
-        /// <summary>
-        /// AnalyticsRuleTemplate
-        /// Serialized Name: Kind.AnalyticsRuleTemplate
-        /// </summary>
+        /// <summary> AnalyticsRuleTemplate. </summary>
         public static SecurityInsightsKind AnalyticsRuleTemplate { get; } = new SecurityInsightsKind(AnalyticsRuleTemplateValue);
-        /// <summary>
-        /// AnalyticsRule
-        /// Serialized Name: Kind.AnalyticsRule
-        /// </summary>
+        /// <summary> AnalyticsRule. </summary>
         public static SecurityInsightsKind AnalyticsRule { get; } = new SecurityInsightsKind(AnalyticsRuleValue);
-        /// <summary>
-        /// HuntingQuery
-        /// Serialized Name: Kind.HuntingQuery
-        /// </summary>
+        /// <summary> HuntingQuery. </summary>
         public static SecurityInsightsKind HuntingQuery { get; } = new SecurityInsightsKind(HuntingQueryValue);
-        /// <summary>
-        /// InvestigationQuery
-        /// Serialized Name: Kind.InvestigationQuery
-        /// </summary>
+        /// <summary> InvestigationQuery. </summary>
         public static SecurityInsightsKind InvestigationQuery { get; } = new SecurityInsightsKind(InvestigationQueryValue);
-        /// <summary>
-        /// Parser
-        /// Serialized Name: Kind.Parser
-        /// </summary>
+        /// <summary> Parser. </summary>
         public static SecurityInsightsKind Parser { get; } = new SecurityInsightsKind(ParserValue);
-        /// <summary>
-        /// Watchlist
-        /// Serialized Name: Kind.Watchlist
-        /// </summary>
+        /// <summary> Watchlist. </summary>
         public static SecurityInsightsKind Watchlist { get; } = new SecurityInsightsKind(WatchlistValue);
-        /// <summary>
-        /// WatchlistTemplate
-        /// Serialized Name: Kind.WatchlistTemplate
-        /// </summary>
+        /// <summary> WatchlistTemplate. </summary>
         public static SecurityInsightsKind WatchlistTemplate { get; } = new SecurityInsightsKind(WatchlistTemplateValue);
-        /// <summary>
-        /// Solution
-        /// Serialized Name: Kind.Solution
-        /// </summary>
+        /// <summary> Solution. </summary>
         public static SecurityInsightsKind Solution { get; } = new SecurityInsightsKind(SolutionValue);
-        /// <summary>
-        /// AzureFunction
-        /// Serialized Name: Kind.AzureFunction
-        /// </summary>
+        /// <summary> AzureFunction. </summary>
         public static SecurityInsightsKind AzureFunction { get; } = new SecurityInsightsKind(AzureFunctionValue);
-        /// <summary>
-        /// LogicAppsCustomConnector
-        /// Serialized Name: Kind.LogicAppsCustomConnector
-        /// </summary>
+        /// <summary> LogicAppsCustomConnector. </summary>
         public static SecurityInsightsKind LogicAppsCustomConnector { get; } = new SecurityInsightsKind(LogicAppsCustomConnectorValue);
-        /// <summary>
-        /// AutomationRule
-        /// Serialized Name: Kind.AutomationRule
-        /// </summary>
+        /// <summary> AutomationRule. </summary>
         public static SecurityInsightsKind AutomationRule { get; } = new SecurityInsightsKind(AutomationRuleValue);
         /// <summary> Determines if two <see cref="SecurityInsightsKind"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsKind left, SecurityInsightsKind right) => left.Equals(right);

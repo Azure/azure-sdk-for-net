@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Description about a deployment.
-    /// Serialized Name: Deployment
-    /// </summary>
+    /// <summary> Description about a deployment. </summary>
     public partial class SourceControlDeployment
     {
         /// <summary>
@@ -54,26 +51,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SourceControlDeployment"/>. </summary>
-        /// <param name="deploymentId">
-        /// Deployment identifier.
-        /// Serialized Name: Deployment.deploymentId
-        /// </param>
-        /// <param name="deploymentState">
-        /// Current status of the deployment.
-        /// Serialized Name: Deployment.deploymentState
-        /// </param>
-        /// <param name="deploymentResult">
-        /// The outcome of the deployment.
-        /// Serialized Name: Deployment.deploymentResult
-        /// </param>
-        /// <param name="deploymentOn">
-        /// The time when the deployment finished.
-        /// Serialized Name: Deployment.deploymentTime
-        /// </param>
-        /// <param name="deploymentLogsUri">
-        /// Url to access repository action logs.
-        /// Serialized Name: Deployment.deploymentLogsUrl
-        /// </param>
+        /// <param name="deploymentId"> Deployment identifier. </param>
+        /// <param name="deploymentState"> Current status of the deployment. </param>
+        /// <param name="deploymentResult"> The outcome of the deployment. </param>
+        /// <param name="deploymentOn"> The time when the deployment finished. </param>
+        /// <param name="deploymentLogsUri"> Url to access repository action logs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SourceControlDeployment(string deploymentId, SourceControlDeploymentState? deploymentState, SourceControlDeploymentResult? deploymentResult, DateTimeOffset? deploymentOn, Uri deploymentLogsUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,30 +67,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Deployment identifier.
-        /// Serialized Name: Deployment.deploymentId
-        /// </summary>
+        /// <summary> Deployment identifier. </summary>
         public string DeploymentId { get; }
-        /// <summary>
-        /// Current status of the deployment.
-        /// Serialized Name: Deployment.deploymentState
-        /// </summary>
+        /// <summary> Current status of the deployment. </summary>
         public SourceControlDeploymentState? DeploymentState { get; }
-        /// <summary>
-        /// The outcome of the deployment.
-        /// Serialized Name: Deployment.deploymentResult
-        /// </summary>
+        /// <summary> The outcome of the deployment. </summary>
         public SourceControlDeploymentResult? DeploymentResult { get; }
-        /// <summary>
-        /// The time when the deployment finished.
-        /// Serialized Name: Deployment.deploymentTime
-        /// </summary>
+        /// <summary> The time when the deployment finished. </summary>
         public DateTimeOffset? DeploymentOn { get; }
-        /// <summary>
-        /// Url to access repository action logs.
-        /// Serialized Name: Deployment.deploymentLogsUrl
-        /// </summary>
+        /// <summary> Url to access repository action logs. </summary>
         public Uri DeploymentLogsUri { get; }
     }
 }

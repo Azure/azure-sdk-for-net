@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The registrar associated with this domain
-    /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails
-    /// </summary>
+    /// <summary> The registrar associated with this domain. </summary>
     public partial class EnrichmentDomainWhoisRegistrarDetails
     {
         /// <summary>
@@ -54,30 +51,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EnrichmentDomainWhoisRegistrarDetails"/>. </summary>
-        /// <param name="name">
-        /// The name of this registrar
-        /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails.name
-        /// </param>
-        /// <param name="abuseContactEmail">
-        /// This registrar's abuse contact email
-        /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails.abuseContactEmail
-        /// </param>
-        /// <param name="abuseContactPhone">
-        /// This registrar's abuse contact phone number
-        /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails.abuseContactPhone
-        /// </param>
-        /// <param name="ianaId">
-        /// This registrar's Internet Assigned Numbers Authority id
-        /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails.ianaId
-        /// </param>
-        /// <param name="uri">
-        /// This registrar's URL
-        /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails.url
-        /// </param>
-        /// <param name="whoisServer">
-        /// The hostname of this registrar's whois server
-        /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails.whoisServer
-        /// </param>
+        /// <param name="name"> The name of this registrar. </param>
+        /// <param name="abuseContactEmail"> This registrar's abuse contact email. </param>
+        /// <param name="abuseContactPhone"> This registrar's abuse contact phone number. </param>
+        /// <param name="ianaId"> This registrar's Internet Assigned Numbers Authority id. </param>
+        /// <param name="uri"> This registrar's URL. </param>
+        /// <param name="whoisServer"> The hostname of this registrar's whois server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EnrichmentDomainWhoisRegistrarDetails(string name, string abuseContactEmail, string abuseContactPhone, string ianaId, Uri uri, string whoisServer, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,35 +69,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The name of this registrar
-        /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails.name
-        /// </summary>
+        /// <summary> The name of this registrar. </summary>
         public string Name { get; }
-        /// <summary>
-        /// This registrar's abuse contact email
-        /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails.abuseContactEmail
-        /// </summary>
+        /// <summary> This registrar's abuse contact email. </summary>
         public string AbuseContactEmail { get; }
-        /// <summary>
-        /// This registrar's abuse contact phone number
-        /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails.abuseContactPhone
-        /// </summary>
+        /// <summary> This registrar's abuse contact phone number. </summary>
         public string AbuseContactPhone { get; }
-        /// <summary>
-        /// This registrar's Internet Assigned Numbers Authority id
-        /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails.ianaId
-        /// </summary>
+        /// <summary> This registrar's Internet Assigned Numbers Authority id. </summary>
         public string IanaId { get; }
-        /// <summary>
-        /// This registrar's URL
-        /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails.url
-        /// </summary>
+        /// <summary> This registrar's URL. </summary>
         public Uri Uri { get; }
-        /// <summary>
-        /// The hostname of this registrar's whois server
-        /// Serialized Name: EnrichmentDomainWhoisRegistrarDetails.whoisServer
-        /// </summary>
+        /// <summary> The hostname of this registrar's whois server. </summary>
         public string WhoisServer { get; }
     }
 }

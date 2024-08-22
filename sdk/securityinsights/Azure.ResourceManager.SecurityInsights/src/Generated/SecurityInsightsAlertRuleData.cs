@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsAlertRule data model.
     /// Alert rule.
-    /// Serialized Name: AlertRule
     /// Please note <see cref="SecurityInsightsAlertRuleData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SecurityInsightsFusionAlertRule"/>, <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>, <see cref="MLBehaviorAnalyticsAlertRule"/>, <see cref="NrtAlertRule"/>, <see cref="SecurityInsightsScheduledAlertRule"/> and <see cref="ThreatIntelligenceAlertRule"/>.
     /// </summary>
@@ -64,14 +63,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the alert rule
-        /// Serialized Name: AlertRule.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The kind of the alert rule. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsAlertRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -80,15 +73,9 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The kind of the alert rule
-        /// Serialized Name: AlertRule.kind
-        /// </summary>
+        /// <summary> The kind of the alert rule. </summary>
         internal AlertRuleKind Kind { get; set; }
-        /// <summary>
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </summary>
+        /// <summary> Etag of the azure resource. </summary>
         public ETag? ETag { get; set; }
     }
 }

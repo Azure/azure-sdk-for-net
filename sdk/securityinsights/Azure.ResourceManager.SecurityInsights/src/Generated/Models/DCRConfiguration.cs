@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The configuration of the destination of the data.
-    /// Serialized Name: DCRConfiguration
-    /// </summary>
+    /// <summary> The configuration of the destination of the data. </summary>
     public partial class DCRConfiguration
     {
         /// <summary>
@@ -49,18 +46,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DCRConfiguration"/>. </summary>
-        /// <param name="dataCollectionEndpoint">
-        /// Represents the data collection ingestion endpoint in log analytics.
-        /// Serialized Name: DCRConfiguration.dataCollectionEndpoint
-        /// </param>
-        /// <param name="dataCollectionRuleImmutableId">
-        /// The data collection rule immutable id, the rule defines the transformation and data destination.
-        /// Serialized Name: DCRConfiguration.dataCollectionRuleImmutableId
-        /// </param>
-        /// <param name="streamName">
-        /// The stream we are sending the data to.
-        /// Serialized Name: DCRConfiguration.streamName
-        /// </param>
+        /// <param name="dataCollectionEndpoint"> Represents the data collection ingestion endpoint in log analytics. </param>
+        /// <param name="dataCollectionRuleImmutableId"> The data collection rule immutable id, the rule defines the transformation and data destination. </param>
+        /// <param name="streamName"> The stream we are sending the data to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCollectionEndpoint"/>, <paramref name="dataCollectionRuleImmutableId"/> or <paramref name="streamName"/> is null. </exception>
         public DCRConfiguration(string dataCollectionEndpoint, string dataCollectionRuleImmutableId, string streamName)
         {
@@ -74,18 +62,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DCRConfiguration"/>. </summary>
-        /// <param name="dataCollectionEndpoint">
-        /// Represents the data collection ingestion endpoint in log analytics.
-        /// Serialized Name: DCRConfiguration.dataCollectionEndpoint
-        /// </param>
-        /// <param name="dataCollectionRuleImmutableId">
-        /// The data collection rule immutable id, the rule defines the transformation and data destination.
-        /// Serialized Name: DCRConfiguration.dataCollectionRuleImmutableId
-        /// </param>
-        /// <param name="streamName">
-        /// The stream we are sending the data to.
-        /// Serialized Name: DCRConfiguration.streamName
-        /// </param>
+        /// <param name="dataCollectionEndpoint"> Represents the data collection ingestion endpoint in log analytics. </param>
+        /// <param name="dataCollectionRuleImmutableId"> The data collection rule immutable id, the rule defines the transformation and data destination. </param>
+        /// <param name="streamName"> The stream we are sending the data to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DCRConfiguration(string dataCollectionEndpoint, string dataCollectionRuleImmutableId, string streamName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -100,20 +79,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Represents the data collection ingestion endpoint in log analytics.
-        /// Serialized Name: DCRConfiguration.dataCollectionEndpoint
-        /// </summary>
+        /// <summary> Represents the data collection ingestion endpoint in log analytics. </summary>
         public string DataCollectionEndpoint { get; set; }
-        /// <summary>
-        /// The data collection rule immutable id, the rule defines the transformation and data destination.
-        /// Serialized Name: DCRConfiguration.dataCollectionRuleImmutableId
-        /// </summary>
+        /// <summary> The data collection rule immutable id, the rule defines the transformation and data destination. </summary>
         public string DataCollectionRuleImmutableId { get; set; }
-        /// <summary>
-        /// The stream we are sending the data to.
-        /// Serialized Name: DCRConfiguration.streamName
-        /// </summary>
+        /// <summary> The stream we are sending the data to. </summary>
         public string StreamName { get; set; }
     }
 }

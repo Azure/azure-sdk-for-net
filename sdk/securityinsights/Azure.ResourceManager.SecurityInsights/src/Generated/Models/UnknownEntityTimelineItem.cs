@@ -14,10 +14,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class UnknownEntityTimelineItem : EntityTimelineItem
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEntityTimelineItem"/>. </summary>
-        /// <param name="kind">
-        /// The entity query kind type.
-        /// Serialized Name: EntityTimelineItem.kind
-        /// </param>
+        /// <param name="kind"> The entity query kind type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownEntityTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {

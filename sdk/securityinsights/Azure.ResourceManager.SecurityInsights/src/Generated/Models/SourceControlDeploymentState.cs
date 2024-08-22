@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The current state of the deployment.
-    /// Serialized Name: DeploymentState
-    /// </summary>
+    /// <summary> The current state of the deployment. </summary>
     public readonly partial struct SourceControlDeploymentState : IEquatable<SourceControlDeploymentState>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string QueuedValue = "Queued";
         private const string CancelingValue = "Canceling";
 
-        /// <summary>
-        /// In_Progress
-        /// Serialized Name: DeploymentState.In_Progress
-        /// </summary>
+        /// <summary> In_Progress. </summary>
         public static SourceControlDeploymentState InProgress { get; } = new SourceControlDeploymentState(InProgressValue);
-        /// <summary>
-        /// Completed
-        /// Serialized Name: DeploymentState.Completed
-        /// </summary>
+        /// <summary> Completed. </summary>
         public static SourceControlDeploymentState Completed { get; } = new SourceControlDeploymentState(CompletedValue);
-        /// <summary>
-        /// Queued
-        /// Serialized Name: DeploymentState.Queued
-        /// </summary>
+        /// <summary> Queued. </summary>
         public static SourceControlDeploymentState Queued { get; } = new SourceControlDeploymentState(QueuedValue);
-        /// <summary>
-        /// Canceling
-        /// Serialized Name: DeploymentState.Canceling
-        /// </summary>
+        /// <summary> Canceling. </summary>
         public static SourceControlDeploymentState Canceling { get; } = new SourceControlDeploymentState(CancelingValue);
         /// <summary> Determines if two <see cref="SourceControlDeploymentState"/> values are the same. </summary>
         public static bool operator ==(SourceControlDeploymentState left, SourceControlDeploymentState right) => left.Equals(right);

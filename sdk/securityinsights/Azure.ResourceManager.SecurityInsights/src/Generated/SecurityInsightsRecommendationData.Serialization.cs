@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(CreationTimeUtc))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTimeUtc"u8);
-                writer.WriteStringValue(CreationTimeUtc.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastEvaluatedTimeUtc))
+            if (Optional.IsDefined(LastEvaluatedOn))
             {
                 writer.WritePropertyName("lastEvaluatedTimeUtc"u8);
-                writer.WriteStringValue(LastEvaluatedTimeUtc.Value, "O");
+                writer.WriteStringValue(LastEvaluatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedTimeUtc))
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTimeUtc"u8);
-                writer.WriteStringValue(LastModifiedTimeUtc.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Suggestions))
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.SecurityInsights
             ResourceType type = default;
             SystemData systemData = default;
             string recommendationTypeId = default;
-            State? state = default;
+            RecommendationState? state = default;
             string title = default;
             string description = default;
             DateTimeOffset? creationTimeUtc = default;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            state = new State(property0.Value.GetString());
+                            state = new RecommendationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("title"u8))

@@ -14,11 +14,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class UnknownAutomationRuleAction : SecurityInsightsAutomationRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAutomationRuleAction"/>. </summary>
-        /// <param name="order"> Serialized Name: AutomationRuleAction.order. </param>
-        /// <param name="actionType">
-        /// The type of the automation rule action.
-        /// Serialized Name: AutomationRuleAction.actionType
-        /// </param>
+        /// <param name="order"></param>
+        /// <param name="actionType"> The type of the automation rule action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownAutomationRuleAction(int order, ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(order, actionType, serializedAdditionalRawData)
         {

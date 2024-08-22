@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             Status? status = default;
             DateTimeOffset? executionTime = default;
             IList<PublicationFailedError> errors = default;
@@ -99,7 +99,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))

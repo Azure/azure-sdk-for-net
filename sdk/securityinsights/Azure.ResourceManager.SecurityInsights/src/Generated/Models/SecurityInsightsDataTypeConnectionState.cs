@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describe whether this data type connection is enabled or not.
-    /// Serialized Name: DataTypeState
-    /// </summary>
+    /// <summary> Describe whether this data type connection is enabled or not. </summary>
     public readonly partial struct SecurityInsightsDataTypeConnectionState : IEquatable<SecurityInsightsDataTypeConnectionState>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// Enabled
-        /// Serialized Name: DataTypeState.Enabled
-        /// </summary>
+        /// <summary> Enabled. </summary>
         public static SecurityInsightsDataTypeConnectionState Enabled { get; } = new SecurityInsightsDataTypeConnectionState(EnabledValue);
-        /// <summary>
-        /// Disabled
-        /// Serialized Name: DataTypeState.Disabled
-        /// </summary>
+        /// <summary> Disabled. </summary>
         public static SecurityInsightsDataTypeConnectionState Disabled { get; } = new SecurityInsightsDataTypeConnectionState(DisabledValue);
         /// <summary> Determines if two <see cref="SecurityInsightsDataTypeConnectionState"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsDataTypeConnectionState left, SecurityInsightsDataTypeConnectionState right) => left.Equals(right);

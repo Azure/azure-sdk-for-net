@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// An entity describing the publish status of a content item.
-    /// Serialized Name: JobItem
-    /// </summary>
+    /// <summary> An entity describing the publish status of a content item. </summary>
     public partial class JobItem
     {
         /// <summary>
@@ -55,24 +53,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JobItem"/>. </summary>
-        /// <param name="resourceId">
-        /// The resource id of the content item
-        /// Serialized Name: JobItem.resourceId
-        /// </param>
-        /// <param name="status">
-        /// Status of the item publication
-        /// Serialized Name: JobItem.status
-        /// </param>
-        /// <param name="executionOn">
-        /// The time the item publishing was completed
-        /// Serialized Name: JobItem.executionTime
-        /// </param>
-        /// <param name="errors">
-        /// The list of error descriptions if the item publication fails.
-        /// Serialized Name: JobItem.errors
-        /// </param>
+        /// <param name="resourceId"> The resource id of the content item. </param>
+        /// <param name="status"> Status of the item publication. </param>
+        /// <param name="executionOn"> The time the item publishing was completed. </param>
+        /// <param name="errors"> The list of error descriptions if the item publication fails. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobItem(string resourceId, Status? status, DateTimeOffset? executionOn, IList<PublicationFailedError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal JobItem(ResourceIdentifier resourceId, Status? status, DateTimeOffset? executionOn, IList<PublicationFailedError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             Status = status;
@@ -81,25 +67,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource id of the content item
-        /// Serialized Name: JobItem.resourceId
-        /// </summary>
-        public string ResourceId { get; set; }
-        /// <summary>
-        /// Status of the item publication
-        /// Serialized Name: JobItem.status
-        /// </summary>
+        /// <summary> The resource id of the content item. </summary>
+        public ResourceIdentifier ResourceId { get; set; }
+        /// <summary> Status of the item publication. </summary>
         public Status? Status { get; }
-        /// <summary>
-        /// The time the item publishing was completed
-        /// Serialized Name: JobItem.executionTime
-        /// </summary>
+        /// <summary> The time the item publishing was completed. </summary>
         public DateTimeOffset? ExecutionOn { get; }
-        /// <summary>
-        /// The list of error descriptions if the item publication fails.
-        /// Serialized Name: JobItem.errors
-        /// </summary>
+        /// <summary> The list of error descriptions if the item publication fails. </summary>
         public IList<PublicationFailedError> Errors { get; }
     }
 }

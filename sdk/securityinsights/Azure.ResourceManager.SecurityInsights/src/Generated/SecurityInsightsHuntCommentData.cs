@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsHuntComment data model.
     /// Represents a Hunt Comment in Azure Security Insights
-    /// Serialized Name: HuntComment
     /// </summary>
     public partial class SecurityInsightsHuntCommentData : ResourceData
     {
@@ -61,14 +60,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="message">
-        /// The message for the comment
-        /// Serialized Name: HuntComment.properties.message
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="message"> The message for the comment. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsHuntCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string message, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -77,15 +70,9 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The message for the comment
-        /// Serialized Name: HuntComment.properties.message
-        /// </summary>
+        /// <summary> The message for the comment. </summary>
         public string Message { get; set; }
-        /// <summary>
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </summary>
+        /// <summary> Etag of the azure resource. </summary>
         public ETag? ETag { get; set; }
     }
 }

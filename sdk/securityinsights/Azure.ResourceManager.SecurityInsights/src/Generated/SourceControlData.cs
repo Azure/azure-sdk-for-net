@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SourceControl data model.
     /// Represents a SourceControl in Azure Security Insights.
-    /// Serialized Name: SourceControl
     /// </summary>
     public partial class SourceControlData : ResourceData
     {
@@ -54,22 +53,10 @@ namespace Azure.ResourceManager.SecurityInsights
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SourceControlData"/>. </summary>
-        /// <param name="displayName">
-        /// The display name of the source control
-        /// Serialized Name: SourceControl.properties.displayName
-        /// </param>
-        /// <param name="repoType">
-        /// The repository type of the source control
-        /// Serialized Name: SourceControl.properties.repoType
-        /// </param>
-        /// <param name="contentTypes">
-        /// Array of source control content types.
-        /// Serialized Name: SourceControl.properties.contentTypes
-        /// </param>
-        /// <param name="repository">
-        /// Repository metadata.
-        /// Serialized Name: SourceControl.properties.repository
-        /// </param>
+        /// <param name="displayName"> The display name of the source control. </param>
+        /// <param name="repoType"> The repository type of the source control. </param>
+        /// <param name="contentTypes"> Array of source control content types. </param>
+        /// <param name="repository"> Repository metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="contentTypes"/> or <paramref name="repository"/> is null. </exception>
         public SourceControlData(string displayName, RepoType repoType, IEnumerable<Models.ContentType> contentTypes, SourceControlRepository repository)
         {
@@ -88,62 +75,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="idPropertiesId">
-        /// The id (a Guid) of the source control
-        /// Serialized Name: SourceControl.properties.id
-        /// </param>
-        /// <param name="version">
-        /// The version number associated with the source control
-        /// Serialized Name: SourceControl.properties.version
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the source control
-        /// Serialized Name: SourceControl.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// A description of the source control
-        /// Serialized Name: SourceControl.properties.description
-        /// </param>
-        /// <param name="repoType">
-        /// The repository type of the source control
-        /// Serialized Name: SourceControl.properties.repoType
-        /// </param>
-        /// <param name="contentTypes">
-        /// Array of source control content types.
-        /// Serialized Name: SourceControl.properties.contentTypes
-        /// </param>
-        /// <param name="repository">
-        /// Repository metadata.
-        /// Serialized Name: SourceControl.properties.repository
-        /// </param>
-        /// <param name="servicePrincipal">
-        /// Service principal metadata.
-        /// Serialized Name: SourceControl.properties.servicePrincipal
-        /// </param>
-        /// <param name="repositoryAccess">
-        /// Repository access credentials. This is write-only object and it never returns back to a user.
-        /// Serialized Name: SourceControl.properties.repositoryAccess
-        /// </param>
-        /// <param name="repositoryResourceInfo">
-        /// Information regarding the resources created in user's repository.
-        /// Serialized Name: SourceControl.properties.repositoryResourceInfo
-        /// </param>
-        /// <param name="lastDeploymentInfo">
-        /// Information regarding the latest deployment for the source control.
-        /// Serialized Name: SourceControl.properties.lastDeploymentInfo
-        /// </param>
-        /// <param name="pullRequest">
-        /// Information regarding the pull request of the source control.
-        /// Serialized Name: SourceControl.properties.pullRequest
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="sourceControlId"> The id (a Guid) of the source control. </param>
+        /// <param name="version"> The version number associated with the source control. </param>
+        /// <param name="displayName"> The display name of the source control. </param>
+        /// <param name="description"> A description of the source control. </param>
+        /// <param name="repoType"> The repository type of the source control. </param>
+        /// <param name="contentTypes"> Array of source control content types. </param>
+        /// <param name="repository"> Repository metadata. </param>
+        /// <param name="servicePrincipal"> Service principal metadata. </param>
+        /// <param name="repositoryAccess"> Repository access credentials. This is write-only object and it never returns back to a user. </param>
+        /// <param name="repositoryResourceInfo"> Information regarding the resources created in user's repository. </param>
+        /// <param name="lastDeploymentInfo"> Information regarding the latest deployment for the source control. </param>
+        /// <param name="pullRequest"> Information regarding the pull request of the source control. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string idPropertiesId, Models.Version? version, string displayName, string description, RepoType repoType, IList<Models.ContentType> contentTypes, SourceControlRepository repository, ServicePrincipal servicePrincipal, RepositoryAccess repositoryAccess, RepositoryResourceInfo repositoryResourceInfo, SourceControlDeploymentInfo lastDeploymentInfo, PullRequestInfo pullRequest, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? sourceControlId, SourceControlVersion? version, string displayName, string description, RepoType repoType, IList<Models.ContentType> contentTypes, SourceControlRepository repository, SourceControlServicePrincipal servicePrincipal, RepositoryAccess repositoryAccess, RepositoryResourceInfo repositoryResourceInfo, SourceControlDeploymentInfo lastDeploymentInfo, PullRequestInfo pullRequest, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            IdPropertiesId = idPropertiesId;
+            SourceControlId = sourceControlId;
             Version = version;
             DisplayName = displayName;
             Description = description;
@@ -164,70 +112,31 @@ namespace Azure.ResourceManager.SecurityInsights
         {
         }
 
-        /// <summary>
-        /// The id (a Guid) of the source control
-        /// Serialized Name: SourceControl.properties.id
-        /// </summary>
-        public string IdPropertiesId { get; }
-        /// <summary>
-        /// The version number associated with the source control
-        /// Serialized Name: SourceControl.properties.version
-        /// </summary>
-        public Models.Version? Version { get; }
-        /// <summary>
-        /// The display name of the source control
-        /// Serialized Name: SourceControl.properties.displayName
-        /// </summary>
+        /// <summary> The id (a Guid) of the source control. </summary>
+        public Guid? SourceControlId { get; }
+        /// <summary> The version number associated with the source control. </summary>
+        public SourceControlVersion? Version { get; }
+        /// <summary> The display name of the source control. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// A description of the source control
-        /// Serialized Name: SourceControl.properties.description
-        /// </summary>
+        /// <summary> A description of the source control. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The repository type of the source control
-        /// Serialized Name: SourceControl.properties.repoType
-        /// </summary>
+        /// <summary> The repository type of the source control. </summary>
         public RepoType RepoType { get; set; }
-        /// <summary>
-        /// Array of source control content types.
-        /// Serialized Name: SourceControl.properties.contentTypes
-        /// </summary>
+        /// <summary> Array of source control content types. </summary>
         public IList<Models.ContentType> ContentTypes { get; }
-        /// <summary>
-        /// Repository metadata.
-        /// Serialized Name: SourceControl.properties.repository
-        /// </summary>
+        /// <summary> Repository metadata. </summary>
         public SourceControlRepository Repository { get; set; }
-        /// <summary>
-        /// Service principal metadata.
-        /// Serialized Name: SourceControl.properties.servicePrincipal
-        /// </summary>
-        public ServicePrincipal ServicePrincipal { get; set; }
-        /// <summary>
-        /// Repository access credentials. This is write-only object and it never returns back to a user.
-        /// Serialized Name: SourceControl.properties.repositoryAccess
-        /// </summary>
+        /// <summary> Service principal metadata. </summary>
+        public SourceControlServicePrincipal ServicePrincipal { get; set; }
+        /// <summary> Repository access credentials. This is write-only object and it never returns back to a user. </summary>
         public RepositoryAccess RepositoryAccess { get; set; }
-        /// <summary>
-        /// Information regarding the resources created in user's repository.
-        /// Serialized Name: SourceControl.properties.repositoryResourceInfo
-        /// </summary>
+        /// <summary> Information regarding the resources created in user's repository. </summary>
         public RepositoryResourceInfo RepositoryResourceInfo { get; set; }
-        /// <summary>
-        /// Information regarding the latest deployment for the source control.
-        /// Serialized Name: SourceControl.properties.lastDeploymentInfo
-        /// </summary>
+        /// <summary> Information regarding the latest deployment for the source control. </summary>
         public SourceControlDeploymentInfo LastDeploymentInfo { get; }
-        /// <summary>
-        /// Information regarding the pull request of the source control.
-        /// Serialized Name: SourceControl.properties.pullRequest
-        /// </summary>
+        /// <summary> Information regarding the pull request of the source control. </summary>
         public PullRequestInfo PullRequest { get; }
-        /// <summary>
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </summary>
+        /// <summary> Etag of the azure resource. </summary>
         public ETag? ETag { get; set; }
     }
 }

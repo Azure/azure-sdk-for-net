@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List all the file imports.
-    /// Serialized Name: FileImportList
-    /// </summary>
+    /// <summary> List all the file imports. </summary>
     internal partial class FileImportList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FileImportList"/>. </summary>
-        /// <param name="value">
-        /// Array of file imports.
-        /// Serialized Name: FileImportList.value
-        /// </param>
+        /// <param name="value"> Array of file imports. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FileImportList(IEnumerable<FileImportData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FileImportList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of file imports.
-        /// Serialized Name: FileImportList.nextLink
-        /// </param>
-        /// <param name="value">
-        /// Array of file imports.
-        /// Serialized Name: FileImportList.value
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of file imports. </param>
+        /// <param name="value"> Array of file imports. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FileImportList(string nextLink, IReadOnlyList<FileImportData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of file imports.
-        /// Serialized Name: FileImportList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of file imports. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Array of file imports.
-        /// Serialized Name: FileImportList.value
-        /// </summary>
+        /// <summary> Array of file imports. </summary>
         public IReadOnlyList<FileImportData> Value { get; }
     }
 }

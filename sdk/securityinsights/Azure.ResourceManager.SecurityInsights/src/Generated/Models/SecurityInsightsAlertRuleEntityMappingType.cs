@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The V3 type of the mapped entity
-    /// Serialized Name: EntityMappingType
-    /// </summary>
+    /// <summary> The V3 type of the mapped entity. </summary>
     public readonly partial struct SecurityInsightsAlertRuleEntityMappingType : IEquatable<SecurityInsightsAlertRuleEntityMappingType>
     {
         private readonly string _value;
@@ -44,95 +41,41 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string MailMessageValue = "MailMessage";
         private const string SubmissionMailValue = "SubmissionMail";
 
-        /// <summary>
-        /// User account entity type
-        /// Serialized Name: EntityMappingType.Account
-        /// </summary>
+        /// <summary> User account entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType Account { get; } = new SecurityInsightsAlertRuleEntityMappingType(AccountValue);
-        /// <summary>
-        /// Host entity type
-        /// Serialized Name: EntityMappingType.Host
-        /// </summary>
+        /// <summary> Host entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType Host { get; } = new SecurityInsightsAlertRuleEntityMappingType(HostValue);
-        /// <summary>
-        /// IP address entity type
-        /// Serialized Name: EntityMappingType.IP
-        /// </summary>
+        /// <summary> IP address entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType IP { get; } = new SecurityInsightsAlertRuleEntityMappingType(IPValue);
-        /// <summary>
-        /// Malware entity type
-        /// Serialized Name: EntityMappingType.Malware
-        /// </summary>
+        /// <summary> Malware entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType Malware { get; } = new SecurityInsightsAlertRuleEntityMappingType(MalwareValue);
-        /// <summary>
-        /// System file entity type
-        /// Serialized Name: EntityMappingType.File
-        /// </summary>
+        /// <summary> System file entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType File { get; } = new SecurityInsightsAlertRuleEntityMappingType(FileValue);
-        /// <summary>
-        /// Process entity type
-        /// Serialized Name: EntityMappingType.Process
-        /// </summary>
+        /// <summary> Process entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType Process { get; } = new SecurityInsightsAlertRuleEntityMappingType(ProcessValue);
-        /// <summary>
-        /// Cloud app entity type
-        /// Serialized Name: EntityMappingType.CloudApplication
-        /// </summary>
+        /// <summary> Cloud app entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType CloudApplication { get; } = new SecurityInsightsAlertRuleEntityMappingType(CloudApplicationValue);
-        /// <summary>
-        /// DNS entity type
-        /// Serialized Name: EntityMappingType.DNS
-        /// </summary>
+        /// <summary> DNS entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType Dns { get; } = new SecurityInsightsAlertRuleEntityMappingType(DnsValue);
-        /// <summary>
-        /// Azure resource entity type
-        /// Serialized Name: EntityMappingType.AzureResource
-        /// </summary>
+        /// <summary> Azure resource entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType AzureResource { get; } = new SecurityInsightsAlertRuleEntityMappingType(AzureResourceValue);
-        /// <summary>
-        /// File-hash entity type
-        /// Serialized Name: EntityMappingType.FileHash
-        /// </summary>
+        /// <summary> File-hash entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType FileHash { get; } = new SecurityInsightsAlertRuleEntityMappingType(FileHashValue);
-        /// <summary>
-        /// Registry key entity type
-        /// Serialized Name: EntityMappingType.RegistryKey
-        /// </summary>
+        /// <summary> Registry key entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType RegistryKey { get; } = new SecurityInsightsAlertRuleEntityMappingType(RegistryKeyValue);
-        /// <summary>
-        /// Registry value entity type
-        /// Serialized Name: EntityMappingType.RegistryValue
-        /// </summary>
+        /// <summary> Registry value entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType RegistryValue { get; } = new SecurityInsightsAlertRuleEntityMappingType(RegistryValueValue);
-        /// <summary>
-        /// Security group entity type
-        /// Serialized Name: EntityMappingType.SecurityGroup
-        /// </summary>
+        /// <summary> Security group entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType SecurityGroup { get; } = new SecurityInsightsAlertRuleEntityMappingType(SecurityGroupValue);
-        /// <summary>
-        /// URL entity type
-        /// Serialized Name: EntityMappingType.URL
-        /// </summary>
+        /// <summary> URL entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType Uri { get; } = new SecurityInsightsAlertRuleEntityMappingType(UriValue);
-        /// <summary>
-        /// Mailbox entity type
-        /// Serialized Name: EntityMappingType.Mailbox
-        /// </summary>
+        /// <summary> Mailbox entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType Mailbox { get; } = new SecurityInsightsAlertRuleEntityMappingType(MailboxValue);
-        /// <summary>
-        /// Mail cluster entity type
-        /// Serialized Name: EntityMappingType.MailCluster
-        /// </summary>
+        /// <summary> Mail cluster entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType MailCluster { get; } = new SecurityInsightsAlertRuleEntityMappingType(MailClusterValue);
-        /// <summary>
-        /// Mail message entity type
-        /// Serialized Name: EntityMappingType.MailMessage
-        /// </summary>
+        /// <summary> Mail message entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType MailMessage { get; } = new SecurityInsightsAlertRuleEntityMappingType(MailMessageValue);
-        /// <summary>
-        /// Submission mail entity type
-        /// Serialized Name: EntityMappingType.SubmissionMail
-        /// </summary>
+        /// <summary> Submission mail entity type. </summary>
         public static SecurityInsightsAlertRuleEntityMappingType SubmissionMail { get; } = new SecurityInsightsAlertRuleEntityMappingType(SubmissionMailValue);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertRuleEntityMappingType"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertRuleEntityMappingType left, SecurityInsightsAlertRuleEntityMappingType right) => left.Equals(right);

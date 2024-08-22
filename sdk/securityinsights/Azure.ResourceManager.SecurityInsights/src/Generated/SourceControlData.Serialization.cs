@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.SecurityInsights
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(IdPropertiesId))
+            if (options.Format != "W" && Optional.IsDefined(SourceControlId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(IdPropertiesId);
+                writer.WriteStringValue(SourceControlId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
@@ -152,14 +152,14 @@ namespace Azure.ResourceManager.SecurityInsights
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string id0 = default;
-            Models.Version? version = default;
+            Guid? id0 = default;
+            SourceControlVersion? version = default;
             string displayName = default;
             string description = default;
             RepoType repoType = default;
             IList<Models.ContentType> contentTypes = default;
             SourceControlRepository repository = default;
-            ServicePrincipal servicePrincipal = default;
+            SourceControlServicePrincipal servicePrincipal = default;
             RepositoryAccess repositoryAccess = default;
             RepositoryResourceInfo repositoryResourceInfo = default;
             SourceControlDeploymentInfo lastDeploymentInfo = default;
@@ -212,7 +212,11 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         if (property0.NameEquals("id"u8))
                         {
-                            id0 = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            id0 = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("version"u8))
@@ -221,7 +225,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            version = new Models.Version(property0.Value.GetString());
+                            version = new SourceControlVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
@@ -260,7 +264,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            servicePrincipal = ServicePrincipal.DeserializeServicePrincipal(property0.Value, options);
+                            servicePrincipal = SourceControlServicePrincipal.DeserializeSourceControlServicePrincipal(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("repositoryAccess"u8))

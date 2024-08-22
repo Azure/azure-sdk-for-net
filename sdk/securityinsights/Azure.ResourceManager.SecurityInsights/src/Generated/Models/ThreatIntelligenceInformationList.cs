@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List of all the threat intelligence information objects.
-    /// Serialized Name: ThreatIntelligenceInformationList
-    /// </summary>
+    /// <summary> List of all the threat intelligence information objects. </summary>
     internal partial class ThreatIntelligenceInformationList
     {
         /// <summary>
@@ -52,7 +49,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceInformationList"/>. </summary>
         /// <param name="value">
         /// Array of threat intelligence information objects.
-        /// Serialized Name: ThreatIntelligenceInformationList.value
         /// Please note <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>.
         /// </param>
@@ -65,13 +61,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceInformationList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of information objects.
-        /// Serialized Name: ThreatIntelligenceInformationList.nextLink
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of information objects. </param>
         /// <param name="value">
         /// Array of threat intelligence information objects.
-        /// Serialized Name: ThreatIntelligenceInformationList.value
         /// Please note <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>.
         /// </param>
@@ -88,14 +80,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of information objects.
-        /// Serialized Name: ThreatIntelligenceInformationList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of information objects. </summary>
         public string NextLink { get; }
         /// <summary>
         /// Array of threat intelligence information objects.
-        /// Serialized Name: ThreatIntelligenceInformationList.value
         /// Please note <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>.
         /// </summary>

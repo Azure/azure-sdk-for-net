@@ -11,17 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents bookmark timeline item.
-    /// Serialized Name: BookmarkTimelineItem
-    /// </summary>
+    /// <summary> Represents bookmark timeline item. </summary>
     public partial class BookmarkTimelineItem : EntityTimelineItem
     {
         /// <summary> Initializes a new instance of <see cref="BookmarkTimelineItem"/>. </summary>
-        /// <param name="azureResourceId">
-        /// The bookmark azure resource id.
-        /// Serialized Name: BookmarkTimelineItem.azureResourceId
-        /// </param>
+        /// <param name="azureResourceId"> The bookmark azure resource id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureResourceId"/> is null. </exception>
         internal BookmarkTimelineItem(ResourceIdentifier azureResourceId)
         {
@@ -33,50 +27,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BookmarkTimelineItem"/>. </summary>
-        /// <param name="kind">
-        /// The entity query kind type.
-        /// Serialized Name: EntityTimelineItem.kind
-        /// </param>
+        /// <param name="kind"> The entity query kind type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="azureResourceId">
-        /// The bookmark azure resource id.
-        /// Serialized Name: BookmarkTimelineItem.azureResourceId
-        /// </param>
-        /// <param name="displayName">
-        /// The bookmark display name.
-        /// Serialized Name: BookmarkTimelineItem.displayName
-        /// </param>
-        /// <param name="notes">
-        /// The notes of the bookmark
-        /// Serialized Name: BookmarkTimelineItem.notes
-        /// </param>
-        /// <param name="endTimeUtc">
-        /// The bookmark end time.
-        /// Serialized Name: BookmarkTimelineItem.endTimeUtc
-        /// </param>
-        /// <param name="startTimeUtc">
-        /// The bookmark start time.
-        /// Serialized Name: BookmarkTimelineItem.startTimeUtc
-        /// </param>
-        /// <param name="eventOn">
-        /// The bookmark event time.
-        /// Serialized Name: BookmarkTimelineItem.eventTime
-        /// </param>
-        /// <param name="createdBy">
-        /// Describes a user that created the bookmark
-        /// Serialized Name: BookmarkTimelineItem.createdBy
-        /// </param>
-        /// <param name="labels">
-        /// List of labels relevant to this bookmark
-        /// Serialized Name: BookmarkTimelineItem.labels
-        /// </param>
-        internal BookmarkTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier azureResourceId, string displayName, string notes, DateTimeOffset? endTimeUtc, DateTimeOffset? startTimeUtc, DateTimeOffset? eventOn, SecurityInsightsUserInfo createdBy, IReadOnlyList<string> labels) : base(kind, serializedAdditionalRawData)
+        /// <param name="azureResourceId"> The bookmark azure resource id. </param>
+        /// <param name="displayName"> The bookmark display name. </param>
+        /// <param name="notes"> The notes of the bookmark. </param>
+        /// <param name="endOn"> The bookmark end time. </param>
+        /// <param name="startOn"> The bookmark start time. </param>
+        /// <param name="eventOn"> The bookmark event time. </param>
+        /// <param name="createdBy"> Describes a user that created the bookmark. </param>
+        /// <param name="labels"> List of labels relevant to this bookmark. </param>
+        internal BookmarkTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier azureResourceId, string displayName, string notes, DateTimeOffset? endOn, DateTimeOffset? startOn, DateTimeOffset? eventOn, SecurityInsightsUserInfo createdBy, IReadOnlyList<string> labels) : base(kind, serializedAdditionalRawData)
         {
             AzureResourceId = azureResourceId;
             DisplayName = displayName;
             Notes = notes;
-            EndTimeUtc = endTimeUtc;
-            StartTimeUtc = startTimeUtc;
+            EndOn = endOn;
+            StartOn = startOn;
             EventOn = eventOn;
             CreatedBy = createdBy;
             Labels = labels;
@@ -88,45 +55,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// The bookmark azure resource id.
-        /// Serialized Name: BookmarkTimelineItem.azureResourceId
-        /// </summary>
+        /// <summary> The bookmark azure resource id. </summary>
         public ResourceIdentifier AzureResourceId { get; }
-        /// <summary>
-        /// The bookmark display name.
-        /// Serialized Name: BookmarkTimelineItem.displayName
-        /// </summary>
+        /// <summary> The bookmark display name. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// The notes of the bookmark
-        /// Serialized Name: BookmarkTimelineItem.notes
-        /// </summary>
+        /// <summary> The notes of the bookmark. </summary>
         public string Notes { get; }
-        /// <summary>
-        /// The bookmark end time.
-        /// Serialized Name: BookmarkTimelineItem.endTimeUtc
-        /// </summary>
-        public DateTimeOffset? EndTimeUtc { get; }
-        /// <summary>
-        /// The bookmark start time.
-        /// Serialized Name: BookmarkTimelineItem.startTimeUtc
-        /// </summary>
-        public DateTimeOffset? StartTimeUtc { get; }
-        /// <summary>
-        /// The bookmark event time.
-        /// Serialized Name: BookmarkTimelineItem.eventTime
-        /// </summary>
+        /// <summary> The bookmark end time. </summary>
+        public DateTimeOffset? EndOn { get; }
+        /// <summary> The bookmark start time. </summary>
+        public DateTimeOffset? StartOn { get; }
+        /// <summary> The bookmark event time. </summary>
         public DateTimeOffset? EventOn { get; }
-        /// <summary>
-        /// Describes a user that created the bookmark
-        /// Serialized Name: BookmarkTimelineItem.createdBy
-        /// </summary>
+        /// <summary> Describes a user that created the bookmark. </summary>
         public SecurityInsightsUserInfo CreatedBy { get; }
-        /// <summary>
-        /// List of labels relevant to this bookmark
-        /// Serialized Name: BookmarkTimelineItem.labels
-        /// </summary>
+        /// <summary> List of labels relevant to this bookmark. </summary>
         public IReadOnlyList<string> Labels { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// the query kind
-    /// Serialized Name: GetInsightsError
-    /// </summary>
+    /// <summary> the query kind. </summary>
     internal readonly partial struct GetInsightsError : IEquatable<GetInsightsError>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string InsightValue = "Insight";
 
-        /// <summary>
-        /// Insight
-        /// Serialized Name: GetInsightsError.Insight
-        /// </summary>
+        /// <summary> Insight. </summary>
         public static GetInsightsError Insight { get; } = new GetInsightsError(InsightValue);
         /// <summary> Determines if two <see cref="GetInsightsError"/> values are the same. </summary>
         public static bool operator ==(GetInsightsError left, GetInsightsError right) => left.Equals(right);

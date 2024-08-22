@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describes how to ingest the records in the file.
-    /// Serialized Name: IngestionMode
-    /// </summary>
+    /// <summary> Describes how to ingest the records in the file. </summary>
     public readonly partial struct IngestionMode : IEquatable<IngestionMode>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string IngestAnyValidRecordsValue = "IngestAnyValidRecords";
         private const string UnspecifiedValue = "Unspecified";
 
-        /// <summary>
-        /// No records should be ingested when invalid records are detected.
-        /// Serialized Name: IngestionMode.IngestOnlyIfAllAreValid
-        /// </summary>
+        /// <summary> No records should be ingested when invalid records are detected. </summary>
         public static IngestionMode IngestOnlyIfAllAreValid { get; } = new IngestionMode(IngestOnlyIfAllAreValidValue);
-        /// <summary>
-        /// Valid records should still be ingested when invalid records are detected.
-        /// Serialized Name: IngestionMode.IngestAnyValidRecords
-        /// </summary>
+        /// <summary> Valid records should still be ingested when invalid records are detected. </summary>
         public static IngestionMode IngestAnyValidRecords { get; } = new IngestionMode(IngestAnyValidRecordsValue);
-        /// <summary>
-        /// Unspecified
-        /// Serialized Name: IngestionMode.Unspecified
-        /// </summary>
+        /// <summary> Unspecified. </summary>
         public static IngestionMode Unspecified { get; } = new IngestionMode(UnspecifiedValue);
         /// <summary> Determines if two <see cref="IngestionMode"/> values are the same. </summary>
         public static bool operator ==(IngestionMode left, IngestionMode right) => left.Equals(right);

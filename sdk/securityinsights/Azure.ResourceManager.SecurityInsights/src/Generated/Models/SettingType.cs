@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The kind of the setting
-    /// Serialized Name: SettingType
-    /// </summary>
+    /// <summary> The kind of the setting. </summary>
     public readonly partial struct SettingType : IEquatable<SettingType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string InstructionStepsGroupValue = "InstructionStepsGroup";
         private const string InfoMessageValue = "InfoMessage";
 
-        /// <summary>
-        /// CopyableLabel
-        /// Serialized Name: SettingType.CopyableLabel
-        /// </summary>
+        /// <summary> CopyableLabel. </summary>
         public static SettingType CopyableLabel { get; } = new SettingType(CopyableLabelValue);
-        /// <summary>
-        /// InstructionStepsGroup
-        /// Serialized Name: SettingType.InstructionStepsGroup
-        /// </summary>
+        /// <summary> InstructionStepsGroup. </summary>
         public static SettingType InstructionStepsGroup { get; } = new SettingType(InstructionStepsGroupValue);
-        /// <summary>
-        /// InfoMessage
-        /// Serialized Name: SettingType.InfoMessage
-        /// </summary>
+        /// <summary> InfoMessage. </summary>
         public static SettingType InfoMessage { get; } = new SettingType(InfoMessageValue);
         /// <summary> Determines if two <see cref="SettingType"/> values are the same. </summary>
         public static bool operator ==(SettingType left, SettingType right) => left.Equals(right);

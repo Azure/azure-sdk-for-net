@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents Fusion alert rule.
-    /// Serialized Name: FusionAlertRule
-    /// </summary>
+    /// <summary> Represents Fusion alert rule. </summary>
     public partial class SecurityInsightsFusionAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFusionAlertRule"/>. </summary>
@@ -34,59 +31,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the alert rule
-        /// Serialized Name: AlertRule.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The kind of the alert rule. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="alertRuleTemplateName">
-        /// The Name of the alert rule template used to create this rule.
-        /// Serialized Name: FusionAlertRule.properties.alertRuleTemplateName
-        /// </param>
-        /// <param name="description">
-        /// The description of the alert rule.
-        /// Serialized Name: FusionAlertRule.properties.description
-        /// </param>
-        /// <param name="displayName">
-        /// The display name for alerts created by this alert rule.
-        /// Serialized Name: FusionAlertRule.properties.displayName
-        /// </param>
-        /// <param name="isEnabled">
-        /// Determines whether this alert rule is enabled or disabled.
-        /// Serialized Name: FusionAlertRule.properties.enabled
-        /// </param>
-        /// <param name="sourceSettings">
-        /// Configuration for all supported source signals in fusion detection.
-        /// Serialized Name: FusionAlertRule.properties.sourceSettings
-        /// </param>
-        /// <param name="scenarioExclusionPatterns">
-        /// Configuration to exclude scenarios in fusion detection.
-        /// Serialized Name: FusionAlertRule.properties.scenarioExclusionPatterns
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// The last time that this alert has been modified.
-        /// Serialized Name: FusionAlertRule.properties.lastModifiedUtc
-        /// </param>
-        /// <param name="severity">
-        /// The severity for alerts created by this alert rule.
-        /// Serialized Name: FusionAlertRule.properties.severity
-        /// </param>
-        /// <param name="tactics">
-        /// The tactics of the alert rule
-        /// Serialized Name: FusionAlertRule.properties.tactics
-        /// </param>
-        /// <param name="techniques">
-        /// The techniques of the alert rule
-        /// Serialized Name: FusionAlertRule.properties.techniques
-        /// </param>
-        /// <param name="subTechniques">
-        /// The sub-techniques of the alert rule
-        /// Serialized Name: FusionAlertRule.properties.subTechniques
-        /// </param>
+        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
+        /// <param name="description"> The description of the alert rule. </param>
+        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
+        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
+        /// <param name="sourceSettings"> Configuration for all supported source signals in fusion detection. </param>
+        /// <param name="scenarioExclusionPatterns"> Configuration to exclude scenarios in fusion detection. </param>
+        /// <param name="lastModifiedOn"> The last time that this alert has been modified. </param>
+        /// <param name="severity"> The severity for alerts created by this alert rule. </param>
+        /// <param name="tactics"> The tactics of the alert rule. </param>
+        /// <param name="techniques"> The techniques of the alert rule. </param>
+        /// <param name="subTechniques"> The sub-techniques of the alert rule. </param>
         internal SecurityInsightsFusionAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, IList<FusionSourceSettings> sourceSettings, IList<FusionScenarioExclusionPattern> scenarioExclusionPatterns, DateTimeOffset? lastModifiedOn, SecurityInsightsAlertSeverity? severity, IReadOnlyList<SecurityInsightsAttackTactic> tactics, IReadOnlyList<string> techniques, IReadOnlyList<string> subTechniques) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             AlertRuleTemplateName = alertRuleTemplateName;
@@ -103,60 +61,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The Name of the alert rule template used to create this rule.
-        /// Serialized Name: FusionAlertRule.properties.alertRuleTemplateName
-        /// </summary>
+        /// <summary> The Name of the alert rule template used to create this rule. </summary>
         public string AlertRuleTemplateName { get; set; }
-        /// <summary>
-        /// The description of the alert rule.
-        /// Serialized Name: FusionAlertRule.properties.description
-        /// </summary>
+        /// <summary> The description of the alert rule. </summary>
         public string Description { get; }
-        /// <summary>
-        /// The display name for alerts created by this alert rule.
-        /// Serialized Name: FusionAlertRule.properties.displayName
-        /// </summary>
+        /// <summary> The display name for alerts created by this alert rule. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// Determines whether this alert rule is enabled or disabled.
-        /// Serialized Name: FusionAlertRule.properties.enabled
-        /// </summary>
+        /// <summary> Determines whether this alert rule is enabled or disabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Configuration for all supported source signals in fusion detection.
-        /// Serialized Name: FusionAlertRule.properties.sourceSettings
-        /// </summary>
+        /// <summary> Configuration for all supported source signals in fusion detection. </summary>
         public IList<FusionSourceSettings> SourceSettings { get; }
-        /// <summary>
-        /// Configuration to exclude scenarios in fusion detection.
-        /// Serialized Name: FusionAlertRule.properties.scenarioExclusionPatterns
-        /// </summary>
+        /// <summary> Configuration to exclude scenarios in fusion detection. </summary>
         public IList<FusionScenarioExclusionPattern> ScenarioExclusionPatterns { get; }
-        /// <summary>
-        /// The last time that this alert has been modified.
-        /// Serialized Name: FusionAlertRule.properties.lastModifiedUtc
-        /// </summary>
+        /// <summary> The last time that this alert has been modified. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary>
-        /// The severity for alerts created by this alert rule.
-        /// Serialized Name: FusionAlertRule.properties.severity
-        /// </summary>
+        /// <summary> The severity for alerts created by this alert rule. </summary>
         public SecurityInsightsAlertSeverity? Severity { get; }
-        /// <summary>
-        /// The tactics of the alert rule
-        /// Serialized Name: FusionAlertRule.properties.tactics
-        /// </summary>
+        /// <summary> The tactics of the alert rule. </summary>
         public IReadOnlyList<SecurityInsightsAttackTactic> Tactics { get; }
-        /// <summary>
-        /// The techniques of the alert rule
-        /// Serialized Name: FusionAlertRule.properties.techniques
-        /// </summary>
+        /// <summary> The techniques of the alert rule. </summary>
         public IReadOnlyList<string> Techniques { get; }
-        /// <summary>
-        /// The sub-techniques of the alert rule
-        /// Serialized Name: FusionAlertRule.properties.subTechniques
-        /// </summary>
+        /// <summary> The sub-techniques of the alert rule. </summary>
         public IReadOnlyList<string> SubTechniques { get; }
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Type of paging
-    /// Serialized Name: RestApiPollerRequestPagingKind
-    /// </summary>
+    /// <summary> Type of paging. </summary>
     public readonly partial struct RestApiPollerRequestPagingKind : IEquatable<RestApiPollerRequestPagingKind>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string OffsetValue = "Offset";
         private const string CountBasedPagingValue = "CountBasedPaging";
 
-        /// <summary>
-        /// LinkHeader
-        /// Serialized Name: RestApiPollerRequestPagingKind.LinkHeader
-        /// </summary>
+        /// <summary> LinkHeader. </summary>
         public static RestApiPollerRequestPagingKind LinkHeader { get; } = new RestApiPollerRequestPagingKind(LinkHeaderValue);
-        /// <summary>
-        /// NextPageToken
-        /// Serialized Name: RestApiPollerRequestPagingKind.NextPageToken
-        /// </summary>
+        /// <summary> NextPageToken. </summary>
         public static RestApiPollerRequestPagingKind NextPageToken { get; } = new RestApiPollerRequestPagingKind(NextPageTokenValue);
-        /// <summary>
-        /// NextPageUrl
-        /// Serialized Name: RestApiPollerRequestPagingKind.NextPageUrl
-        /// </summary>
+        /// <summary> NextPageUrl. </summary>
         public static RestApiPollerRequestPagingKind NextPageUrl { get; } = new RestApiPollerRequestPagingKind(NextPageUrlValue);
-        /// <summary>
-        /// PersistentToken
-        /// Serialized Name: RestApiPollerRequestPagingKind.PersistentToken
-        /// </summary>
+        /// <summary> PersistentToken. </summary>
         public static RestApiPollerRequestPagingKind PersistentToken { get; } = new RestApiPollerRequestPagingKind(PersistentTokenValue);
-        /// <summary>
-        /// PersistentLinkHeader
-        /// Serialized Name: RestApiPollerRequestPagingKind.PersistentLinkHeader
-        /// </summary>
+        /// <summary> PersistentLinkHeader. </summary>
         public static RestApiPollerRequestPagingKind PersistentLinkHeader { get; } = new RestApiPollerRequestPagingKind(PersistentLinkHeaderValue);
-        /// <summary>
-        /// Offset
-        /// Serialized Name: RestApiPollerRequestPagingKind.Offset
-        /// </summary>
+        /// <summary> Offset. </summary>
         public static RestApiPollerRequestPagingKind Offset { get; } = new RestApiPollerRequestPagingKind(OffsetValue);
-        /// <summary>
-        /// CountBasedPaging
-        /// Serialized Name: RestApiPollerRequestPagingKind.CountBasedPaging
-        /// </summary>
+        /// <summary> CountBasedPaging. </summary>
         public static RestApiPollerRequestPagingKind CountBasedPaging { get; } = new RestApiPollerRequestPagingKind(CountBasedPagingValue);
         /// <summary> Determines if two <see cref="RestApiPollerRequestPagingKind"/> values are the same. </summary>
         public static bool operator ==(RestApiPollerRequestPagingKind left, RestApiPollerRequestPagingKind right) => left.Equals(right);

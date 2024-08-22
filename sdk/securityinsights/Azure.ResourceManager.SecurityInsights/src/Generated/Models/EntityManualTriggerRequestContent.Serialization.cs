@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class EntityManualTriggerRequestBody : IUtf8JsonSerializable, IJsonModel<EntityManualTriggerRequestBody>
+    public partial class EntityManualTriggerRequestContent : IUtf8JsonSerializable, IJsonModel<EntityManualTriggerRequestContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityManualTriggerRequestBody>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EntityManualTriggerRequestContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EntityManualTriggerRequestBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EntityManualTriggerRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityManualTriggerRequestBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityManualTriggerRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityManualTriggerRequestBody)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityManualTriggerRequestContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        EntityManualTriggerRequestBody IJsonModel<EntityManualTriggerRequestBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EntityManualTriggerRequestContent IJsonModel<EntityManualTriggerRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityManualTriggerRequestBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityManualTriggerRequestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EntityManualTriggerRequestBody)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EntityManualTriggerRequestContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEntityManualTriggerRequestBody(document.RootElement, options);
+            return DeserializeEntityManualTriggerRequestContent(document.RootElement, options);
         }
 
-        internal static EntityManualTriggerRequestBody DeserializeEntityManualTriggerRequestBody(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EntityManualTriggerRequestContent DeserializeEntityManualTriggerRequestContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -112,38 +112,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EntityManualTriggerRequestBody(incidentArmId, tenantId, logicAppsResourceId, serializedAdditionalRawData);
+            return new EntityManualTriggerRequestContent(incidentArmId, tenantId, logicAppsResourceId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EntityManualTriggerRequestBody>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EntityManualTriggerRequestContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityManualTriggerRequestBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityManualTriggerRequestContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EntityManualTriggerRequestBody)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityManualTriggerRequestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EntityManualTriggerRequestBody IPersistableModel<EntityManualTriggerRequestBody>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EntityManualTriggerRequestContent IPersistableModel<EntityManualTriggerRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EntityManualTriggerRequestBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EntityManualTriggerRequestContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEntityManualTriggerRequestBody(document.RootElement, options);
+                        return DeserializeEntityManualTriggerRequestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EntityManualTriggerRequestBody)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EntityManualTriggerRequestContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EntityManualTriggerRequestBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EntityManualTriggerRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

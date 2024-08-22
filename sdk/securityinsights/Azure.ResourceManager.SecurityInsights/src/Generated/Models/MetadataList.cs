@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List of all the metadata.
-    /// Serialized Name: MetadataList
-    /// </summary>
+    /// <summary> List of all the metadata. </summary>
     internal partial class MetadataList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MetadataList"/>. </summary>
-        /// <param name="value">
-        /// Array of metadata.
-        /// Serialized Name: MetadataList.value
-        /// </param>
+        /// <param name="value"> Array of metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal MetadataList(IEnumerable<MetadataModelData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetadataList"/>. </summary>
-        /// <param name="value">
-        /// Array of metadata.
-        /// Serialized Name: MetadataList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to fetch the next page of metadata.
-        /// Serialized Name: MetadataList.nextLink
-        /// </param>
+        /// <param name="value"> Array of metadata. </param>
+        /// <param name="nextLink"> URL to fetch the next page of metadata. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetadataList(IReadOnlyList<MetadataModelData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Array of metadata.
-        /// Serialized Name: MetadataList.value
-        /// </summary>
+        /// <summary> Array of metadata. </summary>
         public IReadOnlyList<MetadataModelData> Value { get; }
-        /// <summary>
-        /// URL to fetch the next page of metadata.
-        /// Serialized Name: MetadataList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next page of metadata. </summary>
         public string NextLink { get; }
     }
 }

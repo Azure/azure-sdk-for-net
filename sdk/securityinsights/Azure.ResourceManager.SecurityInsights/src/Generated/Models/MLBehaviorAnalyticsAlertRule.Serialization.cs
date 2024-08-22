@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
-                writer.WriteStringValue(LastModifiedUtc.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Severity))
             {

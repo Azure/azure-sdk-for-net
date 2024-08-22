@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Model for API authentication with AWS.
-    /// Serialized Name: AWSAuthModel
-    /// </summary>
+    /// <summary> Model for API authentication with AWS. </summary>
     public partial class AWSAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="AWSAuthModel"/>. </summary>
-        /// <param name="roleArn">
-        /// AWS STS assume role ARN
-        /// Serialized Name: AWSAuthModel.roleArn
-        /// </param>
+        /// <param name="roleArn"> AWS STS assume role ARN. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleArn"/> is null. </exception>
         public AWSAuthModel(string roleArn)
         {
@@ -31,19 +25,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AWSAuthModel"/>. </summary>
-        /// <param name="authType">
-        /// The auth type
-        /// Serialized Name: CcpAuthConfig.type
-        /// </param>
+        /// <param name="authType"> The auth type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="roleArn">
-        /// AWS STS assume role ARN
-        /// Serialized Name: AWSAuthModel.roleArn
-        /// </param>
-        /// <param name="externalId">
-        /// AWS STS assume role external ID. This is used to prevent the confused deputy problem: 'https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html'
-        /// Serialized Name: AWSAuthModel.externalId
-        /// </param>
+        /// <param name="roleArn"> AWS STS assume role ARN. </param>
+        /// <param name="externalId"> AWS STS assume role external ID. This is used to prevent the confused deputy problem: 'https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html'. </param>
         internal AWSAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string roleArn, string externalId) : base(authType, serializedAdditionalRawData)
         {
             RoleArn = roleArn;
@@ -56,15 +41,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// AWS STS assume role ARN
-        /// Serialized Name: AWSAuthModel.roleArn
-        /// </summary>
+        /// <summary> AWS STS assume role ARN. </summary>
         public string RoleArn { get; set; }
-        /// <summary>
-        /// AWS STS assume role external ID. This is used to prevent the confused deputy problem: 'https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html'
-        /// Serialized Name: AWSAuthModel.externalId
-        /// </summary>
+        /// <summary> AWS STS assume role external ID. This is used to prevent the confused deputy problem: 'https://docs.aws.amazon.com/IAM/latest/UserGuide/confused-deputy.html'. </summary>
         public string ExternalId { get; set; }
     }
 }

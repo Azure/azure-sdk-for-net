@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("endTimeUtc"u8);
-            writer.WriteStringValue(EndTimeUtc, "O");
+            writer.WriteStringValue(EndOn, "O");
             writer.WritePropertyName("startTimeUtc"u8);
-            writer.WriteStringValue(StartTimeUtc, "O");
+            writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("timeGenerated"u8);
             writer.WriteStringValue(GeneratedOn, "O");
             if (Optional.IsDefined(Vendor))

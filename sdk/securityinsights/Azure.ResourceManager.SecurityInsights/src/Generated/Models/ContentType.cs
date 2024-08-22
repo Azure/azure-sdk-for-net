@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The content type of a source control path.
-    /// Serialized Name: ContentType
-    /// </summary>
+    /// <summary> The content type of a source control path. </summary>
     public readonly partial struct ContentType : IEquatable<ContentType>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string PlaybookValue = "Playbook";
         private const string WorkbookValue = "Workbook";
 
-        /// <summary>
-        /// AnalyticRule
-        /// Serialized Name: ContentType.AnalyticRule
-        /// </summary>
+        /// <summary> AnalyticRule. </summary>
         public static ContentType AnalyticRule { get; } = new ContentType(AnalyticRuleValue);
-        /// <summary>
-        /// AutomationRule
-        /// Serialized Name: ContentType.AutomationRule
-        /// </summary>
+        /// <summary> AutomationRule. </summary>
         public static ContentType AutomationRule { get; } = new ContentType(AutomationRuleValue);
-        /// <summary>
-        /// HuntingQuery
-        /// Serialized Name: ContentType.HuntingQuery
-        /// </summary>
+        /// <summary> HuntingQuery. </summary>
         public static ContentType HuntingQuery { get; } = new ContentType(HuntingQueryValue);
-        /// <summary>
-        /// Parser
-        /// Serialized Name: ContentType.Parser
-        /// </summary>
+        /// <summary> Parser. </summary>
         public static ContentType Parser { get; } = new ContentType(ParserValue);
-        /// <summary>
-        /// Playbook
-        /// Serialized Name: ContentType.Playbook
-        /// </summary>
+        /// <summary> Playbook. </summary>
         public static ContentType Playbook { get; } = new ContentType(PlaybookValue);
-        /// <summary>
-        /// Workbook
-        /// Serialized Name: ContentType.Workbook
-        /// </summary>
+        /// <summary> Workbook. </summary>
         public static ContentType Workbook { get; } = new ContentType(WorkbookValue);
         /// <summary> Determines if two <see cref="ContentType"/> values are the same. </summary>
         public static bool operator ==(ContentType left, ContentType right) => left.Equals(right);

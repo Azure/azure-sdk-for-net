@@ -13,10 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents a submission mail entity.
-    /// Serialized Name: SubmissionMailEntity
-    /// </summary>
+    /// <summary> Represents a submission mail entity. </summary>
     public partial class SecurityInsightsSubmissionMailEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsSubmissionMailEntity"/>. </summary>
@@ -31,59 +28,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the entity.
-        /// Serialized Name: Entity.kind
-        /// </param>
+        /// <param name="kind"> The kind of the entity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData">
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: SubmissionMailEntity.properties.additionalData
-        /// </param>
-        /// <param name="friendlyName">
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: SubmissionMailEntity.properties.friendlyName
-        /// </param>
-        /// <param name="networkMessageId">
-        /// The network message id of email to which submission belongs
-        /// Serialized Name: SubmissionMailEntity.properties.networkMessageId
-        /// </param>
-        /// <param name="submissionId">
-        /// The submission id
-        /// Serialized Name: SubmissionMailEntity.properties.submissionId
-        /// </param>
-        /// <param name="submitter">
-        /// The submitter
-        /// Serialized Name: SubmissionMailEntity.properties.submitter
-        /// </param>
-        /// <param name="submitOn">
-        /// The submission date
-        /// Serialized Name: SubmissionMailEntity.properties.submissionDate
-        /// </param>
-        /// <param name="messageReceivedOn">
-        /// The Time stamp when the message is received (Mail)
-        /// Serialized Name: SubmissionMailEntity.properties.timestamp
-        /// </param>
-        /// <param name="recipient">
-        /// The recipient of the mail
-        /// Serialized Name: SubmissionMailEntity.properties.recipient
-        /// </param>
-        /// <param name="sender">
-        /// The sender of the mail
-        /// Serialized Name: SubmissionMailEntity.properties.sender
-        /// </param>
-        /// <param name="senderIP">
-        /// The sender's IP
-        /// Serialized Name: SubmissionMailEntity.properties.senderIp
-        /// </param>
-        /// <param name="subject">
-        /// The subject of submission mail
-        /// Serialized Name: SubmissionMailEntity.properties.subject
-        /// </param>
-        /// <param name="reportType">
-        /// The submission type for the given instance. This maps to Junk, Phish, Malware or NotJunk.
-        /// Serialized Name: SubmissionMailEntity.properties.reportType
-        /// </param>
+        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
+        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
+        /// <param name="networkMessageId"> The network message id of email to which submission belongs. </param>
+        /// <param name="submissionId"> The submission id. </param>
+        /// <param name="submitter"> The submitter. </param>
+        /// <param name="submitOn"> The submission date. </param>
+        /// <param name="messageReceivedOn"> The Time stamp when the message is received (Mail). </param>
+        /// <param name="recipient"> The recipient of the mail. </param>
+        /// <param name="sender"> The sender of the mail. </param>
+        /// <param name="senderIP"> The sender's IP. </param>
+        /// <param name="subject"> The subject of submission mail. </param>
+        /// <param name="reportType"> The submission type for the given instance. This maps to Junk, Phish, Malware or NotJunk. </param>
         internal SecurityInsightsSubmissionMailEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, Guid? networkMessageId, Guid? submissionId, string submitter, DateTimeOffset? submitOn, DateTimeOffset? messageReceivedOn, string recipient, string sender, IPAddress senderIP, string subject, string reportType) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -103,7 +61,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: SubmissionMailEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -133,60 +90,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary>
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: SubmissionMailEntity.properties.friendlyName
-        /// </summary>
+        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
         public string FriendlyName { get; }
-        /// <summary>
-        /// The network message id of email to which submission belongs
-        /// Serialized Name: SubmissionMailEntity.properties.networkMessageId
-        /// </summary>
+        /// <summary> The network message id of email to which submission belongs. </summary>
         public Guid? NetworkMessageId { get; }
-        /// <summary>
-        /// The submission id
-        /// Serialized Name: SubmissionMailEntity.properties.submissionId
-        /// </summary>
+        /// <summary> The submission id. </summary>
         public Guid? SubmissionId { get; }
-        /// <summary>
-        /// The submitter
-        /// Serialized Name: SubmissionMailEntity.properties.submitter
-        /// </summary>
+        /// <summary> The submitter. </summary>
         public string Submitter { get; }
-        /// <summary>
-        /// The submission date
-        /// Serialized Name: SubmissionMailEntity.properties.submissionDate
-        /// </summary>
+        /// <summary> The submission date. </summary>
         public DateTimeOffset? SubmitOn { get; }
-        /// <summary>
-        /// The Time stamp when the message is received (Mail)
-        /// Serialized Name: SubmissionMailEntity.properties.timestamp
-        /// </summary>
+        /// <summary> The Time stamp when the message is received (Mail). </summary>
         public DateTimeOffset? MessageReceivedOn { get; }
-        /// <summary>
-        /// The recipient of the mail
-        /// Serialized Name: SubmissionMailEntity.properties.recipient
-        /// </summary>
+        /// <summary> The recipient of the mail. </summary>
         public string Recipient { get; }
-        /// <summary>
-        /// The sender of the mail
-        /// Serialized Name: SubmissionMailEntity.properties.sender
-        /// </summary>
+        /// <summary> The sender of the mail. </summary>
         public string Sender { get; }
-        /// <summary>
-        /// The sender's IP
-        /// Serialized Name: SubmissionMailEntity.properties.senderIp
-        /// </summary>
+        /// <summary> The sender's IP. </summary>
         public IPAddress SenderIP { get; }
-        /// <summary>
-        /// The subject of submission mail
-        /// Serialized Name: SubmissionMailEntity.properties.subject
-        /// </summary>
+        /// <summary> The subject of submission mail. </summary>
         public string Subject { get; }
-        /// <summary>
-        /// The submission type for the given instance. This maps to Junk, Phish, Malware or NotJunk.
-        /// Serialized Name: SubmissionMailEntity.properties.reportType
-        /// </summary>
+        /// <summary> The submission type for the given instance. This maps to Junk, Phish, Malware or NotJunk. </summary>
         public string ReportType { get; }
     }
 }

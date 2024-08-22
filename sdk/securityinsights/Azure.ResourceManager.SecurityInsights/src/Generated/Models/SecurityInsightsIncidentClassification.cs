@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The reason the incident was closed
-    /// Serialized Name: IncidentClassification
-    /// </summary>
+    /// <summary> The reason the incident was closed. </summary>
     public readonly partial struct SecurityInsightsIncidentClassification : IEquatable<SecurityInsightsIncidentClassification>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string BenignPositiveValue = "BenignPositive";
         private const string FalsePositiveValue = "FalsePositive";
 
-        /// <summary>
-        /// Incident classification was undetermined
-        /// Serialized Name: IncidentClassification.Undetermined
-        /// </summary>
+        /// <summary> Incident classification was undetermined. </summary>
         public static SecurityInsightsIncidentClassification Undetermined { get; } = new SecurityInsightsIncidentClassification(UndeterminedValue);
-        /// <summary>
-        /// Incident was true positive
-        /// Serialized Name: IncidentClassification.TruePositive
-        /// </summary>
+        /// <summary> Incident was true positive. </summary>
         public static SecurityInsightsIncidentClassification TruePositive { get; } = new SecurityInsightsIncidentClassification(TruePositiveValue);
-        /// <summary>
-        /// Incident was benign positive
-        /// Serialized Name: IncidentClassification.BenignPositive
-        /// </summary>
+        /// <summary> Incident was benign positive. </summary>
         public static SecurityInsightsIncidentClassification BenignPositive { get; } = new SecurityInsightsIncidentClassification(BenignPositiveValue);
-        /// <summary>
-        /// Incident was false positive
-        /// Serialized Name: IncidentClassification.FalsePositive
-        /// </summary>
+        /// <summary> Incident was false positive. </summary>
         public static SecurityInsightsIncidentClassification FalsePositive { get; } = new SecurityInsightsIncidentClassification(FalsePositiveValue);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentClassification"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsIncidentClassification left, SecurityInsightsIncidentClassification right) => left.Equals(right);

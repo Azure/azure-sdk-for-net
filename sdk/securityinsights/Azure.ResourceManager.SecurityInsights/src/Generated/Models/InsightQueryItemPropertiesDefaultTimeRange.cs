@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The insight chart query.
-    /// Serialized Name: InsightQueryItemPropertiesDefaultTimeRange
-    /// </summary>
+    /// <summary> The insight chart query. </summary>
     public partial class InsightQueryItemPropertiesDefaultTimeRange
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InsightQueryItemPropertiesDefaultTimeRange"/>. </summary>
-        /// <param name="beforeRange">
-        /// The padding for the start time of the query.
-        /// Serialized Name: InsightQueryItemPropertiesDefaultTimeRange.beforeRange
-        /// </param>
-        /// <param name="afterRange">
-        /// The padding for the end time of the query.
-        /// Serialized Name: InsightQueryItemPropertiesDefaultTimeRange.afterRange
-        /// </param>
+        /// <param name="beforeRange"> The padding for the start time of the query. </param>
+        /// <param name="afterRange"> The padding for the end time of the query. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InsightQueryItemPropertiesDefaultTimeRange(string beforeRange, string afterRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The padding for the start time of the query.
-        /// Serialized Name: InsightQueryItemPropertiesDefaultTimeRange.beforeRange
-        /// </summary>
+        /// <summary> The padding for the start time of the query. </summary>
         public string BeforeRange { get; }
-        /// <summary>
-        /// The padding for the end time of the query.
-        /// Serialized Name: InsightQueryItemPropertiesDefaultTimeRange.afterRange
-        /// </summary>
+        /// <summary> The padding for the end time of the query. </summary>
         public string AfterRange { get; }
     }
 }

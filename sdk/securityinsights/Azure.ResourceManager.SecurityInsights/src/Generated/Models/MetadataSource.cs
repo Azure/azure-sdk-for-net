@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The original source of the content item, where it comes from.
-    /// Serialized Name: MetadataSource
-    /// </summary>
+    /// <summary> The original source of the content item, where it comes from. </summary>
     public partial class MetadataSource
     {
         /// <summary>
@@ -49,28 +46,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MetadataSource"/>. </summary>
-        /// <param name="kind">
-        /// Source type of the content
-        /// Serialized Name: MetadataSource.kind
-        /// </param>
+        /// <param name="kind"> Source type of the content. </param>
         public MetadataSource(SourceKind kind)
         {
             Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="MetadataSource"/>. </summary>
-        /// <param name="kind">
-        /// Source type of the content
-        /// Serialized Name: MetadataSource.kind
-        /// </param>
-        /// <param name="name">
-        /// Name of the content source.  The repo name, solution name, LA workspace name etc.
-        /// Serialized Name: MetadataSource.name
-        /// </param>
-        /// <param name="sourceId">
-        /// ID of the content source.  The solution ID, workspace ID, etc
-        /// Serialized Name: MetadataSource.sourceId
-        /// </param>
+        /// <param name="kind"> Source type of the content. </param>
+        /// <param name="name"> Name of the content source.  The repo name, solution name, LA workspace name etc. </param>
+        /// <param name="sourceId"> ID of the content source.  The solution ID, workspace ID, etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetadataSource(SourceKind kind, string name, string sourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,20 +70,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Source type of the content
-        /// Serialized Name: MetadataSource.kind
-        /// </summary>
+        /// <summary> Source type of the content. </summary>
         public SourceKind Kind { get; set; }
-        /// <summary>
-        /// Name of the content source.  The repo name, solution name, LA workspace name etc.
-        /// Serialized Name: MetadataSource.name
-        /// </summary>
+        /// <summary> Name of the content source.  The repo name, solution name, LA workspace name etc. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// ID of the content source.  The solution ID, workspace ID, etc
-        /// Serialized Name: MetadataSource.sourceId
-        /// </summary>
+        /// <summary> ID of the content source.  The solution ID, workspace ID, etc. </summary>
         public string SourceId { get; set; }
     }
 }

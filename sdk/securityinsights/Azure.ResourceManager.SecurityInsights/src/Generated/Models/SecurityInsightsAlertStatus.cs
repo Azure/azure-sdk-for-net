@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The lifecycle status of the alert.
-    /// Serialized Name: AlertStatus
-    /// </summary>
+    /// <summary> The lifecycle status of the alert. </summary>
     public readonly partial struct SecurityInsightsAlertStatus : IEquatable<SecurityInsightsAlertStatus>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string DismissedValue = "Dismissed";
         private const string InProgressValue = "InProgress";
 
-        /// <summary>
-        /// Unknown value
-        /// Serialized Name: AlertStatus.Unknown
-        /// </summary>
+        /// <summary> Unknown value. </summary>
         public static SecurityInsightsAlertStatus Unknown { get; } = new SecurityInsightsAlertStatus(UnknownValue);
-        /// <summary>
-        /// New alert
-        /// Serialized Name: AlertStatus.New
-        /// </summary>
+        /// <summary> New alert. </summary>
         public static SecurityInsightsAlertStatus New { get; } = new SecurityInsightsAlertStatus(NewValue);
-        /// <summary>
-        /// Alert closed after handling
-        /// Serialized Name: AlertStatus.Resolved
-        /// </summary>
+        /// <summary> Alert closed after handling. </summary>
         public static SecurityInsightsAlertStatus Resolved { get; } = new SecurityInsightsAlertStatus(ResolvedValue);
-        /// <summary>
-        /// Alert dismissed as false positive
-        /// Serialized Name: AlertStatus.Dismissed
-        /// </summary>
+        /// <summary> Alert dismissed as false positive. </summary>
         public static SecurityInsightsAlertStatus Dismissed { get; } = new SecurityInsightsAlertStatus(DismissedValue);
-        /// <summary>
-        /// Alert is being handled
-        /// Serialized Name: AlertStatus.InProgress
-        /// </summary>
+        /// <summary> Alert is being handled. </summary>
         public static SecurityInsightsAlertStatus InProgress { get; } = new SecurityInsightsAlertStatus(InProgressValue);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertStatus left, SecurityInsightsAlertStatus right) => left.Equals(right);

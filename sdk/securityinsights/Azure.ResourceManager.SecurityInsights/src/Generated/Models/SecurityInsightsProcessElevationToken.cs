@@ -7,26 +7,14 @@
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The elevation token associated with the process.
-    /// Serialized Name: ElevationToken
-    /// </summary>
+    /// <summary> The elevation token associated with the process. </summary>
     public enum SecurityInsightsProcessElevationToken
     {
-        /// <summary>
-        /// Default elevation token
-        /// Serialized Name: ElevationToken.Default
-        /// </summary>
+        /// <summary> Default elevation token. </summary>
         Default,
-        /// <summary>
-        /// Full elevation token
-        /// Serialized Name: ElevationToken.Full
-        /// </summary>
+        /// <summary> Full elevation token. </summary>
         Full,
-        /// <summary>
-        /// Limited elevation token
-        /// Serialized Name: ElevationToken.Limited
-        /// </summary>
+        /// <summary> Limited elevation token. </summary>
         Limited
     }
 }

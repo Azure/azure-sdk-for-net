@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents boolean connectives used to join clauses in conditions.
-    /// Serialized Name: Connective
-    /// </summary>
+    /// <summary> Represents boolean connectives used to join clauses in conditions. </summary>
     public readonly partial struct ClauseConnective : IEquatable<ClauseConnective>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string AndValue = "And";
         private const string OrValue = "Or";
 
-        /// <summary>
-        /// 'And' connective
-        /// Serialized Name: Connective.And
-        /// </summary>
+        /// <summary> 'And' connective. </summary>
         public static ClauseConnective And { get; } = new ClauseConnective(AndValue);
-        /// <summary>
-        /// 'Or' connective
-        /// Serialized Name: Connective.Or
-        /// </summary>
+        /// <summary> 'Or' connective. </summary>
         public static ClauseConnective Or { get; } = new ClauseConnective(OrValue);
         /// <summary> Determines if two <see cref="ClauseConnective"/> values are the same. </summary>
         public static bool operator ==(ClauseConnective left, ClauseConnective right) => left.Equals(right);

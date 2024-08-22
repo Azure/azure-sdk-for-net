@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Support information for the content item.
-    /// Serialized Name: MetadataSupport
-    /// </summary>
+    /// <summary> Support information for the content item. </summary>
     public partial class MetadataSupport
     {
         /// <summary>
@@ -49,32 +46,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MetadataSupport"/>. </summary>
-        /// <param name="tier">
-        /// Type of support for content item
-        /// Serialized Name: MetadataSupport.tier
-        /// </param>
+        /// <param name="tier"> Type of support for content item. </param>
         public MetadataSupport(SupportTier tier)
         {
             Tier = tier;
         }
 
         /// <summary> Initializes a new instance of <see cref="MetadataSupport"/>. </summary>
-        /// <param name="tier">
-        /// Type of support for content item
-        /// Serialized Name: MetadataSupport.tier
-        /// </param>
-        /// <param name="name">
-        /// Name of the support contact. Company or person.
-        /// Serialized Name: MetadataSupport.name
-        /// </param>
-        /// <param name="email">
-        /// Email of support contact
-        /// Serialized Name: MetadataSupport.email
-        /// </param>
-        /// <param name="link">
-        /// Link for support help, like to support page to open a ticket etc.
-        /// Serialized Name: MetadataSupport.link
-        /// </param>
+        /// <param name="tier"> Type of support for content item. </param>
+        /// <param name="name"> Name of the support contact. Company or person. </param>
+        /// <param name="email"> Email of support contact. </param>
+        /// <param name="link"> Link for support help, like to support page to open a ticket etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetadataSupport(SupportTier tier, string name, string email, string link, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -90,25 +72,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Type of support for content item
-        /// Serialized Name: MetadataSupport.tier
-        /// </summary>
+        /// <summary> Type of support for content item. </summary>
         public SupportTier Tier { get; set; }
-        /// <summary>
-        /// Name of the support contact. Company or person.
-        /// Serialized Name: MetadataSupport.name
-        /// </summary>
+        /// <summary> Name of the support contact. Company or person. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Email of support contact
-        /// Serialized Name: MetadataSupport.email
-        /// </summary>
+        /// <summary> Email of support contact. </summary>
         public string Email { get; set; }
-        /// <summary>
-        /// Link for support help, like to support page to open a ticket etc.
-        /// Serialized Name: MetadataSupport.link
-        /// </summary>
+        /// <summary> Link for support help, like to support page to open a ticket etc. </summary>
         public string Link { get; set; }
     }
 }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Permissions required for the connector
-    /// Serialized Name: Permissions
-    /// </summary>
+    /// <summary> Permissions required for the connector. </summary>
     public partial class ConnectorPermissions
     {
         /// <summary>
@@ -56,14 +53,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectorPermissions"/>. </summary>
-        /// <param name="resourceProvider">
-        /// Resource provider permissions required for the connector
-        /// Serialized Name: Permissions.resourceProvider
-        /// </param>
-        /// <param name="customs">
-        /// Customs permissions required for the connector
-        /// Serialized Name: Permissions.customs
-        /// </param>
+        /// <param name="resourceProvider"> Resource provider permissions required for the connector. </param>
+        /// <param name="customs"> Customs permissions required for the connector. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectorPermissions(IList<PermissionsResourceProviderItem> resourceProvider, IList<PermissionsCustomsItem> customs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +63,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Resource provider permissions required for the connector
-        /// Serialized Name: Permissions.resourceProvider
-        /// </summary>
+        /// <summary> Resource provider permissions required for the connector. </summary>
         public IList<PermissionsResourceProviderItem> ResourceProvider { get; }
-        /// <summary>
-        /// Customs permissions required for the connector
-        /// Serialized Name: Permissions.customs
-        /// </summary>
+        /// <summary> Customs permissions required for the connector. </summary>
         public IList<PermissionsCustomsItem> Customs { get; }
     }
 }

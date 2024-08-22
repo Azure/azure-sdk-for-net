@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Count of all the threat intelligence objects on the workspace that match the provided query.
-    /// Serialized Name: ThreatIntelligenceCount
-    /// </summary>
+    /// <summary> Count of all the threat intelligence objects on the workspace that match the provided query. </summary>
     public partial class ThreatIntelligenceCount
     {
         /// <summary>
@@ -49,20 +46,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceCount"/>. </summary>
-        /// <param name="count">
-        /// Count of all the threat intelligence objects on the workspace that match the provided query.
-        /// Serialized Name: ThreatIntelligenceCount.count
-        /// </param>
+        /// <param name="count"> Count of all the threat intelligence objects on the workspace that match the provided query. </param>
         internal ThreatIntelligenceCount(int count)
         {
             Count = count;
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceCount"/>. </summary>
-        /// <param name="count">
-        /// Count of all the threat intelligence objects on the workspace that match the provided query.
-        /// Serialized Name: ThreatIntelligenceCount.count
-        /// </param>
+        /// <param name="count"> Count of all the threat intelligence objects on the workspace that match the provided query. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceCount(int count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,10 +66,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Count of all the threat intelligence objects on the workspace that match the provided query.
-        /// Serialized Name: ThreatIntelligenceCount.count
-        /// </summary>
+        /// <summary> Count of all the threat intelligence objects on the workspace that match the provided query. </summary>
         public int Count { get; }
     }
 }

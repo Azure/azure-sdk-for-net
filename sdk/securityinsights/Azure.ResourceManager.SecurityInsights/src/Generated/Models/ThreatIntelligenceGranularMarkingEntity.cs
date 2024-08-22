@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describes threat granular marking model entity
-    /// Serialized Name: ThreatIntelligenceGranularMarkingModel
-    /// </summary>
+    /// <summary> Describes threat granular marking model entity. </summary>
     public partial class ThreatIntelligenceGranularMarkingEntity
     {
         /// <summary>
@@ -55,18 +52,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceGranularMarkingEntity"/>. </summary>
-        /// <param name="language">
-        /// Language granular marking model
-        /// Serialized Name: ThreatIntelligenceGranularMarkingModel.language
-        /// </param>
-        /// <param name="markingRef">
-        /// marking reference granular marking model
-        /// Serialized Name: ThreatIntelligenceGranularMarkingModel.markingRef
-        /// </param>
-        /// <param name="selectors">
-        /// granular marking model selectors
-        /// Serialized Name: ThreatIntelligenceGranularMarkingModel.selectors
-        /// </param>
+        /// <param name="language"> Language granular marking model. </param>
+        /// <param name="markingRef"> marking reference granular marking model. </param>
+        /// <param name="selectors"> granular marking model selectors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceGranularMarkingEntity(string language, int? markingRef, IList<string> selectors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,20 +64,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Language granular marking model
-        /// Serialized Name: ThreatIntelligenceGranularMarkingModel.language
-        /// </summary>
+        /// <summary> Language granular marking model. </summary>
         public string Language { get; set; }
-        /// <summary>
-        /// marking reference granular marking model
-        /// Serialized Name: ThreatIntelligenceGranularMarkingModel.markingRef
-        /// </summary>
+        /// <summary> marking reference granular marking model. </summary>
         public int? MarkingRef { get; set; }
-        /// <summary>
-        /// granular marking model selectors
-        /// Serialized Name: ThreatIntelligenceGranularMarkingModel.selectors
-        /// </summary>
+        /// <summary> granular marking model selectors. </summary>
         public IList<string> Selectors { get; }
     }
 }

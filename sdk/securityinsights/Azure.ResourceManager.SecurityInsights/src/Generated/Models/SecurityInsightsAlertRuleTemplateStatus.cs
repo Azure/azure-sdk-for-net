@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The alert rule template status.
-    /// Serialized Name: TemplateStatus
-    /// </summary>
+    /// <summary> The alert rule template status. </summary>
     public readonly partial struct SecurityInsightsAlertRuleTemplateStatus : IEquatable<SecurityInsightsAlertRuleTemplateStatus>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string AvailableValue = "Available";
         private const string NotAvailableValue = "NotAvailable";
 
-        /// <summary>
-        /// Alert rule template installed. and can not use more then once
-        /// Serialized Name: TemplateStatus.Installed
-        /// </summary>
+        /// <summary> Alert rule template installed. and can not use more then once. </summary>
         public static SecurityInsightsAlertRuleTemplateStatus Installed { get; } = new SecurityInsightsAlertRuleTemplateStatus(InstalledValue);
-        /// <summary>
-        /// Alert rule template is available.
-        /// Serialized Name: TemplateStatus.Available
-        /// </summary>
+        /// <summary> Alert rule template is available. </summary>
         public static SecurityInsightsAlertRuleTemplateStatus Available { get; } = new SecurityInsightsAlertRuleTemplateStatus(AvailableValue);
-        /// <summary>
-        /// Alert rule template is not available
-        /// Serialized Name: TemplateStatus.NotAvailable
-        /// </summary>
+        /// <summary> Alert rule template is not available. </summary>
         public static SecurityInsightsAlertRuleTemplateStatus NotAvailable { get; } = new SecurityInsightsAlertRuleTemplateStatus(NotAvailableValue);
         /// <summary> Determines if two <see cref="SecurityInsightsAlertRuleTemplateStatus"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsAlertRuleTemplateStatus left, SecurityInsightsAlertRuleTemplateStatus right) => left.Equals(right);

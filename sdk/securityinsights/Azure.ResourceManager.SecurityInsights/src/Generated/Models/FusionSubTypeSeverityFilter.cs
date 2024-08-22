@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents severity configuration for a source subtype consumed in Fusion detection.
-    /// Serialized Name: FusionSubTypeSeverityFilter
-    /// </summary>
+    /// <summary> Represents severity configuration for a source subtype consumed in Fusion detection. </summary>
     public partial class FusionSubTypeSeverityFilter
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FusionSubTypeSeverityFilter"/>. </summary>
-        /// <param name="isSupported">
-        /// Determines whether this source subtype supports severity configuration or not.
-        /// Serialized Name: FusionSubTypeSeverityFilter.isSupported
-        /// </param>
-        /// <param name="filters">
-        /// Individual Severity configuration settings for a given source subtype consumed in Fusion detection.
-        /// Serialized Name: FusionSubTypeSeverityFilter.filters
-        /// </param>
+        /// <param name="isSupported"> Determines whether this source subtype supports severity configuration or not. </param>
+        /// <param name="filters"> Individual Severity configuration settings for a given source subtype consumed in Fusion detection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FusionSubTypeSeverityFilter(bool? isSupported, IList<FusionSubTypeSeverityFiltersItem> filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Determines whether this source subtype supports severity configuration or not.
-        /// Serialized Name: FusionSubTypeSeverityFilter.isSupported
-        /// </summary>
+        /// <summary> Determines whether this source subtype supports severity configuration or not. </summary>
         public bool? IsSupported { get; }
-        /// <summary>
-        /// Individual Severity configuration settings for a given source subtype consumed in Fusion detection.
-        /// Serialized Name: FusionSubTypeSeverityFilter.filters
-        /// </summary>
+        /// <summary> Individual Severity configuration settings for a given source subtype consumed in Fusion detection. </summary>
         public IList<FusionSubTypeSeverityFiltersItem> Filters { get; }
     }
 }

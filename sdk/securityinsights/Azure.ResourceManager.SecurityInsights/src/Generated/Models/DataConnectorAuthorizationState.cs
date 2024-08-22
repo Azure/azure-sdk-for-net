@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describes the state of user's authorization for a connector kind.
-    /// Serialized Name: DataConnectorAuthorizationState
-    /// </summary>
+    /// <summary> Describes the state of user's authorization for a connector kind. </summary>
     public readonly partial struct DataConnectorAuthorizationState : IEquatable<DataConnectorAuthorizationState>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ValidValue = "Valid";
         private const string InvalidValue = "Invalid";
 
-        /// <summary>
-        /// Valid
-        /// Serialized Name: DataConnectorAuthorizationState.Valid
-        /// </summary>
+        /// <summary> Valid. </summary>
         public static DataConnectorAuthorizationState Valid { get; } = new DataConnectorAuthorizationState(ValidValue);
-        /// <summary>
-        /// Invalid
-        /// Serialized Name: DataConnectorAuthorizationState.Invalid
-        /// </summary>
+        /// <summary> Invalid. </summary>
         public static DataConnectorAuthorizationState Invalid { get; } = new DataConnectorAuthorizationState(InvalidValue);
         /// <summary> Determines if two <see cref="DataConnectorAuthorizationState"/> values are the same. </summary>
         public static bool operator ==(DataConnectorAuthorizationState left, DataConnectorAuthorizationState right) => left.Equals(right);

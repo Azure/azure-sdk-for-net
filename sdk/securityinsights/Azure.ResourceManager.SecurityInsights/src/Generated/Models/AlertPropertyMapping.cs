@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// A single alert property mapping to override
-    /// Serialized Name: AlertPropertyMapping
-    /// </summary>
+    /// <summary> A single alert property mapping to override. </summary>
     public partial class AlertPropertyMapping
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AlertPropertyMapping"/>. </summary>
-        /// <param name="alertProperty">
-        /// The V3 alert property
-        /// Serialized Name: AlertPropertyMapping.alertProperty
-        /// </param>
-        /// <param name="value">
-        /// the column name to use to override this property
-        /// Serialized Name: AlertPropertyMapping.value
-        /// </param>
+        /// <param name="alertProperty"> The V3 alert property. </param>
+        /// <param name="value"> the column name to use to override this property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AlertPropertyMapping(AlertProperty? alertProperty, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The V3 alert property
-        /// Serialized Name: AlertPropertyMapping.alertProperty
-        /// </summary>
+        /// <summary> The V3 alert property. </summary>
         public AlertProperty? AlertProperty { get; set; }
-        /// <summary>
-        /// the column name to use to override this property
-        /// Serialized Name: AlertPropertyMapping.value
-        /// </summary>
+        /// <summary> the column name to use to override this property. </summary>
         public string Value { get; set; }
     }
 }

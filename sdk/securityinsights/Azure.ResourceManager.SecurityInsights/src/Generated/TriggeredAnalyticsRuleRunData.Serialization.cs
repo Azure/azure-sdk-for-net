@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("executionTimeUtc"u8);
-            writer.WriteStringValue(ExecutionTimeUtc, "O");
+            writer.WriteStringValue(ExecuteOn, "O");
             writer.WritePropertyName("ruleId"u8);
             writer.WriteStringValue(RuleId);
             writer.WritePropertyName("triggeredAnalyticsRuleRunId"u8);

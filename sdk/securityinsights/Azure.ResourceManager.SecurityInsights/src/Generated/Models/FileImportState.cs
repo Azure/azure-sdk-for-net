@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The state of the file import.
-    /// Serialized Name: FileImportState
-    /// </summary>
+    /// <summary> The state of the file import. </summary>
     public readonly partial struct FileImportState : IEquatable<FileImportState>
     {
         private readonly string _value;
@@ -33,40 +30,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string WaitingForUploadValue = "WaitingForUpload";
         private const string UnspecifiedValue = "Unspecified";
 
-        /// <summary>
-        /// A fatal error has occurred while ingesting the file.
-        /// Serialized Name: FileImportState.FatalError
-        /// </summary>
+        /// <summary> A fatal error has occurred while ingesting the file. </summary>
         public static FileImportState FatalError { get; } = new FileImportState(FatalErrorValue);
-        /// <summary>
-        /// The file has been ingested.
-        /// Serialized Name: FileImportState.Ingested
-        /// </summary>
+        /// <summary> The file has been ingested. </summary>
         public static FileImportState Ingested { get; } = new FileImportState(IngestedValue);
-        /// <summary>
-        /// The file has been ingested with errors.
-        /// Serialized Name: FileImportState.IngestedWithErrors
-        /// </summary>
+        /// <summary> The file has been ingested with errors. </summary>
         public static FileImportState IngestedWithErrors { get; } = new FileImportState(IngestedWithErrorsValue);
-        /// <summary>
-        /// The file ingestion is in progress.
-        /// Serialized Name: FileImportState.InProgress
-        /// </summary>
+        /// <summary> The file ingestion is in progress. </summary>
         public static FileImportState InProgress { get; } = new FileImportState(InProgressValue);
-        /// <summary>
-        /// The file is invalid.
-        /// Serialized Name: FileImportState.Invalid
-        /// </summary>
+        /// <summary> The file is invalid. </summary>
         public static FileImportState Invalid { get; } = new FileImportState(InvalidValue);
-        /// <summary>
-        /// Waiting for the file to be uploaded.
-        /// Serialized Name: FileImportState.WaitingForUpload
-        /// </summary>
+        /// <summary> Waiting for the file to be uploaded. </summary>
         public static FileImportState WaitingForUpload { get; } = new FileImportState(WaitingForUploadValue);
-        /// <summary>
-        /// Unspecified state.
-        /// Serialized Name: FileImportState.Unspecified
-        /// </summary>
+        /// <summary> Unspecified state. </summary>
         public static FileImportState Unspecified { get; } = new FileImportState(UnspecifiedValue);
         /// <summary> Determines if two <see cref="FileImportState"/> values are the same. </summary>
         public static bool operator ==(FileImportState left, FileImportState right) => left.Equals(right);

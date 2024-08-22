@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents Rest Api Poller data connector.
-    /// Serialized Name: RestApiPollerDataConnector
-    /// </summary>
+    /// <summary> Represents Rest Api Poller data connector. </summary>
     public partial class RestApiPollerDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="RestApiPollerDataConnector"/>. </summary>
@@ -30,53 +27,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The data connector kind
-        /// Serialized Name: DataConnector.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="connectorDefinitionName">
-        /// The connector definition name (the dataConnectorDefinition resource id).
-        /// Serialized Name: RestApiPollerDataConnector.properties.connectorDefinitionName
-        /// </param>
+        /// <param name="connectorDefinitionName"> The connector definition name (the dataConnectorDefinition resource id). </param>
         /// <param name="auth">
         /// The a authentication model.
-        /// Serialized Name: RestApiPollerDataConnector.properties.auth
         /// Please note <see cref="CcpAuthConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ApiKeyAuthModel"/>, <see cref="AWSAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GCPAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
         /// </param>
-        /// <param name="request">
-        /// The request configuration.
-        /// Serialized Name: RestApiPollerDataConnector.properties.request
-        /// </param>
-        /// <param name="dcrConfig">
-        /// The DCR related properties.
-        /// Serialized Name: RestApiPollerDataConnector.properties.dcrConfig
-        /// </param>
-        /// <param name="isActive">
-        /// Indicates whether the connector is active or not.
-        /// Serialized Name: RestApiPollerDataConnector.properties.isActive
-        /// </param>
-        /// <param name="dataType">
-        /// The Log Analytics table destination.
-        /// Serialized Name: RestApiPollerDataConnector.properties.dataType
-        /// </param>
-        /// <param name="response">
-        /// The response configuration.
-        /// Serialized Name: RestApiPollerDataConnector.properties.response
-        /// </param>
-        /// <param name="paging">
-        /// The paging configuration.
-        /// Serialized Name: RestApiPollerDataConnector.properties.paging
-        /// </param>
-        /// <param name="addOnAttributes">
-        /// The add on attributes. The key name will become attribute name (a column) and the value will become the attribute value in the payload.
-        /// Serialized Name: RestApiPollerDataConnector.properties.addOnAttributes
-        /// </param>
+        /// <param name="request"> The request configuration. </param>
+        /// <param name="dcrConfig"> The DCR related properties. </param>
+        /// <param name="isActive"> Indicates whether the connector is active or not. </param>
+        /// <param name="dataType"> The Log Analytics table destination. </param>
+        /// <param name="response"> The response configuration. </param>
+        /// <param name="paging"> The paging configuration. </param>
+        /// <param name="addOnAttributes"> The add on attributes. The key name will become attribute name (a column) and the value will become the attribute value in the payload. </param>
         internal RestApiPollerDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectorDefinitionName, CcpAuthConfig auth, RestApiPollerRequestConfig request, DCRConfiguration dcrConfig, bool? isActive, string dataType, CcpResponseConfig response, RestApiPollerRequestPagingConfig paging, IDictionary<string, string> addOnAttributes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             ConnectorDefinitionName = connectorDefinitionName;
@@ -91,52 +57,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The connector definition name (the dataConnectorDefinition resource id).
-        /// Serialized Name: RestApiPollerDataConnector.properties.connectorDefinitionName
-        /// </summary>
+        /// <summary> The connector definition name (the dataConnectorDefinition resource id). </summary>
         public string ConnectorDefinitionName { get; set; }
         /// <summary>
         /// The a authentication model.
-        /// Serialized Name: RestApiPollerDataConnector.properties.auth
         /// Please note <see cref="CcpAuthConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ApiKeyAuthModel"/>, <see cref="AWSAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GCPAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
         /// </summary>
         public CcpAuthConfig Auth { get; set; }
-        /// <summary>
-        /// The request configuration.
-        /// Serialized Name: RestApiPollerDataConnector.properties.request
-        /// </summary>
+        /// <summary> The request configuration. </summary>
         public RestApiPollerRequestConfig Request { get; set; }
-        /// <summary>
-        /// The DCR related properties.
-        /// Serialized Name: RestApiPollerDataConnector.properties.dcrConfig
-        /// </summary>
+        /// <summary> The DCR related properties. </summary>
         public DCRConfiguration DcrConfig { get; set; }
-        /// <summary>
-        /// Indicates whether the connector is active or not.
-        /// Serialized Name: RestApiPollerDataConnector.properties.isActive
-        /// </summary>
+        /// <summary> Indicates whether the connector is active or not. </summary>
         public bool? IsActive { get; set; }
-        /// <summary>
-        /// The Log Analytics table destination.
-        /// Serialized Name: RestApiPollerDataConnector.properties.dataType
-        /// </summary>
+        /// <summary> The Log Analytics table destination. </summary>
         public string DataType { get; set; }
-        /// <summary>
-        /// The response configuration.
-        /// Serialized Name: RestApiPollerDataConnector.properties.response
-        /// </summary>
+        /// <summary> The response configuration. </summary>
         public CcpResponseConfig Response { get; set; }
-        /// <summary>
-        /// The paging configuration.
-        /// Serialized Name: RestApiPollerDataConnector.properties.paging
-        /// </summary>
+        /// <summary> The paging configuration. </summary>
         public RestApiPollerRequestPagingConfig Paging { get; set; }
-        /// <summary>
-        /// The add on attributes. The key name will become attribute name (a column) and the value will become the attribute value in the payload.
-        /// Serialized Name: RestApiPollerDataConnector.properties.addOnAttributes
-        /// </summary>
+        /// <summary> The add on attributes. The key name will become attribute name (a column) and the value will become the attribute value in the payload. </summary>
         public IDictionary<string, string> AddOnAttributes { get; }
     }
 }

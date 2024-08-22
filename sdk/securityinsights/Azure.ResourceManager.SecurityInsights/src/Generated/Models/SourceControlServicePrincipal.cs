@@ -10,11 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Service principal metadata.
-    /// Serialized Name: ServicePrincipal
-    /// </summary>
-    public partial class ServicePrincipal
+    /// <summary> Service principal metadata. </summary>
+    public partial class SourceControlServicePrincipal
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,30 +45,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServicePrincipal"/>. </summary>
-        public ServicePrincipal()
+        /// <summary> Initializes a new instance of <see cref="SourceControlServicePrincipal"/>. </summary>
+        public SourceControlServicePrincipal()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServicePrincipal"/>. </summary>
-        /// <param name="id">
-        /// Id of service principal.
-        /// Serialized Name: ServicePrincipal.id
-        /// </param>
-        /// <param name="tenantId">
-        /// Tenant id of service principal.
-        /// Serialized Name: ServicePrincipal.tenantId
-        /// </param>
-        /// <param name="appId">
-        /// App id of service principal.
-        /// Serialized Name: ServicePrincipal.appId
-        /// </param>
-        /// <param name="credentialsExpireOn">
-        /// Expiration time of service principal credentials.
-        /// Serialized Name: ServicePrincipal.credentialsExpireOn
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="SourceControlServicePrincipal"/>. </summary>
+        /// <param name="id"> Id of service principal. </param>
+        /// <param name="tenantId"> Tenant id of service principal. </param>
+        /// <param name="appId"> App id of service principal. </param>
+        /// <param name="credentialsExpireOn"> Expiration time of service principal credentials. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServicePrincipal(string id, Guid? tenantId, string appId, DateTimeOffset? credentialsExpireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SourceControlServicePrincipal(string id, Guid? tenantId, string appId, DateTimeOffset? credentialsExpireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             TenantId = tenantId;
@@ -80,25 +65,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Id of service principal.
-        /// Serialized Name: ServicePrincipal.id
-        /// </summary>
+        /// <summary> Id of service principal. </summary>
         public string Id { get; }
-        /// <summary>
-        /// Tenant id of service principal.
-        /// Serialized Name: ServicePrincipal.tenantId
-        /// </summary>
+        /// <summary> Tenant id of service principal. </summary>
         public Guid? TenantId { get; }
-        /// <summary>
-        /// App id of service principal.
-        /// Serialized Name: ServicePrincipal.appId
-        /// </summary>
+        /// <summary> App id of service principal. </summary>
         public string AppId { get; }
-        /// <summary>
-        /// Expiration time of service principal credentials.
-        /// Serialized Name: ServicePrincipal.credentialsExpireOn
-        /// </summary>
+        /// <summary> Expiration time of service principal credentials. </summary>
         public DateTimeOffset? CredentialsExpireOn { get; set; }
     }
 }

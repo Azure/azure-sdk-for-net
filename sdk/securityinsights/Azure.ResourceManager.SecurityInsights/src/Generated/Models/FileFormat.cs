@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The format of the file
-    /// Serialized Name: FileFormat
-    /// </summary>
+    /// <summary> The format of the file. </summary>
     public readonly partial struct FileFormat : IEquatable<FileFormat>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string JsonValue = "JSON";
         private const string UnspecifiedValue = "Unspecified";
 
-        /// <summary>
-        /// A CSV file.
-        /// Serialized Name: FileFormat.CSV
-        /// </summary>
+        /// <summary> A CSV file. </summary>
         public static FileFormat CSV { get; } = new FileFormat(CSVValue);
-        /// <summary>
-        /// A JSON file.
-        /// Serialized Name: FileFormat.JSON
-        /// </summary>
+        /// <summary> A JSON file. </summary>
         public static FileFormat Json { get; } = new FileFormat(JsonValue);
-        /// <summary>
-        /// A file of other format.
-        /// Serialized Name: FileFormat.Unspecified
-        /// </summary>
+        /// <summary> A file of other format. </summary>
         public static FileFormat Unspecified { get; } = new FileFormat(UnspecifiedValue);
         /// <summary> Determines if two <see cref="FileFormat"/> values are the same. </summary>
         public static bool operator ==(FileFormat left, FileFormat right) => left.Equals(right);

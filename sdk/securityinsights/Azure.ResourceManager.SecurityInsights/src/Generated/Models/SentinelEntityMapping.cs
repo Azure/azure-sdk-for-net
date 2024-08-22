@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// A single sentinel entity mapping
-    /// Serialized Name: SentinelEntityMapping
-    /// </summary>
+    /// <summary> A single sentinel entity mapping. </summary>
     public partial class SentinelEntityMapping
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SentinelEntityMapping"/>. </summary>
-        /// <param name="columnName">
-        /// the column name to be mapped to the SentinelEntities
-        /// Serialized Name: SentinelEntityMapping.columnName
-        /// </param>
+        /// <param name="columnName"> the column name to be mapped to the SentinelEntities. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SentinelEntityMapping(string columnName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// the column name to be mapped to the SentinelEntities
-        /// Serialized Name: SentinelEntityMapping.columnName
-        /// </summary>
+        /// <summary> the column name to be mapped to the SentinelEntities. </summary>
         public string ColumnName { get; set; }
     }
 }

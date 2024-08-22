@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The insight chart query.
-    /// Serialized Name: InsightQueryItemPropertiesReferenceTimeRange
-    /// </summary>
+    /// <summary> The insight chart query. </summary>
     internal partial class InsightQueryItemPropertiesReferenceTimeRange
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InsightQueryItemPropertiesReferenceTimeRange"/>. </summary>
-        /// <param name="beforeRange">
-        /// Additional query time for looking back.
-        /// Serialized Name: InsightQueryItemPropertiesReferenceTimeRange.beforeRange
-        /// </param>
+        /// <param name="beforeRange"> Additional query time for looking back. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InsightQueryItemPropertiesReferenceTimeRange(string beforeRange, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Additional query time for looking back.
-        /// Serialized Name: InsightQueryItemPropertiesReferenceTimeRange.beforeRange
-        /// </summary>
+        /// <summary> Additional query time for looking back. </summary>
         public string BeforeRange { get; }
     }
 }

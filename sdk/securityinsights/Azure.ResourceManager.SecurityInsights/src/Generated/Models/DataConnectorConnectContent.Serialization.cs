@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class DataConnectorConnectBody : IUtf8JsonSerializable, IJsonModel<DataConnectorConnectBody>
+    public partial class DataConnectorConnectContent : IUtf8JsonSerializable, IJsonModel<DataConnectorConnectContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectorConnectBody>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataConnectorConnectContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DataConnectorConnectBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataConnectorConnectContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataConnectorConnectBody)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataConnectorConnectContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -116,19 +116,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        DataConnectorConnectBody IJsonModel<DataConnectorConnectBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataConnectorConnectContent IJsonModel<DataConnectorConnectContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataConnectorConnectBody)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataConnectorConnectContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataConnectorConnectBody(document.RootElement, options);
+            return DeserializeDataConnectorConnectContent(document.RootElement, options);
         }
 
-        internal static DataConnectorConnectBody DeserializeDataConnectorConnectBody(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DataConnectorConnectContent DeserializeDataConnectorConnectContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataConnectorConnectBody(
+            return new DataConnectorConnectContent(
                 kind,
                 apiKey,
                 dataCollectionEndpoint,
@@ -247,35 +247,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DataConnectorConnectBody>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DataConnectorConnectContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataConnectorConnectBody)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataConnectorConnectContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DataConnectorConnectBody IPersistableModel<DataConnectorConnectBody>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataConnectorConnectContent IPersistableModel<DataConnectorConnectContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataConnectorConnectContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDataConnectorConnectBody(document.RootElement, options);
+                        return DeserializeDataConnectorConnectContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataConnectorConnectBody)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataConnectorConnectContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataConnectorConnectBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataConnectorConnectContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Type of paging
-    /// Serialized Name: CcpAuthType
-    /// </summary>
+    /// <summary> Type of paging. </summary>
     internal readonly partial struct CcpAuthType : IEquatable<CcpAuthType>
     {
         private readonly string _value;
@@ -37,60 +34,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string OracleValue = "Oracle";
         private const string NoneValue = "None";
 
-        /// <summary>
-        /// Basic
-        /// Serialized Name: CcpAuthType.Basic
-        /// </summary>
+        /// <summary> Basic. </summary>
         public static CcpAuthType Basic { get; } = new CcpAuthType(BasicValue);
-        /// <summary>
-        /// APIKey
-        /// Serialized Name: CcpAuthType.APIKey
-        /// </summary>
+        /// <summary> APIKey. </summary>
         public static CcpAuthType APIKey { get; } = new CcpAuthType(APIKeyValue);
-        /// <summary>
-        /// OAuth2
-        /// Serialized Name: CcpAuthType.OAuth2
-        /// </summary>
+        /// <summary> OAuth2. </summary>
         public static CcpAuthType OAuth2 { get; } = new CcpAuthType(OAuth2Value);
-        /// <summary>
-        /// AWS
-        /// Serialized Name: CcpAuthType.AWS
-        /// </summary>
+        /// <summary> AWS. </summary>
         public static CcpAuthType AWS { get; } = new CcpAuthType(AWSValue);
-        /// <summary>
-        /// GCP
-        /// Serialized Name: CcpAuthType.GCP
-        /// </summary>
+        /// <summary> GCP. </summary>
         public static CcpAuthType GCP { get; } = new CcpAuthType(GCPValue);
-        /// <summary>
-        /// Session
-        /// Serialized Name: CcpAuthType.Session
-        /// </summary>
+        /// <summary> Session. </summary>
         public static CcpAuthType Session { get; } = new CcpAuthType(SessionValue);
-        /// <summary>
-        /// JwtToken
-        /// Serialized Name: CcpAuthType.JwtToken
-        /// </summary>
+        /// <summary> JwtToken. </summary>
         public static CcpAuthType JwtToken { get; } = new CcpAuthType(JwtTokenValue);
-        /// <summary>
-        /// GitHub
-        /// Serialized Name: CcpAuthType.GitHub
-        /// </summary>
+        /// <summary> GitHub. </summary>
         public static CcpAuthType GitHub { get; } = new CcpAuthType(GitHubValue);
-        /// <summary>
-        /// ServiceBus
-        /// Serialized Name: CcpAuthType.ServiceBus
-        /// </summary>
+        /// <summary> ServiceBus. </summary>
         public static CcpAuthType ServiceBus { get; } = new CcpAuthType(ServiceBusValue);
-        /// <summary>
-        /// Oracle
-        /// Serialized Name: CcpAuthType.Oracle
-        /// </summary>
+        /// <summary> Oracle. </summary>
         public static CcpAuthType Oracle { get; } = new CcpAuthType(OracleValue);
-        /// <summary>
-        /// None
-        /// Serialized Name: CcpAuthType.None
-        /// </summary>
+        /// <summary> None. </summary>
         public static CcpAuthType None { get; } = new CcpAuthType(NoneValue);
         /// <summary> Determines if two <see cref="CcpAuthType"/> values are the same. </summary>
         public static bool operator ==(CcpAuthType left, CcpAuthType right) => left.Equals(right);

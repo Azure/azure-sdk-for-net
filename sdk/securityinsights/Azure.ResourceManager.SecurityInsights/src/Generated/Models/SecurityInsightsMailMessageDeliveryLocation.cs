@@ -7,56 +7,26 @@
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The delivery location of this mail message like Inbox, JunkFolder etc
-    /// Serialized Name: DeliveryLocation
-    /// </summary>
+    /// <summary> The delivery location of this mail message like Inbox, JunkFolder etc. </summary>
     public enum SecurityInsightsMailMessageDeliveryLocation
     {
-        /// <summary>
-        /// Unknown
-        /// Serialized Name: DeliveryLocation.Unknown
-        /// </summary>
+        /// <summary> Unknown. </summary>
         Unknown,
-        /// <summary>
-        /// Inbox
-        /// Serialized Name: DeliveryLocation.Inbox
-        /// </summary>
+        /// <summary> Inbox. </summary>
         Inbox,
-        /// <summary>
-        /// JunkFolder
-        /// Serialized Name: DeliveryLocation.JunkFolder
-        /// </summary>
+        /// <summary> JunkFolder. </summary>
         JunkFolder,
-        /// <summary>
-        /// DeletedFolder
-        /// Serialized Name: DeliveryLocation.DeletedFolder
-        /// </summary>
+        /// <summary> DeletedFolder. </summary>
         DeletedFolder,
-        /// <summary>
-        /// Quarantine
-        /// Serialized Name: DeliveryLocation.Quarantine
-        /// </summary>
+        /// <summary> Quarantine. </summary>
         Quarantine,
-        /// <summary>
-        /// External
-        /// Serialized Name: DeliveryLocation.External
-        /// </summary>
+        /// <summary> External. </summary>
         External,
-        /// <summary>
-        /// Failed
-        /// Serialized Name: DeliveryLocation.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary>
-        /// Dropped
-        /// Serialized Name: DeliveryLocation.Dropped
-        /// </summary>
+        /// <summary> Dropped. </summary>
         Dropped,
-        /// <summary>
-        /// Forwarded
-        /// Serialized Name: DeliveryLocation.Forwarded
-        /// </summary>
+        /// <summary> Forwarded. </summary>
         Forwarded
     }
 }

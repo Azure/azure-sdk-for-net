@@ -374,18 +374,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectBody"> The data connector. </param>
+        /// <param name="content"> The data connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectBody"/> is null. </exception>
-        public virtual async Task<Response> ConnectAsync(DataConnectorConnectBody connectBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response> ConnectAsync(DataConnectorConnectContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(connectBody, nameof(connectBody));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorResource.Connect");
             scope.Start();
             try
             {
-                var response = await _securityInsightsDataConnectorDataConnectorsRestClient.ConnectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectBody, cancellationToken).ConfigureAwait(false);
+                var response = await _securityInsightsDataConnectorDataConnectorsRestClient.ConnectAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -416,18 +416,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="connectBody"> The data connector. </param>
+        /// <param name="content"> The data connector. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectBody"/> is null. </exception>
-        public virtual Response Connect(DataConnectorConnectBody connectBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response Connect(DataConnectorConnectContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(connectBody, nameof(connectBody));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _securityInsightsDataConnectorDataConnectorsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorResource.Connect");
             scope.Start();
             try
             {
-                var response = _securityInsightsDataConnectorDataConnectorsRestClient.Connect(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, connectBody, cancellationToken);
+                var response = _securityInsightsDataConnectorDataConnectorsRestClient.Connect(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

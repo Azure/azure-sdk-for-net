@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents Insight Query.
-    /// Serialized Name: InsightQueryItemProperties
-    /// </summary>
+    /// <summary> Represents Insight Query. </summary>
     public partial class InsightQueryItemProperties : EntityQueryItemProperties
     {
         /// <summary> Initializes a new instance of <see cref="InsightQueryItemProperties"/>. </summary>
@@ -22,55 +19,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InsightQueryItemProperties"/>. </summary>
-        /// <param name="dataTypes">
-        /// Data types for template
-        /// Serialized Name: EntityQueryItemProperties.dataTypes
-        /// </param>
-        /// <param name="inputEntityType">
-        /// The type of the entity
-        /// Serialized Name: EntityQueryItemProperties.inputEntityType
-        /// </param>
-        /// <param name="requiredInputFieldsSets">
-        /// Data types for template
-        /// Serialized Name: EntityQueryItemProperties.requiredInputFieldsSets
-        /// </param>
-        /// <param name="entitiesFilter">
-        /// The query applied only to entities matching to all filters
-        /// Serialized Name: EntityQueryItemProperties.entitiesFilter
-        /// </param>
+        /// <param name="dataTypes"> Data types for template. </param>
+        /// <param name="inputEntityType"> The type of the entity. </param>
+        /// <param name="requiredInputFieldsSets"> Data types for template. </param>
+        /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="displayName">
-        /// The insight display name.
-        /// Serialized Name: InsightQueryItemProperties.displayName
-        /// </param>
-        /// <param name="description">
-        /// The insight description.
-        /// Serialized Name: InsightQueryItemProperties.description
-        /// </param>
-        /// <param name="baseQuery">
-        /// The base query of the insight.
-        /// Serialized Name: InsightQueryItemProperties.baseQuery
-        /// </param>
-        /// <param name="tableQuery">
-        /// The insight table query.
-        /// Serialized Name: InsightQueryItemProperties.tableQuery
-        /// </param>
-        /// <param name="chartQuery">
-        /// The insight chart query.
-        /// Serialized Name: InsightQueryItemProperties.chartQuery
-        /// </param>
-        /// <param name="additionalQuery">
-        /// The activity query definitions.
-        /// Serialized Name: InsightQueryItemProperties.additionalQuery
-        /// </param>
-        /// <param name="defaultTimeRange">
-        /// The insight chart query.
-        /// Serialized Name: InsightQueryItemProperties.defaultTimeRange
-        /// </param>
-        /// <param name="referenceTimeRange">
-        /// The insight chart query.
-        /// Serialized Name: InsightQueryItemProperties.referenceTimeRange
-        /// </param>
+        /// <param name="displayName"> The insight display name. </param>
+        /// <param name="description"> The insight description. </param>
+        /// <param name="baseQuery"> The base query of the insight. </param>
+        /// <param name="tableQuery"> The insight table query. </param>
+        /// <param name="chartQuery"> The insight chart query. </param>
+        /// <param name="additionalQuery"> The activity query definitions. </param>
+        /// <param name="defaultTimeRange"> The insight chart query. </param>
+        /// <param name="referenceTimeRange"> The insight chart query. </param>
         internal InsightQueryItemProperties(IReadOnlyList<EntityQueryItemPropertiesDataTypesItem> dataTypes, EntityType? inputEntityType, IReadOnlyList<IList<string>> requiredInputFieldsSets, BinaryData entitiesFilter, IDictionary<string, BinaryData> serializedAdditionalRawData, string displayName, string description, string baseQuery, InsightQueryItemPropertiesTableQuery tableQuery, BinaryData chartQuery, InsightQueryItemPropertiesAdditionalQuery additionalQuery, InsightQueryItemPropertiesDefaultTimeRange defaultTimeRange, InsightQueryItemPropertiesReferenceTimeRange referenceTimeRange) : base(dataTypes, inputEntityType, requiredInputFieldsSets, entitiesFilter, serializedAdditionalRawData)
         {
             DisplayName = displayName;
@@ -83,29 +44,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ReferenceTimeRange = referenceTimeRange;
         }
 
-        /// <summary>
-        /// The insight display name.
-        /// Serialized Name: InsightQueryItemProperties.displayName
-        /// </summary>
+        /// <summary> The insight display name. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// The insight description.
-        /// Serialized Name: InsightQueryItemProperties.description
-        /// </summary>
+        /// <summary> The insight description. </summary>
         public string Description { get; }
-        /// <summary>
-        /// The base query of the insight.
-        /// Serialized Name: InsightQueryItemProperties.baseQuery
-        /// </summary>
+        /// <summary> The base query of the insight. </summary>
         public string BaseQuery { get; }
-        /// <summary>
-        /// The insight table query.
-        /// Serialized Name: InsightQueryItemProperties.tableQuery
-        /// </summary>
+        /// <summary> The insight table query. </summary>
         public InsightQueryItemPropertiesTableQuery TableQuery { get; }
         /// <summary>
         /// The insight chart query.
-        /// Serialized Name: InsightQueryItemProperties.chartQuery
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -135,25 +83,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public BinaryData ChartQuery { get; }
-        /// <summary>
-        /// The activity query definitions.
-        /// Serialized Name: InsightQueryItemProperties.additionalQuery
-        /// </summary>
+        /// <summary> The activity query definitions. </summary>
         public InsightQueryItemPropertiesAdditionalQuery AdditionalQuery { get; }
-        /// <summary>
-        /// The insight chart query.
-        /// Serialized Name: InsightQueryItemProperties.defaultTimeRange
-        /// </summary>
+        /// <summary> The insight chart query. </summary>
         public InsightQueryItemPropertiesDefaultTimeRange DefaultTimeRange { get; }
-        /// <summary>
-        /// The insight chart query.
-        /// Serialized Name: InsightQueryItemProperties.referenceTimeRange
-        /// </summary>
+        /// <summary> The insight chart query. </summary>
         internal InsightQueryItemPropertiesReferenceTimeRange ReferenceTimeRange { get; }
-        /// <summary>
-        /// Additional query time for looking back.
-        /// Serialized Name: InsightQueryItemPropertiesReferenceTimeRange.beforeRange
-        /// </summary>
+        /// <summary> Additional query time for looking back. </summary>
         public string BeforeRange
         {
             get => ReferenceTimeRange?.BeforeRange;

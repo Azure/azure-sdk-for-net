@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            Webhook webhook = default;
+            SourceControlWebhook webhook = default;
             GitHubResourceInfo gitHubResourceInfo = default;
             AzureDevOpsResourceInfo azureDevOpsResourceInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    webhook = Webhook.DeserializeWebhook(property.Value, options);
+                    webhook = SourceControlWebhook.DeserializeSourceControlWebhook(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("gitHubResourceInfo"u8))

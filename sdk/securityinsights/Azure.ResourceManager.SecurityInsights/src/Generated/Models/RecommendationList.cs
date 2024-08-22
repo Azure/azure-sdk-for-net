@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// A list of recommendations
-    /// Serialized Name: RecommendationList
-    /// </summary>
+    /// <summary> A list of recommendations. </summary>
     internal partial class RecommendationList
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecommendationList"/>. </summary>
-        /// <param name="value">
-        /// An list of recommendations
-        /// Serialized Name: RecommendationList.value
-        /// </param>
+        /// <param name="value"> An list of recommendations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RecommendationList(IReadOnlyList<SecurityInsightsRecommendationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// An list of recommendations
-        /// Serialized Name: RecommendationList.value
-        /// </summary>
+        /// <summary> An list of recommendations. </summary>
         public IReadOnlyList<SecurityInsightsRecommendationData> Value { get; }
     }
 }

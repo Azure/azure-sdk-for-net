@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateRunPlaybookRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string entityIdentifier, EntityManualTriggerRequestBody requestBody)
+        internal RequestUriBuilder CreateRunPlaybookRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string entityIdentifier, EntityManualTriggerRequestContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateRunPlaybookRequest(string subscriptionId, string resourceGroupName, string workspaceName, string entityIdentifier, EntityManualTriggerRequestBody requestBody)
+        internal HttpMessage CreateRunPlaybookRequest(string subscriptionId, string resourceGroupName, string workspaceName, string entityIdentifier, EntityManualTriggerRequestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.SecurityInsights
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (requestBody != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(requestBody, ModelSerializationExtensions.WireOptions);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -88,18 +88,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="entityIdentifier"> Entity identifier. </param>
-        /// <param name="requestBody"> Describes the request body for triggering a playbook on an entity. </param>
+        /// <param name="content"> Describes the request body for triggering a playbook on an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="entityIdentifier"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="entityIdentifier"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> RunPlaybookAsync(string subscriptionId, string resourceGroupName, string workspaceName, string entityIdentifier, EntityManualTriggerRequestBody requestBody = null, CancellationToken cancellationToken = default)
+        public async Task<Response> RunPlaybookAsync(string subscriptionId, string resourceGroupName, string workspaceName, string entityIdentifier, EntityManualTriggerRequestContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(entityIdentifier, nameof(entityIdentifier));
 
-            using var message = CreateRunPlaybookRequest(subscriptionId, resourceGroupName, workspaceName, entityIdentifier, requestBody);
+            using var message = CreateRunPlaybookRequest(subscriptionId, resourceGroupName, workspaceName, entityIdentifier, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -115,18 +115,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="entityIdentifier"> Entity identifier. </param>
-        /// <param name="requestBody"> Describes the request body for triggering a playbook on an entity. </param>
+        /// <param name="content"> Describes the request body for triggering a playbook on an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="entityIdentifier"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="entityIdentifier"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response RunPlaybook(string subscriptionId, string resourceGroupName, string workspaceName, string entityIdentifier, EntityManualTriggerRequestBody requestBody = null, CancellationToken cancellationToken = default)
+        public Response RunPlaybook(string subscriptionId, string resourceGroupName, string workspaceName, string entityIdentifier, EntityManualTriggerRequestContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(entityIdentifier, nameof(entityIdentifier));
 
-            using var message = CreateRunPlaybookRequest(subscriptionId, resourceGroupName, workspaceName, entityIdentifier, requestBody);
+            using var message = CreateRunPlaybookRequest(subscriptionId, resourceGroupName, workspaceName, entityIdentifier, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

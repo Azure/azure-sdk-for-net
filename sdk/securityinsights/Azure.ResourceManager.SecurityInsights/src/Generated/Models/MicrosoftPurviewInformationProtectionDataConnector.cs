@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents Microsoft Purview Information Protection data connector.
-    /// Serialized Name: MicrosoftPurviewInformationProtectionDataConnector
-    /// </summary>
+    /// <summary> Represents Microsoft Purview Information Protection data connector. </summary>
     public partial class MicrosoftPurviewInformationProtectionDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="MicrosoftPurviewInformationProtectionDataConnector"/>. </summary>
@@ -29,23 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The data connector kind
-        /// Serialized Name: DataConnector.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId">
-        /// The tenant id to connect to, and get the data from.
-        /// Serialized Name: MicrosoftPurviewInformationProtectionDataConnector.properties.tenantId
-        /// </param>
-        /// <param name="logs">
-        /// Logs data type.
-        /// Serialized Name: MicrosoftPurviewInformationProtectionDataConnector.properties.dataTypes.logs
-        /// </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
+        /// <param name="logs"> Logs data type. </param>
         internal MicrosoftPurviewInformationProtectionDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, MicrosoftPurviewInformationProtectionConnectorDataTypesLogs logs) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             TenantId = tenantId;
@@ -53,20 +38,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The tenant id to connect to, and get the data from.
-        /// Serialized Name: MicrosoftPurviewInformationProtectionDataConnector.properties.tenantId
-        /// </summary>
+        /// <summary> The tenant id to connect to, and get the data from. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary>
-        /// Logs data type.
-        /// Serialized Name: MicrosoftPurviewInformationProtectionDataConnector.properties.dataTypes.logs
-        /// </summary>
+        /// <summary> Logs data type. </summary>
         internal MicrosoftPurviewInformationProtectionConnectorDataTypesLogs Logs { get; set; }
-        /// <summary>
-        /// Describe whether this data type connection is enabled or not.
-        /// Serialized Name: DataConnectorDataTypeCommon.state
-        /// </summary>
+        /// <summary> Describe whether this data type connection is enabled or not. </summary>
         public SecurityInsightsDataTypeConnectionState? LogsState
         {
             get => Logs is null ? default(SecurityInsightsDataTypeConnectionState?) : Logs.State;

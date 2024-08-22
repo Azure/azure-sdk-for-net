@@ -14,7 +14,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Represents a threat intelligence object in Azure Security Insights.
-    /// Serialized Name: TIObject
     /// Please note <see cref="TIObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="TiObjectKindAttackPattern"/>, <see cref="TiObjectKindIdentity"/>, <see cref="TiObjectKindIndicator"/>, <see cref="TiObjectKindRelationship"/> and <see cref="TiObjectKindThreatActor"/>.
     /// </summary>
@@ -64,75 +63,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the TI object
-        /// Serialized Name: TIObject.kind
-        /// </param>
-        /// <param name="data">
-        /// The core STIX object that this TI object represents.
-        /// Serialized Name: TIObject.properties.data
-        /// </param>
-        /// <param name="createdBy">
-        /// The UserInfo of the user/entity which originally created this TI object.
-        /// Serialized Name: TIObject.properties.createdBy
-        /// </param>
-        /// <param name="source">
-        /// The source name for this TI object.
-        /// Serialized Name: TIObject.properties.source
-        /// </param>
-        /// <param name="firstIngestedTimeUtc">
-        /// The timestamp for the first time this object was ingested.
-        /// Serialized Name: TIObject.properties.firstIngestedTimeUtc
-        /// </param>
-        /// <param name="lastIngestedTimeUtc">
-        /// The timestamp for the last time this object was ingested.
-        /// Serialized Name: TIObject.properties.lastIngestedTimeUtc
-        /// </param>
-        /// <param name="ingestionRulesVersion">
-        /// The ID of the rules version that was active when this TI object was last ingested.
-        /// Serialized Name: TIObject.properties.ingestionRulesVersion
-        /// </param>
-        /// <param name="lastUpdateMethod">
-        /// The name of the method/application that initiated the last write to this TI object.
-        /// Serialized Name: TIObject.properties.lastUpdateMethod
-        /// </param>
-        /// <param name="lastModifiedBy">
-        /// The UserInfo of the user/entity which last modified this TI object.
-        /// Serialized Name: TIObject.properties.lastModifiedBy
-        /// </param>
-        /// <param name="lastUpdatedDateTimeUtc">
-        /// The timestamp for the last time this TI object was updated.
-        /// Serialized Name: TIObject.properties.lastUpdatedDateTimeUtc
-        /// </param>
-        /// <param name="relationshipHints">
-        /// A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object.
-        /// Serialized Name: TIObject.properties.relationshipHints
-        /// </param>
+        /// <param name="kind"> The kind of the TI object. </param>
+        /// <param name="data"> The core STIX object that this TI object represents. </param>
+        /// <param name="createdBy"> The UserInfo of the user/entity which originally created this TI object. </param>
+        /// <param name="source"> The source name for this TI object. </param>
+        /// <param name="firstIngestedOn"> The timestamp for the first time this object was ingested. </param>
+        /// <param name="lastIngestedOn"> The timestamp for the last time this object was ingested. </param>
+        /// <param name="ingestionRulesVersion"> The ID of the rules version that was active when this TI object was last ingested. </param>
+        /// <param name="lastUpdateMethod"> The name of the method/application that initiated the last write to this TI object. </param>
+        /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
+        /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
+        /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TIObject(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TIObjectKind kind, IReadOnlyDictionary<string, BinaryData> data, ThreatIntelligenceUserInfo createdBy, string source, DateTimeOffset? firstIngestedTimeUtc, DateTimeOffset? lastIngestedTimeUtc, Guid? ingestionRulesVersion, string lastUpdateMethod, ThreatIntelligenceUserInfo lastModifiedBy, DateTimeOffset? lastUpdatedDateTimeUtc, IReadOnlyList<RelationshipHint> relationshipHints, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TIObject(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TIObjectKind kind, IReadOnlyDictionary<string, BinaryData> data, ThreatIntelligenceUserInfo createdBy, string source, DateTimeOffset? firstIngestedOn, DateTimeOffset? lastIngestedOn, Guid? ingestionRulesVersion, string lastUpdateMethod, ThreatIntelligenceUserInfo lastModifiedBy, DateTimeOffset? lastUpdatedOn, IReadOnlyList<RelationshipHint> relationshipHints, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Data = data;
             CreatedBy = createdBy;
             Source = source;
-            FirstIngestedTimeUtc = firstIngestedTimeUtc;
-            LastIngestedTimeUtc = lastIngestedTimeUtc;
+            FirstIngestedOn = firstIngestedOn;
+            LastIngestedOn = lastIngestedOn;
             IngestionRulesVersion = ingestionRulesVersion;
             LastUpdateMethod = lastUpdateMethod;
             LastModifiedBy = lastModifiedBy;
-            LastUpdatedDateTimeUtc = lastUpdatedDateTimeUtc;
+            LastUpdatedOn = lastUpdatedOn;
             RelationshipHints = relationshipHints;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The kind of the TI object
-        /// Serialized Name: TIObject.kind
-        /// </summary>
+        /// <summary> The kind of the TI object. </summary>
         internal TIObjectKind Kind { get; set; }
         /// <summary>
         /// The core STIX object that this TI object represents.
-        /// Serialized Name: TIObject.properties.data
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -162,50 +124,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> Data { get; }
-        /// <summary>
-        /// The UserInfo of the user/entity which originally created this TI object.
-        /// Serialized Name: TIObject.properties.createdBy
-        /// </summary>
+        /// <summary> The UserInfo of the user/entity which originally created this TI object. </summary>
         public ThreatIntelligenceUserInfo CreatedBy { get; }
-        /// <summary>
-        /// The source name for this TI object.
-        /// Serialized Name: TIObject.properties.source
-        /// </summary>
+        /// <summary> The source name for this TI object. </summary>
         public string Source { get; }
-        /// <summary>
-        /// The timestamp for the first time this object was ingested.
-        /// Serialized Name: TIObject.properties.firstIngestedTimeUtc
-        /// </summary>
-        public DateTimeOffset? FirstIngestedTimeUtc { get; }
-        /// <summary>
-        /// The timestamp for the last time this object was ingested.
-        /// Serialized Name: TIObject.properties.lastIngestedTimeUtc
-        /// </summary>
-        public DateTimeOffset? LastIngestedTimeUtc { get; }
-        /// <summary>
-        /// The ID of the rules version that was active when this TI object was last ingested.
-        /// Serialized Name: TIObject.properties.ingestionRulesVersion
-        /// </summary>
+        /// <summary> The timestamp for the first time this object was ingested. </summary>
+        public DateTimeOffset? FirstIngestedOn { get; }
+        /// <summary> The timestamp for the last time this object was ingested. </summary>
+        public DateTimeOffset? LastIngestedOn { get; }
+        /// <summary> The ID of the rules version that was active when this TI object was last ingested. </summary>
         public Guid? IngestionRulesVersion { get; }
-        /// <summary>
-        /// The name of the method/application that initiated the last write to this TI object.
-        /// Serialized Name: TIObject.properties.lastUpdateMethod
-        /// </summary>
+        /// <summary> The name of the method/application that initiated the last write to this TI object. </summary>
         public string LastUpdateMethod { get; }
-        /// <summary>
-        /// The UserInfo of the user/entity which last modified this TI object.
-        /// Serialized Name: TIObject.properties.lastModifiedBy
-        /// </summary>
+        /// <summary> The UserInfo of the user/entity which last modified this TI object. </summary>
         public ThreatIntelligenceUserInfo LastModifiedBy { get; }
-        /// <summary>
-        /// The timestamp for the last time this TI object was updated.
-        /// Serialized Name: TIObject.properties.lastUpdatedDateTimeUtc
-        /// </summary>
-        public DateTimeOffset? LastUpdatedDateTimeUtc { get; }
-        /// <summary>
-        /// A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object.
-        /// Serialized Name: TIObject.properties.relationshipHints
-        /// </summary>
+        /// <summary> The timestamp for the last time this TI object was updated. </summary>
+        public DateTimeOffset? LastUpdatedOn { get; }
+        /// <summary> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </summary>
         public IReadOnlyList<RelationshipHint> RelationshipHints { get; }
     }
 }

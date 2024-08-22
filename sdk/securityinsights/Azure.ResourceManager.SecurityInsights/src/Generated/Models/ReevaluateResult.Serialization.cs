@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(LastEvaluatedTimeUtc))
+            if (Optional.IsDefined(LastEvaluatedOn))
             {
                 writer.WritePropertyName("lastEvaluatedTimeUtc"u8);
-                writer.WriteStringValue(LastEvaluatedTimeUtc.Value, "O");
+                writer.WriteStringValue(LastEvaluatedOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

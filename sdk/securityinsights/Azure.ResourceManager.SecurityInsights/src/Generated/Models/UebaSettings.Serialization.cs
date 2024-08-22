@@ -14,16 +14,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class Ueba : IUtf8JsonSerializable, IJsonModel<Ueba>
+    public partial class UebaSettings : IUtf8JsonSerializable, IJsonModel<UebaSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Ueba>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UebaSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Ueba>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UebaSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Ueba>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UebaSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Ueba)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UebaSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,19 +85,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        Ueba IJsonModel<Ueba>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UebaSettings IJsonModel<UebaSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Ueba>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UebaSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Ueba)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UebaSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUeba(document.RootElement, options);
+            return DeserializeUebaSettings(document.RootElement, options);
         }
 
-        internal static Ueba DeserializeUeba(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UebaSettings DeserializeUebaSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Ueba(
+            return new UebaSettings(
                 id,
                 name,
                 type,
@@ -197,35 +197,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 dataSources ?? new ChangeTrackingList<UebaDataSource>());
         }
 
-        BinaryData IPersistableModel<Ueba>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UebaSettings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Ueba>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UebaSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Ueba)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UebaSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Ueba IPersistableModel<Ueba>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UebaSettings IPersistableModel<UebaSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Ueba>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UebaSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUeba(document.RootElement, options);
+                        return DeserializeUebaSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Ueba)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UebaSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Ueba>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UebaSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

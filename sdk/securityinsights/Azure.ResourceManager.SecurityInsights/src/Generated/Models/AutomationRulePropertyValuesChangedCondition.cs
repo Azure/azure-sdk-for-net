@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The AutomationRulePropertyValuesChangedCondition.
-    /// Serialized Name: AutomationRulePropertyValuesChangedCondition
-    /// </summary>
+    /// <summary> The AutomationRulePropertyValuesChangedCondition. </summary>
     public partial class AutomationRulePropertyValuesChangedCondition
     {
         /// <summary>
@@ -55,10 +52,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyValuesChangedCondition"/>. </summary>
-        /// <param name="propertyName"> Serialized Name: AutomationRulePropertyValuesChangedCondition.propertyName. </param>
-        /// <param name="changeType"> Serialized Name: AutomationRulePropertyValuesChangedCondition.changeType. </param>
-        /// <param name="operator"> Serialized Name: AutomationRulePropertyValuesChangedCondition.operator. </param>
-        /// <param name="propertyValues"> Serialized Name: AutomationRulePropertyValuesChangedCondition.propertyValues. </param>
+        /// <param name="propertyName"></param>
+        /// <param name="changeType"></param>
+        /// <param name="operator"></param>
+        /// <param name="propertyValues"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutomationRulePropertyValuesChangedCondition(AutomationRulePropertyChangedConditionSupportedPropertyType? propertyName, AutomationRulePropertyChangedConditionSupportedChangedType? changeType, AutomationRulePropertyConditionSupportedOperator? @operator, IList<string> propertyValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,13 +66,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: AutomationRulePropertyValuesChangedCondition.propertyName. </summary>
+        /// <summary> Gets or sets the property name. </summary>
         public AutomationRulePropertyChangedConditionSupportedPropertyType? PropertyName { get; set; }
-        /// <summary> Serialized Name: AutomationRulePropertyValuesChangedCondition.changeType. </summary>
+        /// <summary> Gets or sets the change type. </summary>
         public AutomationRulePropertyChangedConditionSupportedChangedType? ChangeType { get; set; }
-        /// <summary> Serialized Name: AutomationRulePropertyValuesChangedCondition.operator. </summary>
+        /// <summary> Gets or sets the operator. </summary>
         public AutomationRulePropertyConditionSupportedOperator? Operator { get; set; }
-        /// <summary> Serialized Name: AutomationRulePropertyValuesChangedCondition.propertyValues. </summary>
+        /// <summary> Gets the property values. </summary>
         public IList<string> PropertyValues { get; }
     }
 }

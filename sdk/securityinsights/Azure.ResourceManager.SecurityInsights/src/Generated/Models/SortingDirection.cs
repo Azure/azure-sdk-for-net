@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The direction to sort the results by.
-    /// Serialized Name: SortingDirection
-    /// </summary>
+    /// <summary> The direction to sort the results by. </summary>
     public readonly partial struct SortingDirection : IEquatable<SortingDirection>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ASCValue = "ASC";
         private const string DescValue = "DESC";
 
-        /// <summary>
-        /// Indicates that the query should be sorted from lowest-to-highest value.
-        /// Serialized Name: SortingDirection.ASC
-        /// </summary>
+        /// <summary> Indicates that the query should be sorted from lowest-to-highest value. </summary>
         public static SortingDirection ASC { get; } = new SortingDirection(ASCValue);
-        /// <summary>
-        /// Indicates that the query should be sorted from lowest-to-highest value.
-        /// Serialized Name: SortingDirection.DESC
-        /// </summary>
+        /// <summary> Indicates that the query should be sorted from lowest-to-highest value. </summary>
         public static SortingDirection Desc { get; } = new SortingDirection(DescValue);
         /// <summary> Determines if two <see cref="SortingDirection"/> values are the same. </summary>
         public static bool operator ==(SortingDirection left, SortingDirection right) => left.Equals(right);

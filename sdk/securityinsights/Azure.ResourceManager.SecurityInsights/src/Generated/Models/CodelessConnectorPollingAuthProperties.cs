@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describe the authentication properties needed to successfully authenticate with the server
-    /// Serialized Name: CodelessConnectorPollingAuthProperties
-    /// </summary>
+    /// <summary> Describe the authentication properties needed to successfully authenticate with the server. </summary>
     public partial class CodelessConnectorPollingAuthProperties
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingAuthProperties"/>. </summary>
-        /// <param name="authType">
-        /// The authentication type
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.authType
-        /// </param>
+        /// <param name="authType"> The authentication type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authType"/> is null. </exception>
         public CodelessConnectorPollingAuthProperties(string authType)
         {
@@ -62,58 +56,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingAuthProperties"/>. </summary>
-        /// <param name="authType">
-        /// The authentication type
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.authType
-        /// </param>
-        /// <param name="apiKeyName">
-        /// The header name which the token is sent with
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.apiKeyName
-        /// </param>
-        /// <param name="apiKeyIdentifier">
-        /// A prefix send in the header before the actual token
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.apiKeyIdentifier
-        /// </param>
-        /// <param name="isApiKeyInPostPayload">
-        /// Marks if the key should sent in header
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.isApiKeyInPostPayload
-        /// </param>
-        /// <param name="flowName">
-        /// Describes the flow name, for example 'AuthCode' for Oauth 2.0
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.flowName
-        /// </param>
-        /// <param name="tokenEndpoint">
-        /// The endpoint used to issue a token, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.tokenEndpoint
-        /// </param>
-        /// <param name="authorizationEndpoint">
-        /// The endpoint used to authorize the user, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.authorizationEndpoint
-        /// </param>
-        /// <param name="authorizationEndpointQueryParameters">
-        /// The query parameters used in authorization request, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.authorizationEndpointQueryParameters
-        /// </param>
-        /// <param name="redirectionEndpoint">
-        /// The redirect endpoint where we will get the authorization code, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.redirectionEndpoint
-        /// </param>
-        /// <param name="tokenEndpointHeaders">
-        /// The query headers used in token request, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.tokenEndpointHeaders
-        /// </param>
-        /// <param name="tokenEndpointQueryParameters">
-        /// The query parameters used in token request, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.tokenEndpointQueryParameters
-        /// </param>
-        /// <param name="isClientSecretInHeader">
-        /// Marks if we should send the client secret in header or payload, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.isClientSecretInHeader
-        /// </param>
-        /// <param name="scope">
-        /// The OAuth token scope
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.scope
-        /// </param>
+        /// <param name="authType"> The authentication type. </param>
+        /// <param name="apiKeyName"> The header name which the token is sent with. </param>
+        /// <param name="apiKeyIdentifier"> A prefix send in the header before the actual token. </param>
+        /// <param name="isApiKeyInPostPayload"> Marks if the key should sent in header. </param>
+        /// <param name="flowName"> Describes the flow name, for example 'AuthCode' for Oauth 2.0. </param>
+        /// <param name="tokenEndpoint"> The endpoint used to issue a token, used in Oauth 2.0 flow. </param>
+        /// <param name="authorizationEndpoint"> The endpoint used to authorize the user, used in Oauth 2.0 flow. </param>
+        /// <param name="authorizationEndpointQueryParameters"> The query parameters used in authorization request, used in Oauth 2.0 flow. </param>
+        /// <param name="redirectionEndpoint"> The redirect endpoint where we will get the authorization code, used in Oauth 2.0 flow. </param>
+        /// <param name="tokenEndpointHeaders"> The query headers used in token request, used in Oauth 2.0 flow. </param>
+        /// <param name="tokenEndpointQueryParameters"> The query parameters used in token request, used in Oauth 2.0 flow. </param>
+        /// <param name="isClientSecretInHeader"> Marks if we should send the client secret in header or payload, used in Oauth 2.0 flow. </param>
+        /// <param name="scope"> The OAuth token scope. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CodelessConnectorPollingAuthProperties(string authType, string apiKeyName, string apiKeyIdentifier, string isApiKeyInPostPayload, string flowName, string tokenEndpoint, string authorizationEndpoint, BinaryData authorizationEndpointQueryParameters, string redirectionEndpoint, BinaryData tokenEndpointHeaders, BinaryData tokenEndpointQueryParameters, bool? isClientSecretInHeader, string scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -138,44 +93,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// The authentication type
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.authType
-        /// </summary>
+        /// <summary> The authentication type. </summary>
         public string AuthType { get; set; }
-        /// <summary>
-        /// The header name which the token is sent with
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.apiKeyName
-        /// </summary>
+        /// <summary> The header name which the token is sent with. </summary>
         public string ApiKeyName { get; set; }
-        /// <summary>
-        /// A prefix send in the header before the actual token
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.apiKeyIdentifier
-        /// </summary>
+        /// <summary> A prefix send in the header before the actual token. </summary>
         public string ApiKeyIdentifier { get; set; }
-        /// <summary>
-        /// Marks if the key should sent in header
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.isApiKeyInPostPayload
-        /// </summary>
+        /// <summary> Marks if the key should sent in header. </summary>
         public string IsApiKeyInPostPayload { get; set; }
-        /// <summary>
-        /// Describes the flow name, for example 'AuthCode' for Oauth 2.0
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.flowName
-        /// </summary>
+        /// <summary> Describes the flow name, for example 'AuthCode' for Oauth 2.0. </summary>
         public string FlowName { get; set; }
-        /// <summary>
-        /// The endpoint used to issue a token, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.tokenEndpoint
-        /// </summary>
+        /// <summary> The endpoint used to issue a token, used in Oauth 2.0 flow. </summary>
         public string TokenEndpoint { get; set; }
-        /// <summary>
-        /// The endpoint used to authorize the user, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.authorizationEndpoint
-        /// </summary>
+        /// <summary> The endpoint used to authorize the user, used in Oauth 2.0 flow. </summary>
         public string AuthorizationEndpoint { get; set; }
         /// <summary>
         /// The query parameters used in authorization request, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.authorizationEndpointQueryParameters
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -205,14 +138,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public BinaryData AuthorizationEndpointQueryParameters { get; set; }
-        /// <summary>
-        /// The redirect endpoint where we will get the authorization code, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.redirectionEndpoint
-        /// </summary>
+        /// <summary> The redirect endpoint where we will get the authorization code, used in Oauth 2.0 flow. </summary>
         public string RedirectionEndpoint { get; set; }
         /// <summary>
         /// The query headers used in token request, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.tokenEndpointHeaders
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -244,7 +173,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public BinaryData TokenEndpointHeaders { get; set; }
         /// <summary>
         /// The query parameters used in token request, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.tokenEndpointQueryParameters
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -274,15 +202,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public BinaryData TokenEndpointQueryParameters { get; set; }
-        /// <summary>
-        /// Marks if we should send the client secret in header or payload, used in Oauth 2.0 flow
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.isClientSecretInHeader
-        /// </summary>
+        /// <summary> Marks if we should send the client secret in header or payload, used in Oauth 2.0 flow. </summary>
         public bool? IsClientSecretInHeader { get; set; }
-        /// <summary>
-        /// The OAuth token scope
-        /// Serialized Name: CodelessConnectorPollingAuthProperties.scope
-        /// </summary>
+        /// <summary> The OAuth token scope. </summary>
         public string Scope { get; set; }
     }
 }

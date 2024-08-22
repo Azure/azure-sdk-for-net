@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WritePropertyName("queryId"u8);
             writer.WriteStringValue(QueryId);
             writer.WritePropertyName("bucketStartTimeUTC"u8);
-            writer.WriteStringValue(BucketStartTimeUTC, "O");
+            writer.WriteStringValue(BucketStartOn, "O");
             writer.WritePropertyName("bucketEndTimeUTC"u8);
-            writer.WriteStringValue(BucketEndTimeUTC, "O");
+            writer.WriteStringValue(BucketEndOn, "O");
             writer.WritePropertyName("firstActivityTimeUTC"u8);
-            writer.WriteStringValue(FirstActivityTimeUTC, "O");
+            writer.WriteStringValue(FirstActivityOn, "O");
             writer.WritePropertyName("lastActivityTimeUTC"u8);
-            writer.WriteStringValue(LastActivityTimeUTC, "O");
+            writer.WriteStringValue(LastActivityOn, "O");
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
             writer.WritePropertyName("title"u8);

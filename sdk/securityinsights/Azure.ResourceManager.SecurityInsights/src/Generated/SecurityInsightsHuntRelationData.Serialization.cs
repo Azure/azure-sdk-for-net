@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityInsights
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string relatedResourceId = default;
+            ResourceIdentifier relatedResourceId = default;
             string relatedResourceName = default;
             string relationType = default;
             string relatedResourceKind = default;
@@ -181,7 +181,11 @@ namespace Azure.ResourceManager.SecurityInsights
                     {
                         if (property0.NameEquals("relatedResourceId"u8))
                         {
-                            relatedResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            relatedResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("relatedResourceName"u8))

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The classification reason the incident was closed with
-    /// Serialized Name: IncidentClassificationReason
-    /// </summary>
+    /// <summary> The classification reason the incident was closed with. </summary>
     public readonly partial struct SecurityInsightsIncidentClassificationReason : IEquatable<SecurityInsightsIncidentClassificationReason>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string IncorrectAlertLogicValue = "IncorrectAlertLogic";
         private const string InaccurateDataValue = "InaccurateData";
 
-        /// <summary>
-        /// Classification reason was suspicious activity
-        /// Serialized Name: IncidentClassificationReason.SuspiciousActivity
-        /// </summary>
+        /// <summary> Classification reason was suspicious activity. </summary>
         public static SecurityInsightsIncidentClassificationReason SuspiciousActivity { get; } = new SecurityInsightsIncidentClassificationReason(SuspiciousActivityValue);
-        /// <summary>
-        /// Classification reason was suspicious but expected
-        /// Serialized Name: IncidentClassificationReason.SuspiciousButExpected
-        /// </summary>
+        /// <summary> Classification reason was suspicious but expected. </summary>
         public static SecurityInsightsIncidentClassificationReason SuspiciousButExpected { get; } = new SecurityInsightsIncidentClassificationReason(SuspiciousButExpectedValue);
-        /// <summary>
-        /// Classification reason was incorrect alert logic
-        /// Serialized Name: IncidentClassificationReason.IncorrectAlertLogic
-        /// </summary>
+        /// <summary> Classification reason was incorrect alert logic. </summary>
         public static SecurityInsightsIncidentClassificationReason IncorrectAlertLogic { get; } = new SecurityInsightsIncidentClassificationReason(IncorrectAlertLogicValue);
-        /// <summary>
-        /// Classification reason was inaccurate data
-        /// Serialized Name: IncidentClassificationReason.InaccurateData
-        /// </summary>
+        /// <summary> Classification reason was inaccurate data. </summary>
         public static SecurityInsightsIncidentClassificationReason InaccurateData { get; } = new SecurityInsightsIncidentClassificationReason(InaccurateDataValue);
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentClassificationReason"/> values are the same. </summary>
         public static bool operator ==(SecurityInsightsIncidentClassificationReason left, SecurityInsightsIncidentClassificationReason right) => left.Equals(right);

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsRecommendation data model.
     /// Recommendation object.
-    /// Serialized Name: Recommendation
     /// </summary>
     public partial class SecurityInsightsRecommendationData : ResourceData
     {
@@ -64,60 +63,27 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="recommendationTypeId">
-        /// Id of the recommendation type.
-        /// Serialized Name: Recommendation.properties.recommendationTypeId
-        /// </param>
-        /// <param name="state">
-        /// State of the recommendation.
-        /// Serialized Name: Recommendation.properties.state
-        /// </param>
-        /// <param name="title">
-        /// Title of the recommendation.
-        /// Serialized Name: Recommendation.properties.title
-        /// </param>
-        /// <param name="description">
-        /// Description of the recommendation.
-        /// Serialized Name: Recommendation.properties.description
-        /// </param>
-        /// <param name="creationTimeUtc">
-        /// The time stamp (UTC) when the recommendation was created.
-        /// Serialized Name: Recommendation.properties.creationTimeUtc
-        /// </param>
-        /// <param name="lastEvaluatedTimeUtc">
-        /// The time stamp (UTC) when the recommendation was last evaluated.
-        /// Serialized Name: Recommendation.properties.lastEvaluatedTimeUtc
-        /// </param>
-        /// <param name="lastModifiedTimeUtc">
-        /// The time stamp (UTC) when the recommendation was last modified.
-        /// Serialized Name: Recommendation.properties.lastModifiedTimeUtc
-        /// </param>
-        /// <param name="suggestions">
-        /// List of suggestions to take for this recommendation.
-        /// Serialized Name: Recommendation.properties.suggestions
-        /// </param>
-        /// <param name="resourceId">
-        /// Id of the resource this recommendation refers to.
-        /// Serialized Name: Recommendation.properties.resourceId
-        /// </param>
-        /// <param name="additionalProperties">
-        /// Collection of additional properties for the recommendation.
-        /// Serialized Name: Recommendation.properties.additionalProperties
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="recommendationTypeId"> Id of the recommendation type. </param>
+        /// <param name="state"> State of the recommendation. </param>
+        /// <param name="title"> Title of the recommendation. </param>
+        /// <param name="description"> Description of the recommendation. </param>
+        /// <param name="createdOn"> The time stamp (UTC) when the recommendation was created. </param>
+        /// <param name="lastEvaluatedOn"> The time stamp (UTC) when the recommendation was last evaluated. </param>
+        /// <param name="lastModifiedOn"> The time stamp (UTC) when the recommendation was last modified. </param>
+        /// <param name="suggestions"> List of suggestions to take for this recommendation. </param>
+        /// <param name="resourceId"> Id of the resource this recommendation refers to. </param>
+        /// <param name="additionalProperties"> Collection of additional properties for the recommendation. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsRecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationTypeId, State? state, string title, string description, DateTimeOffset? creationTimeUtc, DateTimeOffset? lastEvaluatedTimeUtc, DateTimeOffset? lastModifiedTimeUtc, IList<RecommendedSuggestion> suggestions, string resourceId, IDictionary<string, string> additionalProperties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SecurityInsightsRecommendationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string recommendationTypeId, RecommendationState? state, string title, string description, DateTimeOffset? createdOn, DateTimeOffset? lastEvaluatedOn, DateTimeOffset? lastModifiedOn, IList<RecommendedSuggestion> suggestions, string resourceId, IDictionary<string, string> additionalProperties, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RecommendationTypeId = recommendationTypeId;
             State = state;
             Title = title;
             Description = description;
-            CreationTimeUtc = creationTimeUtc;
-            LastEvaluatedTimeUtc = lastEvaluatedTimeUtc;
-            LastModifiedTimeUtc = lastModifiedTimeUtc;
+            CreatedOn = createdOn;
+            LastEvaluatedOn = lastEvaluatedOn;
+            LastModifiedOn = lastModifiedOn;
             Suggestions = suggestions;
             ResourceId = resourceId;
             AdditionalProperties = additionalProperties;
@@ -125,60 +91,27 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Id of the recommendation type.
-        /// Serialized Name: Recommendation.properties.recommendationTypeId
-        /// </summary>
+        /// <summary> Id of the recommendation type. </summary>
         public string RecommendationTypeId { get; set; }
-        /// <summary>
-        /// State of the recommendation.
-        /// Serialized Name: Recommendation.properties.state
-        /// </summary>
-        public State? State { get; set; }
-        /// <summary>
-        /// Title of the recommendation.
-        /// Serialized Name: Recommendation.properties.title
-        /// </summary>
+        /// <summary> State of the recommendation. </summary>
+        public RecommendationState? State { get; set; }
+        /// <summary> Title of the recommendation. </summary>
         public string Title { get; set; }
-        /// <summary>
-        /// Description of the recommendation.
-        /// Serialized Name: Recommendation.properties.description
-        /// </summary>
+        /// <summary> Description of the recommendation. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The time stamp (UTC) when the recommendation was created.
-        /// Serialized Name: Recommendation.properties.creationTimeUtc
-        /// </summary>
-        public DateTimeOffset? CreationTimeUtc { get; set; }
-        /// <summary>
-        /// The time stamp (UTC) when the recommendation was last evaluated.
-        /// Serialized Name: Recommendation.properties.lastEvaluatedTimeUtc
-        /// </summary>
-        public DateTimeOffset? LastEvaluatedTimeUtc { get; set; }
-        /// <summary>
-        /// The time stamp (UTC) when the recommendation was last modified.
-        /// Serialized Name: Recommendation.properties.lastModifiedTimeUtc
-        /// </summary>
-        public DateTimeOffset? LastModifiedTimeUtc { get; set; }
-        /// <summary>
-        /// List of suggestions to take for this recommendation.
-        /// Serialized Name: Recommendation.properties.suggestions
-        /// </summary>
+        /// <summary> The time stamp (UTC) when the recommendation was created. </summary>
+        public DateTimeOffset? CreatedOn { get; set; }
+        /// <summary> The time stamp (UTC) when the recommendation was last evaluated. </summary>
+        public DateTimeOffset? LastEvaluatedOn { get; set; }
+        /// <summary> The time stamp (UTC) when the recommendation was last modified. </summary>
+        public DateTimeOffset? LastModifiedOn { get; set; }
+        /// <summary> List of suggestions to take for this recommendation. </summary>
         public IList<RecommendedSuggestion> Suggestions { get; }
-        /// <summary>
-        /// Id of the resource this recommendation refers to.
-        /// Serialized Name: Recommendation.properties.resourceId
-        /// </summary>
+        /// <summary> Id of the resource this recommendation refers to. </summary>
         public string ResourceId { get; set; }
-        /// <summary>
-        /// Collection of additional properties for the recommendation.
-        /// Serialized Name: Recommendation.properties.additionalProperties
-        /// </summary>
+        /// <summary> Collection of additional properties for the recommendation. </summary>
         public IDictionary<string, string> AdditionalProperties { get; set; }
-        /// <summary>
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </summary>
+        /// <summary> Etag of the azure resource. </summary>
         public ETag? ETag { get; set; }
     }
 }

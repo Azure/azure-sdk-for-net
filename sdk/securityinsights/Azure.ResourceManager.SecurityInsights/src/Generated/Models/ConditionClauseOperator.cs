@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents an operator in a ConditionClause.
-    /// Serialized Name: Operator
-    /// </summary>
+    /// <summary> Represents an operator in a ConditionClause. </summary>
     public readonly partial struct ConditionClauseOperator : IEquatable<ConditionClauseOperator>
     {
         private readonly string _value;
@@ -52,135 +49,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string OnOrBeforeAbsoluteValue = "OnOrBeforeAbsolute";
         private const string BeforeAbsoluteValue = "BeforeAbsolute";
 
-        /// <summary>
-        /// Equals
-        /// Serialized Name: Operator.Equals
-        /// </summary>
+        /// <summary> Equals. </summary>
         public static ConditionClauseOperator EqualsValue { get; } = new ConditionClauseOperator(EqualsValueValue);
-        /// <summary>
-        /// NotEquals
-        /// Serialized Name: Operator.NotEquals
-        /// </summary>
+        /// <summary> NotEquals. </summary>
         public static ConditionClauseOperator NotEquals { get; } = new ConditionClauseOperator(NotEqualsValue);
-        /// <summary>
-        /// LessThan
-        /// Serialized Name: Operator.LessThan
-        /// </summary>
+        /// <summary> LessThan. </summary>
         public static ConditionClauseOperator LessThan { get; } = new ConditionClauseOperator(LessThanValue);
-        /// <summary>
-        /// LessThanEqual
-        /// Serialized Name: Operator.LessThanEqual
-        /// </summary>
+        /// <summary> LessThanEqual. </summary>
         public static ConditionClauseOperator LessThanEqual { get; } = new ConditionClauseOperator(LessThanEqualValue);
-        /// <summary>
-        /// GreaterThan
-        /// Serialized Name: Operator.GreaterThan
-        /// </summary>
+        /// <summary> GreaterThan. </summary>
         public static ConditionClauseOperator GreaterThan { get; } = new ConditionClauseOperator(GreaterThanValue);
-        /// <summary>
-        /// GreaterThanEqual
-        /// Serialized Name: Operator.GreaterThanEqual
-        /// </summary>
+        /// <summary> GreaterThanEqual. </summary>
         public static ConditionClauseOperator GreaterThanEqual { get; } = new ConditionClauseOperator(GreaterThanEqualValue);
-        /// <summary>
-        /// StringContains
-        /// Serialized Name: Operator.StringContains
-        /// </summary>
+        /// <summary> StringContains. </summary>
         public static ConditionClauseOperator StringContains { get; } = new ConditionClauseOperator(StringContainsValue);
-        /// <summary>
-        /// StringNotContains
-        /// Serialized Name: Operator.StringNotContains
-        /// </summary>
+        /// <summary> StringNotContains. </summary>
         public static ConditionClauseOperator StringNotContains { get; } = new ConditionClauseOperator(StringNotContainsValue);
-        /// <summary>
-        /// StringStartsWith
-        /// Serialized Name: Operator.StringStartsWith
-        /// </summary>
+        /// <summary> StringStartsWith. </summary>
         public static ConditionClauseOperator StringStartsWith { get; } = new ConditionClauseOperator(StringStartsWithValue);
-        /// <summary>
-        /// StringNotStartsWith
-        /// Serialized Name: Operator.StringNotStartsWith
-        /// </summary>
+        /// <summary> StringNotStartsWith. </summary>
         public static ConditionClauseOperator StringNotStartsWith { get; } = new ConditionClauseOperator(StringNotStartsWithValue);
-        /// <summary>
-        /// StringEndsWith
-        /// Serialized Name: Operator.StringEndsWith
-        /// </summary>
+        /// <summary> StringEndsWith. </summary>
         public static ConditionClauseOperator StringEndsWith { get; } = new ConditionClauseOperator(StringEndsWithValue);
-        /// <summary>
-        /// StringNotEndsWith
-        /// Serialized Name: Operator.StringNotEndsWith
-        /// </summary>
+        /// <summary> StringNotEndsWith. </summary>
         public static ConditionClauseOperator StringNotEndsWith { get; } = new ConditionClauseOperator(StringNotEndsWithValue);
-        /// <summary>
-        /// StringIsEmpty
-        /// Serialized Name: Operator.StringIsEmpty
-        /// </summary>
+        /// <summary> StringIsEmpty. </summary>
         public static ConditionClauseOperator StringIsEmpty { get; } = new ConditionClauseOperator(StringIsEmptyValue);
-        /// <summary>
-        /// IsNull
-        /// Serialized Name: Operator.IsNull
-        /// </summary>
+        /// <summary> IsNull. </summary>
         public static ConditionClauseOperator IsNull { get; } = new ConditionClauseOperator(IsNullValue);
-        /// <summary>
-        /// IsTrue
-        /// Serialized Name: Operator.IsTrue
-        /// </summary>
+        /// <summary> IsTrue. </summary>
         public static ConditionClauseOperator IsTrue { get; } = new ConditionClauseOperator(IsTrueValue);
-        /// <summary>
-        /// IsFalse
-        /// Serialized Name: Operator.IsFalse
-        /// </summary>
+        /// <summary> IsFalse. </summary>
         public static ConditionClauseOperator IsFalse { get; } = new ConditionClauseOperator(IsFalseValue);
-        /// <summary>
-        /// ArrayContains
-        /// Serialized Name: Operator.ArrayContains
-        /// </summary>
+        /// <summary> ArrayContains. </summary>
         public static ConditionClauseOperator ArrayContains { get; } = new ConditionClauseOperator(ArrayContainsValue);
-        /// <summary>
-        /// ArrayNotContains
-        /// Serialized Name: Operator.ArrayNotContains
-        /// </summary>
+        /// <summary> ArrayNotContains. </summary>
         public static ConditionClauseOperator ArrayNotContains { get; } = new ConditionClauseOperator(ArrayNotContainsValue);
-        /// <summary>
-        /// OnOrAfterRelative
-        /// Serialized Name: Operator.OnOrAfterRelative
-        /// </summary>
+        /// <summary> OnOrAfterRelative. </summary>
         public static ConditionClauseOperator OnOrAfterRelative { get; } = new ConditionClauseOperator(OnOrAfterRelativeValue);
-        /// <summary>
-        /// AfterRelative
-        /// Serialized Name: Operator.AfterRelative
-        /// </summary>
+        /// <summary> AfterRelative. </summary>
         public static ConditionClauseOperator AfterRelative { get; } = new ConditionClauseOperator(AfterRelativeValue);
-        /// <summary>
-        /// OnOrBeforeRelative
-        /// Serialized Name: Operator.OnOrBeforeRelative
-        /// </summary>
+        /// <summary> OnOrBeforeRelative. </summary>
         public static ConditionClauseOperator OnOrBeforeRelative { get; } = new ConditionClauseOperator(OnOrBeforeRelativeValue);
-        /// <summary>
-        /// BeforeRelative
-        /// Serialized Name: Operator.BeforeRelative
-        /// </summary>
+        /// <summary> BeforeRelative. </summary>
         public static ConditionClauseOperator BeforeRelative { get; } = new ConditionClauseOperator(BeforeRelativeValue);
-        /// <summary>
-        /// OnOrAfterAbsolute
-        /// Serialized Name: Operator.OnOrAfterAbsolute
-        /// </summary>
+        /// <summary> OnOrAfterAbsolute. </summary>
         public static ConditionClauseOperator OnOrAfterAbsolute { get; } = new ConditionClauseOperator(OnOrAfterAbsoluteValue);
-        /// <summary>
-        /// AfterAbsolute
-        /// Serialized Name: Operator.AfterAbsolute
-        /// </summary>
+        /// <summary> AfterAbsolute. </summary>
         public static ConditionClauseOperator AfterAbsolute { get; } = new ConditionClauseOperator(AfterAbsoluteValue);
-        /// <summary>
-        /// OnOrBeforeAbsolute
-        /// Serialized Name: Operator.OnOrBeforeAbsolute
-        /// </summary>
+        /// <summary> OnOrBeforeAbsolute. </summary>
         public static ConditionClauseOperator OnOrBeforeAbsolute { get; } = new ConditionClauseOperator(OnOrBeforeAbsoluteValue);
-        /// <summary>
-        /// BeforeAbsolute
-        /// Serialized Name: Operator.BeforeAbsolute
-        /// </summary>
+        /// <summary> BeforeAbsolute. </summary>
         public static ConditionClauseOperator BeforeAbsolute { get; } = new ConditionClauseOperator(BeforeAbsoluteValue);
         /// <summary> Determines if two <see cref="ConditionClauseOperator"/> values are the same. </summary>
         public static bool operator ==(ConditionClauseOperator left, ConditionClauseOperator right) => left.Equals(right);

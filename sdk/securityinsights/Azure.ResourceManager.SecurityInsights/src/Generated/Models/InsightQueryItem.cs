@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents Insight Query.
-    /// Serialized Name: InsightQueryItem
-    /// </summary>
+    /// <summary> Represents Insight Query. </summary>
     public partial class InsightQueryItem : EntityQueryItem
     {
         /// <summary> Initializes a new instance of <see cref="InsightQueryItem"/>. </summary>
@@ -29,25 +26,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the entity query
-        /// Serialized Name: EntityQueryItem.kind
-        /// </param>
+        /// <param name="kind"> The kind of the entity query. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties">
-        /// Properties bag for InsightQueryItem
-        /// Serialized Name: InsightQueryItem.properties
-        /// </param>
+        /// <param name="properties"> Properties bag for InsightQueryItem. </param>
         internal InsightQueryItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, InsightQueryItemProperties properties) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             Properties = properties;
             Kind = kind;
         }
 
-        /// <summary>
-        /// Properties bag for InsightQueryItem
-        /// Serialized Name: InsightQueryItem.properties
-        /// </summary>
+        /// <summary> Properties bag for InsightQueryItem. </summary>
         public InsightQueryItemProperties Properties { get; }
     }
 }

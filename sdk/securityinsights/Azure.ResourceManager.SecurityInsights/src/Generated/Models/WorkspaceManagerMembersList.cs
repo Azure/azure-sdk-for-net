@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List of workspace manager members
-    /// Serialized Name: WorkspaceManagerMembersList
-    /// </summary>
+    /// <summary> List of workspace manager members. </summary>
     internal partial class WorkspaceManagerMembersList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerMembersList"/>. </summary>
-        /// <param name="value">
-        /// Array of workspace manager members
-        /// Serialized Name: WorkspaceManagerMembersList.value
-        /// </param>
+        /// <param name="value"> Array of workspace manager members. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WorkspaceManagerMembersList(IEnumerable<WorkspaceManagerMemberData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerMembersList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of workspace manager members
-        /// Serialized Name: WorkspaceManagerMembersList.nextLink
-        /// </param>
-        /// <param name="value">
-        /// Array of workspace manager members
-        /// Serialized Name: WorkspaceManagerMembersList.value
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of workspace manager members. </param>
+        /// <param name="value"> Array of workspace manager members. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkspaceManagerMembersList(string nextLink, IReadOnlyList<WorkspaceManagerMemberData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of workspace manager members
-        /// Serialized Name: WorkspaceManagerMembersList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of workspace manager members. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Array of workspace manager members
-        /// Serialized Name: WorkspaceManagerMembersList.value
-        /// </summary>
+        /// <summary> Array of workspace manager members. </summary>
         public IReadOnlyList<WorkspaceManagerMemberData> Value { get; }
     }
 }

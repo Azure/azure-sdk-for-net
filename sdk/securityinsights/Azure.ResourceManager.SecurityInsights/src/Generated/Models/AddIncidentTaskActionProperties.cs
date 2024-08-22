@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The AddIncidentTaskActionProperties.
-    /// Serialized Name: AddIncidentTaskActionProperties
-    /// </summary>
+    /// <summary> The AddIncidentTaskActionProperties. </summary>
     public partial class AddIncidentTaskActionProperties
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AddIncidentTaskActionProperties"/>. </summary>
-        /// <param name="title">
-        /// The title of the task.
-        /// Serialized Name: AddIncidentTaskActionProperties.title
-        /// </param>
+        /// <param name="title"> The title of the task. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="title"/> is null. </exception>
         public AddIncidentTaskActionProperties(string title)
         {
@@ -62,14 +56,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AddIncidentTaskActionProperties"/>. </summary>
-        /// <param name="title">
-        /// The title of the task.
-        /// Serialized Name: AddIncidentTaskActionProperties.title
-        /// </param>
-        /// <param name="description">
-        /// The description of the task.
-        /// Serialized Name: AddIncidentTaskActionProperties.description
-        /// </param>
+        /// <param name="title"> The title of the task. </param>
+        /// <param name="description"> The description of the task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AddIncidentTaskActionProperties(string title, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -83,15 +71,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// The title of the task.
-        /// Serialized Name: AddIncidentTaskActionProperties.title
-        /// </summary>
+        /// <summary> The title of the task. </summary>
         public string Title { get; set; }
-        /// <summary>
-        /// The description of the task.
-        /// Serialized Name: AddIncidentTaskActionProperties.description
-        /// </summary>
+        /// <summary> The description of the task. </summary>
         public string Description { get; set; }
     }
 }

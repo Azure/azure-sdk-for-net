@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents a Fusion scenario exclusion patterns in Fusion detection.
-    /// Serialized Name: FusionScenarioExclusionPattern
-    /// </summary>
+    /// <summary> Represents a Fusion scenario exclusion patterns in Fusion detection. </summary>
     public partial class FusionScenarioExclusionPattern
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FusionScenarioExclusionPattern"/>. </summary>
-        /// <param name="exclusionPattern">
-        /// Scenario exclusion pattern.
-        /// Serialized Name: FusionScenarioExclusionPattern.exclusionPattern
-        /// </param>
-        /// <param name="dateAddedInUTC">
-        /// DateTime when scenario exclusion pattern is added in UTC.
-        /// Serialized Name: FusionScenarioExclusionPattern.dateAddedInUTC
-        /// </param>
+        /// <param name="exclusionPattern"> Scenario exclusion pattern. </param>
+        /// <param name="dateAddedInUTC"> DateTime when scenario exclusion pattern is added in UTC. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="exclusionPattern"/> or <paramref name="dateAddedInUTC"/> is null. </exception>
         public FusionScenarioExclusionPattern(string exclusionPattern, string dateAddedInUTC)
         {
@@ -68,14 +59,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FusionScenarioExclusionPattern"/>. </summary>
-        /// <param name="exclusionPattern">
-        /// Scenario exclusion pattern.
-        /// Serialized Name: FusionScenarioExclusionPattern.exclusionPattern
-        /// </param>
-        /// <param name="dateAddedInUTC">
-        /// DateTime when scenario exclusion pattern is added in UTC.
-        /// Serialized Name: FusionScenarioExclusionPattern.dateAddedInUTC
-        /// </param>
+        /// <param name="exclusionPattern"> Scenario exclusion pattern. </param>
+        /// <param name="dateAddedInUTC"> DateTime when scenario exclusion pattern is added in UTC. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FusionScenarioExclusionPattern(string exclusionPattern, string dateAddedInUTC, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -89,15 +74,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Scenario exclusion pattern.
-        /// Serialized Name: FusionScenarioExclusionPattern.exclusionPattern
-        /// </summary>
+        /// <summary> Scenario exclusion pattern. </summary>
         public string ExclusionPattern { get; set; }
-        /// <summary>
-        /// DateTime when scenario exclusion pattern is added in UTC.
-        /// Serialized Name: FusionScenarioExclusionPattern.dateAddedInUTC
-        /// </summary>
+        /// <summary> DateTime when scenario exclusion pattern is added in UTC. </summary>
         public string DateAddedInUTC { get; set; }
     }
 }

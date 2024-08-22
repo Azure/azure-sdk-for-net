@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The anomaly SecurityMLAnalyticsSettings status
-    /// Serialized Name: SettingsStatus
-    /// </summary>
+    /// <summary> The anomaly SecurityMLAnalyticsSettings status. </summary>
     public readonly partial struct AnomalySecurityMLAnalyticsSettingsStatus : IEquatable<AnomalySecurityMLAnalyticsSettingsStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ProductionValue = "Production";
         private const string FlightingValue = "Flighting";
 
-        /// <summary>
-        /// Anomaly settings status in Production mode
-        /// Serialized Name: SettingsStatus.Production
-        /// </summary>
+        /// <summary> Anomaly settings status in Production mode. </summary>
         public static AnomalySecurityMLAnalyticsSettingsStatus Production { get; } = new AnomalySecurityMLAnalyticsSettingsStatus(ProductionValue);
-        /// <summary>
-        /// Anomaly settings status in Flighting mode
-        /// Serialized Name: SettingsStatus.Flighting
-        /// </summary>
+        /// <summary> Anomaly settings status in Flighting mode. </summary>
         public static AnomalySecurityMLAnalyticsSettingsStatus Flighting { get; } = new AnomalySecurityMLAnalyticsSettingsStatus(FlightingValue);
         /// <summary> Determines if two <see cref="AnomalySecurityMLAnalyticsSettingsStatus"/> values are the same. </summary>
         public static bool operator ==(AnomalySecurityMLAnalyticsSettingsStatus left, AnomalySecurityMLAnalyticsSettingsStatus right) => left.Equals(right);

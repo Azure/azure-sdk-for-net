@@ -7,36 +7,18 @@
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The operating system type.
-    /// Serialized Name: OSFamily
-    /// </summary>
+    /// <summary> The operating system type. </summary>
     public enum SecurityInsightsHostOSFamily
     {
-        /// <summary>
-        /// Host with Unknown operating system.
-        /// Serialized Name: OSFamily.Unknown
-        /// </summary>
+        /// <summary> Host with Unknown operating system. </summary>
         Unknown,
-        /// <summary>
-        /// Host with Linux operating system.
-        /// Serialized Name: OSFamily.Linux
-        /// </summary>
+        /// <summary> Host with Linux operating system. </summary>
         Linux,
-        /// <summary>
-        /// Host with Windows operating system.
-        /// Serialized Name: OSFamily.Windows
-        /// </summary>
+        /// <summary> Host with Windows operating system. </summary>
         Windows,
-        /// <summary>
-        /// Host with Android operating system.
-        /// Serialized Name: OSFamily.Android
-        /// </summary>
+        /// <summary> Host with Android operating system. </summary>
         Android,
-        /// <summary>
-        /// Host with IOS operating system.
-        /// Serialized Name: OSFamily.IOS
-        /// </summary>
+        /// <summary> Host with IOS operating system. </summary>
         Ios
     }
 }

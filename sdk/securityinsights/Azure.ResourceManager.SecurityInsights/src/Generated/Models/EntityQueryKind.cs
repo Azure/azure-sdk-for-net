@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The EntityQueryKind.
-    /// Serialized Name: EntityQueryKind
-    /// </summary>
+    /// <summary> The EntityQueryKind. </summary>
     public readonly partial struct EntityQueryKind : IEquatable<EntityQueryKind>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ExpansionValue = "Expansion";
         private const string ActivityValue = "Activity";
 
-        /// <summary>
-        /// Expansion
-        /// Serialized Name: EntityQueryKind.Expansion
-        /// </summary>
+        /// <summary> Expansion. </summary>
         public static EntityQueryKind Expansion { get; } = new EntityQueryKind(ExpansionValue);
-        /// <summary>
-        /// Activity
-        /// Serialized Name: EntityQueryKind.Activity
-        /// </summary>
+        /// <summary> Activity. </summary>
         public static EntityQueryKind Activity { get; } = new EntityQueryKind(ActivityValue);
         /// <summary> Determines if two <see cref="EntityQueryKind"/> values are the same. </summary>
         public static bool operator ==(EntityQueryKind left, EntityQueryKind right) => left.Equals(right);

@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The UiConfig for 'Customizable' connector definition kind.
-    /// Serialized Name: CustomizableConnectorUiConfig
-    /// </summary>
+    /// <summary> The UiConfig for 'Customizable' connector definition kind. </summary>
     public partial class CustomizableConnectorUiConfig
     {
         /// <summary>
@@ -50,38 +47,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CustomizableConnectorUiConfig"/>. </summary>
-        /// <param name="title">
-        /// Gets or sets the connector blade title.
-        /// Serialized Name: CustomizableConnectorUiConfig.title
-        /// </param>
-        /// <param name="publisher">
-        /// Gets or sets the connector publisher name.
-        /// Serialized Name: CustomizableConnectorUiConfig.publisher
-        /// </param>
-        /// <param name="descriptionMarkdown">
-        /// Gets or sets the connector description in markdown format.
-        /// Serialized Name: CustomizableConnectorUiConfig.descriptionMarkdown
-        /// </param>
-        /// <param name="graphQueries">
-        /// Gets or sets the graph queries to show the current data volume over time.
-        /// Serialized Name: CustomizableConnectorUiConfig.graphQueries
-        /// </param>
-        /// <param name="dataTypes">
-        /// Gets or sets the data types to check for last data received.
-        /// Serialized Name: CustomizableConnectorUiConfig.dataTypes
-        /// </param>
-        /// <param name="connectivityCriteria">
-        /// Gets or sets the way the connector checks whether the connector is connected.
-        /// Serialized Name: CustomizableConnectorUiConfig.connectivityCriteria
-        /// </param>
-        /// <param name="permissions">
-        /// The required Permissions for the connector.
-        /// Serialized Name: CustomizableConnectorUiConfig.permissions
-        /// </param>
-        /// <param name="instructionSteps">
-        /// Gets or sets the instruction steps to enable the connector.
-        /// Serialized Name: CustomizableConnectorUiConfig.instructionSteps
-        /// </param>
+        /// <param name="title"> Gets or sets the connector blade title. </param>
+        /// <param name="publisher"> Gets or sets the connector publisher name. </param>
+        /// <param name="descriptionMarkdown"> Gets or sets the connector description in markdown format. </param>
+        /// <param name="graphQueries"> Gets or sets the graph queries to show the current data volume over time. </param>
+        /// <param name="dataTypes"> Gets or sets the data types to check for last data received. </param>
+        /// <param name="connectivityCriteria"> Gets or sets the way the connector checks whether the connector is connected. </param>
+        /// <param name="permissions"> The required Permissions for the connector. </param>
+        /// <param name="instructionSteps"> Gets or sets the instruction steps to enable the connector. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="title"/>, <paramref name="publisher"/>, <paramref name="descriptionMarkdown"/>, <paramref name="graphQueries"/>, <paramref name="dataTypes"/>, <paramref name="connectivityCriteria"/>, <paramref name="permissions"/> or <paramref name="instructionSteps"/> is null. </exception>
         public CustomizableConnectorUiConfig(string title, string publisher, string descriptionMarkdown, IEnumerable<GraphQuery> graphQueries, IEnumerable<ConnectorDataType> dataTypes, IEnumerable<ConnectivityCriterion> connectivityCriteria, ConnectorDefinitionsPermissions permissions, IEnumerable<InstructionStep> instructionSteps)
         {
@@ -105,55 +78,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomizableConnectorUiConfig"/>. </summary>
-        /// <param name="id">
-        /// Gets or sets custom connector id. optional field.
-        /// Serialized Name: CustomizableConnectorUiConfig.id
-        /// </param>
-        /// <param name="title">
-        /// Gets or sets the connector blade title.
-        /// Serialized Name: CustomizableConnectorUiConfig.title
-        /// </param>
-        /// <param name="publisher">
-        /// Gets or sets the connector publisher name.
-        /// Serialized Name: CustomizableConnectorUiConfig.publisher
-        /// </param>
-        /// <param name="descriptionMarkdown">
-        /// Gets or sets the connector description in markdown format.
-        /// Serialized Name: CustomizableConnectorUiConfig.descriptionMarkdown
-        /// </param>
-        /// <param name="graphQueries">
-        /// Gets or sets the graph queries to show the current data volume over time.
-        /// Serialized Name: CustomizableConnectorUiConfig.graphQueries
-        /// </param>
-        /// <param name="dataTypes">
-        /// Gets or sets the data types to check for last data received.
-        /// Serialized Name: CustomizableConnectorUiConfig.dataTypes
-        /// </param>
-        /// <param name="connectivityCriteria">
-        /// Gets or sets the way the connector checks whether the connector is connected.
-        /// Serialized Name: CustomizableConnectorUiConfig.connectivityCriteria
-        /// </param>
-        /// <param name="availability">
-        /// The exposure status of the connector to the customers.
-        /// Serialized Name: CustomizableConnectorUiConfig.availability
-        /// </param>
-        /// <param name="permissions">
-        /// The required Permissions for the connector.
-        /// Serialized Name: CustomizableConnectorUiConfig.permissions
-        /// </param>
-        /// <param name="instructionSteps">
-        /// Gets or sets the instruction steps to enable the connector.
-        /// Serialized Name: CustomizableConnectorUiConfig.instructionSteps
-        /// </param>
+        /// <param name="id"> Gets or sets custom connector id. optional field. </param>
+        /// <param name="title"> Gets or sets the connector blade title. </param>
+        /// <param name="publisher"> Gets or sets the connector publisher name. </param>
+        /// <param name="descriptionMarkdown"> Gets or sets the connector description in markdown format. </param>
+        /// <param name="graphQueries"> Gets or sets the graph queries to show the current data volume over time. </param>
+        /// <param name="dataTypes"> Gets or sets the data types to check for last data received. </param>
+        /// <param name="connectivityCriteria"> Gets or sets the way the connector checks whether the connector is connected. </param>
+        /// <param name="availability"> The exposure status of the connector to the customers. </param>
+        /// <param name="permissions"> The required Permissions for the connector. </param>
+        /// <param name="instructionSteps"> Gets or sets the instruction steps to enable the connector. </param>
         /// <param name="logo">
         /// Gets or sets the connector logo to be used when displaying the connector within Azure Sentinel's connector's gallery.
         /// The logo value should be in SVG format.
-        /// Serialized Name: CustomizableConnectorUiConfig.logo
         /// </param>
-        /// <param name="isConnectivityCriteriasMatchSome">
-        /// Gets or sets a value indicating whether to use 'OR'(SOME) or 'AND' between ConnectivityCriteria items.
-        /// Serialized Name: CustomizableConnectorUiConfig.isConnectivityCriteriasMatchSome
-        /// </param>
+        /// <param name="isConnectivityCriteriasMatchSome"> Gets or sets a value indicating whether to use 'OR'(SOME) or 'AND' between ConnectivityCriteria items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomizableConnectorUiConfig(string id, string title, string publisher, string descriptionMarkdown, IList<GraphQuery> graphQueries, IList<ConnectorDataType> dataTypes, IList<ConnectivityCriterion> connectivityCriteria, ConnectorDefinitionsAvailability availability, ConnectorDefinitionsPermissions permissions, IList<InstructionStep> instructionSteps, string logo, bool? isConnectivityCriteriasMatchSome, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -177,66 +116,32 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Gets or sets custom connector id. optional field.
-        /// Serialized Name: CustomizableConnectorUiConfig.id
-        /// </summary>
+        /// <summary> Gets or sets custom connector id. optional field. </summary>
         public string Id { get; set; }
-        /// <summary>
-        /// Gets or sets the connector blade title.
-        /// Serialized Name: CustomizableConnectorUiConfig.title
-        /// </summary>
+        /// <summary> Gets or sets the connector blade title. </summary>
         public string Title { get; set; }
-        /// <summary>
-        /// Gets or sets the connector publisher name.
-        /// Serialized Name: CustomizableConnectorUiConfig.publisher
-        /// </summary>
+        /// <summary> Gets or sets the connector publisher name. </summary>
         public string Publisher { get; set; }
-        /// <summary>
-        /// Gets or sets the connector description in markdown format.
-        /// Serialized Name: CustomizableConnectorUiConfig.descriptionMarkdown
-        /// </summary>
+        /// <summary> Gets or sets the connector description in markdown format. </summary>
         public string DescriptionMarkdown { get; set; }
-        /// <summary>
-        /// Gets or sets the graph queries to show the current data volume over time.
-        /// Serialized Name: CustomizableConnectorUiConfig.graphQueries
-        /// </summary>
+        /// <summary> Gets or sets the graph queries to show the current data volume over time. </summary>
         public IList<GraphQuery> GraphQueries { get; }
-        /// <summary>
-        /// Gets or sets the data types to check for last data received.
-        /// Serialized Name: CustomizableConnectorUiConfig.dataTypes
-        /// </summary>
+        /// <summary> Gets or sets the data types to check for last data received. </summary>
         public IList<ConnectorDataType> DataTypes { get; }
-        /// <summary>
-        /// Gets or sets the way the connector checks whether the connector is connected.
-        /// Serialized Name: CustomizableConnectorUiConfig.connectivityCriteria
-        /// </summary>
+        /// <summary> Gets or sets the way the connector checks whether the connector is connected. </summary>
         public IList<ConnectivityCriterion> ConnectivityCriteria { get; }
-        /// <summary>
-        /// The exposure status of the connector to the customers.
-        /// Serialized Name: CustomizableConnectorUiConfig.availability
-        /// </summary>
+        /// <summary> The exposure status of the connector to the customers. </summary>
         public ConnectorDefinitionsAvailability Availability { get; set; }
-        /// <summary>
-        /// The required Permissions for the connector.
-        /// Serialized Name: CustomizableConnectorUiConfig.permissions
-        /// </summary>
+        /// <summary> The required Permissions for the connector. </summary>
         public ConnectorDefinitionsPermissions Permissions { get; set; }
-        /// <summary>
-        /// Gets or sets the instruction steps to enable the connector.
-        /// Serialized Name: CustomizableConnectorUiConfig.instructionSteps
-        /// </summary>
+        /// <summary> Gets or sets the instruction steps to enable the connector. </summary>
         public IList<InstructionStep> InstructionSteps { get; }
         /// <summary>
         /// Gets or sets the connector logo to be used when displaying the connector within Azure Sentinel's connector's gallery.
         /// The logo value should be in SVG format.
-        /// Serialized Name: CustomizableConnectorUiConfig.logo
         /// </summary>
         public string Logo { get; set; }
-        /// <summary>
-        /// Gets or sets a value indicating whether to use 'OR'(SOME) or 'AND' between ConnectivityCriteria items.
-        /// Serialized Name: CustomizableConnectorUiConfig.isConnectivityCriteriasMatchSome
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether to use 'OR'(SOME) or 'AND' between ConnectivityCriteria items. </summary>
         public bool? IsConnectivityCriteriasMatchSome { get; set; }
     }
 }

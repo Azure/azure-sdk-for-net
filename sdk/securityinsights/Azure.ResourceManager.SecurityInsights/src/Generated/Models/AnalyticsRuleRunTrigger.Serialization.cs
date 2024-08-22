@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("executionTimeUtc"u8);
-            writer.WriteStringValue(ExecutionTimeUtc, "O");
+            writer.WriteStringValue(ExecuteOn, "O");
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

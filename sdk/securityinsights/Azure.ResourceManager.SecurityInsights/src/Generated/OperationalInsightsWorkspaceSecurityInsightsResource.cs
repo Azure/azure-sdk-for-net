@@ -2318,18 +2318,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="enrichmentType"> Enrichment type. </param>
-        /// <param name="domainBody"> Domain name to be enriched. Only domain name is accepted. </param>
+        /// <param name="content"> Domain name to be enriched. Only domain name is accepted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainBody"/> is null. </exception>
-        public virtual async Task<Response<EnrichmentDomainWhois>> GetWhoisByDomainAsync(EnrichmentType enrichmentType, EnrichmentDomainBody domainBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<EnrichmentDomainWhois>> GetWhoisByDomainAsync(EnrichmentType enrichmentType, EnrichmentDomainContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(domainBody, nameof(domainBody));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("OperationalInsightsWorkspaceSecurityInsightsResource.GetWhoisByDomain");
             scope.Start();
             try
             {
-                var response = await _defaultRestClient.ListWhoisByDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enrichmentType, domainBody, cancellationToken).ConfigureAwait(false);
+                var response = await _defaultRestClient.ListWhoisByDomainAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enrichmentType, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2357,18 +2357,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </list>
         /// </summary>
         /// <param name="enrichmentType"> Enrichment type. </param>
-        /// <param name="domainBody"> Domain name to be enriched. Only domain name is accepted. </param>
+        /// <param name="content"> Domain name to be enriched. Only domain name is accepted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainBody"/> is null. </exception>
-        public virtual Response<EnrichmentDomainWhois> GetWhoisByDomain(EnrichmentType enrichmentType, EnrichmentDomainBody domainBody, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<EnrichmentDomainWhois> GetWhoisByDomain(EnrichmentType enrichmentType, EnrichmentDomainContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(domainBody, nameof(domainBody));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _defaultClientDiagnostics.CreateScope("OperationalInsightsWorkspaceSecurityInsightsResource.GetWhoisByDomain");
             scope.Start();
             try
             {
-                var response = _defaultRestClient.ListWhoisByDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enrichmentType, domainBody, cancellationToken);
+                var response = _defaultRestClient.ListWhoisByDomain(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, enrichmentType, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

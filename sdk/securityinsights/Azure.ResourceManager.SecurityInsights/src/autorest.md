@@ -17,8 +17,8 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-mgmt-debug: 
- show-serialized-names: true
+# mgmt-debug: 
+#  show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}: SecurityInsightsThreatIntelligenceIndicator
@@ -248,8 +248,9 @@ rename-mapping:
   DeploymentResult: SourceControlDeploymentResult
   DeploymentState: SourceControlDeploymentState
   EntityGetInsightsParameters.addDefaultExtendedTimeRange: IsDefaultExtendedTimeRangeAdded
-  EntityManualTriggerRequestBody.incidentArmId:  -|arm-id
-  EntityManualTriggerRequestBody.logicAppsResourceId:  -|arm-id
+  EntityManualTriggerRequestBody: EntityManualTriggerRequestContent
+  EntityManualTriggerRequestBody.incidentArmId: -|arm-id
+  EntityManualTriggerRequestBody.logicAppsResourceId: -|arm-id
   Error: PublicationFailedError
   Flag: MetadataFlag
   FusionSourceSettings.enabled: IsEnabled
@@ -266,16 +267,39 @@ rename-mapping:
   Permissions: ConnectorPermissions
   # Not working, check if we still need this.
   # ProductTemplateModelCollectionGetAllOptions.count: ReturnOnlyObjectCount
+  # PackageModelCollectionGetAllOptions 
+  # TemplateModelCollectionGetAllOptions 
+  # Confirm if this a guid or not
+  # OracleAuthModel.tenantId
   Repo: SourceControlRepo
   Repository: SourceControlRepository
   RequiredPermissions.action: IsCustomAction
   RequiredPermissions.delete: IsDeleteAction
   RequiredPermissions.read: IsReadAction
   RequiredPermissions.write: IsWriteAction
+  SourceControl.properties.id: SourceControlId | uuid
+  AssignmentItem.resourceId: -|arm-id
+  # Not working, check if we still need this.
+  EnrichmentIPAddressBody: EnrichmentIPAddressContent
+  EnrichmentDomainBody: EnrichmentDomainContent
+  DataConnectorConnectBody: DataConnectorConnectContent
+  InsightQueryItemPropertiesTableQueryColumnsDefinitionsItem.supportDeepLink: IsDeepLinkSupported
+  JobItem.resourceId: -|arm-id
+  NrtAlertRule.properties.enabled: IsEnabled
+  NrtAlertRule.properties.suppressionEnabled: IsSuppressionEnabled
   ResourceProviderRequiredPermissions.action: IsCustomAction
   ResourceProviderRequiredPermissions.delete: IsDeleteAction
   ResourceProviderRequiredPermissions.read: IsReadAction
   ResourceProviderRequiredPermissions.write: IsWriteAction
+  SecurityAlertTimelineItem.azureResourceId: -|arm-id
+  ServicePrincipal: SourceControlServicePrincipal
+  State: RecommendationState
+  ThreatIntelligenceAlertRule.properties.enabled: IsEnabled
+  Ueba: UebaSettings
+  Version: SourceControlVersion
+  Warning: ResponseWarning
+  Webhook: SourceControlWebhook
+  Webhook.rotateWebhookSecret: IsWebhookSecretRotated
   FileImport.properties.createdTimeUTC: CreatedOn
   FileImport.properties.filesValidUntilTimeUTC: FilesValidUntil
   FileImport.properties.importValidUntilTimeUTC: ImportValidUntil
@@ -284,6 +308,38 @@ rename-mapping:
   Recommendation.properties.creationTimeUtc: CreatedOn
   Recommendation.properties.lastEvaluatedTimeUtc: LastEvaluatedOn
   Recommendation.properties.lastModifiedTimeUtc: LastModifiedOn
+  TriggeredAnalyticsRuleRun.properties.executionTimeUtc: ExecuteOn
+  ActivityCustomEntityQuery.properties.createdTimeUtc: CreatedOn
+  ActivityCustomEntityQuery.properties.lastModifiedTimeUtc: LastModifiedOn
+  ActivityEntityQuery.properties.createdTimeUtc: CreatedOn
+  ActivityEntityQuery.properties.lastModifiedTimeUtc: LastModifiedOn
+  ActivityTimelineItem.bucketStartTimeUTC: BucketStartOn
+  ActivityTimelineItem.bucketEndTimeUTC: BucketEndOn
+  ActivityTimelineItem.firstActivityTimeUTC: FirstActivityOn
+  ActivityTimelineItem.lastActivityTimeUTC: LastActivityOn
+  AnalyticsRuleRunTrigger.properties.executionTimeUtc: ExecuteOn
+  AnomalyTimelineItem.endTimeUtc: EndOn
+  AnomalyTimelineItem.startTimeUtc: StartOn
+  BookmarkTimelineItem.endTimeUtc: EndOn
+  BookmarkTimelineItem.startTimeUtc: StartOn
+  CustomizableConnectorDefinition.properties.lastModifiedUtc: LastModifiedOn
+  CustomizableConnectorDefinition.properties.createdTimeUtc: CreatedOn
+  MLBehaviorAnalyticsAlertRule.properties.lastModifiedUtc: LastModifiedOn
+  MLBehaviorAnalyticsAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
+  MLBehaviorAnalyticsAlertRuleTemplate.properties.createdDateUTC: CreatedOn
+  NrtAlertRule.properties.lastModifiedUtc: LastModifiedOn
+  NrtAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
+  NrtAlertRuleTemplate.properties.createdDateUTC: CreatedOn
+  ReevaluateResponse.lastEvaluatedTimeUtc: LastEvaluatedOn
+  SecurityAlertTimelineItem.endTimeUtc: EndOn
+  SecurityAlertTimelineItem.startTimeUtc: StartOn
+  SecurityAlertTimelineItem.timeGenerated: GeneratedOn
+  ThreatIntelligenceAlertRule.properties.lastModifiedUtc: LastModifiedOn
+  ThreatIntelligenceAlertRuleTemplate.properties.lastUpdatedDateUTC: LastUpdatedOn
+  ThreatIntelligenceAlertRuleTemplate.properties.createdDateUTC: CreatedOn
+  TIObject.properties.firstIngestedTimeUtc: FirstIngestedOn
+  TIObject.properties.lastIngestedTimeUtc: LastIngestedOn
+  TIObject.properties.lastUpdatedDateTimeUtc: LastUpdatedOn
   # Added property renaming due to api compat check with property breaking chang to dictionary type in 2024-01-01-preview version
   WatchlistItem.properties.itemsKeyValue: ItemsKeyValueDictionary
   WatchlistItem.properties.entityMapping: EntityMappingDictionary
@@ -434,4 +490,13 @@ directive:
             "value": "Activity"
           }
         ]};
+  # Add this due to the naming requirement and actually there are two status in this service
+  - from: Hunts.json
+    where: $.definitions.HuntProperties.properties.status
+    transform: >
+      $[x-ms-enum].name = 'HuntStatus';
+  - from: WorkspaceManagerAssignments.json
+    where: $.definitions.jobItem.properties.status
+    transform: >
+      $[x-ms-enum].name = 'PublicationStatus';
 ```

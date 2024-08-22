@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
-                writer.WriteStringValue(LastModifiedUtc.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Severity))
             {

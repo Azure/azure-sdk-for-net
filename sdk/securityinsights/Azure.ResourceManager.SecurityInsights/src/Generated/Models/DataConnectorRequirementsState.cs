@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Data connector requirements status.
-    /// Serialized Name: DataConnectorRequirementsState
-    /// </summary>
+    /// <summary> Data connector requirements status. </summary>
     public partial class DataConnectorRequirementsState
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataConnectorRequirementsState"/>. </summary>
-        /// <param name="authorizationState">
-        /// Authorization state for this connector
-        /// Serialized Name: DataConnectorRequirementsState.authorizationState
-        /// </param>
-        /// <param name="licenseState">
-        /// License state for this connector
-        /// Serialized Name: DataConnectorRequirementsState.licenseState
-        /// </param>
+        /// <param name="authorizationState"> Authorization state for this connector. </param>
+        /// <param name="licenseState"> License state for this connector. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataConnectorRequirementsState(DataConnectorAuthorizationState? authorizationState, DataConnectorLicenseState? licenseState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Authorization state for this connector
-        /// Serialized Name: DataConnectorRequirementsState.authorizationState
-        /// </summary>
+        /// <summary> Authorization state for this connector. </summary>
         public DataConnectorAuthorizationState? AuthorizationState { get; }
-        /// <summary>
-        /// License state for this connector
-        /// Serialized Name: DataConnectorRequirementsState.licenseState
-        /// </summary>
+        /// <summary> License state for this connector. </summary>
         public DataConnectorLicenseState? LicenseState { get; }
     }
 }

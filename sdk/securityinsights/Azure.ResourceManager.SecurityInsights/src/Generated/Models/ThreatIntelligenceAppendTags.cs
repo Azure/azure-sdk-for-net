@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Array of tags to be appended to the threat intelligence indicator.
-    /// Serialized Name: ThreatIntelligenceAppendTags
-    /// </summary>
+    /// <summary> Array of tags to be appended to the threat intelligence indicator. </summary>
     public partial class ThreatIntelligenceAppendTags
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceAppendTags"/>. </summary>
-        /// <param name="threatIntelligenceTags">
-        /// List of tags to be appended.
-        /// Serialized Name: ThreatIntelligenceAppendTags.threatIntelligenceTags
-        /// </param>
+        /// <param name="threatIntelligenceTags"> List of tags to be appended. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceAppendTags(IList<string> threatIntelligenceTags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of tags to be appended.
-        /// Serialized Name: ThreatIntelligenceAppendTags.threatIntelligenceTags
-        /// </summary>
+        /// <summary> List of tags to be appended. </summary>
         public IList<string> ThreatIntelligenceTags { get; }
     }
 }

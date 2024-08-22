@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Permission provider scope
-    /// Serialized Name: PermissionProviderScope
-    /// </summary>
+    /// <summary> Permission provider scope. </summary>
     public readonly partial struct PermissionProviderScope : IEquatable<PermissionProviderScope>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string SubscriptionValue = "Subscription";
         private const string WorkspaceValue = "Workspace";
 
-        /// <summary>
-        /// ResourceGroup
-        /// Serialized Name: PermissionProviderScope.ResourceGroup
-        /// </summary>
+        /// <summary> ResourceGroup. </summary>
         public static PermissionProviderScope ResourceGroup { get; } = new PermissionProviderScope(ResourceGroupValue);
-        /// <summary>
-        /// Subscription
-        /// Serialized Name: PermissionProviderScope.Subscription
-        /// </summary>
+        /// <summary> Subscription. </summary>
         public static PermissionProviderScope Subscription { get; } = new PermissionProviderScope(SubscriptionValue);
-        /// <summary>
-        /// Workspace
-        /// Serialized Name: PermissionProviderScope.Workspace
-        /// </summary>
+        /// <summary> Workspace. </summary>
         public static PermissionProviderScope Workspace { get; } = new PermissionProviderScope(WorkspaceValue);
         /// <summary> Determines if two <see cref="PermissionProviderScope"/> values are the same. </summary>
         public static bool operator ==(PermissionProviderScope left, PermissionProviderScope right) => left.Equals(right);

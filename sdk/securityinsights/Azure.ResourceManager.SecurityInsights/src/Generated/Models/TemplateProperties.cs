@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Template property bag.
-    /// Serialized Name: TemplateProperties
-    /// </summary>
+    /// <summary> Template property bag. </summary>
     public partial class TemplateProperties : TemplateBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="TemplateProperties"/>. </summary>
@@ -23,115 +20,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TemplateProperties"/>. </summary>
-        /// <param name="contentId">
-        /// Static ID for the content.  Used to identify dependencies and content from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name
-        /// Serialized Name: TemplateBaseProperties.contentId
-        /// </param>
-        /// <param name="contentProductId">
-        /// Unique ID for the content. It should be generated based on the contentId of the package, contentId of the template, contentKind of the template and the contentVersion of the template
-        /// Serialized Name: TemplateBaseProperties.contentProductId
-        /// </param>
-        /// <param name="packageVersion">
-        /// Version of the package.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks
-        /// Serialized Name: TemplateBaseProperties.packageVersion
-        /// </param>
-        /// <param name="version">
-        /// Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks
-        /// Serialized Name: TemplateBaseProperties.version
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the template
-        /// Serialized Name: TemplateBaseProperties.displayName
-        /// </param>
-        /// <param name="contentKind">
-        /// The kind of content the template is for.
-        /// Serialized Name: TemplateBaseProperties.contentKind
-        /// </param>
-        /// <param name="source">
-        /// Source of the content.  This is where/how it was created.
-        /// Serialized Name: TemplateBaseProperties.source
-        /// </param>
-        /// <param name="author">
-        /// The creator of the content item.
-        /// Serialized Name: TemplateBaseProperties.author
-        /// </param>
-        /// <param name="support">
-        /// Support information for the template - type, name, contact information
-        /// Serialized Name: TemplateBaseProperties.support
-        /// </param>
-        /// <param name="dependencies">
-        /// Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats.
-        /// Serialized Name: TemplateBaseProperties.dependencies
-        /// </param>
-        /// <param name="categories">
-        /// Categories for the item
-        /// Serialized Name: TemplateBaseProperties.categories
-        /// </param>
-        /// <param name="providers">
-        /// Providers for the content item
-        /// Serialized Name: TemplateBaseProperties.providers
-        /// </param>
-        /// <param name="firstPublishOn">
-        /// first publish date content item
-        /// Serialized Name: TemplateBaseProperties.firstPublishDate
-        /// </param>
-        /// <param name="lastPublishOn">
-        /// last publish date for the content item
-        /// Serialized Name: TemplateBaseProperties.lastPublishDate
-        /// </param>
-        /// <param name="customVersion">
-        /// The custom version of the content. A optional free text
-        /// Serialized Name: TemplateBaseProperties.customVersion
-        /// </param>
-        /// <param name="contentSchemaVersion">
-        /// Schema version of the content. Can be used to distinguish between different flow based on the schema version
-        /// Serialized Name: TemplateBaseProperties.contentSchemaVersion
-        /// </param>
-        /// <param name="icon">
-        /// the icon identifier. this id can later be fetched from the content metadata
-        /// Serialized Name: TemplateBaseProperties.icon
-        /// </param>
-        /// <param name="threatAnalysisTactics">
-        /// the tactics the resource covers
-        /// Serialized Name: TemplateBaseProperties.threatAnalysisTactics
-        /// </param>
-        /// <param name="threatAnalysisTechniques">
-        /// the techniques the resource covers, these have to be aligned with the tactics being used
-        /// Serialized Name: TemplateBaseProperties.threatAnalysisTechniques
-        /// </param>
-        /// <param name="previewImages">
-        /// preview image file names. These will be taken from the solution artifacts
-        /// Serialized Name: TemplateBaseProperties.previewImages
-        /// </param>
-        /// <param name="previewImagesDark">
-        /// preview image file names. These will be taken from the solution artifacts. used for dark theme support
-        /// Serialized Name: TemplateBaseProperties.previewImagesDark
-        /// </param>
-        /// <param name="packageId">
-        /// the package Id contains this template
-        /// Serialized Name: TemplateBaseProperties.packageId
-        /// </param>
-        /// <param name="packageKind">
-        /// the packageKind of the package contains this template
-        /// Serialized Name: TemplateBaseProperties.packageKind
-        /// </param>
-        /// <param name="packageName">
-        /// the name of the package contains this template
-        /// Serialized Name: TemplateBaseProperties.packageName
-        /// </param>
-        /// <param name="isDeprecated">
-        /// Flag indicates if this template is deprecated
-        /// Serialized Name: TemplateBaseProperties.isDeprecated
-        /// </param>
+        /// <param name="contentId"> Static ID for the content.  Used to identify dependencies and content from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name. </param>
+        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId of the package, contentId of the template, contentKind of the template and the contentVersion of the template. </param>
+        /// <param name="packageVersion"> Version of the package.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="version"> Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="displayName"> The display name of the template. </param>
+        /// <param name="contentKind"> The kind of content the template is for. </param>
+        /// <param name="source"> Source of the content.  This is where/how it was created. </param>
+        /// <param name="author"> The creator of the content item. </param>
+        /// <param name="support"> Support information for the template - type, name, contact information. </param>
+        /// <param name="dependencies"> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </param>
+        /// <param name="categories"> Categories for the item. </param>
+        /// <param name="providers"> Providers for the content item. </param>
+        /// <param name="firstPublishOn"> first publish date content item. </param>
+        /// <param name="lastPublishOn"> last publish date for the content item. </param>
+        /// <param name="customVersion"> The custom version of the content. A optional free text. </param>
+        /// <param name="contentSchemaVersion"> Schema version of the content. Can be used to distinguish between different flow based on the schema version. </param>
+        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
+        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
+        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
+        /// <param name="previewImages"> preview image file names. These will be taken from the solution artifacts. </param>
+        /// <param name="previewImagesDark"> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </param>
+        /// <param name="packageId"> the package Id contains this template. </param>
+        /// <param name="packageKind"> the packageKind of the package contains this template. </param>
+        /// <param name="packageName"> the name of the package contains this template. </param>
+        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="mainTemplate">
-        /// The JSON of the ARM template to deploy active content. Expandable.
-        /// Serialized Name: TemplateAdditionalProperties.mainTemplate
-        /// </param>
-        /// <param name="dependantTemplates">
-        /// Dependant templates. Expandable.
-        /// Serialized Name: TemplateAdditionalProperties.dependantTemplates
-        /// </param>
+        /// <param name="mainTemplate"> The JSON of the ARM template to deploy active content. Expandable. </param>
+        /// <param name="dependantTemplates"> Dependant templates. Expandable. </param>
         internal TemplateProperties(string contentId, string contentProductId, string packageVersion, string version, string displayName, SecurityInsightsKind? contentKind, MetadataSource source, MetadataAuthor author, MetadataSupport support, MetadataDependencies dependencies, MetadataCategories categories, IReadOnlyList<string> providers, DateTimeOffset? firstPublishOn, DateTimeOffset? lastPublishOn, string customVersion, string contentSchemaVersion, string icon, IReadOnlyList<string> threatAnalysisTactics, IReadOnlyList<string> threatAnalysisTechniques, IReadOnlyList<string> previewImages, IReadOnlyList<string> previewImagesDark, string packageId, PackageKind? packageKind, string packageName, MetadataFlag? isDeprecated, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData mainTemplate, IReadOnlyList<TemplateProperties> dependantTemplates) : base(contentId, contentProductId, packageVersion, version, displayName, contentKind, source, author, support, dependencies, categories, providers, firstPublishOn, lastPublishOn, customVersion, contentSchemaVersion, icon, threatAnalysisTactics, threatAnalysisTechniques, previewImages, previewImagesDark, packageId, packageKind, packageName, isDeprecated, serializedAdditionalRawData)
         {
             MainTemplate = mainTemplate;
@@ -140,7 +56,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// The JSON of the ARM template to deploy active content. Expandable.
-        /// Serialized Name: TemplateAdditionalProperties.mainTemplate
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -170,10 +85,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public BinaryData MainTemplate { get; }
-        /// <summary>
-        /// Dependant templates. Expandable.
-        /// Serialized Name: TemplateAdditionalProperties.dependantTemplates
-        /// </summary>
+        /// <summary> Dependant templates. Expandable. </summary>
         public IReadOnlyList<TemplateProperties> DependantTemplates { get; }
     }
 }

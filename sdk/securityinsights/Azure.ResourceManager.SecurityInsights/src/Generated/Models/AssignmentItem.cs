@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// An entity describing a content item.
-    /// Serialized Name: AssignmentItem
-    /// </summary>
+    /// <summary> An entity describing a content item. </summary>
     public partial class AssignmentItem
     {
         /// <summary>
@@ -54,21 +52,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AssignmentItem"/>. </summary>
-        /// <param name="resourceId">
-        /// The resource id of the content item
-        /// Serialized Name: AssignmentItem.resourceId
-        /// </param>
+        /// <param name="resourceId"> The resource id of the content item. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssignmentItem(string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssignmentItem(ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource id of the content item
-        /// Serialized Name: AssignmentItem.resourceId
-        /// </summary>
-        public string ResourceId { get; set; }
+        /// <summary> The resource id of the content item. </summary>
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

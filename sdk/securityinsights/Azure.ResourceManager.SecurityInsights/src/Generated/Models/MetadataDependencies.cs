@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex dependencies.
-    /// Serialized Name: MetadataDependencies
-    /// </summary>
+    /// <summary> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex dependencies. </summary>
     public partial class MetadataDependencies
     {
         /// <summary>
@@ -55,30 +52,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MetadataDependencies"/>. </summary>
-        /// <param name="contentId">
-        /// Id of the content item we depend on
-        /// Serialized Name: MetadataDependencies.contentId
-        /// </param>
-        /// <param name="kind">
-        /// Type of the content item we depend on
-        /// Serialized Name: MetadataDependencies.kind
-        /// </param>
-        /// <param name="version">
-        /// Version of the the content item we depend on.  Can be blank, * or missing to indicate any version fulfills the dependency.  If version does not match our defined numeric format then an exact match is required.
-        /// Serialized Name: MetadataDependencies.version
-        /// </param>
-        /// <param name="name">
-        /// Name of the content item
-        /// Serialized Name: MetadataDependencies.name
-        /// </param>
-        /// <param name="operator">
-        /// Operator used for list of dependencies in criteria array.
-        /// Serialized Name: MetadataDependencies.operator
-        /// </param>
-        /// <param name="criteria">
-        /// This is the list of dependencies we must fulfill, according to the AND/OR operator
-        /// Serialized Name: MetadataDependencies.criteria
-        /// </param>
+        /// <param name="contentId"> Id of the content item we depend on. </param>
+        /// <param name="kind"> Type of the content item we depend on. </param>
+        /// <param name="version"> Version of the the content item we depend on.  Can be blank, * or missing to indicate any version fulfills the dependency.  If version does not match our defined numeric format then an exact match is required. </param>
+        /// <param name="name"> Name of the content item. </param>
+        /// <param name="operator"> Operator used for list of dependencies in criteria array. </param>
+        /// <param name="criteria"> This is the list of dependencies we must fulfill, according to the AND/OR operator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MetadataDependencies(string contentId, SecurityInsightsKind? kind, string version, string name, ConditionClauseOperator? @operator, IList<MetadataDependencies> criteria, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,35 +70,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Id of the content item we depend on
-        /// Serialized Name: MetadataDependencies.contentId
-        /// </summary>
+        /// <summary> Id of the content item we depend on. </summary>
         public string ContentId { get; set; }
-        /// <summary>
-        /// Type of the content item we depend on
-        /// Serialized Name: MetadataDependencies.kind
-        /// </summary>
+        /// <summary> Type of the content item we depend on. </summary>
         public SecurityInsightsKind? Kind { get; set; }
-        /// <summary>
-        /// Version of the the content item we depend on.  Can be blank, * or missing to indicate any version fulfills the dependency.  If version does not match our defined numeric format then an exact match is required.
-        /// Serialized Name: MetadataDependencies.version
-        /// </summary>
+        /// <summary> Version of the the content item we depend on.  Can be blank, * or missing to indicate any version fulfills the dependency.  If version does not match our defined numeric format then an exact match is required. </summary>
         public string Version { get; set; }
-        /// <summary>
-        /// Name of the content item
-        /// Serialized Name: MetadataDependencies.name
-        /// </summary>
+        /// <summary> Name of the content item. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Operator used for list of dependencies in criteria array.
-        /// Serialized Name: MetadataDependencies.operator
-        /// </summary>
+        /// <summary> Operator used for list of dependencies in criteria array. </summary>
         public ConditionClauseOperator? Operator { get; set; }
-        /// <summary>
-        /// This is the list of dependencies we must fulfill, according to the AND/OR operator
-        /// Serialized Name: MetadataDependencies.criteria
-        /// </summary>
+        /// <summary> This is the list of dependencies we must fulfill, according to the AND/OR operator. </summary>
         public IList<MetadataDependencies> Criteria { get; }
     }
 }

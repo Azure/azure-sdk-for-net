@@ -83,15 +83,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && Optional.IsDefined(FirstIngestedTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(FirstIngestedOn))
             {
                 writer.WritePropertyName("firstIngestedTimeUtc"u8);
-                writer.WriteStringValue(FirstIngestedTimeUtc.Value, "O");
+                writer.WriteStringValue(FirstIngestedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastIngestedTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastIngestedOn))
             {
                 writer.WritePropertyName("lastIngestedTimeUtc"u8);
-                writer.WriteStringValue(LastIngestedTimeUtc.Value, "O");
+                writer.WriteStringValue(LastIngestedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IngestionRulesVersion))
             {
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteObjectValue(LastModifiedBy, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedDateTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedDateTimeUtc"u8);
-                writer.WriteStringValue(LastUpdatedDateTimeUtc.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RelationshipHints))
             {

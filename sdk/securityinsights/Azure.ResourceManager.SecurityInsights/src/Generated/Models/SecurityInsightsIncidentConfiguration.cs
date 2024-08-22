@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Incident Configuration property bag.
-    /// Serialized Name: IncidentConfiguration
-    /// </summary>
+    /// <summary> Incident Configuration property bag. </summary>
     public partial class SecurityInsightsIncidentConfiguration
     {
         /// <summary>
@@ -49,24 +46,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentConfiguration"/>. </summary>
-        /// <param name="isIncidentCreated">
-        /// Create incidents from alerts triggered by this analytics rule
-        /// Serialized Name: IncidentConfiguration.createIncident
-        /// </param>
+        /// <param name="isIncidentCreated"> Create incidents from alerts triggered by this analytics rule. </param>
         public SecurityInsightsIncidentConfiguration(bool isIncidentCreated)
         {
             IsIncidentCreated = isIncidentCreated;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentConfiguration"/>. </summary>
-        /// <param name="isIncidentCreated">
-        /// Create incidents from alerts triggered by this analytics rule
-        /// Serialized Name: IncidentConfiguration.createIncident
-        /// </param>
-        /// <param name="groupingConfiguration">
-        /// Set how the alerts that are triggered by this analytics rule, are grouped into incidents
-        /// Serialized Name: IncidentConfiguration.groupingConfiguration
-        /// </param>
+        /// <param name="isIncidentCreated"> Create incidents from alerts triggered by this analytics rule. </param>
+        /// <param name="groupingConfiguration"> Set how the alerts that are triggered by this analytics rule, are grouped into incidents. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsIncidentConfiguration(bool isIncidentCreated, SecurityInsightsGroupingConfiguration groupingConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,15 +68,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Create incidents from alerts triggered by this analytics rule
-        /// Serialized Name: IncidentConfiguration.createIncident
-        /// </summary>
+        /// <summary> Create incidents from alerts triggered by this analytics rule. </summary>
         public bool IsIncidentCreated { get; set; }
-        /// <summary>
-        /// Set how the alerts that are triggered by this analytics rule, are grouped into incidents
-        /// Serialized Name: IncidentConfiguration.groupingConfiguration
-        /// </summary>
+        /// <summary> Set how the alerts that are triggered by this analytics rule, are grouped into incidents. </summary>
         public SecurityInsightsGroupingConfiguration GroupingConfiguration { get; set; }
     }
 }

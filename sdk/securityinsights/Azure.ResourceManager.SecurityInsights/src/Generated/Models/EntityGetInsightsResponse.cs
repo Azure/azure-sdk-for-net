@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The Get Insights result operation response.
-    /// Serialized Name: EntityGetInsightsResponse
-    /// </summary>
+    /// <summary> The Get Insights result operation response. </summary>
     internal partial class EntityGetInsightsResponse
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityGetInsightsResponse"/>. </summary>
-        /// <param name="metaData">
-        /// The metadata from the get insights operation results.
-        /// Serialized Name: EntityGetInsightsResponse.metaData
-        /// </param>
-        /// <param name="value">
-        /// The insights result values.
-        /// Serialized Name: EntityGetInsightsResponse.value
-        /// </param>
+        /// <param name="metaData"> The metadata from the get insights operation results. </param>
+        /// <param name="value"> The insights result values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityGetInsightsResponse(GetInsightsResultsMetadata metaData, IReadOnlyList<EntityInsightItem> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The metadata from the get insights operation results.
-        /// Serialized Name: EntityGetInsightsResponse.metaData
-        /// </summary>
+        /// <summary> The metadata from the get insights operation results. </summary>
         public GetInsightsResultsMetadata MetaData { get; }
-        /// <summary>
-        /// The insights result values.
-        /// Serialized Name: EntityGetInsightsResponse.value
-        /// </summary>
+        /// <summary> The insights result values. </summary>
         public IReadOnlyList<EntityInsightItem> Value { get; }
     }
 }

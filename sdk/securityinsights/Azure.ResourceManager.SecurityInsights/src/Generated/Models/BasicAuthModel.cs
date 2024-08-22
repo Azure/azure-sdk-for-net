@@ -10,21 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Model for API authentication with basic flow - user name + password.
-    /// Serialized Name: BasicAuthModel
-    /// </summary>
+    /// <summary> Model for API authentication with basic flow - user name + password. </summary>
     public partial class BasicAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="BasicAuthModel"/>. </summary>
-        /// <param name="userName">
-        /// The user name.
-        /// Serialized Name: BasicAuthModel.userName
-        /// </param>
-        /// <param name="password">
-        /// The password
-        /// Serialized Name: BasicAuthModel.password
-        /// </param>
+        /// <param name="userName"> The user name. </param>
+        /// <param name="password"> The password. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
         public BasicAuthModel(string userName, string password)
         {
@@ -37,19 +28,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BasicAuthModel"/>. </summary>
-        /// <param name="authType">
-        /// The auth type
-        /// Serialized Name: CcpAuthConfig.type
-        /// </param>
+        /// <param name="authType"> The auth type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="userName">
-        /// The user name.
-        /// Serialized Name: BasicAuthModel.userName
-        /// </param>
-        /// <param name="password">
-        /// The password
-        /// Serialized Name: BasicAuthModel.password
-        /// </param>
+        /// <param name="userName"> The user name. </param>
+        /// <param name="password"> The password. </param>
         internal BasicAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string userName, string password) : base(authType, serializedAdditionalRawData)
         {
             UserName = userName;
@@ -62,15 +44,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// The user name.
-        /// Serialized Name: BasicAuthModel.userName
-        /// </summary>
+        /// <summary> The user name. </summary>
         public string UserName { get; set; }
-        /// <summary>
-        /// The password
-        /// Serialized Name: BasicAuthModel.password
-        /// </summary>
+        /// <summary> The password. </summary>
         public string Password { get; set; }
     }
 }

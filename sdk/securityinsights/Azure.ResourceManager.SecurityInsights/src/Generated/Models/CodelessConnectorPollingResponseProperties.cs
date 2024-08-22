@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describes the response from the external server
-    /// Serialized Name: CodelessConnectorPollingResponseProperties
-    /// </summary>
+    /// <summary> Describes the response from the external server. </summary>
     public partial class CodelessConnectorPollingResponseProperties
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingResponseProperties"/>. </summary>
-        /// <param name="eventsJsonPaths">
-        /// Describes the path we should extract the data in the response
-        /// Serialized Name: CodelessConnectorPollingResponseProperties.eventsJsonPaths
-        /// </param>
+        /// <param name="eventsJsonPaths"> Describes the path we should extract the data in the response. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="eventsJsonPaths"/> is null. </exception>
         public CodelessConnectorPollingResponseProperties(IEnumerable<string> eventsJsonPaths)
         {
@@ -63,22 +57,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CodelessConnectorPollingResponseProperties"/>. </summary>
-        /// <param name="eventsJsonPaths">
-        /// Describes the path we should extract the data in the response
-        /// Serialized Name: CodelessConnectorPollingResponseProperties.eventsJsonPaths
-        /// </param>
-        /// <param name="successStatusJsonPath">
-        /// Describes the path we should extract the status code in the response
-        /// Serialized Name: CodelessConnectorPollingResponseProperties.successStatusJsonPath
-        /// </param>
-        /// <param name="successStatusValue">
-        /// Describes the path we should extract the status value in the response
-        /// Serialized Name: CodelessConnectorPollingResponseProperties.successStatusValue
-        /// </param>
-        /// <param name="isGzipCompressed">
-        /// Describes if the data in the response is Gzip
-        /// Serialized Name: CodelessConnectorPollingResponseProperties.isGzipCompressed
-        /// </param>
+        /// <param name="eventsJsonPaths"> Describes the path we should extract the data in the response. </param>
+        /// <param name="successStatusJsonPath"> Describes the path we should extract the status code in the response. </param>
+        /// <param name="successStatusValue"> Describes the path we should extract the status value in the response. </param>
+        /// <param name="isGzipCompressed"> Describes if the data in the response is Gzip. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CodelessConnectorPollingResponseProperties(IList<string> eventsJsonPaths, string successStatusJsonPath, string successStatusValue, bool? isGzipCompressed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -94,25 +76,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Describes the path we should extract the data in the response
-        /// Serialized Name: CodelessConnectorPollingResponseProperties.eventsJsonPaths
-        /// </summary>
+        /// <summary> Describes the path we should extract the data in the response. </summary>
         public IList<string> EventsJsonPaths { get; }
-        /// <summary>
-        /// Describes the path we should extract the status code in the response
-        /// Serialized Name: CodelessConnectorPollingResponseProperties.successStatusJsonPath
-        /// </summary>
+        /// <summary> Describes the path we should extract the status code in the response. </summary>
         public string SuccessStatusJsonPath { get; set; }
-        /// <summary>
-        /// Describes the path we should extract the status value in the response
-        /// Serialized Name: CodelessConnectorPollingResponseProperties.successStatusValue
-        /// </summary>
+        /// <summary> Describes the path we should extract the status value in the response. </summary>
         public string SuccessStatusValue { get; set; }
-        /// <summary>
-        /// Describes if the data in the response is Gzip
-        /// Serialized Name: CodelessConnectorPollingResponseProperties.isGzipCompressed
-        /// </summary>
+        /// <summary> Describes if the data in the response is Gzip. </summary>
         public bool? IsGzipCompressed { get; set; }
     }
 }

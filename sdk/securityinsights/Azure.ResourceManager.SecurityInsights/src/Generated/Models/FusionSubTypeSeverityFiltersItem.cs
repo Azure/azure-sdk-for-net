@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents a Severity filter setting for a given source subtype consumed in Fusion detection.
-    /// Serialized Name: FusionSubTypeSeverityFiltersItem
-    /// </summary>
+    /// <summary> Represents a Severity filter setting for a given source subtype consumed in Fusion detection. </summary>
     public partial class FusionSubTypeSeverityFiltersItem
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FusionSubTypeSeverityFiltersItem"/>. </summary>
-        /// <param name="severity">
-        /// The Severity for a given source subtype consumed in Fusion detection.
-        /// Serialized Name: FusionSubTypeSeverityFiltersItem.severity
-        /// </param>
-        /// <param name="isEnabled">
-        /// Determines whether this severity is enabled or disabled for this source subtype consumed in Fusion detection.
-        /// Serialized Name: FusionSubTypeSeverityFiltersItem.enabled
-        /// </param>
+        /// <param name="severity"> The Severity for a given source subtype consumed in Fusion detection. </param>
+        /// <param name="isEnabled"> Determines whether this severity is enabled or disabled for this source subtype consumed in Fusion detection. </param>
         public FusionSubTypeSeverityFiltersItem(SecurityInsightsAlertSeverity severity, bool isEnabled)
         {
             Severity = severity;
@@ -64,14 +55,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FusionSubTypeSeverityFiltersItem"/>. </summary>
-        /// <param name="severity">
-        /// The Severity for a given source subtype consumed in Fusion detection.
-        /// Serialized Name: FusionSubTypeSeverityFiltersItem.severity
-        /// </param>
-        /// <param name="isEnabled">
-        /// Determines whether this severity is enabled or disabled for this source subtype consumed in Fusion detection.
-        /// Serialized Name: FusionSubTypeSeverityFiltersItem.enabled
-        /// </param>
+        /// <param name="severity"> The Severity for a given source subtype consumed in Fusion detection. </param>
+        /// <param name="isEnabled"> Determines whether this severity is enabled or disabled for this source subtype consumed in Fusion detection. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FusionSubTypeSeverityFiltersItem(SecurityInsightsAlertSeverity severity, bool isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -85,15 +70,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// The Severity for a given source subtype consumed in Fusion detection.
-        /// Serialized Name: FusionSubTypeSeverityFiltersItem.severity
-        /// </summary>
+        /// <summary> The Severity for a given source subtype consumed in Fusion detection. </summary>
         public SecurityInsightsAlertSeverity Severity { get; set; }
-        /// <summary>
-        /// Determines whether this severity is enabled or disabled for this source subtype consumed in Fusion detection.
-        /// Serialized Name: FusionSubTypeSeverityFiltersItem.enabled
-        /// </summary>
+        /// <summary> Determines whether this severity is enabled or disabled for this source subtype consumed in Fusion detection. </summary>
         public bool IsEnabled { get; set; }
     }
 }

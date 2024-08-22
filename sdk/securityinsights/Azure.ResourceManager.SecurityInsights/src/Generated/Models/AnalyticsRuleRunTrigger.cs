@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Analytics Rule Run Trigger request
-    /// Serialized Name: AnalyticsRuleRunTrigger
-    /// </summary>
+    /// <summary> Analytics Rule Run Trigger request. </summary>
     public partial class AnalyticsRuleRunTrigger
     {
         /// <summary>
@@ -49,18 +46,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AnalyticsRuleRunTrigger"/>. </summary>
-        /// <param name="executionTimeUtc"> Serialized Name: AnalyticsRuleRunTrigger.properties.executionTimeUtc. </param>
-        public AnalyticsRuleRunTrigger(DateTimeOffset executionTimeUtc)
+        /// <param name="executeOn"></param>
+        public AnalyticsRuleRunTrigger(DateTimeOffset executeOn)
         {
-            ExecutionTimeUtc = executionTimeUtc;
+            ExecuteOn = executeOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalyticsRuleRunTrigger"/>. </summary>
-        /// <param name="executionTimeUtc"> Serialized Name: AnalyticsRuleRunTrigger.properties.executionTimeUtc. </param>
+        /// <param name="executeOn"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyticsRuleRunTrigger(DateTimeOffset executionTimeUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyticsRuleRunTrigger(DateTimeOffset executeOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ExecutionTimeUtc = executionTimeUtc;
+            ExecuteOn = executeOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,7 +66,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Serialized Name: AnalyticsRuleRunTrigger.properties.executionTimeUtc. </summary>
-        public DateTimeOffset ExecutionTimeUtc { get; }
+        /// <summary> Gets the execute on. </summary>
+        public DateTimeOffset ExecuteOn { get; }
     }
 }

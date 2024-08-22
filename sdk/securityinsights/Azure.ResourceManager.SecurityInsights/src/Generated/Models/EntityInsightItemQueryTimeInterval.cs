@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The Time interval that the query actually executed on.
-    /// Serialized Name: EntityInsightItemQueryTimeInterval
-    /// </summary>
+    /// <summary> The Time interval that the query actually executed on. </summary>
     public partial class EntityInsightItemQueryTimeInterval
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityInsightItemQueryTimeInterval"/>. </summary>
-        /// <param name="startOn">
-        /// Insight query start time
-        /// Serialized Name: EntityInsightItemQueryTimeInterval.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// Insight query end time
-        /// Serialized Name: EntityInsightItemQueryTimeInterval.endTime
-        /// </param>
+        /// <param name="startOn"> Insight query start time. </param>
+        /// <param name="endOn"> Insight query end time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityInsightItemQueryTimeInterval(DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Insight query start time
-        /// Serialized Name: EntityInsightItemQueryTimeInterval.startTime
-        /// </summary>
+        /// <summary> Insight query start time. </summary>
         public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// Insight query end time
-        /// Serialized Name: EntityInsightItemQueryTimeInterval.endTime
-        /// </summary>
+        /// <summary> Insight query end time. </summary>
         public DateTimeOffset? EndOn { get; }
     }
 }

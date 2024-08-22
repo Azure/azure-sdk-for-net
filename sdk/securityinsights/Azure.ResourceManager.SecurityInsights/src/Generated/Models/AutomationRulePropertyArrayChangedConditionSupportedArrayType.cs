@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The AutomationRulePropertyArrayChangedConditionSupportedArrayType.
-    /// Serialized Name: AutomationRulePropertyArrayChangedConditionSupportedArrayType
-    /// </summary>
+    /// <summary> The AutomationRulePropertyArrayChangedConditionSupportedArrayType. </summary>
     public readonly partial struct AutomationRulePropertyArrayChangedConditionSupportedArrayType : IEquatable<AutomationRulePropertyArrayChangedConditionSupportedArrayType>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string TacticsValue = "Tactics";
         private const string CommentsValue = "Comments";
 
-        /// <summary>
-        /// Evaluate the condition on the alerts
-        /// Serialized Name: AutomationRulePropertyArrayChangedConditionSupportedArrayType.Alerts
-        /// </summary>
+        /// <summary> Evaluate the condition on the alerts. </summary>
         public static AutomationRulePropertyArrayChangedConditionSupportedArrayType Alerts { get; } = new AutomationRulePropertyArrayChangedConditionSupportedArrayType(AlertsValue);
-        /// <summary>
-        /// Evaluate the condition on the labels
-        /// Serialized Name: AutomationRulePropertyArrayChangedConditionSupportedArrayType.Labels
-        /// </summary>
+        /// <summary> Evaluate the condition on the labels. </summary>
         public static AutomationRulePropertyArrayChangedConditionSupportedArrayType Labels { get; } = new AutomationRulePropertyArrayChangedConditionSupportedArrayType(LabelsValue);
-        /// <summary>
-        /// Evaluate the condition on the tactics
-        /// Serialized Name: AutomationRulePropertyArrayChangedConditionSupportedArrayType.Tactics
-        /// </summary>
+        /// <summary> Evaluate the condition on the tactics. </summary>
         public static AutomationRulePropertyArrayChangedConditionSupportedArrayType Tactics { get; } = new AutomationRulePropertyArrayChangedConditionSupportedArrayType(TacticsValue);
-        /// <summary>
-        /// Evaluate the condition on the comments
-        /// Serialized Name: AutomationRulePropertyArrayChangedConditionSupportedArrayType.Comments
-        /// </summary>
+        /// <summary> Evaluate the condition on the comments. </summary>
         public static AutomationRulePropertyArrayChangedConditionSupportedArrayType Comments { get; } = new AutomationRulePropertyArrayChangedConditionSupportedArrayType(CommentsValue);
         /// <summary> Determines if two <see cref="AutomationRulePropertyArrayChangedConditionSupportedArrayType"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyArrayChangedConditionSupportedArrayType left, AutomationRulePropertyArrayChangedConditionSupportedArrayType right) => left.Equals(right);

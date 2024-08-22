@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Threat intelligence indicator entity.
-    /// Serialized Name: ThreatIntelligenceIndicatorModel
-    /// </summary>
+    /// <summary> Threat intelligence indicator entity. </summary>
     public partial class SecurityInsightsThreatIntelligenceIndicatorData : SecurityInsightsThreatIntelligenceIndicatorBaseData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>. </summary>
@@ -40,135 +37,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the entity.
-        /// Serialized Name: ThreatIntelligenceInformation.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData">
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.additionalData
-        /// </param>
-        /// <param name="friendlyName">
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.friendlyName
-        /// </param>
-        /// <param name="threatIntelligenceTags">
-        /// List of tags
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.threatIntelligenceTags
-        /// </param>
-        /// <param name="lastUpdatedOn">
-        /// Last updated time in UTC
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.lastUpdatedTimeUtc
-        /// </param>
-        /// <param name="source">
-        /// Source of a threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.source
-        /// </param>
-        /// <param name="displayName">
-        /// Display name of a threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// Description of a threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.description
-        /// </param>
-        /// <param name="indicatorTypes">
-        /// Indicator types of threat intelligence entities
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.indicatorTypes
-        /// </param>
-        /// <param name="pattern">
-        /// Pattern of a threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.pattern
-        /// </param>
-        /// <param name="patternType">
-        /// Pattern type of a threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.patternType
-        /// </param>
-        /// <param name="patternVersion">
-        /// Pattern version of a threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.patternVersion
-        /// </param>
-        /// <param name="killChainPhases">
-        /// Kill chain phases
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.killChainPhases
-        /// </param>
-        /// <param name="parsedPattern">
-        /// Parsed patterns
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.parsedPattern
-        /// </param>
-        /// <param name="externalId">
-        /// External ID of threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.externalId
-        /// </param>
-        /// <param name="createdByRef">
-        /// Created by reference of threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.createdByRef
-        /// </param>
-        /// <param name="isDefanged">
-        /// Is threat intelligence entity defanged
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.defanged
-        /// </param>
-        /// <param name="externalLastUpdatedOn">
-        /// External last updated time in UTC
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.externalLastUpdatedTimeUtc
-        /// </param>
-        /// <param name="externalReferences">
-        /// External References
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.externalReferences
-        /// </param>
-        /// <param name="granularMarkings">
-        /// Granular Markings
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.granularMarkings
-        /// </param>
-        /// <param name="labels">
-        /// Labels  of threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.labels
-        /// </param>
-        /// <param name="isRevoked">
-        /// Is threat intelligence entity revoked
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.revoked
-        /// </param>
-        /// <param name="confidence">
-        /// Confidence of threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.confidence
-        /// </param>
-        /// <param name="objectMarkingRefs">
-        /// Threat intelligence entity object marking references
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.objectMarkingRefs
-        /// </param>
-        /// <param name="language">
-        /// Language of threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.language
-        /// </param>
-        /// <param name="threatTypes">
-        /// Threat types
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.threatTypes
-        /// </param>
-        /// <param name="validFrom">
-        /// Valid from
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.validFrom
-        /// </param>
-        /// <param name="validUntil">
-        /// Valid until
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.validUntil
-        /// </param>
-        /// <param name="createdOn">
-        /// Created by
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.created
-        /// </param>
-        /// <param name="modified">
-        /// Modified by
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.modified
-        /// </param>
-        /// <param name="extensions">
-        /// Extensions map
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.extensions
-        /// </param>
+        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
+        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
+        /// <param name="threatIntelligenceTags"> List of tags. </param>
+        /// <param name="lastUpdatedOn"> Last updated time in UTC. </param>
+        /// <param name="source"> Source of a threat intelligence entity. </param>
+        /// <param name="displayName"> Display name of a threat intelligence entity. </param>
+        /// <param name="description"> Description of a threat intelligence entity. </param>
+        /// <param name="indicatorTypes"> Indicator types of threat intelligence entities. </param>
+        /// <param name="pattern"> Pattern of a threat intelligence entity. </param>
+        /// <param name="patternType"> Pattern type of a threat intelligence entity. </param>
+        /// <param name="patternVersion"> Pattern version of a threat intelligence entity. </param>
+        /// <param name="killChainPhases"> Kill chain phases. </param>
+        /// <param name="parsedPattern"> Parsed patterns. </param>
+        /// <param name="externalId"> External ID of threat intelligence entity. </param>
+        /// <param name="createdByRef"> Created by reference of threat intelligence entity. </param>
+        /// <param name="isDefanged"> Is threat intelligence entity defanged. </param>
+        /// <param name="externalLastUpdatedOn"> External last updated time in UTC. </param>
+        /// <param name="externalReferences"> External References. </param>
+        /// <param name="granularMarkings"> Granular Markings. </param>
+        /// <param name="labels"> Labels  of threat intelligence entity. </param>
+        /// <param name="isRevoked"> Is threat intelligence entity revoked. </param>
+        /// <param name="confidence"> Confidence of threat intelligence entity. </param>
+        /// <param name="objectMarkingRefs"> Threat intelligence entity object marking references. </param>
+        /// <param name="language"> Language of threat intelligence entity. </param>
+        /// <param name="threatTypes"> Threat types. </param>
+        /// <param name="validFrom"> Valid from. </param>
+        /// <param name="validUntil"> Valid until. </param>
+        /// <param name="createdOn"> Created by. </param>
+        /// <param name="modified"> Modified by. </param>
+        /// <param name="extensions"> Extensions map. </param>
         internal SecurityInsightsThreatIntelligenceIndicatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceInnerKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IList<string> threatIntelligenceTags, DateTimeOffset? lastUpdatedOn, string source, string displayName, string description, IList<string> indicatorTypes, string pattern, string patternType, string patternVersion, IList<ThreatIntelligenceKillChainPhase> killChainPhases, IList<ThreatIntelligenceParsedPattern> parsedPattern, string externalId, string createdByRef, bool? isDefanged, DateTimeOffset? externalLastUpdatedOn, IList<ThreatIntelligenceExternalReference> externalReferences, IList<ThreatIntelligenceGranularMarkingEntity> granularMarkings, IList<string> labels, bool? isRevoked, int? confidence, IList<string> objectMarkingRefs, string language, IList<string> threatTypes, DateTimeOffset? validFrom, DateTimeOffset? validUntil, DateTimeOffset? createdOn, string modified, IDictionary<string, BinaryData> extensions) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -206,7 +107,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -236,149 +136,64 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary>
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.friendlyName
-        /// </summary>
+        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
         public string FriendlyName { get; }
-        /// <summary>
-        /// List of tags
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.threatIntelligenceTags
-        /// </summary>
+        /// <summary> List of tags. </summary>
         public IList<string> ThreatIntelligenceTags { get; }
-        /// <summary>
-        /// Last updated time in UTC
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.lastUpdatedTimeUtc
-        /// </summary>
+        /// <summary> Last updated time in UTC. </summary>
         public DateTimeOffset? LastUpdatedOn { get; set; }
-        /// <summary>
-        /// Source of a threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.source
-        /// </summary>
+        /// <summary> Source of a threat intelligence entity. </summary>
         public string Source { get; set; }
-        /// <summary>
-        /// Display name of a threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.displayName
-        /// </summary>
+        /// <summary> Display name of a threat intelligence entity. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Description of a threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.description
-        /// </summary>
+        /// <summary> Description of a threat intelligence entity. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Indicator types of threat intelligence entities
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.indicatorTypes
-        /// </summary>
+        /// <summary> Indicator types of threat intelligence entities. </summary>
         public IList<string> IndicatorTypes { get; }
-        /// <summary>
-        /// Pattern of a threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.pattern
-        /// </summary>
+        /// <summary> Pattern of a threat intelligence entity. </summary>
         public string Pattern { get; set; }
-        /// <summary>
-        /// Pattern type of a threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.patternType
-        /// </summary>
+        /// <summary> Pattern type of a threat intelligence entity. </summary>
         public string PatternType { get; set; }
-        /// <summary>
-        /// Pattern version of a threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.patternVersion
-        /// </summary>
+        /// <summary> Pattern version of a threat intelligence entity. </summary>
         public string PatternVersion { get; set; }
-        /// <summary>
-        /// Kill chain phases
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.killChainPhases
-        /// </summary>
+        /// <summary> Kill chain phases. </summary>
         public IList<ThreatIntelligenceKillChainPhase> KillChainPhases { get; }
-        /// <summary>
-        /// Parsed patterns
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.parsedPattern
-        /// </summary>
+        /// <summary> Parsed patterns. </summary>
         public IList<ThreatIntelligenceParsedPattern> ParsedPattern { get; }
-        /// <summary>
-        /// External ID of threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.externalId
-        /// </summary>
+        /// <summary> External ID of threat intelligence entity. </summary>
         public string ExternalId { get; set; }
-        /// <summary>
-        /// Created by reference of threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.createdByRef
-        /// </summary>
+        /// <summary> Created by reference of threat intelligence entity. </summary>
         public string CreatedByRef { get; set; }
-        /// <summary>
-        /// Is threat intelligence entity defanged
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.defanged
-        /// </summary>
+        /// <summary> Is threat intelligence entity defanged. </summary>
         public bool? IsDefanged { get; set; }
-        /// <summary>
-        /// External last updated time in UTC
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.externalLastUpdatedTimeUtc
-        /// </summary>
+        /// <summary> External last updated time in UTC. </summary>
         public DateTimeOffset? ExternalLastUpdatedOn { get; set; }
-        /// <summary>
-        /// External References
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.externalReferences
-        /// </summary>
+        /// <summary> External References. </summary>
         public IList<ThreatIntelligenceExternalReference> ExternalReferences { get; }
-        /// <summary>
-        /// Granular Markings
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.granularMarkings
-        /// </summary>
+        /// <summary> Granular Markings. </summary>
         public IList<ThreatIntelligenceGranularMarkingEntity> GranularMarkings { get; }
-        /// <summary>
-        /// Labels  of threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.labels
-        /// </summary>
+        /// <summary> Labels  of threat intelligence entity. </summary>
         public IList<string> Labels { get; }
-        /// <summary>
-        /// Is threat intelligence entity revoked
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.revoked
-        /// </summary>
+        /// <summary> Is threat intelligence entity revoked. </summary>
         public bool? IsRevoked { get; set; }
-        /// <summary>
-        /// Confidence of threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.confidence
-        /// </summary>
+        /// <summary> Confidence of threat intelligence entity. </summary>
         public int? Confidence { get; set; }
-        /// <summary>
-        /// Threat intelligence entity object marking references
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.objectMarkingRefs
-        /// </summary>
+        /// <summary> Threat intelligence entity object marking references. </summary>
         public IList<string> ObjectMarkingRefs { get; }
-        /// <summary>
-        /// Language of threat intelligence entity
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.language
-        /// </summary>
+        /// <summary> Language of threat intelligence entity. </summary>
         public string Language { get; set; }
-        /// <summary>
-        /// Threat types
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.threatTypes
-        /// </summary>
+        /// <summary> Threat types. </summary>
         public IList<string> ThreatTypes { get; }
-        /// <summary>
-        /// Valid from
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.validFrom
-        /// </summary>
+        /// <summary> Valid from. </summary>
         public DateTimeOffset? ValidFrom { get; set; }
-        /// <summary>
-        /// Valid until
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.validUntil
-        /// </summary>
+        /// <summary> Valid until. </summary>
         public DateTimeOffset? ValidUntil { get; set; }
-        /// <summary>
-        /// Created by
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.created
-        /// </summary>
+        /// <summary> Created by. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// Modified by
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.modified
-        /// </summary>
+        /// <summary> Modified by. </summary>
         public string Modified { get; set; }
         /// <summary>
         /// Extensions map
-        /// Serialized Name: ThreatIntelligenceIndicatorModel.properties.extensions
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

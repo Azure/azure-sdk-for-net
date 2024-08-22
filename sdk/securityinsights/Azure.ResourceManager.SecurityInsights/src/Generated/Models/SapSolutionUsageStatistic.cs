@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Billing statistic about the Microsoft Sentinel solution for SAP Usage
-    /// Serialized Name: SapSolutionUsageStatistic
-    /// </summary>
+    /// <summary> Billing statistic about the Microsoft Sentinel solution for SAP Usage. </summary>
     public partial class SapSolutionUsageStatistic : BillingStatisticData
     {
         /// <summary> Initializes a new instance of <see cref="SapSolutionUsageStatistic"/>. </summary>
@@ -29,29 +26,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the billing statistic
-        /// Serialized Name: BillingStatistic.kind
-        /// </param>
-        /// <param name="etag">
-        /// Resource Etag.
-        /// Serialized Name: AzureEntityResource.etag
-        /// </param>
+        /// <param name="kind"> The kind of the billing statistic. </param>
+        /// <param name="etag"> Resource Etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="activeSystemIdCount">
-        /// The latest count of active SAP system IDs under the Microsoft Sentinel solution for SAP Usage
-        /// Serialized Name: SapSolutionUsageStatistic.properties.activeSystemIdCount
-        /// </param>
+        /// <param name="activeSystemIdCount"> The latest count of active SAP system IDs under the Microsoft Sentinel solution for SAP Usage. </param>
         internal SapSolutionUsageStatistic(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingStatisticKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, long? activeSystemIdCount) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             ActiveSystemIdCount = activeSystemIdCount;
             Kind = kind;
         }
 
-        /// <summary>
-        /// The latest count of active SAP system IDs under the Microsoft Sentinel solution for SAP Usage
-        /// Serialized Name: SapSolutionUsageStatistic.properties.activeSystemIdCount
-        /// </summary>
+        /// <summary> The latest count of active SAP system IDs under the Microsoft Sentinel solution for SAP Usage. </summary>
         public long? ActiveSystemIdCount { get; }
     }
 }

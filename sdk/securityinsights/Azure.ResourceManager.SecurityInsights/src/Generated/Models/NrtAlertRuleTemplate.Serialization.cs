@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("alertRulesCreatedByTemplateCount"u8);
                 writer.WriteNumberValue(AlertRulesCreatedByTemplateCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdatedDateUTC))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedDateUTC"u8);
-                writer.WriteStringValue(LastUpdatedDateUTC.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedDateUTC))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateUTC"u8);
-                writer.WriteStringValue(CreatedDateUTC.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(Description))
             {

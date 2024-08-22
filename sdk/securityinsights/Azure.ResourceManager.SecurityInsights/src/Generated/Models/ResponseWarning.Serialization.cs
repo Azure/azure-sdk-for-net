@@ -13,23 +13,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class Warning : IUtf8JsonSerializable, IJsonModel<Warning>
+    public partial class ResponseWarning : IUtf8JsonSerializable, IJsonModel<ResponseWarning>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Warning>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResponseWarning>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Warning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResponseWarning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Warning>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResponseWarning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Warning)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponseWarning)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(WarningValue))
+            if (options.Format != "W" && Optional.IsDefined(Warning))
             {
                 writer.WritePropertyName("warning"u8);
-                writer.WriteObjectValue(WarningValue, options);
+                writer.WriteObjectValue(Warning, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        Warning IJsonModel<Warning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResponseWarning IJsonModel<ResponseWarning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Warning>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResponseWarning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Warning)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponseWarning)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWarning(document.RootElement, options);
+            return DeserializeResponseWarning(document.RootElement, options);
         }
 
-        internal static Warning DeserializeWarning(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ResponseWarning DeserializeResponseWarning(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -89,38 +89,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Warning(warning, serializedAdditionalRawData);
+            return new ResponseWarning(warning, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Warning>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ResponseWarning>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Warning>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResponseWarning>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Warning)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponseWarning)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Warning IPersistableModel<Warning>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ResponseWarning IPersistableModel<ResponseWarning>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Warning>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResponseWarning>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeWarning(document.RootElement, options);
+                        return DeserializeResponseWarning(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Warning)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponseWarning)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Warning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResponseWarning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

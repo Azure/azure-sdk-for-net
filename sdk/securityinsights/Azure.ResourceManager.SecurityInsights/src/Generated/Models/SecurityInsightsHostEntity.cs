@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents a host entity.
-    /// Serialized Name: HostEntity
-    /// </summary>
+    /// <summary> Represents a host entity. </summary>
     public partial class SecurityInsightsHostEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHostEntity"/>. </summary>
@@ -30,55 +27,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the entity.
-        /// Serialized Name: Entity.kind
-        /// </param>
+        /// <param name="kind"> The kind of the entity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData">
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: HostEntity.properties.additionalData
-        /// </param>
-        /// <param name="friendlyName">
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: HostEntity.properties.friendlyName
-        /// </param>
-        /// <param name="azureId">
-        /// The azure resource id of the VM.
-        /// Serialized Name: HostEntity.properties.azureID
-        /// </param>
-        /// <param name="dnsDomain">
-        /// The DNS domain that this host belongs to. Should contain the compete DNS suffix for the domain
-        /// Serialized Name: HostEntity.properties.dnsDomain
-        /// </param>
-        /// <param name="hostName">
-        /// The hostname without the domain suffix.
-        /// Serialized Name: HostEntity.properties.hostName
-        /// </param>
-        /// <param name="isDomainJoined">
-        /// Determines whether this host belongs to a domain.
-        /// Serialized Name: HostEntity.properties.isDomainJoined
-        /// </param>
-        /// <param name="netBiosName">
-        /// The host name (pre-windows2000).
-        /// Serialized Name: HostEntity.properties.netBiosName
-        /// </param>
-        /// <param name="ntDomain">
-        /// The NT domain that this host belongs to.
-        /// Serialized Name: HostEntity.properties.ntDomain
-        /// </param>
-        /// <param name="omsAgentId">
-        /// The OMS agent id, if the host has OMS agent installed.
-        /// Serialized Name: HostEntity.properties.omsAgentID
-        /// </param>
-        /// <param name="osFamily">
-        /// The operating system type.
-        /// Serialized Name: HostEntity.properties.osFamily
-        /// </param>
-        /// <param name="osVersion">
-        /// A free text representation of the operating system. This field is meant to hold specific versions the are more fine grained than OSFamily or future values not supported by OSFamily enumeration
-        /// Serialized Name: HostEntity.properties.osVersion
-        /// </param>
+        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
+        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
+        /// <param name="azureId"> The azure resource id of the VM. </param>
+        /// <param name="dnsDomain"> The DNS domain that this host belongs to. Should contain the compete DNS suffix for the domain. </param>
+        /// <param name="hostName"> The hostname without the domain suffix. </param>
+        /// <param name="isDomainJoined"> Determines whether this host belongs to a domain. </param>
+        /// <param name="netBiosName"> The host name (pre-windows2000). </param>
+        /// <param name="ntDomain"> The NT domain that this host belongs to. </param>
+        /// <param name="omsAgentId"> The OMS agent id, if the host has OMS agent installed. </param>
+        /// <param name="osFamily"> The operating system type. </param>
+        /// <param name="osVersion"> A free text representation of the operating system. This field is meant to hold specific versions the are more fine grained than OSFamily or future values not supported by OSFamily enumeration. </param>
         internal SecurityInsightsHostEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, ResourceIdentifier azureId, string dnsDomain, string hostName, bool? isDomainJoined, string netBiosName, string ntDomain, string omsAgentId, SecurityInsightsHostOSFamily? osFamily, string osVersion) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -97,7 +58,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: HostEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -127,55 +87,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary>
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: HostEntity.properties.friendlyName
-        /// </summary>
+        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
         public string FriendlyName { get; }
-        /// <summary>
-        /// The azure resource id of the VM.
-        /// Serialized Name: HostEntity.properties.azureID
-        /// </summary>
+        /// <summary> The azure resource id of the VM. </summary>
         public ResourceIdentifier AzureId { get; }
-        /// <summary>
-        /// The DNS domain that this host belongs to. Should contain the compete DNS suffix for the domain
-        /// Serialized Name: HostEntity.properties.dnsDomain
-        /// </summary>
+        /// <summary> The DNS domain that this host belongs to. Should contain the compete DNS suffix for the domain. </summary>
         public string DnsDomain { get; }
-        /// <summary>
-        /// The hostname without the domain suffix.
-        /// Serialized Name: HostEntity.properties.hostName
-        /// </summary>
+        /// <summary> The hostname without the domain suffix. </summary>
         public string HostName { get; }
-        /// <summary>
-        /// Determines whether this host belongs to a domain.
-        /// Serialized Name: HostEntity.properties.isDomainJoined
-        /// </summary>
+        /// <summary> Determines whether this host belongs to a domain. </summary>
         public bool? IsDomainJoined { get; }
-        /// <summary>
-        /// The host name (pre-windows2000).
-        /// Serialized Name: HostEntity.properties.netBiosName
-        /// </summary>
+        /// <summary> The host name (pre-windows2000). </summary>
         public string NetBiosName { get; }
-        /// <summary>
-        /// The NT domain that this host belongs to.
-        /// Serialized Name: HostEntity.properties.ntDomain
-        /// </summary>
+        /// <summary> The NT domain that this host belongs to. </summary>
         public string NtDomain { get; }
-        /// <summary>
-        /// The OMS agent id, if the host has OMS agent installed.
-        /// Serialized Name: HostEntity.properties.omsAgentID
-        /// </summary>
+        /// <summary> The OMS agent id, if the host has OMS agent installed. </summary>
         public string OmsAgentId { get; }
-        /// <summary>
-        /// The operating system type.
-        /// Serialized Name: HostEntity.properties.osFamily
-        /// </summary>
+        /// <summary> The operating system type. </summary>
         public SecurityInsightsHostOSFamily? OSFamily { get; set; }
-        /// <summary>
-        /// A free text representation of the operating system. This field is meant to hold specific versions the are more fine grained than OSFamily or future values not supported by OSFamily enumeration
-        /// Serialized Name: HostEntity.properties.osVersion
-        /// </summary>
+        /// <summary> A free text representation of the operating system. This field is meant to hold specific versions the are more fine grained than OSFamily or future values not supported by OSFamily enumeration. </summary>
         public string OSVersion { get; }
     }
 }

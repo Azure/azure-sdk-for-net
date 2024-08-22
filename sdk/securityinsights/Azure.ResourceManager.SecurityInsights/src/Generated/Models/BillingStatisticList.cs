@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List of all Microsoft Sentinel billing statistics.
-    /// Serialized Name: BillingStatisticList
-    /// </summary>
+    /// <summary> List of all Microsoft Sentinel billing statistics. </summary>
     internal partial class BillingStatisticList
     {
         /// <summary>
@@ -52,7 +49,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="BillingStatisticList"/>. </summary>
         /// <param name="value">
         /// Array of billing statistics.
-        /// Serialized Name: BillingStatisticList.value
         /// Please note <see cref="BillingStatisticData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SapSolutionUsageStatistic"/>.
         /// </param>
@@ -65,13 +61,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingStatisticList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of billing statistics.
-        /// Serialized Name: BillingStatisticList.nextLink
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of billing statistics. </param>
         /// <param name="value">
         /// Array of billing statistics.
-        /// Serialized Name: BillingStatisticList.value
         /// Please note <see cref="BillingStatisticData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SapSolutionUsageStatistic"/>.
         /// </param>
@@ -88,14 +80,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of billing statistics.
-        /// Serialized Name: BillingStatisticList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of billing statistics. </summary>
         public string NextLink { get; }
         /// <summary>
         /// Array of billing statistics.
-        /// Serialized Name: BillingStatisticList.value
         /// Please note <see cref="BillingStatisticData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SapSolutionUsageStatistic"/>.
         /// </summary>

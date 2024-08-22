@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The IncidentTaskStatus.
-    /// Serialized Name: IncidentTaskStatus
-    /// </summary>
+    /// <summary> The IncidentTaskStatus. </summary>
     public readonly partial struct IncidentTaskStatus : IEquatable<IncidentTaskStatus>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string NewValue = "New";
         private const string CompletedValue = "Completed";
 
-        /// <summary>
-        /// A new task
-        /// Serialized Name: IncidentTaskStatus.New
-        /// </summary>
+        /// <summary> A new task. </summary>
         public static IncidentTaskStatus New { get; } = new IncidentTaskStatus(NewValue);
-        /// <summary>
-        /// A completed task
-        /// Serialized Name: IncidentTaskStatus.Completed
-        /// </summary>
+        /// <summary> A completed task. </summary>
         public static IncidentTaskStatus Completed { get; } = new IncidentTaskStatus(CompletedValue);
         /// <summary> Determines if two <see cref="IncidentTaskStatus"/> values are the same. </summary>
         public static bool operator ==(IncidentTaskStatus left, IncidentTaskStatus right) => left.Equals(right);

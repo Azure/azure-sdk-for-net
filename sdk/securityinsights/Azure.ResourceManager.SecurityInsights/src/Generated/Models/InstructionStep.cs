@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Instruction steps to enable the connector.
-    /// Serialized Name: InstructionStep
-    /// </summary>
+    /// <summary> Instruction steps to enable the connector. </summary>
     public partial class InstructionStep
     {
         /// <summary>
@@ -56,22 +53,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="InstructionStep"/>. </summary>
-        /// <param name="title">
-        /// Gets or sets the instruction step title.
-        /// Serialized Name: InstructionStep.title
-        /// </param>
-        /// <param name="description">
-        /// Gets or sets the instruction step description.
-        /// Serialized Name: InstructionStep.description
-        /// </param>
-        /// <param name="instructions">
-        /// Gets or sets the instruction step details.
-        /// Serialized Name: InstructionStep.instructions
-        /// </param>
+        /// <param name="title"> Gets or sets the instruction step title. </param>
+        /// <param name="description"> Gets or sets the instruction step description. </param>
+        /// <param name="instructions"> Gets or sets the instruction step details. </param>
         /// <param name="innerSteps">
         /// Gets or sets the inner instruction steps details.
         /// Foe Example: instruction step 1 might contain inner instruction steps: [instruction step 1.1, instruction step 1.2].
-        /// Serialized Name: InstructionStep.innerSteps
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InstructionStep(string title, string description, IList<InstructionStepDetails> instructions, IList<InstructionStep> innerSteps, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -83,25 +70,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Gets or sets the instruction step title.
-        /// Serialized Name: InstructionStep.title
-        /// </summary>
+        /// <summary> Gets or sets the instruction step title. </summary>
         public string Title { get; set; }
-        /// <summary>
-        /// Gets or sets the instruction step description.
-        /// Serialized Name: InstructionStep.description
-        /// </summary>
+        /// <summary> Gets or sets the instruction step description. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Gets or sets the instruction step details.
-        /// Serialized Name: InstructionStep.instructions
-        /// </summary>
+        /// <summary> Gets or sets the instruction step details. </summary>
         public IList<InstructionStepDetails> Instructions { get; }
         /// <summary>
         /// Gets or sets the inner instruction steps details.
         /// Foe Example: instruction step 1 might contain inner instruction steps: [instruction step 1.1, instruction step 1.2].
-        /// Serialized Name: InstructionStep.innerSteps
         /// </summary>
         public IList<InstructionStep> InnerSteps { get; }
     }

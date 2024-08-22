@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The geo-location context attached to the ip entity
-    /// Serialized Name: GeoLocation
-    /// </summary>
+    /// <summary> The geo-location context attached to the ip entity. </summary>
     public partial class SecurityInsightsIPEntityGeoLocation
     {
         /// <summary>
@@ -54,34 +51,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIPEntityGeoLocation"/>. </summary>
-        /// <param name="asn">
-        /// Autonomous System Number
-        /// Serialized Name: GeoLocation.asn
-        /// </param>
-        /// <param name="city">
-        /// City name
-        /// Serialized Name: GeoLocation.city
-        /// </param>
-        /// <param name="countryCode">
-        /// The country code according to ISO 3166 format
-        /// Serialized Name: GeoLocation.countryCode
-        /// </param>
-        /// <param name="countryName">
-        /// Country name according to ISO 3166 Alpha 2: the lowercase of the English Short Name
-        /// Serialized Name: GeoLocation.countryName
-        /// </param>
-        /// <param name="latitude">
-        /// The latitude of the identified location, expressed as a floating point number with range of - 90 to 90. Latitude and longitude are derived from the city or postal code.
-        /// Serialized Name: GeoLocation.latitude
-        /// </param>
-        /// <param name="longitude">
-        /// The longitude of the identified location, expressed as a floating point number with range of -180 to 180. Latitude and longitude are derived from the city or postal code.
-        /// Serialized Name: GeoLocation.longitude
-        /// </param>
-        /// <param name="state">
-        /// State name
-        /// Serialized Name: GeoLocation.state
-        /// </param>
+        /// <param name="asn"> Autonomous System Number. </param>
+        /// <param name="city"> City name. </param>
+        /// <param name="countryCode"> The country code according to ISO 3166 format. </param>
+        /// <param name="countryName"> Country name according to ISO 3166 Alpha 2: the lowercase of the English Short Name. </param>
+        /// <param name="latitude"> The latitude of the identified location, expressed as a floating point number with range of - 90 to 90. Latitude and longitude are derived from the city or postal code. </param>
+        /// <param name="longitude"> The longitude of the identified location, expressed as a floating point number with range of -180 to 180. Latitude and longitude are derived from the city or postal code. </param>
+        /// <param name="state"> State name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsIPEntityGeoLocation(int? asn, string city, string countryCode, string countryName, double? latitude, double? longitude, string state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -95,40 +71,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Autonomous System Number
-        /// Serialized Name: GeoLocation.asn
-        /// </summary>
+        /// <summary> Autonomous System Number. </summary>
         public int? Asn { get; }
-        /// <summary>
-        /// City name
-        /// Serialized Name: GeoLocation.city
-        /// </summary>
+        /// <summary> City name. </summary>
         public string City { get; }
-        /// <summary>
-        /// The country code according to ISO 3166 format
-        /// Serialized Name: GeoLocation.countryCode
-        /// </summary>
+        /// <summary> The country code according to ISO 3166 format. </summary>
         public string CountryCode { get; }
-        /// <summary>
-        /// Country name according to ISO 3166 Alpha 2: the lowercase of the English Short Name
-        /// Serialized Name: GeoLocation.countryName
-        /// </summary>
+        /// <summary> Country name according to ISO 3166 Alpha 2: the lowercase of the English Short Name. </summary>
         public string CountryName { get; }
-        /// <summary>
-        /// The latitude of the identified location, expressed as a floating point number with range of - 90 to 90. Latitude and longitude are derived from the city or postal code.
-        /// Serialized Name: GeoLocation.latitude
-        /// </summary>
+        /// <summary> The latitude of the identified location, expressed as a floating point number with range of - 90 to 90. Latitude and longitude are derived from the city or postal code. </summary>
         public double? Latitude { get; }
-        /// <summary>
-        /// The longitude of the identified location, expressed as a floating point number with range of -180 to 180. Latitude and longitude are derived from the city or postal code.
-        /// Serialized Name: GeoLocation.longitude
-        /// </summary>
+        /// <summary> The longitude of the identified location, expressed as a floating point number with range of -180 to 180. Latitude and longitude are derived from the city or postal code. </summary>
         public double? Longitude { get; }
-        /// <summary>
-        /// State name
-        /// Serialized Name: GeoLocation.state
-        /// </summary>
+        /// <summary> State name. </summary>
         public string State { get; }
     }
 }

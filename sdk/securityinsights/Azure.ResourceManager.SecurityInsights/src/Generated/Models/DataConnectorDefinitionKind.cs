@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The kind of the data connector definitions
-    /// Serialized Name: DataConnectorDefinitionKind
-    /// </summary>
+    /// <summary> The kind of the data connector definitions. </summary>
     internal readonly partial struct DataConnectorDefinitionKind : IEquatable<DataConnectorDefinitionKind>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         private const string CustomizableValue = "Customizable";
 
-        /// <summary>
-        /// Customizable
-        /// Serialized Name: DataConnectorDefinitionKind.Customizable
-        /// </summary>
+        /// <summary> Customizable. </summary>
         public static DataConnectorDefinitionKind Customizable { get; } = new DataConnectorDefinitionKind(CustomizableValue);
         /// <summary> Determines if two <see cref="DataConnectorDefinitionKind"/> values are the same. </summary>
         public static bool operator ==(DataConnectorDefinitionKind left, DataConnectorDefinitionKind right) => left.Equals(right);

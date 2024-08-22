@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        internal RequestUriBuilder CreateListWhoisByDomainRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentDomainBody domainBody)
+        internal RequestUriBuilder CreateListWhoisByDomainRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentDomainContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return uri;
         }
 
-        internal HttpMessage CreateListWhoisByDomainRequest(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentDomainBody domainBody)
+        internal HttpMessage CreateListWhoisByDomainRequest(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentDomainContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -181,9 +181,9 @@ namespace Azure.ResourceManager.SecurityInsights
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(domainBody, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -193,18 +193,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="enrichmentType"> Enrichment type. </param>
-        /// <param name="domainBody"> Domain name to be enriched. Only domain name is accepted. </param>
+        /// <param name="content"> Domain name to be enriched. Only domain name is accepted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="domainBody"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EnrichmentDomainWhois>> ListWhoisByDomainAsync(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentDomainBody domainBody, CancellationToken cancellationToken = default)
+        public async Task<Response<EnrichmentDomainWhois>> ListWhoisByDomainAsync(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentDomainContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(domainBody, nameof(domainBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListWhoisByDomainRequest(subscriptionId, resourceGroupName, workspaceName, enrichmentType, domainBody);
+            using var message = CreateListWhoisByDomainRequest(subscriptionId, resourceGroupName, workspaceName, enrichmentType, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -225,18 +225,18 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="enrichmentType"> Enrichment type. </param>
-        /// <param name="domainBody"> Domain name to be enriched. Only domain name is accepted. </param>
+        /// <param name="content"> Domain name to be enriched. Only domain name is accepted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="domainBody"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EnrichmentDomainWhois> ListWhoisByDomain(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentDomainBody domainBody, CancellationToken cancellationToken = default)
+        public Response<EnrichmentDomainWhois> ListWhoisByDomain(string subscriptionId, string resourceGroupName, string workspaceName, EnrichmentType enrichmentType, EnrichmentDomainContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
-            Argument.AssertNotNull(domainBody, nameof(domainBody));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListWhoisByDomainRequest(subscriptionId, resourceGroupName, workspaceName, enrichmentType, domainBody);
+            using var message = CreateListWhoisByDomainRequest(subscriptionId, resourceGroupName, workspaceName, enrichmentType, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

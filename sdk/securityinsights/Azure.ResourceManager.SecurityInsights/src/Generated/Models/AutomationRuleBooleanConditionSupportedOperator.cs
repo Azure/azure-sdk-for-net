@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The AutomationRuleBooleanConditionSupportedOperator.
-    /// Serialized Name: AutomationRuleBooleanConditionSupportedOperator
-    /// </summary>
+    /// <summary> The AutomationRuleBooleanConditionSupportedOperator. </summary>
     public readonly partial struct AutomationRuleBooleanConditionSupportedOperator : IEquatable<AutomationRuleBooleanConditionSupportedOperator>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string AndValue = "And";
         private const string OrValue = "Or";
 
-        /// <summary>
-        /// Evaluates as true if all the item conditions are evaluated as true
-        /// Serialized Name: AutomationRuleBooleanConditionSupportedOperator.And
-        /// </summary>
+        /// <summary> Evaluates as true if all the item conditions are evaluated as true. </summary>
         public static AutomationRuleBooleanConditionSupportedOperator And { get; } = new AutomationRuleBooleanConditionSupportedOperator(AndValue);
-        /// <summary>
-        /// Evaluates as true if at least one of the item conditions are evaluated as true
-        /// Serialized Name: AutomationRuleBooleanConditionSupportedOperator.Or
-        /// </summary>
+        /// <summary> Evaluates as true if at least one of the item conditions are evaluated as true. </summary>
         public static AutomationRuleBooleanConditionSupportedOperator Or { get; } = new AutomationRuleBooleanConditionSupportedOperator(OrValue);
         /// <summary> Determines if two <see cref="AutomationRuleBooleanConditionSupportedOperator"/> values are the same. </summary>
         public static bool operator ==(AutomationRuleBooleanConditionSupportedOperator left, AutomationRuleBooleanConditionSupportedOperator right) => left.Equals(right);

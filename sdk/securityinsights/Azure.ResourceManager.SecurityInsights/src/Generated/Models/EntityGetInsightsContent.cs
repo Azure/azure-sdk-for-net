@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The parameters required to execute insights operation on the given entity.
-    /// Serialized Name: EntityGetInsightsParameters
-    /// </summary>
+    /// <summary> The parameters required to execute insights operation on the given entity. </summary>
     public partial class EntityGetInsightsContent
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EntityGetInsightsContent"/>. </summary>
-        /// <param name="startOn">
-        /// The start timeline date, so the results returned are after this date.
-        /// Serialized Name: EntityGetInsightsParameters.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end timeline date, so the results returned are before this date.
-        /// Serialized Name: EntityGetInsightsParameters.endTime
-        /// </param>
+        /// <param name="startOn"> The start timeline date, so the results returned are after this date. </param>
+        /// <param name="endOn"> The end timeline date, so the results returned are before this date. </param>
         public EntityGetInsightsContent(DateTimeOffset startOn, DateTimeOffset endOn)
         {
             StartOn = startOn;
@@ -65,22 +56,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityGetInsightsContent"/>. </summary>
-        /// <param name="startOn">
-        /// The start timeline date, so the results returned are after this date.
-        /// Serialized Name: EntityGetInsightsParameters.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// The end timeline date, so the results returned are before this date.
-        /// Serialized Name: EntityGetInsightsParameters.endTime
-        /// </param>
-        /// <param name="isDefaultExtendedTimeRangeAdded">
-        /// Indicates if query time range should be extended with default time range of the query. Default value is false
-        /// Serialized Name: EntityGetInsightsParameters.addDefaultExtendedTimeRange
-        /// </param>
-        /// <param name="insightQueryIds">
-        /// List of Insights Query Id. If empty, default value is all insights of this entity
-        /// Serialized Name: EntityGetInsightsParameters.insightQueryIds
-        /// </param>
+        /// <param name="startOn"> The start timeline date, so the results returned are after this date. </param>
+        /// <param name="endOn"> The end timeline date, so the results returned are before this date. </param>
+        /// <param name="isDefaultExtendedTimeRangeAdded"> Indicates if query time range should be extended with default time range of the query. Default value is false. </param>
+        /// <param name="insightQueryIds"> List of Insights Query Id. If empty, default value is all insights of this entity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EntityGetInsightsContent(DateTimeOffset startOn, DateTimeOffset endOn, bool? isDefaultExtendedTimeRangeAdded, IList<Guid> insightQueryIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -96,25 +75,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// The start timeline date, so the results returned are after this date.
-        /// Serialized Name: EntityGetInsightsParameters.startTime
-        /// </summary>
+        /// <summary> The start timeline date, so the results returned are after this date. </summary>
         public DateTimeOffset StartOn { get; }
-        /// <summary>
-        /// The end timeline date, so the results returned are before this date.
-        /// Serialized Name: EntityGetInsightsParameters.endTime
-        /// </summary>
+        /// <summary> The end timeline date, so the results returned are before this date. </summary>
         public DateTimeOffset EndOn { get; }
-        /// <summary>
-        /// Indicates if query time range should be extended with default time range of the query. Default value is false
-        /// Serialized Name: EntityGetInsightsParameters.addDefaultExtendedTimeRange
-        /// </summary>
+        /// <summary> Indicates if query time range should be extended with default time range of the query. Default value is false. </summary>
         public bool? IsDefaultExtendedTimeRangeAdded { get; set; }
-        /// <summary>
-        /// List of Insights Query Id. If empty, default value is all insights of this entity
-        /// Serialized Name: EntityGetInsightsParameters.insightQueryIds
-        /// </summary>
+        /// <summary> List of Insights Query Id. If empty, default value is all insights of this entity. </summary>
         public IList<Guid> InsightQueryIds { get; }
     }
 }

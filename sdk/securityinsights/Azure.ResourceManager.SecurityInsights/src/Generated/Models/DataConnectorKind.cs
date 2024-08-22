@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The kind of the data connector
-    /// Serialized Name: DataConnectorKind
-    /// </summary>
+    /// <summary> The kind of the data connector. </summary>
     internal readonly partial struct DataConnectorKind : IEquatable<DataConnectorKind>
     {
         private readonly string _value;
@@ -49,120 +46,51 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string GCPValue = "GCP";
         private const string RestApiPollerValue = "RestApiPoller";
 
-        /// <summary>
-        /// AzureActiveDirectory
-        /// Serialized Name: DataConnectorKind.AzureActiveDirectory
-        /// </summary>
+        /// <summary> AzureActiveDirectory. </summary>
         public static DataConnectorKind AzureActiveDirectory { get; } = new DataConnectorKind(AzureActiveDirectoryValue);
-        /// <summary>
-        /// AzureSecurityCenter
-        /// Serialized Name: DataConnectorKind.AzureSecurityCenter
-        /// </summary>
+        /// <summary> AzureSecurityCenter. </summary>
         public static DataConnectorKind AzureSecurityCenter { get; } = new DataConnectorKind(AzureSecurityCenterValue);
-        /// <summary>
-        /// MicrosoftCloudAppSecurity
-        /// Serialized Name: DataConnectorKind.MicrosoftCloudAppSecurity
-        /// </summary>
+        /// <summary> MicrosoftCloudAppSecurity. </summary>
         public static DataConnectorKind MicrosoftCloudAppSecurity { get; } = new DataConnectorKind(MicrosoftCloudAppSecurityValue);
-        /// <summary>
-        /// ThreatIntelligence
-        /// Serialized Name: DataConnectorKind.ThreatIntelligence
-        /// </summary>
+        /// <summary> ThreatIntelligence. </summary>
         public static DataConnectorKind ThreatIntelligence { get; } = new DataConnectorKind(ThreatIntelligenceValue);
-        /// <summary>
-        /// ThreatIntelligenceTaxii
-        /// Serialized Name: DataConnectorKind.ThreatIntelligenceTaxii
-        /// </summary>
+        /// <summary> ThreatIntelligenceTaxii. </summary>
         public static DataConnectorKind ThreatIntelligenceTaxii { get; } = new DataConnectorKind(ThreatIntelligenceTaxiiValue);
-        /// <summary>
-        /// Office365
-        /// Serialized Name: DataConnectorKind.Office365
-        /// </summary>
+        /// <summary> Office365. </summary>
         public static DataConnectorKind Office365 { get; } = new DataConnectorKind(Office365Value);
-        /// <summary>
-        /// OfficeATP
-        /// Serialized Name: DataConnectorKind.OfficeATP
-        /// </summary>
+        /// <summary> OfficeATP. </summary>
         public static DataConnectorKind OfficeATP { get; } = new DataConnectorKind(OfficeATPValue);
-        /// <summary>
-        /// OfficeIRM
-        /// Serialized Name: DataConnectorKind.OfficeIRM
-        /// </summary>
+        /// <summary> OfficeIRM. </summary>
         public static DataConnectorKind OfficeIRM { get; } = new DataConnectorKind(OfficeIRMValue);
-        /// <summary>
-        /// Office365Project
-        /// Serialized Name: DataConnectorKind.Office365Project
-        /// </summary>
+        /// <summary> Office365Project. </summary>
         public static DataConnectorKind Office365Project { get; } = new DataConnectorKind(Office365ProjectValue);
-        /// <summary>
-        /// MicrosoftPurviewInformationProtection
-        /// Serialized Name: DataConnectorKind.MicrosoftPurviewInformationProtection
-        /// </summary>
+        /// <summary> MicrosoftPurviewInformationProtection. </summary>
         public static DataConnectorKind MicrosoftPurviewInformationProtection { get; } = new DataConnectorKind(MicrosoftPurviewInformationProtectionValue);
-        /// <summary>
-        /// OfficePowerBI
-        /// Serialized Name: DataConnectorKind.OfficePowerBI
-        /// </summary>
+        /// <summary> OfficePowerBI. </summary>
         public static DataConnectorKind OfficePowerBI { get; } = new DataConnectorKind(OfficePowerBIValue);
-        /// <summary>
-        /// AmazonWebServicesCloudTrail
-        /// Serialized Name: DataConnectorKind.AmazonWebServicesCloudTrail
-        /// </summary>
+        /// <summary> AmazonWebServicesCloudTrail. </summary>
         public static DataConnectorKind AmazonWebServicesCloudTrail { get; } = new DataConnectorKind(AmazonWebServicesCloudTrailValue);
-        /// <summary>
-        /// AmazonWebServicesS3
-        /// Serialized Name: DataConnectorKind.AmazonWebServicesS3
-        /// </summary>
+        /// <summary> AmazonWebServicesS3. </summary>
         public static DataConnectorKind AmazonWebServicesS3 { get; } = new DataConnectorKind(AmazonWebServicesS3Value);
-        /// <summary>
-        /// AzureAdvancedThreatProtection
-        /// Serialized Name: DataConnectorKind.AzureAdvancedThreatProtection
-        /// </summary>
+        /// <summary> AzureAdvancedThreatProtection. </summary>
         public static DataConnectorKind AzureAdvancedThreatProtection { get; } = new DataConnectorKind(AzureAdvancedThreatProtectionValue);
-        /// <summary>
-        /// MicrosoftDefenderAdvancedThreatProtection
-        /// Serialized Name: DataConnectorKind.MicrosoftDefenderAdvancedThreatProtection
-        /// </summary>
+        /// <summary> MicrosoftDefenderAdvancedThreatProtection. </summary>
         public static DataConnectorKind MicrosoftDefenderAdvancedThreatProtection { get; } = new DataConnectorKind(MicrosoftDefenderAdvancedThreatProtectionValue);
-        /// <summary>
-        /// Dynamics365
-        /// Serialized Name: DataConnectorKind.Dynamics365
-        /// </summary>
+        /// <summary> Dynamics365. </summary>
         public static DataConnectorKind Dynamics365 { get; } = new DataConnectorKind(Dynamics365Value);
-        /// <summary>
-        /// MicrosoftThreatProtection
-        /// Serialized Name: DataConnectorKind.MicrosoftThreatProtection
-        /// </summary>
+        /// <summary> MicrosoftThreatProtection. </summary>
         public static DataConnectorKind MicrosoftThreatProtection { get; } = new DataConnectorKind(MicrosoftThreatProtectionValue);
-        /// <summary>
-        /// MicrosoftThreatIntelligence
-        /// Serialized Name: DataConnectorKind.MicrosoftThreatIntelligence
-        /// </summary>
+        /// <summary> MicrosoftThreatIntelligence. </summary>
         public static DataConnectorKind MicrosoftThreatIntelligence { get; } = new DataConnectorKind(MicrosoftThreatIntelligenceValue);
-        /// <summary>
-        /// GenericUI
-        /// Serialized Name: DataConnectorKind.GenericUI
-        /// </summary>
+        /// <summary> GenericUI. </summary>
         public static DataConnectorKind GenericUI { get; } = new DataConnectorKind(GenericUIValue);
-        /// <summary>
-        /// APIPolling
-        /// Serialized Name: DataConnectorKind.APIPolling
-        /// </summary>
+        /// <summary> APIPolling. </summary>
         public static DataConnectorKind APIPolling { get; } = new DataConnectorKind(APIPollingValue);
-        /// <summary>
-        /// IOT
-        /// Serialized Name: DataConnectorKind.IOT
-        /// </summary>
+        /// <summary> IOT. </summary>
         public static DataConnectorKind IOT { get; } = new DataConnectorKind(IOTValue);
-        /// <summary>
-        /// GCP
-        /// Serialized Name: DataConnectorKind.GCP
-        /// </summary>
+        /// <summary> GCP. </summary>
         public static DataConnectorKind GCP { get; } = new DataConnectorKind(GCPValue);
-        /// <summary>
-        /// RestApiPoller
-        /// Serialized Name: DataConnectorKind.RestApiPoller
-        /// </summary>
+        /// <summary> RestApiPoller. </summary>
         public static DataConnectorKind RestApiPoller { get; } = new DataConnectorKind(RestApiPollerValue);
         /// <summary> Determines if two <see cref="DataConnectorKind"/> values are the same. </summary>
         public static bool operator ==(DataConnectorKind left, DataConnectorKind right) => left.Equals(right);

@@ -10,11 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Domain name to be enriched
-    /// Serialized Name: EnrichmentDomainBody
-    /// </summary>
-    public partial class EnrichmentDomainBody
+    /// <summary> Warning response structure. </summary>
+    public partial class ResponseWarning
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,27 +45,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EnrichmentDomainBody"/>. </summary>
-        public EnrichmentDomainBody()
+        /// <summary> Initializes a new instance of <see cref="ResponseWarning"/>. </summary>
+        internal ResponseWarning()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnrichmentDomainBody"/>. </summary>
-        /// <param name="domain">
-        /// The domain name
-        /// Serialized Name: EnrichmentDomainBody.domain
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="ResponseWarning"/>. </summary>
+        /// <param name="warning"> Warning data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnrichmentDomainBody(string domain, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResponseWarning(WarningBody warning, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Domain = domain;
+            Warning = warning;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The domain name
-        /// Serialized Name: EnrichmentDomainBody.domain
-        /// </summary>
-        public string Domain { get; set; }
+        /// <summary> Warning data. </summary>
+        public WarningBody Warning { get; }
     }
 }

@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents a Hunting bookmark entity.
-    /// Serialized Name: HuntingBookmark
-    /// </summary>
+    /// <summary> Represents a Hunting bookmark entity. </summary>
     public partial class SecurityInsightsHuntingBookmark : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHuntingBookmark"/>. </summary>
@@ -31,63 +28,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the entity.
-        /// Serialized Name: Entity.kind
-        /// </param>
+        /// <param name="kind"> The kind of the entity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData">
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: HuntingBookmark.properties.additionalData
-        /// </param>
-        /// <param name="friendlyName">
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: HuntingBookmark.properties.friendlyName
-        /// </param>
-        /// <param name="createdOn">
-        /// The time the bookmark was created
-        /// Serialized Name: HuntingBookmark.properties.created
-        /// </param>
-        /// <param name="createdBy">
-        /// Describes a user that created the bookmark
-        /// Serialized Name: HuntingBookmark.properties.createdBy
-        /// </param>
-        /// <param name="displayName">
-        /// The display name of the bookmark
-        /// Serialized Name: HuntingBookmark.properties.displayName
-        /// </param>
-        /// <param name="eventOn">
-        /// The time of the event
-        /// Serialized Name: HuntingBookmark.properties.eventTime
-        /// </param>
-        /// <param name="labels">
-        /// List of labels relevant to this bookmark
-        /// Serialized Name: HuntingBookmark.properties.labels
-        /// </param>
-        /// <param name="notes">
-        /// The notes of the bookmark
-        /// Serialized Name: HuntingBookmark.properties.notes
-        /// </param>
-        /// <param name="query">
-        /// The query of the bookmark.
-        /// Serialized Name: HuntingBookmark.properties.query
-        /// </param>
-        /// <param name="queryResult">
-        /// The query result of the bookmark.
-        /// Serialized Name: HuntingBookmark.properties.queryResult
-        /// </param>
-        /// <param name="updatedOn">
-        /// The last time the bookmark was updated
-        /// Serialized Name: HuntingBookmark.properties.updated
-        /// </param>
-        /// <param name="updatedBy">
-        /// Describes a user that updated the bookmark
-        /// Serialized Name: HuntingBookmark.properties.updatedBy
-        /// </param>
-        /// <param name="incidentInfo">
-        /// Describes an incident that relates to bookmark
-        /// Serialized Name: HuntingBookmark.properties.incidentInfo
-        /// </param>
+        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
+        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
+        /// <param name="createdOn"> The time the bookmark was created. </param>
+        /// <param name="createdBy"> Describes a user that created the bookmark. </param>
+        /// <param name="displayName"> The display name of the bookmark. </param>
+        /// <param name="eventOn"> The time of the event. </param>
+        /// <param name="labels"> List of labels relevant to this bookmark. </param>
+        /// <param name="notes"> The notes of the bookmark. </param>
+        /// <param name="query"> The query of the bookmark. </param>
+        /// <param name="queryResult"> The query result of the bookmark. </param>
+        /// <param name="updatedOn"> The last time the bookmark was updated. </param>
+        /// <param name="updatedBy"> Describes a user that updated the bookmark. </param>
+        /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
         internal SecurityInsightsHuntingBookmark(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, DateTimeOffset? eventOn, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, SecurityInsightsBookmarkIncidentInfo incidentInfo) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -108,7 +63,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: HuntingBookmark.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -138,65 +92,29 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary>
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: HuntingBookmark.properties.friendlyName
-        /// </summary>
+        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
         public string FriendlyName { get; }
-        /// <summary>
-        /// The time the bookmark was created
-        /// Serialized Name: HuntingBookmark.properties.created
-        /// </summary>
+        /// <summary> The time the bookmark was created. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary>
-        /// Describes a user that created the bookmark
-        /// Serialized Name: HuntingBookmark.properties.createdBy
-        /// </summary>
+        /// <summary> Describes a user that created the bookmark. </summary>
         public SecurityInsightsUserInfo CreatedBy { get; set; }
-        /// <summary>
-        /// The display name of the bookmark
-        /// Serialized Name: HuntingBookmark.properties.displayName
-        /// </summary>
+        /// <summary> The display name of the bookmark. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The time of the event
-        /// Serialized Name: HuntingBookmark.properties.eventTime
-        /// </summary>
+        /// <summary> The time of the event. </summary>
         public DateTimeOffset? EventOn { get; set; }
-        /// <summary>
-        /// List of labels relevant to this bookmark
-        /// Serialized Name: HuntingBookmark.properties.labels
-        /// </summary>
+        /// <summary> List of labels relevant to this bookmark. </summary>
         public IList<string> Labels { get; }
-        /// <summary>
-        /// The notes of the bookmark
-        /// Serialized Name: HuntingBookmark.properties.notes
-        /// </summary>
+        /// <summary> The notes of the bookmark. </summary>
         public string Notes { get; set; }
-        /// <summary>
-        /// The query of the bookmark.
-        /// Serialized Name: HuntingBookmark.properties.query
-        /// </summary>
+        /// <summary> The query of the bookmark. </summary>
         public string Query { get; set; }
-        /// <summary>
-        /// The query result of the bookmark.
-        /// Serialized Name: HuntingBookmark.properties.queryResult
-        /// </summary>
+        /// <summary> The query result of the bookmark. </summary>
         public string QueryResult { get; set; }
-        /// <summary>
-        /// The last time the bookmark was updated
-        /// Serialized Name: HuntingBookmark.properties.updated
-        /// </summary>
+        /// <summary> The last time the bookmark was updated. </summary>
         public DateTimeOffset? UpdatedOn { get; set; }
-        /// <summary>
-        /// Describes a user that updated the bookmark
-        /// Serialized Name: HuntingBookmark.properties.updatedBy
-        /// </summary>
+        /// <summary> Describes a user that updated the bookmark. </summary>
         public SecurityInsightsUserInfo UpdatedBy { get; set; }
-        /// <summary>
-        /// Describes an incident that relates to bookmark
-        /// Serialized Name: HuntingBookmark.properties.incidentInfo
-        /// </summary>
+        /// <summary> Describes an incident that relates to bookmark. </summary>
         public SecurityInsightsBookmarkIncidentInfo IncidentInfo { get; set; }
     }
 }

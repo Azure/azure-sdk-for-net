@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents Codeless API Polling data connector.
-    /// Serialized Name: CodelessApiPollingDataConnector
-    /// </summary>
+    /// <summary> Represents Codeless API Polling data connector. </summary>
     public partial class CodelessApiPollingDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="CodelessApiPollingDataConnector"/>. </summary>
@@ -29,23 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The data connector kind
-        /// Serialized Name: DataConnector.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="connectorUiConfig">
-        /// Config to describe the instructions blade
-        /// Serialized Name: CodelessApiPollingDataConnector.properties.connectorUiConfig
-        /// </param>
-        /// <param name="pollingConfig">
-        /// Config to describe the polling instructions
-        /// Serialized Name: CodelessApiPollingDataConnector.properties.pollingConfig
-        /// </param>
+        /// <param name="connectorUiConfig"> Config to describe the instructions blade. </param>
+        /// <param name="pollingConfig"> Config to describe the polling instructions. </param>
         internal CodelessApiPollingDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, CodelessUiConnectorConfigProperties connectorUiConfig, CodelessConnectorPollingConfigProperties pollingConfig) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             ConnectorUiConfig = connectorUiConfig;
@@ -53,15 +38,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// Config to describe the instructions blade
-        /// Serialized Name: CodelessApiPollingDataConnector.properties.connectorUiConfig
-        /// </summary>
+        /// <summary> Config to describe the instructions blade. </summary>
         public CodelessUiConnectorConfigProperties ConnectorUiConfig { get; set; }
-        /// <summary>
-        /// Config to describe the polling instructions
-        /// Serialized Name: CodelessApiPollingDataConnector.properties.pollingConfig
-        /// </summary>
+        /// <summary> Config to describe the polling instructions. </summary>
         public CodelessConnectorPollingConfigProperties PollingConfig { get; set; }
     }
 }

@@ -111,25 +111,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
-                writer.WriteStringValue(LastModifiedUtc.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (Optional.IsDefined(SuppressionDuration))
             {
                 writer.WritePropertyName("suppressionDuration"u8);
                 writer.WriteStringValue(SuppressionDuration.Value, "P");
             }
-            if (Optional.IsDefined(SuppressionEnabled))
+            if (Optional.IsDefined(IsSuppressionEnabled))
             {
                 writer.WritePropertyName("suppressionEnabled"u8);
-                writer.WriteBooleanValue(SuppressionEnabled.Value);
+                writer.WriteBooleanValue(IsSuppressionEnabled.Value);
             }
             if (Optional.IsDefined(Severity))
             {

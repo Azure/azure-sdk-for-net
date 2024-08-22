@@ -11,11 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describes the request body for triggering a playbook on an entity.
-    /// Serialized Name: EntityManualTriggerRequestBody
-    /// </summary>
-    public partial class EntityManualTriggerRequestBody
+    /// <summary> Describes the request body for triggering a playbook on an entity. </summary>
+    public partial class EntityManualTriggerRequestContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -49,34 +46,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EntityManualTriggerRequestBody"/>. </summary>
-        /// <param name="logicAppsResourceId">
-        /// The resource id of the playbook resource.
-        /// Serialized Name: EntityManualTriggerRequestBody.logicAppsResourceId
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="EntityManualTriggerRequestContent"/>. </summary>
+        /// <param name="logicAppsResourceId"> The resource id of the playbook resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logicAppsResourceId"/> is null. </exception>
-        public EntityManualTriggerRequestBody(ResourceIdentifier logicAppsResourceId)
+        public EntityManualTriggerRequestContent(ResourceIdentifier logicAppsResourceId)
         {
             Argument.AssertNotNull(logicAppsResourceId, nameof(logicAppsResourceId));
 
             LogicAppsResourceId = logicAppsResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityManualTriggerRequestBody"/>. </summary>
-        /// <param name="incidentArmId">
-        /// Incident ARM id.
-        /// Serialized Name: EntityManualTriggerRequestBody.incidentArmId
-        /// </param>
-        /// <param name="tenantId">
-        /// The tenant id of the playbook resource.
-        /// Serialized Name: EntityManualTriggerRequestBody.tenantId
-        /// </param>
-        /// <param name="logicAppsResourceId">
-        /// The resource id of the playbook resource.
-        /// Serialized Name: EntityManualTriggerRequestBody.logicAppsResourceId
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="EntityManualTriggerRequestContent"/>. </summary>
+        /// <param name="incidentArmId"> Incident ARM id. </param>
+        /// <param name="tenantId"> The tenant id of the playbook resource. </param>
+        /// <param name="logicAppsResourceId"> The resource id of the playbook resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EntityManualTriggerRequestBody(ResourceIdentifier incidentArmId, Guid? tenantId, ResourceIdentifier logicAppsResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EntityManualTriggerRequestContent(ResourceIdentifier incidentArmId, Guid? tenantId, ResourceIdentifier logicAppsResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IncidentArmId = incidentArmId;
             TenantId = tenantId;
@@ -84,25 +69,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EntityManualTriggerRequestBody"/> for deserialization. </summary>
-        internal EntityManualTriggerRequestBody()
+        /// <summary> Initializes a new instance of <see cref="EntityManualTriggerRequestContent"/> for deserialization. </summary>
+        internal EntityManualTriggerRequestContent()
         {
         }
 
-        /// <summary>
-        /// Incident ARM id.
-        /// Serialized Name: EntityManualTriggerRequestBody.incidentArmId
-        /// </summary>
+        /// <summary> Incident ARM id. </summary>
         public ResourceIdentifier IncidentArmId { get; set; }
-        /// <summary>
-        /// The tenant id of the playbook resource.
-        /// Serialized Name: EntityManualTriggerRequestBody.tenantId
-        /// </summary>
+        /// <summary> The tenant id of the playbook resource. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary>
-        /// The resource id of the playbook resource.
-        /// Serialized Name: EntityManualTriggerRequestBody.logicAppsResourceId
-        /// </summary>
+        /// <summary> The resource id of the playbook resource. </summary>
         public ResourceIdentifier LogicAppsResourceId { get; }
     }
 }

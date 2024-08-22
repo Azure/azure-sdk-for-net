@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The data source that enriched by ueba.
-    /// Serialized Name: UebaDataSources
-    /// </summary>
+    /// <summary> The data source that enriched by ueba. </summary>
     public readonly partial struct UebaDataSource : IEquatable<UebaDataSource>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string SecurityEventValue = "SecurityEvent";
         private const string SigninLogsValue = "SigninLogs";
 
-        /// <summary>
-        /// AuditLogs
-        /// Serialized Name: UebaDataSources.AuditLogs
-        /// </summary>
+        /// <summary> AuditLogs. </summary>
         public static UebaDataSource AuditLogs { get; } = new UebaDataSource(AuditLogsValue);
-        /// <summary>
-        /// AzureActivity
-        /// Serialized Name: UebaDataSources.AzureActivity
-        /// </summary>
+        /// <summary> AzureActivity. </summary>
         public static UebaDataSource AzureActivity { get; } = new UebaDataSource(AzureActivityValue);
-        /// <summary>
-        /// SecurityEvent
-        /// Serialized Name: UebaDataSources.SecurityEvent
-        /// </summary>
+        /// <summary> SecurityEvent. </summary>
         public static UebaDataSource SecurityEvent { get; } = new UebaDataSource(SecurityEventValue);
-        /// <summary>
-        /// SigninLogs
-        /// Serialized Name: UebaDataSources.SigninLogs
-        /// </summary>
+        /// <summary> SigninLogs. </summary>
         public static UebaDataSource SigninLogs { get; } = new UebaDataSource(SigninLogsValue);
         /// <summary> Determines if two <see cref="UebaDataSource"/> values are the same. </summary>
         public static bool operator ==(UebaDataSource left, UebaDataSource right) => left.Equals(right);

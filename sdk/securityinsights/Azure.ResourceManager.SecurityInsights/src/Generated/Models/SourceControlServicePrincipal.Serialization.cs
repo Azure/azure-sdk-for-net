@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ServicePrincipal : IUtf8JsonSerializable, IJsonModel<ServicePrincipal>
+    public partial class SourceControlServicePrincipal : IUtf8JsonSerializable, IJsonModel<SourceControlServicePrincipal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePrincipal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceControlServicePrincipal>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ServicePrincipal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SourceControlServicePrincipal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServicePrincipal)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlServicePrincipal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        ServicePrincipal IJsonModel<ServicePrincipal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SourceControlServicePrincipal IJsonModel<SourceControlServicePrincipal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServicePrincipal)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlServicePrincipal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServicePrincipal(document.RootElement, options);
+            return DeserializeSourceControlServicePrincipal(document.RootElement, options);
         }
 
-        internal static ServicePrincipal DeserializeServicePrincipal(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SourceControlServicePrincipal DeserializeSourceControlServicePrincipal(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -126,38 +126,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServicePrincipal(id, tenantId, appId, credentialsExpireOn, serializedAdditionalRawData);
+            return new SourceControlServicePrincipal(id, tenantId, appId, credentialsExpireOn, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ServicePrincipal>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SourceControlServicePrincipal>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServicePrincipal)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlServicePrincipal)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ServicePrincipal IPersistableModel<ServicePrincipal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SourceControlServicePrincipal IPersistableModel<SourceControlServicePrincipal>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeServicePrincipal(document.RootElement, options);
+                        return DeserializeSourceControlServicePrincipal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServicePrincipal)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlServicePrincipal)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ServicePrincipal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SourceControlServicePrincipal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

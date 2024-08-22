@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class Webhook : IUtf8JsonSerializable, IJsonModel<Webhook>
+    public partial class SourceControlWebhook : IUtf8JsonSerializable, IJsonModel<SourceControlWebhook>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Webhook>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceControlWebhook>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<Webhook>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SourceControlWebhook>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Webhook>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlWebhook>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Webhook)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlWebhook)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("webhookSecretUpdateTime"u8);
                 writer.WriteStringValue(WebhookSecretUpdateOn.Value, "O");
             }
-            if (Optional.IsDefined(RotateWebhookSecret))
+            if (Optional.IsDefined(IsWebhookSecretRotated))
             {
                 writer.WritePropertyName("rotateWebhookSecret"u8);
-                writer.WriteBooleanValue(RotateWebhookSecret.Value);
+                writer.WriteBooleanValue(IsWebhookSecretRotated.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,19 +64,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        Webhook IJsonModel<Webhook>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SourceControlWebhook IJsonModel<SourceControlWebhook>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Webhook>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlWebhook>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Webhook)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlWebhook)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWebhook(document.RootElement, options);
+            return DeserializeSourceControlWebhook(document.RootElement, options);
         }
 
-        internal static Webhook DeserializeWebhook(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SourceControlWebhook DeserializeSourceControlWebhook(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -130,38 +130,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new Webhook(webhookId, webhookUrl, webhookSecretUpdateTime, rotateWebhookSecret, serializedAdditionalRawData);
+            return new SourceControlWebhook(webhookId, webhookUrl, webhookSecretUpdateTime, rotateWebhookSecret, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Webhook>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SourceControlWebhook>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Webhook>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlWebhook>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Webhook)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlWebhook)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Webhook IPersistableModel<Webhook>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SourceControlWebhook IPersistableModel<SourceControlWebhook>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Webhook>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlWebhook>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeWebhook(document.RootElement, options);
+                        return DeserializeSourceControlWebhook(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Webhook)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlWebhook)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Webhook>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SourceControlWebhook>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -20,14 +20,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the billing statistic
-        /// Serialized Name: BillingStatistic.kind
-        /// </param>
-        /// <param name="etag">
-        /// Resource Etag.
-        /// Serialized Name: AzureEntityResource.etag
-        /// </param>
+        /// <param name="kind"> The kind of the billing statistic. </param>
+        /// <param name="etag"> Resource Etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownBillingStatistic(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingStatisticKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {

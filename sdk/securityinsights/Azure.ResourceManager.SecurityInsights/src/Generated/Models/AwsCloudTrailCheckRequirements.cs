@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Amazon Web Services CloudTrail requirements check request.
-    /// Serialized Name: AwsCloudTrailCheckRequirements
-    /// </summary>
+    /// <summary> Amazon Web Services CloudTrail requirements check request. </summary>
     public partial class AwsCloudTrailCheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="AwsCloudTrailCheckRequirements"/>. </summary>
@@ -23,10 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AwsCloudTrailCheckRequirements"/>. </summary>
-        /// <param name="kind">
-        /// Describes the kind of connector to be checked.
-        /// Serialized Name: DataConnectorsCheckRequirements.kind
-        /// </param>
+        /// <param name="kind"> Describes the kind of connector to be checked. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AwsCloudTrailCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {

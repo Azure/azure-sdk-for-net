@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents MCAS (Microsoft Cloud App Security) requirements check request.
-    /// Serialized Name: McasCheckRequirements
-    /// </summary>
+    /// <summary> Represents MCAS (Microsoft Cloud App Security) requirements check request. </summary>
     public partial class McasCheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="McasCheckRequirements"/>. </summary>
@@ -23,25 +20,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="McasCheckRequirements"/>. </summary>
-        /// <param name="kind">
-        /// Describes the kind of connector to be checked.
-        /// Serialized Name: DataConnectorsCheckRequirements.kind
-        /// </param>
+        /// <param name="kind"> Describes the kind of connector to be checked. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId">
-        /// The tenant id to connect to, and get the data from.
-        /// Serialized Name: McasCheckRequirements.properties.tenantId
-        /// </param>
+        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
         internal McasCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId) : base(kind, serializedAdditionalRawData)
         {
             TenantId = tenantId;
             Kind = kind;
         }
 
-        /// <summary>
-        /// The tenant id to connect to, and get the data from.
-        /// Serialized Name: McasCheckRequirements.properties.tenantId
-        /// </summary>
+        /// <summary> The tenant id to connect to, and get the data from. </summary>
         public Guid? TenantId { get; set; }
     }
 }

@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List of all the workspace manager assignments.
-    /// Serialized Name: WorkspaceManagerAssignmentList
-    /// </summary>
+    /// <summary> List of all the workspace manager assignments. </summary>
     internal partial class WorkspaceManagerAssignmentList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentList"/>. </summary>
-        /// <param name="value">
-        /// Array of workspace manager assignments.
-        /// Serialized Name: WorkspaceManagerAssignmentList.value
-        /// </param>
+        /// <param name="value"> Array of workspace manager assignments. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal WorkspaceManagerAssignmentList(IEnumerable<WorkspaceManagerAssignmentData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of workspace manager assignments.
-        /// Serialized Name: WorkspaceManagerAssignmentList.nextLink
-        /// </param>
-        /// <param name="value">
-        /// Array of workspace manager assignments.
-        /// Serialized Name: WorkspaceManagerAssignmentList.value
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of workspace manager assignments. </param>
+        /// <param name="value"> Array of workspace manager assignments. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkspaceManagerAssignmentList(string nextLink, IReadOnlyList<WorkspaceManagerAssignmentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of workspace manager assignments.
-        /// Serialized Name: WorkspaceManagerAssignmentList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of workspace manager assignments. </summary>
         public string NextLink { get; }
-        /// <summary>
-        /// Array of workspace manager assignments.
-        /// Serialized Name: WorkspaceManagerAssignmentList.value
-        /// </summary>
+        /// <summary> Array of workspace manager assignments. </summary>
         public IReadOnlyList<WorkspaceManagerAssignmentData> Value { get; }
     }
 }

@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents an IoT device entity.
-    /// Serialized Name: IoTDeviceEntity
-    /// </summary>
+    /// <summary> Represents an IoT device entity. </summary>
     public partial class SecurityInsightsIotDeviceEntity : SecurityInsightsEntity
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIotDeviceEntity"/>. </summary>
@@ -34,131 +31,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the entity.
-        /// Serialized Name: Entity.kind
-        /// </param>
+        /// <param name="kind"> The kind of the entity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData">
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: IoTDeviceEntity.properties.additionalData
-        /// </param>
-        /// <param name="friendlyName">
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: IoTDeviceEntity.properties.friendlyName
-        /// </param>
-        /// <param name="deviceId">
-        /// The ID of the IoT Device in the IoT Hub
-        /// Serialized Name: IoTDeviceEntity.properties.deviceId
-        /// </param>
-        /// <param name="deviceName">
-        /// The friendly name of the device
-        /// Serialized Name: IoTDeviceEntity.properties.deviceName
-        /// </param>
-        /// <param name="source">
-        /// The source of the device
-        /// Serialized Name: IoTDeviceEntity.properties.source
-        /// </param>
-        /// <param name="iotSecurityAgentId">
-        /// The ID of the security agent running on the device
-        /// Serialized Name: IoTDeviceEntity.properties.iotSecurityAgentId
-        /// </param>
-        /// <param name="deviceType">
-        /// The type of the device
-        /// Serialized Name: IoTDeviceEntity.properties.deviceType
-        /// </param>
-        /// <param name="vendor">
-        /// The vendor of the device
-        /// Serialized Name: IoTDeviceEntity.properties.vendor
-        /// </param>
-        /// <param name="edgeId">
-        /// The ID of the edge device
-        /// Serialized Name: IoTDeviceEntity.properties.edgeId
-        /// </param>
-        /// <param name="macAddress">
-        /// The MAC address of the device
-        /// Serialized Name: IoTDeviceEntity.properties.macAddress
-        /// </param>
-        /// <param name="model">
-        /// The model of the device
-        /// Serialized Name: IoTDeviceEntity.properties.model
-        /// </param>
-        /// <param name="serialNumber">
-        /// The serial number of the device
-        /// Serialized Name: IoTDeviceEntity.properties.serialNumber
-        /// </param>
-        /// <param name="firmwareVersion">
-        /// The firmware version of the device
-        /// Serialized Name: IoTDeviceEntity.properties.firmwareVersion
-        /// </param>
-        /// <param name="operatingSystem">
-        /// The operating system of the device
-        /// Serialized Name: IoTDeviceEntity.properties.operatingSystem
-        /// </param>
-        /// <param name="iotHubEntityId">
-        /// The AzureResource entity id of the IoT Hub
-        /// Serialized Name: IoTDeviceEntity.properties.iotHubEntityId
-        /// </param>
-        /// <param name="hostEntityId">
-        /// The Host entity id of this device
-        /// Serialized Name: IoTDeviceEntity.properties.hostEntityId
-        /// </param>
-        /// <param name="ipAddressEntityId">
-        /// The IP entity if of this device
-        /// Serialized Name: IoTDeviceEntity.properties.ipAddressEntityId
-        /// </param>
-        /// <param name="threatIntelligence">
-        /// A list of TI contexts attached to the IoTDevice entity.
-        /// Serialized Name: IoTDeviceEntity.properties.threatIntelligence
-        /// </param>
-        /// <param name="protocols">
-        /// A list of protocols of the IoTDevice entity.
-        /// Serialized Name: IoTDeviceEntity.properties.protocols
-        /// </param>
-        /// <param name="owners">
-        /// A list of owners of the IoTDevice entity.
-        /// Serialized Name: IoTDeviceEntity.properties.owners
-        /// </param>
-        /// <param name="nicEntityIds">
-        /// A list of Nic entity ids of the IoTDevice entity.
-        /// Serialized Name: IoTDeviceEntity.properties.nicEntityIds
-        /// </param>
-        /// <param name="site">
-        /// The site of the device
-        /// Serialized Name: IoTDeviceEntity.properties.site
-        /// </param>
-        /// <param name="zone">
-        /// The zone location of the device within a site
-        /// Serialized Name: IoTDeviceEntity.properties.zone
-        /// </param>
-        /// <param name="sensor">
-        /// The sensor the device is monitored by
-        /// Serialized Name: IoTDeviceEntity.properties.sensor
-        /// </param>
-        /// <param name="deviceSubType">
-        /// The subType of the device ('PLC', 'HMI', 'EWS', etc.)
-        /// Serialized Name: IoTDeviceEntity.properties.deviceSubType
-        /// </param>
-        /// <param name="importance">
-        /// Device importance, determines if the device classified as 'crown jewel'
-        /// Serialized Name: IoTDeviceEntity.properties.importance
-        /// </param>
-        /// <param name="purdueLayer">
-        /// The Purdue Layer of the device
-        /// Serialized Name: IoTDeviceEntity.properties.purdueLayer
-        /// </param>
-        /// <param name="isAuthorized">
-        /// Determines whether the device classified as authorized device
-        /// Serialized Name: IoTDeviceEntity.properties.isAuthorized
-        /// </param>
-        /// <param name="isProgramming">
-        /// Determines whether the device classified as programming device
-        /// Serialized Name: IoTDeviceEntity.properties.isProgramming
-        /// </param>
-        /// <param name="isScanner">
-        /// Is the device classified as a scanner device
-        /// Serialized Name: IoTDeviceEntity.properties.isScanner
-        /// </param>
+        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
+        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
+        /// <param name="deviceId"> The ID of the IoT Device in the IoT Hub. </param>
+        /// <param name="deviceName"> The friendly name of the device. </param>
+        /// <param name="source"> The source of the device. </param>
+        /// <param name="iotSecurityAgentId"> The ID of the security agent running on the device. </param>
+        /// <param name="deviceType"> The type of the device. </param>
+        /// <param name="vendor"> The vendor of the device. </param>
+        /// <param name="edgeId"> The ID of the edge device. </param>
+        /// <param name="macAddress"> The MAC address of the device. </param>
+        /// <param name="model"> The model of the device. </param>
+        /// <param name="serialNumber"> The serial number of the device. </param>
+        /// <param name="firmwareVersion"> The firmware version of the device. </param>
+        /// <param name="operatingSystem"> The operating system of the device. </param>
+        /// <param name="iotHubEntityId"> The AzureResource entity id of the IoT Hub. </param>
+        /// <param name="hostEntityId"> The Host entity id of this device. </param>
+        /// <param name="ipAddressEntityId"> The IP entity if of this device. </param>
+        /// <param name="threatIntelligence"> A list of TI contexts attached to the IoTDevice entity. </param>
+        /// <param name="protocols"> A list of protocols of the IoTDevice entity. </param>
+        /// <param name="owners"> A list of owners of the IoTDevice entity. </param>
+        /// <param name="nicEntityIds"> A list of Nic entity ids of the IoTDevice entity. </param>
+        /// <param name="site"> The site of the device. </param>
+        /// <param name="zone"> The zone location of the device within a site. </param>
+        /// <param name="sensor"> The sensor the device is monitored by. </param>
+        /// <param name="deviceSubType"> The subType of the device ('PLC', 'HMI', 'EWS', etc.). </param>
+        /// <param name="importance"> Device importance, determines if the device classified as 'crown jewel'. </param>
+        /// <param name="purdueLayer"> The Purdue Layer of the device. </param>
+        /// <param name="isAuthorized"> Determines whether the device classified as authorized device. </param>
+        /// <param name="isProgramming"> Determines whether the device classified as programming device. </param>
+        /// <param name="isScanner"> Is the device classified as a scanner device. </param>
         internal SecurityInsightsIotDeviceEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string deviceId, string deviceName, string source, Guid? iotSecurityAgentId, string deviceType, string vendor, string edgeId, string macAddress, string model, string serialNumber, string firmwareVersion, string operatingSystem, string iotHubEntityId, string hostEntityId, string ipAddressEntityId, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence, IReadOnlyList<string> protocols, IReadOnlyList<string> owners, IReadOnlyList<string> nicEntityIds, string site, string zone, string sensor, string deviceSubType, DeviceImportance? importance, string purdueLayer, bool? isAuthorized, bool? isProgramming, bool? isScanner) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
@@ -196,7 +100,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary>
         /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// Serialized Name: IoTDeviceEntity.properties.additionalData
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -226,150 +129,63 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </para>
         /// </summary>
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
-        /// <summary>
-        /// The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated.
-        /// Serialized Name: IoTDeviceEntity.properties.friendlyName
-        /// </summary>
+        /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
         public string FriendlyName { get; }
-        /// <summary>
-        /// The ID of the IoT Device in the IoT Hub
-        /// Serialized Name: IoTDeviceEntity.properties.deviceId
-        /// </summary>
+        /// <summary> The ID of the IoT Device in the IoT Hub. </summary>
         public string DeviceId { get; }
-        /// <summary>
-        /// The friendly name of the device
-        /// Serialized Name: IoTDeviceEntity.properties.deviceName
-        /// </summary>
+        /// <summary> The friendly name of the device. </summary>
         public string DeviceName { get; }
-        /// <summary>
-        /// The source of the device
-        /// Serialized Name: IoTDeviceEntity.properties.source
-        /// </summary>
+        /// <summary> The source of the device. </summary>
         public string Source { get; }
-        /// <summary>
-        /// The ID of the security agent running on the device
-        /// Serialized Name: IoTDeviceEntity.properties.iotSecurityAgentId
-        /// </summary>
+        /// <summary> The ID of the security agent running on the device. </summary>
         public Guid? IotSecurityAgentId { get; }
-        /// <summary>
-        /// The type of the device
-        /// Serialized Name: IoTDeviceEntity.properties.deviceType
-        /// </summary>
+        /// <summary> The type of the device. </summary>
         public string DeviceType { get; }
-        /// <summary>
-        /// The vendor of the device
-        /// Serialized Name: IoTDeviceEntity.properties.vendor
-        /// </summary>
+        /// <summary> The vendor of the device. </summary>
         public string Vendor { get; }
-        /// <summary>
-        /// The ID of the edge device
-        /// Serialized Name: IoTDeviceEntity.properties.edgeId
-        /// </summary>
+        /// <summary> The ID of the edge device. </summary>
         public string EdgeId { get; }
-        /// <summary>
-        /// The MAC address of the device
-        /// Serialized Name: IoTDeviceEntity.properties.macAddress
-        /// </summary>
+        /// <summary> The MAC address of the device. </summary>
         public string MacAddress { get; }
-        /// <summary>
-        /// The model of the device
-        /// Serialized Name: IoTDeviceEntity.properties.model
-        /// </summary>
+        /// <summary> The model of the device. </summary>
         public string Model { get; }
-        /// <summary>
-        /// The serial number of the device
-        /// Serialized Name: IoTDeviceEntity.properties.serialNumber
-        /// </summary>
+        /// <summary> The serial number of the device. </summary>
         public string SerialNumber { get; }
-        /// <summary>
-        /// The firmware version of the device
-        /// Serialized Name: IoTDeviceEntity.properties.firmwareVersion
-        /// </summary>
+        /// <summary> The firmware version of the device. </summary>
         public string FirmwareVersion { get; }
-        /// <summary>
-        /// The operating system of the device
-        /// Serialized Name: IoTDeviceEntity.properties.operatingSystem
-        /// </summary>
+        /// <summary> The operating system of the device. </summary>
         public string OperatingSystem { get; }
-        /// <summary>
-        /// The AzureResource entity id of the IoT Hub
-        /// Serialized Name: IoTDeviceEntity.properties.iotHubEntityId
-        /// </summary>
+        /// <summary> The AzureResource entity id of the IoT Hub. </summary>
         public string IotHubEntityId { get; }
-        /// <summary>
-        /// The Host entity id of this device
-        /// Serialized Name: IoTDeviceEntity.properties.hostEntityId
-        /// </summary>
+        /// <summary> The Host entity id of this device. </summary>
         public string HostEntityId { get; }
-        /// <summary>
-        /// The IP entity if of this device
-        /// Serialized Name: IoTDeviceEntity.properties.ipAddressEntityId
-        /// </summary>
+        /// <summary> The IP entity if of this device. </summary>
         public string IPAddressEntityId { get; }
-        /// <summary>
-        /// A list of TI contexts attached to the IoTDevice entity.
-        /// Serialized Name: IoTDeviceEntity.properties.threatIntelligence
-        /// </summary>
+        /// <summary> A list of TI contexts attached to the IoTDevice entity. </summary>
         public IReadOnlyList<SecurityInsightsThreatIntelligence> ThreatIntelligence { get; }
-        /// <summary>
-        /// A list of protocols of the IoTDevice entity.
-        /// Serialized Name: IoTDeviceEntity.properties.protocols
-        /// </summary>
+        /// <summary> A list of protocols of the IoTDevice entity. </summary>
         public IReadOnlyList<string> Protocols { get; }
-        /// <summary>
-        /// A list of owners of the IoTDevice entity.
-        /// Serialized Name: IoTDeviceEntity.properties.owners
-        /// </summary>
+        /// <summary> A list of owners of the IoTDevice entity. </summary>
         public IReadOnlyList<string> Owners { get; }
-        /// <summary>
-        /// A list of Nic entity ids of the IoTDevice entity.
-        /// Serialized Name: IoTDeviceEntity.properties.nicEntityIds
-        /// </summary>
+        /// <summary> A list of Nic entity ids of the IoTDevice entity. </summary>
         public IReadOnlyList<string> NicEntityIds { get; }
-        /// <summary>
-        /// The site of the device
-        /// Serialized Name: IoTDeviceEntity.properties.site
-        /// </summary>
+        /// <summary> The site of the device. </summary>
         public string Site { get; }
-        /// <summary>
-        /// The zone location of the device within a site
-        /// Serialized Name: IoTDeviceEntity.properties.zone
-        /// </summary>
+        /// <summary> The zone location of the device within a site. </summary>
         public string Zone { get; }
-        /// <summary>
-        /// The sensor the device is monitored by
-        /// Serialized Name: IoTDeviceEntity.properties.sensor
-        /// </summary>
+        /// <summary> The sensor the device is monitored by. </summary>
         public string Sensor { get; }
-        /// <summary>
-        /// The subType of the device ('PLC', 'HMI', 'EWS', etc.)
-        /// Serialized Name: IoTDeviceEntity.properties.deviceSubType
-        /// </summary>
+        /// <summary> The subType of the device ('PLC', 'HMI', 'EWS', etc.). </summary>
         public string DeviceSubType { get; }
-        /// <summary>
-        /// Device importance, determines if the device classified as 'crown jewel'
-        /// Serialized Name: IoTDeviceEntity.properties.importance
-        /// </summary>
+        /// <summary> Device importance, determines if the device classified as 'crown jewel'. </summary>
         public DeviceImportance? Importance { get; set; }
-        /// <summary>
-        /// The Purdue Layer of the device
-        /// Serialized Name: IoTDeviceEntity.properties.purdueLayer
-        /// </summary>
+        /// <summary> The Purdue Layer of the device. </summary>
         public string PurdueLayer { get; }
-        /// <summary>
-        /// Determines whether the device classified as authorized device
-        /// Serialized Name: IoTDeviceEntity.properties.isAuthorized
-        /// </summary>
+        /// <summary> Determines whether the device classified as authorized device. </summary>
         public bool? IsAuthorized { get; }
-        /// <summary>
-        /// Determines whether the device classified as programming device
-        /// Serialized Name: IoTDeviceEntity.properties.isProgramming
-        /// </summary>
+        /// <summary> Determines whether the device classified as programming device. </summary>
         public bool? IsProgramming { get; }
-        /// <summary>
-        /// Is the device classified as a scanner device
-        /// Serialized Name: IoTDeviceEntity.properties.isScanner
-        /// </summary>
+        /// <summary> Is the device classified as a scanner device. </summary>
         public bool? IsScanner { get; }
     }
 }

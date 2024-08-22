@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Single entity mapping for the alert rule
-    /// Serialized Name: EntityMapping
-    /// </summary>
+    /// <summary> Single entity mapping for the alert rule. </summary>
     public partial class SecurityInsightsAlertRuleEntityMapping
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleEntityMapping"/>. </summary>
-        /// <param name="entityType">
-        /// The V3 type of the mapped entity
-        /// Serialized Name: EntityMapping.entityType
-        /// </param>
-        /// <param name="fieldMappings">
-        /// array of field mappings for the given entity mapping
-        /// Serialized Name: EntityMapping.fieldMappings
-        /// </param>
+        /// <param name="entityType"> The V3 type of the mapped entity. </param>
+        /// <param name="fieldMappings"> array of field mappings for the given entity mapping. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsAlertRuleEntityMapping(SecurityInsightsAlertRuleEntityMappingType? entityType, IList<SecurityInsightsFieldMapping> fieldMappings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The V3 type of the mapped entity
-        /// Serialized Name: EntityMapping.entityType
-        /// </summary>
+        /// <summary> The V3 type of the mapped entity. </summary>
         public SecurityInsightsAlertRuleEntityMappingType? EntityType { get; set; }
-        /// <summary>
-        /// array of field mappings for the given entity mapping
-        /// Serialized Name: EntityMapping.fieldMappings
-        /// </summary>
+        /// <summary> array of field mappings for the given entity mapping. </summary>
         public IList<SecurityInsightsFieldMapping> FieldMappings { get; }
     }
 }

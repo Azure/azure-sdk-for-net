@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The entity provider that is synced.
-    /// Serialized Name: EntityProviders
-    /// </summary>
+    /// <summary> The entity provider that is synced. </summary>
     public readonly partial struct EntityProvider : IEquatable<EntityProvider>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ActiveDirectoryValue = "ActiveDirectory";
         private const string AzureActiveDirectoryValue = "AzureActiveDirectory";
 
-        /// <summary>
-        /// ActiveDirectory
-        /// Serialized Name: EntityProviders.ActiveDirectory
-        /// </summary>
+        /// <summary> ActiveDirectory. </summary>
         public static EntityProvider ActiveDirectory { get; } = new EntityProvider(ActiveDirectoryValue);
-        /// <summary>
-        /// AzureActiveDirectory
-        /// Serialized Name: EntityProviders.AzureActiveDirectory
-        /// </summary>
+        /// <summary> AzureActiveDirectory. </summary>
         public static EntityProvider AzureActiveDirectory { get; } = new EntityProvider(AzureActiveDirectoryValue);
         /// <summary> Determines if two <see cref="EntityProvider"/> values are the same. </summary>
         public static bool operator ==(EntityProvider left, EntityProvider right) => left.Equals(right);

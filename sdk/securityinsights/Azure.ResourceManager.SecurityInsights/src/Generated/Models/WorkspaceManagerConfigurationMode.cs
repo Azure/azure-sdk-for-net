@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The current mode of the workspace manager configuration
-    /// Serialized Name: Mode
-    /// </summary>
+    /// <summary> The current mode of the workspace manager configuration. </summary>
     public readonly partial struct WorkspaceManagerConfigurationMode : IEquatable<WorkspaceManagerConfigurationMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary>
-        /// The workspace manager configuration is enabled
-        /// Serialized Name: Mode.Enabled
-        /// </summary>
+        /// <summary> The workspace manager configuration is enabled. </summary>
         public static WorkspaceManagerConfigurationMode Enabled { get; } = new WorkspaceManagerConfigurationMode(EnabledValue);
-        /// <summary>
-        /// The workspace manager configuration is disabled
-        /// Serialized Name: Mode.Disabled
-        /// </summary>
+        /// <summary> The workspace manager configuration is disabled. </summary>
         public static WorkspaceManagerConfigurationMode Disabled { get; } = new WorkspaceManagerConfigurationMode(DisabledValue);
         /// <summary> Determines if two <see cref="WorkspaceManagerConfigurationMode"/> values are the same. </summary>
         public static bool operator ==(WorkspaceManagerConfigurationMode left, WorkspaceManagerConfigurationMode right) => left.Equals(right);

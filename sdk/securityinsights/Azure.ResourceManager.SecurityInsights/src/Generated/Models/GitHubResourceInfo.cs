@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Resources created in GitHub repository.
-    /// Serialized Name: GitHubResourceInfo
-    /// </summary>
+    /// <summary> Resources created in GitHub repository. </summary>
     internal partial class GitHubResourceInfo
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GitHubResourceInfo"/>. </summary>
-        /// <param name="appInstallationId">
-        /// GitHub application installation id.
-        /// Serialized Name: GitHubResourceInfo.appInstallationId
-        /// </param>
+        /// <param name="appInstallationId"> GitHub application installation id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GitHubResourceInfo(string appInstallationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// GitHub application installation id.
-        /// Serialized Name: GitHubResourceInfo.appInstallationId
-        /// </summary>
+        /// <summary> GitHub application installation id. </summary>
         public string AppInstallationId { get; }
     }
 }

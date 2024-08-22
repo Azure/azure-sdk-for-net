@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List all the threat intelligence objects on the workspace that match the provided query.
-    /// Serialized Name: ThreatIntelligenceList
-    /// </summary>
+    /// <summary> List all the threat intelligence objects on the workspace that match the provided query. </summary>
     internal partial class ThreatIntelligenceList
     {
         /// <summary>
@@ -52,7 +49,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceList"/>. </summary>
         /// <param name="value">
         /// Array of threat intelligence objects on the workspace that match the provided query.
-        /// Serialized Name: ThreatIntelligenceList.value
         /// Please note <see cref="TIObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TiObjectKindAttackPattern"/>, <see cref="TiObjectKindIdentity"/>, <see cref="TiObjectKindIndicator"/>, <see cref="TiObjectKindRelationship"/> and <see cref="TiObjectKindThreatActor"/>.
         /// </param>
@@ -65,13 +61,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceList"/>. </summary>
-        /// <param name="nextLink">
-        /// URL to fetch the next set of threat intelligence objects.
-        /// Serialized Name: ThreatIntelligenceList.nextLink
-        /// </param>
+        /// <param name="nextLink"> URL to fetch the next set of threat intelligence objects. </param>
         /// <param name="value">
         /// Array of threat intelligence objects on the workspace that match the provided query.
-        /// Serialized Name: ThreatIntelligenceList.value
         /// Please note <see cref="TIObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TiObjectKindAttackPattern"/>, <see cref="TiObjectKindIdentity"/>, <see cref="TiObjectKindIndicator"/>, <see cref="TiObjectKindRelationship"/> and <see cref="TiObjectKindThreatActor"/>.
         /// </param>
@@ -88,14 +80,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// URL to fetch the next set of threat intelligence objects.
-        /// Serialized Name: ThreatIntelligenceList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next set of threat intelligence objects. </summary>
         public string NextLink { get; }
         /// <summary>
         /// Array of threat intelligence objects on the workspace that match the provided query.
-        /// Serialized Name: ThreatIntelligenceList.value
         /// Please note <see cref="TIObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="TiObjectKindAttackPattern"/>, <see cref="TiObjectKindIdentity"/>, <see cref="TiObjectKindIndicator"/>, <see cref="TiObjectKindRelationship"/> and <see cref="TiObjectKindThreatActor"/>.
         /// </summary>

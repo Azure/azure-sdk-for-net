@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Base Model for API authentication.
-    /// Serialized Name: CcpAuthConfig
     /// Please note <see cref="CcpAuthConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ApiKeyAuthModel"/>, <see cref="AWSAuthModel"/>, <see cref="BasicAuthModel"/>, <see cref="GCPAuthModel"/>, <see cref="GitHubAuthModel"/>, <see cref="JwtAuthModel"/>, <see cref="NoneAuthModel"/>, <see cref="OAuthModel"/>, <see cref="OracleAuthModel"/>, <see cref="GenericBlobSbsAuthModel"/> and <see cref="SessionAuthModel"/>.
     /// </summary>
@@ -56,10 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CcpAuthConfig"/>. </summary>
-        /// <param name="authType">
-        /// The auth type
-        /// Serialized Name: CcpAuthConfig.type
-        /// </param>
+        /// <param name="authType"> The auth type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CcpAuthConfig(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +63,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The auth type
-        /// Serialized Name: CcpAuthConfig.type
-        /// </summary>
+        /// <summary> The auth type. </summary>
         internal CcpAuthType AuthType { get; set; }
     }
 }

@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Settings with single toggle.
-    /// Serialized Name: EyesOn
-    /// </summary>
+    /// <summary> Settings with single toggle. </summary>
     public partial class EyesOn : SecurityInsightsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="EyesOn"/>. </summary>
@@ -29,29 +26,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the setting
-        /// Serialized Name: Settings.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The kind of the setting. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="isEnabled">
-        /// Determines whether the setting is enable or disabled.
-        /// Serialized Name: EyesOn.properties.isEnabled
-        /// </param>
+        /// <param name="isEnabled"> Determines whether the setting is enable or disabled. </param>
         internal EyesOn(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SettingKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isEnabled) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             Kind = kind;
         }
 
-        /// <summary>
-        /// Determines whether the setting is enable or disabled.
-        /// Serialized Name: EyesOn.properties.isEnabled
-        /// </summary>
+        /// <summary> Determines whether the setting is enable or disabled. </summary>
         public bool? IsEnabled { get; }
     }
 }

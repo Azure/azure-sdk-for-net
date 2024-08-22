@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describes threat kill chain phase entity
-    /// Serialized Name: ThreatIntelligenceParsedPatternTypeValue
-    /// </summary>
+    /// <summary> Describes threat kill chain phase entity. </summary>
     public partial class ThreatIntelligenceParsedPatternTypeValue
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceParsedPatternTypeValue"/>. </summary>
-        /// <param name="valueType">
-        /// Type of the value
-        /// Serialized Name: ThreatIntelligenceParsedPatternTypeValue.valueType
-        /// </param>
-        /// <param name="value">
-        /// Value of parsed pattern
-        /// Serialized Name: ThreatIntelligenceParsedPatternTypeValue.value
-        /// </param>
+        /// <param name="valueType"> Type of the value. </param>
+        /// <param name="value"> Value of parsed pattern. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceParsedPatternTypeValue(string valueType, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Type of the value
-        /// Serialized Name: ThreatIntelligenceParsedPatternTypeValue.valueType
-        /// </summary>
+        /// <summary> Type of the value. </summary>
         public string ValueType { get; set; }
-        /// <summary>
-        /// Value of parsed pattern
-        /// Serialized Name: ThreatIntelligenceParsedPatternTypeValue.value
-        /// </summary>
+        /// <summary> Value of parsed pattern. </summary>
         public string Value { get; set; }
     }
 }

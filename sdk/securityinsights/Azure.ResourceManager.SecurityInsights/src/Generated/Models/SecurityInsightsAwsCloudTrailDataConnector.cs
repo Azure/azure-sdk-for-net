@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents Amazon Web Services CloudTrail data connector.
-    /// Serialized Name: AwsCloudTrailDataConnector
-    /// </summary>
+    /// <summary> Represents Amazon Web Services CloudTrail data connector. </summary>
     public partial class SecurityInsightsAwsCloudTrailDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>. </summary>
@@ -29,23 +26,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The data connector kind
-        /// Serialized Name: DataConnector.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The data connector kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="awsRoleArn">
-        /// The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account.
-        /// Serialized Name: AwsCloudTrailDataConnector.properties.awsRoleArn
-        /// </param>
-        /// <param name="logs">
-        /// Logs data type.
-        /// Serialized Name: AwsCloudTrailDataConnector.properties.dataTypes.logs
-        /// </param>
+        /// <param name="awsRoleArn"> The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account. </param>
+        /// <param name="logs"> Logs data type. </param>
         internal SecurityInsightsAwsCloudTrailDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string awsRoleArn, AwsCloudTrailDataConnectorDataTypesLogs logs) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             AwsRoleArn = awsRoleArn;
@@ -53,20 +38,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary>
-        /// The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account.
-        /// Serialized Name: AwsCloudTrailDataConnector.properties.awsRoleArn
-        /// </summary>
+        /// <summary> The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account. </summary>
         public string AwsRoleArn { get; set; }
-        /// <summary>
-        /// Logs data type.
-        /// Serialized Name: AwsCloudTrailDataConnector.properties.dataTypes.logs
-        /// </summary>
+        /// <summary> Logs data type. </summary>
         internal AwsCloudTrailDataConnectorDataTypesLogs Logs { get; set; }
-        /// <summary>
-        /// Describe whether this data type connection is enabled or not.
-        /// Serialized Name: DataConnectorDataTypeCommon.state
-        /// </summary>
+        /// <summary> Describe whether this data type connection is enabled or not. </summary>
         public SecurityInsightsDataTypeConnectionState? LogsState
         {
             get => Logs is null ? default(SecurityInsightsDataTypeConnectionState?) : Logs.State;

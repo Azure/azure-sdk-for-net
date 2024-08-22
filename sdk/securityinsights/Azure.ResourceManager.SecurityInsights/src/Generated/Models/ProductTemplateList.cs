@@ -11,10 +11,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// List of all the template.
-    /// Serialized Name: ProductTemplateList
-    /// </summary>
+    /// <summary> List of all the template. </summary>
     internal partial class ProductTemplateList
     {
         /// <summary>
@@ -50,10 +47,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProductTemplateList"/>. </summary>
-        /// <param name="value">
-        /// Array of templates.
-        /// Serialized Name: ProductTemplateList.value
-        /// </param>
+        /// <param name="value"> Array of templates. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ProductTemplateList(IEnumerable<ProductTemplateModelData> value)
         {
@@ -63,14 +57,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductTemplateList"/>. </summary>
-        /// <param name="value">
-        /// Array of templates.
-        /// Serialized Name: ProductTemplateList.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to fetch the next page of template.
-        /// Serialized Name: ProductTemplateList.nextLink
-        /// </param>
+        /// <param name="value"> Array of templates. </param>
+        /// <param name="nextLink"> URL to fetch the next page of template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProductTemplateList(IReadOnlyList<ProductTemplateModelData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,15 +72,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary>
-        /// Array of templates.
-        /// Serialized Name: ProductTemplateList.value
-        /// </summary>
+        /// <summary> Array of templates. </summary>
         public IReadOnlyList<ProductTemplateModelData> Value { get; }
-        /// <summary>
-        /// URL to fetch the next page of template.
-        /// Serialized Name: ProductTemplateList.nextLink
-        /// </summary>
+        /// <summary> URL to fetch the next page of template. </summary>
         public string NextLink { get; }
     }
 }

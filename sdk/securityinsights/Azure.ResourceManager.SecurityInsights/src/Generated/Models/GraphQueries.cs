@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The graph query to show the current data status
-    /// Serialized Name: GraphQueries
-    /// </summary>
+    /// <summary> The graph query to show the current data status. </summary>
     public partial class GraphQueries
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GraphQueries"/>. </summary>
-        /// <param name="metricName">
-        /// the metric that the query is checking
-        /// Serialized Name: GraphQueries.metricName
-        /// </param>
-        /// <param name="legend">
-        /// The legend for the graph
-        /// Serialized Name: GraphQueries.legend
-        /// </param>
-        /// <param name="baseQuery">
-        /// The base query for the graph
-        /// Serialized Name: GraphQueries.baseQuery
-        /// </param>
+        /// <param name="metricName"> the metric that the query is checking. </param>
+        /// <param name="legend"> The legend for the graph. </param>
+        /// <param name="baseQuery"> The base query for the graph. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GraphQueries(string metricName, string legend, string baseQuery, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// the metric that the query is checking
-        /// Serialized Name: GraphQueries.metricName
-        /// </summary>
+        /// <summary> the metric that the query is checking. </summary>
         public string MetricName { get; set; }
-        /// <summary>
-        /// The legend for the graph
-        /// Serialized Name: GraphQueries.legend
-        /// </summary>
+        /// <summary> The legend for the graph. </summary>
         public string Legend { get; set; }
-        /// <summary>
-        /// The base query for the graph
-        /// Serialized Name: GraphQueries.baseQuery
-        /// </summary>
+        /// <summary> The base query for the graph. </summary>
         public string BaseQuery { get; set; }
     }
 }

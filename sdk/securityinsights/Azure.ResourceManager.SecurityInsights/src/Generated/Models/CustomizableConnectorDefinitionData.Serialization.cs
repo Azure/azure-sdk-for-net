@@ -56,15 +56,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedTimeUtc))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimeUtc"u8);
-                writer.WriteStringValue(CreatedTimeUtc.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastModifiedUtc))
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
-                writer.WriteStringValue(LastModifiedUtc.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (Optional.IsDefined(ConnectorUiConfig))
             {

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Filtering criteria for querying threat intelligence indicators.
-    /// Serialized Name: ThreatIntelligenceFilteringCriteria
-    /// </summary>
+    /// <summary> Filtering criteria for querying threat intelligence indicators. </summary>
     public partial class ThreatIntelligenceFilteringCriteria
     {
         /// <summary>
@@ -60,58 +57,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceFilteringCriteria"/>. </summary>
-        /// <param name="pageSize">
-        /// Page size
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.pageSize
-        /// </param>
-        /// <param name="minConfidence">
-        /// Minimum confidence.
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.minConfidence
-        /// </param>
-        /// <param name="maxConfidence">
-        /// Maximum confidence.
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.maxConfidence
-        /// </param>
-        /// <param name="minValidUntil">
-        /// Start time for ValidUntil filter.
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.minValidUntil
-        /// </param>
-        /// <param name="maxValidUntil">
-        /// End time for ValidUntil filter.
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.maxValidUntil
-        /// </param>
-        /// <param name="isIncludeDisabled">
-        /// Parameter to include/exclude disabled indicators.
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.includeDisabled
-        /// </param>
-        /// <param name="sortBy">
-        /// Columns to sort by and sorting order
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.sortBy
-        /// </param>
-        /// <param name="sources">
-        /// Sources of threat intelligence indicators
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.sources
-        /// </param>
-        /// <param name="patternTypes">
-        /// Pattern types
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.patternTypes
-        /// </param>
-        /// <param name="threatTypes">
-        /// Threat types of threat intelligence indicators
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.threatTypes
-        /// </param>
-        /// <param name="ids">
-        /// Ids of threat intelligence indicators
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.ids
-        /// </param>
-        /// <param name="keywords">
-        /// Keywords for searching threat intelligence indicators
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.keywords
-        /// </param>
-        /// <param name="skipToken">
-        /// Skip token.
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.skipToken
-        /// </param>
+        /// <param name="pageSize"> Page size. </param>
+        /// <param name="minConfidence"> Minimum confidence. </param>
+        /// <param name="maxConfidence"> Maximum confidence. </param>
+        /// <param name="minValidUntil"> Start time for ValidUntil filter. </param>
+        /// <param name="maxValidUntil"> End time for ValidUntil filter. </param>
+        /// <param name="isIncludeDisabled"> Parameter to include/exclude disabled indicators. </param>
+        /// <param name="sortBy"> Columns to sort by and sorting order. </param>
+        /// <param name="sources"> Sources of threat intelligence indicators. </param>
+        /// <param name="patternTypes"> Pattern types. </param>
+        /// <param name="threatTypes"> Threat types of threat intelligence indicators. </param>
+        /// <param name="ids"> Ids of threat intelligence indicators. </param>
+        /// <param name="keywords"> Keywords for searching threat intelligence indicators. </param>
+        /// <param name="skipToken"> Skip token. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ThreatIntelligenceFilteringCriteria(int? pageSize, int? minConfidence, int? maxConfidence, DateTimeOffset? minValidUntil, DateTimeOffset? maxValidUntil, bool? isIncludeDisabled, IList<ThreatIntelligenceSortingCriteria> sortBy, IList<string> sources, IList<string> patternTypes, IList<string> threatTypes, IList<string> ids, IList<string> keywords, string skipToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -131,70 +89,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Page size
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.pageSize
-        /// </summary>
+        /// <summary> Page size. </summary>
         public int? PageSize { get; set; }
-        /// <summary>
-        /// Minimum confidence.
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.minConfidence
-        /// </summary>
+        /// <summary> Minimum confidence. </summary>
         public int? MinConfidence { get; set; }
-        /// <summary>
-        /// Maximum confidence.
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.maxConfidence
-        /// </summary>
+        /// <summary> Maximum confidence. </summary>
         public int? MaxConfidence { get; set; }
-        /// <summary>
-        /// Start time for ValidUntil filter.
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.minValidUntil
-        /// </summary>
+        /// <summary> Start time for ValidUntil filter. </summary>
         public DateTimeOffset? MinValidUntil { get; set; }
-        /// <summary>
-        /// End time for ValidUntil filter.
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.maxValidUntil
-        /// </summary>
+        /// <summary> End time for ValidUntil filter. </summary>
         public DateTimeOffset? MaxValidUntil { get; set; }
-        /// <summary>
-        /// Parameter to include/exclude disabled indicators.
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.includeDisabled
-        /// </summary>
+        /// <summary> Parameter to include/exclude disabled indicators. </summary>
         public bool? IsIncludeDisabled { get; set; }
-        /// <summary>
-        /// Columns to sort by and sorting order
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.sortBy
-        /// </summary>
+        /// <summary> Columns to sort by and sorting order. </summary>
         public IList<ThreatIntelligenceSortingCriteria> SortBy { get; }
-        /// <summary>
-        /// Sources of threat intelligence indicators
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.sources
-        /// </summary>
+        /// <summary> Sources of threat intelligence indicators. </summary>
         public IList<string> Sources { get; }
-        /// <summary>
-        /// Pattern types
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.patternTypes
-        /// </summary>
+        /// <summary> Pattern types. </summary>
         public IList<string> PatternTypes { get; }
-        /// <summary>
-        /// Threat types of threat intelligence indicators
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.threatTypes
-        /// </summary>
+        /// <summary> Threat types of threat intelligence indicators. </summary>
         public IList<string> ThreatTypes { get; }
-        /// <summary>
-        /// Ids of threat intelligence indicators
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.ids
-        /// </summary>
+        /// <summary> Ids of threat intelligence indicators. </summary>
         public IList<string> Ids { get; }
-        /// <summary>
-        /// Keywords for searching threat intelligence indicators
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.keywords
-        /// </summary>
+        /// <summary> Keywords for searching threat intelligence indicators. </summary>
         public IList<string> Keywords { get; }
-        /// <summary>
-        /// Skip token.
-        /// Serialized Name: ThreatIntelligenceFilteringCriteria.skipToken
-        /// </summary>
+        /// <summary> Skip token. </summary>
         public string SkipToken { get; set; }
     }
 }

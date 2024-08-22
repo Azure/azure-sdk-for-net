@@ -10,27 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Describes an automation rule action to add a task to an incident
-    /// Serialized Name: AutomationRuleAddIncidentTaskAction
-    /// </summary>
+    /// <summary> Describes an automation rule action to add a task to an incident. </summary>
     public partial class AutomationRuleAddIncidentTaskAction : SecurityInsightsAutomationRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="AutomationRuleAddIncidentTaskAction"/>. </summary>
-        /// <param name="order"> Serialized Name: AutomationRuleAction.order. </param>
+        /// <param name="order"></param>
         public AutomationRuleAddIncidentTaskAction(int order) : base(order)
         {
             ActionType = ActionType.AddIncidentTask;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationRuleAddIncidentTaskAction"/>. </summary>
-        /// <param name="order"> Serialized Name: AutomationRuleAction.order. </param>
-        /// <param name="actionType">
-        /// The type of the automation rule action.
-        /// Serialized Name: AutomationRuleAction.actionType
-        /// </param>
+        /// <param name="order"></param>
+        /// <param name="actionType"> The type of the automation rule action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="actionConfiguration"> Serialized Name: AutomationRuleAddIncidentTaskAction.actionConfiguration. </param>
+        /// <param name="actionConfiguration"></param>
         internal AutomationRuleAddIncidentTaskAction(int order, ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, AddIncidentTaskActionProperties actionConfiguration) : base(order, actionType, serializedAdditionalRawData)
         {
             ActionConfiguration = actionConfiguration;
@@ -42,7 +36,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
         }
 
-        /// <summary> Serialized Name: AutomationRuleAddIncidentTaskAction.actionConfiguration. </summary>
+        /// <summary> Gets or sets the action configuration. </summary>
         public AddIncidentTaskActionProperties ActionConfiguration { get; set; }
     }
 }

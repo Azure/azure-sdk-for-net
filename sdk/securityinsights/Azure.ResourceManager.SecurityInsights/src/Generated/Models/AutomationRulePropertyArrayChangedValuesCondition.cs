@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The AutomationRulePropertyArrayChangedValuesCondition.
-    /// Serialized Name: AutomationRulePropertyArrayChangedValuesCondition
-    /// </summary>
+    /// <summary> The AutomationRulePropertyArrayChangedValuesCondition. </summary>
     public partial class AutomationRulePropertyArrayChangedValuesCondition
     {
         /// <summary>
@@ -54,8 +51,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyArrayChangedValuesCondition"/>. </summary>
-        /// <param name="arrayType"> Serialized Name: AutomationRulePropertyArrayChangedValuesCondition.arrayType. </param>
-        /// <param name="changeType"> Serialized Name: AutomationRulePropertyArrayChangedValuesCondition.changeType. </param>
+        /// <param name="arrayType"></param>
+        /// <param name="changeType"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutomationRulePropertyArrayChangedValuesCondition(AutomationRulePropertyArrayChangedConditionSupportedArrayType? arrayType, AutomationRulePropertyArrayChangedConditionSupportedChangeType? changeType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,9 +61,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: AutomationRulePropertyArrayChangedValuesCondition.arrayType. </summary>
+        /// <summary> Gets or sets the array type. </summary>
         public AutomationRulePropertyArrayChangedConditionSupportedArrayType? ArrayType { get; set; }
-        /// <summary> Serialized Name: AutomationRulePropertyArrayChangedValuesCondition.changeType. </summary>
+        /// <summary> Gets or sets the change type. </summary>
         public AutomationRulePropertyArrayChangedConditionSupportedChangeType? ChangeType { get; set; }
     }
 }

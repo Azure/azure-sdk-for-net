@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Model for API authentication for GitHub. For this authentication first we need to approve the Router app (Microsoft Security DevOps) to access the GitHub account, Then we only need the InstallationId to get the access token from https://api.github.com/app/installations/{installId}/access_tokens.
-    /// Serialized Name: GitHubAuthModel
-    /// </summary>
+    /// <summary> Model for API authentication for GitHub. For this authentication first we need to approve the Router app (Microsoft Security DevOps) to access the GitHub account, Then we only need the InstallationId to get the access token from https://api.github.com/app/installations/{installId}/access_tokens. </summary>
     public partial class GitHubAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="GitHubAuthModel"/>. </summary>
@@ -23,25 +20,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GitHubAuthModel"/>. </summary>
-        /// <param name="authType">
-        /// The auth type
-        /// Serialized Name: CcpAuthConfig.type
-        /// </param>
+        /// <param name="authType"> The auth type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="installationId">
-        /// The GitHubApp auth installation id.
-        /// Serialized Name: GitHubAuthModel.installationId
-        /// </param>
+        /// <param name="installationId"> The GitHubApp auth installation id. </param>
         internal GitHubAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string installationId) : base(authType, serializedAdditionalRawData)
         {
             InstallationId = installationId;
             AuthType = authType;
         }
 
-        /// <summary>
-        /// The GitHubApp auth installation id.
-        /// Serialized Name: GitHubAuthModel.installationId
-        /// </summary>
+        /// <summary> The GitHubApp auth installation id. </summary>
         public string InstallationId { get; set; }
     }
 }

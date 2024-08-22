@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class EnrichmentDomainBody : IUtf8JsonSerializable, IJsonModel<EnrichmentDomainBody>
+    public partial class EnrichmentDomainContent : IUtf8JsonSerializable, IJsonModel<EnrichmentDomainContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnrichmentDomainBody>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnrichmentDomainContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EnrichmentDomainBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EnrichmentDomainContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnrichmentDomainBody)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EnrichmentDomainContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteEndObject();
         }
 
-        EnrichmentDomainBody IJsonModel<EnrichmentDomainBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EnrichmentDomainContent IJsonModel<EnrichmentDomainContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnrichmentDomainBody)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EnrichmentDomainContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEnrichmentDomainBody(document.RootElement, options);
+            return DeserializeEnrichmentDomainContent(document.RootElement, options);
         }
 
-        internal static EnrichmentDomainBody DeserializeEnrichmentDomainBody(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EnrichmentDomainContent DeserializeEnrichmentDomainContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -85,38 +85,38 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EnrichmentDomainBody(domain, serializedAdditionalRawData);
+            return new EnrichmentDomainContent(domain, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EnrichmentDomainBody>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EnrichmentDomainContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnrichmentDomainBody)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnrichmentDomainContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EnrichmentDomainBody IPersistableModel<EnrichmentDomainBody>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EnrichmentDomainContent IPersistableModel<EnrichmentDomainContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainBody>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEnrichmentDomainBody(document.RootElement, options);
+                        return DeserializeEnrichmentDomainContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnrichmentDomainBody)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnrichmentDomainContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EnrichmentDomainBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EnrichmentDomainContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

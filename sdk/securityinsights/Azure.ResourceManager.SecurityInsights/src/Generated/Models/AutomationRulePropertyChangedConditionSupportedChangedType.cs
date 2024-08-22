@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The AutomationRulePropertyChangedConditionSupportedChangedType.
-    /// Serialized Name: AutomationRulePropertyChangedConditionSupportedChangedType
-    /// </summary>
+    /// <summary> The AutomationRulePropertyChangedConditionSupportedChangedType. </summary>
     public readonly partial struct AutomationRulePropertyChangedConditionSupportedChangedType : IEquatable<AutomationRulePropertyChangedConditionSupportedChangedType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ChangedFromValue = "ChangedFrom";
         private const string ChangedToValue = "ChangedTo";
 
-        /// <summary>
-        /// Evaluate the condition on the previous value of the property
-        /// Serialized Name: AutomationRulePropertyChangedConditionSupportedChangedType.ChangedFrom
-        /// </summary>
+        /// <summary> Evaluate the condition on the previous value of the property. </summary>
         public static AutomationRulePropertyChangedConditionSupportedChangedType ChangedFrom { get; } = new AutomationRulePropertyChangedConditionSupportedChangedType(ChangedFromValue);
-        /// <summary>
-        /// Evaluate the condition on the updated value of the property
-        /// Serialized Name: AutomationRulePropertyChangedConditionSupportedChangedType.ChangedTo
-        /// </summary>
+        /// <summary> Evaluate the condition on the updated value of the property. </summary>
         public static AutomationRulePropertyChangedConditionSupportedChangedType ChangedTo { get; } = new AutomationRulePropertyChangedConditionSupportedChangedType(ChangedToValue);
         /// <summary> Determines if two <see cref="AutomationRulePropertyChangedConditionSupportedChangedType"/> values are the same. </summary>
         public static bool operator ==(AutomationRulePropertyChangedConditionSupportedChangedType left, AutomationRulePropertyChangedConditionSupportedChangedType right) => left.Equals(right);

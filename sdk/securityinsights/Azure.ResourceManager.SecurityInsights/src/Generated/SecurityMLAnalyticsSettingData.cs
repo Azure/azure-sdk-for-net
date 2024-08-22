@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityMLAnalyticsSetting data model.
     /// Security ML Analytics Setting
-    /// Serialized Name: SecurityMLAnalyticsSetting
     /// Please note <see cref="SecurityMLAnalyticsSettingData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AnomalySecurityMLAnalyticsSettings"/>.
     /// </summary>
@@ -64,14 +63,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of security ML Analytics Settings
-        /// Serialized Name: SecurityMLAnalyticsSetting.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> The kind of security ML Analytics Settings. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityMLAnalyticsSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMLAnalyticsSettingsKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -80,15 +73,9 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The kind of security ML Analytics Settings
-        /// Serialized Name: SecurityMLAnalyticsSetting.kind
-        /// </summary>
+        /// <summary> The kind of security ML Analytics Settings. </summary>
         internal SecurityMLAnalyticsSettingsKind Kind { get; set; }
-        /// <summary>
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </summary>
+        /// <summary> Etag of the azure resource. </summary>
         public ETag? ETag { get; set; }
     }
 }

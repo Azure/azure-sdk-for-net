@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the SecurityInsightsAlertRuleAction data model.
     /// Action for alert rule.
-    /// Serialized Name: ActionResponse
     /// </summary>
     public partial class SecurityInsightsAlertRuleActionData : ResourceData
     {
@@ -61,18 +60,9 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="logicAppResourceId">
-        /// Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}.
-        /// Serialized Name: ActionResponse.properties.logicAppResourceId
-        /// </param>
-        /// <param name="workflowId">
-        /// The name of the logic app's workflow.
-        /// Serialized Name: ActionResponse.properties.workflowId
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="logicAppResourceId"> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </param>
+        /// <param name="workflowId"> The name of the logic app's workflow. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SecurityInsightsAlertRuleActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier logicAppResourceId, string workflowId, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -82,20 +72,11 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}.
-        /// Serialized Name: ActionResponse.properties.logicAppResourceId
-        /// </summary>
+        /// <summary> Logic App Resource Id, /subscriptions/{my-subscription}/resourceGroups/{my-resource-group}/providers/Microsoft.Logic/workflows/{my-workflow-id}. </summary>
         public ResourceIdentifier LogicAppResourceId { get; set; }
-        /// <summary>
-        /// The name of the logic app's workflow.
-        /// Serialized Name: ActionResponse.properties.workflowId
-        /// </summary>
+        /// <summary> The name of the logic app's workflow. </summary>
         public string WorkflowId { get; set; }
-        /// <summary>
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </summary>
+        /// <summary> Etag of the azure resource. </summary>
         public ETag? ETag { get; set; }
     }
 }

@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Represents Activity entity query.
-    /// Serialized Name: ActivityCustomEntityQuery
-    /// </summary>
+    /// <summary> Represents Activity entity query. </summary>
     public partial class ActivityCustomEntityQuery : EntityQueryCreateOrUpdateContent
     {
         /// <summary> Initializes a new instance of <see cref="ActivityCustomEntityQuery"/>. </summary>
@@ -31,60 +28,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// the entity query kind
-        /// Serialized Name: CustomEntityQuery.kind
-        /// </param>
-        /// <param name="etag">
-        /// Etag of the azure resource
-        /// Serialized Name: ResourceWithEtag.etag
-        /// </param>
+        /// <param name="kind"> the entity query kind. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="title">
-        /// The entity query title
-        /// Serialized Name: ActivityCustomEntityQuery.properties.title
-        /// </param>
-        /// <param name="content">
-        /// The entity query content to display in timeline
-        /// Serialized Name: ActivityCustomEntityQuery.properties.content
-        /// </param>
-        /// <param name="description">
-        /// The entity query description
-        /// Serialized Name: ActivityCustomEntityQuery.properties.description
-        /// </param>
-        /// <param name="queryDefinitions">
-        /// The Activity query definitions
-        /// Serialized Name: ActivityCustomEntityQuery.properties.queryDefinitions
-        /// </param>
-        /// <param name="inputEntityType">
-        /// The type of the query's source entity
-        /// Serialized Name: ActivityCustomEntityQuery.properties.inputEntityType
-        /// </param>
-        /// <param name="requiredInputFieldsSets">
-        /// List of the fields of the source entity that are required to run the query
-        /// Serialized Name: ActivityCustomEntityQuery.properties.requiredInputFieldsSets
-        /// </param>
-        /// <param name="entitiesFilter">
-        /// The query applied only to entities matching to all filters
-        /// Serialized Name: ActivityCustomEntityQuery.properties.entitiesFilter
-        /// </param>
-        /// <param name="templateName">
-        /// The template id this activity was created from
-        /// Serialized Name: ActivityCustomEntityQuery.properties.templateName
-        /// </param>
-        /// <param name="isEnabled">
-        /// Determines whether this activity is enabled or disabled.
-        /// Serialized Name: ActivityCustomEntityQuery.properties.enabled
-        /// </param>
-        /// <param name="createdTimeUtc">
-        /// The time the activity was created
-        /// Serialized Name: ActivityCustomEntityQuery.properties.createdTimeUtc
-        /// </param>
-        /// <param name="lastModifiedTimeUtc">
-        /// The last time the activity was updated
-        /// Serialized Name: ActivityCustomEntityQuery.properties.lastModifiedTimeUtc
-        /// </param>
-        internal ActivityCustomEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomEntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, string content, string description, ActivityEntityQueriesPropertiesQueryDefinitions queryDefinitions, EntityType? inputEntityType, IList<IList<string>> requiredInputFieldsSets, IDictionary<string, IList<string>> entitiesFilter, string templateName, bool? isEnabled, DateTimeOffset? createdTimeUtc, DateTimeOffset? lastModifiedTimeUtc) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="title"> The entity query title. </param>
+        /// <param name="content"> The entity query content to display in timeline. </param>
+        /// <param name="description"> The entity query description. </param>
+        /// <param name="queryDefinitions"> The Activity query definitions. </param>
+        /// <param name="inputEntityType"> The type of the query's source entity. </param>
+        /// <param name="requiredInputFieldsSets"> List of the fields of the source entity that are required to run the query. </param>
+        /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
+        /// <param name="templateName"> The template id this activity was created from. </param>
+        /// <param name="isEnabled"> Determines whether this activity is enabled or disabled. </param>
+        /// <param name="createdOn"> The time the activity was created. </param>
+        /// <param name="lastModifiedOn"> The last time the activity was updated. </param>
+        internal ActivityCustomEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomEntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, string content, string description, ActivityEntityQueriesPropertiesQueryDefinitions queryDefinitions, EntityType? inputEntityType, IList<IList<string>> requiredInputFieldsSets, IDictionary<string, IList<string>> entitiesFilter, string templateName, bool? isEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Title = title;
             Content = content;
@@ -95,35 +53,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             EntitiesFilter = entitiesFilter;
             TemplateName = templateName;
             IsEnabled = isEnabled;
-            CreatedTimeUtc = createdTimeUtc;
-            LastModifiedTimeUtc = lastModifiedTimeUtc;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
             Kind = kind;
         }
 
-        /// <summary>
-        /// The entity query title
-        /// Serialized Name: ActivityCustomEntityQuery.properties.title
-        /// </summary>
+        /// <summary> The entity query title. </summary>
         public string Title { get; set; }
-        /// <summary>
-        /// The entity query content to display in timeline
-        /// Serialized Name: ActivityCustomEntityQuery.properties.content
-        /// </summary>
+        /// <summary> The entity query content to display in timeline. </summary>
         public string Content { get; set; }
-        /// <summary>
-        /// The entity query description
-        /// Serialized Name: ActivityCustomEntityQuery.properties.description
-        /// </summary>
+        /// <summary> The entity query description. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// The Activity query definitions
-        /// Serialized Name: ActivityCustomEntityQuery.properties.queryDefinitions
-        /// </summary>
+        /// <summary> The Activity query definitions. </summary>
         internal ActivityEntityQueriesPropertiesQueryDefinitions QueryDefinitions { get; set; }
-        /// <summary>
-        /// The Activity query to run on a given entity
-        /// Serialized Name: ActivityEntityQueriesPropertiesQueryDefinitions.query
-        /// </summary>
+        /// <summary> The Activity query to run on a given entity. </summary>
         public string Query
         {
             get => QueryDefinitions is null ? default : QueryDefinitions.Query;
@@ -135,40 +78,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        /// <summary>
-        /// The type of the query's source entity
-        /// Serialized Name: ActivityCustomEntityQuery.properties.inputEntityType
-        /// </summary>
+        /// <summary> The type of the query's source entity. </summary>
         public EntityType? InputEntityType { get; set; }
-        /// <summary>
-        /// List of the fields of the source entity that are required to run the query
-        /// Serialized Name: ActivityCustomEntityQuery.properties.requiredInputFieldsSets
-        /// </summary>
+        /// <summary> List of the fields of the source entity that are required to run the query. </summary>
         public IList<IList<string>> RequiredInputFieldsSets { get; }
-        /// <summary>
-        /// The query applied only to entities matching to all filters
-        /// Serialized Name: ActivityCustomEntityQuery.properties.entitiesFilter
-        /// </summary>
+        /// <summary> The query applied only to entities matching to all filters. </summary>
         public IDictionary<string, IList<string>> EntitiesFilter { get; }
-        /// <summary>
-        /// The template id this activity was created from
-        /// Serialized Name: ActivityCustomEntityQuery.properties.templateName
-        /// </summary>
+        /// <summary> The template id this activity was created from. </summary>
         public string TemplateName { get; set; }
-        /// <summary>
-        /// Determines whether this activity is enabled or disabled.
-        /// Serialized Name: ActivityCustomEntityQuery.properties.enabled
-        /// </summary>
+        /// <summary> Determines whether this activity is enabled or disabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// The time the activity was created
-        /// Serialized Name: ActivityCustomEntityQuery.properties.createdTimeUtc
-        /// </summary>
-        public DateTimeOffset? CreatedTimeUtc { get; }
-        /// <summary>
-        /// The last time the activity was updated
-        /// Serialized Name: ActivityCustomEntityQuery.properties.lastModifiedTimeUtc
-        /// </summary>
-        public DateTimeOffset? LastModifiedTimeUtc { get; }
+        /// <summary> The time the activity was created. </summary>
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> The last time the activity was updated. </summary>
+        public DateTimeOffset? LastModifiedOn { get; }
     }
 }

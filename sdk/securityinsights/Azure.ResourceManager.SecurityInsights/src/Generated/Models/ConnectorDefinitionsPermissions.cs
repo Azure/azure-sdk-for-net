@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// The required Permissions for the connector.
-    /// Serialized Name: ConnectorDefinitionsPermissions
-    /// </summary>
+    /// <summary> The required Permissions for the connector. </summary>
     public partial class ConnectorDefinitionsPermissions
     {
         /// <summary>
@@ -58,22 +55,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectorDefinitionsPermissions"/>. </summary>
-        /// <param name="tenant">
-        /// Gets or sets the required tenant permissions for the connector.
-        /// Serialized Name: ConnectorDefinitionsPermissions.tenant
-        /// </param>
-        /// <param name="licenses">
-        /// Gets or sets the required licenses for the user to create connections.
-        /// Serialized Name: ConnectorDefinitionsPermissions.licenses
-        /// </param>
-        /// <param name="resourceProvider">
-        /// Gets or sets the resource provider permissions required for the user to create connections.
-        /// Serialized Name: ConnectorDefinitionsPermissions.resourceProvider
-        /// </param>
-        /// <param name="customs">
-        /// Gets or sets the customs permissions required for the user to create connections.
-        /// Serialized Name: ConnectorDefinitionsPermissions.customs
-        /// </param>
+        /// <param name="tenant"> Gets or sets the required tenant permissions for the connector. </param>
+        /// <param name="licenses"> Gets or sets the required licenses for the user to create connections. </param>
+        /// <param name="resourceProvider"> Gets or sets the resource provider permissions required for the user to create connections. </param>
+        /// <param name="customs"> Gets or sets the customs permissions required for the user to create connections. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConnectorDefinitionsPermissions(IList<string> tenant, IList<string> licenses, IList<ConnectorDefinitionsResourceProvider> resourceProvider, IList<CustomPermissionDetails> customs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -84,25 +69,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Gets or sets the required tenant permissions for the connector.
-        /// Serialized Name: ConnectorDefinitionsPermissions.tenant
-        /// </summary>
+        /// <summary> Gets or sets the required tenant permissions for the connector. </summary>
         public IList<string> Tenant { get; }
-        /// <summary>
-        /// Gets or sets the required licenses for the user to create connections.
-        /// Serialized Name: ConnectorDefinitionsPermissions.licenses
-        /// </summary>
+        /// <summary> Gets or sets the required licenses for the user to create connections. </summary>
         public IList<string> Licenses { get; }
-        /// <summary>
-        /// Gets or sets the resource provider permissions required for the user to create connections.
-        /// Serialized Name: ConnectorDefinitionsPermissions.resourceProvider
-        /// </summary>
+        /// <summary> Gets or sets the resource provider permissions required for the user to create connections. </summary>
         public IList<ConnectorDefinitionsResourceProvider> ResourceProvider { get; }
-        /// <summary>
-        /// Gets or sets the customs permissions required for the user to create connections.
-        /// Serialized Name: ConnectorDefinitionsPermissions.customs
-        /// </summary>
+        /// <summary> Gets or sets the customs permissions required for the user to create connections. </summary>
         public IList<CustomPermissionDetails> Customs { get; }
     }
 }

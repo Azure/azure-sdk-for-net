@@ -10,11 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Warning response structure.
-    /// Serialized Name: Warning
-    /// </summary>
-    public partial class Warning
+    /// <summary> Detail about the webhook object. </summary>
+    public partial class SourceControlWebhook
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,27 +45,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Warning"/>. </summary>
-        internal Warning()
+        /// <summary> Initializes a new instance of <see cref="SourceControlWebhook"/>. </summary>
+        public SourceControlWebhook()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Warning"/>. </summary>
-        /// <param name="warningValue">
-        /// Warning data.
-        /// Serialized Name: Warning.warning
-        /// </param>
+        /// <summary> Initializes a new instance of <see cref="SourceControlWebhook"/>. </summary>
+        /// <param name="webhookId"> Unique identifier for the webhook. </param>
+        /// <param name="webhookUri"> URL that gets invoked by the webhook. </param>
+        /// <param name="webhookSecretUpdateOn"> Time when the webhook secret was updated. </param>
+        /// <param name="isWebhookSecretRotated"> A flag to instruct the backend service to rotate webhook secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Warning(WarningBody warningValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SourceControlWebhook(string webhookId, Uri webhookUri, DateTimeOffset? webhookSecretUpdateOn, bool? isWebhookSecretRotated, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            WarningValue = warningValue;
+            WebhookId = webhookId;
+            WebhookUri = webhookUri;
+            WebhookSecretUpdateOn = webhookSecretUpdateOn;
+            IsWebhookSecretRotated = isWebhookSecretRotated;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Warning data.
-        /// Serialized Name: Warning.warning
-        /// </summary>
-        public WarningBody WarningValue { get; }
+        /// <summary> Unique identifier for the webhook. </summary>
+        public string WebhookId { get; }
+        /// <summary> URL that gets invoked by the webhook. </summary>
+        public Uri WebhookUri { get; }
+        /// <summary> Time when the webhook secret was updated. </summary>
+        public DateTimeOffset? WebhookSecretUpdateOn { get; }
+        /// <summary> A flag to instruct the backend service to rotate webhook secret. </summary>
+        public bool? IsWebhookSecretRotated { get; set; }
     }
 }

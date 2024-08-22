@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary>
-    /// Event grouping settings property bag.
-    /// Serialized Name: EventGroupingSettings
-    /// </summary>
+    /// <summary> Event grouping settings property bag. </summary>
     internal partial class EventGroupingSettings
     {
         /// <summary>
@@ -54,10 +51,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGroupingSettings"/>. </summary>
-        /// <param name="aggregationKind">
-        /// The event grouping aggregation kinds
-        /// Serialized Name: EventGroupingSettings.aggregationKind
-        /// </param>
+        /// <param name="aggregationKind"> The event grouping aggregation kinds. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EventGroupingSettings(EventGroupingAggregationKind? aggregationKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,10 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The event grouping aggregation kinds
-        /// Serialized Name: EventGroupingSettings.aggregationKind
-        /// </summary>
+        /// <summary> The event grouping aggregation kinds. </summary>
         public EventGroupingAggregationKind? AggregationKind { get; set; }
     }
 }

@@ -132,15 +132,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimeUtc"u8);
-                writer.WriteStringValue(CreatedTimeUtc.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTimeUtc"u8);
-                writer.WriteStringValue(LastModifiedTimeUtc.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

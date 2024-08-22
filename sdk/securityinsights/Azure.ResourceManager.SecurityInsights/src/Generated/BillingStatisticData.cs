@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecurityInsights
     /// <summary>
     /// A class representing the BillingStatistic data model.
     /// Billing statistic
-    /// Serialized Name: BillingStatistic
     /// Please note <see cref="BillingStatisticData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="SapSolutionUsageStatistic"/>.
     /// </summary>
@@ -64,14 +63,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// The kind of the billing statistic
-        /// Serialized Name: BillingStatistic.kind
-        /// </param>
-        /// <param name="etag">
-        /// Resource Etag.
-        /// Serialized Name: AzureEntityResource.etag
-        /// </param>
+        /// <param name="kind"> The kind of the billing statistic. </param>
+        /// <param name="etag"> Resource Etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BillingStatisticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingStatisticKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -80,15 +73,9 @@ namespace Azure.ResourceManager.SecurityInsights
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The kind of the billing statistic
-        /// Serialized Name: BillingStatistic.kind
-        /// </summary>
+        /// <summary> The kind of the billing statistic. </summary>
         internal BillingStatisticKind Kind { get; set; }
-        /// <summary>
-        /// Resource Etag.
-        /// Serialized Name: AzureEntityResource.etag
-        /// </summary>
+        /// <summary> Resource Etag. </summary>
         public ETag? ETag { get; }
     }
 }
