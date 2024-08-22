@@ -14,9 +14,16 @@ namespace Azure.Generator;
 [ExportMetadata("PluginName", nameof(AzurePlugin))]
 public class AzurePlugin : ClientModelPlugin
 {
+    /// <summary>
+    /// XXX
+    /// </summary>
+    /// <param name="context"></param>
     [ImportingConstructor]
     public AzurePlugin(GeneratorContext context) : base(context) { }
 
+    /// <summary>
+    /// XXX
+    /// </summary>
     public override void Configure()
     {
     }
