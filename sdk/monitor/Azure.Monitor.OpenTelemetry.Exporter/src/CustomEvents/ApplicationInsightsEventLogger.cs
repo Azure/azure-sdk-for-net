@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.Events
     /// <summary>
     /// Default logger for logging Application Insights custom events.
     /// </summary>
-    public sealed class CustomEventLogger : ICustomEventLogger
+    public sealed class ApplicationInsightsEventLogger : IApplicationInsightsEventLogger
     {
         private static readonly Func<IReadOnlyList<KeyValuePair<string, object?>>?, Exception?, string> s_formatter = (state, ex) =>
         {
@@ -24,7 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Events
         /// </summary>
         /// <param name="loggerFactory">LoggerFactory instance for logging events.</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public CustomEventLogger(ILoggerFactory loggerFactory)
+        public ApplicationInsightsEventLogger(ILoggerFactory loggerFactory)
         {
             if (loggerFactory == null)
                 throw new ArgumentNullException(nameof(loggerFactory));

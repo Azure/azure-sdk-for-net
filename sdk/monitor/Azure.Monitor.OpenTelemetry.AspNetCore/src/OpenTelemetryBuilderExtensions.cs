@@ -213,7 +213,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 });
 
             // Enable custom events
-            builder.Services.AddSingleton<ICustomEventLogger, CustomEventLogger>();
+            builder.Services.AddSingleton<IApplicationInsightsEventLogger, ApplicationInsightsEventLogger>();
 
             return builder;
         }

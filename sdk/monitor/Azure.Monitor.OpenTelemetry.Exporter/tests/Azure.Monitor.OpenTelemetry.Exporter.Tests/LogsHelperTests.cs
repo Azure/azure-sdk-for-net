@@ -558,7 +558,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 });
             });
 
-            var eventLogger = new CustomEventLogger(loggerFactory);
+            var eventLogger = new ApplicationInsightsEventLogger(loggerFactory);
 
             var attributesList = new List<KeyValuePair<string, object?>>
             {
@@ -579,7 +579,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(telemetryEventData);
             Assert.Equal("MyCustomEvent", telemetryEventData.Name);
             Assert.Single(telemetryEventData.Properties);
-            var property = telemetryEventData.Properties.FirstOrDefault();
+            var property = telemetryEventData.Properties.Single();
             Assert.Equal("customEventKey", property.Key);
             Assert.Equal("customEventValue", property.Value);
         }

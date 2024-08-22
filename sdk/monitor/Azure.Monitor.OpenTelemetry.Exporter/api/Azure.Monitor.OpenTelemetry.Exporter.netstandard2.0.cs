@@ -1,11 +1,11 @@
 namespace Azure.Monitor.OpenTelemetry.Events
 {
-    public sealed partial class CustomEventLogger : Azure.Monitor.OpenTelemetry.CustomEvents.ICustomEventLogger
+    public sealed partial class ApplicationInsightsEventLogger : Azure.Monitor.OpenTelemetry.Events.IApplicationInsightsEventLogger
     {
-        public CustomEventLogger(Microsoft.Extensions.Logging.ILoggerFactory loggerFactory) { }
+        public ApplicationInsightsEventLogger(Microsoft.Extensions.Logging.ILoggerFactory loggerFactory) { }
         public void TrackEvent(string name, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.KeyValuePair<string, object?>>? attributes = null) { }
     }
-    public partial interface ICustomEventLogger
+    public partial interface IApplicationInsightsEventLogger
     {
         void TrackEvent(string name, System.Collections.Generic.IReadOnlyList<System.Collections.Generic.KeyValuePair<string, object?>>? attributes = null);
     }

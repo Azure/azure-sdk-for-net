@@ -8,7 +8,7 @@ namespace Azure.Monitor.OpenTelemetry.Events
     /// <summary>
     /// An interface for logging custom events telemetry.
     /// </summary>
-    public interface ICustomEventLogger
+    public interface IApplicationInsightsEventLogger
     {
         /// <summary>
         /// Tracks Application Insights custom events.
