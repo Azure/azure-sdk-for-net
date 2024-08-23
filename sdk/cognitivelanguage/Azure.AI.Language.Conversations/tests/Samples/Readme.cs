@@ -28,6 +28,16 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #endregion
         }
 
+        public void CreateConversationClientWithSpecificApiVersion()
+        {
+            #region Snippet:CreateConversationAnalysisClientForSpecificApiVersion
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
+            ConversationsClientOptions options = new ConversationsClientOptions(ConversationsClientOptions.ServiceVersion.V2024_05_01);
+            ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential, options);
+            #endregion
+        }
+
         public void CreateConversationClientWithDefaultAzureCredential()
         {
             #region Snippet:ConversationAnalysisClient_CreateWithDefaultAzureCredential

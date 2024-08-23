@@ -24,12 +24,13 @@ namespace Azure.Messaging.EventGrid
         /// <param name="contentLength"> The size of the blob in bytes. This is the same as what would be returned in the Content-Length header from the blob. </param>
         /// <param name="contentOffset"> The offset of the blob in bytes. </param>
         /// <param name="blobType"> The type of blob. </param>
+        /// <param name="accessTier"> The current tier of the blob. </param>
         /// <param name="url"> The path to the blob. </param>
         /// <param name="sequencer"> An opaque string value representing the logical sequence of events for any particular blob name. Users can use standard string comparison to understand the relative sequence of two events on the same blob name. </param>
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobCreatedEventData"/> instance for mocking. </returns>
-        public static StorageBlobCreatedEventData StorageBlobCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string contentType = null, long? contentLength = null, long? contentOffset = null, string blobType = null, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
+        public static StorageBlobCreatedEventData StorageBlobCreatedEventData(string api = null, string clientRequestId = null, string requestId = null, string eTag = null, string contentType = null, long? contentLength = null, long? contentOffset = null, string blobType = null, StorageBlobAccessTier accessTier = default, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
             return new StorageBlobCreatedEventData(
                 api,
@@ -40,6 +41,7 @@ namespace Azure.Messaging.EventGrid
                 contentLength,
                 contentOffset,
                 blobType,
+                accessTier,
                 url,
                 sequencer,
                 identity,
@@ -168,12 +170,14 @@ namespace Azure.Messaging.EventGrid
         /// <param name="contentType"> The content type of the blob. This is the same as what would be returned in the Content-Type header from the blob. </param>
         /// <param name="contentLength"> The size of the blob in bytes. This is the same as what would be returned in the Content-Length header from the blob. </param>
         /// <param name="blobType"> The type of blob. </param>
+        /// <param name="accessTier"> The current tier of the blob. </param>
+        /// <param name="previousTier"> The previous tier of the blob. </param>
         /// <param name="url"> The path to the blob. </param>
         /// <param name="sequencer"> An opaque string value representing the logical sequence of events for any particular blob name. Users can use standard string comparison to understand the relative sequence of two events on the same blob name. </param>
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <returns> A new <see cref="SystemEvents.StorageBlobTierChangedEventData"/> instance for mocking. </returns>
-        public static StorageBlobTierChangedEventData StorageBlobTierChangedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
+        public static StorageBlobTierChangedEventData StorageBlobTierChangedEventData(string api = null, string clientRequestId = null, string requestId = null, string contentType = null, long? contentLength = null, string blobType = null, StorageBlobAccessTier accessTier = default, StorageBlobAccessTier previousTier = default, string url = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
             return new StorageBlobTierChangedEventData(
                 api,
@@ -182,6 +186,8 @@ namespace Azure.Messaging.EventGrid
                 contentType,
                 contentLength,
                 blobType,
+                accessTier,
+                previousTier,
                 url,
                 sequencer,
                 identity,
