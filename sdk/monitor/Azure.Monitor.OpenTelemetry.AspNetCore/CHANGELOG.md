@@ -26,6 +26,12 @@
 * Updated field mappings for telemetry sent to LiveMetrics.
   ([#45103](https://github.com/Azure/azure-sdk-for-net/pull/45103))
 
+* Updated log collection to default to Warning level and above for Azure SDKs
+  via `Microsoft.Extensions.Logging`. For more information, refer to [Logging
+  with the Azure SDK for
+  .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging).
+  ([#45649](https://github.com/Azure/azure-sdk-for-net/pull/45649))
+
 ## 1.3.0-beta.1 (2024-07-12)
 
 ### Bugs Fixed
