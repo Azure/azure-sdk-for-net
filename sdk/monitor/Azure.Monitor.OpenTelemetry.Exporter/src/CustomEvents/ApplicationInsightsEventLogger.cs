@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Events
         private const string EventLoggerName = "Azure.Monitor.OpenTelemetry.CustomEvents";
         private static readonly Func<IReadOnlyList<KeyValuePair<string, object?>>?, Exception?, string> s_formatter = (state, ex) =>
         {
-            return "CustomEvent";
+            return "Application Insights Custom Event";
         };
 
         private readonly ILogger _logger;
