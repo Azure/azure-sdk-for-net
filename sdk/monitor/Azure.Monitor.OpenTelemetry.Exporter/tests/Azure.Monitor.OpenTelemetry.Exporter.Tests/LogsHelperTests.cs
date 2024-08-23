@@ -560,9 +560,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var eventLogger = new ApplicationInsightsEventLogger(loggerFactory);
 
-            var attributesList = new List<KeyValuePair<string, object?>>
+            var attributesList = new List<KeyValuePair<string, string?>>
             {
-                new KeyValuePair<string, object?>("customEventKey", "customEventValue")
+                new KeyValuePair<string, string?>("customEventKey", "customEventValue")
             };
 
             eventLogger.TrackEvent("MyCustomEvent", attributesList);
