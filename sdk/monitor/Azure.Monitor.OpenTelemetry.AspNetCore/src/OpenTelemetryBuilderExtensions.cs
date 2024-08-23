@@ -178,7 +178,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 }
 
                 var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
-                return new AzureEventSourceLogForwarder(loggerFactory);
+                var loggerFilterOptions = sp.GetRequiredService<IOptionsMonitor<LoggerFilterOptions>>().CurrentValue;
+                return new AzureEventSourceLogForwarder(loggerFactory, loggerFilterOptions);
             });
 
             // Register Manager as a singleton
