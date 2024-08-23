@@ -15,6 +15,6 @@ namespace Azure.Monitor.OpenTelemetry.Events
         /// </summary>
         /// <param name="name">Name of the CustomEvent.</param>
         /// <param name="attributes">Custom dimensions of the event.</param>
-        public void TrackEvent(string name, IReadOnlyList<KeyValuePair<string, string?>>? attributes = null);
+        public void TrackEvent(string name, IReadOnlyList<KeyValuePair<string, object?>>? attributes = null);
     }
 }

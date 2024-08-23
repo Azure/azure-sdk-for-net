@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Events
     public sealed class ApplicationInsightsEventLogger : IApplicationInsightsEventLogger
     {
         private const string EventLoggerName = "Azure.Monitor.OpenTelemetry.CustomEvents";
-        private static readonly Func<IReadOnlyList<KeyValuePair<string, string?>>?, Exception?, string> s_formatter = (state, ex) =>
+        private static readonly Func<IReadOnlyList<KeyValuePair<string, object?>>?, Exception?, string> s_formatter = (state, ex) =>
         {
             return "Application Insights Custom Event";
         };
@@ -35,7 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.Events
 
         // TODO: Follow up to check if nullables are ok.
         /// <inheritdoc/>
-        public void TrackEvent(string name, IReadOnlyList<KeyValuePair<string, string?>>? attributes = null)
+        public void TrackEvent(string name, IReadOnlyList<KeyValuePair<string, object?>>? attributes = null)
         {
             _logger.Log(LogLevel.Information, eventId: new EventId(1, name), attributes, exception: null, formatter: s_formatter);
         }
