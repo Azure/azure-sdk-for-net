@@ -63,6 +63,7 @@ $GetEmitterNameFn = "Get-${Language}-EmitterName"
 $GetDirectoriesForGenerationFn = "Get-${Language}-DirectoriesForGeneration"
 $UpdateGeneratedSdksFn = "Update-${Language}-GeneratedSdks"
 $IsApiviewStatusCheckRequiredFn = "Get-${Language}-ApiviewStatusCheckRequirement" 
+$DependentPackagesFromPackageSetFn = "Get-${Language}-DependentPackagesFromPackageSet"
 
 # Expected to be set in eng/scripts/docs/Docs-Onboarding.ps1
 $SetDocsPackageOnboarding = "Set-${Language}-DocsPackageOnboarding"
