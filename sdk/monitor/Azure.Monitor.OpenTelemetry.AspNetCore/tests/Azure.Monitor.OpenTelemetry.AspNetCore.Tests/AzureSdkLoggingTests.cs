@@ -148,7 +148,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.False(logAzureFilterCalled);
         }
 
+#if NET6_0
+        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+#else
         [Fact]
+#endif
         public async Task DistroLogForwarderAppliesWildCardFilter()
         {
             var builder = WebApplication.CreateBuilder();
@@ -169,7 +173,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             await AssertContentContains(transport.Requests.Single(), "TestWarningEvent: hello", LogLevel.Warning);
         }
 
+#if NET6_0
+        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+#else
         [Fact]
+#endif
         public async Task SettingCustomLoggingFilterResetsDefaultWarningLevel()
         {
             var builder = WebApplication.CreateBuilder();
@@ -205,7 +213,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             await AssertContentContains(transport.Requests.Single(), "TestInfoEvent: hello two", LogLevel.Information);
         }
 
+#if NET6_0
+        [ConditionallySkipOSFact(platformToSkip: "macos", reason: "This test consistently exceeds 1 hour runtime limit when running on MacOS & Net60")]
+#else
         [Fact]
+#endif
         public async Task CustomLoggingFilterOverridesDefaultWarningAndCapturesErrorLogs()
         {
             var builder = WebApplication.CreateBuilder();
