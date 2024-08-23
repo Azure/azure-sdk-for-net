@@ -353,7 +353,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
         Assert.AreEqual("Mock content", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
 
         // The second time it's read the stream's Position is at the end
-        Assert.AreEqual(0, BinaryData.FromStream(message.Response!.ContentStream!).ToArray().Length);
+        Assert.AreEqual(string.Empty, BinaryData.FromStream(message.Response!.ContentStream!).ToString());
     }
 
     [Test]
@@ -372,7 +372,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        Assert.AreEqual(0, BinaryData.FromStream(message.Response!.ContentStream!).ToArray().Length);
+        Assert.AreEqual(string.Empty, BinaryData.FromStream(message.Response!.ContentStream!).ToString());
     }
 
     [Test]
