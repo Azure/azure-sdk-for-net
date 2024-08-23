@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Upgraded dependency on System.Text.Json to 6.0.9
+
 ## 1.42.0 (2024-08-01)
 
 ### Other Changes
