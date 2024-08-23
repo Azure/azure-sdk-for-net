@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Name of service to import from WSDL. </summary>
+        [WirePath("wsdlServiceName")]
         public string WsdlServiceName { get; set; }
         /// <summary> Name of endpoint(port) to import from WSDL. </summary>
+        [WirePath("wsdlEndpointName")]
         public string WsdlEndpointName { get; set; }
     }
 }

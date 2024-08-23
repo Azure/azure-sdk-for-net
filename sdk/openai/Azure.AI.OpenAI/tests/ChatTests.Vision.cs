@@ -3,7 +3,6 @@ using System.ClientModel;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Chat;
 using Azure.Core.TestFramework;
 using OpenAI.Chat;
 
@@ -49,7 +48,7 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(response, Is.Not.Null);
 
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-            Assert.That(response.Value.CreatedAt, Is.GreaterThan(new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero)));
+            Assert.That(response.Value.CreatedAt, Is.GreaterThan(START_2024));
             Assert.That(response.Value.FinishReason, Is.EqualTo(ChatFinishReason.Stop));
             Assert.That(response.Value.Role, Is.EqualTo(ChatMessageRole.Assistant));
             Assert.That(response.Value.Usage, Is.Not.Null);

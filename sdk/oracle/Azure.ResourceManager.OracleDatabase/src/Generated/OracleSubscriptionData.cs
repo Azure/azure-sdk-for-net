@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the OracleSubscription data model.
     /// OracleSubscription resource definition
-    /// Serialized Name: OracleSubscription
     /// </summary>
     public partial class OracleSubscriptionData : ResourceData
     {
@@ -62,14 +61,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: OracleSubscription.properties
-        /// </param>
-        /// <param name="plan">
-        /// Details of the resource plan.
-        /// Serialized Name: OracleSubscription.plan
-        /// </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="plan"> Details of the resource plan. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OracleSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, OracleSubscriptionProperties properties, ArmPlan plan, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -78,15 +71,9 @@ namespace Azure.ResourceManager.OracleDatabase
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: OracleSubscription.properties
-        /// </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         public OracleSubscriptionProperties Properties { get; set; }
-        /// <summary>
-        /// Details of the resource plan.
-        /// Serialized Name: OracleSubscription.plan
-        /// </summary>
+        /// <summary> Details of the resource plan. </summary>
         public ArmPlan Plan { get; set; }
     }
 }

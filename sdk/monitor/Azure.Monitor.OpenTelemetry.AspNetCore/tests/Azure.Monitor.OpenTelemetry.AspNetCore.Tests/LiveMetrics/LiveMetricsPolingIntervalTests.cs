@@ -22,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics
                 Transport = mockTransport
             };
 
-            var manager = new Manager(options, new DefaultPlatform());
+            var manager = new Manager(options, new DefaultPlatformDistro());
 
             Assert.Empty(mockTransport.Requests);
             Assert.Null(manager._pingPeriodFromService);

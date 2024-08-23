@@ -30,6 +30,7 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/43401")]
         public async Task VerifyViaMockK8TokenExchangeEnvironment()
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
@@ -79,7 +80,7 @@ namespace Azure.Identity.Tests
             }
         }
 
-        private static string CreateClientAssertionJWT(string clientId, string audience, X509Certificate2 clientCertificate)
+        public static string CreateClientAssertionJWT(string clientId, string audience, X509Certificate2 clientCertificate)
         {
             var headerBuff = new ArrayBufferWriter<byte>();
 

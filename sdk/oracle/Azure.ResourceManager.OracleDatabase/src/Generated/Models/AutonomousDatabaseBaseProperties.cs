@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary>
     /// Autonomous Database base resource model.
-    /// Serialized Name: AutonomousDatabaseBaseProperties
     /// Please note <see cref="AutonomousDatabaseBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AutonomousDatabaseCloneProperties"/> and <see cref="AutonomousDatabaseProperties"/>.
     /// </summary>
@@ -54,8 +53,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBaseProperties"/>. </summary>
         protected AutonomousDatabaseBaseProperties()
         {
-            CustomerContacts = new ChangeTrackingList<CustomerContact>();
-            PeerDbIds = new ChangeTrackingList<string>();
+            CustomerContacts = new ChangeTrackingList<OracleCustomerContact>();
+            PeerDBIds = new ChangeTrackingList<string>();
             AvailableUpgradeVersions = new ChangeTrackingList<string>();
             ProvisionableCpus = new ChangeTrackingList<int>();
             SupportedRegionsToCloneTo = new ChangeTrackingList<string>();
@@ -63,308 +62,83 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBaseProperties"/>. </summary>
-        /// <param name="adminPassword">
-        /// Admin password.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.adminPassword
-        /// </param>
-        /// <param name="dataBaseType">
-        /// Database type to be created.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.dataBaseType
-        /// </param>
-        /// <param name="autonomousMaintenanceScheduleType">
-        /// The maintenance schedule type of the Autonomous Database Serverless.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.autonomousMaintenanceScheduleType
-        /// </param>
-        /// <param name="characterSet">
-        /// The character set for the autonomous database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.characterSet
-        /// </param>
-        /// <param name="computeCount">
-        /// The compute amount (CPUs) available to the database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.computeCount
-        /// </param>
-        /// <param name="computeModel">
-        /// The compute model of the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.computeModel
-        /// </param>
-        /// <param name="cpuCoreCount">
-        /// The number of CPU cores to be made available to the database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.cpuCoreCount
-        /// </param>
-        /// <param name="customerContacts">
-        /// Customer Contacts.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.customerContacts
-        /// </param>
-        /// <param name="dataStorageSizeInTbs">
-        /// The quantity of data in the database, in terabytes.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.dataStorageSizeInTbs
-        /// </param>
-        /// <param name="dataStorageSizeInGbs">
-        /// The size, in gigabytes, of the data volume that will be created and attached to the database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.dataStorageSizeInGbs
-        /// </param>
-        /// <param name="dbVersion">
-        /// A valid Oracle Database version for Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.dbVersion
-        /// </param>
-        /// <param name="dbWorkload">
-        /// The Autonomous Database workload type
-        /// Serialized Name: AutonomousDatabaseBaseProperties.dbWorkload
-        /// </param>
-        /// <param name="displayName">
-        /// The user-friendly name for the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.displayName
-        /// </param>
-        /// <param name="isAutoScalingEnabled">
-        /// Indicates if auto scaling is enabled for the Autonomous Database CPU core count.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isAutoScalingEnabled
-        /// </param>
-        /// <param name="isAutoScalingForStorageEnabled">
-        /// Indicates if auto scaling is enabled for the Autonomous Database storage.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isAutoScalingForStorageEnabled
-        /// </param>
-        /// <param name="peerDbIds">
-        /// The list of [OCIDs](https://docs.oracle.com/iaas/Content/General/Concepts/identifiers.htm) of standby databases located in Autonomous Data Guard remote regions that are associated with the source database. Note that for Autonomous Database Serverless instances, standby databases located in the same region as the source primary database do not have OCIDs.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.peerDbIds
-        /// </param>
-        /// <param name="peerDbId">
-        /// The database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.peerDbId
-        /// </param>
-        /// <param name="isLocalDataGuardEnabled">
-        /// Indicates whether the Autonomous Database has local or called in-region Data Guard enabled.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isLocalDataGuardEnabled
-        /// </param>
-        /// <param name="isRemoteDataGuardEnabled">
-        /// Indicates whether the Autonomous Database has Cross Region Data Guard enabled.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isRemoteDataGuardEnabled
-        /// </param>
-        /// <param name="localDisasterRecoveryType">
-        /// Indicates the local disaster recovery (DR) type of the Autonomous Database Serverless instance.Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover.Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.localDisasterRecoveryType
-        /// </param>
-        /// <param name="localStandbyDb">
-        /// Local Autonomous Disaster Recovery standby database details.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.localStandbyDb
-        /// </param>
-        /// <param name="failedDataRecoveryInSeconds">
-        /// Indicates the number of seconds of data loss for a Data Guard failover.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.failedDataRecoveryInSeconds
-        /// </param>
-        /// <param name="isMtlsConnectionRequired">
-        /// Specifies if the Autonomous Database requires mTLS connections.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isMtlsConnectionRequired
-        /// </param>
-        /// <param name="isPreviewVersionWithServiceTermsAccepted">
-        /// Specifies if the Autonomous Database preview version is being provisioned.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isPreviewVersionWithServiceTermsAccepted
-        /// </param>
-        /// <param name="licenseModel">
-        /// The Oracle license model that applies to the Oracle Autonomous Database. The default is LICENSE_INCLUDED.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.licenseModel
-        /// </param>
-        /// <param name="ncharacterSet">
-        /// The character set for the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.ncharacterSet
-        /// </param>
-        /// <param name="lifecycleDetails">
-        /// Additional information about the current lifecycle state.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.lifecycleDetails
-        /// </param>
-        /// <param name="provisioningState">
-        /// Azure resource provisioning state.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.provisioningState
-        /// </param>
-        /// <param name="lifecycleState">
-        /// Views lifecycleState
-        /// Serialized Name: AutonomousDatabaseBaseProperties.lifecycleState
-        /// </param>
-        /// <param name="scheduledOperations">
-        /// The list of scheduled operations.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.scheduledOperations
-        /// </param>
-        /// <param name="privateEndpointIP">
-        /// The private endpoint Ip address for the resource.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.privateEndpointIp
-        /// </param>
-        /// <param name="privateEndpointLabel">
-        /// The resource's private endpoint label.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.privateEndpointLabel
-        /// </param>
-        /// <param name="ociUri">
-        /// HTTPS link to OCI resources exposed to Azure Customer via Azure Interface.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.ociUrl
-        /// </param>
-        /// <param name="subnetId">
-        /// Client subnet
-        /// Serialized Name: AutonomousDatabaseBaseProperties.subnetId
-        /// </param>
-        /// <param name="vnetId">
-        /// VNET for network connectivity
-        /// Serialized Name: AutonomousDatabaseBaseProperties.vnetId
-        /// </param>
-        /// <param name="timeCreated">
-        /// The date and time that the database was created.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeCreated
-        /// </param>
-        /// <param name="timeMaintenanceBegin">
-        /// The date and time when maintenance will begin.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeMaintenanceBegin
-        /// </param>
-        /// <param name="timeMaintenanceEnd">
-        /// The date and time when maintenance will end.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeMaintenanceEnd
-        /// </param>
-        /// <param name="actualUsedDataStorageSizeInTbs">
-        /// The current amount of storage in use for user and system data, in terabytes (TB).
-        /// Serialized Name: AutonomousDatabaseBaseProperties.actualUsedDataStorageSizeInTbs
-        /// </param>
-        /// <param name="allocatedStorageSizeInTbs">
-        /// The amount of storage currently allocated for the database tables and billed for, rounded up.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.allocatedStorageSizeInTbs
-        /// </param>
-        /// <param name="apexDetails">
-        /// Information about Oracle APEX Application Development.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.apexDetails
-        /// </param>
-        /// <param name="availableUpgradeVersions">
-        /// List of Oracle Database versions available for a database upgrade. If there are no version upgrades available, this list is empty.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.availableUpgradeVersions
-        /// </param>
-        /// <param name="connectionStrings">
-        /// The connection string used to connect to the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.connectionStrings
-        /// </param>
-        /// <param name="connectionUrls">
-        /// The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.connectionUrls
-        /// </param>
-        /// <param name="dataSafeStatus">
-        /// Status of the Data Safe registration for this Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.dataSafeStatus
-        /// </param>
-        /// <param name="databaseEdition">
-        /// The Oracle Database Edition that applies to the Autonomous databases.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.databaseEdition
-        /// </param>
-        /// <param name="autonomousDatabaseId">
-        /// Autonomous Database ID
-        /// Serialized Name: AutonomousDatabaseBaseProperties.autonomousDatabaseId
-        /// </param>
-        /// <param name="inMemoryAreaInGbs">
-        /// The area assigned to In-Memory tables in Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.inMemoryAreaInGbs
-        /// </param>
-        /// <param name="nextLongTermBackupTimeStamp">
-        /// The date and time when the next long-term backup would be created.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.nextLongTermBackupTimeStamp
-        /// </param>
-        /// <param name="longTermBackupSchedule">
-        /// Details for the long-term backup schedule.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.longTermBackupSchedule
-        /// </param>
-        /// <param name="isPreview">
-        /// Indicates if the Autonomous Database version is a preview version.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isPreview
-        /// </param>
-        /// <param name="localAdgAutoFailoverMaxDataLossLimit">
-        /// Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard
-        /// Serialized Name: AutonomousDatabaseBaseProperties.localAdgAutoFailoverMaxDataLossLimit
-        /// </param>
-        /// <param name="memoryPerOracleComputeUnitInGbs">
-        /// The amount of memory (in GBs) enabled per ECPU or OCPU.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.memoryPerOracleComputeUnitInGbs
-        /// </param>
-        /// <param name="openMode">
-        /// Indicates the Autonomous Database mode.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.openMode
-        /// </param>
-        /// <param name="operationsInsightsStatus">
-        /// Status of Operations Insights for this Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.operationsInsightsStatus
-        /// </param>
-        /// <param name="permissionLevel">
-        /// The Autonomous Database permission level.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.permissionLevel
-        /// </param>
-        /// <param name="privateEndpoint">
-        /// The private endpoint for the resource.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.privateEndpoint
-        /// </param>
-        /// <param name="provisionableCpus">
-        /// An array of CPU values that an Autonomous Database can be scaled to.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.provisionableCpus
-        /// </param>
-        /// <param name="role">
-        /// The Data Guard role of the Autonomous Container Database or Autonomous Database, if Autonomous Data Guard is enabled.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.role
-        /// </param>
-        /// <param name="serviceConsoleUri">
-        /// The URL of the Service Console for the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.serviceConsoleUrl
-        /// </param>
-        /// <param name="sqlWebDeveloperUri">
-        /// The SQL Web Developer URL for the Oracle Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.sqlWebDeveloperUrl
-        /// </param>
-        /// <param name="supportedRegionsToCloneTo">
-        /// The list of regions that support the creation of an Autonomous Database clone or an Autonomous Data Guard standby database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.supportedRegionsToCloneTo
-        /// </param>
-        /// <param name="timeDataGuardRoleChanged">
-        /// The date and time the Autonomous Data Guard role was switched for the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeDataGuardRoleChanged
-        /// </param>
-        /// <param name="timeDeletionOfFreeAutonomousDatabase">
-        /// The date and time the Always Free database will be automatically deleted because of inactivity.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeDeletionOfFreeAutonomousDatabase
-        /// </param>
-        /// <param name="timeLocalDataGuardEnabled">
-        /// The date and time that Autonomous Data Guard was enabled for an Autonomous Database where the standby was provisioned in the same region as the primary database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeLocalDataGuardEnabled
-        /// </param>
-        /// <param name="timeOfLastFailover">
-        /// The timestamp of the last failover operation.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeOfLastFailover
-        /// </param>
-        /// <param name="timeOfLastRefresh">
-        /// The date and time when last refresh happened.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeOfLastRefresh
-        /// </param>
-        /// <param name="timeOfLastRefreshPoint">
-        /// The refresh point timestamp (UTC).
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeOfLastRefreshPoint
-        /// </param>
-        /// <param name="timeOfLastSwitchover">
-        /// The timestamp of the last switchover operation for the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeOfLastSwitchover
-        /// </param>
-        /// <param name="timeReclamationOfFreeAutonomousDatabase">
-        /// The date and time the Always Free database will be stopped because of inactivity.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeReclamationOfFreeAutonomousDatabase
-        /// </param>
-        /// <param name="usedDataStorageSizeInGbs">
-        /// The storage space consumed by Autonomous Database in GBs.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.usedDataStorageSizeInGbs
-        /// </param>
-        /// <param name="usedDataStorageSizeInTbs">
-        /// The amount of storage that has been used, in terabytes.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.usedDataStorageSizeInTbs
-        /// </param>
-        /// <param name="ocid">
-        /// Database ocid
-        /// Serialized Name: AutonomousDatabaseBaseProperties.ocid
-        /// </param>
-        /// <param name="backupRetentionPeriodInDays">
-        /// Retention period, in days, for long-term backups
-        /// Serialized Name: AutonomousDatabaseBaseProperties.backupRetentionPeriodInDays
-        /// </param>
-        /// <param name="whitelistedIPs">
-        /// The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']
-        /// Serialized Name: AutonomousDatabaseBaseProperties.whitelistedIps
-        /// </param>
+        /// <param name="adminPassword"> Admin password. </param>
+        /// <param name="dataBaseType"> Database type to be created. </param>
+        /// <param name="autonomousMaintenanceScheduleType"> The maintenance schedule type of the Autonomous Database Serverless. </param>
+        /// <param name="characterSet"> The character set for the autonomous database. </param>
+        /// <param name="computeCount"> The compute amount (CPUs) available to the database. </param>
+        /// <param name="computeModel"> The compute model of the Autonomous Database. </param>
+        /// <param name="cpuCoreCount"> The number of CPU cores to be made available to the database. </param>
+        /// <param name="customerContacts"> Customer Contacts. </param>
+        /// <param name="dataStorageSizeInTbs"> The quantity of data in the database, in terabytes. </param>
+        /// <param name="dataStorageSizeInGbs"> The size, in gigabytes, of the data volume that will be created and attached to the database. </param>
+        /// <param name="dbVersion"> A valid Oracle Database version for Autonomous Database. </param>
+        /// <param name="dbWorkload"> The Autonomous Database workload type. </param>
+        /// <param name="displayName"> The user-friendly name for the Autonomous Database. </param>
+        /// <param name="isAutoScalingEnabled"> Indicates if auto scaling is enabled for the Autonomous Database CPU core count. </param>
+        /// <param name="isAutoScalingForStorageEnabled"> Indicates if auto scaling is enabled for the Autonomous Database storage. </param>
+        /// <param name="peerDBIds"> The list of [OCIDs](https://docs.oracle.com/iaas/Content/General/Concepts/identifiers.htm) of standby databases located in Autonomous Data Guard remote regions that are associated with the source database. Note that for Autonomous Database Serverless instances, standby databases located in the same region as the source primary database do not have OCIDs. </param>
+        /// <param name="peerDBId"> The database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </param>
+        /// <param name="isLocalDataGuardEnabled"> Indicates whether the Autonomous Database has local or called in-region Data Guard enabled. </param>
+        /// <param name="isRemoteDataGuardEnabled"> Indicates whether the Autonomous Database has Cross Region Data Guard enabled. </param>
+        /// <param name="localDisasterRecoveryType"> Indicates the local disaster recovery (DR) type of the Autonomous Database Serverless instance.Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover.Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover. </param>
+        /// <param name="localStandbyDB"> Local Autonomous Disaster Recovery standby database details. </param>
+        /// <param name="failedDataRecoveryInSeconds"> Indicates the number of seconds of data loss for a Data Guard failover. </param>
+        /// <param name="isMtlsConnectionRequired"> Specifies if the Autonomous Database requires mTLS connections. </param>
+        /// <param name="isPreviewVersionWithServiceTermsAccepted"> Specifies if the Autonomous Database preview version is being provisioned. </param>
+        /// <param name="licenseModel"> The Oracle license model that applies to the Oracle Autonomous Database. The default is LICENSE_INCLUDED. </param>
+        /// <param name="ncharacterSet"> The character set for the Autonomous Database. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="provisioningState"> Azure resource provisioning state. </param>
+        /// <param name="lifecycleState"> Views lifecycleState. </param>
+        /// <param name="scheduledOperations"> The list of scheduled operations. </param>
+        /// <param name="privateEndpointIP"> The private endpoint Ip address for the resource. </param>
+        /// <param name="privateEndpointLabel"> The resource's private endpoint label. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="subnetId"> Client subnet. </param>
+        /// <param name="vnetId"> VNET for network connectivity. </param>
+        /// <param name="createdOn"> The date and time that the database was created. </param>
+        /// <param name="maintenanceBeginOn"> The date and time when maintenance will begin. </param>
+        /// <param name="maintenanceEndOn"> The date and time when maintenance will end. </param>
+        /// <param name="actualUsedDataStorageSizeInTbs"> The current amount of storage in use for user and system data, in terabytes (TB). </param>
+        /// <param name="allocatedStorageSizeInTbs"> The amount of storage currently allocated for the database tables and billed for, rounded up. </param>
+        /// <param name="apexDetails"> Information about Oracle APEX Application Development. </param>
+        /// <param name="availableUpgradeVersions"> List of Oracle Database versions available for a database upgrade. If there are no version upgrades available, this list is empty. </param>
+        /// <param name="connectionStrings"> The connection string used to connect to the Autonomous Database. </param>
+        /// <param name="connectionUrls"> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. </param>
+        /// <param name="dataSafeStatus"> Status of the Data Safe registration for this Autonomous Database. </param>
+        /// <param name="databaseEdition"> The Oracle Database Edition that applies to the Autonomous databases. </param>
+        /// <param name="autonomousDatabaseId"> Autonomous Database ID. </param>
+        /// <param name="inMemoryAreaInGbs"> The area assigned to In-Memory tables in Autonomous Database. </param>
+        /// <param name="nextLongTermBackupCreatedOn"> The date and time when the next long-term backup would be created. </param>
+        /// <param name="longTermBackupSchedule"> Details for the long-term backup schedule. </param>
+        /// <param name="isPreview"> Indicates if the Autonomous Database version is a preview version. </param>
+        /// <param name="localAdgAutoFailoverMaxDataLossLimit"> Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard. </param>
+        /// <param name="memoryPerOracleComputeUnitInGbs"> The amount of memory (in GBs) enabled per ECPU or OCPU. </param>
+        /// <param name="openMode"> Indicates the Autonomous Database mode. </param>
+        /// <param name="operationsInsightsStatus"> Status of Operations Insights for this Autonomous Database. </param>
+        /// <param name="permissionLevel"> The Autonomous Database permission level. </param>
+        /// <param name="privateEndpoint"> The private endpoint for the resource. </param>
+        /// <param name="provisionableCpus"> An array of CPU values that an Autonomous Database can be scaled to. </param>
+        /// <param name="role"> The Data Guard role of the Autonomous Container Database or Autonomous Database, if Autonomous Data Guard is enabled. </param>
+        /// <param name="serviceConsoleUri"> The URL of the Service Console for the Autonomous Database. </param>
+        /// <param name="sqlWebDeveloperUri"> The SQL Web Developer URL for the Oracle Autonomous Database. </param>
+        /// <param name="supportedRegionsToCloneTo"> The list of regions that support the creation of an Autonomous Database clone or an Autonomous Data Guard standby database. </param>
+        /// <param name="dataGuardRoleChangedOn"> The date and time the Autonomous Data Guard role was switched for the Autonomous Database. </param>
+        /// <param name="freeAutonomousDatabaseDeletedOn"> The date and time the Always Free database will be automatically deleted because of inactivity. </param>
+        /// <param name="timeLocalDataGuardEnabled"> The date and time that Autonomous Data Guard was enabled for an Autonomous Database where the standby was provisioned in the same region as the primary database. </param>
+        /// <param name="lastFailoverHappenedOn"> The timestamp of the last failover operation. </param>
+        /// <param name="lastRefreshHappenedOn"> The date and time when last refresh happened. </param>
+        /// <param name="lastRefreshPointTimestamp"> The refresh point timestamp (UTC). </param>
+        /// <param name="lastSwitchoverHappenedOn"> The timestamp of the last switchover operation for the Autonomous Database. </param>
+        /// <param name="freeAutonomousDatabaseStoppedOn"> The date and time the Always Free database will be stopped because of inactivity. </param>
+        /// <param name="usedDataStorageSizeInGbs"> The storage space consumed by Autonomous Database in GBs. </param>
+        /// <param name="usedDataStorageSizeInTbs"> The amount of storage that has been used, in terabytes. </param>
+        /// <param name="ocid"> Database ocid. </param>
+        /// <param name="backupRetentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
+        /// <param name="whitelistedIPs"> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseBaseProperties(string adminPassword, DataBaseType dataBaseType, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, string characterSet, float? computeCount, ComputeModel? computeModel, int? cpuCoreCount, IList<CustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string dbVersion, WorkloadType? dbWorkload, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, IReadOnlyList<string> peerDbIds, string peerDbId, bool? isLocalDataGuardEnabled, bool? isRemoteDataGuardEnabled, DisasterRecoveryType? localDisasterRecoveryType, AutonomousDatabaseStandbySummary localStandbyDb, int? failedDataRecoveryInSeconds, bool? isMtlsConnectionRequired, bool? isPreviewVersionWithServiceTermsAccepted, LicenseModel? licenseModel, string ncharacterSet, string lifecycleDetails, AzureResourceProvisioningState? provisioningState, AutonomousDatabaseLifecycleState? lifecycleState, ScheduledOperationsType scheduledOperations, string privateEndpointIP, string privateEndpointLabel, Uri ociUri, ResourceIdentifier subnetId, ResourceIdentifier vnetId, DateTimeOffset? timeCreated, DateTimeOffset? timeMaintenanceBegin, DateTimeOffset? timeMaintenanceEnd, double? actualUsedDataStorageSizeInTbs, double? allocatedStorageSizeInTbs, ApexDetailsType apexDetails, IReadOnlyList<string> availableUpgradeVersions, ConnectionStringType connectionStrings, ConnectionUrlType connectionUrls, DataSafeStatusType? dataSafeStatus, DatabaseEditionType? databaseEdition, ResourceIdentifier autonomousDatabaseId, int? inMemoryAreaInGbs, DateTimeOffset? nextLongTermBackupTimeStamp, LongTermBackUpScheduleDetails longTermBackupSchedule, bool? isPreview, int? localAdgAutoFailoverMaxDataLossLimit, int? memoryPerOracleComputeUnitInGbs, OpenModeType? openMode, OperationsInsightsStatusType? operationsInsightsStatus, PermissionLevelType? permissionLevel, string privateEndpoint, IReadOnlyList<int> provisionableCpus, RoleType? role, Uri serviceConsoleUri, Uri sqlWebDeveloperUri, IReadOnlyList<string> supportedRegionsToCloneTo, string timeDataGuardRoleChanged, string timeDeletionOfFreeAutonomousDatabase, string timeLocalDataGuardEnabled, string timeOfLastFailover, string timeOfLastRefresh, string timeOfLastRefreshPoint, string timeOfLastSwitchover, string timeReclamationOfFreeAutonomousDatabase, int? usedDataStorageSizeInGbs, int? usedDataStorageSizeInTbs, string ocid, int? backupRetentionPeriodInDays, IList<string> whitelistedIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutonomousDatabaseBaseProperties(string adminPassword, OracleDataBaseType dataBaseType, AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType, string characterSet, float? computeCount, AutonomousDatabaseComputeModel? computeModel, int? cpuCoreCount, IList<OracleCustomerContact> customerContacts, int? dataStorageSizeInTbs, int? dataStorageSizeInGbs, string dbVersion, AutonomousDatabaseWorkloadType? dbWorkload, string displayName, bool? isAutoScalingEnabled, bool? isAutoScalingForStorageEnabled, IReadOnlyList<string> peerDBIds, string peerDBId, bool? isLocalDataGuardEnabled, bool? isRemoteDataGuardEnabled, DisasterRecoveryType? localDisasterRecoveryType, AutonomousDatabaseStandbySummary localStandbyDB, int? failedDataRecoveryInSeconds, bool? isMtlsConnectionRequired, bool? isPreviewVersionWithServiceTermsAccepted, OracleLicenseModel? licenseModel, string ncharacterSet, string lifecycleDetails, OracleDatabaseProvisioningState? provisioningState, AutonomousDatabaseLifecycleState? lifecycleState, ScheduledOperationsType scheduledOperations, string privateEndpointIP, string privateEndpointLabel, Uri ociUri, ResourceIdentifier subnetId, ResourceIdentifier vnetId, DateTimeOffset? createdOn, DateTimeOffset? maintenanceBeginOn, DateTimeOffset? maintenanceEndOn, double? actualUsedDataStorageSizeInTbs, double? allocatedStorageSizeInTbs, OracleApexDetailsType apexDetails, IReadOnlyList<string> availableUpgradeVersions, AutonomousDatabaseConnectionStrings connectionStrings, AutonomousDatabaseConnectionUrls connectionUrls, DataSafeStatusType? dataSafeStatus, OracleDatabaseEditionType? databaseEdition, ResourceIdentifier autonomousDatabaseId, int? inMemoryAreaInGbs, DateTimeOffset? nextLongTermBackupCreatedOn, LongTermBackUpScheduleDetails longTermBackupSchedule, bool? isPreview, int? localAdgAutoFailoverMaxDataLossLimit, int? memoryPerOracleComputeUnitInGbs, AutonomousDatabaseModeType? openMode, OperationsInsightsStatusType? operationsInsightsStatus, AutonomousDatabasePermissionLevelType? permissionLevel, string privateEndpoint, IReadOnlyList<int> provisionableCpus, DataGuardRoleType? role, Uri serviceConsoleUri, Uri sqlWebDeveloperUri, IReadOnlyList<string> supportedRegionsToCloneTo, DateTimeOffset? dataGuardRoleChangedOn, DateTimeOffset? freeAutonomousDatabaseDeletedOn, string timeLocalDataGuardEnabled, DateTimeOffset? lastFailoverHappenedOn, DateTimeOffset? lastRefreshHappenedOn, DateTimeOffset? lastRefreshPointTimestamp, DateTimeOffset? lastSwitchoverHappenedOn, DateTimeOffset? freeAutonomousDatabaseStoppedOn, int? usedDataStorageSizeInGbs, int? usedDataStorageSizeInTbs, ResourceIdentifier ocid, int? backupRetentionPeriodInDays, IList<string> whitelistedIPs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminPassword = adminPassword;
             DataBaseType = dataBaseType;
@@ -376,17 +150,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             CustomerContacts = customerContacts;
             DataStorageSizeInTbs = dataStorageSizeInTbs;
             DataStorageSizeInGbs = dataStorageSizeInGbs;
-            DbVersion = dbVersion;
-            DbWorkload = dbWorkload;
+            DBVersion = dbVersion;
+            DBWorkload = dbWorkload;
             DisplayName = displayName;
             IsAutoScalingEnabled = isAutoScalingEnabled;
             IsAutoScalingForStorageEnabled = isAutoScalingForStorageEnabled;
-            PeerDbIds = peerDbIds;
-            PeerDbId = peerDbId;
+            PeerDBIds = peerDBIds;
+            PeerDBId = peerDBId;
             IsLocalDataGuardEnabled = isLocalDataGuardEnabled;
             IsRemoteDataGuardEnabled = isRemoteDataGuardEnabled;
             LocalDisasterRecoveryType = localDisasterRecoveryType;
-            LocalStandbyDb = localStandbyDb;
+            LocalStandbyDB = localStandbyDB;
             FailedDataRecoveryInSeconds = failedDataRecoveryInSeconds;
             IsMtlsConnectionRequired = isMtlsConnectionRequired;
             IsPreviewVersionWithServiceTermsAccepted = isPreviewVersionWithServiceTermsAccepted;
@@ -401,9 +175,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             OciUri = ociUri;
             SubnetId = subnetId;
             VnetId = vnetId;
-            TimeCreated = timeCreated;
-            TimeMaintenanceBegin = timeMaintenanceBegin;
-            TimeMaintenanceEnd = timeMaintenanceEnd;
+            CreatedOn = createdOn;
+            MaintenanceBeginOn = maintenanceBeginOn;
+            MaintenanceEndOn = maintenanceEndOn;
             ActualUsedDataStorageSizeInTbs = actualUsedDataStorageSizeInTbs;
             AllocatedStorageSizeInTbs = allocatedStorageSizeInTbs;
             ApexDetails = apexDetails;
@@ -414,7 +188,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DatabaseEdition = databaseEdition;
             AutonomousDatabaseId = autonomousDatabaseId;
             InMemoryAreaInGbs = inMemoryAreaInGbs;
-            NextLongTermBackupTimeStamp = nextLongTermBackupTimeStamp;
+            NextLongTermBackupCreatedOn = nextLongTermBackupCreatedOn;
             LongTermBackupSchedule = longTermBackupSchedule;
             IsPreview = isPreview;
             LocalAdgAutoFailoverMaxDataLossLimit = localAdgAutoFailoverMaxDataLossLimit;
@@ -428,14 +202,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             ServiceConsoleUri = serviceConsoleUri;
             SqlWebDeveloperUri = sqlWebDeveloperUri;
             SupportedRegionsToCloneTo = supportedRegionsToCloneTo;
-            TimeDataGuardRoleChanged = timeDataGuardRoleChanged;
-            TimeDeletionOfFreeAutonomousDatabase = timeDeletionOfFreeAutonomousDatabase;
+            DataGuardRoleChangedOn = dataGuardRoleChangedOn;
+            FreeAutonomousDatabaseDeletedOn = freeAutonomousDatabaseDeletedOn;
             TimeLocalDataGuardEnabled = timeLocalDataGuardEnabled;
-            TimeOfLastFailover = timeOfLastFailover;
-            TimeOfLastRefresh = timeOfLastRefresh;
-            TimeOfLastRefreshPoint = timeOfLastRefreshPoint;
-            TimeOfLastSwitchover = timeOfLastSwitchover;
-            TimeReclamationOfFreeAutonomousDatabase = timeReclamationOfFreeAutonomousDatabase;
+            LastFailoverHappenedOn = lastFailoverHappenedOn;
+            LastRefreshHappenedOn = lastRefreshHappenedOn;
+            LastRefreshPointTimestamp = lastRefreshPointTimestamp;
+            LastSwitchoverHappenedOn = lastSwitchoverHappenedOn;
+            FreeAutonomousDatabaseStoppedOn = freeAutonomousDatabaseStoppedOn;
             UsedDataStorageSizeInGbs = usedDataStorageSizeInGbs;
             UsedDataStorageSizeInTbs = usedDataStorageSizeInTbs;
             Ocid = ocid;
@@ -444,380 +218,155 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Admin password.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.adminPassword
-        /// </summary>
+        /// <summary> Admin password. </summary>
         public string AdminPassword { get; set; }
-        /// <summary>
-        /// Database type to be created.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.dataBaseType
-        /// </summary>
-        internal DataBaseType DataBaseType { get; set; }
-        /// <summary>
-        /// The maintenance schedule type of the Autonomous Database Serverless.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.autonomousMaintenanceScheduleType
-        /// </summary>
+        /// <summary> Database type to be created. </summary>
+        internal OracleDataBaseType DataBaseType { get; set; }
+        /// <summary> The maintenance schedule type of the Autonomous Database Serverless. </summary>
         public AutonomousMaintenanceScheduleType? AutonomousMaintenanceScheduleType { get; set; }
-        /// <summary>
-        /// The character set for the autonomous database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.characterSet
-        /// </summary>
+        /// <summary> The character set for the autonomous database. </summary>
         public string CharacterSet { get; set; }
-        /// <summary>
-        /// The compute amount (CPUs) available to the database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.computeCount
-        /// </summary>
+        /// <summary> The compute amount (CPUs) available to the database. </summary>
         public float? ComputeCount { get; set; }
-        /// <summary>
-        /// The compute model of the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.computeModel
-        /// </summary>
-        public ComputeModel? ComputeModel { get; set; }
-        /// <summary>
-        /// The number of CPU cores to be made available to the database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.cpuCoreCount
-        /// </summary>
+        /// <summary> The compute model of the Autonomous Database. </summary>
+        public AutonomousDatabaseComputeModel? ComputeModel { get; set; }
+        /// <summary> The number of CPU cores to be made available to the database. </summary>
         public int? CpuCoreCount { get; set; }
-        /// <summary>
-        /// Customer Contacts.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.customerContacts
-        /// </summary>
-        public IList<CustomerContact> CustomerContacts { get; }
-        /// <summary>
-        /// The quantity of data in the database, in terabytes.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.dataStorageSizeInTbs
-        /// </summary>
+        /// <summary> Customer Contacts. </summary>
+        public IList<OracleCustomerContact> CustomerContacts { get; }
+        /// <summary> The quantity of data in the database, in terabytes. </summary>
         public int? DataStorageSizeInTbs { get; set; }
-        /// <summary>
-        /// The size, in gigabytes, of the data volume that will be created and attached to the database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.dataStorageSizeInGbs
-        /// </summary>
+        /// <summary> The size, in gigabytes, of the data volume that will be created and attached to the database. </summary>
         public int? DataStorageSizeInGbs { get; set; }
-        /// <summary>
-        /// A valid Oracle Database version for Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.dbVersion
-        /// </summary>
-        public string DbVersion { get; set; }
-        /// <summary>
-        /// The Autonomous Database workload type
-        /// Serialized Name: AutonomousDatabaseBaseProperties.dbWorkload
-        /// </summary>
-        public WorkloadType? DbWorkload { get; set; }
-        /// <summary>
-        /// The user-friendly name for the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.displayName
-        /// </summary>
+        /// <summary> A valid Oracle Database version for Autonomous Database. </summary>
+        public string DBVersion { get; set; }
+        /// <summary> The Autonomous Database workload type. </summary>
+        public AutonomousDatabaseWorkloadType? DBWorkload { get; set; }
+        /// <summary> The user-friendly name for the Autonomous Database. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// Indicates if auto scaling is enabled for the Autonomous Database CPU core count.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isAutoScalingEnabled
-        /// </summary>
+        /// <summary> Indicates if auto scaling is enabled for the Autonomous Database CPU core count. </summary>
         public bool? IsAutoScalingEnabled { get; set; }
-        /// <summary>
-        /// Indicates if auto scaling is enabled for the Autonomous Database storage.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isAutoScalingForStorageEnabled
-        /// </summary>
+        /// <summary> Indicates if auto scaling is enabled for the Autonomous Database storage. </summary>
         public bool? IsAutoScalingForStorageEnabled { get; set; }
-        /// <summary>
-        /// The list of [OCIDs](https://docs.oracle.com/iaas/Content/General/Concepts/identifiers.htm) of standby databases located in Autonomous Data Guard remote regions that are associated with the source database. Note that for Autonomous Database Serverless instances, standby databases located in the same region as the source primary database do not have OCIDs.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.peerDbIds
-        /// </summary>
-        public IReadOnlyList<string> PeerDbIds { get; }
-        /// <summary>
-        /// The database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.peerDbId
-        /// </summary>
-        public string PeerDbId { get; set; }
-        /// <summary>
-        /// Indicates whether the Autonomous Database has local or called in-region Data Guard enabled.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isLocalDataGuardEnabled
-        /// </summary>
+        /// <summary> The list of [OCIDs](https://docs.oracle.com/iaas/Content/General/Concepts/identifiers.htm) of standby databases located in Autonomous Data Guard remote regions that are associated with the source database. Note that for Autonomous Database Serverless instances, standby databases located in the same region as the source primary database do not have OCIDs. </summary>
+        public IReadOnlyList<string> PeerDBIds { get; }
+        /// <summary> The database OCID of the Disaster Recovery peer database, which is located in a different region from the current peer database. </summary>
+        public string PeerDBId { get; set; }
+        /// <summary> Indicates whether the Autonomous Database has local or called in-region Data Guard enabled. </summary>
         public bool? IsLocalDataGuardEnabled { get; set; }
-        /// <summary>
-        /// Indicates whether the Autonomous Database has Cross Region Data Guard enabled.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isRemoteDataGuardEnabled
-        /// </summary>
+        /// <summary> Indicates whether the Autonomous Database has Cross Region Data Guard enabled. </summary>
         public bool? IsRemoteDataGuardEnabled { get; }
-        /// <summary>
-        /// Indicates the local disaster recovery (DR) type of the Autonomous Database Serverless instance.Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover.Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.localDisasterRecoveryType
-        /// </summary>
+        /// <summary> Indicates the local disaster recovery (DR) type of the Autonomous Database Serverless instance.Autonomous Data Guard (ADG) DR type provides business critical DR with a faster recovery time objective (RTO) during failover or switchover.Backup-based DR type provides lower cost DR with a slower RTO during failover or switchover. </summary>
         public DisasterRecoveryType? LocalDisasterRecoveryType { get; }
-        /// <summary>
-        /// Local Autonomous Disaster Recovery standby database details.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.localStandbyDb
-        /// </summary>
-        public AutonomousDatabaseStandbySummary LocalStandbyDb { get; }
-        /// <summary>
-        /// Indicates the number of seconds of data loss for a Data Guard failover.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.failedDataRecoveryInSeconds
-        /// </summary>
+        /// <summary> Local Autonomous Disaster Recovery standby database details. </summary>
+        public AutonomousDatabaseStandbySummary LocalStandbyDB { get; }
+        /// <summary> Indicates the number of seconds of data loss for a Data Guard failover. </summary>
         public int? FailedDataRecoveryInSeconds { get; }
-        /// <summary>
-        /// Specifies if the Autonomous Database requires mTLS connections.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isMtlsConnectionRequired
-        /// </summary>
+        /// <summary> Specifies if the Autonomous Database requires mTLS connections. </summary>
         public bool? IsMtlsConnectionRequired { get; set; }
-        /// <summary>
-        /// Specifies if the Autonomous Database preview version is being provisioned.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isPreviewVersionWithServiceTermsAccepted
-        /// </summary>
+        /// <summary> Specifies if the Autonomous Database preview version is being provisioned. </summary>
         public bool? IsPreviewVersionWithServiceTermsAccepted { get; set; }
-        /// <summary>
-        /// The Oracle license model that applies to the Oracle Autonomous Database. The default is LICENSE_INCLUDED.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.licenseModel
-        /// </summary>
-        public LicenseModel? LicenseModel { get; set; }
-        /// <summary>
-        /// The character set for the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.ncharacterSet
-        /// </summary>
+        /// <summary> The Oracle license model that applies to the Oracle Autonomous Database. The default is LICENSE_INCLUDED. </summary>
+        public OracleLicenseModel? LicenseModel { get; set; }
+        /// <summary> The character set for the Autonomous Database. </summary>
         public string NcharacterSet { get; set; }
-        /// <summary>
-        /// Additional information about the current lifecycle state.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.lifecycleDetails
-        /// </summary>
+        /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
-        /// <summary>
-        /// Azure resource provisioning state.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.provisioningState
-        /// </summary>
-        public AzureResourceProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Views lifecycleState
-        /// Serialized Name: AutonomousDatabaseBaseProperties.lifecycleState
-        /// </summary>
+        /// <summary> Azure resource provisioning state. </summary>
+        public OracleDatabaseProvisioningState? ProvisioningState { get; }
+        /// <summary> Views lifecycleState. </summary>
         public AutonomousDatabaseLifecycleState? LifecycleState { get; }
-        /// <summary>
-        /// The list of scheduled operations.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.scheduledOperations
-        /// </summary>
+        /// <summary> The list of scheduled operations. </summary>
         public ScheduledOperationsType ScheduledOperations { get; set; }
-        /// <summary>
-        /// The private endpoint Ip address for the resource.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.privateEndpointIp
-        /// </summary>
+        /// <summary> The private endpoint Ip address for the resource. </summary>
         public string PrivateEndpointIP { get; set; }
-        /// <summary>
-        /// The resource's private endpoint label.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.privateEndpointLabel
-        /// </summary>
+        /// <summary> The resource's private endpoint label. </summary>
         public string PrivateEndpointLabel { get; set; }
-        /// <summary>
-        /// HTTPS link to OCI resources exposed to Azure Customer via Azure Interface.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.ociUrl
-        /// </summary>
+        /// <summary> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </summary>
         public Uri OciUri { get; }
-        /// <summary>
-        /// Client subnet
-        /// Serialized Name: AutonomousDatabaseBaseProperties.subnetId
-        /// </summary>
+        /// <summary> Client subnet. </summary>
         public ResourceIdentifier SubnetId { get; set; }
-        /// <summary>
-        /// VNET for network connectivity
-        /// Serialized Name: AutonomousDatabaseBaseProperties.vnetId
-        /// </summary>
+        /// <summary> VNET for network connectivity. </summary>
         public ResourceIdentifier VnetId { get; set; }
-        /// <summary>
-        /// The date and time that the database was created.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeCreated
-        /// </summary>
-        public DateTimeOffset? TimeCreated { get; }
-        /// <summary>
-        /// The date and time when maintenance will begin.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeMaintenanceBegin
-        /// </summary>
-        public DateTimeOffset? TimeMaintenanceBegin { get; }
-        /// <summary>
-        /// The date and time when maintenance will end.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeMaintenanceEnd
-        /// </summary>
-        public DateTimeOffset? TimeMaintenanceEnd { get; }
-        /// <summary>
-        /// The current amount of storage in use for user and system data, in terabytes (TB).
-        /// Serialized Name: AutonomousDatabaseBaseProperties.actualUsedDataStorageSizeInTbs
-        /// </summary>
+        /// <summary> The date and time that the database was created. </summary>
+        public DateTimeOffset? CreatedOn { get; }
+        /// <summary> The date and time when maintenance will begin. </summary>
+        public DateTimeOffset? MaintenanceBeginOn { get; }
+        /// <summary> The date and time when maintenance will end. </summary>
+        public DateTimeOffset? MaintenanceEndOn { get; }
+        /// <summary> The current amount of storage in use for user and system data, in terabytes (TB). </summary>
         public double? ActualUsedDataStorageSizeInTbs { get; }
-        /// <summary>
-        /// The amount of storage currently allocated for the database tables and billed for, rounded up.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.allocatedStorageSizeInTbs
-        /// </summary>
+        /// <summary> The amount of storage currently allocated for the database tables and billed for, rounded up. </summary>
         public double? AllocatedStorageSizeInTbs { get; }
-        /// <summary>
-        /// Information about Oracle APEX Application Development.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.apexDetails
-        /// </summary>
-        public ApexDetailsType ApexDetails { get; }
-        /// <summary>
-        /// List of Oracle Database versions available for a database upgrade. If there are no version upgrades available, this list is empty.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.availableUpgradeVersions
-        /// </summary>
+        /// <summary> Information about Oracle APEX Application Development. </summary>
+        public OracleApexDetailsType ApexDetails { get; }
+        /// <summary> List of Oracle Database versions available for a database upgrade. If there are no version upgrades available, this list is empty. </summary>
         public IReadOnlyList<string> AvailableUpgradeVersions { get; }
-        /// <summary>
-        /// The connection string used to connect to the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.connectionStrings
-        /// </summary>
-        public ConnectionStringType ConnectionStrings { get; }
-        /// <summary>
-        /// The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.connectionUrls
-        /// </summary>
-        public ConnectionUrlType ConnectionUrls { get; }
-        /// <summary>
-        /// Status of the Data Safe registration for this Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.dataSafeStatus
-        /// </summary>
+        /// <summary> The connection string used to connect to the Autonomous Database. </summary>
+        public AutonomousDatabaseConnectionStrings ConnectionStrings { get; }
+        /// <summary> The URLs for accessing Oracle Application Express (APEX) and SQL Developer Web with a browser from a Compute instance within your VCN or that has a direct connection to your VCN. </summary>
+        public AutonomousDatabaseConnectionUrls ConnectionUrls { get; }
+        /// <summary> Status of the Data Safe registration for this Autonomous Database. </summary>
         public DataSafeStatusType? DataSafeStatus { get; }
-        /// <summary>
-        /// The Oracle Database Edition that applies to the Autonomous databases.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.databaseEdition
-        /// </summary>
-        public DatabaseEditionType? DatabaseEdition { get; set; }
-        /// <summary>
-        /// Autonomous Database ID
-        /// Serialized Name: AutonomousDatabaseBaseProperties.autonomousDatabaseId
-        /// </summary>
+        /// <summary> The Oracle Database Edition that applies to the Autonomous databases. </summary>
+        public OracleDatabaseEditionType? DatabaseEdition { get; set; }
+        /// <summary> Autonomous Database ID. </summary>
         public ResourceIdentifier AutonomousDatabaseId { get; set; }
-        /// <summary>
-        /// The area assigned to In-Memory tables in Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.inMemoryAreaInGbs
-        /// </summary>
+        /// <summary> The area assigned to In-Memory tables in Autonomous Database. </summary>
         public int? InMemoryAreaInGbs { get; }
-        /// <summary>
-        /// The date and time when the next long-term backup would be created.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.nextLongTermBackupTimeStamp
-        /// </summary>
-        public DateTimeOffset? NextLongTermBackupTimeStamp { get; }
-        /// <summary>
-        /// Details for the long-term backup schedule.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.longTermBackupSchedule
-        /// </summary>
+        /// <summary> The date and time when the next long-term backup would be created. </summary>
+        public DateTimeOffset? NextLongTermBackupCreatedOn { get; }
+        /// <summary> Details for the long-term backup schedule. </summary>
         public LongTermBackUpScheduleDetails LongTermBackupSchedule { get; set; }
-        /// <summary>
-        /// Indicates if the Autonomous Database version is a preview version.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.isPreview
-        /// </summary>
+        /// <summary> Indicates if the Autonomous Database version is a preview version. </summary>
         public bool? IsPreview { get; }
-        /// <summary>
-        /// Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard
-        /// Serialized Name: AutonomousDatabaseBaseProperties.localAdgAutoFailoverMaxDataLossLimit
-        /// </summary>
+        /// <summary> Parameter that allows users to select an acceptable maximum data loss limit in seconds, up to which Automatic Failover will be triggered when necessary for a Local Autonomous Data Guard. </summary>
         public int? LocalAdgAutoFailoverMaxDataLossLimit { get; set; }
-        /// <summary>
-        /// The amount of memory (in GBs) enabled per ECPU or OCPU.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.memoryPerOracleComputeUnitInGbs
-        /// </summary>
+        /// <summary> The amount of memory (in GBs) enabled per ECPU or OCPU. </summary>
         public int? MemoryPerOracleComputeUnitInGbs { get; }
-        /// <summary>
-        /// Indicates the Autonomous Database mode.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.openMode
-        /// </summary>
-        public OpenModeType? OpenMode { get; set; }
-        /// <summary>
-        /// Status of Operations Insights for this Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.operationsInsightsStatus
-        /// </summary>
+        /// <summary> Indicates the Autonomous Database mode. </summary>
+        public AutonomousDatabaseModeType? OpenMode { get; set; }
+        /// <summary> Status of Operations Insights for this Autonomous Database. </summary>
         public OperationsInsightsStatusType? OperationsInsightsStatus { get; }
-        /// <summary>
-        /// The Autonomous Database permission level.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.permissionLevel
-        /// </summary>
-        public PermissionLevelType? PermissionLevel { get; set; }
-        /// <summary>
-        /// The private endpoint for the resource.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.privateEndpoint
-        /// </summary>
+        /// <summary> The Autonomous Database permission level. </summary>
+        public AutonomousDatabasePermissionLevelType? PermissionLevel { get; set; }
+        /// <summary> The private endpoint for the resource. </summary>
         public string PrivateEndpoint { get; }
-        /// <summary>
-        /// An array of CPU values that an Autonomous Database can be scaled to.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.provisionableCpus
-        /// </summary>
+        /// <summary> An array of CPU values that an Autonomous Database can be scaled to. </summary>
         public IReadOnlyList<int> ProvisionableCpus { get; }
-        /// <summary>
-        /// The Data Guard role of the Autonomous Container Database or Autonomous Database, if Autonomous Data Guard is enabled.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.role
-        /// </summary>
-        public RoleType? Role { get; set; }
-        /// <summary>
-        /// The URL of the Service Console for the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.serviceConsoleUrl
-        /// </summary>
+        /// <summary> The Data Guard role of the Autonomous Container Database or Autonomous Database, if Autonomous Data Guard is enabled. </summary>
+        public DataGuardRoleType? Role { get; set; }
+        /// <summary> The URL of the Service Console for the Autonomous Database. </summary>
         public Uri ServiceConsoleUri { get; }
-        /// <summary>
-        /// The SQL Web Developer URL for the Oracle Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.sqlWebDeveloperUrl
-        /// </summary>
+        /// <summary> The SQL Web Developer URL for the Oracle Autonomous Database. </summary>
         public Uri SqlWebDeveloperUri { get; }
-        /// <summary>
-        /// The list of regions that support the creation of an Autonomous Database clone or an Autonomous Data Guard standby database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.supportedRegionsToCloneTo
-        /// </summary>
+        /// <summary> The list of regions that support the creation of an Autonomous Database clone or an Autonomous Data Guard standby database. </summary>
         public IReadOnlyList<string> SupportedRegionsToCloneTo { get; }
-        /// <summary>
-        /// The date and time the Autonomous Data Guard role was switched for the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeDataGuardRoleChanged
-        /// </summary>
-        public string TimeDataGuardRoleChanged { get; }
-        /// <summary>
-        /// The date and time the Always Free database will be automatically deleted because of inactivity.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeDeletionOfFreeAutonomousDatabase
-        /// </summary>
-        public string TimeDeletionOfFreeAutonomousDatabase { get; }
-        /// <summary>
-        /// The date and time that Autonomous Data Guard was enabled for an Autonomous Database where the standby was provisioned in the same region as the primary database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeLocalDataGuardEnabled
-        /// </summary>
+        /// <summary> The date and time the Autonomous Data Guard role was switched for the Autonomous Database. </summary>
+        public DateTimeOffset? DataGuardRoleChangedOn { get; }
+        /// <summary> The date and time the Always Free database will be automatically deleted because of inactivity. </summary>
+        public DateTimeOffset? FreeAutonomousDatabaseDeletedOn { get; }
+        /// <summary> The date and time that Autonomous Data Guard was enabled for an Autonomous Database where the standby was provisioned in the same region as the primary database. </summary>
         public string TimeLocalDataGuardEnabled { get; }
-        /// <summary>
-        /// The timestamp of the last failover operation.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeOfLastFailover
-        /// </summary>
-        public string TimeOfLastFailover { get; }
-        /// <summary>
-        /// The date and time when last refresh happened.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeOfLastRefresh
-        /// </summary>
-        public string TimeOfLastRefresh { get; }
-        /// <summary>
-        /// The refresh point timestamp (UTC).
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeOfLastRefreshPoint
-        /// </summary>
-        public string TimeOfLastRefreshPoint { get; }
-        /// <summary>
-        /// The timestamp of the last switchover operation for the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeOfLastSwitchover
-        /// </summary>
-        public string TimeOfLastSwitchover { get; }
-        /// <summary>
-        /// The date and time the Always Free database will be stopped because of inactivity.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.timeReclamationOfFreeAutonomousDatabase
-        /// </summary>
-        public string TimeReclamationOfFreeAutonomousDatabase { get; }
-        /// <summary>
-        /// The storage space consumed by Autonomous Database in GBs.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.usedDataStorageSizeInGbs
-        /// </summary>
+        /// <summary> The timestamp of the last failover operation. </summary>
+        public DateTimeOffset? LastFailoverHappenedOn { get; }
+        /// <summary> The date and time when last refresh happened. </summary>
+        public DateTimeOffset? LastRefreshHappenedOn { get; }
+        /// <summary> The refresh point timestamp (UTC). </summary>
+        public DateTimeOffset? LastRefreshPointTimestamp { get; }
+        /// <summary> The timestamp of the last switchover operation for the Autonomous Database. </summary>
+        public DateTimeOffset? LastSwitchoverHappenedOn { get; }
+        /// <summary> The date and time the Always Free database will be stopped because of inactivity. </summary>
+        public DateTimeOffset? FreeAutonomousDatabaseStoppedOn { get; }
+        /// <summary> The storage space consumed by Autonomous Database in GBs. </summary>
         public int? UsedDataStorageSizeInGbs { get; }
-        /// <summary>
-        /// The amount of storage that has been used, in terabytes.
-        /// Serialized Name: AutonomousDatabaseBaseProperties.usedDataStorageSizeInTbs
-        /// </summary>
+        /// <summary> The amount of storage that has been used, in terabytes. </summary>
         public int? UsedDataStorageSizeInTbs { get; }
-        /// <summary>
-        /// Database ocid
-        /// Serialized Name: AutonomousDatabaseBaseProperties.ocid
-        /// </summary>
-        public string Ocid { get; }
-        /// <summary>
-        /// Retention period, in days, for long-term backups
-        /// Serialized Name: AutonomousDatabaseBaseProperties.backupRetentionPeriodInDays
-        /// </summary>
+        /// <summary> Database ocid. </summary>
+        public ResourceIdentifier Ocid { get; }
+        /// <summary> Retention period, in days, for long-term backups. </summary>
         public int? BackupRetentionPeriodInDays { get; set; }
-        /// <summary>
-        /// The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']
-        /// Serialized Name: AutonomousDatabaseBaseProperties.whitelistedIps
-        /// </summary>
+        /// <summary> The client IP access control list (ACL). This is an array of CIDR notations and/or IP addresses. Values should be separate strings, separated by commas. Example: ['1.1.1.1','1.1.1.0/24','1.1.2.25']. </summary>
         public IList<string> WhitelistedIPs { get; }
     }
 }

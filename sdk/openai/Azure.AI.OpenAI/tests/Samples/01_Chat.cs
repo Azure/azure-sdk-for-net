@@ -20,8 +20,6 @@ namespace Azure.AI.OpenAI.Samples;
 
 public partial class AzureOpenAISamples
 {
-    [Test]
-    [Ignore("Only for sample compilation validation")]
     public void BasicChat()
     {
         #region Snippet:SimpleChatResponse
@@ -45,8 +43,6 @@ public partial class AzureOpenAISamples
         #endregion
     }
 
-    [Test]
-    [Ignore("Only for sample compilation validation")]
     public void StreamingChat()
     {
         #region Snippet:StreamChatMessages
@@ -73,8 +69,6 @@ public partial class AzureOpenAISamples
         #endregion
     }
 
-    [Test]
-    [Ignore("Only for sample compilation validation")]
     public void ChatWithTools()
     {
         #region Snippet:ChatTools:DefineTool
@@ -187,8 +181,6 @@ public partial class AzureOpenAISamples
         #endregion
     }
 
-    [Test]
-    [Ignore("Only for sample compilation validation")]
     public void StreamingChatToolCalls()
     {
         static string GetCurrentLocation()

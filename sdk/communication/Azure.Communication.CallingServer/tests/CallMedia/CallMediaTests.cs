@@ -44,7 +44,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_PlayOperationsAsync))]
-
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task MediaOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response>> operation)
         {
             if (_callMedia != null)
@@ -56,7 +56,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_PlayOperations))]
-
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void MediaOperations_Return202Accepted(Func<CallMedia, Response> operation)
         {
             if (_callMedia != null)
@@ -68,6 +68,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_PlayOperationsAsync))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void MediaOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
@@ -80,6 +81,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_PlayOperations))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void MediaOperations_Return404NotFound(Func<CallMedia, Response> operation)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);

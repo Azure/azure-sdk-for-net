@@ -25,7 +25,6 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string TextEmbeddingAda002Value = "text-embedding-ada-002";
         private const string TextEmbedding3LargeValue = "text-embedding-3-large";
         private const string TextEmbedding3SmallValue = "text-embedding-3-small";
-        private const string ExperimentalValue = "experimental";
 
         /// <summary> text-embedding-ada-002. </summary>
         public static AzureOpenAIModelName TextEmbeddingAda002 { get; } = new AzureOpenAIModelName(TextEmbeddingAda002Value);
@@ -33,8 +32,6 @@ namespace Azure.Search.Documents.Indexes.Models
         public static AzureOpenAIModelName TextEmbedding3Large { get; } = new AzureOpenAIModelName(TextEmbedding3LargeValue);
         /// <summary> text-embedding-3-small. </summary>
         public static AzureOpenAIModelName TextEmbedding3Small { get; } = new AzureOpenAIModelName(TextEmbedding3SmallValue);
-        /// <summary> experimental. </summary>
-        public static AzureOpenAIModelName Experimental { get; } = new AzureOpenAIModelName(ExperimentalValue);
         /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are the same. </summary>
         public static bool operator ==(AzureOpenAIModelName left, AzureOpenAIModelName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AzureOpenAIModelName"/> values are not the same. </summary>
@@ -50,7 +47,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -173,7 +173,7 @@ namespace Azure.Core.Pipeline
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, headerValue);
         }
 
-        private class AccessTokenCache
+        internal class AccessTokenCache
         {
             private readonly object _syncObj = new object();
             private readonly TokenCredential _credential;
@@ -181,7 +181,7 @@ namespace Azure.Core.Pipeline
             private readonly TimeSpan _tokenRefreshRetryDelay;
 
             // must be updated under lock (_syncObj)
-            private TokenRequestState? _state;
+            internal TokenRequestState? _state;
 
             public AccessTokenCache(TokenCredential credential, TimeSpan tokenRefreshOffset, TimeSpan tokenRefreshRetryDelay)
             {
@@ -204,7 +204,7 @@ namespace Azure.Core.Pipeline
                     {
                         if (localState.BackgroundTokenUpdateTcs != null)
                         {
-                            headerValueInfo = await localState.GetCurrentHeaderValue(async).ConfigureAwait(false);
+                            headerValueInfo = await localState.GetCurrentHeaderValue(async, false, message.CancellationToken).ConfigureAwait(false);
                             _ = Task.Run(() => GetHeaderValueFromCredentialInBackgroundAsync(localState.BackgroundTokenUpdateTcs, headerValueInfo, context, async));
                             return headerValueInfo.HeaderValue;
                         }
@@ -355,7 +355,7 @@ namespace Azure.Core.Pipeline
                 targetTcs.SetResult(new AuthHeaderValueInfo("Bearer " + token.Token, token.ExpiresOn, token.RefreshOn.HasValue ? token.RefreshOn.Value : token.ExpiresOn - _tokenRefreshOffset));
             }
 
-            private readonly struct AuthHeaderValueInfo
+            internal readonly struct AuthHeaderValueInfo
             {
                 public string HeaderValue { get; }
                 public DateTimeOffset ExpiresOn { get; }
@@ -369,7 +369,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            private class TokenRequestState
+            internal class TokenRequestState
             {
                 public TokenRequestContext CurrentContext { get; }
                 public TaskCompletionSource<AuthHeaderValueInfo> CurrentTokenTcs { get; }
@@ -409,7 +409,7 @@ namespace Azure.Core.Pipeline
                     new TokenRequestState(CurrentContext, BackgroundTokenUpdateTcs!, default);
 
                 public TokenRequestState WithNewCurrentTokenTcs() =>
-                    new TokenRequestState(CurrentContext, new TaskCompletionSource<AuthHeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously), BackgroundTokenUpdateTcs);
+                    new TokenRequestState(CurrentContext, new TaskCompletionSource<AuthHeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously), default);
 
                 public TokenRequestState WithNewBackroundUpdateTokenTcs() =>
                     new TokenRequestState(CurrentContext, CurrentTokenTcs, new TaskCompletionSource<AuthHeaderValueInfo>(TaskCreationOptions.RunContinuationsAsynchronously));

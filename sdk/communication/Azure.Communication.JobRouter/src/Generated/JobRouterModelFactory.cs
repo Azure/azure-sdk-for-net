@@ -36,6 +36,25 @@ namespace Azure.Communication.JobRouter
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobRouter.FunctionRouterRule"/>. </summary>
+        /// <param name="functionUri"> URL for Azure Function. </param>
+        /// <param name="credential"> Credentials used to access Azure function rule. </param>
+        /// <returns> A new <see cref="JobRouter.FunctionRouterRule"/> instance for mocking. </returns>
+        public static FunctionRouterRule FunctionRouterRule(Uri functionUri = null, FunctionRouterRuleCredential credential = null)
+        {
+            return new FunctionRouterRule(RouterRuleKind.Function, serializedAdditionalRawData: null, functionUri, credential);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.WebhookRouterRule"/>. </summary>
+        /// <param name="authorizationServerUri"> Uri for Authorization Server. </param>
+        /// <param name="clientCredential"> OAuth2.0 Credentials used to Contoso's Authorization server. Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/. </param>
+        /// <param name="webhookUri"> Uri for Contoso's Web Server. </param>
+        /// <returns> A new <see cref="JobRouter.WebhookRouterRule"/> instance for mocking. </returns>
+        public static WebhookRouterRule WebhookRouterRule(Uri authorizationServerUri = null, OAuth2WebhookClientCredential clientCredential = null, Uri webhookUri = null)
+        {
+            return new WebhookRouterRule(RouterRuleKind.Webhook, serializedAdditionalRawData: null, authorizationServerUri, clientCredential, webhookUri);
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.ClassificationPolicy"/>. </summary>
         /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a classification policy. </param>
@@ -71,183 +90,6 @@ namespace Azure.Communication.JobRouter
                 prioritizationRule,
                 workerSelectorAttachments?.ToList(),
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionPolicy"/>. </summary>
-        /// <param name="eTag"> The entity tag for this resource. </param>
-        /// <param name="id"> Id of an exception policy. </param>
-        /// <param name="name"> Friendly name of this policy. </param>
-        /// <param name="exceptionRules"> A collection of exception rules on the exception policy. </param>
-        /// <returns> A new <see cref="JobRouter.ExceptionPolicy"/> instance for mocking. </returns>
-        public static ExceptionPolicy ExceptionPolicy(ETag eTag = default, string id = null, string name = null, IEnumerable<ExceptionRule> exceptionRules = null)
-        {
-            exceptionRules ??= new List<ExceptionRule>();
-
-            return new ExceptionPolicy(eTag, id, name, exceptionRules?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionRule"/>. </summary>
-        /// <param name="id"> Id of an exception rule. </param>
-        /// <param name="trigger">
-        /// The trigger for this exception rule.
-        /// Please note <see cref="ExceptionTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobRouter.QueueLengthExceptionTrigger"/> and <see cref="WaitTimeExceptionTrigger"/>.
-        /// </param>
-        /// <param name="actions">
-        /// A collection of actions to perform once the exception is triggered.
-        /// Please note <see cref="JobRouter.ExceptionAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="JobRouter.CancelExceptionAction"/>, <see cref="JobRouter.ManualReclassifyExceptionAction"/> and <see cref="ReclassifyExceptionAction"/>.
-        /// </param>
-        /// <returns> A new <see cref="JobRouter.ExceptionRule"/> instance for mocking. </returns>
-        public static ExceptionRule ExceptionRule(string id = null, ExceptionTrigger trigger = null, IEnumerable<ExceptionAction> actions = null)
-        {
-            actions ??= new List<ExceptionAction>();
-
-            return new ExceptionRule(id, trigger, actions?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionAction"/>. </summary>
-        /// <param name="id"> Unique Id of the exception action. </param>
-        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
-        /// <returns> A new <see cref="JobRouter.ExceptionAction"/> instance for mocking. </returns>
-        public static ExceptionAction ExceptionAction(string id = null, string kind = null)
-        {
-            return new UnknownExceptionAction(id, kind == null ? default : new ExceptionActionKind(kind), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobAssignment"/>. </summary>
-        /// <param name="assignmentId"> Id of a job assignment. </param>
-        /// <param name="workerId"> Id of the Worker assigned to the job. </param>
-        /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>
-        /// <param name="completedAt"> Timestamp when the job was marked as completed after being assigned in UTC. </param>
-        /// <param name="closedAt"> Timestamp when the job was marked as closed after being completed in UTC. </param>
-        /// <returns> A new <see cref="JobRouter.RouterJobAssignment"/> instance for mocking. </returns>
-        public static RouterJobAssignment RouterJobAssignment(string assignmentId = null, string workerId = null, DateTimeOffset assignedAt = default, DateTimeOffset? completedAt = null, DateTimeOffset? closedAt = null)
-        {
-            return new RouterJobAssignment(
-                assignmentId,
-                workerId,
-                assignedAt,
-                completedAt,
-                closedAt,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobNote"/>. </summary>
-        /// <param name="message"> The message contained in the note. </param>
-        /// <param name="addedAt"> The time at which the note was added in UTC. If not provided, will default to the current time. </param>
-        /// <returns> A new <see cref="JobRouter.RouterJobNote"/> instance for mocking. </returns>
-        public static RouterJobNote RouterJobNote(string message = null, DateTimeOffset? addedAt = null)
-        {
-            return new RouterJobNote(message, addedAt, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobPositionDetails"/>. </summary>
-        /// <param name="jobId"> Id of the job these details are about. </param>
-        /// <param name="position"> Position of the job in question within that queue. </param>
-        /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
-        /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
-        /// <param name="estimatedWaitTime"> Estimated wait time of the job rounded up to the nearest minute. </param>
-        /// <returns> A new <see cref="JobRouter.RouterJobPositionDetails"/> instance for mocking. </returns>
-        public static RouterJobPositionDetails RouterJobPositionDetails(string jobId = null, int position = default, string queueId = null, int queueLength = default, TimeSpan estimatedWaitTime = default)
-        {
-            return new RouterJobPositionDetails(
-                jobId,
-                position,
-                queueId,
-                queueLength,
-                estimatedWaitTime,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.UnassignJobResult"/>. </summary>
-        /// <param name="jobId"> Id of an unassigned job. </param>
-        /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
-        /// <returns> A new <see cref="JobRouter.UnassignJobResult"/> instance for mocking. </returns>
-        public static UnassignJobResult UnassignJobResult(string jobId = null, int unassignmentCount = default)
-        {
-            return new UnassignJobResult(jobId, unassignmentCount, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.AcceptJobOfferResult"/>. </summary>
-        /// <param name="assignmentId"> Id of job assignment that assigns a worker that has accepted an offer to a job. </param>
-        /// <param name="jobId"> Id of the job assigned. </param>
-        /// <param name="workerId"> Id of the worker that has been assigned this job. </param>
-        /// <returns> A new <see cref="JobRouter.AcceptJobOfferResult"/> instance for mocking. </returns>
-        public static AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null)
-        {
-            return new AcceptJobOfferResult(assignmentId, jobId, workerId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterQueueStatistics"/>. </summary>
-        /// <param name="queueId"> Id of the queue these details are about. </param>
-        /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
-        /// <param name="estimatedWaitTimes"> The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority. </param>
-        /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
-        /// <returns> A new <see cref="JobRouter.RouterQueueStatistics"/> instance for mocking. </returns>
-        public static RouterQueueStatistics RouterQueueStatistics(string queueId = null, int length = default, IDictionary<int, TimeSpan> estimatedWaitTimes = null, double? longestJobWaitTimeMinutes = null)
-        {
-            estimatedWaitTimes ??= new Dictionary<int, TimeSpan>();
-
-            return new RouterQueueStatistics(queueId, length, estimatedWaitTimes, longestJobWaitTimeMinutes, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterChannel"/>. </summary>
-        /// <param name="channelId"> Id of a channel. </param>
-        /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
-        /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. Value must be greater than zero. </param>
-        /// <returns> A new <see cref="JobRouter.RouterChannel"/> instance for mocking. </returns>
-        public static RouterChannel RouterChannel(string channelId = null, int capacityCostPerJob = default, int? maxNumberOfJobs = null)
-        {
-            return new RouterChannel(channelId, capacityCostPerJob, maxNumberOfJobs, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobOffer"/>. </summary>
-        /// <param name="offerId"> Id of an offer. </param>
-        /// <param name="jobId"> Id of the job. </param>
-        /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
-        /// <param name="offeredAt"> Timestamp when the offer was created in UTC. </param>
-        /// <param name="expiresAt"> Timestamp when the offer will expire in UTC. </param>
-        /// <returns> A new <see cref="JobRouter.RouterJobOffer"/> instance for mocking. </returns>
-        public static RouterJobOffer RouterJobOffer(string offerId = null, string jobId = null, int capacityCost = default, DateTimeOffset? offeredAt = null, DateTimeOffset? expiresAt = null)
-        {
-            return new RouterJobOffer(
-                offerId,
-                jobId,
-                capacityCost,
-                offeredAt,
-                expiresAt,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterWorkerAssignment"/>. </summary>
-        /// <param name="assignmentId"> Id of the assignment. </param>
-        /// <param name="jobId"> Id of the job assigned. </param>
-        /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
-        /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
-        /// <returns> A new <see cref="JobRouter.RouterWorkerAssignment"/> instance for mocking. </returns>
-        public static RouterWorkerAssignment RouterWorkerAssignment(string assignmentId = null, string jobId = null, int capacityCost = default, DateTimeOffset assignedAt = default)
-        {
-            return new RouterWorkerAssignment(assignmentId, jobId, capacityCost, assignedAt, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.FunctionRouterRule"/>. </summary>
-        /// <param name="functionUri"> URL for Azure Function. </param>
-        /// <param name="credential"> Credentials used to access Azure function rule. </param>
-        /// <returns> A new <see cref="JobRouter.FunctionRouterRule"/> instance for mocking. </returns>
-        public static FunctionRouterRule FunctionRouterRule(Uri functionUri = null, FunctionRouterRuleCredential credential = null)
-        {
-            return new FunctionRouterRule(RouterRuleKind.Function, serializedAdditionalRawData: null, functionUri, credential);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="JobRouter.WebhookRouterRule"/>. </summary>
-        /// <param name="authorizationServerUri"> Uri for Authorization Server. </param>
-        /// <param name="clientCredential"> OAuth2.0 Credentials used to Contoso's Authorization server. Reference: https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/. </param>
-        /// <param name="webhookUri"> Uri for Contoso's Web Server. </param>
-        /// <returns> A new <see cref="JobRouter.WebhookRouterRule"/> instance for mocking. </returns>
-        public static WebhookRouterRule WebhookRouterRule(Uri authorizationServerUri = null, OAuth2WebhookClientCredential clientCredential = null, Uri webhookUri = null)
-        {
-            return new WebhookRouterRule(RouterRuleKind.Webhook, serializedAdditionalRawData: null, authorizationServerUri, clientCredential, webhookUri);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.ConditionalQueueSelectorAttachment"/>. </summary>
@@ -381,12 +223,54 @@ namespace Azure.Communication.JobRouter
             return new WorkerWeightedAllocation(weight, workerSelectors?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionPolicy"/>. </summary>
+        /// <param name="eTag"> The entity tag for this resource. </param>
+        /// <param name="id"> Id of an exception policy. </param>
+        /// <param name="name"> Friendly name of this policy. </param>
+        /// <param name="exceptionRules"> A collection of exception rules on the exception policy. </param>
+        /// <returns> A new <see cref="JobRouter.ExceptionPolicy"/> instance for mocking. </returns>
+        public static ExceptionPolicy ExceptionPolicy(ETag eTag = default, string id = null, string name = null, IEnumerable<ExceptionRule> exceptionRules = null)
+        {
+            exceptionRules ??= new List<ExceptionRule>();
+
+            return new ExceptionPolicy(eTag, id, name, exceptionRules?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionRule"/>. </summary>
+        /// <param name="id"> Id of an exception rule. </param>
+        /// <param name="trigger">
+        /// The trigger for this exception rule.
+        /// Please note <see cref="ExceptionTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.QueueLengthExceptionTrigger"/> and <see cref="WaitTimeExceptionTrigger"/>.
+        /// </param>
+        /// <param name="actions">
+        /// A collection of actions to perform once the exception is triggered.
+        /// Please note <see cref="JobRouter.ExceptionAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobRouter.CancelExceptionAction"/>, <see cref="JobRouter.ManualReclassifyExceptionAction"/> and <see cref="ReclassifyExceptionAction"/>.
+        /// </param>
+        /// <returns> A new <see cref="JobRouter.ExceptionRule"/> instance for mocking. </returns>
+        public static ExceptionRule ExceptionRule(string id = null, ExceptionTrigger trigger = null, IEnumerable<ExceptionAction> actions = null)
+        {
+            actions ??= new List<ExceptionAction>();
+
+            return new ExceptionRule(id, trigger, actions?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.QueueLengthExceptionTrigger"/>. </summary>
         /// <param name="threshold"> Threshold of number of jobs ahead in the queue to for this trigger to fire. </param>
         /// <returns> A new <see cref="JobRouter.QueueLengthExceptionTrigger"/> instance for mocking. </returns>
         public static QueueLengthExceptionTrigger QueueLengthExceptionTrigger(int threshold = default)
         {
             return new QueueLengthExceptionTrigger(ExceptionTriggerKind.QueueLength, serializedAdditionalRawData: null, threshold);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionAction"/>. </summary>
+        /// <param name="id"> Unique Id of the exception action. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
+        /// <returns> A new <see cref="JobRouter.ExceptionAction"/> instance for mocking. </returns>
+        public static ExceptionAction ExceptionAction(string id = null, string kind = null)
+        {
+            return new UnknownExceptionAction(id, kind == null ? default : new ExceptionActionKind(kind), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.CancelExceptionAction"/>. </summary>
@@ -418,12 +302,128 @@ namespace Azure.Communication.JobRouter
                 workerSelectors?.ToList());
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobAssignment"/>. </summary>
+        /// <param name="assignmentId"> Id of a job assignment. </param>
+        /// <param name="workerId"> Id of the Worker assigned to the job. </param>
+        /// <param name="assignedAt"> Timestamp when the job was assigned to a worker in UTC. </param>
+        /// <param name="completedAt"> Timestamp when the job was marked as completed after being assigned in UTC. </param>
+        /// <param name="closedAt"> Timestamp when the job was marked as closed after being completed in UTC. </param>
+        /// <returns> A new <see cref="JobRouter.RouterJobAssignment"/> instance for mocking. </returns>
+        public static RouterJobAssignment RouterJobAssignment(string assignmentId = null, string workerId = null, DateTimeOffset assignedAt = default, DateTimeOffset? completedAt = null, DateTimeOffset? closedAt = null)
+        {
+            return new RouterJobAssignment(
+                assignmentId,
+                workerId,
+                assignedAt,
+                completedAt,
+                closedAt,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobNote"/>. </summary>
+        /// <param name="message"> The message contained in the note. </param>
+        /// <param name="addedAt"> The time at which the note was added in UTC. If not provided, will default to the current time. </param>
+        /// <returns> A new <see cref="JobRouter.RouterJobNote"/> instance for mocking. </returns>
+        public static RouterJobNote RouterJobNote(string message = null, DateTimeOffset? addedAt = null)
+        {
+            return new RouterJobNote(message, addedAt, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.ScheduleAndSuspendMode"/>. </summary>
         /// <param name="scheduleAt"> Requested schedule time. </param>
         /// <returns> A new <see cref="JobRouter.ScheduleAndSuspendMode"/> instance for mocking. </returns>
         public static ScheduleAndSuspendMode ScheduleAndSuspendMode(DateTimeOffset scheduleAt = default)
         {
             return new ScheduleAndSuspendMode(JobMatchingModeKind.ScheduleAndSuspend, serializedAdditionalRawData: null, scheduleAt);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobPositionDetails"/>. </summary>
+        /// <param name="jobId"> Id of the job these details are about. </param>
+        /// <param name="position"> Position of the job in question within that queue. </param>
+        /// <param name="queueId"> Id of the queue this job is enqueued in. </param>
+        /// <param name="queueLength"> Length of the queue: total number of enqueued jobs. </param>
+        /// <param name="estimatedWaitTime"> Estimated wait time of the job rounded up to the nearest minute. </param>
+        /// <returns> A new <see cref="JobRouter.RouterJobPositionDetails"/> instance for mocking. </returns>
+        public static RouterJobPositionDetails RouterJobPositionDetails(string jobId = null, int position = default, string queueId = null, int queueLength = default, TimeSpan estimatedWaitTime = default)
+        {
+            return new RouterJobPositionDetails(
+                jobId,
+                position,
+                queueId,
+                queueLength,
+                estimatedWaitTime,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.UnassignJobResult"/>. </summary>
+        /// <param name="jobId"> Id of an unassigned job. </param>
+        /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
+        /// <returns> A new <see cref="JobRouter.UnassignJobResult"/> instance for mocking. </returns>
+        public static UnassignJobResult UnassignJobResult(string jobId = null, int unassignmentCount = default)
+        {
+            return new UnassignJobResult(jobId, unassignmentCount, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterChannel"/>. </summary>
+        /// <param name="channelId"> Id of a channel. </param>
+        /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
+        /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. Value must be greater than zero. </param>
+        /// <returns> A new <see cref="JobRouter.RouterChannel"/> instance for mocking. </returns>
+        public static RouterChannel RouterChannel(string channelId = null, int capacityCostPerJob = default, int? maxNumberOfJobs = null)
+        {
+            return new RouterChannel(channelId, capacityCostPerJob, maxNumberOfJobs, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobOffer"/>. </summary>
+        /// <param name="offerId"> Id of an offer. </param>
+        /// <param name="jobId"> Id of the job. </param>
+        /// <param name="capacityCost"> The capacity cost consumed by the job offer. </param>
+        /// <param name="offeredAt"> Timestamp when the offer was created in UTC. </param>
+        /// <param name="expiresAt"> Timestamp when the offer will expire in UTC. </param>
+        /// <returns> A new <see cref="JobRouter.RouterJobOffer"/> instance for mocking. </returns>
+        public static RouterJobOffer RouterJobOffer(string offerId = null, string jobId = null, int capacityCost = default, DateTimeOffset? offeredAt = null, DateTimeOffset? expiresAt = null)
+        {
+            return new RouterJobOffer(
+                offerId,
+                jobId,
+                capacityCost,
+                offeredAt,
+                expiresAt,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterWorkerAssignment"/>. </summary>
+        /// <param name="assignmentId"> Id of the assignment. </param>
+        /// <param name="jobId"> Id of the job assigned. </param>
+        /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
+        /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
+        /// <returns> A new <see cref="JobRouter.RouterWorkerAssignment"/> instance for mocking. </returns>
+        public static RouterWorkerAssignment RouterWorkerAssignment(string assignmentId = null, string jobId = null, int capacityCost = default, DateTimeOffset assignedAt = default)
+        {
+            return new RouterWorkerAssignment(assignmentId, jobId, capacityCost, assignedAt, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.AcceptJobOfferResult"/>. </summary>
+        /// <param name="assignmentId"> Id of job assignment that assigns a worker that has accepted an offer to a job. </param>
+        /// <param name="jobId"> Id of the job assigned. </param>
+        /// <param name="workerId"> Id of the worker that has been assigned this job. </param>
+        /// <returns> A new <see cref="JobRouter.AcceptJobOfferResult"/> instance for mocking. </returns>
+        public static AcceptJobOfferResult AcceptJobOfferResult(string assignmentId = null, string jobId = null, string workerId = null)
+        {
+            return new AcceptJobOfferResult(assignmentId, jobId, workerId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobRouter.RouterQueueStatistics"/>. </summary>
+        /// <param name="queueId"> Id of the queue these details are about. </param>
+        /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
+        /// <param name="estimatedWaitTimes"> The estimated wait time of this queue rounded up to the nearest minute, grouped by job priority. </param>
+        /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
+        /// <returns> A new <see cref="JobRouter.RouterQueueStatistics"/> instance for mocking. </returns>
+        public static RouterQueueStatistics RouterQueueStatistics(string queueId = null, int length = default, IDictionary<int, TimeSpan> estimatedWaitTimes = null, double? longestJobWaitTimeMinutes = null)
+        {
+            estimatedWaitTimes ??= new Dictionary<int, TimeSpan>();
+
+            return new RouterQueueStatistics(queueId, length, estimatedWaitTimes, longestJobWaitTimeMinutes, serializedAdditionalRawData: null);
         }
     }
 }

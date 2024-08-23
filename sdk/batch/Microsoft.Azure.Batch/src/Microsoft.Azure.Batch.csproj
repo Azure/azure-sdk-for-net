@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.Text.Encodings.Web" />
-    <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">

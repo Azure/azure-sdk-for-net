@@ -13,13 +13,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
     public class ShareFileStorageResourceOptions
     {
         /// <summary>
-        /// Optional. The file permission to set on the destination directory and/or file.
-        ///
-        /// Applies to copy and upload transfers.
-        /// </summary>
-        public string FilePermissions { get; set; }
-
-        /// <summary>
         /// Optional. See <see cref="ShareFileRequestConditions"/>.
         /// Access conditions on the copying of data from this source storage resource share file.
         ///
@@ -101,8 +94,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// The key of the file permission.
+        ///
+        /// By default the permission key will not be preserved from the source Share to the destination Share.
         /// </summary>
-        public string FilePermissionKey { get; set; }
+        public DataTransferProperty FilePermissions { get; set; }
 
         /// <summary>
         /// The creation time of the file.
@@ -145,5 +140,30 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public DataTransferProperty<Metadata> FileMetadata { get; set; }
+
+        /// <summary>
+        /// Constructor for ShareFileStorageResourceOptions.
+        /// </summary>
+        public ShareFileStorageResourceOptions()
+        {
+        }
+
+        internal ShareFileStorageResourceOptions(ShareFileStorageResourceOptions options)
+        {
+            SourceConditions = options?.SourceConditions;
+            DestinationConditions = options?.DestinationConditions;
+            CacheControl = options?.CacheControl;
+            ContentDisposition = options?.ContentDisposition;
+            ContentEncoding = options?.ContentEncoding;
+            ContentLanguage = options?.ContentLanguage;
+            ContentType = options?.ContentType;
+            FileAttributes = options?.FileAttributes;
+            FilePermissions = options?.FilePermissions;
+            FileCreatedOn = options?.FileCreatedOn;
+            FileLastWrittenOn = options?.FileLastWrittenOn;
+            FileChangedOn = options?.FileChangedOn;
+            DirectoryMetadata = options?.DirectoryMetadata;
+            FileMetadata = options?.FileMetadata;
+        }
     }
 }

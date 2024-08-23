@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the CloudVmCluster data model.
     /// CloudVmCluster resource definition
-    /// Serialized Name: CloudVmCluster
     /// </summary>
     public partial class CloudVmClusterData : TrackedResourceData
     {
@@ -65,10 +64,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: CloudVmCluster.properties
-        /// </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudVmClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CloudVmClusterProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -81,10 +77,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
         }
 
-        /// <summary>
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: CloudVmCluster.properties
-        /// </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         public CloudVmClusterProperties Properties { get; set; }
     }
 }

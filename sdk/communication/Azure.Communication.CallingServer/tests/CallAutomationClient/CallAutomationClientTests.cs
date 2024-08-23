@@ -18,6 +18,7 @@ namespace Azure.Communication.CallingServer
             MediaStreamingAudioChannel.Mixed);
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task AnswerCallAsync_200OK(string incomingCallContext, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionPayload);
@@ -31,6 +32,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void AnswerCall_200OK(string incomingCallContext, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionPayload);
@@ -44,6 +46,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task AnswerCallWithOptionsAsync_200OK(string incomingCallContext, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
@@ -61,6 +64,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void AnswerCallWithOptions_200OK(string incomingCallContext, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
@@ -78,6 +82,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void AnswerCallAsync_401AuthFailed(string incomingCallContext, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(401);
@@ -88,6 +93,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_AnswerCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void AnswerCall_401AuthFailed(string incomingCallContext, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(401);
@@ -98,6 +104,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task RedirectCallAsync_204NoContent(string incomingCallContext, CommunicationIdentifier target)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
@@ -108,6 +115,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RedirectCall_204NoContent(string incomingCallContext, CommunicationIdentifier target)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
@@ -118,6 +126,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RedirectCallAsync_404NotFound(string incomingCallContext, CommunicationIdentifier target)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
@@ -128,6 +137,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_RedirectCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RedirectCall_404NotFound(string incomingCallContext, CommunicationIdentifier target)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
@@ -138,6 +148,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_RejectCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task RejectCallAsync_204NoContent(string incomingCallContext, CallRejectReason reason)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
@@ -148,6 +159,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_RejectCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RejectCall_204NoContent(string incomingCallContext, CallRejectReason reason)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(204);
@@ -158,6 +170,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_RejectCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RejectCallAsync_404NotFound(string incomingCallContext, CallRejectReason reason)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
@@ -168,6 +181,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_RejectCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RejectCall_404NotFound(string incomingCallContext, CallRejectReason reason)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
@@ -178,6 +192,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task CreateCallAsync_201Created(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
@@ -192,6 +207,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void CreateCall_201Created(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
@@ -206,6 +222,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public async Task CreateCallWithOptionsAsync_201Created(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
@@ -228,6 +245,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void CreateCallWithOptions_201Created(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
@@ -250,6 +268,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void CreateCallAsync_404NotFound(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
@@ -260,6 +279,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_CreateCall))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void CreateCall_404NotFound(CallSource source, CommunicationIdentifier[] targets, Uri callbackUri)
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
@@ -270,6 +290,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [TestCaseSource(nameof(TestData_GetCallConnection))]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void GetCallConnection(string callConnectionId)
         {
             var response = new CallAutomationClient(ConnectionString).GetCallConnection(callConnectionId);
@@ -279,6 +300,7 @@ namespace Azure.Communication.CallingServer
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void GetCallRecording()
         {
             var response = new CallAutomationClient(ConnectionString).GetCallRecording();

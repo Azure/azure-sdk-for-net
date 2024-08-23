@@ -101,6 +101,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("corsPolicy"u8);
                 writer.WriteObjectValue(CorsPolicy, options);
             }
+            if (Optional.IsCollectionDefined(AdditionalPortMappings))
+            {
+                writer.WritePropertyName("additionalPortMappings"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdditionalPortMappings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -151,6 +161,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             IngressStickySessions stickySessions = default;
             ContainerAppIngressClientCertificateMode? clientCertificateMode = default;
             ContainerAppCorsPolicy corsPolicy = default;
+            IList<IngressPortMapping> additionalPortMappings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -274,6 +285,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                     corsPolicy = ContainerAppCorsPolicy.DeserializeContainerAppCorsPolicy(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("additionalPortMappings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IngressPortMapping> array = new List<IngressPortMapping>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(IngressPortMapping.DeserializeIngressPortMapping(item, options));
+                    }
+                    additionalPortMappings = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -293,6 +318,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 stickySessions,
                 clientCertificateMode,
                 corsPolicy,
+                additionalPortMappings ?? new ChangeTrackingList<IngressPortMapping>(),
                 serializedAdditionalRawData);
         }
 

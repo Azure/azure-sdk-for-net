@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.11.3" />
+    <PackageReference Include="Azure.Identity" Version="1.11.4" />
     <PackageReference Include="CommandLineParser" Version="2.7.82" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.16.0" />
 

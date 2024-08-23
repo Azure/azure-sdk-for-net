@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Portal revision description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Portal revision publishing status details. </summary>
+        [WirePath("properties.statusDetails")]
         public string StatusDetails { get; }
         /// <summary> Status of the portal's revision. </summary>
+        [WirePath("properties.status")]
         public PortalRevisionStatus? Status { get; }
         /// <summary> Indicates if the portal's revision is public. </summary>
+        [WirePath("properties.isCurrent")]
         public bool? IsCurrent { get; set; }
         /// <summary> Portal's revision creation date and time. </summary>
+        [WirePath("properties.createdDateTime")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Last updated date and time. </summary>
+        [WirePath("properties.updatedDateTime")]
         public DateTimeOffset? UpdatedOn { get; }
     }
 }

@@ -65,8 +65,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Locations where the SKU is restricted. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> List of availability zones where the SKU is restricted. </summary>
+        [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
     }
 }

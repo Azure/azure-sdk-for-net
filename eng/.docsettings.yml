@@ -20,6 +20,7 @@ omitted_paths:
   - sdk/resourcemanager/*
   - src/*
   - tools/*
+  - sdk/**/tools/*
 
 language: net
 root_check_enabled: True
@@ -88,7 +89,6 @@ known_presence_issues:
 known_content_issues:
   - ['sdk/batch/Microsoft.Azure.Batch.Conventions.Files/README.md','Track 1']
   - ['sdk/batch/Microsoft.Azure.Batch/README.md','Track 1']
-  - ['sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement/README.md','Track 1']
   - ['sdk/cognitiveservices/FormRecognizer/README.md','Track 1']
   - ['sdk/cognitiveservices/Language.TextAnalytics/src/README.md','Track 1']
   - ['sdk/cognitiveservices/Personalizer/src/README.md','Track 1']
@@ -118,6 +118,7 @@ known_content_issues:
   - ['sdk/core/Microsoft.Azure.Core.Spatial/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/core/System.ClientModel/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404', 'Missing section: Azure .+ client library for .NET']
+  - ['sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/eventhub/Azure.Messaging.EventHubs.Shared/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/eventhub/Azure.Messaging.EventHubs.Experimental/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/extensions/Azure.Extensions.AspNetCore.Configuration.Secrets/README.md', 'azure-sdk-tools/issues/404']
@@ -128,6 +129,7 @@ known_content_issues:
   - ['sdk/storage/Azure.Storage.Common/README.md','azure-sdk-tools/issues/404']
   - ['sdk/textanalytics/Azure.AI.TextAnalytics.Legacy.Shared/README.md','https://github.com/Azure/azure-sdk-tools/issues/404']
   - ['sdk/webpubsub/Azure.Messaging.WebPubSub/README.md', 'azure-sdk-tools/issues/404 - requires different name for auth section']
+  - ['sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/README.md', 'Opt out of sections: https://github.com/Azure/azure-sdk-tools/issues/404']
 
   - ['sdk/anomalydetector/Azure.AI.AnomalyDetector/README.md', '#25936: Needs Examples']
   - ['sdk/personalizer/Azure.AI.Personalizer/README.md','#24535: Needs content']

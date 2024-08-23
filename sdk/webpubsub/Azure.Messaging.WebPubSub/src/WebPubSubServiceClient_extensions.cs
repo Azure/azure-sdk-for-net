@@ -18,7 +18,7 @@ namespace Azure.Messaging.WebPubSub
     [CodeGenSuppress("SendToConnection", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("SendToConnectionAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("SendToGroup", typeof(string), typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestContext))]
-    [CodeGenSuppress("SendToGroupAsync", typeof(string),  typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestContext))]
+    [CodeGenSuppress("SendToGroupAsync", typeof(string), typeof(RequestContent), typeof(IEnumerable<string>), typeof(RequestContext))]
     [CodeGenSuppress("SendToUser", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("SendToUserAsync", typeof(string), typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("AddUserToGroup", typeof(string), typeof(string), typeof(RequestContext))]
@@ -27,6 +27,7 @@ namespace Azure.Messaging.WebPubSub
     [CodeGenSuppress("RemoveUserFromGroupAsync", typeof(string), typeof(string), typeof(RequestContext))]
     public partial class WebPubSubServiceClient
     {
+        private readonly WebPubSubServiceClientOptions.ServiceVersion _apiVersionEnum;
         private AzureKeyCredential _credential;
         private TokenCredential _tokenCredential;
 
@@ -160,6 +161,7 @@ namespace Azure.Messaging.WebPubSub
             options ??= new WebPubSubServiceClientOptions();
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _apiVersion = options.Version;
+            _apiVersionEnum = options.VersionEnum;
         }
 
         /// <summary>Broadcast message to all the connected client connections.</summary>
@@ -170,7 +172,8 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return await SendToAllAsync(RequestContent.Create(content), contentType.ToString(), default, context: default).ConfigureAwait(false);
         }
@@ -183,7 +186,8 @@ namespace Azure.Messaging.WebPubSub
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return SendToAll(RequestContent.Create(content), contentType, excluded: default, context: default);
         }
@@ -200,7 +204,8 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return await SendToUserAsync(userId, RequestContent.Create(content), contentType, context: default).ConfigureAwait(false);
         }
@@ -217,7 +222,8 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(userId, nameof(userId));
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return SendToUser(userId, RequestContent.Create(content), contentType, context: default);
         }
@@ -234,7 +240,8 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(connectionId, nameof(connectionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return await SendToConnectionAsync(connectionId, RequestContent.Create(content), contentType, context: default).ConfigureAwait(false);
         }
@@ -251,7 +258,8 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(connectionId, nameof(connectionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return SendToConnection(connectionId, RequestContent.Create(content), contentType, context: default);
         }
@@ -268,9 +276,10 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(group, nameof(group));
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
-            return await SendToGroupAsync(group, RequestContent.Create(content), contentType, excluded : default, context: default).ConfigureAwait(false);
+            return await SendToGroupAsync(group, RequestContent.Create(content), contentType, excluded: default, context: default).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -285,7 +294,8 @@ namespace Azure.Messaging.WebPubSub
             Argument.AssertNotNull(group, nameof(group));
             Argument.AssertNotNull(content, nameof(content));
 
-            if (contentType == default) contentType = ContentType.TextPlain;
+            if (contentType == default)
+                contentType = ContentType.TextPlain;
 
             return SendToGroup(group, RequestContent.Create(content), contentType, excluded: default, context: default);
         }
@@ -548,6 +558,64 @@ namespace Azure.Messaging.WebPubSub
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Add filtered connections to multiple groups.
+        /// </summary>
+        /// <param name="groups"> A list of groups which target connections will be added into. </param>
+        /// <param name="filter"> An OData filter which target connections satisfy. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
+        public virtual Response AddConnectionsToGroups(IEnumerable<string> groups, string filter, RequestContext context = null)
+        {
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(groups, nameof(groups));
+
+            return AddConnectionsToGroups(RequestContent.Create(new { filter = filter, groups = groups }), context);
+        }
+
+        /// <summary>
+        /// Add filtered connections to multiple groups.
+        /// </summary>
+        /// <param name="groups"> A list of groups which target connections will be added into. </param>
+        /// <param name="filter"> An OData filter which target connections satisfy. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
+        public virtual async Task<Response> AddConnectionsToGroupsAsync(IEnumerable<string> groups, string filter, RequestContext context = null)
+        {
+            Argument.AssertNotNull(filter, nameof(filter));
+            Argument.AssertNotNull(groups, nameof(groups));
+
+            return await AddConnectionsToGroupsAsync(RequestContent.Create(new { filter = filter, groups = groups }), context).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Remove filtered connections from multiple groups.
+        /// </summary>
+        /// <param name="groups"> A list of groups which target connections will be added into. </param>
+        /// <param name="filter"> An OData filter which target connections satisfy. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
+        public virtual Response RemoveConnectionsFromGroups(IEnumerable<string> groups, string filter = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(groups, nameof(groups));
+
+            return RemoveConnectionsFromGroups(RequestContent.Create(new { filter = filter, groups = groups }), context);
+        }
+
+        /// <summary>
+        /// Remove filtered connections from multiple groups.
+        /// </summary>
+        /// <param name="groups"> A list of groups which target connections will be added into. </param>
+        /// <param name="filter"> An OData filter which target connections satisfy. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns>A <see cref="Response"/> if successful.</returns>
+        public virtual async Task<Response> RemoveConnectionsFromGroupsAsync(IEnumerable<string> groups, string filter = null, RequestContext context = null)
+        {
+            Argument.AssertNotNull(groups, nameof(groups));
+
+            return await RemoveConnectionsFromGroupsAsync(RequestContent.Create(new { filter = filter, groups = groups }), context).ConfigureAwait(false);
         }
     }
 }

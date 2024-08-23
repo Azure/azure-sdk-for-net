@@ -84,7 +84,7 @@ foreach($mgmtDir in $track2MgmtDirs) {
     if(Test-Path $ciFile) {
         #check for orphaned ci.yml files
         #if this service directory only has mgmt plane ci.yml should not be there
-        $mgmtDirCount = (Get-ChildItem -Path "$serviceDirectory" -Directory | Where-Object { $_.Name -match "(Azure.ResourceManager.|Microsoft.Azure.Management.)" }).Length
+        $mgmtDirCount = (Get-ChildItem -Path "$serviceDirectory" -Directory | Where-Object { $_.Name -match "(Azure.ResourceManager.)" }).Length
         $totalDirCount = (Get-ChildItem -Path "$serviceDirectory" -Directory).Length
 
         if($mgmtDirCount -eq $totalDirCount) {

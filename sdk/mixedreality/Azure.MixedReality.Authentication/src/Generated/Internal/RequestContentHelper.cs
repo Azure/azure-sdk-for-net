@@ -55,6 +55,20 @@ namespace Azure.MixedReality.Common
             return content;
         }
 
+        public static RequestContent FromEnumerable<T>(ReadOnlySpan<T> span)
+        where T : notnull
+        {
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteStartArray();
+            for (int i = 0; i < span.Length; i++)
+            {
+                content.JsonWriter.WriteObjectValue(span[i]);
+            }
+            content.JsonWriter.WriteEndArray();
+
+            return content;
+        }
+
         public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
         where TValue : notnull
         {

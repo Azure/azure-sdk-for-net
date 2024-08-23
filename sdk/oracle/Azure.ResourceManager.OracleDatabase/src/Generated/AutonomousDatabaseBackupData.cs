@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the AutonomousDatabaseBackup data model.
     /// AutonomousDatabaseBackup resource definition
-    /// Serialized Name: AutonomousDatabaseBackup
     /// </summary>
     public partial class AutonomousDatabaseBackupData : ResourceData
     {
@@ -62,10 +61,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: AutonomousDatabaseBackup.properties
-        /// </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AutonomousDatabaseBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AutonomousDatabaseBackupProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,10 +69,7 @@ namespace Azure.ResourceManager.OracleDatabase
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: AutonomousDatabaseBackup.properties
-        /// </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         public AutonomousDatabaseBackupProperties Properties { get; set; }
     }
 }

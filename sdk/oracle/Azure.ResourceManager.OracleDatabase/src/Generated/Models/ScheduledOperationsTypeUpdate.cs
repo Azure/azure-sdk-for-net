@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// The list of scheduled operations.
-    /// Serialized Name: ScheduledOperationsTypeUpdate
-    /// </summary>
+    /// <summary> The list of scheduled operations. </summary>
     public partial class ScheduledOperationsTypeUpdate
     {
         /// <summary>
@@ -54,37 +51,22 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ScheduledOperationsTypeUpdate"/>. </summary>
-        /// <param name="dayOfWeek">
-        /// Day of week
-        /// Serialized Name: ScheduledOperationsTypeUpdate.dayOfWeek
-        /// </param>
-        /// <param name="scheduledStartTime">
-        /// auto start time. value must be of ISO-8601 format HH:mm
-        /// Serialized Name: ScheduledOperationsTypeUpdate.scheduledStartTime
-        /// </param>
-        /// <param name="scheduledStopTime">
-        /// auto stop time. value must be of ISO-8601 format HH:mm
-        /// Serialized Name: ScheduledOperationsTypeUpdate.scheduledStopTime
-        /// </param>
+        /// <param name="dayOfWeek"> Day of week. </param>
+        /// <param name="autoStartOn"> auto start time. value must be of ISO-8601 format HH:mm. </param>
+        /// <param name="autoStopOn"> auto stop time. value must be of ISO-8601 format HH:mm. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledOperationsTypeUpdate(DayOfWeekUpdate dayOfWeek, string scheduledStartTime, string scheduledStopTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledOperationsTypeUpdate(DayOfWeekUpdate dayOfWeek, DateTimeOffset? autoStartOn, DateTimeOffset? autoStopOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DayOfWeek = dayOfWeek;
-            ScheduledStartTime = scheduledStartTime;
-            ScheduledStopTime = scheduledStopTime;
+            AutoStartOn = autoStartOn;
+            AutoStopOn = autoStopOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Day of week
-        /// Serialized Name: ScheduledOperationsTypeUpdate.dayOfWeek
-        /// </summary>
+        /// <summary> Day of week. </summary>
         internal DayOfWeekUpdate DayOfWeek { get; set; }
-        /// <summary>
-        /// Name of the day of the week.
-        /// Serialized Name: DayOfWeekUpdate.name
-        /// </summary>
-        public DayOfWeekName? DayOfWeekName
+        /// <summary> Name of the day of the week. </summary>
+        public OracleDatabaseDayOfWeekName? DayOfWeekName
         {
             get => DayOfWeek is null ? default : DayOfWeek.Name;
             set
@@ -95,15 +77,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
         }
 
-        /// <summary>
-        /// auto start time. value must be of ISO-8601 format HH:mm
-        /// Serialized Name: ScheduledOperationsTypeUpdate.scheduledStartTime
-        /// </summary>
-        public string ScheduledStartTime { get; set; }
-        /// <summary>
-        /// auto stop time. value must be of ISO-8601 format HH:mm
-        /// Serialized Name: ScheduledOperationsTypeUpdate.scheduledStopTime
-        /// </summary>
-        public string ScheduledStopTime { get; set; }
+        /// <summary> auto start time. value must be of ISO-8601 format HH:mm. </summary>
+        public DateTimeOffset? AutoStartOn { get; set; }
+        /// <summary> auto stop time. value must be of ISO-8601 format HH:mm. </summary>
+        public DateTimeOffset? AutoStopOn { get; set; }
     }
 }

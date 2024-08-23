@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.OracleDatabase
     /// <summary>
     /// A class representing the CloudExadataInfrastructure data model.
     /// CloudExadataInfrastructure resource definition
-    /// Serialized Name: CloudExadataInfrastructure
     /// </summary>
     public partial class CloudExadataInfrastructureData : TrackedResourceData
     {
@@ -55,10 +54,7 @@ namespace Azure.ResourceManager.OracleDatabase
 
         /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructureData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="zones">
-        /// CloudExadataInfrastructure zones
-        /// Serialized Name: CloudExadataInfrastructure.zones
-        /// </param>
+        /// <param name="zones"> CloudExadataInfrastructure zones. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="zones"/> is null. </exception>
         public CloudExadataInfrastructureData(AzureLocation location, IEnumerable<string> zones) : base(location)
         {
@@ -74,14 +70,8 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: CloudExadataInfrastructure.properties
-        /// </param>
-        /// <param name="zones">
-        /// CloudExadataInfrastructure zones
-        /// Serialized Name: CloudExadataInfrastructure.zones
-        /// </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="zones"> CloudExadataInfrastructure zones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudExadataInfrastructureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CloudExadataInfrastructureProperties properties, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -95,15 +85,9 @@ namespace Azure.ResourceManager.OracleDatabase
         {
         }
 
-        /// <summary>
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: CloudExadataInfrastructure.properties
-        /// </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         public CloudExadataInfrastructureProperties Properties { get; set; }
-        /// <summary>
-        /// CloudExadataInfrastructure zones
-        /// Serialized Name: CloudExadataInfrastructure.zones
-        /// </summary>
+        /// <summary> CloudExadataInfrastructure zones. </summary>
         public IList<string> Zones { get; }
     }
 }

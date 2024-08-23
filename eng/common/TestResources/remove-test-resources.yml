@@ -29,7 +29,9 @@ steps:
       displayName: Remove test resources
       condition: and(eq(variables['CI_HAS_DEPLOYED_RESOURCES'], 'true'), ne(variables['Skip.RemoveTestResources'], 'true'))
       continueOnError: true
-      env: ${{ parameters.EnvVars }}
+      env:
+        PoolSubnet: $(PoolSubnet)
+        ${{ insert }}: ${{ parameters.EnvVars }}
       inputs:
         azureSubscription: ${{ parameters.ServiceConnection }}
         azurePowerShellVersion: LatestVersion
@@ -46,6 +48,7 @@ steps:
             @subscriptionConfiguration `
             -ResourceType '${{ parameters.ResourceType }}' `
             -ServiceDirectory "${{ parameters.ServiceDirectory }}" `
+            -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
             -CI `
             -Force `
             -Verbose
@@ -63,10 +66,13 @@ steps:
           -ResourceType '${{ parameters.ResourceType }}' `
           -ServiceDirectory "${{ parameters.ServiceDirectory }}" `
           -ServicePrincipalAuth `
+          -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
           -CI `
           -Force `
           -Verbose
       displayName: Remove test resources
       condition: and(eq(variables['CI_HAS_DEPLOYED_RESOURCES'], 'true'), ne(variables['Skip.RemoveTestResources'], 'true'))
       continueOnError: true
-      env: ${{ parameters.EnvVars }}
+      env:
+        PoolSubnet: $(PoolSubnet)
+        ${{ insert }}: ${{ parameters.EnvVars }}

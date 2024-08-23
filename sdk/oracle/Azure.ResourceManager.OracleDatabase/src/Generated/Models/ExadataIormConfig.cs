@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// ExadataIormConfig for cloud vm cluster
-    /// Serialized Name: ExadataIormConfig
-    /// </summary>
+    /// <summary> ExadataIormConfig for cloud vm cluster. </summary>
     public partial class ExadataIormConfig
     {
         /// <summary>
@@ -51,55 +48,31 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="ExadataIormConfig"/>. </summary>
         internal ExadataIormConfig()
         {
-            DbPlans = new ChangeTrackingList<DbIormConfig>();
+            DBPlans = new ChangeTrackingList<DBIormConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExadataIormConfig"/>. </summary>
-        /// <param name="dbPlans">
-        /// An array of IORM settings for all the database in the Exadata DB system.
-        /// Serialized Name: ExadataIormConfig.dbPlans
-        /// </param>
-        /// <param name="lifecycleDetails">
-        /// Additional information about the current lifecycleState.
-        /// Serialized Name: ExadataIormConfig.lifecycleDetails
-        /// </param>
-        /// <param name="lifecycleState">
-        /// The current state of IORM configuration for the Exadata DB system.
-        /// Serialized Name: ExadataIormConfig.lifecycleState
-        /// </param>
-        /// <param name="objective">
-        /// The current value for the IORM objective. The default is AUTO.
-        /// Serialized Name: ExadataIormConfig.objective
-        /// </param>
+        /// <param name="dbPlans"> An array of IORM settings for all the database in the Exadata DB system. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycleState. </param>
+        /// <param name="lifecycleState"> The current state of IORM configuration for the Exadata DB system. </param>
+        /// <param name="objective"> The current value for the IORM objective. The default is AUTO. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExadataIormConfig(IReadOnlyList<DbIormConfig> dbPlans, string lifecycleDetails, IormLifecycleState? lifecycleState, Objective? objective, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExadataIormConfig(IReadOnlyList<DBIormConfig> dbPlans, string lifecycleDetails, IormLifecycleState? lifecycleState, IormObjective? objective, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DbPlans = dbPlans;
+            DBPlans = dbPlans;
             LifecycleDetails = lifecycleDetails;
             LifecycleState = lifecycleState;
             Objective = objective;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// An array of IORM settings for all the database in the Exadata DB system.
-        /// Serialized Name: ExadataIormConfig.dbPlans
-        /// </summary>
-        public IReadOnlyList<DbIormConfig> DbPlans { get; }
-        /// <summary>
-        /// Additional information about the current lifecycleState.
-        /// Serialized Name: ExadataIormConfig.lifecycleDetails
-        /// </summary>
+        /// <summary> An array of IORM settings for all the database in the Exadata DB system. </summary>
+        public IReadOnlyList<DBIormConfig> DBPlans { get; }
+        /// <summary> Additional information about the current lifecycleState. </summary>
         public string LifecycleDetails { get; }
-        /// <summary>
-        /// The current state of IORM configuration for the Exadata DB system.
-        /// Serialized Name: ExadataIormConfig.lifecycleState
-        /// </summary>
+        /// <summary> The current state of IORM configuration for the Exadata DB system. </summary>
         public IormLifecycleState? LifecycleState { get; }
-        /// <summary>
-        /// The current value for the IORM objective. The default is AUTO.
-        /// Serialized Name: ExadataIormConfig.objective
-        /// </summary>
-        public Objective? Objective { get; }
+        /// <summary> The current value for the IORM objective. The default is AUTO. </summary>
+        public IormObjective? Objective { get; }
     }
 }

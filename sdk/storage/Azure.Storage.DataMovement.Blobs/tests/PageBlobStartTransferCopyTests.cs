@@ -19,6 +19,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Shared;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -131,7 +132,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             bool createResource = false,
             string objectName = null,
             BlobClientOptions options = null,
-            Stream contents = null)
+            Stream contents = default,
+            TransferPropertiesTestType propertiesTestType = default,
+            CancellationToken cancellationToken = default)
             => GetPageBlobClientAsync(
                 container,
                 objectLength,
@@ -152,7 +155,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             bool createResource = false,
             string objectName = null,
             BlobClientOptions options = null,
-            Stream contents = null)
+            Stream contents = null,
+            CancellationToken cancellationToken = default)
             => GetPageBlobClientAsync(
                 container,
                 objectLength,
@@ -210,7 +214,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             PageBlobClient sourceClient,
-            PageBlobClient destinationClient)
+            PageBlobClient destinationClient,
+            CancellationToken cancellationToken)
         {
             // Verify completion
             Assert.NotNull(transfer);
@@ -239,7 +244,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
 
                 Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
-                Assert.AreEqual(_defaultAccessTier.ToString(), destinationProperties.AccessTier);
                 Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
                 Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
                 Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);

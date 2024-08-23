@@ -92,7 +92,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             try
             {
-                TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
+                TokenCredential tokenCredential = TestEnvironment.Credential;
                 Uri uri = new Uri($"{TestConfigHierarchicalNamespace.BlobServiceEndpoint}/{fileSystemName}").ToHttps();
                 DataLakeFileSystemClient fileSystemClient = InstrumentClient(new DataLakeFileSystemClient(uri, tokenCredential, GetOptions()));
 
@@ -171,7 +171,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         public void Ctor_TokenCredential_Http()
         {
             // Arrange
-            TokenCredential tokenCredential = Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace);
+            TokenCredential tokenCredential = TestEnvironment.Credential;
             Uri uri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttp();
 
             // Act
@@ -523,6 +523,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Public access disabled on live test accounts.")]
         public async Task CreateAsync_PublicAccess()
         {
             // Arrange
@@ -1110,13 +1111,13 @@ namespace Azure.Storage.Files.DataLake.Tests
         [RecordedTest]
         public async Task GetPropertiesAsync()
         {
-            await using DisposingFileSystem test = await GetNewFileSystem(publicAccessType: PublicAccessType.FileSystem);
+            await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Act
             Response<FileSystemProperties> response = await test.FileSystem.GetPropertiesAsync();
 
             // Assert
-            Assert.AreEqual(PublicAccessType.FileSystem, response.Value.PublicAccess);
+            Assert.AreEqual(PublicAccessType.None, response.Value.PublicAccess);
         }
 
         [RecordedTest]
@@ -2361,19 +2362,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Arrange
-            PublicAccessType publicAccessType = PublicAccessType.FileSystem;
             DataLakeSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
 
             // Act
             await test.FileSystem.SetAccessPolicyAsync(
-                accessType: publicAccessType,
                 permissions: signedIdentifiers
             );
 
             // Assert
-            Response<FileSystemProperties> propertiesResponse = await test.FileSystem.GetPropertiesAsync();
-            Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
-
             Response<FileSystemAccessPolicy> response = await test.FileSystem.GetAccessPolicyAsync();
             Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
 
@@ -2417,6 +2413,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        [PlaybackOnly("Public access disabled on live test accounts.")]
         public async Task SetAccessPolicy_PublicAccessPolicy()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -2585,7 +2582,6 @@ namespace Azure.Storage.Files.DataLake.Tests
         public async Task SetAccessPolicyAsync_Error()
         {
             // Arrange
-            PublicAccessType publicAccessType = PublicAccessType.FileSystem;
             DataLakeSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
             DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
             DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
@@ -2593,7 +2589,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fileSystem.SetAccessPolicyAsync(
-                    accessType: publicAccessType,
                     permissions: signedIdentifiers),
                 e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
         }
@@ -2604,7 +2599,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             foreach (AccessConditionParameters parameters in NoLease_Conditions_Data)
             {
                 // Arrange
-                PublicAccessType publicAccessType = PublicAccessType.FileSystem;
                 DataLakeSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
                 DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
                 DataLakeFileSystemClient fileSystem = InstrumentClient(service.GetFileSystemClient(GetNewFileSystemName()));
@@ -2617,7 +2611,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
                 // Act
                 Response<FileSystemInfo> response = await fileSystem.SetAccessPolicyAsync(
-                    accessType: publicAccessType,
                     permissions: signedIdentifiers,
                     conditions: conditions);
 
@@ -2659,7 +2652,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             await using DisposingFileSystem test = await GetNewFileSystem();
 
             // Arrange
-            PublicAccessType publicAccessType = PublicAccessType.FileSystem;
             DataLakeSignedIdentifier[] signedIdentifiers = new[]
             {
                 new DataLakeSignedIdentifier
@@ -2676,14 +2668,10 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Act
             await test.FileSystem.SetAccessPolicyAsync(
-                accessType: publicAccessType,
                 permissions: signedIdentifiers
             );
 
             // Assert
-            Response<FileSystemProperties> propertiesResponse = await test.FileSystem.GetPropertiesAsync();
-            Assert.AreEqual(publicAccessType, propertiesResponse.Value.PublicAccess);
-
             Response<FileSystemAccessPolicy> response = await test.FileSystem.GetAccessPolicyAsync();
             Assert.AreEqual(1, response.Value.SignedIdentifiers.Count());
 
@@ -3205,8 +3193,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 constants.Sas.SharedKeyCredential,
                 GetOptions()));
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = fileSystemClient.GenerateSasUri(permissions, expiresOn);
+            Uri sasUri = fileSystemClient.GenerateSasUri(permissions, expiresOn, out stringToSign);
 
             // Assert
             DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
@@ -3219,6 +3209,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 Sas = sasBuilder2.ToSasQueryParameters(constants.Sas.SharedKeyCredential)
             };
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -3245,8 +3236,10 @@ namespace Azure.Storage.Files.DataLake.Tests
                 FileSystemName = fileSystemClient.Name
             };
 
+            string stringToSign = null;
+
             // Act
-            Uri sasUri = fileSystemClient.GenerateSasUri(sasBuilder);
+            Uri sasUri = fileSystemClient.GenerateSasUri(sasBuilder, out stringToSign);
 
             // Assert
             DataLakeSasBuilder sasBuilder2 = new DataLakeSasBuilder(permissions, expiresOn)
@@ -3260,6 +3253,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             };
 
             Assert.AreEqual(expectedUri.ToUri(), sasUri);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -3344,7 +3338,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), Tenants.GetNewHnsSharedKeyCredentials(), new DataLakeClientOptions()).Object;
             mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), new AzureSasCredential("foo"), new DataLakeClientOptions()).Object;
-            mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), Tenants.GetOAuthCredential(TestConfigHierarchicalNamespace), new DataLakeClientOptions()).Object;
+            mock = new Mock<DataLakeFileSystemClient>(new Uri("https://test/test"), TestEnvironment.Credential, new DataLakeClientOptions()).Object;
         }
 
         private IEnumerable<AccessConditionParameters> Conditions_Data

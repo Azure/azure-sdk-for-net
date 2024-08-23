@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.\
 // Licensed under the MIT License.
 
 using System;
@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         private const string defaultSubscriptionId = "65a85478-2333-4bbd-981b-1a818c944faf";
 
         //Change this to your own MG
+
         private const string managementGroupId = "testMgIdRoot";
 
         public GroupQuotaTests() : base(true)
@@ -93,7 +94,6 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             // get the collection of this GroupQuotasEntityResource
             var collection = managementGroupResource.GetGroupQuotaEntities();
-
             // Get all the Group Quota Entities
             await foreach (GroupQuotaEntityResource item in collection.GetAllAsync())
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
                 {
                     RequestedResource = new GroupQuotaRequestBase()
                     {
-                        Limit = 10000,
+                        Limit = 225,
                         Region = "westus",
                         Comments = "ticketComments"
                     }
@@ -199,6 +199,8 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             {
                 Console.WriteLine($"Request has not reached a terminal state. Please continue to poll using this uri :{locationUri}");
             }
+            
+            Assert.IsNotNull(response);
         }
 
         [TestCase]
@@ -247,9 +249,6 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
         [TestCase]
         public async Task SetSubscriptionAllocationRequest()
         {
-            ArmClientOptions options = new ArmClientOptions();
-            options.Environment = new ArmEnvironment(new Uri("https://eastus2euap.management.azure.com"), "https://management.azure.com/");
-            var Client = new ArmClient(TestEnvironment.Credential, defaultSubscriptionId, options);
             // invoke the operation
             string groupQuotaName = "sdk-test-group-quota";
             string resourceProviderName = "Microsoft.Compute";
@@ -277,6 +276,7 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
             ManagementGroupResource managementGroupResource = Client.GetManagementGroupResource(managementGroupResourceId);
 
             var allocationResponse = await managementGroupResource.CreateOrUpdateGroupQuotaSubscriptionAllocationRequestAsync(WaitUntil.Started, defaultSubscriptionId, groupQuotaName, resourceProviderName, resourceName, data);
+
 
             // Get the QuotaLimit Response
             var check = allocationResponse.GetRawResponse();
@@ -347,6 +347,8 @@ namespace Azure.ResourceManager.Quota.Tests.Tests
 
             // Delete the Subscription as part of test cleanup
             await groupQuotaSubscriptionId.DeleteAsync(WaitUntil.Completed);
+            Assert.IsNotNull(allocationResponse);
+
         }
 
         [TestCase]

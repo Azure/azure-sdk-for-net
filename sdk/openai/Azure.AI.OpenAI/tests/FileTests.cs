@@ -31,4 +31,12 @@ public class FileTests : AoaiTestBase<FileClient>
         bool deleted = await client.DeleteFileAsync(file);
         Assert.IsTrue(deleted);
     }
+
+    [RecordedTest]
+    public async Task CanListFiles()
+    {
+        FileClient client = GetTestClient();
+        OpenAIFileInfoCollection files = await client.GetFilesAsync();
+        Assert.That(files, Has.Count.GreaterThan(0));
+    }
 }

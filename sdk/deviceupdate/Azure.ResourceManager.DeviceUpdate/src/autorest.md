@@ -90,6 +90,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
 
 directive:
   - remove-operation: Accounts_Head  # Not supported yet

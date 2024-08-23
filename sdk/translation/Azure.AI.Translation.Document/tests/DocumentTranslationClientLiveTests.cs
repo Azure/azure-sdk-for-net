@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -19,6 +20,52 @@ namespace Azure.AI.Translation.Document.Tests
             : base(isAsync)
             //: base(isAsync, RecordedTestMode.Record)
         {
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task GetTranslationStatusesTestWithSourceInputOptions(bool usetokenCredential)
+        {
+            Uri sourceUri = await CreateSourceContainerAsync(oneTestDocuments);
+            Uri targetUri = await CreateTargetContainerAsync();
+
+            DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
+
+            TranslationSource translationSource = new TranslationSource(sourceUri, "en");
+            TranslationTarget translationTarget = new TranslationTarget(targetUri, "fr");
+            List<TranslationTarget> targets = new List<TranslationTarget> { translationTarget };
+            var input = new DocumentTranslationInput(translationSource, targets);
+            var translationOp = await client.StartTranslationAsync(input);
+            await translationOp.WaitForCompletionAsync();
+
+            // list translations with ID filter
+            var options = new GetTranslationStatusesOptions
+            {
+                Ids = { translationOp.Id }
+            };
+            var translations = await client.GetTranslationStatusesAsync(options: options).ToEnumerableAsync();
+
+            // assert
+            Assert.GreaterOrEqual(translations.Count, 1);
+            TranslationStatusResult oneTranslation = translations[0];
+            Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.CreatedOn);
+            Assert.AreNotEqual(new DateTimeOffset(), oneTranslation.LastModified);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsCanceled, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsFailed, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsInProgress, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsNotStarted, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsSucceeded, 0);
+            Assert.GreaterOrEqual(oneTranslation.DocumentsTotal, 0);
+
+            if (oneTranslation.Status == DocumentTranslationStatus.Succeeded)
+            {
+                Assert.Greater(oneTranslation.TotalCharactersCharged, 0);
+            }
+            else
+            {
+                Assert.AreEqual(0, oneTranslation.TotalCharactersCharged);
+            }
         }
 
         [RecordedTest]

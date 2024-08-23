@@ -42,6 +42,21 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("canFailover"u8);
                 writer.WriteBooleanValue(CanFailover.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(CanPlannedFailover))
+            {
+                writer.WritePropertyName("canPlannedFailover"u8);
+                writer.WriteBooleanValue(CanPlannedFailover.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PostFailoverRedundancy))
+            {
+                writer.WritePropertyName("postFailoverRedundancy"u8);
+                writer.WriteStringValue(PostFailoverRedundancy.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PostPlannedFailoverRedundancy))
+            {
+                writer.WritePropertyName("postPlannedFailoverRedundancy"u8);
+                writer.WriteStringValue(PostPlannedFailoverRedundancy.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,6 +98,9 @@ namespace Azure.ResourceManager.Storage.Models
             GeoReplicationStatus? status = default;
             DateTimeOffset? lastSyncTime = default;
             bool? canFailover = default;
+            bool? canPlannedFailover = default;
+            PostFailoverRedundancy? postFailoverRedundancy = default;
+            PostPlannedFailoverRedundancy? postPlannedFailoverRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,13 +132,47 @@ namespace Azure.ResourceManager.Storage.Models
                     canFailover = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("canPlannedFailover"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    canPlannedFailover = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("postFailoverRedundancy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    postFailoverRedundancy = new PostFailoverRedundancy(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("postPlannedFailoverRedundancy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    postPlannedFailoverRedundancy = new PostPlannedFailoverRedundancy(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GeoReplicationStatistics(status, lastSyncTime, canFailover, serializedAdditionalRawData);
+            return new GeoReplicationStatistics(
+                status,
+                lastSyncTime,
+                canFailover,
+                canPlannedFailover,
+                postFailoverRedundancy,
+                postPlannedFailoverRedundancy,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -178,6 +230,52 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  canFailover: ");
                     var boolValue = CanFailover.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanPlannedFailover), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  canPlannedFailover: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CanPlannedFailover))
+                {
+                    builder.Append("  canPlannedFailover: ");
+                    var boolValue = CanPlannedFailover.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PostFailoverRedundancy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  postFailoverRedundancy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PostFailoverRedundancy))
+                {
+                    builder.Append("  postFailoverRedundancy: ");
+                    builder.AppendLine($"'{PostFailoverRedundancy.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PostPlannedFailoverRedundancy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  postPlannedFailoverRedundancy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PostPlannedFailoverRedundancy))
+                {
+                    builder.Append("  postPlannedFailoverRedundancy: ");
+                    builder.AppendLine($"'{PostPlannedFailoverRedundancy.Value.ToString()}'");
                 }
             }
 

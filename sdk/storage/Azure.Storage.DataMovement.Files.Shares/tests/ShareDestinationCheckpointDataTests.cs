@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+extern alias BaseShares;
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Azure.Storage.Files.Shares.Models;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -29,6 +30,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         };
         // just a few different flags, no meaning
         private readonly NtfsFileAttributes? DefaultFileAttributes = NtfsFileAttributes.Temporary | NtfsFileAttributes.Archive;
+        private const string DefaultPermissions = "rwxrwxrwx";
         private const string DefaultFilePermissionKey = "MyPermissionKey";
         private readonly DateTimeOffset? DefaultFileCreatedOn = new DateTimeOffset(2019, 2, 19, 4, 3, 5, TimeSpan.FromMinutes(5));
         private readonly DateTimeOffset? DefaultFileLastWrittenOn = new DateTimeOffset(2024, 11, 24, 11, 23, 45, TimeSpan.FromHours(10));
@@ -57,7 +59,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new(false),
                 new(false),
                 new(false),
-                default,
+                false,
                 new(false),
                 new(false),
                 new(false),
@@ -72,7 +74,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new(true),
                 new(true),
                 new(true),
-                default,
+                true,
                 new(true),
                 new(true),
                 new(true),
@@ -87,7 +89,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 contentDisposition: new(DefaultContentDisposition),
                 cacheControl: new(DefaultCacheControl),
                 fileAttributes: new(DefaultFileAttributes.Value),
-                filePermissionKey: DefaultFilePermissionKey,
+                preserveFilePermission: false,
                 fileCreatedOn: new(DefaultFileCreatedOn.Value),
                 fileLastWrittenOn: new(DefaultFileLastWrittenOn.Value),
                 fileChangedOn: new(DefaultFileChangedOn.Value),
@@ -104,8 +106,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             {
                 Assert.That(left.FileAttributes.Value, Is.EqualTo(right.FileAttributes.Value));
             }
-            Assert.That(left.FilePermissionKey, Is.EqualTo(right.FilePermissionKey));
 
+            Assert.That(left.PreserveFilePermission, Is.EqualTo(right.PreserveFilePermission));
             Assert.That(left.PreserveFileCreatedOn, Is.EqualTo(right.PreserveFileCreatedOn));
             Assert.That(left.FileCreatedOn.Preserve, Is.EqualTo(right.FileCreatedOn.Preserve));
             if (!left.PreserveFileCreatedOn && left.FileCreatedOn != default)
@@ -196,6 +198,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
 
             return stream.ToArray();
         }
@@ -207,6 +211,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointData.VariableLengthStartIndex;
             writer.Write(DataMovementShareConstants.DestinationCheckpointData.SchemaVersion);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.Write(false);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
@@ -228,7 +235,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             using MemoryStream stream = new();
             using BinaryWriter writer = new(stream);
 
-            byte[] filePermissionKey = Encoding.UTF8.GetBytes(DefaultFilePermissionKey);
+            bool preserveFilePermission = false;
             byte[] fileCreatedOn = Encoding.UTF8.GetBytes(DefaultFileCreatedOn.Value.ToString("o"));
             byte[] fileLastWrittenOn = Encoding.UTF8.GetBytes(DefaultFileLastWrittenOn.Value.ToString("o"));
             byte[] fileChangedOn = Encoding.UTF8.GetBytes(DefaultFileChangedOn.Value.ToString("o"));
@@ -243,7 +250,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointData.VariableLengthStartIndex;
             writer.Write(DataMovementShareConstants.DestinationCheckpointData.SchemaVersion);
             writer.WritePreservablePropertyOffset(false, DataMovementConstants.IntSizeInBytes, ref currentVariableLengthIndex);
-            writer.WriteVariableLengthFieldInfo(filePermissionKey.Length, ref currentVariableLengthIndex);
+            writer.Write(preserveFilePermission);
             writer.WritePreservablePropertyOffset(false, fileCreatedOn.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(false, fileLastWrittenOn.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(false, fileChangedOn.Length, ref currentVariableLengthIndex);
@@ -255,7 +262,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             writer.WritePreservablePropertyOffset(false, fileMetadata.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(false, directoryMetadata.Length, ref currentVariableLengthIndex);
             writer.Write((int)DefaultFileAttributes);
-            writer.Write(filePermissionKey);
             writer.Write(fileCreatedOn);
             writer.Write(fileLastWrittenOn);
             writer.Write(fileChangedOn);
@@ -278,7 +284,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.AreEqual(DataMovementShareConstants.DestinationCheckpointData.SchemaVersion, data.Version);
             Assert.IsTrue(data.PreserveFileAttributes);
             Assert.IsNull(data.FileAttributes);
-            Assert.IsNull(data.FilePermissionKey);
+            Assert.IsFalse(data.PreserveFilePermission);
             Assert.IsTrue(data.PreserveFileCreatedOn);
             Assert.IsNull(data.FileCreatedOn);
             Assert.IsTrue(data.PreserveFileLastWrittenOn);
@@ -309,7 +315,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.That(data.Version, Is.EqualTo(DataMovementShareConstants.DestinationCheckpointData.SchemaVersion));
             Assert.IsFalse(data.PreserveFileAttributes);
             Assert.That(data.FileAttributes.Value, Is.EqualTo(DefaultFileAttributes));
-            Assert.That(data.FilePermissionKey, Is.EqualTo(DefaultFilePermissionKey));
+            Assert.IsFalse(data.PreserveFilePermission);
             Assert.IsFalse(data.PreserveFileCreatedOn);
             Assert.That(data.FileCreatedOn.Value, Is.EqualTo(DefaultFileCreatedOn));
             Assert.IsFalse(data.PreserveFileLastWrittenOn);
@@ -341,7 +347,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.IsTrue(data.PreserveFileAttributes);
             Assert.IsTrue(data.FileAttributes.Preserve);
             Assert.IsNull(data.FileAttributes.Value);
-            Assert.IsNull(data.FilePermissionKey);
+            Assert.IsTrue(data.PreserveFilePermission);
             Assert.IsTrue(data.PreserveFileCreatedOn);
             Assert.IsTrue(data.FileCreatedOn.Preserve);
             Assert.IsNull(data.FileCreatedOn.Value);

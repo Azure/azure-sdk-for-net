@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IReadOnlyList<DnsPrivateZoneData> value = default;
+            IReadOnlyList<OracleDnsPrivateZoneData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DnsPrivateZoneData> array = new List<DnsPrivateZoneData>();
+                    List<OracleDnsPrivateZoneData> array = new List<OracleDnsPrivateZoneData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsPrivateZoneData.DeserializeDnsPrivateZoneData(item, options));
+                        array.Add(OracleDnsPrivateZoneData.DeserializeOracleDnsPrivateZoneData(item, options));
                     }
                     value = array;
                     continue;

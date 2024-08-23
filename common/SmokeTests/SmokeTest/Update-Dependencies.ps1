@@ -14,7 +14,8 @@ param(
 
 $packageExcludeSet = @(
     "Microsoft.Azure.WebPubSub.AspNetCore",
-    "Microsoft.WCF.Azure.StorageQueues"
+    "Microsoft.WCF.Azure.StorageQueues",
+    "OpenAI"
 )
 
 function Log-Warning($message) {

@@ -25,7 +25,7 @@ pattern of `Azure.Provisioning.{ServiceName}`.
 
 ## Key concepts
 
-This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure diretly without needing to write or maintain bicep or arm templates.
+This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
 ## Examples
 

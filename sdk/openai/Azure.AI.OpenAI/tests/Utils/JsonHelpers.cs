@@ -19,6 +19,33 @@ internal static class JsonHelpers
     public static JsonNamingPolicy SnakeCaseLower { get; } =
         new SnakeCaseNamingPolicy();
 
+    public static JsonSerializerOptions OpenAIJsonOptions { get; } = new()
+    {
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = SnakeCaseLower,
+#if NETFRAMEWORK
+        IgnoreNullValues = true,
+#else
+        DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+#endif
+        Converters =
+        {
+            new ModelReaderWriterConverter(),
+            new UnixDateTimeConverter()
+        }
+    };
+
+    public static JsonSerializerOptions AzureJsonOptions { get; } = new()
+    {
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+#if NETFRAMEWORK
+        IgnoreNullValues = true,
+#else
+        DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+#endif
+    };
+
     // TODO FIXME once we move to newer versions of System.Text.Json we can directly call
     //            JsonSerializer.Serialize(...) with a stream
     public static void Serialize<T>(Stream stream, T value, JsonSerializerOptions? options = null)
@@ -64,6 +91,32 @@ internal static class JsonHelpers
         return JsonSerializer.Deserialize<T>(span, options);
     }
 #endif
+
+    public static T? Deserialize<T>(Stream stream, JsonSerializerOptions? options = null)
+    {
+#if NETFRAMEWORK
+        // For now let's keep it simple and load entire JSON bytes into memory
+        using MemoryStream buffer = new();
+        stream.CopyTo(buffer);
+
+        ReadOnlySpan<byte> jsonBytes = buffer.GetBuffer().AsSpan(0, (int)buffer.Length);
+        return JsonSerializer.Deserialize<T>(jsonBytes, options);
+#else
+        return JsonSerializer.Deserialize<T>(stream, options);
+#endif
+    }
+
+    public static JsonElement SerializeToElement<T>(T value, JsonSerializerOptions? options = null)
+    {
+#if NET6_0_OR_GREATER
+        return JsonSerializer.SerializeToElement(value, options);
+#else
+        using MemoryStream stream = new();
+        Serialize(stream, value, options);
+        stream.Seek(0, SeekOrigin.Begin);
+        return JsonDocument.Parse(stream).RootElement;
+#endif
+    }
 
     // Ported over from the source code for newer versions of System.Text.Json
     internal class SnakeCaseNamingPolicy : JsonNamingPolicy

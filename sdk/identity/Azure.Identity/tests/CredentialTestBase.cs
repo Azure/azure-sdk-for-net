@@ -110,6 +110,55 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [TestCase(EventLevel.Informational)]
+        [TestCase(EventLevel.Verbose)]
+        public async Task ListenerEventLevelControlsMsalLogLevel(EventLevel eventLevel)
+        {
+            using var _listener = new TestEventListener();
+            _listener.EnableEvents(AzureIdentityEventSource.Singleton, eventLevel);
+
+            var token = Guid.NewGuid().ToString();
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => token
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var mockTransport = new MockTransport(factory);
+
+            var config = new CommonCredentialTestConfig()
+            {
+                TransportConfig = transportConfig,
+                Transport = mockTransport,
+                TenantId = TenantId,
+                IsUnsafeSupportLoggingEnabled = true
+            };
+            var credential = GetTokenCredential(config);
+            if (!CredentialTestHelpers.IsMsalCredential(credential))
+            {
+                Assert.Ignore($"{credential.GetType().Name} is not an MSAL credential.");
+            }
+            transportConfig.IsPubClient = CredentialTestHelpers.IsCredentialTypePubClient(credential);
+            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, null), default);
+
+            Assert.AreEqual(token, actualToken.Token);
+
+            Assert.True(_listener.EventData.Any(d => d.Level == EventLevel.Informational && d.EventName == "LogMsalInformational"));
+
+            switch (eventLevel)
+            {
+                case EventLevel.Informational:
+                    Assert.False(_listener.EventData.Any(d => d.Level == EventLevel.Verbose && d.EventName == "LogMsalVerbose"));
+                    break;
+                case EventLevel.Verbose:
+                    Assert.True(_listener.EventData.Any(d => d.Level == EventLevel.Verbose && d.EventName == "LogMsalVerbose"));
+                    break;
+                default:
+                    Assert.Fail("Unexpected event level");
+                    break;
+            }
+        }
+
+        [Test]
         [NonParallelizable]
         public async Task DisableInstanceMetadataDiscovery([Values(true, false)] bool disable)
         {

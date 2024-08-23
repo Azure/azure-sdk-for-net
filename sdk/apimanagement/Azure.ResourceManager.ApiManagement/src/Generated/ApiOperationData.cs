@@ -86,20 +86,28 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Collection of URL template parameters. </summary>
+        [WirePath("properties.templateParameters")]
         public IList<ParameterContract> TemplateParameters { get; }
         /// <summary> Description of the operation. May include HTML formatting tags. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> An entity containing request details. </summary>
+        [WirePath("properties.request")]
         public RequestContract Request { get; set; }
         /// <summary> Array of Operation responses. </summary>
+        [WirePath("properties.responses")]
         public IList<ResponseContract> Responses { get; }
         /// <summary> Operation Policies. </summary>
+        [WirePath("properties.policies")]
         public string Policies { get; set; }
         /// <summary> Operation Name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </summary>
+        [WirePath("properties.method")]
         public string Method { get; set; }
         /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
+        [WirePath("properties.urlTemplate")]
         public string UriTemplate { get; set; }
     }
 }

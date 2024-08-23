@@ -130,7 +130,8 @@ namespace Azure.Identity
                 Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true),
                 Options = options,
                 InitialImdsConnectionTimeout = TimeSpan.FromSeconds(1),
-                ExcludeTokenExchangeManagedIdentitySource = options.ExcludeWorkloadIdentityCredential
+                ExcludeTokenExchangeManagedIdentitySource = options.ExcludeWorkloadIdentityCredential,
+                IsForceRefreshEnabled = options.IsForceRefreshEnabled,
             };
 
             return new ManagedIdentityCredential(new ManagedIdentityClient(miOptions));

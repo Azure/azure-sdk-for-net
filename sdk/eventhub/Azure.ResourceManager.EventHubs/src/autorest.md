@@ -63,6 +63,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
 
 prepend-rp-prefix:
   - TlsVersion

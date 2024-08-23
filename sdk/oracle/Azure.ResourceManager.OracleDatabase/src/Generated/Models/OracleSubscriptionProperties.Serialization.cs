@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             OracleSubscriptionProvisioningState? provisioningState = default;
             string saasSubscriptionId = default;
-            string cloudAccountId = default;
+            ResourceIdentifier cloudAccountId = default;
             CloudAccountProvisioningState? cloudAccountState = default;
             string termUnit = default;
             string productCode = default;
-            Intent? intent = default;
+            OracleSubscriptionUpdateIntent? intent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("cloudAccountId"u8))
                 {
-                    cloudAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cloudAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cloudAccountState"u8))
@@ -154,7 +158,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    intent = new Intent(property.Value.GetString());
+                    intent = new OracleSubscriptionUpdateIntent(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

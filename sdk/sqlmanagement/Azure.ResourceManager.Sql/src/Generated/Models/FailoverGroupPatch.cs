@@ -60,14 +60,16 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
         /// <param name="failoverDatabases"> List of databases in the failover group. </param>
         /// <param name="partnerServers"> List of partner server information for the failover group. </param>
+        /// <param name="secondaryType"> Databases secondary type on partner server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FailoverGroupPatch(IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, IList<ResourceIdentifier> failoverDatabases, IList<PartnerServerInfo> partnerServers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FailoverGroupPatch(IDictionary<string, string> tags, FailoverGroupReadWriteEndpoint readWriteEndpoint, FailoverGroupReadOnlyEndpoint readOnlyEndpoint, IList<ResourceIdentifier> failoverDatabases, IList<PartnerServerInfo> partnerServers, FailoverGroupDatabasesSecondaryType? secondaryType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             ReadWriteEndpoint = readWriteEndpoint;
             ReadOnlyEndpoint = readOnlyEndpoint;
             FailoverDatabases = failoverDatabases;
             PartnerServers = partnerServers;
+            SecondaryType = secondaryType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -86,5 +88,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> List of partner server information for the failover group. </summary>
         [WirePath("properties.partnerServers")]
         public IList<PartnerServerInfo> PartnerServers { get; }
+        /// <summary> Databases secondary type on partner server. </summary>
+        [WirePath("properties.secondaryType")]
+        public FailoverGroupDatabasesSecondaryType? SecondaryType { get; set; }
     }
 }

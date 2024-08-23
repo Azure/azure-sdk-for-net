@@ -743,6 +743,18 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="InboundSecurityRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InboundSecurityRuleResource.CreateResourceIdentifier" /> to create an <see cref="InboundSecurityRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="InboundSecurityRuleResource"/> object. </returns>
+        public virtual InboundSecurityRuleResource GetInboundSecurityRuleResource(ResourceIdentifier id)
+        {
+            InboundSecurityRuleResource.ValidateResourceId(id);
+            return new InboundSecurityRuleResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NetworkWatcherResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetworkWatcherResource.CreateResourceIdentifier" /> to create a <see cref="NetworkWatcherResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

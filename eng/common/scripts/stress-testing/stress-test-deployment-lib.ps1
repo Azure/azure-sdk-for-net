@@ -122,6 +122,12 @@ function DeployStressTests(
         }
         $clusterGroup = 'rg-stress-cluster-prod'
         $subscription = 'Azure SDK Test Resources'
+    } elseif ($environment -eq 'storage') {
+        if ($clusterGroup -or $subscription) {
+            Write-Warning "Overriding cluster group and subscription with defaults for 'storage' environment."
+        }
+        $clusterGroup = 'rg-stress-cluster-storage'
+        $subscription = 'XClient'
     } elseif (!$clusterGroup -or !$subscription) {
         throw "clusterGroup and subscription parameters must be specified when deploying to an environment that is not pg or prod."
     }
@@ -285,7 +291,10 @@ function DeployStressPackage(
             Write-Host "Setting DOCKER_BUILDKIT=1"
             $env:DOCKER_BUILDKIT = 1
 
-            $dockerBuildCmd = "docker", "build", "-t", $imageTag, "-f", $dockerFile
+            # Force amd64 since that's what our AKS cluster is running. Without this you
+            # end up inheriting the default for our platform, which is bad when using ARM
+            # platforms.
+            $dockerBuildCmd = "docker", "build", "--platform", "linux/amd64", "-t", $imageTag, "-f", $dockerFile
             foreach ($buildArg in $dockerBuildConfig.scenario.GetEnumerator()) {
                 $dockerBuildCmd += "--build-arg"
                 $dockerBuildCmd += "'$($buildArg.Key)'='$($buildArg.Value)'"

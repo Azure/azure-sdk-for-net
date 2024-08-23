@@ -15,7 +15,10 @@ filename as track 1 packages (e.g. same artifact name or package name), the
 track 2 package properties will be written.
 
 .PARAMETER serviceDirectory
-Service directory in which to search for packages
+Service directory in which to search for packages.
+
+.PARAMETER prDiff
+A file path leading to a file generated from Generate-PR-Diff.json. This parameter takes precedence over serviceDirectory, do not provide both.
 
 .PARAMETER outDirectory
 Output location (generally a package artifact directory in DevOps) for JSON 
@@ -32,10 +35,10 @@ Verison property in that file.
 
 [CmdletBinding()]
 Param (
-  [Parameter(Mandatory=$True)]
   [string] $serviceDirectory,
   [Parameter(Mandatory=$True)]
   [string] $outDirectory,
+  [string] $prDiff,
   [switch] $addDevVersion
 )
 
@@ -92,7 +95,16 @@ function GetRelativePath($path) {
 }
 
 $exportedPaths = @{}
-$allPackageProperties = Get-AllPkgProperties $serviceDirectory
+
+$allPackageProperties = @()
+
+if ($prDiff) {
+  $allPackageProperties = Get-PrPkgProperties $prDiff
+}
+else {
+  $allPackageProperties = Get-AllPkgProperties $serviceDirectory
+}
+
 if ($allPackageProperties)
 {
     if (-not (Test-Path -Path $outDirectory))
@@ -137,6 +149,6 @@ if ($allPackageProperties)
 }
 else
 {
-    Write-Error "Package properties are not available for service directory $($serviceDirectory)"
+    Write-Error "Package properties are not available for service directory $serviceDirectory or $prdiff"
     exit 1
 }

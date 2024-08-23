@@ -41,8 +41,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public Azure.Storage.DataMovement.DataTransferProperty<System.DateTimeOffset?> FileCreatedOn { get { throw null; } set { } }
         public Azure.Storage.DataMovement.DataTransferProperty<System.DateTimeOffset?> FileLastWrittenOn { get { throw null; } set { } }
         public Azure.Storage.DataMovement.DataTransferProperty<System.Collections.Generic.IDictionary<string, string>> FileMetadata { get { throw null; } set { } }
-        public string FilePermissionKey { get { throw null; } set { } }
-        public string FilePermissions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferProperty FilePermissions { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceConditions { get { throw null; } set { } }
     }
 }

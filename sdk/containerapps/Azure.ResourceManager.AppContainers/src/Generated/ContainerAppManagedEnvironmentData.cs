@@ -87,8 +87,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="daprConfiguration"> The configuration of Dapr component. </param>
         /// <param name="infrastructureResourceGroup"> Name of the platform-managed resource group created for the Managed Environment to host infrastructure resources. If a subnet ID is provided, this resource group will be created in the same subscription as the subnet. </param>
         /// <param name="peerAuthentication"> Peer authentication settings for the Managed Environment. </param>
+        /// <param name="peerTrafficConfiguration"> Peer traffic settings for the Managed Environment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup, ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup, ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication, ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ProvisioningState = provisioningState;
@@ -107,6 +108,7 @@ namespace Azure.ResourceManager.AppContainers
             DaprConfiguration = daprConfiguration;
             InfrastructureResourceGroup = infrastructureResourceGroup;
             PeerAuthentication = peerAuthentication;
+            PeerTrafficConfiguration = peerTrafficConfiguration;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -174,6 +176,20 @@ namespace Azure.ResourceManager.AppContainers
                 if (PeerAuthentication is null)
                     PeerAuthentication = new ManagedEnvironmentPropertiesPeerAuthentication();
                 PeerAuthentication.IsMtlsEnabled = value;
+            }
+        }
+
+        /// <summary> Peer traffic settings for the Managed Environment. </summary>
+        internal ManagedEnvironmentPropertiesPeerTrafficConfiguration PeerTrafficConfiguration { get; set; }
+        /// <summary> Boolean indicating whether the peer traffic encryption is enabled. </summary>
+        public bool? IsEnabled
+        {
+            get => PeerTrafficConfiguration is null ? default : PeerTrafficConfiguration.IsEnabled;
+            set
+            {
+                if (PeerTrafficConfiguration is null)
+                    PeerTrafficConfiguration = new ManagedEnvironmentPropertiesPeerTrafficConfiguration();
+                PeerTrafficConfiguration.IsEnabled = value;
             }
         }
     }

@@ -116,6 +116,10 @@ namespace Azure.Storage.DataMovement.Tests
             destMock.Verify(b => b.ResourceId, Times.Once());
             destMock.Verify(b => b.MaxSupportedChunkSize, Times.Exactly(2));
             destMock.Verify(b => b.GetDestinationCheckpointData(), Times.Once());
+            destMock.Verify(b => b.SetPermissionsAsync(
+                sourceMock.Object,
+                It.IsAny<StorageResourceItemProperties>(),
+                It.IsAny<CancellationToken>()), Times.Once());
             destMock.Verify(b => b.CopyFromUriAsync(
                 sourceMock.Object,
                 false,
@@ -155,6 +159,10 @@ namespace Azure.Storage.DataMovement.Tests
             destMock.Verify(b => b.ResourceId, Times.Once());
             destMock.Verify(b => b.MaxSupportedChunkSize, Times.Exactly(2));
             destMock.Verify(b => b.GetDestinationCheckpointData(), Times.Once());
+            destMock.Verify(b => b.SetPermissionsAsync(
+                sourceMock.Object,
+                It.IsAny<StorageResourceItemProperties>(),
+                It.IsAny<CancellationToken>()), Times.Once());
             destMock.Verify(b => b.CopyFromUriAsync(
                 sourceMock.Object,
                 false,

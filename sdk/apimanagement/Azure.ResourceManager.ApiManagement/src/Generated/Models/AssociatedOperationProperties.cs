@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Identifier of the operation in form /operations/{operationId}. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Operation name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> API Name. </summary>
+        [WirePath("apiName")]
         public string ApiName { get; }
         /// <summary> API Revision. </summary>
+        [WirePath("apiRevision")]
         public string ApiRevision { get; }
         /// <summary> API Version. </summary>
+        [WirePath("apiVersion")]
         public string ApiVersion { get; }
         /// <summary> Operation Description. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </summary>
+        [WirePath("method")]
         public string Method { get; }
         /// <summary> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </summary>
+        [WirePath("urlTemplate")]
         public string UriTemplate { get; }
     }
 }

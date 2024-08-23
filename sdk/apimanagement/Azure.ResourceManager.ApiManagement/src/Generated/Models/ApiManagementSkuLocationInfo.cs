@@ -67,10 +67,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Location of the SKU. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> List of availability zones where the SKU is supported. </summary>
+        [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
         /// <summary> Details of capabilities available to a SKU in specific zones. </summary>
+        [WirePath("zoneDetails")]
         public IReadOnlyList<ApiManagementSkuZoneDetails> ZoneDetails { get; }
     }
 }

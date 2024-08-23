@@ -19,14 +19,14 @@ Param (
   [string] $TargetPath
 )
 
-. (Join-Path $PSScriptRoot "Helpers" git-helpers.ps1)
+. (Join-Path $PSScriptRoot "Helpers" "git-helpers.ps1")
 
 function Get-ChangedServices {
     Param (
         [Parameter(Mandatory=$True)]
         [string[]] $ChangedFiles
     )
-    
+
     $changedServices = $ChangedFiles | Foreach-Object { if ($_ -match "sdk/([^/]+)") { $matches[1] } } | Sort-Object -Unique
 
     return $changedServices
@@ -45,7 +45,7 @@ $changedServices = Get-ChangedServices -ChangedFiles $changedFiles
 $result = [PSCustomObject]@{
     "ChangedFiles" = $changedFiles
     "ChangedServices" = $changedServices
-    "PRNumber" = $env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER
+    "PRNumber" = if ($env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER) { $env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER } else { "-1" }
 }
 
 $result | ConvertTo-Json | Out-File $ArtifactName

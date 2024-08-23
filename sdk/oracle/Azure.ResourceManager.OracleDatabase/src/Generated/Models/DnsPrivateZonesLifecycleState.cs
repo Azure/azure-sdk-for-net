@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// DNS Private Zones lifecycle state enum
-    /// Serialized Name: DnsPrivateZonesLifecycleState
-    /// </summary>
+    /// <summary> DNS Private Zones lifecycle state enum. </summary>
     public readonly partial struct DnsPrivateZonesLifecycleState : IEquatable<DnsPrivateZonesLifecycleState>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
 
-        /// <summary>
-        /// DNS Private Zones is active
-        /// Serialized Name: DnsPrivateZonesLifecycleState.Active
-        /// </summary>
+        /// <summary> DNS Private Zones is active. </summary>
         public static DnsPrivateZonesLifecycleState Active { get; } = new DnsPrivateZonesLifecycleState(ActiveValue);
-        /// <summary>
-        /// DNS Private Zones is creating
-        /// Serialized Name: DnsPrivateZonesLifecycleState.Creating
-        /// </summary>
+        /// <summary> DNS Private Zones is creating. </summary>
         public static DnsPrivateZonesLifecycleState Creating { get; } = new DnsPrivateZonesLifecycleState(CreatingValue);
-        /// <summary>
-        /// DNS Private Zones is deleted
-        /// Serialized Name: DnsPrivateZonesLifecycleState.Deleted
-        /// </summary>
+        /// <summary> DNS Private Zones is deleted. </summary>
         public static DnsPrivateZonesLifecycleState Deleted { get; } = new DnsPrivateZonesLifecycleState(DeletedValue);
-        /// <summary>
-        /// DNS Private Zones is deleting
-        /// Serialized Name: DnsPrivateZonesLifecycleState.Deleting
-        /// </summary>
+        /// <summary> DNS Private Zones is deleting. </summary>
         public static DnsPrivateZonesLifecycleState Deleting { get; } = new DnsPrivateZonesLifecycleState(DeletingValue);
-        /// <summary>
-        /// DNS Private Zones is updating
-        /// Serialized Name: DnsPrivateZonesLifecycleState.Updating
-        /// </summary>
+        /// <summary> DNS Private Zones is updating. </summary>
         public static DnsPrivateZonesLifecycleState Updating { get; } = new DnsPrivateZonesLifecycleState(UpdatingValue);
         /// <summary> Determines if two <see cref="DnsPrivateZonesLifecycleState"/> values are the same. </summary>
         public static bool operator ==(DnsPrivateZonesLifecycleState left, DnsPrivateZonesLifecycleState right) => left.Equals(right);
@@ -71,7 +53,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

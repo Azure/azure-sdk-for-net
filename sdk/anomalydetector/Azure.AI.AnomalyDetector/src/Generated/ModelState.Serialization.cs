@@ -104,10 +104,10 @@ namespace Azure.AI.AnomalyDetector
             {
                 return null;
             }
-            IList<int> epochIds = default;
-            IList<float> trainLosses = default;
-            IList<float> validationLosses = default;
-            IList<float> latenciesInSeconds = default;
+            IReadOnlyList<int> epochIds = default;
+            IReadOnlyList<float> trainLosses = default;
+            IReadOnlyList<float> validationLosses = default;
+            IReadOnlyList<float> latenciesInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

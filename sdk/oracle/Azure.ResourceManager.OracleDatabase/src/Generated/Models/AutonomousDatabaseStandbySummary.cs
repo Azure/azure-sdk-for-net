@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// Autonomous Disaster Recovery standby database details.
-    /// Serialized Name: AutonomousDatabaseStandbySummary
-    /// </summary>
+    /// <summary> Autonomous Disaster Recovery standby database details. </summary>
     public partial class AutonomousDatabaseStandbySummary
     {
         /// <summary>
@@ -54,61 +51,31 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseStandbySummary"/>. </summary>
-        /// <param name="lagTimeInSeconds">
-        /// The amount of time, in seconds, that the data of the standby database lags the data of the primary database. Can be used to determine the potential data loss in the event of a failover.
-        /// Serialized Name: AutonomousDatabaseStandbySummary.lagTimeInSeconds
-        /// </param>
-        /// <param name="lifecycleState">
-        /// The current state of the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseStandbySummary.lifecycleState
-        /// </param>
-        /// <param name="lifecycleDetails">
-        /// Additional information about the current lifecycle state.
-        /// Serialized Name: AutonomousDatabaseStandbySummary.lifecycleDetails
-        /// </param>
-        /// <param name="timeDataGuardRoleChanged">
-        /// The date and time the Autonomous Data Guard role was switched for the standby Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseStandbySummary.timeDataGuardRoleChanged
-        /// </param>
-        /// <param name="timeDisasterRecoveryRoleChanged">
-        /// The date and time the Disaster Recovery role was switched for the standby Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseStandbySummary.timeDisasterRecoveryRoleChanged
-        /// </param>
+        /// <param name="lagTimeInSeconds"> The amount of time, in seconds, that the data of the standby database lags the data of the primary database. Can be used to determine the potential data loss in the event of a failover. </param>
+        /// <param name="lifecycleState"> The current state of the Autonomous Database. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="dataGuardRoleChangedOn"> The date and time the Autonomous Data Guard role was switched for the standby Autonomous Database. </param>
+        /// <param name="disasterRecoveryRoleChangedOn"> The date and time the Disaster Recovery role was switched for the standby Autonomous Database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseStandbySummary(int? lagTimeInSeconds, AutonomousDatabaseLifecycleState? lifecycleState, string lifecycleDetails, string timeDataGuardRoleChanged, string timeDisasterRecoveryRoleChanged, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutonomousDatabaseStandbySummary(int? lagTimeInSeconds, AutonomousDatabaseLifecycleState? lifecycleState, string lifecycleDetails, DateTimeOffset? dataGuardRoleChangedOn, DateTimeOffset? disasterRecoveryRoleChangedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LagTimeInSeconds = lagTimeInSeconds;
             LifecycleState = lifecycleState;
             LifecycleDetails = lifecycleDetails;
-            TimeDataGuardRoleChanged = timeDataGuardRoleChanged;
-            TimeDisasterRecoveryRoleChanged = timeDisasterRecoveryRoleChanged;
+            DataGuardRoleChangedOn = dataGuardRoleChangedOn;
+            DisasterRecoveryRoleChangedOn = disasterRecoveryRoleChangedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The amount of time, in seconds, that the data of the standby database lags the data of the primary database. Can be used to determine the potential data loss in the event of a failover.
-        /// Serialized Name: AutonomousDatabaseStandbySummary.lagTimeInSeconds
-        /// </summary>
+        /// <summary> The amount of time, in seconds, that the data of the standby database lags the data of the primary database. Can be used to determine the potential data loss in the event of a failover. </summary>
         public int? LagTimeInSeconds { get; }
-        /// <summary>
-        /// The current state of the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseStandbySummary.lifecycleState
-        /// </summary>
+        /// <summary> The current state of the Autonomous Database. </summary>
         public AutonomousDatabaseLifecycleState? LifecycleState { get; }
-        /// <summary>
-        /// Additional information about the current lifecycle state.
-        /// Serialized Name: AutonomousDatabaseStandbySummary.lifecycleDetails
-        /// </summary>
+        /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
-        /// <summary>
-        /// The date and time the Autonomous Data Guard role was switched for the standby Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseStandbySummary.timeDataGuardRoleChanged
-        /// </summary>
-        public string TimeDataGuardRoleChanged { get; }
-        /// <summary>
-        /// The date and time the Disaster Recovery role was switched for the standby Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseStandbySummary.timeDisasterRecoveryRoleChanged
-        /// </summary>
-        public string TimeDisasterRecoveryRoleChanged { get; }
+        /// <summary> The date and time the Autonomous Data Guard role was switched for the standby Autonomous Database. </summary>
+        public DateTimeOffset? DataGuardRoleChangedOn { get; }
+        /// <summary> The date and time the Disaster Recovery role was switched for the standby Autonomous Database. </summary>
+        public DateTimeOffset? DisasterRecoveryRoleChangedOn { get; }
     }
 }

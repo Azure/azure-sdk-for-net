@@ -24,17 +24,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
         private const string AzureOpenAIValue = "azureOpenAI";
         private const string CustomWebApiValue = "customWebApi";
-        private const string AIServicesVisionValue = "aiServicesVision";
-        private const string AMLValue = "aml";
 
         /// <summary> Generate embeddings using an Azure OpenAI resource at query time. </summary>
         public static VectorSearchVectorizerKind AzureOpenAI { get; } = new VectorSearchVectorizerKind(AzureOpenAIValue);
         /// <summary> Generate embeddings using a custom web endpoint at query time. </summary>
         public static VectorSearchVectorizerKind CustomWebApi { get; } = new VectorSearchVectorizerKind(CustomWebApiValue);
-        /// <summary> Generate embeddings for an image or text input at query time using the Azure AI Services Vision Vectorize API. </summary>
-        public static VectorSearchVectorizerKind AIServicesVision { get; } = new VectorSearchVectorizerKind(AIServicesVisionValue);
-        /// <summary> Generate embeddings using an Azure Machine Learning endpoint deployed via the Azure AI Studio Model Catalog at query time. </summary>
-        public static VectorSearchVectorizerKind AML { get; } = new VectorSearchVectorizerKind(AMLValue);
         /// <summary> Determines if two <see cref="VectorSearchVectorizerKind"/> values are the same. </summary>
         public static bool operator ==(VectorSearchVectorizerKind left, VectorSearchVectorizerKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VectorSearchVectorizerKind"/> values are not the same. </summary>
@@ -50,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

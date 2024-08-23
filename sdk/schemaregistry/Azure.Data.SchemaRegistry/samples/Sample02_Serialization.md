@@ -42,7 +42,7 @@ In order to serialize an `EventData` instance with JSON information, you can do 
 
 ```C# Snippet:SchemaRegistryJsonSerializeEventData
 // The serializer serializes into JSON by default
-var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
+var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName);
 
 var employee = new Employee { Age = 42, Name = "Caketown" };
 EventData eventData = (EventData)await serializer.SerializeAsync(employee, messageType: typeof(EventData));
@@ -87,7 +87,7 @@ You can also use generic methods to serialize and deserialize the data. This may
 
 ```C# Snippet:SchemaRegistryJsonSerializeEventDataGenerics
 // The serializer serializes into JSON by default
-var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
+var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName);
 
 var employee = new Employee { Age = 42, Name = "Caketown" };
 EventData eventData = await serializer.SerializeAsync<EventData, Employee>(employee);
@@ -113,7 +113,7 @@ It is also possible to serialize and deserialize using `MessageContent`. Use thi
 
 ```C# Snippet:SchemaRegistryJsonSerializeDeserializeMessageContent
 // The serializer serializes into JSON by default
-var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator());
+var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName);
 MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
 Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
@@ -129,7 +129,7 @@ var newtonsoftSerializerOptions = new SchemaRegistrySerializerOptions
 {
     Serializer = new NewtonsoftJsonObjectSerializer()
 };
-var newtonsoftSerializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator(), newtonsoftSerializerOptions);
+var newtonsoftSerializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName, newtonsoftSerializerOptions);
 ```
 
 If you'd like to configure the `JsonObjectSerializer`, you can pass `JsonSerializerOptions` into the 'JsonObjectSerializer`'s constructor:
@@ -143,7 +143,7 @@ var serializerOptions = new SchemaRegistrySerializerOptions
 {
     Serializer = new JsonObjectSerializer(jsonSerializerOptions)
 };
-var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonValidator(), serializerOptions);
+var serializer = new SchemaRegistrySerializer(client, new SampleJsonValidator(), groupName, serializerOptions);
 ```
 
 ## Troubleshooting

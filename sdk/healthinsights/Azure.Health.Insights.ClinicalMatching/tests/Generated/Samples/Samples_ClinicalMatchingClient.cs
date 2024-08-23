@@ -80,11 +80,11 @@ id = "<id>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
+            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, body);
             TrialMatcherResults responseData = operation.Value;
         }
 
@@ -96,11 +96,11 @@ new PatientRecord("<id>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, body);
             TrialMatcherResults responseData = operation.Value;
         }
 
@@ -566,7 +566,7 @@ radius = 123.45,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -645,7 +645,7 @@ FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJso
                     IncludeEvidence = true,
                 },
             };
-            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
+            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, body);
             TrialMatcherResults responseData = operation.Value;
         }
 
@@ -657,7 +657,7 @@ FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJso
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -736,7 +736,7 @@ FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJso
                     IncludeEvidence = true,
                 },
             };
-            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, body);
             TrialMatcherResults responseData = operation.Value;
         }
     }

@@ -16,6 +16,24 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.ImageContentFilterResultForPrompt GetContentFilterResultForPrompt(this OpenAI.Images.GeneratedImage image) { throw null; }
         public static Azure.AI.OpenAI.ImageContentFilterResultForResponse GetContentFilterResultForResponse(this OpenAI.Images.GeneratedImage image) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureOpenAIAudience : System.IEquatable<Azure.AI.OpenAI.AzureOpenAIAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureOpenAIAudience(string value) { throw null; }
+        public static Azure.AI.OpenAI.AzureOpenAIAudience AzureGovernment { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureOpenAIAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.AzureOpenAIAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.AzureOpenAIAudience left, Azure.AI.OpenAI.AzureOpenAIAudience right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.AzureOpenAIAudience (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.AzureOpenAIAudience left, Azure.AI.OpenAI.AzureOpenAIAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AzureOpenAIClient : OpenAI.OpenAIClient
     {
         protected AzureOpenAIClient() { }
@@ -40,9 +58,11 @@ namespace Azure.AI.OpenAI
         public override OpenAI.Moderations.ModerationClient GetModerationClient(string _) { throw null; }
         public override OpenAI.VectorStores.VectorStoreClient GetVectorStoreClient() { throw null; }
     }
-    public partial class AzureOpenAIClientOptions : OpenAI.OpenAIClientOptions
+    public partial class AzureOpenAIClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
     {
         public AzureOpenAIClientOptions(Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion.V2024_05_01_Preview) { }
+        public string ApplicationId { get { throw null; } set { } }
+        public Azure.AI.OpenAI.AzureOpenAIAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2024_04_01_Preview = 7,

@@ -16,7 +16,7 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
-using OpenTelemetry.ResourceDetectors.Azure;
+using OpenTelemetry.Resources.Azure;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
@@ -28,8 +28,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     public static class OpenTelemetryBuilderExtensions
     {
         private const string SqlClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.SqlClient";
-
-        private const string EnableLogSamplingEnvVar = "OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING";
 
         /// <summary>
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
@@ -135,39 +133,24 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             builder.WithLogging(
                     logging => logging.AddProcessor(sp =>
                     {
-                        bool enableLogSampling = false;
-                        try
-                        {
-                            var enableLogSamplingEnvVar = Environment.GetEnvironmentVariable(EnableLogSamplingEnvVar);
-                            bool.TryParse(enableLogSamplingEnvVar, out enableLogSampling);
-                        }
-                        catch (Exception ex)
-                        {
-                            AzureMonitorAspNetCoreEventSource.Log.GetEnvironmentVariableFailed(EnableLogSamplingEnvVar, ex);
-                        }
-
                         var azureMonitorOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().CurrentValue;
                         var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
                         azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
 
                         var exporter = new AzureMonitorLogExporter(azureMonitorExporterOptions);
-                        var logProcessor = enableLogSampling
-                            ? new LogFilteringProcessor(exporter)
-                            : new BatchLogRecordExportProcessor(exporter);
 
                         if (azureMonitorOptions.EnableLiveMetrics)
                         {
                             var manager = sp.GetRequiredService<Manager>();
-                            var liveMetricsProcessor = new LiveMetricsLogProcessor(manager);
 
                             return new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
                             {
-                                liveMetricsProcessor,
-                                logProcessor
+                                new LiveMetricsLogProcessor(manager),
+                                new BatchLogRecordExportProcessor(exporter)
                             });
                         }
 
-                        return logProcessor;
+                        return new BatchLogRecordExportProcessor(exporter);
                     }),
                     options => options.IncludeFormattedMessage = true);
 
@@ -193,14 +176,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 }
 
                 var loggerFactory = sp.GetRequiredService<ILoggerFactory>();
-                return new AzureEventSourceLogForwarder(loggerFactory);
+                var loggerFilterOptions = sp.GetRequiredService<IOptionsMonitor<LoggerFilterOptions>>().CurrentValue;
+                return new AzureEventSourceLogForwarder(loggerFactory, loggerFilterOptions);
             });
 
             // Register Manager as a singleton
             builder.Services.AddSingleton<Manager>(sp =>
             {
                 AzureMonitorOptions options = sp.GetRequiredService<IOptionsMonitor<AzureMonitorOptions>>().Get(Options.DefaultName);
-                return new Manager(options, new DefaultPlatform());
+                return new Manager(options, new DefaultPlatformDistro());
             });
 
             builder.Services.AddOptions<AzureMonitorOptions>()
@@ -219,6 +203,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     if (config[EnvironmentVariableConstants.HTTPCLIENT_DISABLE_URL_QUERY_REDACTION] == null)
                     {
                         config[EnvironmentVariableConstants.HTTPCLIENT_DISABLE_URL_QUERY_REDACTION] = Boolean.TrueString;
+                    }
+
+                    // If connection string is not set in the options, try to get it from configuration.
+                    if (string.IsNullOrWhiteSpace(options.ConnectionString) && config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING] != null)
+                    {
+                        options.ConnectionString = config[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
                     }
                 });
 

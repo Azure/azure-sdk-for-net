@@ -342,4 +342,3 @@ jobs:
             TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
             # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
             ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'
-

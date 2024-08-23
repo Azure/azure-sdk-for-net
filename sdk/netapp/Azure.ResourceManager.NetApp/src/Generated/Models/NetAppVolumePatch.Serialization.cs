@@ -77,6 +77,16 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("exportPolicy"u8);
                 writer.WriteObjectValue(ExportPolicy, options);
             }
+            if (Optional.IsCollectionDefined(ProtocolTypes))
+            {
+                writer.WritePropertyName("protocolTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtocolTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(ThroughputMibps))
             {
                 writer.WritePropertyName("throughputMibps"u8);
@@ -85,7 +95,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue<NetAppVolumePatchDataProtection>(DataProtection, options);
+                writer.WriteObjectValue(DataProtection, options);
             }
             if (Optional.IsDefined(IsDefaultQuotaEnabled))
             {
@@ -199,6 +209,7 @@ namespace Azure.ResourceManager.NetApp.Models
             NetAppFileServiceLevel? serviceLevel = default;
             long? usageThreshold = default;
             VolumePatchPropertiesExportPolicy exportPolicy = default;
+            IList<string> protocolTypes = default;
             float? throughputMibps = default;
             NetAppVolumePatchDataProtection dataProtection = default;
             bool? isDefaultQuotaEnabled = default;
@@ -292,6 +303,20 @@ namespace Azure.ResourceManager.NetApp.Models
                                 continue;
                             }
                             exportPolicy = VolumePatchPropertiesExportPolicy.DeserializeVolumePatchPropertiesExportPolicy(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("protocolTypes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            protocolTypes = array;
                             continue;
                         }
                         if (property0.NameEquals("throughputMibps"u8))
@@ -423,6 +448,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serviceLevel,
                 usageThreshold,
                 exportPolicy,
+                protocolTypes ?? new ChangeTrackingList<string>(),
                 throughputMibps,
                 dataProtection,
                 isDefaultQuotaEnabled,

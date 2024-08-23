@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("httpSettings"u8);
                 writer.WriteObjectValue(HttpSettings, options);
             }
+            if (Optional.IsDefined(EncryptionSettings))
+            {
+                writer.WritePropertyName("encryptionSettings"u8);
+                writer.WriteObjectValue(EncryptionSettings, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -123,6 +128,7 @@ namespace Azure.ResourceManager.AppContainers
             ContainerAppIdentityProvidersConfiguration identityProviders = default;
             ContainerAppLogin login = default;
             ContainerAppHttpSettings httpSettings = default;
+            EncryptionSettings encryptionSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,6 +211,15 @@ namespace Azure.ResourceManager.AppContainers
                             httpSettings = ContainerAppHttpSettings.DeserializeContainerAppHttpSettings(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("encryptionSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionSettings = EncryptionSettings.DeserializeEncryptionSettings(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -224,6 +239,7 @@ namespace Azure.ResourceManager.AppContainers
                 identityProviders,
                 login,
                 httpSettings,
+                encryptionSettings,
                 serializedAdditionalRawData);
         }
 

@@ -18,6 +18,12 @@ namespace Azure.Messaging.ServiceBus
         private long? _maxSizeInBytes;
 
         /// <summary>
+        ///   The maximum number of messages to allow in a single batch.
+        /// </summary>
+        ///
+        internal int? MaxMessageCount { get; set; }
+
+        /// <summary>
         ///   The maximum size to allow for a single batch of messages, in bytes.
         /// </summary>
         ///
@@ -25,9 +31,11 @@ namespace Azure.Messaging.ServiceBus
         ///   The desired limit, in bytes, for the size of the associated service bus message batch.  If <c>null</c>,
         ///   the maximum size allowed by the active transport will be used.
         /// </value>
+        ///
         /// <exception cref="ArgumentOutOfRangeException">
         ///   A negative value is attempted to be set for the property.
         /// </exception>
+        ///
         public long? MaxSizeInBytes
         {
             get => _maxSizeInBytes;

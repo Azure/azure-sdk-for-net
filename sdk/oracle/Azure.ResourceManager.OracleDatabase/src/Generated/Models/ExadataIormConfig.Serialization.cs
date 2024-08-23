@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(DbPlans))
+            if (Optional.IsCollectionDefined(DBPlans))
             {
                 writer.WritePropertyName("dbPlans"u8);
                 writer.WriteStartArray();
-                foreach (var item in DbPlans)
+                foreach (var item in DBPlans)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IReadOnlyList<DbIormConfig> dbPlans = default;
+            IReadOnlyList<DBIormConfig> dbPlans = default;
             string lifecycleDetails = default;
             IormLifecycleState? lifecycleState = default;
-            Objective? objective = default;
+            IormObjective? objective = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<DbIormConfig> array = new List<DbIormConfig>();
+                    List<DBIormConfig> array = new List<DBIormConfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DbIormConfig.DeserializeDbIormConfig(item, options));
+                        array.Add(DBIormConfig.DeserializeDBIormConfig(item, options));
                     }
                     dbPlans = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    objective = new Objective(property.Value.GetString());
+                    objective = new IormObjective(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExadataIormConfig(dbPlans ?? new ChangeTrackingList<DbIormConfig>(), lifecycleDetails, lifecycleState, objective, serializedAdditionalRawData);
+            return new ExadataIormConfig(dbPlans ?? new ChangeTrackingList<DBIormConfig>(), lifecycleDetails, lifecycleState, objective, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExadataIormConfig>.Write(ModelReaderWriterOptions options)

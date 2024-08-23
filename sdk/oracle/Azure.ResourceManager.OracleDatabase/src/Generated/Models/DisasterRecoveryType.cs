@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// Disaster recovery type enum.
-    /// Serialized Name: DisasterRecoveryType
-    /// </summary>
+    /// <summary> Disaster recovery type enum. </summary>
     public readonly partial struct DisasterRecoveryType : IEquatable<DisasterRecoveryType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string AdgValue = "Adg";
         private const string BackupBasedValue = "BackupBased";
 
-        /// <summary>
-        /// ADG type
-        /// Serialized Name: DisasterRecoveryType.Adg
-        /// </summary>
+        /// <summary> ADG type. </summary>
         public static DisasterRecoveryType Adg { get; } = new DisasterRecoveryType(AdgValue);
-        /// <summary>
-        /// Backup based type
-        /// Serialized Name: DisasterRecoveryType.BackupBased
-        /// </summary>
+        /// <summary> Backup based type. </summary>
         public static DisasterRecoveryType BackupBased { get; } = new DisasterRecoveryType(BackupBasedValue);
         /// <summary> Determines if two <see cref="DisasterRecoveryType"/> values are the same. </summary>
         public static bool operator ==(DisasterRecoveryType left, DisasterRecoveryType right) => left.Equals(right);
@@ -53,7 +44,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

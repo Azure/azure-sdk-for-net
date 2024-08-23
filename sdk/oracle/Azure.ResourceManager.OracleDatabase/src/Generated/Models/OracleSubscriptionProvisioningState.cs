@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// OracleSubscriptionProvisioningState enum
-    /// Serialized Name: OracleSubscriptionProvisioningState
-    /// </summary>
+    /// <summary> OracleSubscriptionProvisioningState enum. </summary>
     public readonly partial struct OracleSubscriptionProvisioningState : IEquatable<OracleSubscriptionProvisioningState>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// Resource has been created.
-        /// Serialized Name: OracleSubscriptionProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Resource has been created. </summary>
         public static OracleSubscriptionProvisioningState Succeeded { get; } = new OracleSubscriptionProvisioningState(SucceededValue);
-        /// <summary>
-        /// Resource creation failed.
-        /// Serialized Name: OracleSubscriptionProvisioningState.Failed
-        /// </summary>
+        /// <summary> Resource creation failed. </summary>
         public static OracleSubscriptionProvisioningState Failed { get; } = new OracleSubscriptionProvisioningState(FailedValue);
-        /// <summary>
-        /// Resource creation was canceled.
-        /// Serialized Name: OracleSubscriptionProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static OracleSubscriptionProvisioningState Canceled { get; } = new OracleSubscriptionProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="OracleSubscriptionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(OracleSubscriptionProvisioningState left, OracleSubscriptionProvisioningState right) => left.Equals(right);
@@ -59,7 +47,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

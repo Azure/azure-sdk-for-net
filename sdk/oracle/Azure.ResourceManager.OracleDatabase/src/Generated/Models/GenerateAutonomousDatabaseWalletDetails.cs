@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// Autonomous Database Generate Wallet resource model.
-    /// Serialized Name: GenerateAutonomousDatabaseWalletDetails
-    /// </summary>
+    /// <summary> Autonomous Database Generate Wallet resource model. </summary>
     public partial class GenerateAutonomousDatabaseWalletDetails
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GenerateAutonomousDatabaseWalletDetails"/>. </summary>
-        /// <param name="password">
-        /// The password to encrypt the keys inside the wallet
-        /// Serialized Name: GenerateAutonomousDatabaseWalletDetails.password
-        /// </param>
+        /// <param name="password"> The password to encrypt the keys inside the wallet. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="password"/> is null. </exception>
         public GenerateAutonomousDatabaseWalletDetails(string password)
         {
@@ -62,20 +56,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GenerateAutonomousDatabaseWalletDetails"/>. </summary>
-        /// <param name="generateType">
-        /// The type of wallet to generate.
-        /// Serialized Name: GenerateAutonomousDatabaseWalletDetails.generateType
-        /// </param>
-        /// <param name="isRegional">
-        /// True when requesting regional connection strings in PDB connect info, applicable to cross-region DG only.
-        /// Serialized Name: GenerateAutonomousDatabaseWalletDetails.isRegional
-        /// </param>
-        /// <param name="password">
-        /// The password to encrypt the keys inside the wallet
-        /// Serialized Name: GenerateAutonomousDatabaseWalletDetails.password
-        /// </param>
+        /// <param name="generateType"> The type of wallet to generate. </param>
+        /// <param name="isRegional"> True when requesting regional connection strings in PDB connect info, applicable to cross-region DG only. </param>
+        /// <param name="password"> The password to encrypt the keys inside the wallet. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GenerateAutonomousDatabaseWalletDetails(GenerateType? generateType, bool? isRegional, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GenerateAutonomousDatabaseWalletDetails(WalletGenerateType? generateType, bool? isRegional, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             GenerateType = generateType;
             IsRegional = isRegional;
@@ -88,20 +73,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
         }
 
-        /// <summary>
-        /// The type of wallet to generate.
-        /// Serialized Name: GenerateAutonomousDatabaseWalletDetails.generateType
-        /// </summary>
-        public GenerateType? GenerateType { get; set; }
-        /// <summary>
-        /// True when requesting regional connection strings in PDB connect info, applicable to cross-region DG only.
-        /// Serialized Name: GenerateAutonomousDatabaseWalletDetails.isRegional
-        /// </summary>
+        /// <summary> The type of wallet to generate. </summary>
+        public WalletGenerateType? GenerateType { get; set; }
+        /// <summary> True when requesting regional connection strings in PDB connect info, applicable to cross-region DG only. </summary>
         public bool? IsRegional { get; set; }
-        /// <summary>
-        /// The password to encrypt the keys inside the wallet
-        /// Serialized Name: GenerateAutonomousDatabaseWalletDetails.password
-        /// </summary>
+        /// <summary> The password to encrypt the keys inside the wallet. </summary>
         public string Password { get; }
     }
 }

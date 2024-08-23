@@ -486,7 +486,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             long size = Constants.KB;
             int waitTimeInSec = 10;
-            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth();
+            BlobServiceClient service = GetServiceClient_OAuth();
             var containerName = GetNewContainerName();
             await using DisposingContainer testContainer = await GetTestContainerAsync(
                 service,

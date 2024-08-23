@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,11 +10,27 @@
 
 ### Other Changes
 
+## 1.2.0 (2024-07-05)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2021-08' to 'package-2022-08'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/apimanagement/resource-manager/readme.md.
+- Added `ArmOperation.Rehydrate` and `ArmOperation.Rehydrate<T>` static methods to rehydrate a long-running operation.
+
+### Bugs Fixed
+
+- fix bugs caused by applying to the lastest 'require url' for opeartion_Id_:ContentType_CreateOrUpdate and ContentItem_CreateOrUpdate in apimcontenttypes.json
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.40.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.12.0
+
 ## 1.2.0-beta.1 (2024-04-22)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Bugs Fixed
 
@@ -25,11 +41,11 @@
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Bugs Fixed
 
-- Add property `PrivateUriString` instead of `PrivateUri` in ApiRevisionContract to fix Uri deserialization issue.
+- Added property `PrivateUriString` instead of `PrivateUri` in ApiRevisionContract to fix Uri deserialization issue.
 
 ### Other Changes
 
@@ -39,7 +55,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
@@ -118,4 +134,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-

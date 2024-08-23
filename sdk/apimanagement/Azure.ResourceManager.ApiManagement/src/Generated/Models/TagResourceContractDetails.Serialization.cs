@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -130,6 +131,81 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new TagResourceContractDetails(tag, api, operation, product, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Tag))
+                {
+                    builder.Append("  tag: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Tag, options, 2, false, "  tag: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Api), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  api: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Api))
+                {
+                    builder.Append("  api: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Api, options, 2, false, "  api: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Operation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  operation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Operation))
+                {
+                    builder.Append("  operation: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Operation, options, 2, false, "  operation: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Product), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  product: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Product))
+                {
+                    builder.Append("  product: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Product, options, 2, false, "  product: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TagResourceContractDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TagResourceContractDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -138,6 +214,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support writing '{options.Format}' format.");
             }

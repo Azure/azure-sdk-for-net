@@ -1,1 +1,0 @@
-Start-AutoRestCodeGeneration -ResourceProvider "servicefabricmanagedclusters/resource-manager" -AutoRestVersion "v2"

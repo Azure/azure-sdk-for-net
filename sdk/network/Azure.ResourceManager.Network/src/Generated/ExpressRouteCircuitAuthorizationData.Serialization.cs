@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("authorizationUseStatus"u8);
                 writer.WriteStringValue(AuthorizationUseStatus.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ConnectionResourceUri))
+            {
+                writer.WritePropertyName("connectionResourceUri"u8);
+                writer.WriteStringValue(ConnectionResourceUri.AbsoluteUri);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -109,6 +114,7 @@ namespace Azure.ResourceManager.Network
             ResourceType? type = default;
             string authorizationKey = default;
             AuthorizationUseStatus? authorizationUseStatus = default;
+            Uri connectionResourceUri = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -169,6 +175,15 @@ namespace Azure.ResourceManager.Network
                             authorizationUseStatus = new AuthorizationUseStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("connectionResourceUri"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            connectionResourceUri = new Uri(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -195,6 +210,7 @@ namespace Azure.ResourceManager.Network
                 etag,
                 authorizationKey,
                 authorizationUseStatus,
+                connectionResourceUri,
                 provisioningState);
         }
 

@@ -9,8 +9,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-SimSwapRetrievalContent simSwapRetrievalContent = new SimSwapRetrievalContent(new NetworkIdentifier("<identifierType>", "<identifier>"));
-Response<SimSwapRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", simSwapRetrievalContent);
+SimSwapRetrievalContent body = new SimSwapRetrievalContent(new NetworkIdentifier("<identifierType>", "<identifier>"));
+Response<SimSwapRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", body);
 ]]></code>
 This sample shows how to call RetrieveAsync with all parameters.
 <code><![CDATA[
@@ -18,11 +18,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-SimSwapRetrievalContent simSwapRetrievalContent = new SimSwapRetrievalContent(new NetworkIdentifier("<identifierType>", "<identifier>"))
+SimSwapRetrievalContent body = new SimSwapRetrievalContent(new NetworkIdentifier("<identifierType>", "<identifier>"))
 {
     PhoneNumber = "<phoneNumber>",
 };
-Response<SimSwapRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", simSwapRetrievalContent);
+Response<SimSwapRetrievalResult> response = await client.RetrieveAsync("<apcGatewayId>", body);
 ]]></code></example>
     </member>
     <member name="Retrieve(string,SimSwapRetrievalContent,CancellationToken)">
@@ -33,8 +33,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-SimSwapRetrievalContent simSwapRetrievalContent = new SimSwapRetrievalContent(new NetworkIdentifier("<identifierType>", "<identifier>"));
-Response<SimSwapRetrievalResult> response = client.Retrieve("<apcGatewayId>", simSwapRetrievalContent);
+SimSwapRetrievalContent body = new SimSwapRetrievalContent(new NetworkIdentifier("<identifierType>", "<identifier>"));
+Response<SimSwapRetrievalResult> response = client.Retrieve("<apcGatewayId>", body);
 ]]></code>
 This sample shows how to call Retrieve with all parameters.
 <code><![CDATA[
@@ -42,11 +42,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-SimSwapRetrievalContent simSwapRetrievalContent = new SimSwapRetrievalContent(new NetworkIdentifier("<identifierType>", "<identifier>"))
+SimSwapRetrievalContent body = new SimSwapRetrievalContent(new NetworkIdentifier("<identifierType>", "<identifier>"))
 {
     PhoneNumber = "<phoneNumber>",
 };
-Response<SimSwapRetrievalResult> response = client.Retrieve("<apcGatewayId>", simSwapRetrievalContent);
+Response<SimSwapRetrievalResult> response = client.Retrieve("<apcGatewayId>", body);
 ]]></code></example>
     </member>
     <member name="RetrieveAsync(string,RequestContent,RequestContext)">
@@ -141,8 +141,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-SimSwapVerificationContent simSwapVerificationContent = new SimSwapVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"));
-Response<SimSwapVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", simSwapVerificationContent);
+SimSwapVerificationContent body = new SimSwapVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"));
+Response<SimSwapVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", body);
 ]]></code>
 This sample shows how to call VerifyAsync with all parameters.
 <code><![CDATA[
@@ -150,12 +150,12 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-SimSwapVerificationContent simSwapVerificationContent = new SimSwapVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"))
+SimSwapVerificationContent body = new SimSwapVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"))
 {
     PhoneNumber = "<phoneNumber>",
     MaxAgeHours = 1234,
 };
-Response<SimSwapVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", simSwapVerificationContent);
+Response<SimSwapVerificationResult> response = await client.VerifyAsync("<apcGatewayId>", body);
 ]]></code></example>
     </member>
     <member name="Verify(string,SimSwapVerificationContent,CancellationToken)">
@@ -166,8 +166,8 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-SimSwapVerificationContent simSwapVerificationContent = new SimSwapVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"));
-Response<SimSwapVerificationResult> response = client.Verify("<apcGatewayId>", simSwapVerificationContent);
+SimSwapVerificationContent body = new SimSwapVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"));
+Response<SimSwapVerificationResult> response = client.Verify("<apcGatewayId>", body);
 ]]></code>
 This sample shows how to call Verify with all parameters.
 <code><![CDATA[
@@ -175,12 +175,12 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 SimSwap client = new ProgrammableConnectivityClient(endpoint, credential).GetSimSwapClient(apiVersion: "2024-02-09-preview");
 
-SimSwapVerificationContent simSwapVerificationContent = new SimSwapVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"))
+SimSwapVerificationContent body = new SimSwapVerificationContent(new NetworkIdentifier("<identifierType>", "<identifier>"))
 {
     PhoneNumber = "<phoneNumber>",
     MaxAgeHours = 1234,
 };
-Response<SimSwapVerificationResult> response = client.Verify("<apcGatewayId>", simSwapVerificationContent);
+Response<SimSwapVerificationResult> response = client.Verify("<apcGatewayId>", body);
 ]]></code></example>
     </member>
     <member name="VerifyAsync(string,RequestContent,RequestContext)">

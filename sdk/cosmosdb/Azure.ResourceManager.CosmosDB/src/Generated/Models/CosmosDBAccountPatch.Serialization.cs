@@ -211,6 +211,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteObjectValue(Capacity, options);
             }
+            if (Optional.IsDefined(CapacityMode))
+            {
+                writer.WritePropertyName("capacityMode"u8);
+                writer.WriteStringValue(CapacityMode.Value.ToString());
+            }
             if (Optional.IsDefined(EnableMaterializedViews))
             {
                 writer.WritePropertyName("enableMaterializedViews"u8);
@@ -323,6 +328,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DiagnosticLogSettings diagnosticLogSettings = default;
             bool? disableLocalAuth = default;
             CosmosDBAccountCapacity capacity = default;
+            CapacityMode? capacityMode = default;
             bool? enableMaterializedViews = default;
             DatabaseAccountKeysMetadata keysMetadata = default;
             bool? enablePartitionMerge = default;
@@ -636,6 +642,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             capacity = CosmosDBAccountCapacity.DeserializeCosmosDBAccountCapacity(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("capacityMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            capacityMode = new CapacityMode(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("enableMaterializedViews"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -751,6 +766,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 diagnosticLogSettings,
                 disableLocalAuth,
                 capacity,
+                capacityMode,
                 enableMaterializedViews,
                 keysMetadata,
                 enablePartitionMerge,

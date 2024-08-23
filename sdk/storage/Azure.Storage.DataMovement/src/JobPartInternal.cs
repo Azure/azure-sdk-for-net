@@ -127,8 +127,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public SyncAsyncEventHandler<TransferItemCompletedEventArgs> SingleTransferCompletedEventHandler { get; internal set; }
 
-        private List<Task<bool>> _chunkTasks;
-        private List<TaskCompletionSource<bool>> _chunkTaskSources;
+        /// <summary>
+        /// Represents the current state of the job part.
+        /// </summary>
+        private int _currentChunkCount;
+        private int _completedChunkCount;
         protected bool _queueingTasks = false;
 
         /// <summary>
@@ -195,8 +198,8 @@ namespace Azure.Storage.DataMovement
                 StorageResourceCreationPreference.FailIfExists : createMode;
 
             Length = length;
-            _chunkTasks = new List<Task<bool>>();
-            _chunkTaskSources = new List<TaskCompletionSource<bool>>();
+            _currentChunkCount = 0;
+            _completedChunkCount = 0;
         }
 
         public void SetQueueChunkDelegate(QueueChunkDelegate chunkDelegate)
@@ -212,26 +215,20 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public async Task QueueChunkToChannelAsync(Func<Task> chunkTask)
         {
-            // Attach TaskCompletionSource
-            TaskCompletionSource<bool> chunkCompleted = new TaskCompletionSource<bool>(
-                false,
-                TaskCreationOptions.RunContinuationsAsynchronously);
-            _chunkTaskSources.Add(chunkCompleted);
-            _chunkTasks.Add(chunkCompleted.Task);
-
+            Interlocked.Increment(ref _currentChunkCount);
             await QueueChunk(
                 async () =>
                 {
                     try
                     {
                         await Task.Run(chunkTask).ConfigureAwait(false);
-                        chunkCompleted.SetResult(true);
-                        await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
                         await InvokeFailedArg(ex).ConfigureAwait(false);
                     }
+                    Interlocked.Increment(ref _completedChunkCount);
+                    await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
                 }).ConfigureAwait(false);
         }
 
@@ -570,7 +567,7 @@ namespace Azure.Storage.DataMovement
             if (JobPartStatus.State == DataTransferState.Pausing ||
                 JobPartStatus.State == DataTransferState.Stopping)
             {
-                if (!_queueingTasks && _chunkTasks.All((Task task) => (task.IsCompleted)))
+                if (!_queueingTasks && _currentChunkCount == _completedChunkCount)
                 {
                     DataTransferState newState = JobPartStatus.State == DataTransferState.Pausing ?
                         DataTransferState.Paused :

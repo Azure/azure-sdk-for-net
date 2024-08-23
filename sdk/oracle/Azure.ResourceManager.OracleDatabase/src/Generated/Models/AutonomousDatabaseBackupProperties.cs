@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// AutonomousDatabaseBackup resource model
-    /// Serialized Name: AutonomousDatabaseBackupProperties
-    /// </summary>
+    /// <summary> AutonomousDatabaseBackup resource model. </summary>
     public partial class AutonomousDatabaseBackupProperties
     {
         /// <summary>
@@ -54,76 +52,28 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDatabaseBackupProperties"/>. </summary>
-        /// <param name="autonomousDatabaseOcid">
-        /// The OCID of the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.autonomousDatabaseOcid
-        /// </param>
-        /// <param name="databaseSizeInTbs">
-        /// The size of the database in terabytes at the time the backup was taken.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.databaseSizeInTbs
-        /// </param>
-        /// <param name="dbVersion">
-        /// A valid Oracle Database version for Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.dbVersion
-        /// </param>
-        /// <param name="displayName">
-        /// The user-friendly name for the backup. The name does not have to be unique.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.displayName
-        /// </param>
-        /// <param name="ocid">
-        /// The OCID of the Autonomous Database backup.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.ocid
-        /// </param>
-        /// <param name="isAutomatic">
-        /// Indicates whether the backup is user-initiated or automatic.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.isAutomatic
-        /// </param>
-        /// <param name="isRestorable">
-        /// Indicates whether the backup can be used to restore the associated Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.isRestorable
-        /// </param>
-        /// <param name="lifecycleDetails">
-        /// Additional information about the current lifecycle state.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.lifecycleDetails
-        /// </param>
-        /// <param name="lifecycleState">
-        /// The current state of the backup.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.lifecycleState
-        /// </param>
-        /// <param name="retentionPeriodInDays">
-        /// Retention period, in days, for long-term backups.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.retentionPeriodInDays
-        /// </param>
-        /// <param name="sizeInTbs">
-        /// The backup size in terabytes (TB).
-        /// Serialized Name: AutonomousDatabaseBackupProperties.sizeInTbs
-        /// </param>
-        /// <param name="timeAvailableTil">
-        /// Timestamp until when the backup will be available.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.timeAvailableTil
-        /// </param>
-        /// <param name="timeStarted">
-        /// The date and time the backup started.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.timeStarted
-        /// </param>
-        /// <param name="timeEnded">
-        /// The date and time the backup completed.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.timeEnded
-        /// </param>
-        /// <param name="backupType">
-        /// The type of backup.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.backupType
-        /// </param>
-        /// <param name="provisioningState">
-        /// Azure resource provisioning state.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.provisioningState
-        /// </param>
+        /// <param name="autonomousDatabaseOcid"> The OCID of the Autonomous Database. </param>
+        /// <param name="databaseSizeInTbs"> The size of the database in terabytes at the time the backup was taken. </param>
+        /// <param name="dbVersion"> A valid Oracle Database version for Autonomous Database. </param>
+        /// <param name="displayName"> The user-friendly name for the backup. The name does not have to be unique. </param>
+        /// <param name="ocid"> The OCID of the Autonomous Database backup. </param>
+        /// <param name="isAutomatic"> Indicates whether the backup is user-initiated or automatic. </param>
+        /// <param name="isRestorable"> Indicates whether the backup can be used to restore the associated Autonomous Database. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="lifecycleState"> The current state of the backup. </param>
+        /// <param name="retentionPeriodInDays"> Retention period, in days, for long-term backups. </param>
+        /// <param name="sizeInTbs"> The backup size in terabytes (TB). </param>
+        /// <param name="timeAvailableTil"> Timestamp until when the backup will be available. </param>
+        /// <param name="timeStarted"> The date and time the backup started. </param>
+        /// <param name="timeEnded"> The date and time the backup completed. </param>
+        /// <param name="backupType"> The type of backup. </param>
+        /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutonomousDatabaseBackupProperties(string autonomousDatabaseOcid, double? databaseSizeInTbs, string dbVersion, string displayName, string ocid, bool? isAutomatic, bool? isRestorable, string lifecycleDetails, AutonomousDatabaseBackupLifecycleState? lifecycleState, int? retentionPeriodInDays, double? sizeInTbs, DateTimeOffset? timeAvailableTil, string timeStarted, string timeEnded, AutonomousDatabaseBackupType? backupType, AzureResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AutonomousDatabaseBackupProperties(ResourceIdentifier autonomousDatabaseOcid, double? databaseSizeInTbs, string dbVersion, string displayName, ResourceIdentifier ocid, bool? isAutomatic, bool? isRestorable, string lifecycleDetails, AutonomousDatabaseBackupLifecycleState? lifecycleState, int? retentionPeriodInDays, double? sizeInTbs, DateTimeOffset? timeAvailableTil, string timeStarted, string timeEnded, AutonomousDatabaseBackupType? backupType, OracleDatabaseProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AutonomousDatabaseOcid = autonomousDatabaseOcid;
             DatabaseSizeInTbs = databaseSizeInTbs;
-            DbVersion = dbVersion;
+            DBVersion = dbVersion;
             DisplayName = displayName;
             Ocid = ocid;
             IsAutomatic = isAutomatic;
@@ -140,85 +90,37 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The OCID of the Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.autonomousDatabaseOcid
-        /// </summary>
-        public string AutonomousDatabaseOcid { get; }
-        /// <summary>
-        /// The size of the database in terabytes at the time the backup was taken.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.databaseSizeInTbs
-        /// </summary>
+        /// <summary> The OCID of the Autonomous Database. </summary>
+        public ResourceIdentifier AutonomousDatabaseOcid { get; }
+        /// <summary> The size of the database in terabytes at the time the backup was taken. </summary>
         public double? DatabaseSizeInTbs { get; }
-        /// <summary>
-        /// A valid Oracle Database version for Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.dbVersion
-        /// </summary>
-        public string DbVersion { get; }
-        /// <summary>
-        /// The user-friendly name for the backup. The name does not have to be unique.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.displayName
-        /// </summary>
+        /// <summary> A valid Oracle Database version for Autonomous Database. </summary>
+        public string DBVersion { get; }
+        /// <summary> The user-friendly name for the backup. The name does not have to be unique. </summary>
         public string DisplayName { get; set; }
-        /// <summary>
-        /// The OCID of the Autonomous Database backup.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.ocid
-        /// </summary>
-        public string Ocid { get; }
-        /// <summary>
-        /// Indicates whether the backup is user-initiated or automatic.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.isAutomatic
-        /// </summary>
+        /// <summary> The OCID of the Autonomous Database backup. </summary>
+        public ResourceIdentifier Ocid { get; }
+        /// <summary> Indicates whether the backup is user-initiated or automatic. </summary>
         public bool? IsAutomatic { get; }
-        /// <summary>
-        /// Indicates whether the backup can be used to restore the associated Autonomous Database.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.isRestorable
-        /// </summary>
+        /// <summary> Indicates whether the backup can be used to restore the associated Autonomous Database. </summary>
         public bool? IsRestorable { get; }
-        /// <summary>
-        /// Additional information about the current lifecycle state.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.lifecycleDetails
-        /// </summary>
+        /// <summary> Additional information about the current lifecycle state. </summary>
         public string LifecycleDetails { get; }
-        /// <summary>
-        /// The current state of the backup.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.lifecycleState
-        /// </summary>
+        /// <summary> The current state of the backup. </summary>
         public AutonomousDatabaseBackupLifecycleState? LifecycleState { get; }
-        /// <summary>
-        /// Retention period, in days, for long-term backups.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.retentionPeriodInDays
-        /// </summary>
+        /// <summary> Retention period, in days, for long-term backups. </summary>
         public int? RetentionPeriodInDays { get; set; }
-        /// <summary>
-        /// The backup size in terabytes (TB).
-        /// Serialized Name: AutonomousDatabaseBackupProperties.sizeInTbs
-        /// </summary>
+        /// <summary> The backup size in terabytes (TB). </summary>
         public double? SizeInTbs { get; }
-        /// <summary>
-        /// Timestamp until when the backup will be available.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.timeAvailableTil
-        /// </summary>
+        /// <summary> Timestamp until when the backup will be available. </summary>
         public DateTimeOffset? TimeAvailableTil { get; }
-        /// <summary>
-        /// The date and time the backup started.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.timeStarted
-        /// </summary>
+        /// <summary> The date and time the backup started. </summary>
         public string TimeStarted { get; }
-        /// <summary>
-        /// The date and time the backup completed.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.timeEnded
-        /// </summary>
+        /// <summary> The date and time the backup completed. </summary>
         public string TimeEnded { get; }
-        /// <summary>
-        /// The type of backup.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.backupType
-        /// </summary>
+        /// <summary> The type of backup. </summary>
         public AutonomousDatabaseBackupType? BackupType { get; }
-        /// <summary>
-        /// Azure resource provisioning state.
-        /// Serialized Name: AutonomousDatabaseBackupProperties.provisioningState
-        /// </summary>
-        public AzureResourceProvisioningState? ProvisioningState { get; }
+        /// <summary> Azure resource provisioning state. </summary>
+        public OracleDatabaseProvisioningState? ProvisioningState { get; }
     }
 }

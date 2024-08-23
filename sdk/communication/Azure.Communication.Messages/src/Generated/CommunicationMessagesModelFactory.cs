@@ -27,36 +27,6 @@ namespace Azure.Communication.Messages
             return new UnknownNotificationContent(channelRegistrationId, to?.ToList(), kind == null ? default : new CommunicationMessageKind(kind), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Messages.SendMessageResult"/>. </summary>
-        /// <param name="receipts"> Receipts of the send message operation. </param>
-        /// <returns> A new <see cref="Messages.SendMessageResult"/> instance for mocking. </returns>
-        public static SendMessageResult SendMessageResult(IEnumerable<MessageReceipt> receipts = null)
-        {
-            receipts ??= new List<MessageReceipt>();
-
-            return new SendMessageResult(receipts?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.MessageReceipt"/>. </summary>
-        /// <param name="messageId"> The message id. </param>
-        /// <param name="to"> The native external platform user identifier of the recipient. </param>
-        /// <returns> A new <see cref="Messages.MessageReceipt"/> instance for mocking. </returns>
-        public static MessageReceipt MessageReceipt(string messageId = null, string to = null)
-        {
-            return new MessageReceipt(messageId, to, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateItem"/>. </summary>
-        /// <param name="name"> The template's name. </param>
-        /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
-        /// <param name="status"> The aggregated template status. </param>
-        /// <param name="kind"> The type discriminator describing a template type. </param>
-        /// <returns> A new <see cref="Messages.MessageTemplateItem"/> instance for mocking. </returns>
-        public static MessageTemplateItem MessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, string kind = null)
-        {
-            return new UnknownMessageTemplateItem(name, language, status, kind == null ? default : new CommunicationMessagesChannel(kind), serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Messages.TextNotificationContent"/>. </summary>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="to"> The native external platform user identifiers of the recipient. </param>
@@ -198,6 +168,36 @@ namespace Azure.Communication.Messages
         public static MessageTemplateQuickAction MessageTemplateQuickAction(string name = null, string text = null, string payload = null)
         {
             return new MessageTemplateQuickAction(name, MessageTemplateValueKind.QuickAction, serializedAdditionalRawData: null, text, payload);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.SendMessageResult"/>. </summary>
+        /// <param name="receipts"> Receipts of the send message operation. </param>
+        /// <returns> A new <see cref="Messages.SendMessageResult"/> instance for mocking. </returns>
+        public static SendMessageResult SendMessageResult(IEnumerable<MessageReceipt> receipts = null)
+        {
+            receipts ??= new List<MessageReceipt>();
+
+            return new SendMessageResult(receipts?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.MessageReceipt"/>. </summary>
+        /// <param name="messageId"> The message id. </param>
+        /// <param name="to"> The native external platform user identifier of the recipient. </param>
+        /// <returns> A new <see cref="Messages.MessageReceipt"/> instance for mocking. </returns>
+        public static MessageReceipt MessageReceipt(string messageId = null, string to = null)
+        {
+            return new MessageReceipt(messageId, to, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateItem"/>. </summary>
+        /// <param name="name"> The template's name. </param>
+        /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
+        /// <param name="status"> The aggregated template status. </param>
+        /// <param name="kind"> The type discriminator describing a template type. </param>
+        /// <returns> A new <see cref="Messages.MessageTemplateItem"/> instance for mocking. </returns>
+        public static MessageTemplateItem MessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, string kind = null)
+        {
+            return new UnknownMessageTemplateItem(name, language, status, kind == null ? default : new CommunicationMessagesChannel(kind), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppMessageTemplateItem"/>. </summary>

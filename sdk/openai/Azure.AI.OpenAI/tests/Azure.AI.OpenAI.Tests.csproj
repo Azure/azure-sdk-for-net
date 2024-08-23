@@ -28,31 +28,26 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\edit_sample_image.png">
+    <None Include="Assets\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\edit_sample_mask.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Include="SessionRecords\**\*">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
-    <None Update="Assets\french.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\hello_world.m4a">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\speed-talking.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\stop_sign.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\variation_sample_image.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Include="..\src\Utility\Polyfill\**\*.cs">
+      <Link>Utils\Polyfill\%(RecursiveDir)\%(Filename).cs</Link>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="SessionRecords\**\*" />
+    <!-- This is used to automatically update the playback configuration file when recording -->
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>TestProjectSourceBasePath</_Parameter1>
+      <_Parameter2>$(MSBuildThisFileDirectory)</_Parameter2>
+    </AssemblyAttribute>
   </ItemGroup>
-  
+
 </Project>

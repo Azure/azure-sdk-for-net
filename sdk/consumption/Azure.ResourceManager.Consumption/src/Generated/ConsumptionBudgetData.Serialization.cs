@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Consumption
             {
                 return null;
             }
-            ETag? eTag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Consumption
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Consumption
                 currentSpend,
                 notifications ?? new ChangeTrackingDictionary<string, BudgetAssociatedNotification>(),
                 forecastSpend,
-                eTag,
+                etag,
                 serializedAdditionalRawData);
         }
 

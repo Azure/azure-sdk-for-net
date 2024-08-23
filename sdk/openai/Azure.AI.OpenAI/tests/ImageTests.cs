@@ -6,9 +6,8 @@
 using System;
 using System.ClientModel;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI.Images;
-using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using OpenAI.Images;
 
 namespace Azure.AI.OpenAI.Tests;
@@ -20,19 +19,20 @@ public class ImageTests : AoaiTestBase<ImageClient>
 
     [RecordedTest]
     [Category("Smoke")]
-    public void CanCreateClient() => Assert.That(GetTestClient<TokenCredential>(), Is.InstanceOf<ImageClient>());
+    public void CanCreateClient()
+    {
+        ImageClient client = GetTestClient(tokenCredential: new DefaultAzureCredential());
+        Assert.That(client, Is.InstanceOf<ImageClient>());
+    }
 
     [RecordedTest]
     public async Task BadKeyGivesHelpfulError()
     {
-        Uri endpoint = TestConfig.GetEndpointFor<ImageClient>();
-        string modelName = TestConfig.GetDeploymentNameFor<ImageClient>();
         string mockKey = "not-a-valid-key-and-should-still-be-sanitized";
 
-        AzureOpenAIClient topLevelClient = new(endpoint, new ApiKeyCredential(mockKey));
-        ImageClient client = InstrumentClient(topLevelClient.GetImageClient(modelName));
         try
         {
+            ImageClient client = GetTestClient(keyCredential: new ApiKeyCredential(mockKey));
             _ = await client.GenerateImageAsync("a delightful exception message, in contemporary watercolor");
             Assert.Fail("No exception was thrown");
         }
@@ -48,7 +48,7 @@ public class ImageTests : AoaiTestBase<ImageClient>
     public async Task CanCreateSimpleImage()
     {
         ImageClient client = GetTestClient();
-        GeneratedImage image = await client.GenerateImageAsync("a small watermelon", new()
+        GeneratedImage image = await client.GenerateImageAsync("a tabby cat", new()
         {
             Quality = GeneratedImageQuality.Standard,
             Size = GeneratedImageSize.W1024xH1024,
@@ -63,7 +63,7 @@ public class ImageTests : AoaiTestBase<ImageClient>
     public async Task CanGetContentFilterResults()
     {
         ImageClient client = GetTestClient();
-        ClientResult<GeneratedImage> imageResult = await client.GenerateImageAsync("a small watermelon", new()
+        ClientResult<GeneratedImage> imageResult = await client.GenerateImageAsync("a tabby cat", new()
         {
             Quality = GeneratedImageQuality.Standard,
             Size = GeneratedImageSize.W1024xH1024,

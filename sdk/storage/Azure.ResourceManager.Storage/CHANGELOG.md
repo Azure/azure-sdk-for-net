@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2024-06-28)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2022-09' to 'package-2023-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b22c642b361e6d6e7d72a2347a09b0bcf6075d70/specification/storage/resource-manager/readme.md.
+    - Supported Create/Update/Get/Delete/List StorageTaskAssignment.
+    - Supported List StorageTaskAssignmentsInstancesReport from Storage account and from StorageTaskAssignment.
+    - Supported localuser new properties: "userId", "groupId", "allowAclAuthorization", "extendedGroups", "isNFSv3Enabled".
+    - Supported list localusers paging and filtering.
+    - Supported new Storage Account properties: "enableExtendedGroups".
+    - Supported Storage Account minimumTlsVersion new value "TLS1_3".
+    - Supported Storage Account accessTier new value "Cold".
+    - Supported Storage Account sasPolicy expirationAction new value "Block".
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.39.0 to 1.40.0
 
 ## 1.2.3 (2024-05-07)
 

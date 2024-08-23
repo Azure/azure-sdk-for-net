@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="systemData"> The systemData. </param>
         /// <param name="title"> Backend Title. </param>
         /// <param name="description"> Backend Description. </param>
-        /// <param name="resourceUri"> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
+        /// <param name="resourceUri"> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
         /// <param name="properties"> Backend Properties contract. </param>
         /// <param name="credentials"> Backend Credentials Contract Properties. </param>
-        /// <param name="proxy"> Backend Proxy Contract Properties. </param>
+        /// <param name="proxy"> Backend gateway Contract Properties. </param>
         /// <param name="tls"> Backend TLS Properties. </param>
         /// <param name="uri"> Runtime Url of the Backend. </param>
         /// <param name="protocol"> Backend communication protocol. </param>
@@ -86,14 +86,18 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Backend Title. </summary>
+        [WirePath("properties.title")]
         public string Title { get; set; }
         /// <summary> Backend Description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
+        /// <summary> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
+        [WirePath("properties.resourceId")]
         public Uri ResourceUri { get; set; }
         /// <summary> Backend Properties contract. </summary>
         internal BackendProperties Properties { get; set; }
         /// <summary> Backend Service Fabric Cluster Properties. </summary>
+        [WirePath("properties.properties.serviceFabricCluster")]
         public BackendServiceFabricClusterProperties BackendServiceFabricCluster
         {
             get => Properties is null ? default : Properties.ServiceFabricCluster;
@@ -106,14 +110,19 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Backend Credentials Contract Properties. </summary>
+        [WirePath("properties.credentials")]
         public BackendCredentialsContract Credentials { get; set; }
-        /// <summary> Backend Proxy Contract Properties. </summary>
+        /// <summary> Backend gateway Contract Properties. </summary>
+        [WirePath("properties.proxy")]
         public BackendProxyContract Proxy { get; set; }
         /// <summary> Backend TLS Properties. </summary>
+        [WirePath("properties.tls")]
         public BackendTlsProperties Tls { get; set; }
         /// <summary> Runtime Url of the Backend. </summary>
+        [WirePath("properties.url")]
         public Uri Uri { get; set; }
         /// <summary> Backend communication protocol. </summary>
+        [WirePath("properties.protocol")]
         public BackendProtocol? Protocol { get; set; }
     }
 }

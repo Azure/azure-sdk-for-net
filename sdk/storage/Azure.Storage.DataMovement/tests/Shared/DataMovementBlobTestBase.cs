@@ -104,11 +104,8 @@ namespace Azure.Storage.DataMovement.Tests
                     options));
         }
 
-        private static TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
-            => new Identity.ClientSecretCredential(
-                config.ActiveDirectoryTenantId,
-                config.ActiveDirectoryApplicationId,
-                config.ActiveDirectoryApplicationSecret);
+        public BlobServiceClient GetServiceClient_OAuth()
+            => BlobsClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
 
         public BlobServiceClient GetServiceClient_BlobServiceSas_Container(
             string containerName,

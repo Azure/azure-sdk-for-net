@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// DataSafe status type enum.
-    /// Serialized Name: DataSafeStatusType
-    /// </summary>
+    /// <summary> DataSafe status type enum. </summary>
     public readonly partial struct DataSafeStatusType : IEquatable<DataSafeStatusType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string NotRegisteredValue = "NotRegistered";
         private const string FailedValue = "Failed";
 
-        /// <summary>
-        /// Registering status
-        /// Serialized Name: DataSafeStatusType.Registering
-        /// </summary>
+        /// <summary> Registering status. </summary>
         public static DataSafeStatusType Registering { get; } = new DataSafeStatusType(RegisteringValue);
-        /// <summary>
-        /// Registered status
-        /// Serialized Name: DataSafeStatusType.Registered
-        /// </summary>
+        /// <summary> Registered status. </summary>
         public static DataSafeStatusType Registered { get; } = new DataSafeStatusType(RegisteredValue);
-        /// <summary>
-        /// Deregistering status
-        /// Serialized Name: DataSafeStatusType.Deregistering
-        /// </summary>
+        /// <summary> Deregistering status. </summary>
         public static DataSafeStatusType Deregistering { get; } = new DataSafeStatusType(DeregisteringValue);
-        /// <summary>
-        /// NotRegistered status
-        /// Serialized Name: DataSafeStatusType.NotRegistered
-        /// </summary>
+        /// <summary> NotRegistered status. </summary>
         public static DataSafeStatusType NotRegistered { get; } = new DataSafeStatusType(NotRegisteredValue);
-        /// <summary>
-        /// Failed status
-        /// Serialized Name: DataSafeStatusType.Failed
-        /// </summary>
+        /// <summary> Failed status. </summary>
         public static DataSafeStatusType Failed { get; } = new DataSafeStatusType(FailedValue);
         /// <summary> Determines if two <see cref="DataSafeStatusType"/> values are the same. </summary>
         public static bool operator ==(DataSafeStatusType left, DataSafeStatusType right) => left.Equals(right);
@@ -71,7 +53,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

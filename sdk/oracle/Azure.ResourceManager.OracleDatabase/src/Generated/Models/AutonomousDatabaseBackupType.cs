@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
-    /// <summary>
-    /// Autonomous database backup type enum
-    /// Serialized Name: AutonomousDatabaseBackupType
-    /// </summary>
+    /// <summary> Autonomous database backup type enum. </summary>
     public readonly partial struct AutonomousDatabaseBackupType : IEquatable<AutonomousDatabaseBackupType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private const string FullValue = "Full";
         private const string LongTermValue = "LongTerm";
 
-        /// <summary>
-        /// Incremental backup
-        /// Serialized Name: AutonomousDatabaseBackupType.Incremental
-        /// </summary>
+        /// <summary> Incremental backup. </summary>
         public static AutonomousDatabaseBackupType Incremental { get; } = new AutonomousDatabaseBackupType(IncrementalValue);
-        /// <summary>
-        /// Full backup
-        /// Serialized Name: AutonomousDatabaseBackupType.Full
-        /// </summary>
+        /// <summary> Full backup. </summary>
         public static AutonomousDatabaseBackupType Full { get; } = new AutonomousDatabaseBackupType(FullValue);
-        /// <summary>
-        /// LongTerm backup
-        /// Serialized Name: AutonomousDatabaseBackupType.LongTerm
-        /// </summary>
+        /// <summary> LongTerm backup. </summary>
         public static AutonomousDatabaseBackupType LongTerm { get; } = new AutonomousDatabaseBackupType(LongTermValue);
         /// <summary> Determines if two <see cref="AutonomousDatabaseBackupType"/> values are the same. </summary>
         public static bool operator ==(AutonomousDatabaseBackupType left, AutonomousDatabaseBackupType right) => left.Equals(right);
@@ -59,7 +47,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

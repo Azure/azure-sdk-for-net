@@ -49,6 +49,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
   PIN: Pin
 
 request-path-is-non-resource:

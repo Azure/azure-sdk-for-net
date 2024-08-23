@@ -4,331 +4,203 @@
 #nullable enable
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.AI.OpenAI.Tests.Utils;
+using Azure.AI.OpenAI.Tests.Utils.Config;
+using Azure.Core.TestFramework;
 
 namespace Azure.AI.OpenAI.Tests;
 
 internal class TestConfig
 {
-    private const string AOAI_ENV_KEY_SEPARATOR = "_";
-    private const string AOAI_ENV_KEY_PREFIX = "AZURE_OPENAI_";
-    private const string SUFFIX_AOAI_API_KEY = "API_KEY";
-    private const string SUFFIX_AOAI_ENDPOINT = "ENDPOINT";
-    private const string SUFFIX_AOAI_DEPLOYMENT = "DEPLOYMENT";
+    private const string AZURE_OPENAI_ENV_KEY_PREFIX = "AZURE_OPENAI";
 
-    private readonly Lazy<IReadOnlyDictionary<string, Config>?> _config;
+    private readonly bool _isPlayback;
+    private readonly IReadOnlyDictionary<string, JsonConfig> _jsonConfig;
+    private SortedDictionary<string, SanitizedJsonConfig> _recordedConfig;
 
-    public TestConfig()
+    public virtual string AssetsSubFolder => "Assets";
+    public virtual string AssetsJson => "test_config.json";
+    public virtual string PlaybackAssetsJson => $"playback_{AssetsJson}";
+
+    public TestConfig(RecordedTestMode? mode)
     {
-        // To do: reimplement file-based with Azure SDK artifacts
-        _config = new Lazy<IReadOnlyDictionary<string, Config>?>(() =>
-        {
-            return new[]
-            {
-                AssetsJson,
-                Path.Combine(AssetsSubFolder, AssetsJson),
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Azure", AssetsSubFolder, AssetsJson),
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".Azure", AssetsSubFolder, AssetsJson),
-            }
-            .Select(f =>
-            {
-                try
-                {
-                    if (File.Exists(f))
-                    {
-                        string json = File.ReadAllText(f);
-                        return JsonSerializer.Deserialize<Dictionary<string, Config>>(json, new JsonSerializerOptions()
-                        {
-                            PropertyNameCaseInsensitive = true,
-                            PropertyNamingPolicy = JsonHelpers.SnakeCaseLower,
-                            DictionaryKeyPolicy = JsonHelpers.SnakeCaseLower,
-                            Converters =
-                            {
-                                new UnSnakeCaseDictKeyConverter()
-                            }
-                        });
-                    }
-                }
-                catch (Exception)
-                {
-                }
+        _isPlayback = mode == RecordedTestMode.Playback;
+        _recordedConfig = new(new DefaultFirstStringComparer());
 
-                return null;
-            })
-            .FirstOrDefault(c => c != null);
-        });
+        // Load the previous playback configuration and use that to initialize the recorded config
+        string playbackConfigJson = Path.Combine(AssetsSubFolder, PlaybackAssetsJson);
+        var playbackConfig = ReadJsonConfig(playbackConfigJson);
+        if (playbackConfig != null)
+        {
+            foreach (var kvp in playbackConfig)
+            {
+                _recordedConfig.Add(kvp.Key, new SanitizedJsonConfig(kvp.Value));
+            }
+        }
+
+        // When in playback mode, we always use the playback configuration. This ensures that we run in the same way in CI/CD
+        // as we do locally.
+        if (_isPlayback)
+        {
+            _jsonConfig = playbackConfig
+                ?? throw new InvalidOperationException($"The playback config file was not found: {playbackConfigJson}");
+        }
+        else
+        {
+            _jsonConfig = new[]
+                {
+                    AssetsJson,
+                    Path.Combine(AssetsSubFolder, AssetsJson),
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Azure", AssetsSubFolder, AssetsJson),
+                    Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".Azure", AssetsSubFolder, AssetsJson),
+                }
+                .Select(f => ReadJsonConfig(f))
+                .FirstOrDefault(c => c != null)
+                ?? new Dictionary<string, JsonConfig>();
+        }
     }
 
-    protected virtual string AssetsSubFolder => "Assets";
-    protected virtual string AssetsJson => "test_config.json";
+    public virtual IConfiguration? GetConfig<TClient>()
+        => GetConfig(ToKey<TClient>());
 
-    public virtual Uri GetEndpointFor<TClient>(string? @override = null)
-        => GetConfig(@override ?? ToKey<TClient>())?.Endpoint
-            ?? throw new KeyNotFoundException($"{typeof(TClient).FullName}: endpoint");
-
-    public virtual ApiKeyCredential GetApiKeyFor<TClient>(string? @override = null)
-        => GetConfig(@override ?? ToKey<TClient>())
-            ?.Key
-            ?? throw new KeyNotFoundException($"{typeof(TClient).FullName}: API key");
-
-    public virtual string GetDeploymentNameFor<TClient>(string? @override = null)
-        => GetConfig(@override ?? ToKey<TClient>())
-            ?.Deployment
-            ?? throw new KeyNotFoundException($"{typeof(TClient).FullName}: deployment");
-
-    public virtual Config? GetConfig<TClient>()
-        => GetConfig(ToKey<TClient>(), false);
-
-    public virtual Config? GetConfig(string name, params string[] additionalTypesToAdd)
-        => GetConfig(name, false, additionalTypesToAdd);
-
-    public virtual Config GetConfig(string name, bool ignoreDefault, params string[] additionalTypesToAdd)
+    public virtual IConfiguration? GetConfig(string name)
     {
         // In order to populate each property of the Config object, the search order is as follows:
         // 1. Getting the specific config for the name in the JSON config file
         // 2. Getting the value from the default config
-        // 3. Getting the value from the AZURE_OPENAI_<NAME>_<PROEPRTYNAME> environment variable
-        // 4. Getting the value from the AZURE_OPENAI_<PROEPRTYNAME> environment variable
+        // 3. (Not in playback) Getting the value from the AZURE_OPENAI_<NAME>_<PROEPRTYNAME> environment variable
+        // 4. (Not in playback) Getting the value from the AZURE_OPENAI_<PROEPRTYNAME> environment variable
         // It will fall through each one if the value is null
 
-        Config? specificConfig = _config.Value?.GetValueOrDefault(name);
-        Config? defaultConfig = ignoreDefault
-            ? null
-            : _config.Value?.GetValueOrDefault("default");
+        return new FlattenedConfig(
+            [
+                new NamedConfig(_jsonConfig.GetValueOrDefault(name), name),
+                new NamedConfig(_jsonConfig.GetValueOrDefault(JsonConfig.DEFAULT_CONFIG_NAME), null),
+                _isPlayback ? null : new EnvironmentValuesConfig(AZURE_OPENAI_ENV_KEY_PREFIX, name),
+                _isPlayback ? null : new EnvironmentValuesConfig(AZURE_OPENAI_ENV_KEY_PREFIX)
+            ], _recordedConfig);
+    }
 
-        Config flattenedConfig = new Config()
+    public virtual void SavePlaybackConfig()
+    {
+        try
         {
-            Deployment = specificConfig?.Deployment
-                ?? defaultConfig?.Deployment
-                ?? GetValueFromEnv<string>(name, SUFFIX_AOAI_DEPLOYMENT, ignoreDefault),
-            Endpoint = specificConfig?.Endpoint
-                ?? defaultConfig?.Endpoint
-                ?? GetValueFromEnv<Uri>(name, SUFFIX_AOAI_ENDPOINT, ignoreDefault),
-            Key = specificConfig?.Key
-                ?? defaultConfig?.Key
-                ?? GetValueFromEnv<string>(name, SUFFIX_AOAI_API_KEY, ignoreDefault),
-            ExtensionData = specificConfig?.ExtensionData
-        };
+            string? sourceDirectoryPath = typeof(TestConfig).Assembly
+                .GetCustomAttributes<AssemblyMetadataAttribute>()
+                .FirstOrDefault(attrib => attrib.Key == "TestProjectSourceBasePath")
+                ?.Value;
 
-        if (additionalTypesToAdd?.Length > 0)
-        {
-            if (flattenedConfig.ExtensionData == null)
-                flattenedConfig.ExtensionData = new Dictionary<string, JsonElement>();
-
-            foreach (var additionalType in additionalTypesToAdd)
+            if (sourceDirectoryPath != null)
             {
-                if (flattenedConfig.ExtensionData.ContainsKey(additionalType))
+                string playbackConfigJson = Path.Combine(sourceDirectoryPath, AssetsSubFolder, PlaybackAssetsJson);
+
+                string oldJson = string.Empty;
+                if (File.Exists(playbackConfigJson))
                 {
-                    continue;
+                    oldJson = File.ReadAllText(playbackConfigJson);
                 }
 
-                if (defaultConfig?.ExtensionData?.TryGetValue(additionalType, out var defaultMatch) == true)
-                {
-                    flattenedConfig.ExtensionData[additionalType] = defaultMatch.Clone();
-                    continue;
-                }
+                string newJson = JsonSerializer.Serialize(_recordedConfig, JsonConfig.JSON_OPTIONS);
 
-                string? value = GetValueFromEnv<string>(name, additionalType, true);
-                if (value != null)
+                // Visual Studio's hot reload feature can get upset if you are debugging the code and the playback config
+                // file changes, so we only save it if it is different
+                if (oldJson != newJson)
                 {
-                    using var json = JsonDocument.Parse($@"""{value}""");
-                    flattenedConfig.ExtensionData[additionalType] = json.RootElement.Clone();
+                    File.WriteAllText(playbackConfigJson, newJson, Encoding.UTF8);
                 }
             }
         }
-
-        return flattenedConfig;
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine("Failed to save the playback configuration file. Details: " + ex);
+        }
     }
 
     protected static string ToKey<TClient>()
-        => typeof(TClient).Name.Replace("Client", string.Empty);
-
-    private static TVal? GetValueFromEnv<TVal>(string name, Func<string, TVal?>? converter)
     {
-        string? value = Environment.GetEnvironmentVariable(name ?? string.Empty);
-        if (value == null)
+        string fullName = typeof(TClient).Name;
+        int stopAt = fullName.LastIndexOf("Client");
+        stopAt = stopAt == -1 ? fullName.Length : stopAt;
+
+        StringBuilder builder = new(fullName.Length);
+        bool prevWasUpper = true;
+
+        for (int i = 0; i < stopAt; i++)
         {
-            return default;
-        }
-        else if (value is TVal val)
-        {
-            return val;
-        }
-        else if (converter is not null)
-        {
-            return converter(value);
-        }
-        else
-        {
-            var defaultConverter = TypeDescriptor.GetConverter(typeof(TVal));
-            return (TVal?)defaultConverter.ConvertFromInvariantString(value);
-        }
-    }
-
-    protected virtual TVal? GetValueFromEnv<TVal>(string name, string type, bool ignoreDefault, Func<string, TVal?>? converter = null)
-    {
-        string upperType = type.ToUpperInvariant();
-        string specificName = AOAI_ENV_KEY_PREFIX + name?.ToUpperInvariant() + AOAI_ENV_KEY_SEPARATOR + upperType;
-        string generalName = AOAI_ENV_KEY_PREFIX + upperType;
-
-        TVal? value = GetValueFromEnv(specificName, converter);
-        if (value == null && !ignoreDefault)
-        {
-            value = GetValueFromEnv(generalName, converter);
-        }
-
-        return value;
-    }
-
-    public class Config
-    {
-        public string? Key { get; init; }
-        public string? Deployment { get; init; }
-        public Uri? Endpoint { get; init; }
-
-        [JsonExtensionData]
-        public Dictionary<string, JsonElement>? ExtensionData { get; set; }
-
-        public T GetValueOrDefault<T>(string name)
-        {
-            T val = default!;
-
-            if (ExtensionData?.TryGetValue(name, out JsonElement element) == true)
+            char c = fullName[i];
+            if (char.IsUpper(c))
             {
-                val = element.Deserialize<T>()!;
-            }
-
-            return val ?? default(T)!;
-        }
-    }
-
-    private class UnSnakeCaseDictKeyConverter : JsonConverterFactory
-    {
-        public override bool CanConvert(Type typeToConvert)
-        {
-            return typeToConvert.IsConstructedGenericType
-                && typeToConvert.GetGenericTypeDefinition() == typeof(Dictionary<,>)
-                && typeToConvert.GetGenericArguments()[0] == typeof(string);
-        }
-
-        public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options)
-        {
-            Type closedType = typeof(InnerConverter<>).MakeGenericType([typeToConvert.GetGenericArguments()[1]]);
-            return (JsonConverter?)Activator.CreateInstance(
-                closedType,
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
-                null,
-                [options],
-                null);
-        }
-
-        private class InnerConverter<TValue> : JsonConverter<Dictionary<string, TValue>>
-        {
-            private JsonSerializerOptions _options;
-
-            public InnerConverter(JsonSerializerOptions options)
-            {
-#if NETFRAMEWORK
-                _options = new()
+                if (prevWasUpper)
                 {
-                    AllowTrailingCommas = options.AllowTrailingCommas,
-                    DefaultBufferSize = options.DefaultBufferSize,
-                    DictionaryKeyPolicy = options.DictionaryKeyPolicy,
-                    Encoder = options.Encoder,
-                    IgnoreReadOnlyProperties = options.IgnoreReadOnlyProperties,
-                    MaxDepth = options.MaxDepth,
-                    PropertyNameCaseInsensitive = options.PropertyNameCaseInsensitive,
-                    PropertyNamingPolicy = options.PropertyNamingPolicy,
-                    ReadCommentHandling = options.ReadCommentHandling,
-                    WriteIndented = options.WriteIndented,
-                    IgnoreNullValues = options.IgnoreNullValues,
-                };
-#else
-                _options = new(options);
-                _options.Converters.Clear();
-#endif
-
-                if (options.Converters?.Count > 0)
-                {
-                    var thisType = GetType();
-
-                    foreach (var conv in options.Converters)
-                    {
-                        if (conv is not UnSnakeCaseDictKeyConverter
-                            && !thisType.IsAssignableFrom(conv.GetType()))
-                        {
-                            _options.Converters.Add(conv);
-                        }
-                    }
+                    builder.Append(char.ToLowerInvariant(c));
                 }
-            }
-
-            public override Dictionary<string, TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                if (reader.TokenType != JsonTokenType.StartObject)
+                else
                 {
-                    throw new JsonException();
+                    builder.Append('_');
+                    builder.Append(char.ToLowerInvariant(c));
                 }
 
-                StringBuilder builder = new();
-                Dictionary<string, TValue> dict = new(StringComparer.OrdinalIgnoreCase);
-
-                while (reader.Read())
-                {
-                    if (reader.TokenType == JsonTokenType.EndObject)
-                    {
-                        return dict;
-                    }
-
-                    if (reader.TokenType != JsonTokenType.PropertyName)
-                    {
-                        throw new JsonException();
-                    }
-
-                    string? propertyName = reader.GetString();
-                    bool prevWasSeparator = true;
-                    for (int i = 0; i < propertyName?.Length; i++)
-                    {
-                        if (propertyName[i] == '_' || propertyName[i] == '-')
-                        {
-                            prevWasSeparator = true;
-                        }
-                        else if (prevWasSeparator)
-                        {
-                            prevWasSeparator = false;
-                            builder.Append(char.ToUpperInvariant(propertyName[i]));
-                        }
-                        else
-                        {
-                            builder.Append(propertyName[i]);
-                        }
-                    }
-
-                    propertyName = builder.ToString();
-                    builder.Clear();
-
-                    reader.Read();
-                    TValue? val = JsonSerializer.Deserialize<TValue>(ref reader, _options);
-
-                    dict[propertyName] = val!;
-                }
-
-                throw new JsonException();
+                prevWasUpper = true;
             }
-
-            public override void Write(Utf8JsonWriter writer, Dictionary<string, TValue> value, JsonSerializerOptions options)
+            else
             {
-                throw new NotSupportedException("Please use the DictionaryKeyNaming policy option instead");
+                builder.Append(c);
+                prevWasUpper = false;
             }
+        }
+
+        return builder.ToString();
+    }
+
+    protected static IReadOnlyDictionary<string, JsonConfig>? ReadJsonConfig(string fullPath)
+    {
+        try
+        {
+            if (File.Exists(fullPath))
+            {
+                string json = File.ReadAllText(fullPath);
+                return JsonSerializer.Deserialize<Dictionary<string, JsonConfig>>(json, JsonConfig.JSON_OPTIONS);
+            }
+        }
+        catch (Exception)
+        {
+        }
+
+        return null;
+    }
+
+    private class DefaultFirstStringComparer : IComparer<string>
+    {
+        public int Compare(string? x, string? y)
+        {
+            if (ReferenceEquals(x, y))
+            {
+                return 0;
+            }
+            else if (x == null)
+            {
+                return -1;
+            }
+            else if (y == null)
+            {
+                return 1;
+            }
+            else if (x == JsonConfig.DEFAULT_CONFIG_NAME && y != JsonConfig.DEFAULT_CONFIG_NAME)
+            {
+                return -1;
+            }
+            else if (x != JsonConfig.DEFAULT_CONFIG_NAME && y == JsonConfig.DEFAULT_CONFIG_NAME)
+            {
+                return 1;
+            }
+
+            return string.Compare(x, y, StringComparison.Ordinal);
         }
     }
 }
