@@ -54,7 +54,7 @@ extends:
                 displayName: "Emitter linter check"
                 workingDirectory: $(Build.SourcesDirectory)/tools/azure-plugin/emitter
               - task: Npm@1
-                displayName: 'Build TypeSpec csharp emitter and generator'
+                displayName: 'Build Azure csharp client emitter and generator'
                 inputs:
                   command: custom
                   customCommand: run build

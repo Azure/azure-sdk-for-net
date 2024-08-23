@@ -1,5 +1,3 @@
-#Requires -Version 7.0
-
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
 
 $packageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
