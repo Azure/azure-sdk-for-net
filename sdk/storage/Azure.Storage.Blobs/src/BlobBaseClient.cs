@@ -6902,7 +6902,14 @@ namespace Azure.Storage.Blobs.Specialized
         [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateUserDelegationSasUri(BlobSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey, out string stringToSign) =>
-            GenerateUserDelegationSasUri(new BlobSasBuilder(permissions, expiresOn) { BlobContainerName = Name }, userDelegationKey, out stringToSign);
+            GenerateUserDelegationSasUri(new BlobSasBuilder(permissions, expiresOn)
+            {
+                BlobContainerName = BlobContainerName,
+                BlobName = Name,
+                Snapshot = _snapshot,
+                BlobVersionId = _blobVersionId,
+                EncryptionScope = _clientConfiguration.EncryptionScope
+            }, userDelegationKey, out stringToSign);
 
         /// <summary>
         /// The <see cref="GenerateUserDelegationSasUri(BlobSasBuilder, UserDelegationKey)"/>
@@ -6969,24 +6976,40 @@ namespace Azure.Storage.Blobs.Specialized
             // Deep copy of builder so we don't modify the user's origial BlobSasBuilder.
             builder = BlobSasBuilder.DeepCopy(builder);
 
-            // Assign builder's ContainerName if it is null.
-            builder.BlobContainerName ??= Name;
+            // Assign builder's ContainerName, BlobName, Snapshot, BlobVersionId, and EncryptionScope if they are null.
+            builder.BlobContainerName ??= BlobContainerName;
+            builder.BlobName ??= Name;
+            builder.Snapshot ??= _snapshot;
+            builder.BlobVersionId ??= _blobVersionId;
+            builder.EncryptionScope ??= _clientConfiguration.EncryptionScope;
 
-            if (!builder.BlobContainerName.Equals(Name, StringComparison.InvariantCulture))
+            if (!builder.BlobContainerName.Equals(BlobContainerName, StringComparison.InvariantCulture))
             {
                 throw Errors.SasNamesNotMatching(
                     nameof(builder.BlobContainerName),
                     nameof(BlobSasBuilder),
+                    nameof(BlobContainerName));
+            }
+            if (!builder.BlobName.Equals(Name, StringComparison.InvariantCulture))
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobName),
+                    nameof(BlobSasBuilder),
                     nameof(Name));
             }
-            if (!string.IsNullOrEmpty(builder.BlobName))
+            if (string.Compare(_snapshot, builder.Snapshot, StringComparison.InvariantCulture) != 0)
             {
-                throw Errors.SasBuilderEmptyParam(
-                    nameof(builder),
-                    nameof(builder.BlobName),
-                    nameof(Constants.Blob.Container.Name));
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.Snapshot),
+                    nameof(BlobSasBuilder));
             }
-            if (!string.IsNullOrEmpty(AccountName))
+            if (string.Compare(_blobVersionId, builder.BlobVersionId, StringComparison.InvariantCulture) != 0)
+            {
+                throw Errors.SasNamesNotMatching(
+                    nameof(builder.BlobVersionId),
+                    nameof(BlobSasBuilder));
+            }
+            if (string.IsNullOrEmpty(AccountName))
             {
                 throw Errors.SasClientMissingData(nameof(AccountName));
             }
