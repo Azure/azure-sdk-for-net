@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="ApiManagementGroupCreateOrUpdateContent"/>. </summary>
         /// <param name="displayName"> Group name. </param>
         /// <param name="description"> Group description. </param>
-        /// <param name="groupType"> Group type. </param>
+        /// <param name="apiManagementGroupType"> Group type. </param>
         /// <param name="externalId"> Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGroupCreateOrUpdateContent(string displayName, string description, ApiManagementGroupType? groupType, string externalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementGroupCreateOrUpdateContent(string displayName, string description, ApiManagementGroupType? apiManagementGroupType, string externalId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             Description = description;
-            GroupType = groupType;
+            ApiManagementGroupType = apiManagementGroupType;
             ExternalId = externalId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Description { get; set; }
         /// <summary> Group type. </summary>
         [WirePath("properties.type")]
-        public ApiManagementGroupType? GroupType { get; set; }
+        public ApiManagementGroupType? ApiManagementGroupType { get; set; }
         /// <summary> Identifier of the external groups, this property contains the id of the group from the external identity provider, e.g. for Azure Active Directory `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object id&gt;`; otherwise the value is null. </summary>
         [WirePath("properties.externalId")]
         public string ExternalId { get; set; }

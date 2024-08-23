@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             {
                 DisplayName = "NewGroup (samiraad.onmicrosoft.com)",
                 Description = "new group to test",
-                GroupType = ApiManagementGroupType.External,
+                ApiManagementGroupType = ApiManagementGroupType.External,
                 ExternalId = "aad://samiraad.onmicrosoft.com/groups/83cf2753-5831-4675-bc0e-2f8dc067c58d",
             };
             ArmOperation<ApiManagementGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, groupId, content);

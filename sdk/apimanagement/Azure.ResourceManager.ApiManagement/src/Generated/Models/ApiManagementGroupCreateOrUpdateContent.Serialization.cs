@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(GroupType))
+            if (Optional.IsDefined(ApiManagementGroupType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(GroupType.Value.ToSerialString());
+                writer.WriteStringValue(ApiManagementGroupType.Value.ToSerialString());
             }
             if (Optional.IsDefined(ExternalId))
             {

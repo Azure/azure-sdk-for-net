@@ -62,7 +62,6 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}: ApiManagementGroup
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas/{schemaId}: ApiManagementGlobalSchema
 
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -198,7 +197,7 @@ rename-mapping:
   GatewayContract: ApiManagementGateway
   GlobalSchemaContract: ApiManagementGlobalSchema
   GroupContract: ApiManagementGroup
-  GroupContract.properties.type: ApiManagementGroupType
+  GroupContract.properties.type: GroupType
   GroupContract.properties.builtIn: IsBuiltIn
   IdentityProviderContract: ApiManagementIdentityProvider
   IdentityProviderContract.properties.type: IdentityProviderType
@@ -308,7 +307,9 @@ rename-mapping:
   ProductUpdateParameters: ApiManagementProductPatch
   NamedValueUpdateParameters: ApiManagementNamedValuePatch
   GroupCreateParameters: ApiManagementGroupCreateOrUpdateContent
+  GroupCreateParameters.properties.type: ApiManagementGroupType
   GroupUpdateParameters: ApiManagementGroupPatch
+  GroupUpdateParameters.properties.type: ApiManagementGroupType
   ApiVersionSetUpdateParameters: ApiVersionSetPatch
   OperationUpdateContract: ApiOperationPatch
   NamedValueCreateContract: ApiManagementNamedValueCreateOrUpdateContent
