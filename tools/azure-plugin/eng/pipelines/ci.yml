@@ -59,10 +59,8 @@ extends:
                   command: custom
                   customCommand: run build
                   workingDir: $(Build.SourcesDirectory)/tools/azure-plugin              
-              - task: PowerShell@2
+              - pwsh: ./tools/azure-plugin/eng/scripts/CodeGenerationCheck.ps1
                 displayName: "Check if generated code is up-to-date"
-                inputs:
-                   filePath: $(Build.SourcesDirectory)/tools/azure-plugin/eng/scripts/CodeGenerationCheck.ps1
                 env:
                   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
                   DOTNET_CLI_TELEMETRY_OPTOUT: 1
