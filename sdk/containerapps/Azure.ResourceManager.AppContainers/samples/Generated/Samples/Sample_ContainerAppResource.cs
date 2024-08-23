@@ -242,6 +242,8 @@ Name = "testcontainerApp0",
                     {
                         MinReplicas = 1,
                         MaxReplicas = 5,
+                        CooldownPeriod = 350,
+                        PollingInterval = 35,
                         Rules =
 {
 new ContainerAppScaleRule()

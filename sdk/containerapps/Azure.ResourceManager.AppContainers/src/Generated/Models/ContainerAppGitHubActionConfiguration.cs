@@ -55,6 +55,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="registryInfo"> Registry configurations. </param>
         /// <param name="azureCredentials"> AzureCredentials configurations. </param>
         /// <param name="contextPath"> Context path. </param>
+        /// <param name="dockerfilePath"> Dockerfile path. </param>
         /// <param name="gitHubPersonalAccessToken"> One time Github PAT to configure github environment. </param>
         /// <param name="image"> Image name. </param>
         /// <param name="publishType"> Code or Image. </param>
@@ -63,11 +64,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="runtimeVersion"> Runtime version. </param>
         /// <param name="buildEnvironmentVariables"> List of environment variables to be passed to the build. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppGitHubActionConfiguration(ContainerAppRegistryInfo registryInfo, ContainerAppCredentials azureCredentials, string contextPath, string gitHubPersonalAccessToken, string image, string publishType, string os, string runtimeStack, string runtimeVersion, IList<EnvironmentVariable> buildEnvironmentVariables, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppGitHubActionConfiguration(ContainerAppRegistryInfo registryInfo, ContainerAppCredentials azureCredentials, string contextPath, string dockerfilePath, string gitHubPersonalAccessToken, string image, string publishType, string os, string runtimeStack, string runtimeVersion, IList<EnvironmentVariable> buildEnvironmentVariables, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RegistryInfo = registryInfo;
             AzureCredentials = azureCredentials;
             ContextPath = contextPath;
+            DockerfilePath = dockerfilePath;
             GitHubPersonalAccessToken = gitHubPersonalAccessToken;
             Image = image;
             PublishType = publishType;
@@ -84,6 +86,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         public ContainerAppCredentials AzureCredentials { get; set; }
         /// <summary> Context path. </summary>
         public string ContextPath { get; set; }
+        /// <summary> Dockerfile path. </summary>
+        public string DockerfilePath { get; set; }
         /// <summary> One time Github PAT to configure github environment. </summary>
         public string GitHubPersonalAccessToken { get; set; }
         /// <summary> Image name. </summary>

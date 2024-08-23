@@ -90,6 +90,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
                         Kind = "feaderated",
                     },
                     ContextPath = "./",
+                    DockerfilePath = "./Dockerfile",
                     GitHubPersonalAccessToken = "test",
                     Image = "image/tag",
                     BuildEnvironmentVariables =

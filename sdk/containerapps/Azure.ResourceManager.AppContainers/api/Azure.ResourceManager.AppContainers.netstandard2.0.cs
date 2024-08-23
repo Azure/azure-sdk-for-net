@@ -3197,6 +3197,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public Azure.ResourceManager.AppContainers.Models.ContainerAppCredentials AzureCredentials { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.EnvironmentVariable> BuildEnvironmentVariables { get { throw null; } }
         public string ContextPath { get { throw null; } set { } }
+        public string DockerfilePath { get { throw null; } set { } }
         public string GitHubPersonalAccessToken { get { throw null; } set { } }
         public string Image { get { throw null; } set { } }
         public string OS { get { throw null; } set { } }
@@ -4041,8 +4042,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppScale : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppScale>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppScale>
     {
         public ContainerAppScale() { }
+        public int? CooldownPeriod { get { throw null; } set { } }
         public int? MaxReplicas { get { throw null; } set { } }
         public int? MinReplicas { get { throw null; } set { } }
+        public int? PollingInterval { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppScaleRule> Rules { get { throw null; } }
         Azure.ResourceManager.AppContainers.Models.ContainerAppScale System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppScale>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppScale>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5005,6 +5008,17 @@ namespace Azure.ResourceManager.AppContainers.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ManagedEnvironmentStorageProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ManagedEnvironmentStorageProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class MetricsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.MetricsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.MetricsConfiguration>
+    {
+        public MetricsConfiguration() { }
+        public System.Collections.Generic.IList<string> Destinations { get { throw null; } }
+        public bool? IncludeKeda { get { throw null; } set { } }
+        Azure.ResourceManager.AppContainers.Models.MetricsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.MetricsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.MetricsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.MetricsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.MetricsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.MetricsConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.MetricsConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class NacosComponent : Azure.ResourceManager.AppContainers.Models.JavaComponentProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.NacosComponent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.NacosComponent>
     {
         public NacosComponent() { }
@@ -5020,8 +5034,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         public OpenTelemetryConfiguration() { }
         public Azure.ResourceManager.AppContainers.Models.DestinationsConfiguration DestinationsConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> LogsDestinations { get { throw null; } }
-        public System.Collections.Generic.IList<string> MetricsDestinations { get { throw null; } }
-        public System.Collections.Generic.IList<string> TracesDestinations { get { throw null; } }
+        public Azure.ResourceManager.AppContainers.Models.MetricsConfiguration MetricsConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.TracesConfiguration TracesConfiguration { get { throw null; } set { } }
         Azure.ResourceManager.AppContainers.Models.OpenTelemetryConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.OpenTelemetryConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.OpenTelemetryConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppContainers.Models.OpenTelemetryConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.OpenTelemetryConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5501,6 +5515,17 @@ namespace Azure.ResourceManager.AppContainers.Models
         Azure.ResourceManager.AppContainers.Models.TokenStore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.TokenStore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.TokenStore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.TokenStore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TracesConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.TracesConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.TracesConfiguration>
+    {
+        public TracesConfiguration() { }
+        public System.Collections.Generic.IList<string> Destinations { get { throw null; } }
+        public bool? IncludeDapr { get { throw null; } set { } }
+        Azure.ResourceManager.AppContainers.Models.TracesConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.TracesConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.TracesConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.TracesConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.TracesConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.TracesConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.TracesConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UsageName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.UsageName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.UsageName>
     {

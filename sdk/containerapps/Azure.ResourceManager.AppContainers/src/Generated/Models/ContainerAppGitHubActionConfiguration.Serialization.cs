@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
+            if (Optional.IsDefined(DockerfilePath))
+            {
+                writer.WritePropertyName("dockerfilePath"u8);
+                writer.WriteStringValue(DockerfilePath);
+            }
             if (Optional.IsDefined(GitHubPersonalAccessToken))
             {
                 writer.WritePropertyName("githubPersonalAccessToken"u8);
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppRegistryInfo registryInfo = default;
             ContainerAppCredentials azureCredentials = default;
             string contextPath = default;
+            string dockerfilePath = default;
             string gitHubPersonalAccessToken = default;
             string image = default;
             string publishType = default;
@@ -154,6 +160,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("contextPath"u8))
                 {
                     contextPath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dockerfilePath"u8))
+                {
+                    dockerfilePath = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("githubPersonalAccessToken"u8))
@@ -210,6 +221,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 registryInfo,
                 azureCredentials,
                 contextPath,
+                dockerfilePath,
                 gitHubPersonalAccessToken,
                 image,
                 publishType,

@@ -218,6 +218,8 @@ Memory = "2.0Gi",
                     {
                         MinReplicas = 1,
                         MaxReplicas = 30,
+                        CooldownPeriod = 350,
+                        PollingInterval = 35,
                     },
                 },
             };
@@ -411,6 +413,8 @@ Name = "testcontainerApp0",
                     {
                         MinReplicas = 1,
                         MaxReplicas = 5,
+                        CooldownPeriod = 350,
+                        PollingInterval = 35,
                         Rules =
 {
 new ContainerAppScaleRule()
@@ -647,6 +651,8 @@ SubPath = "subPath2",
                     {
                         MinReplicas = 1,
                         MaxReplicas = 5,
+                        CooldownPeriod = 350,
+                        PollingInterval = 35,
                         Rules =
 {
 new ContainerAppScaleRule()
@@ -797,6 +803,8 @@ Name = "testcontainerAppManagedBy",
                     {
                         MinReplicas = 1,
                         MaxReplicas = 5,
+                        CooldownPeriod = 350,
+                        PollingInterval = 35,
                         Rules =
 {
 new ContainerAppScaleRule()
@@ -1001,6 +1009,8 @@ SubPath = "subPath2",
                     {
                         MinReplicas = 1,
                         MaxReplicas = 5,
+                        CooldownPeriod = 350,
+                        PollingInterval = 35,
                         Rules =
 {
 new ContainerAppScaleRule()
@@ -1126,6 +1136,8 @@ Name = "testcontainerAppTcp",
                     {
                         MinReplicas = 1,
                         MaxReplicas = 5,
+                        CooldownPeriod = 350,
+                        PollingInterval = 35,
                         Rules =
 {
 new ContainerAppScaleRule()

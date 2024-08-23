@@ -310,18 +310,26 @@ Value = "xxxxxxxxxxx",
 }
 },
                     },
-                    TracesDestinations =
+                    TracesConfiguration = new TracesConfiguration()
+                    {
+                        IncludeDapr = true,
+                        Destinations =
 {
 "appInsights"
 },
+                    },
                     LogsDestinations =
 {
 "appInsights"
 },
-                    MetricsDestinations =
+                    MetricsConfiguration = new MetricsConfiguration()
+                    {
+                        IncludeKeda = true,
+                        Destinations =
 {
 "dataDog"
 },
+                    },
                 },
                 IsZoneRedundant = true,
                 CustomDomainConfiguration = new ContainerAppCustomDomainConfiguration()
