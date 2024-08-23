@@ -11,15 +11,15 @@ namespace Azure.Generator;
 /// XXX
 /// </summary>
 [Export(typeof(CodeModelPlugin))]
-[ExportMetadata("PluginName", nameof(AzurePlugin))]
-public class AzurePlugin : ClientModelPlugin
+[ExportMetadata("PluginName", nameof(AzureClinetPlugin))]
+public class AzureClinetPlugin : ClientModelPlugin
 {
     /// <summary>
     /// XXX
     /// </summary>
     /// <param name="context"></param>
     [ImportingConstructor]
-    public AzurePlugin(GeneratorContext context) : base(context) { }
+    public AzureClinetPlugin(GeneratorContext context) : base(context) { }
 
     /// <summary>
     /// XXX

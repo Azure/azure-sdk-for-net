@@ -8,7 +8,7 @@ pr:
     - release/*
   paths:
     include:
-    - azure-plugin
+    - tools/azure-plugin
   
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -26,7 +26,7 @@ extends:
               - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
                 parameters:
                   Paths:
-                    - azure-plugin
+                    - tools/azure-plugin
               - task: UseDotNet@2
                 displayName: 'Use .NET Core SDK'
                 retryCountOnTaskFailure: 3
@@ -40,22 +40,22 @@ extends:
               - script: |
                   npm ci
                 displayName: "Install packages"
-                workingDirectory: $(Build.SourcesDirectory)/azure-plugin
+                workingDirectory: $(Build.SourcesDirectory)/tools/azure-plugin
               - script: |
                   npm ls -a
                 displayName: "List packages"
-                workingDirectory: $(Build.SourcesDirectory)/azure-plugin
+                workingDirectory: $(Build.SourcesDirectory)/tools/azure-plugin
               - script: |
                   npm run prettier
                 displayName: "Emitter format check"
-                workingDirectory: $(Build.SourcesDirectory)/azure-plugin/emitter
+                workingDirectory: $(Build.SourcesDirectory)/tools/azure-plugin/emitter
               - script: |
                   npm run lint
                 displayName: "Emitter linter check"
-                workingDirectory: $(Build.SourcesDirectory)/azure-plugin/emitter
+                workingDirectory: $(Build.SourcesDirectory)/tools/azure-plugin/emitter
               - task: Npm@1
                 displayName: 'Build TypeSpec csharp emitter and generator'
                 inputs:
                   command: custom
                   customCommand: run build
-                  workingDir: $(Build.SourcesDirectory)/azure-plugin
+                  workingDir: $(Build.SourcesDirectory)/tools/azure-plugin
