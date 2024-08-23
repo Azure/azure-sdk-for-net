@@ -138,21 +138,25 @@ namespace Azure.Storage.Files.Shares.Models
         public long? PaidBurstingMaxBandwidthMibps { get; internal set; }
 
         /// <summary>
+        /// Only applicable to provisioned v2 storage accounts.
         /// The calculated burst IOPS of the share.
         /// </summary>
         public long? IncludedBurstIops { get; internal set; }
 
         /// <summary>
+        /// Only applicable to provisioned v2 storage accounts.
         /// The calculated maximum burst credits. This is not the current burst credit level, but the maximum burst credits the share can have.
         /// </summary>
         public long? MaxBurstCreditsForIops { get; internal set; }
 
         /// <summary>
+        /// Only applicable to provisioned v2 storage accounts.
         /// The time the share can be downgraded to lower provisioned IOPs.
         /// </summary>
         public DateTimeOffset? NextAllowedProvisionedIopsDowngradeTime { get; internal set; }
 
         /// <summary>
+        /// Only applicable to provisioned v2 storage accounts.
         /// The time the shaare can be downgraded to lower provisioned bandwidth.
         /// </summary>
         public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeTime { get; internal set; }

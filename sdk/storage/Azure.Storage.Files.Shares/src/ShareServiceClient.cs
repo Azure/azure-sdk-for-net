@@ -12,7 +12,6 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Sas;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Azure.Storage.Files.Shares
 {
