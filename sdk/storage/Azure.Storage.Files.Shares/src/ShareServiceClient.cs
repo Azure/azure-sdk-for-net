@@ -1398,8 +1398,9 @@ namespace Azure.Storage.Files.Shares
 
         #region GetServiceUsage
         /// <summary>
-        /// The <see cref="GetServiceUsage"/> operation gets the usage
-        /// stats for the storage account in question.
+        /// The <see cref="GetServiceUsage"/> operation gets the usage stats for the storage account in question.
+        /// Only applicable for provisioned V2 storage accounts.
+        ///
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1420,8 +1421,8 @@ namespace Azure.Storage.Files.Shares
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetServiceUsageAsync"/> operation gets the usage
-        /// stats for the storage account in question.
+        /// The <see cref="GetServiceUsageAsync"/> operation gets the usage stats for the storage account in question.
+        /// Only applicable for provisioned V2 storage accounts.
         /// </summary>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1442,8 +1443,8 @@ namespace Azure.Storage.Files.Shares
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetServiceUsageInternal"/> operation gets the usage
-        /// stats for the storage account in question.
+        /// The <see cref="GetServiceUsageInternal"/> operation gets the usage stats for the storage account in question.
+        /// Only applicable for provisioned V2 storage accounts.
         /// </summary>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
