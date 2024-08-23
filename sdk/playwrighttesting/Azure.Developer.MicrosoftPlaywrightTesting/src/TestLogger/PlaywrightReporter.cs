@@ -113,7 +113,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         var startTime = TestRunStartTime.ToString("yyyy-MM-ddTHH:mm:ssZ");
         LogMessage("Test Run start time: " + startTime);
         var corelationId = Guid.NewGuid().ToString();
-        var runName = "TestRun#" + startTime; // TODO discuss approach
+        var runName = Guid.NewGuid().ToString(); // TODO discuss approach
         var run = new TestRunDtoV2
         {
             TestRunId = RunId!,
@@ -586,9 +586,12 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         runParameters.TryGetValue(RunSettingKey.RUN_ID, out var runId);
         // If run id is not provided and not set via env, try fetching it from CI info.
         CIInfo = CiInfoProvider.GetCIInfo();
-        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(PlaywrightConstants.PLAYWRIGHT_SERVICE_RUN_ID)) && !string.IsNullOrEmpty(CIInfo.RunId) && string.IsNullOrEmpty(runId?.ToString()))
+        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(PlaywrightConstants.PLAYWRIGHT_SERVICE_RUN_ID)))
         {
-            Environment.SetEnvironmentVariable(PlaywrightConstants.PLAYWRIGHT_SERVICE_RUN_ID, CIInfo.RunId);
+            if (string.IsNullOrEmpty(runId?.ToString()))
+                Environment.SetEnvironmentVariable(PlaywrightConstants.PLAYWRIGHT_SERVICE_RUN_ID, ReporterUtils.GetRunId(CIInfo));
+            else
+                Environment.SetEnvironmentVariable(PlaywrightConstants.PLAYWRIGHT_SERVICE_RUN_ID, runId!.ToString());
         }
         else
         {

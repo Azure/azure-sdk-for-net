@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using System.Collections.Generic;
@@ -144,7 +146,10 @@ public class PlaywrightService
         }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
         if (DefaultAuth == ServiceAuth.TOKEN && !string.IsNullOrEmpty(GetAuthToken()))
+        {
+            ValidateMptPAT();
             return;
+        }
         var operationStatus = await _entraLifecycle!.FetchEntraIdAccessTokenAsync().ConfigureAwait(false);
         if (!operationStatus)
         {
@@ -218,7 +223,8 @@ public class PlaywrightService
         var runIdFromEnvironmentVariable = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_RUN_ID_ENVIRONMENT_VARIABLE);
         if (!string.IsNullOrEmpty(runIdFromEnvironmentVariable))
             return runIdFromEnvironmentVariable!;
-        var runId = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fff'Z'", CultureInfo.InvariantCulture);
+        CIInfo ciInfo = CiInfoProvider.GetCIInfo();
+        var runId = ReporterUtils.GetRunId(ciInfo);
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PLAYWRIGHT_SERVICE_RUN_ID_ENVIRONMENT_VARIABLE, runId);
         return runId;
     }
@@ -244,10 +250,17 @@ public class PlaywrightService
 
     private void ValidateMptPAT()
     {
-        string authToken = GetAuthToken()!;
-        JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(authToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
-        var expiry = (long)(jsonWebToken.ValidTo - new DateTime(1970, 1, 1)).TotalSeconds;
-        if (expiry <= DateTimeOffset.UtcNow.ToUnixTimeSeconds())
-            throw new Exception(Constants.s_expired_mpt_pat_error);
+        try
+        {
+            string authToken = GetAuthToken()!;
+            JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(authToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
+            var expiry = (long)(jsonWebToken.ValidTo - new DateTime(1970, 1, 1)).TotalSeconds;
+            if (expiry <= DateTimeOffset.UtcNow.ToUnixTimeSeconds())
+                throw new Exception(Constants.s_expired_mpt_pat_error);
+        }
+        catch (Exception)
+        {
+            throw new Exception(Constants.s_invalid_mpt_pat_error);
+        }
     }
 }
