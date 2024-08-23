@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Concurrent;
 using Azure.Storage.DataMovement.Blobs.Stress.Configurations;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress;
@@ -103,7 +102,7 @@ public abstract class TestScenario
                 return Task.Run(() => sessionSender.RunAsync(cancellationToken));
 
             case Role.SessionReceiver:
-                var sessionReceiverConfiguration = new SessionReceiverConfiguration();
+                var sessionReceiverConfiguration = new BlockBlobConfiguration();
                 var sessionReceiver = new SessionReceiver(_testParameters, sessionReceiverConfiguration, _metrics);
                 return Task.Run(() => sessionReceiver.RunAsync(cancellationToken));
 

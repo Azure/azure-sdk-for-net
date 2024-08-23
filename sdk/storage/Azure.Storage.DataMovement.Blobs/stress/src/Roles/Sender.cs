@@ -6,13 +6,14 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement.Blobs.Stress.Configurations;
-using Azure.Storage.DataMovement.Blobs.Stress.Infrastructure;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress;
 
 /// <summary>
-///   The role responsible for running a <see cref="ServiceBusSender" />, and testing its performance over
+///   The role responsible for running a <see cref="Sender" />, and testing its performance over
 ///   a long period of time. It collects metrics about the run and sends them to application insights using a
 ///   <see cref="TelemetryClient" />. The metrics collected are garbage collection information, any exceptions
 ///   thrown or heard, and how many messages are processed and read. It stops sending messages and cleans up resources
@@ -62,10 +63,10 @@ internal class Sender
         {
             using var backgroundCancellationSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-            // Create the Service Bus client and sender
+            // Create the Block Blob client
 
-            await using var client = new ServiceBusClient(_testParameters.ServiceBusConnectionString);
-            var sender = client.CreateSender(_testParameters.QueueName, _senderConfiguration.options);
+            BlobContainerClient containerClient = new BlobContainerClient(_testParameters.StorageConnectionString, _testParameters.BlobContainerName);
+            BlockBlobClient blockBlob = containerClient.GetBlockBlobClient();
 
             try
             {

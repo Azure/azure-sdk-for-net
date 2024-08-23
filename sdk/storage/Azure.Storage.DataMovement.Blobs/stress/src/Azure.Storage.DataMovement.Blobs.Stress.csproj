@@ -18,8 +18,12 @@
     <PackageReference Include="Microsoft.Azure.Amqp" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.Memory.Data" />
-    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="CommandLineParser" />
     <PackageReference Include="Microsoft.ApplicationInsights" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\src\Azure.Storage.DataMovement.Blobs.csproj" />
   </ItemGroup>
 </Project>

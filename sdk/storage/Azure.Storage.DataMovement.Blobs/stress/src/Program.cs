@@ -66,11 +66,8 @@ public class Program
             var testScenarioName = testScenario.ToString();
             metrics.Client.Context.GlobalProperties["TestName"] = testScenarioName;
 
-            var queueName = string.Empty;
-            environment.TryGetValue(EnvironmentVariables.StorageBlobContainer, out queueName);
-
-            var sessionQueueName = string.Empty;
-            environment.TryGetValue(EnvironmentVariables.ServiceBusSessionQueue, out sessionQueueName);
+            var blobContainerName = string.Empty;
+            environment.TryGetValue(EnvironmentVariables.StorageBlobContainer, out blobContainerName);
 
             metrics.Client.TrackEvent("Starting a test run.");
 
@@ -79,17 +76,17 @@ public class Program
             switch (testScenario)
             {
                 case TestScenarioName.UploadBlockBlobTest:
-                    testParameters.BlobContainerName = queueName;
+                    testParameters.BlobContainerName = blobContainerName;
                     testScenarioInstance = new SendReceiveTest(testParameters, metrics, opts.Role);
                     break;
 
                 case TestScenarioName.DownloadBlockBlobTest:
-                    testParameters.BlobContainerName = queueName;
+                    testParameters.BlobContainerName = blobContainerName;
                     testScenarioInstance = new SendReceiveBatchesTest(testParameters, metrics, opts.Role);
                     break;
 
                 case TestScenarioName.CopyBlockBlobTest:
-                    testParameters.BlobContainerName = sessionQueueName;
+                    testParameters.BlobContainerName = blobContainerName;
                     testScenarioInstance = new SessionSendReceiveTest(testParameters, metrics, opts.Role);
                     break;
             }

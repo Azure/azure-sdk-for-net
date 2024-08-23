@@ -41,13 +41,13 @@ public class TestParameters : IDisposable
     ///   The handler to use for processing messages in this test's processor instance.
     /// <summary/>
     ///
-    public Func<, Task> messageHandler;
+    public Func<TransferItemFailedEventArgs, Task> messageHandler;
 
     /// <summary>
     ///   The handler to use for processing errors in this test's processor instance.
     /// <summary/>
     ///
-    public Func<ProcessErrorEventArgs, Task> errorHandler;
+    public Func<TransferItemFailedEventArgs, Task> errorHandler;
 
     /// <summary>
     ///   The hasher to use when hashing event bodies for validation.

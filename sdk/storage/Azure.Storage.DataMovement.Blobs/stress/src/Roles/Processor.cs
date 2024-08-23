@@ -7,8 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Concurrent;
 using System.Security.Cryptography;
-using Azure.Storage.DataMovement.Blobs.Stress.Infrastructure;
-using Azure.Storage.DataMovement.Blobs.Stress;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress;
 

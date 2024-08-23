@@ -29,7 +29,7 @@ internal class SessionReceiver
     private TestParameters _testParameters;
 
     /// <summary>The <see cref="ReceiverConfiguration" /> used to configure the instance of this role.</summary>
-    private SessionReceiverConfiguration _sessionReceiverConfiguration;
+    private BlockBlobConfiguration _sessionReceiverConfiguration;
 
     /// <summary>Holds the set of messages that have been read by this instance. The key is the event's unique Id set by the sender.</summary>
     private ConcurrentDictionary<string, byte> _readMessages;
@@ -39,11 +39,11 @@ internal class SessionReceiver
     /// </summary>
     ///
     /// <param name="testParameters">The <see cref="TestParameters" /> used to configure the test scenario run.</param>
-    /// <param name="sessionReceiverConfiguration">The <see cref="SessionReceiverConfiguration" /> instance used to configure this instance of <see cref="Receiver" />.</param>
+    /// <param name="sessionReceiverConfiguration">The <see cref="BlockBlobConfiguration" /> instance used to configure this instance of <see cref="Receiver" />.</param>
     /// <param name="metrics">The <see cref="Metrics" /> instance used to send metrics to Application Insights.</param>
     ///
     public SessionReceiver(TestParameters testParameters,
-                     SessionReceiverConfiguration sessionReceiverConfiguration,
+                     BlockBlobConfiguration sessionReceiverConfiguration,
                      Metrics metrics)
     {
         _testParameters = testParameters;
