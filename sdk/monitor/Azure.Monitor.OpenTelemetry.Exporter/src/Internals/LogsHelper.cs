@@ -56,17 +56,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
                     if (logRecord.Exception != null)
                     {
+                        telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey);
                         telemetryItem.Data = new MonitorBase
                         {
                             BaseType = "ExceptionData",
                             BaseData = new TelemetryExceptionData(Version, logRecord),
                         };
                     }
+                    else if (logRecord.CategoryName == "Azure.Monitor.OpenTelemetry.CustomEvents")
+                    {
+                        telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey);
+                        telemetryItem.Data = new MonitorBase
+                        {
+                            BaseType = "EventData",
+                            BaseData = new TelemetryEventData(Version, logRecord),
+                        };
+                    }
                     else
                     {
+                        telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey);
                         telemetryItem.Data = new MonitorBase
                         {
                             BaseType = "MessageData",
