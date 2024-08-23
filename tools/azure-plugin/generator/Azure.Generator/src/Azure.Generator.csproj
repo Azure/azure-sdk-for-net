@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <PackageId>AzurePlugin</PackageId>
+    <PackageId>AzureClientPlugin</PackageId>
     <Version>1.0.0-beta.1</Version>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 	<!-- Below is workaround to make MSBuild pass -->
@@ -11,16 +11,16 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Generator.CSharp.ClientModel" VersionOverride ="1.0.0-alpha.20240820.5"/>
+		<PackageReference Include="Microsoft.Generator.CSharp.ClientModel" VersionOverride="1.0.0-alpha.20240820.5" />
 	</ItemGroup>
 
-	<!-- Copy output to package dist path for local execution and  -->
+	<!-- Copy output to package dist path for local execution -->
 	<Target Name="CopyForNpmPackage" AfterTargets="Build">
 		<Message Text="Copying output to dist path" Importance="high" />
 		<ItemGroup>
 			<SourceDir Include="$(OutputPath)**\*.*" />
 		</ItemGroup>
-		<Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\dist\generator\%(RecursiveDir)" />
+		<Copy SourceFiles="@(SourceDir)" DestinationFolder="$(MSBuildThisFileDirectory)..\..\..\dist\generator\%(RecursiveDir)" />
 	</Target>
 	
 </Project>
