@@ -5,23 +5,17 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using Azure.Monitor.OpenTelemetry.Events;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Debug;
-using OpenTelemetry.Instrumentation.AspNetCore;
 using OpenTelemetry.Logs;
-using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Xunit;
 using Xunit.Abstractions;
@@ -172,9 +166,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             // Internal Asp.NetCore logging.
             Assert.NotNull(telemetryItems);
 
+            var traceTelemetry = telemetryItems.Where(x => x.Name == "Message").FirstOrDefault();
+            Assert.NotNull(traceTelemetry);
+
             // Custom event should not be collected.
-            var telemetryItem = telemetryItems.Where(x => x.Name == "Event").FirstOrDefault();
-            Assert.Null(telemetryItem);
+            var eventTelemetry = telemetryItems.Where(x => x.Name == "Event").FirstOrDefault();
+            Assert.Null(eventTelemetry);
         }
 
         public void Dispose()

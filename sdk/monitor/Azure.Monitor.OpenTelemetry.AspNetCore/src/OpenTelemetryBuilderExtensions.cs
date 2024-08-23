@@ -214,7 +214,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 });
 
             // Enable custom events and set filter to enable collection.
-            builder.Services.AddSingleton<IApplicationInsightsEventLogger, ApplicationInsightsEventLogger>();
+            builder.Services.TryAddSingleton<IApplicationInsightsEventLogger, ApplicationInsightsEventLogger>();
 
             // The default behavior is to always capture logs for custom events.
             // This can achieved with this code level filter -> loggingBuilder.AddFilter<OpenTelemetry.Logs.ApplicationInsightsLoggerProvider>("",LogLevel.Information);
@@ -236,7 +236,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 options => options.Rules.Insert(
                     0,
                     new LoggerFilterRule(
-                        "OpenTelemetry.Logs.OpenTelemetryLoggerProvider",
+                        "OpenTelemetry",
                         EventLoggerName,
                         LogLevel.Information,
                         null)));
