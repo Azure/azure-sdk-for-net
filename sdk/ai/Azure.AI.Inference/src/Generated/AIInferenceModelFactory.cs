@@ -58,13 +58,13 @@ namespace Azure.AI.Inference
             return new ChatCompletionsToolDefinition(type, function, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsNamedToolSelection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsNamedToolChoice"/>. </summary>
         /// <param name="type"> The type of the tool. Currently, only `function` is supported. </param>
         /// <param name="function"> The function that should be called. </param>
-        /// <returns> A new <see cref="Inference.ChatCompletionsNamedToolSelection"/> instance for mocking. </returns>
-        public static ChatCompletionsNamedToolSelection ChatCompletionsNamedToolSelection(ChatCompletionsNamedToolSelectionType type = default, ChatCompletionsFunctionToolSelection function = null)
+        /// <returns> A new <see cref="Inference.ChatCompletionsNamedToolChoice"/> instance for mocking. </returns>
+        public static ChatCompletionsNamedToolChoice ChatCompletionsNamedToolChoice(ChatCompletionsNamedToolChoiceType type = default, ChatCompletionsNamedToolChoiceFunction function = null)
         {
-            return new ChatCompletionsNamedToolSelection(type, function, serializedAdditionalRawData: null);
+            return new ChatCompletionsNamedToolChoice(type, function, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletions"/>. </summary>

@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.AI.Inference
 {
     /// <summary> Represents a generic policy for how a chat completions tool may be selected. </summary>
-    public readonly partial struct ChatCompletionsToolSelectionPreset : IEquatable<ChatCompletionsToolSelectionPreset>
+    public readonly partial struct ChatCompletionsToolChoicePreset : IEquatable<ChatCompletionsToolChoicePreset>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsToolSelectionPreset"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsToolChoicePreset"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ChatCompletionsToolSelectionPreset(string value)
+        public ChatCompletionsToolChoicePreset(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -30,26 +30,26 @@ namespace Azure.AI.Inference
         /// Specifies that the model may either use any of the tools provided in this chat completions request or
         /// instead return a standard chat completions response as if no tools were provided.
         /// </summary>
-        public static ChatCompletionsToolSelectionPreset Auto { get; } = new ChatCompletionsToolSelectionPreset(AutoValue);
+        public static ChatCompletionsToolChoicePreset Auto { get; } = new ChatCompletionsToolChoicePreset(AutoValue);
         /// <summary>
         /// Specifies that the model should not respond with a tool call and should instead provide a standard chat
         /// completions response. Response content may still be influenced by the provided tool definitions.
         /// </summary>
-        public static ChatCompletionsToolSelectionPreset None { get; } = new ChatCompletionsToolSelectionPreset(NoneValue);
+        public static ChatCompletionsToolChoicePreset None { get; } = new ChatCompletionsToolChoicePreset(NoneValue);
         /// <summary> Specifies that the model should respond with a call to one or more tools. </summary>
-        public static ChatCompletionsToolSelectionPreset Required { get; } = new ChatCompletionsToolSelectionPreset(RequiredValue);
-        /// <summary> Determines if two <see cref="ChatCompletionsToolSelectionPreset"/> values are the same. </summary>
-        public static bool operator ==(ChatCompletionsToolSelectionPreset left, ChatCompletionsToolSelectionPreset right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ChatCompletionsToolSelectionPreset"/> values are not the same. </summary>
-        public static bool operator !=(ChatCompletionsToolSelectionPreset left, ChatCompletionsToolSelectionPreset right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ChatCompletionsToolSelectionPreset"/>. </summary>
-        public static implicit operator ChatCompletionsToolSelectionPreset(string value) => new ChatCompletionsToolSelectionPreset(value);
+        public static ChatCompletionsToolChoicePreset Required { get; } = new ChatCompletionsToolChoicePreset(RequiredValue);
+        /// <summary> Determines if two <see cref="ChatCompletionsToolChoicePreset"/> values are the same. </summary>
+        public static bool operator ==(ChatCompletionsToolChoicePreset left, ChatCompletionsToolChoicePreset right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="ChatCompletionsToolChoicePreset"/> values are not the same. </summary>
+        public static bool operator !=(ChatCompletionsToolChoicePreset left, ChatCompletionsToolChoicePreset right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="ChatCompletionsToolChoicePreset"/>. </summary>
+        public static implicit operator ChatCompletionsToolChoicePreset(string value) => new ChatCompletionsToolChoicePreset(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ChatCompletionsToolSelectionPreset other && Equals(other);
+        public override bool Equals(object obj) => obj is ChatCompletionsToolChoicePreset other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ChatCompletionsToolSelectionPreset other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ChatCompletionsToolChoicePreset other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

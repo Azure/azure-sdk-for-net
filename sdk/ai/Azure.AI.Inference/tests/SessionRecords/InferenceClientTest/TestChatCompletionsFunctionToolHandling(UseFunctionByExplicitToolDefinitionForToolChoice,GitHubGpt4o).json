@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "760",
         "Content-Type": "application/json",
-        "traceparent": "00-4f4923283f3b66dece46f40aba28c011-f46e5a8571617127-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240730.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-ccab8a6511a8a3c53fb3bd45271f0bdd-0a28812ef17fa990-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240823.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -28,6 +28,7 @@
         "model": "gpt-4o",
         "tools": [
           {
+            "type": "function",
             "function": {
               "name": "get_future_temperature",
               "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
@@ -44,8 +45,7 @@
                   }
                 }
               }
-            },
-            "type": "function"
+            }
           }
         ],
         "tool_choice": {
@@ -57,25 +57,25 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "78b4b0b1-f6e3-49a1-90e5-4edca75a14bf",
-        "azureml-model-session": "d004-20240713103957",
+        "apim-request-id": "9f0d8a92-395a-4732-9b2b-bf30f3b2da7e",
+        "azureml-model-session": "d023-20240717022614",
         "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Thu, 01 Aug 2024 23:09:40 GMT",
+        "Date": "Fri, 23 Aug 2024 23:08:38 GMT",
         "request-context": "appId=",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "Vary": "Accept-Encoding",
-        "x-aml-cluster": "int-01",
+        "x-aml-cluster": "int-02",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "268",
+        "x-envoy-upstream-service-time": "213",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
         "x-ms-region": "East US",
         "x-ratelimit-remaining-requests": "29",
         "x-ratelimit-remaining-tokens": "29469",
-        "X-Request-ID": "062f37c0-c59d-4dce-8277-69be33ff1ba0",
-        "x-request-time": "0.965"
+        "X-Request-ID": "34b163d1-80db-4c75-ab60-407756922864",
+        "x-request-time": "0.720"
       },
       "ResponseBody": {
         "choices": [
@@ -93,15 +93,15 @@
                     "arguments": "{\"locationName\":\"Honolulu\",\"daysInAdvance\":3}",
                     "name": "get_future_temperature"
                   },
-                  "id": "call_rqxGrNBwH4X2N3IzdlPHjM7D",
+                  "id": "call_TYyBFDr9mhZtJVJjtcY1hq92",
                   "type": "function"
                 }
               ]
             }
           }
         ],
-        "created": 1722553780,
-        "id": "chatcmpl-9rZDQu29FkotZWNjEGJ6Zc6E8rURR",
+        "created": 1724454518,
+        "id": "chatcmpl-9zXgUtNGkQ8tBkihugFDQUCbzRRjd",
         "model": "gpt-4o-2024-05-13",
         "object": "chat.completion",
         "prompt_filter_results": [
@@ -143,8 +143,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "995",
         "Content-Type": "application/json",
-        "traceparent": "00-2e9c938e09ea51352c52267933632443-2be5e5d75f2141f3-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240730.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-884ff80a4b1cad030333e6fbb1662ec8-270bda4300d9cfda-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240823.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -161,19 +161,19 @@
           {
             "tool_calls": [
               {
+                "id": "call_TYyBFDr9mhZtJVJjtcY1hq92",
+                "type": "function",
                 "function": {
                   "name": "get_future_temperature",
                   "arguments": "{\"locationName\":\"Honolulu\",\"daysInAdvance\":3}"
-                },
-                "type": "function",
-                "id": "call_rqxGrNBwH4X2N3IzdlPHjM7D"
+                }
               }
             ],
             "role": "assistant"
           },
           {
             "content": "31 celsius",
-            "tool_call_id": "call_rqxGrNBwH4X2N3IzdlPHjM7D",
+            "tool_call_id": "call_TYyBFDr9mhZtJVJjtcY1hq92",
             "role": "tool"
           }
         ],
@@ -181,6 +181,7 @@
         "model": "gpt-4o",
         "tools": [
           {
+            "type": "function",
             "function": {
               "name": "get_future_temperature",
               "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
@@ -197,32 +198,31 @@
                   }
                 }
               }
-            },
-            "type": "function"
+            }
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "73ceb72e-8302-4de2-b890-c7dceeb6fe41",
-        "azureml-model-session": "d021-20240717004256",
+        "apim-request-id": "60d4c475-0fa4-48dc-a037-3c9ed3257aef",
+        "azureml-model-session": "d019-20240716230417",
         "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Thu, 01 Aug 2024 23:09:41 GMT",
+        "Date": "Fri, 23 Aug 2024 23:08:40 GMT",
         "request-context": "appId=",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "Transfer-Encoding": "chunked",
         "Vary": "Accept-Encoding",
-        "x-aml-cluster": "int-01",
+        "x-aml-cluster": "int-02",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "931",
+        "x-envoy-upstream-service-time": "2072",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
         "x-ms-region": "East US",
         "x-ratelimit-remaining-requests": "28",
         "x-ratelimit-remaining-tokens": "28935",
-        "X-Request-ID": "62768c22-4a92-48b1-bd87-2bfd33f7fda6",
-        "x-request-time": "1.142"
+        "X-Request-ID": "e967d24e-2b66-46aa-a633-2de8dc4aaaa1",
+        "x-request-time": "2.307"
       },
       "ResponseBody": {
         "choices": [
@@ -249,13 +249,13 @@
             "index": 0,
             "logprobs": null,
             "message": {
-              "content": "In Honolulu in 3 days, the temperature is anticipated to be around 31°C (88°F). Given the warm weather, here's what you should consider wearing:\n\n- Light, breathable clothing, such as cotton or linen shirts and shorts.\n- A hat and sunglasses to protect yourself from the sun.\n- Comfortable sandals or open-toed shoes.\n- Don't forget sunblock to protect your skin.\n\nEnjoy your time in Honolulu!",
+              "content": "The forecasted temperature in Honolulu in 3 days is 31°C (around 88°F). With such warm weather, you should consider wearing lightweight, breathable clothing. Here are some suggestions:\n\n- **Shorts** or light **skirts**: To keep cool.\n- A **light t-shirt** or **tank top**: Preferably made of cotton or other breathable fabric.\n- **Sandals** or **flip-flops**: Comfortable for walking around in warm temperatures.\n- **Sunglasses** and a **hat**: To protect yourself from the sun.\n- **Lightweight dress**: If you prefer a one-piece option.\n- **Swimwear**: In case you plan to hit the beach or pool.\n- **Sunscreen**: To protect your skin from the sun.\n\nEnjoy your time in Honolulu!",
               "role": "assistant"
             }
           }
         ],
-        "created": 1722553780,
-        "id": "chatcmpl-9rZDQ24Bdy5cWFgHm7mciOPQ5Vgj8",
+        "created": 1724454518,
+        "id": "chatcmpl-9zXgUos7BWNLQbmi5AYy9EwaF3Bed",
         "model": "gpt-4o-2024-05-13",
         "object": "chat.completion",
         "prompt_filter_results": [
@@ -283,9 +283,9 @@
         ],
         "system_fingerprint": "fp_abc28019ad",
         "usage": {
-          "completion_tokens": 86,
+          "completion_tokens": 171,
           "prompt_tokens": 144,
-          "total_tokens": 230
+          "total_tokens": 315
         }
       }
     }
@@ -293,6 +293,6 @@
   "Variables": {
     "AZUREAI_GITHUB_TOKEN": "Sanitized",
     "AZUREAI_GITHUB_URL": "https://int.api.azureml-test.ms/nexus",
-    "RandomSeed": "756243520"
+    "RandomSeed": "497637233"
   }
 }

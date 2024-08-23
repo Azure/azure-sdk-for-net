@@ -9,8 +9,8 @@
         "Content-Length": "142",
         "Content-Type": "application/json",
         "extra-parameters": "pass-through",
-        "traceparent": "00-54c8df4e5c44b33fb6bbb4e9971d445d-91bb2bd04119b575-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240730.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-6ea3c064daff1c2b9282cc7d632e7195-c09000bc9846bd4d-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240823.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -30,16 +30,16 @@
       "StatusCode": 422,
       "ResponseHeaders": {
         "azureml-model-group": "offer-mistral-bundled-paygo",
-        "azureml-model-session": "dep-eus-mis-bundle-240705002",
+        "azureml-model-session": "dep-eus-mis-bundle-240705001",
         "Content-Length": "113",
         "Content-Type": "application/json",
-        "Date": "Thu, 01 Aug 2024 23:10:01 GMT",
+        "Date": "Fri, 23 Aug 2024 23:09:01 GMT",
         "ms-azureml-model-error-reason": "model_error",
         "ms-azureml-model-error-statuscode": "422",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "6c7523a6-e943-4c19-aff8-209c8a32e17e"
+        "X-Request-ID": "0684f274-ad01-47b9-ab4d-cfb5181e6750"
       },
       "ResponseBody": {
         "detail": [
@@ -64,8 +64,8 @@
         "Content-Length": "142",
         "Content-Type": "application/json",
         "extra-parameters": "pass-through",
-        "traceparent": "00-720595024b6d76c7344b2e3f812e5895-9a4709e86c9042d3-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240730.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-a5b91f2e019b2f860f28d01f2314845d-87878896a18853a3-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240823.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -85,16 +85,16 @@
       "StatusCode": 422,
       "ResponseHeaders": {
         "azureml-model-group": "offer-mistral-bundled-paygo",
-        "azureml-model-session": "dep-eus-mis-bundle-240705001",
+        "azureml-model-session": "dep-eus-mis-bundle-240705002",
         "Content-Length": "113",
         "Content-Type": "application/json",
-        "Date": "Thu, 01 Aug 2024 23:10:01 GMT",
+        "Date": "Fri, 23 Aug 2024 23:09:01 GMT",
         "ms-azureml-model-error-reason": "model_error",
         "ms-azureml-model-error-statuscode": "422",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "7be5575e-2658-445a-bea1-3984dca8f98b"
+        "X-Request-ID": "d63f7867-b931-4c39-b093-4f9a986b5676"
       },
       "ResponseBody": {
         "detail": [
@@ -114,6 +114,6 @@
   "Variables": {
     "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
     "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
-    "RandomSeed": "120771713"
+    "RandomSeed": "223022386"
   }
 }

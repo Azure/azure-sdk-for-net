@@ -30,14 +30,14 @@ namespace Azure.AI.Inference
     /// </remarks>
     public partial class ChatCompletionsToolChoice
     {
-        /// <inheritdoc cref="ChatCompletionsToolSelectionPreset.Auto"/>
-        public static readonly ChatCompletionsToolChoice Auto = new(ChatCompletionsToolSelectionPreset.Auto);
+        /// <inheritdoc cref="ChatCompletionsToolChoicePreset.Auto"/>
+        public static readonly ChatCompletionsToolChoice Auto = new(ChatCompletionsToolChoicePreset.Auto);
 
-        /// <inheritdoc cref="ChatCompletionsToolSelectionPreset.None"/>
-        public static readonly ChatCompletionsToolChoice None = new(ChatCompletionsToolSelectionPreset.None);
+        /// <inheritdoc cref="ChatCompletionsToolChoicePreset.None"/>
+        public static readonly ChatCompletionsToolChoice None = new(ChatCompletionsToolChoicePreset.None);
 
-        /// <inheritdoc cref="ChatCompletionsToolSelectionPreset.Required"/>
-        public static readonly ChatCompletionsToolChoice Required = new(ChatCompletionsToolSelectionPreset.Required);
+        /// <inheritdoc cref="ChatCompletionsToolChoicePreset.Required"/>
+        public static readonly ChatCompletionsToolChoice Required = new(ChatCompletionsToolChoicePreset.Required);
 
         public static implicit operator ChatCompletionsToolChoice(FunctionDefinition functionDefinition)
         {
@@ -85,13 +85,13 @@ namespace Azure.AI.Inference
             Function = functionToolDefinition.Function;
         }
 
-        internal ChatCompletionsToolChoice(ChatCompletionsToolSelectionPreset preset)
+        internal ChatCompletionsToolChoice(ChatCompletionsToolChoicePreset preset)
         {
             Preset = preset;
         }
 
         internal FunctionDefinition Function { get; }
 
-        internal ChatCompletionsToolSelectionPreset Preset { get; }
+        internal ChatCompletionsToolChoicePreset Preset { get; }
     }
 }

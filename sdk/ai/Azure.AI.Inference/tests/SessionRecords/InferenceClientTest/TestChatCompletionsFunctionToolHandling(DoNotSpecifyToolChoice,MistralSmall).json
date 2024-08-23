@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "664",
         "Content-Type": "application/json",
-        "traceparent": "00-603acf790edd6ed4eb7b9fe8982adf03-a2190c2cfca01d0f-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240730.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-0b5e95d4212d7276eae31abdde9648fd-d9da7dbddd7e84ee-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240823.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -27,6 +27,7 @@
         "max_tokens": 512,
         "tools": [
           {
+            "type": "function",
             "function": {
               "name": "get_future_temperature",
               "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
@@ -43,24 +44,23 @@
                   }
                 }
               }
-            },
-            "type": "function"
+            }
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "azureml-model-group": "offer-mistral-bundled-paygo",
-        "azureml-model-session": "dep-eus-mis-bundle-240705002",
+        "azureml-model-session": "dep-eus-mis-bundle-240705001",
         "Content-Length": "464",
         "Content-Type": "application/json",
-        "Date": "Thu, 01 Aug 2024 23:09:36 GMT",
+        "Date": "Fri, 23 Aug 2024 23:08:33 GMT",
         "prompt_token_len": "143",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
         "sampling_token_len": "36",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "cf6b0b5b-9d8b-4413-af4b-55a659f76a2d"
+        "X-Request-ID": "2676c0ea-a550-475a-a6b3-57f43416d054"
       },
       "ResponseBody": {
         "choices": [
@@ -77,15 +77,15 @@
                     "call_id": null,
                     "name": "get_future_temperature"
                   },
-                  "id": "REiQqDUKn",
+                  "id": "6VaYs3EGM",
                   "type": "function"
                 }
               ]
             }
           }
         ],
-        "created": 1722553775,
-        "id": "7adb03af8bfa4afe918a73e26cbdbbc0",
+        "created": 1724454514,
+        "id": "dbac063fe82e4042ada514dc6a60029e",
         "model": "mistral-small",
         "object": "chat.completion",
         "usage": {
@@ -103,8 +103,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "954",
         "Content-Type": "application/json",
-        "traceparent": "00-7bb75565bd3e85fed4a9779e7eab58ef-a4f3cf58dd6777dd-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240730.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-c8b0ac797d8e77f2192ee076c36357f6-dc144f51623e5f7a-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240823.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -122,25 +122,26 @@
             "content": "",
             "tool_calls": [
               {
+                "id": "6VaYs3EGM",
+                "type": "function",
                 "function": {
                   "name": "get_future_temperature",
                   "arguments": "{\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}"
-                },
-                "type": "function",
-                "id": "REiQqDUKn"
+                }
               }
             ],
             "role": "assistant"
           },
           {
             "content": "31 celsius",
-            "tool_call_id": "REiQqDUKn",
+            "tool_call_id": "6VaYs3EGM",
             "role": "tool"
           }
         ],
         "max_tokens": 512,
         "tools": [
           {
+            "type": "function",
             "function": {
               "name": "get_future_temperature",
               "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
@@ -157,24 +158,23 @@
                   }
                 }
               }
-            },
-            "type": "function"
+            }
           }
         ]
       },
       "StatusCode": 200,
       "ResponseHeaders": {
         "azureml-model-group": "offer-mistral-bundled-paygo",
-        "azureml-model-session": "dep-eus-mis-bundle-240705001",
-        "Content-Length": "554",
+        "azureml-model-session": "dep-eus-mis-bundle-240705002",
+        "Content-Length": "488",
         "Content-Type": "application/json",
-        "Date": "Thu, 01 Aug 2024 23:09:36 GMT",
-        "prompt_token_len": "218",
+        "Date": "Fri, 23 Aug 2024 23:08:34 GMT",
+        "prompt_token_len": "220",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
-        "sampling_token_len": "64",
+        "sampling_token_len": "46",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "f1036993-49d3-42ec-b505-8fb4eb07a2f1"
+        "X-Request-ID": "2460613b-faa0-4acb-85d8-d76adb377eff"
       },
       "ResponseBody": {
         "choices": [
@@ -182,20 +182,20 @@
             "finish_reason": "stop",
             "index": 0,
             "message": {
-              "content": "Based on the anticipated temperature in Honolulu in 3 days, it is expected to be around 31 degrees Celsius. I would recommend light, breezy clothing such as shorts, t-shirts, and sandals. Don't forget to pack sunscreen for protection against the tropical sun.",
+              "content": "Based on the current forecast, the temperature in Honolulu in 3 days is expected to be around 31 degrees Celsius. I recommend wearing light, breathable clothing and don't forget your sunscreen!",
               "role": "assistant",
               "tool_calls": null
             }
           }
         ],
-        "created": 1722553776,
-        "id": "05287903a9064464a044505382598212",
+        "created": 1724454514,
+        "id": "0a4e9c5a18274c5db2cb5df408acb96c",
         "model": "mistral-small",
         "object": "chat.completion",
         "usage": {
-          "completion_tokens": 64,
-          "prompt_tokens": 218,
-          "total_tokens": 282
+          "completion_tokens": 46,
+          "prompt_tokens": 220,
+          "total_tokens": 266
         }
       }
     }
@@ -203,6 +203,6 @@
   "Variables": {
     "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
     "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
-    "RandomSeed": "619712419"
+    "RandomSeed": "864169298"
   }
 }

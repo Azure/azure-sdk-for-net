@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "685",
         "Content-Type": "application/json",
-        "traceparent": "00-1f7e35dabfdd1714a95ab8fb124dfadb-eb0cf4ffc2950ddb-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240730.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-16323f16c263b89020d6e3f9302540ba-226d02a8fce0be2b-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240823.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -27,6 +27,7 @@
         "max_tokens": 512,
         "tools": [
           {
+            "type": "function",
             "function": {
               "name": "get_future_temperature",
               "description": "requests the anticipated future temperature at a provided location to help inform advice about topics like choice of attire",
@@ -43,8 +44,7 @@
                   }
                 }
               }
-            },
-            "type": "function"
+            }
           }
         ],
         "tool_choice": "none"
@@ -52,16 +52,16 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "azureml-model-group": "offer-mistral-bundled-paygo",
-        "azureml-model-session": "dep-eus-mis-bundle-240705002",
-        "Content-Length": "513",
+        "azureml-model-session": "dep-eus-mis-bundle-240705001",
+        "Content-Length": "550",
         "Content-Type": "application/json",
-        "Date": "Thu, 01 Aug 2024 23:09:38 GMT",
+        "Date": "Fri, 23 Aug 2024 23:08:37 GMT",
         "prompt_token_len": "143",
         "Request-Context": "appId=cid-v1:b80100f5-1286-423d-967f-3517f665186d",
-        "sampling_token_len": "59",
+        "sampling_token_len": "66",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
-        "X-Request-ID": "6fbc8efd-7da8-4866-9a95-3528b6ac428d"
+        "X-Request-ID": "ac237a26-4404-45ba-b4c8-9b56afb0b202"
       },
       "ResponseBody": {
         "choices": [
@@ -69,20 +69,20 @@
             "finish_reason": "stop",
             "index": 0,
             "message": {
-              "content": "To help you with that, I can request the anticipated future temperature in Honolulu for 3 days in advance. [{\"name\": \"get_future_temperature\", \"arguments\": {\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}}]",
+              "content": "To provide you with the best advice, I need to know the anticipated future temperature in Honolulu. Let me request that information for you.\n\n[{\"name\": \"get_future_temperature\", \"arguments\": {\"locationName\": \"Honolulu\", \"daysInAdvance\": 3}}]",
               "role": "assistant",
               "tool_calls": null
             }
           }
         ],
-        "created": 1722553778,
-        "id": "5820d5e82928468ab83af33c2704c0b6",
+        "created": 1724454516,
+        "id": "35efbaae234349f8bf69072920b59525",
         "model": "mistral-small",
         "object": "chat.completion",
         "usage": {
-          "completion_tokens": 59,
+          "completion_tokens": 66,
           "prompt_tokens": 143,
-          "total_tokens": 202
+          "total_tokens": 209
         }
       }
     }
@@ -90,6 +90,6 @@
   "Variables": {
     "AZUREAI_MISTRAL_SMALL_KEY": "Sanitized",
     "AZUREAI_MISTRAL_SMALL_URL": "https://mistral-small-ofgon-serverless.eastus2.inference.ai.azure.com",
-    "RandomSeed": "640083172"
+    "RandomSeed": "779817258"
   }
 }

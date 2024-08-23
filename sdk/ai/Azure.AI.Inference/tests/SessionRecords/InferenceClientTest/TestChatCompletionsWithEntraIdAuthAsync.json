@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "130",
         "Content-Type": "application/json",
-        "traceparent": "00-cdc4a53b34dfcc34794e59d50f55e599-92472f72a10c8ea5-00",
-        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240730.1 (.NET 6.0.32; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-648acdabab63736a43f25a41a34ba3b9-909e3bb260afc6b6-00",
+        "User-Agent": "azsdk-net-AI.Inference/1.0.0-alpha.20240823.1 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -27,20 +27,20 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "2c6b9588-47fd-4e2f-99dc-fc441a66ca65",
-        "azureml-model-session": "d004-20240713213546",
+        "apim-request-id": "b29dda40-67d4-4fef-b11e-b6bb817d3e62",
+        "azureml-model-session": "d025-20240714141352",
         "Content-Length": "842",
         "Content-Type": "application/json",
-        "Date": "Thu, 01 Aug 2024 23:10:58 GMT",
+        "Date": "Fri, 23 Aug 2024 23:09:57 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "x-accel-buffering": "no",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-rai-invoked": "true",
         "x-ms-region": "Sweden Central",
-        "x-ratelimit-remaining-requests": "6",
+        "x-ratelimit-remaining-requests": "9",
         "x-ratelimit-remaining-tokens": "2232",
-        "X-Request-ID": "082f4473-56dd-45a4-9869-327f2d6d059d"
+        "X-Request-ID": "3d70996f-6e47-4bd6-a598-a714727158ee"
       },
       "ResponseBody": {
         "choices": [
@@ -72,8 +72,8 @@
             }
           }
         ],
-        "created": 1722553858,
-        "id": "chatcmpl-9rZEgk6d8VM64l3BbP92HVY0qLsby",
+        "created": 1724454597,
+        "id": "chatcmpl-9zXhlR8R13D7bKR3p1S6KQIr6vcpv",
         "model": "gpt-4o-2024-05-13",
         "object": "chat.completion",
         "prompt_filter_results": [
@@ -110,6 +110,6 @@
   ],
   "Variables": {
     "AOAI_CHAT_COMPLETIONS_ENDPOINT": "https://openai-sdk-test-automation-account-sweden-central.openai.azure.com/openai/deployments/gpt-4o",
-    "RandomSeed": "1974334622"
+    "RandomSeed": "2051833107"
   }
 }

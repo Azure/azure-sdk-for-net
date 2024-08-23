@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Inference
 {
     /// <summary> A tool selection of a specific, named function tool that will limit chat completions to using the named function. </summary>
-    public partial class ChatCompletionsFunctionToolSelection
+    public partial class ChatCompletionsNamedToolChoiceFunction
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,27 @@ namespace Azure.AI.Inference
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolSelection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedToolChoiceFunction"/>. </summary>
         /// <param name="name"> The name of the function that should be called. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public ChatCompletionsFunctionToolSelection(string name)
+        public ChatCompletionsNamedToolChoiceFunction(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolSelection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedToolChoiceFunction"/>. </summary>
         /// <param name="name"> The name of the function that should be called. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatCompletionsFunctionToolSelection(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatCompletionsNamedToolChoiceFunction(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolSelection"/> for deserialization. </summary>
-        internal ChatCompletionsFunctionToolSelection()
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsNamedToolChoiceFunction"/> for deserialization. </summary>
+        internal ChatCompletionsNamedToolChoiceFunction()
         {
         }
 
