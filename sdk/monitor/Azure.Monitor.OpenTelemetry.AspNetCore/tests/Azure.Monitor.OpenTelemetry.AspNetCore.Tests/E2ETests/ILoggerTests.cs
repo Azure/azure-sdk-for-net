@@ -94,7 +94,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
 
             // SHUTDOWN
             var loggerProvider = _factory.Factories.Last().Services.GetRequiredService<LoggerProvider>();
-            ;
             loggerProvider.ForceFlush();
 
             // ASSERT
