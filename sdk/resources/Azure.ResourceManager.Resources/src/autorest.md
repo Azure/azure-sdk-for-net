@@ -670,11 +670,12 @@ These settings apply only when `--tag=package-resources-2022-04` is specified on
 
 ```yaml $(tag) == 'package-resources-2022-04'
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/a220053360f9700f81abcdb6142769c85c3bcb27/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/a220053360f9700f81abcdb6142769c85c3bcb27/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/a220053360f9700f81abcdb6142769c85c3bcb27/specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/resources.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/a220053360f9700f81abcdb6142769c85c3bcb27/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/a220053360f9700f81abcdb6142769c85c3bcb27/specification/resources/resource-manager/Microsoft.Resources/stable/2023-11-01/bicepClient.json#
-    - https://github.com/Azure/azure-rest-api-specs/blob/a220053360f9700f81abcdb6142769c85c3bcb27/specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/deploymentStacks.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/resources.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2023-11-01/bicepClient.json#
+    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/deploymentStacks.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-08-01/dataBoundaries.json
 ```
 
