@@ -1,5 +1,15 @@
 # Release History
 
+## 2.0.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 2.0.0-beta.3 (2024-08-23)
 
 This change updates the library for compatibility with the latest `2.0.0-beta.9` of the `OpenAI` package and the `2024-07-01-preview` Azure OpenAI service API version label, as published on 8/5.
