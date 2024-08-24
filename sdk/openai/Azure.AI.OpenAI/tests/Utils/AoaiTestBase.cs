@@ -38,6 +38,7 @@ namespace Azure.AI.OpenAI.Tests;
 public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 {
     private const string AZURE_URI_SANITIZER_PATTERN = @"(?<=/(subscriptions|resourceGroups|accounts)/)([^/]+?)(?=(/|$))";
+    private const string SMALL_1x1_PNG = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiQAABYkAZsVxhQAAAAMSURBVBhXY2BgYAAAAAQAAVzN/2kAAAAASUVORK5CYII=";
 
     public static readonly DateTimeOffset START_2024 = new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero);
     public static readonly DateTimeOffset UNIX_EPOCH =
@@ -101,6 +102,18 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         RecordingDisabler.DisableBodyRecordingFor<FileClient>(nameof(FileClient.UploadFileAsync));
 
         IgnoredHeaders.Add("x-ms-client-request-id");
+
+        // Data URIs trimmed to prevent the recording from being too large
+        BodyKeySanitizers.Add(new BodyKeySanitizer("$..url")
+        {
+            Regex = @"(?<=data:image/png;base64,)(.+)",
+            Value = SMALL_1x1_PNG
+        });
+        // Base64 encoded images in the response are replaced with a 1x1 black pixel PNG image to ensure valid data
+        BodyKeySanitizers.Add(new BodyKeySanitizer($"..b64_json")
+        {
+            Value = SMALL_1x1_PNG
+        });
     }
 
     /// <summary>
@@ -666,7 +679,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         return model!;
     }
 
-    protected AsyncResultCollection<T> SyncOrAsync<T>(TClient client, Func<TClient, ResultCollection<T>> sync, Func<TClient, AsyncResultCollection<T>> async)
+    protected AsyncCollectionResult<T> SyncOrAsync<T>(TClient client, Func<TClient, CollectionResult<T>> sync, Func<TClient, AsyncCollectionResult<T>> async)
     {
         // TODO FIXME HACK Since the test framework doesn't currently support async result collection, this methods provides
         //                 a simplified way to make explicit calls to the right methods in tests
@@ -678,12 +691,12 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         }
         else
         {
-            ResultCollection<T> syncCollection = sync(rawClient);
-            return new SyncToAsyncResultCollection<T>(syncCollection);
+            CollectionResult<T> syncCollection = sync(rawClient);
+            return new SyncToAsyncCollectionResult<T>(syncCollection);
         }
     }
 
-    protected AsyncPageableCollection<T> SyncOrAsync<T>(TClient client, Func<TClient, PageableCollection<T>> sync, Func<TClient, AsyncPageableCollection<T>> async)
+    protected AsyncPageCollection<T> SyncOrAsync<T>(TClient client, Func<TClient, PageCollection<T>> sync, Func<TClient, AsyncPageCollection<T>> async)
     {
         // TODO FIXME HACK Since the test framework doesn't currently support async result collection, this methods provides
         //                 a simplified way to make explicit calls to the right methods in tests
@@ -695,12 +708,12 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         }
         else
         {
-            PageableCollection<T> syncCollection = sync(rawClient);
-            return new SyncToAsyncPageableCollection<T>(syncCollection);
+            PageCollection<T> syncCollection = sync(rawClient);
+            return new SyncToAsyncPageCollection<T>(syncCollection);
         }
     }
 
-    protected Task<List<T>> SyncOrAsyncList<T>(TClient client, Func<TClient, PageableCollection<T>> sync, Func<TClient, AsyncPageableCollection<T>> async)
+    protected Task<List<T>> SyncOrAsyncList<T>(TClient client, Func<TClient, PageCollection<T>> sync, Func<TClient, AsyncPageCollection<T>> async)
     {
         // TODO FIXME HACK Since the test framework doesn't currently support async result collection, this methods provides
         //                 a simplified way to make explicit calls to the right methods in tests
@@ -708,11 +721,11 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 
         if (IsAsync)
         {
-            return async(rawClient).ToEnumerableAsync();
+            return async(rawClient).GetAllValuesAsync().ToEnumerableAsync();
         }
         else
         {
-            return Task.FromResult(sync(rawClient).ToList());
+            return Task.FromResult(sync(rawClient).GetAllValues().ToList());
         }
     }
 

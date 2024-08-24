@@ -219,7 +219,7 @@ public partial class ChatTests
             }
         };
 
-        AsyncResultCollection<StreamingChatCompletionUpdate> response = SyncOrAsync(client,
+        AsyncCollectionResult<StreamingChatCompletionUpdate> response = SyncOrAsync(client,
             c => c.CompleteChatStreaming(messages, requestOptions),
             c => c.CompleteChatStreamingAsync(messages, requestOptions));
         Assert.That(response, Is.Not.Null);
