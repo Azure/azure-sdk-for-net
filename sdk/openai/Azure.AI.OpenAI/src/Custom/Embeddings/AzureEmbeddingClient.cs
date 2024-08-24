@@ -32,6 +32,5 @@ internal partial class AzureEmbeddingClient : EmbeddingClient
     }
 
     protected AzureEmbeddingClient()
-    {
-    }
+    { }
 }

@@ -30,8 +30,7 @@ internal partial class AzureFileClient : FileClient
     }
 
     protected AzureFileClient()
-    {
-    }
+    { }
 
     /// <inheritdoc />
     public override ClientResult<OpenAIFileInfo> UploadFile(Stream file, string filename, FileUploadPurpose purpose, CancellationToken cancellationToken = default)

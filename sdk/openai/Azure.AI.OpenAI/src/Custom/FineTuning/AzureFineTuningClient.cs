@@ -29,6 +29,5 @@ internal partial class AzureFineTuningClient : FineTuningClient
     }
 
     protected AzureFineTuningClient()
-    {
-    }
+    { }
 }

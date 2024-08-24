@@ -50,7 +50,33 @@ A secure, keyless authentication approach is to use Microsoft Entra ID (formerly
 AzureOpenAIClient azureClient = new(
     new Uri("https://your-azure-openai-resource.com"),
     new DefaultAzureCredential());
-ChatClient chatClient = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
+ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
+```
+
+##### Configure client for Azure sovereign cloud**
+
+If your Microsoft Entra credentials are issued by an entity other than Azure Public Cloud, you can set the `Audience` property on `OpenAIClientOptions` to modify the token authorization scope used for requests.
+
+For example, the following will configure the client to authenticate tokens via Azure Government Cloud, using `https://cognitiveservices.azure.us/.default` as the authorization scope:
+
+```C# Snippet:ConfigureClient:GovernmentAudience
+AzureOpenAIClientOptions options = new()
+{
+    Audience = AzureOpenAIAudience.AzureGovernment,
+};
+AzureOpenAIClient azureClient = new(
+    new Uri("https://your-azure-openai-resource.com"),
+    new DefaultAzureCredential());
+ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
+```
+
+For a custom or non-enumerated value, the authorization scope can be provided directly as the value for `Audience`:
+
+```C# Snippet:ConfigureClient:CustomAudience
+AzureOpenAIClientOptions optionsWithCustomAudience = new()
+{
+    Audience = "https://cognitiveservices.azure.com/.default",
+};
 ```
 
 #### Create client with an API key

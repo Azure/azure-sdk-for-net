@@ -28,6 +28,5 @@ internal partial class AzureAssistantClient : AssistantClient
     }
 
     protected AzureAssistantClient()
-    {
-    }
+    { }
 }

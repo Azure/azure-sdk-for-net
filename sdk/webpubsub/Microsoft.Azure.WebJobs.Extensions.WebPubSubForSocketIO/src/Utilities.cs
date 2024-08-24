@@ -23,8 +23,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
         private const string statusCodeProperty = "statusCode";
         private const string ackProperty = "ack";
 
-        public static MediaTypeHeaderValue GetMediaType(WebPubSubDataType dataType) => new(GetContentType(dataType));
-
         public static string GetContentType(WebPubSubDataType dataType) =>
             dataType switch
             {
@@ -197,19 +195,55 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
             return $"{NamespaceGroupType}{Separator}{Base64UrlEncoder.Encode(@namespace)}{Separator}{Base64UrlEncoder.Encode(room)}";
         }
 
-        private static Dictionary<string, BinaryData> GetStatesFromJson(JObject response)
+        public static string GenerateRoomFilter(string @namespace, string room, bool containsNamespace)
         {
-            if (response.TryGetValue("states", out var val))
+            return GenerateRoomFilter(@namespace, new string[] { room }, null, containsNamespace);
+        }
+
+        public static string GenerateExceptRoomFilter(string @namespace, string exceptRoom, bool containsNamespace)
+        {
+            return GenerateRoomFilter(@namespace, null, new string[] { exceptRoom }, containsNamespace);
+        }
+
+        public static string GenerateRoomFilter(string @namespace, IList<string> rooms, IList<string> exceptRooms, bool containsNamespace)
+        {
+            var filter = containsNamespace ? $"'{GetGroupNameByNamespace(@namespace)}' in groups" : string.Empty;
+            if ((rooms == null || rooms.Count == 0) && (exceptRooms == null || exceptRooms.Count == 0))
             {
-                // val should be a JSON object of <key,value> pairs
-                if (val.Type == JTokenType.Object)
+                return filter;
+            }
+
+            if (rooms != null && rooms.Count > 0)
+            {
+                filter = $"'{GetGroupNameByNamespaceRoom(@namespace, rooms[0])}' in groups";
+                for (int i = 1; i < rooms.Count; i++)
                 {
-                    return val.ToObject<IReadOnlyDictionary<string, BinaryData>>()
-                        .ToDictionary(k => k.Key, v => v.Value);
+                    filter += $" or '{GetGroupNameByNamespaceRoom(@namespace, rooms[i])}' in groups";
                 }
             }
-            // We don't support clear states for JS
-            return new Dictionary<string, BinaryData>();
+
+            var denyFilter = string.Empty;
+            if (exceptRooms != null && exceptRooms.Count > 0)
+            {
+                denyFilter = $"not ('{GetGroupNameByNamespaceRoom(@namespace, exceptRooms[0])}' in groups)";
+                for (int i = 1; i < exceptRooms.Count; i++)
+                {
+                    denyFilter += $" and not ('{GetGroupNameByNamespaceRoom(@namespace, exceptRooms[i])}' in groups)";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(filter) && !string.IsNullOrEmpty(denyFilter))
+            {
+                return $"{filter} and {denyFilter}";
+            }
+            else if (!string.IsNullOrEmpty(filter))
+            {
+                return filter;
+            }
+            else
+            {
+                return denyFilter;
+            }
         }
     }
 }

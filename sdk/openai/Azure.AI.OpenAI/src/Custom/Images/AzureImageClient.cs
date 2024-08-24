@@ -32,6 +32,5 @@ internal partial class AzureImageClient : ImageClient
     }
 
     protected AzureImageClient()
-    {
-    }
+    {}
 }

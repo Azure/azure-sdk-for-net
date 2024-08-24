@@ -32,6 +32,5 @@ internal partial class AzureBatchClient : BatchClient
     }
 
     protected AzureBatchClient()
-    {
-    }
+    { }
 }

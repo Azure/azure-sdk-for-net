@@ -270,15 +270,16 @@ public partial class AzureOpenAIClient : OpenAIClient
     {
         return ClientPipeline.Create(
             options ?? new(),
-            perCallPolicies: [
-            ],
-            perTryPolicies: [
-                authenticationPolicy,
+            perCallPolicies:
+            [
                 CreateAddUserAgentHeaderPolicy(options),
+                CreateAddClientRequestIdHeaderPolicy(),
             ],
-            beforeTransportPolicies: [
-            ]);
-    }
+            perTryPolicies:
+            [
+                authenticationPolicy,
+            ],
+            beforeTransportPolicies: []);
 
     internal static ClientPipeline CreatePipeline(ApiKeyCredential credential, AzureOpenAIClientOptions options = null)
     {
@@ -289,12 +290,14 @@ public partial class AzureOpenAIClient : OpenAIClient
     internal static ClientPipeline CreatePipeline(TokenCredential credential, AzureOpenAIClientOptions options = null)
     {
         Argument.AssertNotNull(credential, nameof(credential));
-        return CreatePipeline(new AzureTokenAuthenticationPolicy(credential), options);
+        string authorizationScope = options?.Audience?.ToString()
+            ?? AzureOpenAIAudience.AzurePublicCloud.ToString();
+        return CreatePipeline(new AzureTokenAuthenticationPolicy(credential, [authorizationScope]), options);
     }
 
     private static PipelinePolicy CreateAddUserAgentHeaderPolicy(AzureOpenAIClientOptions options = null)
     {
-        Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly);
+        Core.TelemetryDetails telemetryDetails = new(typeof(AzureOpenAIClient).Assembly, options?.ApplicationId);
         return new GenericActionPipelinePolicy(
             requestAction: request =>
             {
@@ -305,8 +308,23 @@ public partial class AzureOpenAIClient : OpenAIClient
             });
     }
 
+    private static PipelinePolicy CreateAddClientRequestIdHeaderPolicy()
+    {
+        return new GenericActionPipelinePolicy(message =>
+        {
+            if (message?.Request?.Headers is not null)
+            {
+                string requestId = message.Request.Headers.TryGetValue(s_clientRequestIdHeaderKey, out string existingHeader) == true
+                    ? existingHeader
+                    : Guid.NewGuid().ToString().ToLowerInvariant();
+                message.Request.Headers.Set(s_clientRequestIdHeaderKey, requestId);
+            }
+        });
+    }
+
     private static readonly string s_userAgentHeaderKey = "User-Agent";
-    private static PipelineMessageClassifier _pipelineMessageClassifier;
+    private static readonly string s_clientRequestIdHeaderKey = "x-ms-client-request-id";
+    private static PipelineMessageClassifier s_pipelineMessageClassifier;
     internal static PipelineMessageClassifier PipelineMessageClassifier
-        => _pipelineMessageClassifier ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
+        => s_pipelineMessageClassifier ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201 });
 }

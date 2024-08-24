@@ -117,7 +117,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
                             {
                                 throw new InvalidDataException($"Event name dismatch. {context.EventName} from header but {eventName} from payload");
                             }
-                            eventRequest = new SocketIOMessageRequest(context.Namespace, context.SocketId, payload, arguments);
+                            eventRequest = new SocketIOMessageRequest(context.Namespace, context.SocketId, payload, eventName, arguments);
                             break;
                         }
                     default:

@@ -662,6 +662,9 @@
 # ServiceLabel: %Monitor - Exporter
 # ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
+# PRLabel: %Monitor - LiveMetrics
+/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar @xiang17
+
 # ServiceLabel: %Monitor - LiveMetrics
 # ServiceOwners:                                                   @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar @xiang17
 
@@ -949,6 +952,12 @@
 # ServiceLabel: %Astronomer %Mgmt
 # ServiceOwners:                                                   @banggaurav
 
+# PRLabel: %Azure Stack Hci
+/sdk/azurestackhci/Azure.ResourceManager.Hci/                      @priyjain358
+
+# ServiceLabel: %Azure Stack Hci %Mgmt
+# ServiceOwners:                                                   @priyjain358
+
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
@@ -957,6 +966,12 @@
 
 # ServiceLabel: %Device Registry %Mgmt
 # ServiceOwners:                                                   @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
+
+# PRLabel: %DevOps - Infrastructure
+/sdk/devopsinfrastructure/Azure.ResourceManager.*/                 @oolaoluwa
+
+# ServiceLabel: %DevOps - Infrastructure
+# ServiceOwners:                                                   @oolaoluwa
 
 # PRLabel: %Informatica Data Management
 /sdk/informaticadatamanagement/Azure.ResourceManager.*/            @almasak

@@ -37,24 +37,56 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
         public async Task TestSocketIOTriggerWithKeyBasedConfig()
         {
             var host = TestHelpers.NewHost(typeof(SocketIOFuncs), configuration: KeyBasedConfiguration);
+            var triggerEvent = CreateTestTriggerEvent();
             var args = new Dictionary<string, object>
             {
-                { "request", CreateTestTriggerEvent() }
+                { "request", triggerEvent }
             };
 
             await host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOTrigger", args);
+            Assert.True(triggerEvent.TaskCompletionSource.Task.IsCompleted);
         }
 
         [TestCase]
         public async Task TestSocketIOTriggerWithIdentityBasedConfig()
         {
             var host = TestHelpers.NewHost(typeof(SocketIOFuncs), configuration: IdentityBasedConfiguration);
+            var triggerEvent = CreateTestTriggerEvent();
             var args = new Dictionary<string, object>
             {
-                { "request", CreateTestTriggerEvent() }
+                { "request", triggerEvent }
             };
 
             await host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOTrigger", args);
+            Assert.True(triggerEvent.TaskCompletionSource.Task.IsCompleted);
+        }
+
+        [TestCase]
+        public async Task TestSocketIOTriggerWithParam()
+        {
+            var host = TestHelpers.NewHost(typeof(SocketIOFuncs), configuration: IdentityBasedConfiguration);
+            var triggerEvent = CreateTestMessageTriggerEvent();
+            var args = new Dictionary<string, object>
+            {
+                { "request", triggerEvent }
+            };
+
+            await host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOTriggerWith2Param", args);
+            Assert.True(triggerEvent.TaskCompletionSource.Task.IsCompleted);
+        }
+
+        [TestCase]
+        public async Task TestSocketIOTriggerWithParamAttr()
+        {
+            var host = TestHelpers.NewHost(typeof(SocketIOFuncs), configuration: IdentityBasedConfiguration);
+            var triggerEvent = CreateTestMessageTriggerEvent();
+            var args = new Dictionary<string, object>
+            {
+                { "request", triggerEvent }
+            };
+
+            await host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOTriggerWith2ParamAndParameterAttr", args);
+            Assert.True(triggerEvent.TaskCompletionSource.Task.IsCompleted);
         }
 
         [TestCase]
@@ -69,6 +101,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             var task = host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOTriggerInvalid", args);
             var exception = Assert.ThrowsAsync<FunctionInvocationException>(() => task);
             Assert.AreEqual("Exception while executing function: SocketIOFuncs.TestSocketIOTriggerInvalid", exception.Message);
+        }
+
+        [TestCase]
+        public void TestSocketIOTrigger_InvalidParam()
+        {
+            var host = TestHelpers.NewHost(typeof(SocketIOFuncs), configuration: KeyBasedConfiguration);
+            var args = new Dictionary<string, object>
+            {
+                { "request",CreateTestMessageTriggerEvent() }
+            };
+
+            var task = host.GetJobHost().CallAsync("SocketIOFuncs.TestSocketIOTriggerWith3Param", args);
+            var exception = Assert.ThrowsAsync<FunctionInvocationException>(() => task);
+            Assert.AreEqual("Exception while executing function: SocketIOFuncs.TestSocketIOTriggerWith3Param", exception.Message);
         }
 
         [TestCase]
@@ -115,6 +161,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             };
         }
 
+        private static SocketIOTriggerEvent CreateTestMessageTriggerEvent()
+        {
+            return new SocketIOTriggerEvent
+            {
+                ConnectionContext = TestContext,
+                Request = new SocketIOMessageRequest("ns", "sid", "42ns/,[\"msgEvent\", \"d1\", \"d2\"]", "msgEvent", new[] { "d1", "d2" }),
+                TaskCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously)
+            };
+        }
+
         private static SocketIOSocketContext CreateConnectionContext()
         {
             return new SocketIOSocketContext(WebPubSubEventType.User, "message", "testhub", "000000", "/ns", "sid", "sig", "origin", null);
@@ -128,6 +184,46 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             {
                 // Valid case use default url for verification.
                 Assert.AreEqual(TestContext, connectionContext);
+            }
+
+            public static void TestSocketIOTriggerWith2Param(
+                [SocketIOTrigger("chat", "msgEvent", parameterNames: new[] {"arg1", "arg2"})] SocketIOMessageRequest request,
+                SocketIOSocketContext connectionContext,
+                string arg1,
+                string arg2)
+            {
+                // Valid case use default url for verification.
+                Assert.AreEqual(TestContext, connectionContext);
+                Assert.AreEqual("msgEvent", request.EventName);
+                Assert.AreEqual("d1", arg1);
+                Assert.AreEqual("d2", arg2);
+            }
+
+            public static void TestSocketIOTriggerWith3Param(
+                [SocketIOTrigger("chat", "msgEvent", parameterNames: new[] { "arg1", "arg2", "arg3" })] SocketIOMessageRequest request,
+                SocketIOSocketContext connectionContext,
+                string arg1,
+                string arg2,
+                string arg3)
+            {
+                // Valid case use default url for verification.
+                Assert.AreEqual(TestContext, connectionContext);
+                Assert.AreEqual("msgEvent", request.EventName);
+                Assert.AreEqual("d1", arg1);
+                Assert.AreEqual("d2", arg2);
+            }
+
+            public static void TestSocketIOTriggerWith2ParamAndParameterAttr(
+                [SocketIOTrigger("chat", "msgEvent")] SocketIOMessageRequest request,
+                SocketIOSocketContext connectionContext,
+                [SocketIOParameter] string arg2,
+                [SocketIOParameter] string arg1)
+            {
+                // Valid case use default url for verification.
+                Assert.AreEqual(TestContext, connectionContext);
+                Assert.AreEqual("msgEvent", request.EventName);
+                Assert.AreEqual("d1", arg2);
+                Assert.AreEqual("d2", arg1);
             }
 
             public static void TestSocketIOTriggerInvalid(
@@ -147,6 +243,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             {
                 await operation.AddAsync(new SendToNamespaceAction
                 {
+                    EventName = "event",
                     Parameters = new[] { "arg1" },
                     Namespace = "/",
                 });
@@ -157,6 +254,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO.Tests
             {
                 await operation.AddAsync(new SendToNamespaceAction
                 {
+                    EventName = "event",
                     Parameters = new[] { "arg1" },
                     Namespace = "/",
                 });

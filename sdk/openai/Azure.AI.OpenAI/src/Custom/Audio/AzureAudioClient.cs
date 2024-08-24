@@ -32,6 +32,5 @@ internal partial class AzureAudioClient : AudioClient
     }
 
     protected AzureAudioClient()
-    {
-    }
+    { }
 }

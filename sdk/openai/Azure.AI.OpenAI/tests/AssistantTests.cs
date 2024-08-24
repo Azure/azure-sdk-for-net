@@ -25,6 +25,26 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [Category("Smoke")]
     public void CanCreateClient() => Assert.That(GetTestClient(), Is.InstanceOf<AssistantClient>());
 
+    [Test]
+    [Category("Smoke")]
+    public void VerifyClientOptionMutability()
+    {
+        AzureOpenAIClientOptions options = null;
+        Assert.DoesNotThrow(() =>
+            options = new AzureOpenAIClientOptions()
+            {
+                ApplicationId = "init does not throw",
+            });
+        Assert.DoesNotThrow(() =>
+            options.ApplicationId = "set before freeze OK");
+        AzureOpenAIClient azureClient = new(
+            new Uri("https://www.microsoft.com/placeholder"),
+            new ApiKeyCredential("placeholder"),
+            options);
+        Assert.Throws<InvalidOperationException>(() =>
+            options.ApplicationId = "set after freeze throws");
+    }
+
     [RecordedTest]
     public async Task BasicAssistantOperationsWork()
     {

@@ -31,6 +31,5 @@ internal partial class AzureVectorStoreClient : VectorStoreClient
     }
 
     protected AzureVectorStoreClient()
-    {
-    }
+    { }
 }
