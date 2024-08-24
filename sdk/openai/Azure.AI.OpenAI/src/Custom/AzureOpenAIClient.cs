@@ -267,8 +267,7 @@ public partial class AzureOpenAIClient : OpenAIClient
         => new AzureVectorStoreClient(Pipeline, _endpoint, _options);
 
     private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AzureOpenAIClientOptions options)
-    {
-        return ClientPipeline.Create(
+        => ClientPipeline.Create(
             options ?? new(),
             perCallPolicies:
             [
@@ -310,14 +309,14 @@ public partial class AzureOpenAIClient : OpenAIClient
 
     private static PipelinePolicy CreateAddClientRequestIdHeaderPolicy()
     {
-        return new GenericActionPipelinePolicy(message =>
+        return new GenericActionPipelinePolicy(request =>
         {
-            if (message?.Request?.Headers is not null)
+            if (request?.Headers is not null)
             {
-                string requestId = message.Request.Headers.TryGetValue(s_clientRequestIdHeaderKey, out string existingHeader) == true
+                string requestId = request.Headers.TryGetValue(s_clientRequestIdHeaderKey, out string existingHeader) == true
                     ? existingHeader
                     : Guid.NewGuid().ToString().ToLowerInvariant();
-                message.Request.Headers.Set(s_clientRequestIdHeaderKey, requestId);
+                request.Headers.Set(s_clientRequestIdHeaderKey, requestId);
             }
         });
     }

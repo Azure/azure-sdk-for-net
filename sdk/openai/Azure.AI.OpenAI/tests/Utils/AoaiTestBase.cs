@@ -38,6 +38,7 @@ namespace Azure.AI.OpenAI.Tests;
 public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 {
     private const string AZURE_URI_SANITIZER_PATTERN = @"(?<=/(subscriptions|resourceGroups|accounts)/)([^/]+?)(?=(/|$))";
+    private const string SMALL_1x1_PNG = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFiQAABYkAZsVxhQAAAAMSURBVBhXY2BgYAAAAAQAAVzN/2kAAAAASUVORK5CYII=";
 
     public static readonly DateTimeOffset START_2024 = new DateTimeOffset(2024, 01, 01, 00, 00, 00, TimeSpan.Zero);
     public static readonly DateTimeOffset UNIX_EPOCH =
@@ -101,6 +102,18 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         RecordingDisabler.DisableBodyRecordingFor<FileClient>(nameof(FileClient.UploadFileAsync));
 
         IgnoredHeaders.Add("x-ms-client-request-id");
+
+        // Data URIs trimmed to prevent the recording from being too large
+        BodyKeySanitizers.Add(new BodyKeySanitizer("$..url")
+        {
+            Regex = @"(?<=data:image/png;base64,)(.+)",
+            Value = SMALL_1x1_PNG
+        });
+        // Base64 encoded images in the response are replaced with a 1x1 black pixel PNG image to ensure valid data
+        BodyKeySanitizers.Add(new BodyKeySanitizer($"..b64_json")
+        {
+            Value = SMALL_1x1_PNG
+        });
     }
 
     /// <summary>
