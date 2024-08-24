@@ -177,7 +177,7 @@ AzureOpenAIClient azureClient = new(
     new DefaultAzureCredential());
 ChatClient chatClient = azureClient.GetChatClient("my-gpt-35-turbo-deployment");
 
-ResultCollection<StreamingChatCompletionUpdate> completionUpdates = chatClient.CompleteChatStreaming(
+CollectionResult<StreamingChatCompletionUpdate> completionUpdates = chatClient.CompleteChatStreaming(
     [
         new SystemChatMessage("You are a helpful assistant that talks like a pirate."),
         new UserChatMessage("Hi, can you help me?"),
