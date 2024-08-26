@@ -80,7 +80,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
             var blobContainerName = BlobContainerName;
             var sasToken = "?" + SasToken;
 
-            #region Snippet:HelloPreFullBackupAsync
             // Create a Uri with the storage container
             UriBuilder builder = new UriBuilder(blobStorageUrl)
             {
@@ -100,14 +99,12 @@ namespace Azure.Security.KeyVault.Administration.Tests
             {
                 Console.WriteLine($"Backup operation failed. Status: {backupOperation.GetRawResponse().Status}, Reason: {backupOperation.GetRawResponse().ReasonPhrase}");
             }
-            #endregion
 
             Assert.That(folderUri, Is.Not.Null);
             Assert.That(backupOperation.HasValue, Is.True);
 
             await WaitForOperationAsync();
 
-            #region Snippet:HelloPreFullRestoreAsync
             // Check for restore readiness using the backupBlobUri returned from a previous BackupOperation.
             KeyVaultPreRestoreOperation preRestoreOperation = await Client.StartPreRestoreAsync(folderUri, sasToken);
 
@@ -123,7 +120,6 @@ namespace Azure.Security.KeyVault.Administration.Tests
             {
                 Console.WriteLine($"Pre-restore operation failed. Status: {preRestoreOperation.GetRawResponse().Status}, Reason: {preRestoreOperation.GetRawResponse().ReasonPhrase}");
             }
-            #endregion
 
             Assert.That(preRestoreOperation.HasValue, Is.True);
             Assert.That(preRestoreResult.Value.StartTime, Is.Not.EqualTo(default));
