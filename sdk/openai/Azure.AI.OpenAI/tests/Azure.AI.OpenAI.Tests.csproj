@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.AI.OpenAI.csproj" />
-    <ProjectReference Include="..\..\TestFramework\src\OpenAI.TestFramework.csproj" />
+    <ProjectReference Include="..\..\tools\TestFramework\src\OpenAI.TestFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup>

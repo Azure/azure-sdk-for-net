@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\Azure.AI.OpenAI\src\Utility\Polyfill\**\*.cs">
+    <Compile Include="..\..\..\Azure.AI.OpenAI\src\Utility\Polyfill\**\*.cs">
       <Link>Utils\Polyfill\%(RecursiveDir)\%(Filename).cs</Link>
     </Compile>
   </ItemGroup>

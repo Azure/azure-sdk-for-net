@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.OpenAI", "src\Azur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.OpenAI.Tests", "tests\Azure.AI.OpenAI.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAI.TestFramework", "..\TestFramework\src\OpenAI.TestFramework.csproj", "{2D90AB0E-E458-4B28-97F7-33A70136EA2B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAI.TestFramework", "..\tools\TestFramework\src\OpenAI.TestFramework.csproj", "{2D90AB0E-E458-4B28-97F7-33A70136EA2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
