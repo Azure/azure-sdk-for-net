@@ -12,6 +12,7 @@ namespace Azure.AI.OpenAI.Chat;
 [CodeGenModel("AzureChatDataSourceModelIdVectorizationSource")] internal partial class InternalAzureChatDataSourceModelIdVectorizationSource { }
 [CodeGenModel("AzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions")] internal partial class InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions { }
 [CodeGenModel("AzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions")] internal partial class InternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions { }
+[CodeGenModel("AzureSearchChatDataSourceParametersIncludeContext")] internal readonly partial struct InternalAzureSearchChatDataSourceParametersIncludeContext { }
 [CodeGenModel("UnknownAzureChatDataSource")] internal partial class InternalUnknownAzureChatDataSource { }
 [CodeGenModel("UnknownAzureChatDataSourceAuthenticationOptions")] internal partial class InternalUnknownAzureChatDataSourceAuthenticationOptions { }
 [CodeGenModel("UnknownAzureChatDataSourceVectorizationSource")] internal partial class InternalUnknownAzureChatDataSourceVectorizationSource { }

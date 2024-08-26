@@ -106,8 +106,7 @@ public static class SocketIOOutputBindingFunction
         ILogger log)
     {
         string userName = Guid.NewGuid().ToString();
-        await operation.AddAsync(SocketIOAction.CreateSendToNamespaceAction("/", "new message", new[] { new { username = userName,
-            message = "Hello" } }));
+        await operation.AddAsync(SocketIOAction.CreateSendToNamespaceAction("new message", new[] { new { username = userName, message = "Hello" } }));
         log.LogInformation("Send to namespace finished.");
         return new OkObjectResult("ok");
     }
@@ -153,7 +152,7 @@ public static class SocketIOTriggerFunction
         ILogger log)
     {
         log.LogInformation("Running trigger for: new message");
-        await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("/", "new message", new[] { new { message = request.Parameters } }, new[] { request.SocketId }));
+        await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("new message", new[] { new { message = request.Parameters } }, new[] { request.SocketId }));
     }
 }
 ```
@@ -170,7 +169,7 @@ public static class SocketIOTriggerReturnValueFunction
         ILogger log)
     {
         log.LogInformation("Running trigger for: new message");
-        await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("/", "new message", new[] { new { message = request.Parameters } }, new[] { request.SocketId }));
+        await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("new message", new[] { new { message = request.Parameters } }, new[] { request.SocketId }));
         return new SocketIOMessageResponse(new[] {"ackValue"});
     }
 }

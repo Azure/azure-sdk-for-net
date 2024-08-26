@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -90,6 +91,57 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(page.Formulas, Is.Empty);
 
             AssertSingleEmptySpan(page.Spans);
+        }
+
+        [RecordedTest]
+        public async Task GetAnalyzeResultPdf()
+        {
+            var client = CreateDocumentIntelligenceClient();
+
+            const string ModelId = "prebuilt-read";
+            var content = new AnalyzeDocumentContent()
+            {
+                Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.LayoutSample)
+            };
+            var output = new[] { AnalyzeOutputOption.Pdf };
+
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, ModelId, content, output: output);
+            var response = await client.GetAnalyzeResultPdfAsync(ModelId, Guid.Parse(operation.Id));
+
+            BinaryData pdf = response.Value;
+            byte[] pdfBytes = pdf.ToArray();
+            byte[] pdfHeader = { pdfBytes[0], pdfBytes[1], pdfBytes[2], pdfBytes[3], pdfBytes[4] };
+
+            // A PDF's header is expected to be: %PDF-
+            Assert.That(pdfHeader, Is.EqualTo(new byte[] { 0x25, 0x50, 0x44, 0x46, 0x2D }));
+        }
+
+        [RecordedTest]
+        public async Task GetAnalyzeResultFigures()
+        {
+            var client = CreateDocumentIntelligenceClient();
+
+            const string ModelId = "prebuilt-layout";
+            var content = new AnalyzeDocumentContent()
+            {
+                Base64Source = DocumentIntelligenceTestEnvironment.CreateBinaryData(TestFile.LayoutSample)
+            };
+            var output = new[] { AnalyzeOutputOption.Figures };
+
+            var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, ModelId, content, output: output);
+            var result = operation.Value;
+
+            Assert.That(result.Figures, Is.Not.Empty);
+
+            var figure = result.Figures[0];
+            var response = await client.GetAnalyzeResultFigureAsync(ModelId, Guid.Parse(operation.Id), figure.Id);
+
+            BinaryData image = response.Value;
+            byte[] imageBytes = image.ToArray();
+            byte[] imageHeader = { imageBytes[0], imageBytes[1], imageBytes[2], imageBytes[3] };
+
+            // A PNG's header is expected to start with: ‰PNG
+            Assert.That(imageHeader, Is.EqualTo(new byte[] { 0x89, 0x50, 0x4E, 0x47 }));
         }
 
         private void ValidateGenericAnalyzeResult(AnalyzeResult analyzeResult, string modelId)

@@ -22,7 +22,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void GetTextTranslationSentencesSource()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationSentencesSource
             try
@@ -51,7 +51,7 @@ namespace Azure.AI.Translation.Text.Samples
 
         public void GetTextTranslationSentencesAuto()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:GetTextTranslationSentencesAuto
             try
@@ -79,7 +79,7 @@ namespace Azure.AI.Translation.Text.Samples
         [Test]
         public void FindTextSentenceSentenceBoundaries()
         {
-            TextTranslationClient client = CreateTextTranslationClient();
+            TextTranslationClient client = CreateClient();
 
             #region Snippet:FindTextSentenceBoundaries
             try

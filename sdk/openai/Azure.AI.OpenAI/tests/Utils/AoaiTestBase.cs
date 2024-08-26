@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -402,24 +403,117 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
     private static void DumpRequest(PipelineRequest request)
     {
         Console.WriteLine($"--- New request ---");
-        string headers = request.Headers
-            .Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}")
-            .Aggregate(string.Empty, (current, next) => string.Format("{0},{1}", current, next));
-        Console.WriteLine($"Headers: {headers}");
-        Console.WriteLine($"{request.Method} URI: {request?.Uri}");
-        if (request!.Content is not null)
+        Console.WriteLine($"{request.Method} {request?.Uri}");
+        string headers = string.Join("\n  ",
+            request!.Headers
+                .Select(kvp => $"{kvp.Key}: {(kvp.Key.ToLowerInvariant().Contains("auth") ? "***" : kvp.Value)}"));
+        Console.Write("  ");
+        Console.WriteLine(headers);
+
+        if (request?.Content is not null)
         {
             using MemoryStream stream = new();
             request.Content.WriteTo(stream, default);
             stream.Position = 0;
-            using StreamReader reader = new(stream);
-            Console.WriteLine(reader.ReadToEnd());
+
+            string? contentType = request.Headers.GetFirstValueOrDefault("Content-Type");
+            if (IsProbableTextContent(contentType))
+            {
+                DumpText(contentType, stream);
+            }
+            else
+            {
+                DumpHex(stream);
+            }
         }
     }
 
     private static void DumpResponse(PipelineResponse response)
     {
-        Console.WriteLine($"--- Response --- <dump not yet implemented>");
+        Console.WriteLine($"--- Response ---");
+        Console.WriteLine($"{response.Status} - {response.ReasonPhrase}");
+        string headers = string.Join(
+            "\n  ",
+            response.Headers
+                .Where(kvp => !kvp.Key.ToLowerInvariant().Contains("client-"))
+                .Select(kvp => $"{kvp.Key}: {kvp.Value}"));
+        Console.Write("  ");
+        Console.WriteLine(headers);
+
+        response.BufferContent();
+
+        if (response!.Content is not null)
+        {
+            using Stream stream = response.Content.ToStream();
+            string? contentType = response.Headers.GetFirstValueOrDefault("Content-Type");
+            if (IsProbableTextContent(contentType))
+            {
+                DumpText(contentType, stream);
+            }
+            else
+            {
+                DumpHex(stream);
+            }
+        }
+
+        Console.WriteLine();
+    }
+
+    private static bool IsProbableTextContent(string? contentType)
+    {
+        contentType = contentType?.ToLowerInvariant() ?? string.Empty;
+        return contentType.StartsWith("application/json")
+            || contentType.StartsWith("text/");
+    }
+
+    private static void DumpText(string? contentType, Stream stream)
+    {
+        if (contentType?.ToLowerInvariant().StartsWith("application/json") == true)
+        {
+            var json = JsonDocument.Parse(stream);
+
+            stream = new MemoryStream();
+            using (Utf8JsonWriter writer = new(stream, new() { Indented = true }))
+            {
+                json.WriteTo(writer);
+            }
+
+            stream.Seek(0, SeekOrigin.Begin);
+        }
+
+        using StreamReader reader = new(stream);
+        Console.WriteLine(reader.ReadToEnd());
+    }
+
+    private static void DumpHex(Stream stream, int maxLines = 256)
+    {
+        byte[] buffer = new byte[32];
+        StringBuilder hex = new(3 * buffer.Length);
+        StringBuilder chars = new(buffer.Length);
+
+        int read = 0;
+        for (int lines = 0; (read = stream.FillBuffer(buffer)) > 0 && lines < maxLines; lines++)
+        {
+            for (int i = 0; i < read; i++)
+            {
+                hex.AppendFormat("{0:X2} ", buffer[i]);
+
+                char c = Convert.ToChar(buffer[i]);
+                chars.Append(char.IsControl(c) ? ' ' : c);
+            }
+
+            Console.Write(hex.PadRight(buffer.Length * 3));
+            Console.Write("| ");
+            Console.WriteLine(chars);
+
+            hex.Clear();
+            chars.Clear();
+        }
+
+        if (read != 0)
+        {
+            Console.WriteLine(" ... truncated");
+        }
     }
 
     protected void ValidateById<T>(string id)
@@ -427,12 +521,22 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         Assert.That(id, Is.Not.Null.Or.Empty);
         switch (typeof(T).Name)
         {
-            case nameof(Assistant): _assistantIdsToDelete.Add(id); break;
-            case nameof(AssistantThread): _threadIdsToDelete.Add(id); break;
-            case nameof(OpenAIFileInfo): _fileIdsToDelete.Add(id); break;
-            case nameof(ThreadRun): break;
-            case nameof(VectorStore): _vectorStoreIdsToDelete.Add(id); break;
-            default: throw new NotImplementedException();
+            case nameof(Assistant):
+                _assistantIdsToDelete.Add(id);
+                break;
+            case nameof(AssistantThread):
+                _threadIdsToDelete.Add(id);
+                break;
+            case nameof(OpenAIFileInfo):
+                _fileIdsToDelete.Add(id);
+                break;
+            case nameof(ThreadRun):
+                break;
+            case nameof(VectorStore):
+                _vectorStoreIdsToDelete.Add(id);
+                break;
+            default:
+                throw new NotImplementedException();
         }
     }
 
@@ -534,7 +638,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
             TestConfig.SavePlaybackConfig();
         }
     }
-    
+
     protected static void ValidateClientResult(ClientResult result)
     {
         Assert.That(result, Is.Not.Null);
@@ -575,7 +679,7 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         return model!;
     }
 
-    protected AsyncResultCollection<T> SyncOrAsync<T>(TClient client, Func<TClient, ResultCollection<T>> sync, Func<TClient, AsyncResultCollection<T>> async)
+    protected AsyncCollectionResult<T> SyncOrAsync<T>(TClient client, Func<TClient, CollectionResult<T>> sync, Func<TClient, AsyncCollectionResult<T>> async)
     {
         // TODO FIXME HACK Since the test framework doesn't currently support async result collection, this methods provides
         //                 a simplified way to make explicit calls to the right methods in tests
@@ -587,12 +691,12 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         }
         else
         {
-            ResultCollection<T> syncCollection = sync(rawClient);
-            return new SyncToAsyncResultCollection<T>(syncCollection);
+            CollectionResult<T> syncCollection = sync(rawClient);
+            return new SyncToAsyncCollectionResult<T>(syncCollection);
         }
     }
 
-    protected AsyncPageableCollection<T> SyncOrAsync<T>(TClient client, Func<TClient, PageableCollection<T>> sync, Func<TClient, AsyncPageableCollection<T>> async)
+    protected AsyncPageCollection<T> SyncOrAsync<T>(TClient client, Func<TClient, PageCollection<T>> sync, Func<TClient, AsyncPageCollection<T>> async)
     {
         // TODO FIXME HACK Since the test framework doesn't currently support async result collection, this methods provides
         //                 a simplified way to make explicit calls to the right methods in tests
@@ -604,12 +708,12 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
         }
         else
         {
-            PageableCollection<T> syncCollection = sync(rawClient);
-            return new SyncToAsyncPageableCollection<T>(syncCollection);
+            PageCollection<T> syncCollection = sync(rawClient);
+            return new SyncToAsyncPageCollection<T>(syncCollection);
         }
     }
 
-    protected Task<List<T>> SyncOrAsyncList<T>(TClient client, Func<TClient, PageableCollection<T>> sync, Func<TClient, AsyncPageableCollection<T>> async)
+    protected Task<List<T>> SyncOrAsyncList<T>(TClient client, Func<TClient, PageCollection<T>> sync, Func<TClient, AsyncPageCollection<T>> async)
     {
         // TODO FIXME HACK Since the test framework doesn't currently support async result collection, this methods provides
         //                 a simplified way to make explicit calls to the right methods in tests
@@ -617,11 +721,11 @@ public class AoaiTestBase<TClient> : RecordedTestBase<AoaiTestEnvironment>
 
         if (IsAsync)
         {
-            return async(rawClient).ToEnumerableAsync();
+            return async(rawClient).GetAllValuesAsync().ToEnumerableAsync();
         }
         else
         {
-            return Task.FromResult(sync(rawClient).ToList());
+            return Task.FromResult(sync(rawClient).GetAllValues().ToList());
         }
     }
 

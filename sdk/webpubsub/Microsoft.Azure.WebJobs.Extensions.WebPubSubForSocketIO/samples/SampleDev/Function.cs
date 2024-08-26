@@ -32,7 +32,7 @@ namespace SampleDev
         {
             log.LogInformation($"C# HTTP trigger function processed a request. {Base64UrlEncoder.Encode("abc")}");
             string userName = Guid.NewGuid().ToString();
-            await operation.AddAsync(SocketIOAction.CreateSendToNamespaceAction("/", "new message", new[] { new { username = userName,
+            await operation.AddAsync(SocketIOAction.CreateSendToNamespaceAction("new message", new[] { new { username = userName,
                 message = "Hello" } }));
             log.LogInformation("Send to namespace finished.");
             return new OkObjectResult("ok");
@@ -77,7 +77,7 @@ namespace SampleDev
             log.LogInformation("Running trigger for: disconnected");
             if (_store.TryRemove(request.SocketId, out var context))
             {
-                await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("/", "user left", new[] { new { username = context.UserName, numUsers = Interlocked.Decrement(ref _numUsers)} }, new[] {request.SocketId}));
+                await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("user left", new[] { new { username = context.UserName, numUsers = Interlocked.Decrement(ref _numUsers)} }, new[] {request.SocketId}));
             }
         }
 
@@ -92,7 +92,7 @@ namespace SampleDev
 
             if (_store.TryGetValue(request.SocketId, out var context))
             {
-                await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("/", "new message", new[] { new { username = context.UserName, message = request.Parameters } }, new[] { request.SocketId }));
+                await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("new message", new[] { new { username = context.UserName, message = request.Parameters } }, new[] { request.SocketId }));
             }
         }
 
@@ -115,8 +115,8 @@ namespace SampleDev
                 context.AddedUser = true;
                 context.UserName = userName;
 
-                await collector.AddAsync(SocketIOAction.CreateSendToSocketAction("/", request.SocketId, "login", new[] { new { numUsers = _numUsers } }));
-                await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("/", "user joined", new[] { new { username = userName, numUsers = _numUsers } }, new[] { request.SocketId }));
+                await collector.AddAsync(SocketIOAction.CreateSendToSocketAction(request.SocketId, "login", new[] { new { numUsers = _numUsers } }));
+                await collector.AddAsync(SocketIOAction.CreateSendToNamespaceAction("user joined", new[] { new { username = userName, numUsers = _numUsers } }, new[] { request.SocketId }));
             }
         }
 

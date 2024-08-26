@@ -4,7 +4,6 @@ namespace System.ClientModel
     {
         public ApiKeyCredential(string key) { }
         public void Deconstruct(out string key) { throw null; }
-        public static implicit operator System.ClientModel.ApiKeyCredential (string key) { throw null; }
         public void Update(string key) { }
     }
     public abstract partial class AsyncCollectionResult<T> : System.ClientModel.ClientResult, System.Collections.Generic.IAsyncEnumerable<T>
@@ -91,11 +90,6 @@ namespace System.ClientModel
         public System.Collections.Generic.IReadOnlyList<T> Values { get { throw null; } }
         public static System.ClientModel.PageResult<T> Create(System.Collections.Generic.IReadOnlyList<T> values, System.ClientModel.ContinuationToken pageToken, System.ClientModel.ContinuationToken? nextPageToken, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
     }
-    public enum ReturnWhen
-    {
-        Completed = 0,
-        Started = 1,
-    }
 }
 namespace System.ClientModel.Primitives
 {
@@ -174,6 +168,14 @@ namespace System.ClientModel.Primitives
         string GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options);
         System.BinaryData Write(System.ClientModel.Primitives.ModelReaderWriterOptions options);
     }
+    public partial class JsonModelConverter : System.Text.Json.Serialization.JsonConverter<System.ClientModel.Primitives.IJsonModel<object>>
+    {
+        public JsonModelConverter() { }
+        public JsonModelConverter(System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public override bool CanConvert(System.Type typeToConvert) { throw null; }
+        public override System.ClientModel.Primitives.IJsonModel<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
+    }
     public static partial class ModelReaderWriter
     {
         public static object? Read(System.BinaryData data, System.Type returnType, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) { throw null; }
@@ -191,10 +193,12 @@ namespace System.ClientModel.Primitives
     public abstract partial class OperationResult : System.ClientModel.ClientResult
     {
         protected OperationResult(System.ClientModel.Primitives.PipelineResponse response) { }
-        public abstract bool IsCompleted { get; protected set; }
+        public bool HasCompleted { get { throw null; } protected set { } }
         public abstract System.ClientModel.ContinuationToken? RehydrationToken { get; protected set; }
-        public abstract void WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.Task WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.ClientModel.ClientResult UpdateStatus(System.ClientModel.Primitives.RequestOptions? options = null);
+        public abstract System.Threading.Tasks.ValueTask<System.ClientModel.ClientResult> UpdateStatusAsync(System.ClientModel.Primitives.RequestOptions? options = null);
+        public virtual void WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public virtual System.Threading.Tasks.ValueTask WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class PersistableModelProxyAttribute : System.Attribute

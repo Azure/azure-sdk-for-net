@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI.Tests.Utils.Config;
 using Azure.Core.TestFramework;
@@ -25,6 +24,26 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [Test]
     [Category("Smoke")]
     public void CanCreateClient() => Assert.That(GetTestClient(), Is.InstanceOf<AssistantClient>());
+
+    [Test]
+    [Category("Smoke")]
+    public void VerifyClientOptionMutability()
+    {
+        AzureOpenAIClientOptions options = null;
+        Assert.DoesNotThrow(() =>
+            options = new AzureOpenAIClientOptions()
+            {
+                ApplicationId = "init does not throw",
+            });
+        Assert.DoesNotThrow(() =>
+            options.ApplicationId = "set before freeze OK");
+        AzureOpenAIClient azureClient = new(
+            new Uri("https://www.microsoft.com/placeholder"),
+            new ApiKeyCredential("placeholder"),
+            options);
+        Assert.Throws<InvalidOperationException>(() =>
+            options.ApplicationId = "set after freeze throws");
+    }
 
     [RecordedTest]
     public async Task BasicAssistantOperationsWork()
@@ -60,10 +79,10 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             },
         });
         Assert.That(modifiedAssistant.Id, Is.EqualTo(assistant.Id));
-        AsyncPageableCollection<Assistant> recentAssistants = SyncOrAsync(
+        AsyncPageCollection<Assistant> recentAssistants = SyncOrAsync(
             client, c => c.GetAssistants(), c => c.GetAssistantsAsync());
         Assistant recentAssistant = null;
-        await foreach (Assistant asyncAssistant in recentAssistants)
+        await foreach (Assistant asyncAssistant in recentAssistants.GetAllValuesAsync())
         {
             recentAssistant = asyncAssistant;
             break;
@@ -138,7 +157,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     {
         AssistantClient client = GetTestClient();
         string modelName = client.DeploymentOrThrow();
-        FunctionToolDefinition getWeatherTool = new("get_current_weather", "Gets the user's current weather");
+        FunctionToolDefinition getWeatherTool = new("get_current_weather") { Description = "Gets the user's current weather" };
         Assistant assistant = await client.CreateAssistantAsync(modelName, new()
         {
             Tools = { getWeatherTool }
@@ -154,7 +173,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         {
             InitialMessages = { new(MessageRole.User, ["What should I wear outside right now?"]), },
         };
-        AsyncResultCollection<StreamingUpdate> asyncResults = SyncOrAsync(client,
+        AsyncCollectionResult<StreamingUpdate> asyncResults = SyncOrAsync(client,
             c => c.CreateThreadAndRunStreaming(assistant, thrdOpt),
             c => c.CreateThreadAndRunStreamingAsync(assistant, thrdOpt));
 
@@ -260,17 +279,16 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
     [RecordedTest]
     public async Task ThreadWithInitialMessagesWorks()
     {
+        const string userGreeting = "Hello, world!";
+        const string userQuestion = "Can you describe why stop signs are the shape and color that they are?";
+
         AssistantClient client = GetTestClient();
         ThreadCreationOptions options = new()
         {
             InitialMessages =
             {
-                new ThreadInitializationMessage(MessageRole.User, ["Hello, world!"]),
-                new ThreadInitializationMessage(MessageRole.User,
-                [
-                    "Can you describe this image for me?",
-                    MessageContent.FromImageUrl(new Uri("https://test.openai.com/image.png"))
-                ])
+                new ThreadInitializationMessage(MessageRole.User, [userGreeting]),
+                new ThreadInitializationMessage(MessageRole.User, [ userQuestion ])
                 {
                     Metadata =
                     {
@@ -279,20 +297,17 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
                 },
             },
         };
-        AssistantThread thread = await client.CreateThreadAsync (options);
+        AssistantThread thread = await client.CreateThreadAsync(options);
         Validate(thread);
         List<ThreadMessage> messageList = await SyncOrAsyncList(client,
-            c => c.GetMessages(thread, resultOrder: ListOrder.OldestFirst),
-            c => c.GetMessagesAsync(thread, resultOrder: ListOrder.OldestFirst));
+            c => c.GetMessages(thread, new() { Order = ListOrder.OldestFirst }),
+            c => c.GetMessagesAsync(thread, new() { Order = ListOrder.OldestFirst }));
         Assert.That(messageList.Count, Is.EqualTo(2));
         Assert.That(messageList[0].Role, Is.EqualTo(MessageRole.User));
         Assert.That(messageList[0].Content?.Count, Is.EqualTo(1));
-        Assert.That(messageList[0].Content[0].Text, Is.EqualTo("Hello, world!"));
-        Assert.That(messageList[1].Content?.Count, Is.EqualTo(2));
+        Assert.That(messageList[0].Content[0].Text, Is.EqualTo(userGreeting));
         Assert.That(messageList[1].Content[0], Is.Not.Null);
-        Assert.That(messageList[1].Content[0].Text, Is.EqualTo("Can you describe this image for me?"));
-        Assert.That(messageList[1].Content[1], Is.Not.Null);
-        Assert.That(messageList[1].Content[1].ImageUrl.AbsoluteUri, Is.EqualTo("https://test.openai.com/image.png"));
+        Assert.That(messageList[1].Content[0].Text, Is.EqualTo(userQuestion));
     }
 
     [RecordedTest]
@@ -478,8 +493,8 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
 
         List<ThreadMessage> messages = await SyncOrAsyncList(client,
-            c => c.GetMessages(run.ThreadId, resultOrder: ListOrder.NewestFirst),
-            c => c.GetMessagesAsync(run.ThreadId, resultOrder: ListOrder.NewestFirst));
+            c => c.GetMessages(run.ThreadId, new() { Order = ListOrder.NewestFirst }),
+            c => c.GetMessagesAsync(run.ThreadId, new() { Order = ListOrder.NewestFirst }));
         Assert.That(messages.Count, Is.GreaterThan(1));
         Assert.That(messages.ElementAt(0).Role, Is.EqualTo(MessageRole.Assistant));
         Assert.That(messages.ElementAt(0).Content?[0], Is.Not.Null);
@@ -582,12 +597,12 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
             r => r.Status.IsTerminal);
         Assert.That(run.Status, Is.EqualTo(RunStatus.Completed));
 
-        AsyncPageableCollection<ThreadMessage> messages = SyncOrAsync(client,
-            c => c.GetMessages(thread, resultOrder: ListOrder.NewestFirst),
-            c => c.GetMessagesAsync(thread, resultOrder: ListOrder.NewestFirst));
+        AsyncPageCollection<ThreadMessage> messages = SyncOrAsync(client,
+            c => c.GetMessages(thread, new() { Order = ListOrder.NewestFirst }),
+            c => c.GetMessagesAsync(thread, new() { Order = ListOrder.NewestFirst }));
         bool hasAtLeastOne = false;
         bool hasCake = false;
-        await foreach (ThreadMessage message in messages)
+        await foreach (ThreadMessage message in messages.GetAllValuesAsync())
         {
             hasAtLeastOne = true;
             foreach (MessageContent content in message.Content)
@@ -618,7 +633,7 @@ public class AssistantTests(bool isAsync) : AoaiTestBase<AssistantClient>(isAsyn
         });
         Validate(thread);
 
-        AsyncResultCollection<StreamingUpdate> streamingResult = SyncOrAsync(client,
+        AsyncCollectionResult<StreamingUpdate> streamingResult = SyncOrAsync(client,
             c => c.CreateRunStreaming(thread.Id, assistant.Id),
             c => c.CreateRunStreamingAsync(thread.Id, assistant.Id));
 
