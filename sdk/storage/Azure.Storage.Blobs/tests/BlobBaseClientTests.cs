@@ -8206,7 +8206,7 @@ namespace Azure.Storage.Blobs.Test
                  new InvalidOperationException("SAS Uri cannot be generated. BlobSasBuilder.BlobVersionId does not match snapshot value in the URI in the Client. BlobSasBuilder.BlobVersionId must either be left empty or match the snapshot value in the URI in the Client"));
         }
 
-        [RecordedTest]
+        [LiveOnly]
         public async Task GenerateUserDelegationSas_TrimBlobSlashes()
         {
             // Arrange
