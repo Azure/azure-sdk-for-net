@@ -283,40 +283,44 @@
             }
         }
     ],
-    "outputs": {
-        "AZURE_KEYVAULT_URL": {
-            "type": "string",
-            "value": "[reference(variables('kvName')).vaultUri]"
-        },
-        "AZURE_MANAGEDHSM_URL": {
-            "type": "string",
-            "condition": "[parameters('enableHsm')]",
-            "value": "[reference(variables('hsmName')).hsmUri]"
-        },
-        "KEYVAULT_SKU": {
-            "type": "string",
-            "value": "[reference(parameters('baseName')).sku.name]"
-        },
-        "CLIENT_OBJECTID": {
-            "type": "string",
-            "value": "[parameters('testApplicationOid')]"
-        },
-        "BLOB_STORAGE_ACCOUNT_NAME": {
-            "type": "string",
-            "value": "[variables('primaryAccountName')]"
-        },
-        "BLOB_PRIMARY_STORAGE_ACCOUNT_KEY": {
-            "type": "string",
-            "value": "[listKeys(variables('primaryAccountName'), variables('mgmtApiVersion')).keys[0].value]"
-        },
-        "BLOB_CONTAINER_NAME" : {
-            "type": "string",
-            "value": "[variables('blobContainerName')]"
-        },
-        "AZURE_KEYVAULT_ATTESTATION_URL": {
-            "type": "string",
-            "condition": "[parameters('enableAttestation')]",
-            "value": "[format('https://{0}/', reference(variables('attestationSite')).defaultHostName)]"
-        }
+  "outputs": {
+    "AZURE_KEYVAULT_URL": {
+      "type": "string",
+      "value": "[reference(variables('kvName')).vaultUri]"
+    },
+    "AZURE_MANAGEDHSM_URL": {
+      "type": "string",
+      "condition": "[parameters('enableHsm')]",
+      "value": "[reference(variables('hsmName')).hsmUri]"
+    },
+    "KEYVAULT_SKU": {
+      "type": "string",
+      "value": "[reference(parameters('baseName')).sku.name]"
+    },
+    "CLIENT_OBJECTID": {
+      "type": "string",
+      "value": "[parameters('testApplicationOid')]"
+    },
+    "BLOB_STORAGE_ACCOUNT_NAME": {
+      "type": "string",
+      "value": "[variables('primaryAccountName')]"
+    },
+    "BLOB_PRIMARY_STORAGE_ACCOUNT_KEY": {
+      "type": "string",
+      "value": "[listKeys(variables('primaryAccountName'), variables('mgmtApiVersion')).keys[0].value]"
+    },
+    "BLOB_CONTAINER_NAME": {
+      "type": "string",
+      "value": "[variables('blobContainerName')]"
+    },
+    "AZURE_KEYVAULT_ATTESTATION_URL": {
+      "type": "string",
+      "condition": "[parameters('enableAttestation')]",
+      "value": "[format('https://{0}/', reference(variables('attestationSite')).defaultHostName)]"
+    },
+    "KEYVAULT_TENANT_ID": {
+      "type": "string",
+      "value": "[parameters('tenantId')]"
     }
+  }
 }
