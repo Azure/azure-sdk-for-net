@@ -1,4 +1,4 @@
-# Analyze a conversation with Conversation Summarization
+# Analyze a conversation with Conversation PII
 
 This sample demonstrates how to detect and redact personally identifiable information from a conversation with Conversation Pii. To get started, you'll need to create a Cognitive Language service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/README.md) for links and instructions.
 
