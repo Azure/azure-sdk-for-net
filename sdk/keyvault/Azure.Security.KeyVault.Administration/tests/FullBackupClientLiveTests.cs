@@ -51,6 +51,36 @@ namespace Azure.Security.KeyVault.Administration.Tests
         }
 
         [RecordedTest]
+        [Ignore("Service preview is not available yet.")]
+        public async Task PreBackupAndPreRestore()
+        {
+            var source = new CancellationTokenSource(Timeout);
+
+            UriBuilder builder = new UriBuilder(TestEnvironment.StorageUri);
+            builder.Path = BlobContainerName;
+
+            // Start the pre-backup operation.
+            KeyVaultPreBackupOperation preBackupOperation = await Client.StartPreBackupAsync(builder.Uri, "?" + SasToken, source.Token);
+
+            KeyVaultBackupResult preBackupResult = await preBackupOperation.WaitForCompletionAsync(source.Token);
+
+            await WaitForOperationAsync();
+
+            Assert.That(source.IsCancellationRequested, Is.False);
+            Assert.That(preBackupResult, Is.Not.Null);
+            Assert.That(preBackupOperation.HasValue, Is.True);
+
+            // Start the pre-restore operation.
+            KeyVaultPreRestoreOperation preRestoreOperation = await Client.StartPreRestoreAsync(preBackupResult.FolderUri, "?" + SasToken, source.Token);
+            KeyVaultRestoreResult preRestoreResult = await preRestoreOperation.WaitForCompletionAsync(source.Token);
+            await WaitForOperationAsync();
+
+            Assert.That(source.IsCancellationRequested, Is.False);
+            Assert.That(preRestoreResult, Is.Not.Null);
+            Assert.That(preRestoreOperation.HasValue, Is.True);
+        }
+
+        [RecordedTest]
         [LiveOnly]
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35614")]
         public async Task BackupAndRestoreMultiPartFolderName()
