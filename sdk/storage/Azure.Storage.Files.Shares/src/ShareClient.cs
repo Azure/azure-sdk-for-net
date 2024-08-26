@@ -2037,6 +2037,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: options?.EnablePaidBursting,
                 paidBurstingMaxIops: options?.PaidBurstingMaxIops,
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
+                provisionedMaxIops: options?.ProvisionedMaxIops,
+                provisionedMaxBandwidthBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: false,
@@ -2076,6 +2078,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: options?.EnablePaidBursting,
                 paidBurstingMaxIops: options?.PaidBurstingMaxIops,
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
+                provisionedMaxIops: options?.ProvisionedMaxIops,
+                provisionedMaxBandwidthBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: true,
@@ -2116,6 +2120,16 @@ namespace Azure.Storage.Files.Shares
         ///  Optional. Supported in version 2024-11-04 and above.  Only applicable for premium file storage accounts.
         ///  Default if not specified is the maximum throughput the file share can support. Current maximum for a file share is 10,340 MiB/sec.
         /// </param>
+        /// <param name="provisionedMaxIops">
+        /// Optional.  Supported in version 2025-01-05 and above.  Only applicable to provisioned v2 storage accounts.
+        /// Sets the max provisioned IOPs for a share. For SSD, min IOPs is 3,000 and max is 100,000.
+        /// For HDD, min IOPs is 500 and max is 50,000.
+        /// </param>
+        /// <param name="provisionedMaxBandwidthBandwidthMibps">
+        /// Optional.  Supported in version 2025-01-05 and above.  Only applicable to provisioned v2 storage accounts.
+        /// Sets the max provisioned brandwith for a share.  For SSD, min bandwidth is 125 MiB/sec and max is 10,340 MiB/sec.
+        /// For HDD, min bandwidth is 60 MiB/sec and max is 5,120 MiB/sec.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on setting the quota.
@@ -2146,6 +2160,8 @@ namespace Azure.Storage.Files.Shares
             bool? enablePaidBursting,
             long? paidBurstingMaxIops,
             long? paidBurstingMaxBandwidthMibps,
+            long? provisionedMaxIops,
+            long? provisionedMaxBandwidthBandwidthMibps,
             ShareFileRequestConditions conditions,
             string operationName,
             bool async,
@@ -2178,6 +2194,8 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingEnabled: enablePaidBursting,
                             paidBurstingMaxIops: paidBurstingMaxIops,
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
+                            shareProvisionedIops: provisionedMaxIops,
+                            shareProvisionedBandwidthMibps: provisionedMaxBandwidthBandwidthMibps,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2192,6 +2210,8 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingEnabled: enablePaidBursting,
                             paidBurstingMaxIops: paidBurstingMaxIops,
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
+                            shareProvisionedIops: provisionedMaxIops,
+                            shareProvisionedBandwidthMibps: provisionedMaxBandwidthBandwidthMibps,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -2256,6 +2276,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthBandwidthMibps: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -2302,6 +2324,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthBandwidthMibps: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
@@ -2346,6 +2370,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthBandwidthMibps: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -2389,6 +2415,8 @@ namespace Azure.Storage.Files.Shares
                 enablePaidBursting: default,
                 paidBurstingMaxIops: default,
                 paidBurstingMaxBandwidthMibps: default,
+                provisionedMaxIops: default,
+                provisionedMaxBandwidthBandwidthMibps: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
