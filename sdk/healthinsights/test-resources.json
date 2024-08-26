@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
     "baseName": {
@@ -59,7 +59,7 @@
     "resources": [
         {
             "type": "Microsoft.CognitiveServices/accounts",
-            "apiVersion": "2017-04-18",
+            "apiVersion": "2023-10-01-preview",
             "name": "[variables('textAnalyticsName')]",
             "location": "[parameters('location')]",
             "sku": {
@@ -93,25 +93,17 @@
         },
         {
             "type": "Microsoft.Authorization/roleAssignments",
-            "apiVersion": "2018-09-01-preview",
-            "name": "[guid(resourceGroup().id)]",
+            "apiVersion": "2022-04-01",
+            "name": "[guid(resourceGroup().id, 'healthInsightsRoleAssignment')]",
             "properties": {
-                "roleDefinitionId": "[variables('roleDefinitionId')]",
-                "principalId": "[parameters('testApplicationOid')]"
-            }
-        },
-      {
-        "type": "Microsoft.CognitiveServices/accounts/providers/roleAssignments",
-        "apiVersion": "2018-09-01-preview",
-        "name": "[format('{0}/Microsoft.Authorization/{1}', variables('textAnalyticsName'), guid(variables('textAnalyticsName')))]",
-        "dependsOn": [
-          "[resourceId('Microsoft.CognitiveServices/accounts', variables('textAnalyticsName'))]"
-          ],
-        "properties": {
-        "principalId": "[parameters('testApplicationOid')]",
-        "roleDefinitionId": "[variables('roleDefinitionId')]"
+                "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('roleDefinitionId'))]",
+                "principalId": "[parameters('testApplicationOid')]",
+                "scope": "[resourceGroup().id]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.CognitiveServices/accounts', variables('healthInsightsName'))]"
+            ]
         }
-      }
     ],
     "outputs": {
         "LANGUAGE_API_KEY": {
