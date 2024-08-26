@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text;
 using NUnit.Framework;
 using OpenAI.TestFramework.Recording.RecordingProxy;
+using OpenAI.TestFramework.Utils.Processes;
 
 namespace OpenAI.TestFramework.Recording.Proxy;
 
@@ -23,6 +25,7 @@ public class ProxyService : IDisposable
     private StringBuilder _errorOutput;
     private int _lines;
     private ProxyClient? _client;
+    private WindowsJob? _windowsJob;
 
     /// <summary>
     /// Creates a new instance.
@@ -78,6 +81,14 @@ public class ProxyService : IDisposable
         };
         _testProxyProcess.ErrorDataReceived += HandleStdErr;
         _testProxyProcess.OutputDataReceived += HandleStdOut;
+
+        _windowsJob = null;
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            // If running on Windows, use a Job to instruct the OS to kill the test proxy service process
+            // should this current process die for any reason.
+            _windowsJob = new($"TestProxy_{Process.GetCurrentProcess().Id}");
+        }
     }
 
     /// <summary>
@@ -127,6 +138,10 @@ public class ProxyService : IDisposable
         try
         {
             _testProxyProcess.Kill();
+            if (_windowsJob != null)
+            {
+                // do NOT call Dispose here. This will terminate this process too.
+            }
         } catch { /* we tried */ }
     }
 
@@ -172,6 +187,8 @@ public class ProxyService : IDisposable
         {
             throw new InvalidOperationException("The test proxy process failed to start");
         }
+
+        _windowsJob?.Add(_testProxyProcess);
 
         _testProxyProcess.BeginOutputReadLine();
         _testProxyProcess.BeginErrorReadLine();
