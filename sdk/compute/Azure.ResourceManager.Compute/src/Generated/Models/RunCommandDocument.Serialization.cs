@@ -19,22 +19,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<RunCommandDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<RunCommandDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RunCommandDocument)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            writer.WriteStartObject();
             writer.WritePropertyName("script"u8);
             writer.WriteStartArray();
             foreach (var item in Script)
@@ -52,6 +43,32 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("$schema"u8);
+            writer.WriteStringValue(Schema);
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("osType"u8);
+            writer.WriteStringValue(OSType.ToSerialString());
+            writer.WritePropertyName("label"u8);
+            writer.WriteStringValue(Label);
+            writer.WritePropertyName("description"u8);
+            writer.WriteStringValue(Description);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
         }
 
         RunCommandDocument IJsonModel<RunCommandDocument>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

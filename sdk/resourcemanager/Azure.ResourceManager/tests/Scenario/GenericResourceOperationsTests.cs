@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -12,7 +13,7 @@ namespace Azure.ResourceManager.Tests
     public class GenericResourceOperationsTests : ResourceManagerTestBase
     {
         public GenericResourceOperationsTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 

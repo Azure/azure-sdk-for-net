@@ -19,22 +19,40 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<ProximityPlacementGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<ProximityPlacementGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ProximityPlacementGroupPatch)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
         }
 
         ProximityPlacementGroupPatch IJsonModel<ProximityPlacementGroupPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

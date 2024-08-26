@@ -19,21 +19,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<VirtualMachinePublicIPAddressDnsSettingsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachinePublicIPAddressDnsSettingsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressDnsSettingsConfiguration)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             writer.WritePropertyName("domainNameLabel"u8);
             writer.WriteStringValue(DomainNameLabel);
             if (Optional.IsDefined(DomainNameLabelScope))
@@ -56,6 +48,7 @@ namespace Azure.ResourceManager.Compute.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         VirtualMachinePublicIPAddressDnsSettingsConfiguration IJsonModel<VirtualMachinePublicIPAddressDnsSettingsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

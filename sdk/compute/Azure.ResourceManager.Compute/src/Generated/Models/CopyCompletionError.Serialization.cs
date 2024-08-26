@@ -19,21 +19,13 @@ namespace Azure.ResourceManager.Compute.Models
 
         void IJsonModel<CopyCompletionError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
             var format = options.Format == "W" ? ((IPersistableModel<CopyCompletionError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CopyCompletionError)} does not support writing '{format}' format.");
             }
 
+            writer.WriteStartObject();
             writer.WritePropertyName("errorCode"u8);
             writer.WriteStringValue(ErrorCode.ToString());
             writer.WritePropertyName("errorMessage"u8);
@@ -53,6 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
 #endif
                 }
             }
+            writer.WriteEndObject();
         }
 
         CopyCompletionError IJsonModel<CopyCompletionError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
