@@ -15,6 +15,9 @@ clear-output-folder: true
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
+  skipped-operations:
+    - ApiProduct_ListByApis
+    - UserGroup_List
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
